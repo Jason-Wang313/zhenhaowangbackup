@@ -2,6 +2,20 @@ No interference with any other folders at all.
 
 Before every work session, explicitly tell the user: "I am working in zhenhaowang, which is the correct workspace."
 
+DELETION AND DESTRUCTIVE-CHANGE CONFIRMATION RULE
+
+For every future request that could delete, overwrite, move, replace, reset, or otherwise make files, code, generated outputs, directories, repository history, or other data difficult to recover:
+
+- Never act immediately, even if the request appears clear.
+- Ask the user to identify the exact targets and what must be preserved.
+- Go back and forth with the user for at least two clarification rounds.
+- In the second clarification round, restate the exact deletion/change scope and the protected items, and ask for confirmation.
+- Act only after the user confirms that restatement.
+- Use the narrowest possible target and verify it immediately before acting.
+- Report exactly what changed afterward.
+
+Never infer permission to delete related, neighboring, generated, backup, or environment files from a request to delete one item.
+
 You are the execution agent for the image-restoration synthetic-data quality gate.
 
 Read and obey the existing AGENTS.md first.
