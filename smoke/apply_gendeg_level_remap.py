@@ -132,8 +132,15 @@ def apply_one(root: Path, clean: Path, smoke: bool) -> None:
             # new L5 is also materially darker than the current/new L4.
             target = min(clean_luma * 0.10, old_l5_luma * 0.55, new_l4_luma * 0.55)
             target = max(0.5, target)
-            darken_to_target(old_paths["L5"], output_paths["L5"], target)
-            final_l5 = mean_luma(output_paths["L5"])
+            # A single gamma estimate can miss the requested mean after
+            # 8-bit quantization, so tighten the target until the measured
+            # result is unambiguously darker than L4.
+            final_l5 = darken_to_target(old_paths["L5"], output_paths["L5"], target)
+            for _ in range(6):
+                if final_l5 < new_l4_luma * 0.65:
+                    break
+                target *= 0.5
+                final_l5 = darken_to_target(old_paths["L5"], output_paths["L5"], target)
             if final_l5 >= new_l4_luma * 0.65:
                 raise RuntimeError(f"L5 is not substantially darker than L4 for {name}: {final_l5:.2f} vs {new_l4_luma:.2f}")
             print(f"{name}: clean={clean_luma:.2f} new_L4={new_l4_luma:.2f} new_L5={final_l5:.2f} target={target:.2f}")
