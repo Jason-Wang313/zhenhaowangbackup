@@ -6,6 +6,10 @@
 !smoke/
 !smoke/*.py
 !smoke/**/*.py
+!smoke/run_gendeg_custom_batch.pyc
+!pytorch_lightning/
+!pytorch_lightning/*.py
+!pytorch_lightning/**/*.py
 !manifests/
 !manifests/*.csv
 !manifests/*.json
