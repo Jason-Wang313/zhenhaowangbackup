@@ -1,0 +1,27 @@
+# Default-deny backup scope: large/private runtime assets stay local.
+*
+!.gitignore
+!agents.md
+!README.md
+!smoke/
+!smoke/*.py
+!smoke/**/*.py
+!manifests/
+!manifests/*.csv
+!manifests/*.json
+!reports/
+!reports/qa/
+!reports/qa/*.md
+!logs/
+!logs/project_journal.md
+
+# Explicitly excluded even if a parent directory is later whitelisted.
+checkpoints/
+downloads/
+models/
+data/
+.conda/
+.tools/
+smoke/**/*.png
+smoke/**/*.jpg
+third_party/

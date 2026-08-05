@@ -1,0 +1,401 @@
+image_id,source,kind,output,seed,params,sha256,bytes,height,width
+001,data/clean/001.png,noise,data/agenticir/noise/001.png,2026080400,"{'noise_type': 'Gaussian', 'sigma': 25}",4bcf3ab4f27ca174c3f2f7b8f814146cf2ccdcce3171ae5bd17b1d9f4b7b9405,1785862,640,1024
+001,data/clean/001.png,blur,data/agenticir/blur/001.png,2026080401,"{'blur_type': 'motion', 'severity': 0}",d60cc7135972b8a2ae07fe31afe10428d54d5c79afcd2355e061440f238e06ab,992178,640,1024
+001,data/clean/001.png,haze,data/agenticir/haze/001.png,2026080402,"{'A': 0.85, 'beta': 1.0}",462d24bc67411a17a6e78a25ad74ea63ff86ddf6a75cd6712e217e3ff976ece2,994500,640,1024
+001,data/clean/001.png,rain,data/agenticir/rain/001.png,2026080403,{'value': 70},9d56a2483e8e7057ea239b92da5c9ea9f0118cabd6ff1e1e2e06e61b9842053e,1363237,640,1024
+002,data/clean/002.png,noise,data/agenticir/noise/002.png,2026080410,"{'noise_type': 'Gaussian', 'sigma': 25}",27e62c4e12e62dd10047e7fd0b1fa72b5b8b24a8d3e2cc7ca2af207c8ee2ee1c,2470418,896,1024
+002,data/clean/002.png,blur,data/agenticir/blur/002.png,2026080411,"{'blur_type': 'motion', 'severity': 1}",967a4321cc5e717e6822b1697b0f58bd77092dc78aa9dbe3bc1d62669ea0cf84,980676,896,1024
+002,data/clean/002.png,haze,data/agenticir/haze/002.png,2026080412,"{'A': 0.85, 'beta': 1.0}",6aef8a992be973f6644447dc4defc528eb64a0459af78aec0ad99bdaf84ef174,1170346,896,1024
+002,data/clean/002.png,rain,data/agenticir/rain/002.png,2026080413,{'value': 70},d8f196f06e71ae612e084106f306254cb3da048880a7c72a4fad375e382bbd39,1755610,896,1024
+003,data/clean/003.png,noise,data/agenticir/noise/003.png,2026080420,"{'noise_type': 'Gaussian', 'sigma': 25}",6cdf14fcf3ff80635baa005d0f326896e47e1ea3e7a56b6866b62a8fa9859bc5,2103304,768,1024
+003,data/clean/003.png,blur,data/agenticir/blur/003.png,2026080421,"{'blur_type': 'motion', 'severity': 2}",3ee4d32c5c86c20232ecea8edb40e16bc991daece0fcc9d5138fae383e88bc3e,1174391,768,1024
+003,data/clean/003.png,haze,data/agenticir/haze/003.png,2026080422,"{'A': 0.85, 'beta': 1.0}",f8f6d27eac2ba1b98c22e6d5196dab216c27fa51607e24fc7704ef3772e8048e,1327827,768,1024
+003,data/clean/003.png,rain,data/agenticir/rain/003.png,2026080423,{'value': 70},4f83f785f90d00c73e8f99226defc7451326d6c8431d88c22afdcc087bda0bcb,1775892,768,1024
+004,data/clean/004.png,noise,data/agenticir/noise/004.png,2026080430,"{'noise_type': 'Gaussian', 'sigma': 25}",7ac13b7df99e524b0e1919a4acac153cdb3f23e0c9e7c73ea7a530d2e306c077,2299154,1024,832
+004,data/clean/004.png,blur,data/agenticir/blur/004.png,2026080431,"{'blur_type': 'motion', 'severity': 0}",25306b818620a1332316ed71e97e8e5d8a52b3c9eb6745c3ac5e648c3bb2eaa3,1310633,1024,832
+004,data/clean/004.png,haze,data/agenticir/haze/004.png,2026080432,"{'A': 0.85, 'beta': 1.0}",1fec7ff35b9db04f857a771692b58f420cbc154de2e763d6a276b01b0a608e10,1316885,1024,832
+004,data/clean/004.png,rain,data/agenticir/rain/004.png,2026080433,{'value': 70},d9a807b5d74b1a6601770a702ebbb3c701bd9dcba51d60cd8cddf39fbcf3f016,1816651,1024,832
+005,data/clean/005.png,noise,data/agenticir/noise/005.png,2026080440,"{'noise_type': 'Gaussian', 'sigma': 25}",02cd92eccc335a4282f8232e58b44ce6f45d165b24e7a207653f71d15437903c,2164721,1024,768
+005,data/clean/005.png,blur,data/agenticir/blur/005.png,2026080441,"{'blur_type': 'motion', 'severity': 1}",8220d337afb03dd386324c935d89e70eee1806dccd1d58bc359c52dc397cab76,1443036,1024,768
+005,data/clean/005.png,haze,data/agenticir/haze/005.png,2026080442,"{'A': 0.85, 'beta': 1.0}",1677f90ac1db7014a9bc912c77ac5207c05d90b9a0c80c9d2fc1e3d6fff3eab7,1712711,1024,768
+005,data/clean/005.png,rain,data/agenticir/rain/005.png,2026080443,{'value': 70},342862929ee3966ae0c4bffc0126d209f0aab00836b9776dd147d9ab08abc085,1967611,1024,768
+006,data/clean/006.png,noise,data/agenticir/noise/006.png,2026080450,"{'noise_type': 'Gaussian', 'sigma': 25}",18c076127178d9352ff66448920ee7ee39863da5a903db4661cb160696172280,1765239,640,1024
+006,data/clean/006.png,blur,data/agenticir/blur/006.png,2026080451,"{'blur_type': 'motion', 'severity': 2}",91c1ccca82c708b2b45892ac3635cf7da513ecd2bb0c8ce22ddb60c204d2dba1,666922,640,1024
+006,data/clean/006.png,haze,data/agenticir/haze/006.png,2026080452,"{'A': 0.85, 'beta': 1.0}",cb81dd4a41fcac521ace4d85b6bd723e89db021736119f192d08509ac4a6ff67,1074885,640,1024
+006,data/clean/006.png,rain,data/agenticir/rain/006.png,2026080453,{'value': 70},ddbfca78f937c4b374df240f894d4b8a00548eb0eb35d4a696c4eebc19dc88af,1409236,640,1024
+007,data/clean/007.png,noise,data/agenticir/noise/007.png,2026080460,"{'noise_type': 'Gaussian', 'sigma': 25}",17a9d01c2fec01dde0baebbb35a63396226c30611766448cf15bcbeae8f7067b,1768110,1024,640
+007,data/clean/007.png,blur,data/agenticir/blur/007.png,2026080461,"{'blur_type': 'motion', 'severity': 0}",59c304b57956bbc9f944d23556bda74aa98c39b9e81769deac51b8f38f6d6fa9,1003102,1024,640
+007,data/clean/007.png,haze,data/agenticir/haze/007.png,2026080462,"{'A': 0.85, 'beta': 1.0}",a8ca66c1d5de76ae29592f82fb074a8c535fe66d8182a406364beb421dbf9e41,1124722,1024,640
+007,data/clean/007.png,rain,data/agenticir/rain/007.png,2026080463,{'value': 70},9c2e1f19f93e0d57b42d6ee7c25ea76bf0bb10f9f96940bf1d21a0e9f49b3a15,1390744,1024,640
+008,data/clean/008.png,noise,data/agenticir/noise/008.png,2026080470,"{'noise_type': 'Gaussian', 'sigma': 25}",e2f1cd32e23e2ea537840d1e477819cb1f3a617044936a9b87413c40df81e5e2,2496426,1024,896
+008,data/clean/008.png,blur,data/agenticir/blur/008.png,2026080471,"{'blur_type': 'motion', 'severity': 1}",39c7fecbb03e6700aa8595c8ff810dfe4ef9781f8a86f72c77e3d13dbc5042d0,1306120,1024,896
+008,data/clean/008.png,haze,data/agenticir/haze/008.png,2026080472,"{'A': 0.85, 'beta': 1.0}",306ea1daf1ebc79ec9050c7a2739096c2e6dff952f96d1bc35aaecfd82b046bf,1539598,1024,896
+008,data/clean/008.png,rain,data/agenticir/rain/008.png,2026080473,{'value': 70},80860ba8303ffb6473581dc0bfcb3b94b07f2f6e0ba4c1e24736e01d40b15d8e,1965202,1024,896
+009,data/clean/009.png,noise,data/agenticir/noise/009.png,2026080480,"{'noise_type': 'Gaussian', 'sigma': 25}",0b2b5b8951894210a013f6f04e240c916cc9302886eca054d776dd4cd5e8ec61,2676536,1024,960
+009,data/clean/009.png,blur,data/agenticir/blur/009.png,2026080481,"{'blur_type': 'motion', 'severity': 2}",42d03c43661c00217baaa9806ee2aac24fd9e0235057b748d8ddfab1d338b35b,969628,1024,960
+009,data/clean/009.png,haze,data/agenticir/haze/009.png,2026080482,"{'A': 0.85, 'beta': 1.0}",a7d7db13579bf94d56f3652e3f216b9e5944bddff217798af4dee0977607f3e4,1040033,1024,960
+009,data/clean/009.png,rain,data/agenticir/rain/009.png,2026080483,{'value': 70},1c53e80c5477a38bdbf1fb44c35fcada9201965944c1b5ab1b5c2a2319cce8ac,1709590,1024,960
+010,data/clean/010.png,noise,data/agenticir/noise/010.png,2026080490,"{'noise_type': 'Gaussian', 'sigma': 25}",0793c61dac4ffac0dc306717b9ea361dee9693c732d0e249d6d397bf0b7a5fc7,2900542,1024,1024
+010,data/clean/010.png,blur,data/agenticir/blur/010.png,2026080491,"{'blur_type': 'motion', 'severity': 0}",02cecac90266493f4ffcee1b529e6c6cd959de11bf58b06b594f8e48dd773577,1800470,1024,1024
+010,data/clean/010.png,haze,data/agenticir/haze/010.png,2026080492,"{'A': 0.85, 'beta': 1.0}",4f2b10ba91035963ec4bb2fb7ddbae442fedf9e5d4b93f9039bbb4475af6fbb4,1911996,1024,1024
+010,data/clean/010.png,rain,data/agenticir/rain/010.png,2026080493,{'value': 70},71c82c25877aa0b7752d656ee1fe3fbf1aad4718e7a03ee9a21d77dc2f0ab9db,2312092,1024,1024
+011,data/clean/011.png,noise,data/agenticir/noise/011.png,2026080500,"{'noise_type': 'Gaussian', 'sigma': 25}",df67f3151836c01d0186164a69223dd0ac527366c8278ea46b2d0d8fc027e79b,1820158,640,1024
+011,data/clean/011.png,blur,data/agenticir/blur/011.png,2026080501,"{'blur_type': 'motion', 'severity': 1}",e70728f6767c843618e5dbeae4184362792cb4ddea92aa19fc1f25584331eeb8,1140553,640,1024
+011,data/clean/011.png,haze,data/agenticir/haze/011.png,2026080502,"{'A': 0.85, 'beta': 1.0}",be24c4e16f1351f8fa88a4651774c8b8a19e2a4d84199d5e69582d6a0fe36abb,1462307,640,1024
+011,data/clean/011.png,rain,data/agenticir/rain/011.png,2026080503,{'value': 70},a97cf22ba6093322fdb9d766199b326e87dd0e0a72f1d208960e32c31f32336e,1718386,640,1024
+012,data/clean/012.png,noise,data/agenticir/noise/012.png,2026080510,"{'noise_type': 'Gaussian', 'sigma': 25}",b6f0ac58a0fba17eb1f4426f0161f1e87ce79db9d2527810cd4d3577c0ff02f4,1770181,640,1024
+012,data/clean/012.png,blur,data/agenticir/blur/012.png,2026080511,"{'blur_type': 'motion', 'severity': 2}",ffd049551d55b2fffd310eeb41e83a820d3069fafb4bcae71416703ba0f344e3,898301,640,1024
+012,data/clean/012.png,haze,data/agenticir/haze/012.png,2026080512,"{'A': 0.85, 'beta': 1.0}",489100727d99dd709115a251ad3acb858ae36301c8f67470c27a0eeab5dddbcb,946642,640,1024
+012,data/clean/012.png,rain,data/agenticir/rain/012.png,2026080513,{'value': 70},3dd65ebbf860ebac9c2628cbb7e52092da2332da42a0e7f787eb6728dbc7cda2,1419383,640,1024
+013,data/clean/013.png,noise,data/agenticir/noise/013.png,2026080520,"{'noise_type': 'Gaussian', 'sigma': 25}",65a41e0ae25fa1288f0f4a51963e57e83a736845b9783874ba81270e5383730f,2209670,768,1024
+013,data/clean/013.png,blur,data/agenticir/blur/013.png,2026080521,"{'blur_type': 'motion', 'severity': 0}",6362fe5c2ddd4850ceaa90285f44c4b1e9e967ac5f7c217a9203b0ac927d3f25,1591761,768,1024
+013,data/clean/013.png,haze,data/agenticir/haze/013.png,2026080522,"{'A': 0.85, 'beta': 1.0}",99b599360b8da1820fb9791d1a1a98889bea7df30254bd157c8b83a8dd682686,1742176,768,1024
+013,data/clean/013.png,rain,data/agenticir/rain/013.png,2026080523,{'value': 70},df89bedaadca6d57bf9ce1f5e3901996456325dcd1d4a6318b687c5466a44bcc,2059210,768,1024
+014,data/clean/014.png,noise,data/agenticir/noise/014.png,2026080530,"{'noise_type': 'Gaussian', 'sigma': 25}",1702c93ea1a0c735182bc8736b296e5b6120ddce19385920170bf1a7fa21288b,2021280,768,1024
+014,data/clean/014.png,blur,data/agenticir/blur/014.png,2026080531,"{'blur_type': 'motion', 'severity': 1}",794bf9ea7e1f475f576d35f05e22e00f05e7e583b741cfbebf595fbe4790ea5b,1077008,768,1024
+014,data/clean/014.png,haze,data/agenticir/haze/014.png,2026080532,"{'A': 0.85, 'beta': 1.0}",fe26e727a1e3610de1081c213e55d61a4a5592eb0fe38773047d41a3232897f7,1150943,768,1024
+014,data/clean/014.png,rain,data/agenticir/rain/014.png,2026080533,{'value': 70},b5ca2c92fe79be635582991f371440bfb536d259f5bd84381fd1d155d97b9fc1,1416364,768,1024
+015,data/clean/015.png,noise,data/agenticir/noise/015.png,2026080540,"{'noise_type': 'Gaussian', 'sigma': 25}",a9ab41fb0fa8a89c7b38d94c77ce7b5ff5c780012f46629ff77befb79bed542f,1809214,1024,640
+015,data/clean/015.png,blur,data/agenticir/blur/015.png,2026080541,"{'blur_type': 'motion', 'severity': 2}",b8921f1506f7065f42ca8b9e82adfbcbd2543b1d12287e066700d06d33eb5d94,1250679,1024,640
+015,data/clean/015.png,haze,data/agenticir/haze/015.png,2026080542,"{'A': 0.85, 'beta': 1.0}",0554d0552867ee3ae4431cb641796e9fd13e1bc4f103b2c5007bccb95fbf6dd2,1324614,1024,640
+015,data/clean/015.png,rain,data/agenticir/rain/015.png,2026080543,{'value': 70},8d7fdf9e24ace399b15b04883e8c651889b5b013956ec35615a2727dfc9c5199,1593799,1024,640
+016,data/clean/016.png,noise,data/agenticir/noise/016.png,2026080550,"{'noise_type': 'Gaussian', 'sigma': 25}",f2e68c3369ea56bef6838691b2f2480d61b99b366116c6fb962bcef2dd2b2d00,2390355,832,1024
+016,data/clean/016.png,blur,data/agenticir/blur/016.png,2026080551,"{'blur_type': 'motion', 'severity': 0}",fc15df80eda15968ae51802c294dfcc4880c603d62b2d7e948f69f29c625b301,1584186,832,1024
+016,data/clean/016.png,haze,data/agenticir/haze/016.png,2026080552,"{'A': 0.85, 'beta': 1.0}",4f6cefd0b6aeb33c8260c2d0ba0111c5068a9368b849193c7a83cce64a234c73,1790360,832,1024
+016,data/clean/016.png,rain,data/agenticir/rain/016.png,2026080553,{'value': 70},477fab1dd13aa8a69ec139382ad38308d8aa0ed5f42f06b7dbcbe4529a49d98f,2113007,832,1024
+017,data/clean/017.png,noise,data/agenticir/noise/017.png,2026080560,"{'noise_type': 'Gaussian', 'sigma': 25}",17b2bc821d46862e2f5f7e0b4302ede360c0f03b2507f8e878475a0255248328,1737595,640,1024
+017,data/clean/017.png,blur,data/agenticir/blur/017.png,2026080561,"{'blur_type': 'motion', 'severity': 1}",9b14b852e3cd6208c6b6c160f0a38d2dff1fe072c4905abccd24dfb95edcc8b5,1005589,640,1024
+017,data/clean/017.png,haze,data/agenticir/haze/017.png,2026080562,"{'A': 0.85, 'beta': 1.0}",b8ce48f752d3fe504b40c15c9b76f39e7d81a94cc1643c51f4be43b14ad34a5c,1058981,640,1024
+017,data/clean/017.png,rain,data/agenticir/rain/017.png,2026080563,{'value': 70},185df868ed3a8777f1df9ccce40d2b21d4bdd903f208d15467aadafafb9b366c,1435489,640,1024
+018,data/clean/018.png,noise,data/agenticir/noise/018.png,2026080570,"{'noise_type': 'Gaussian', 'sigma': 25}",f522c9a32a47c289d1d3630f311983d202e2db4d1fc1412f8f85b1850dcdd338,2233297,768,1024
+018,data/clean/018.png,blur,data/agenticir/blur/018.png,2026080571,"{'blur_type': 'motion', 'severity': 2}",178cd948d6a181652ba000574390b365b5d2fc005e2c2b3cf99b717bab15483c,1225376,768,1024
+018,data/clean/018.png,haze,data/agenticir/haze/018.png,2026080572,"{'A': 0.85, 'beta': 1.0}",e6c97919da74e660008faa734f92f831d721d96be0de6602ca4fad3aea7620f4,1773263,768,1024
+018,data/clean/018.png,rain,data/agenticir/rain/018.png,2026080573,{'value': 70},d724d3aded2d9dc1c81943eb5bfca3cccd4f0677017811ca754d69a004b3fa6f,2063882,768,1024
+019,data/clean/019.png,noise,data/agenticir/noise/019.png,2026080580,"{'noise_type': 'Gaussian', 'sigma': 25}",e479263f2016b44b60e13210f35212c24f98286beaaaad8c73b25ab899c252a2,1828611,640,1024
+019,data/clean/019.png,blur,data/agenticir/blur/019.png,2026080581,"{'blur_type': 'motion', 'severity': 0}",91100a16383a1190084cdb649026e9516ba2739f999fd992332e1148060040fe,1366078,640,1024
+019,data/clean/019.png,haze,data/agenticir/haze/019.png,2026080582,"{'A': 0.85, 'beta': 1.0}",ca5220f07988e3df85f452f91a7e3135485d1d8791bc96a5f813bf847b9bd2f9,1258893,640,1024
+019,data/clean/019.png,rain,data/agenticir/rain/019.png,2026080583,{'value': 70},32d75605e6f89740d8d7094fa78dd1861d48fcfd13632d9354078c84d0d8f56b,1641033,640,1024
+020,data/clean/020.png,noise,data/agenticir/noise/020.png,2026080590,"{'noise_type': 'Gaussian', 'sigma': 25}",18ede7124b92604dcdcfc90e58c95ba71dfe7c18efb1d909792521a8bf6f2da9,2202076,768,1024
+020,data/clean/020.png,blur,data/agenticir/blur/020.png,2026080591,"{'blur_type': 'motion', 'severity': 1}",b9ab372b29d41124cec833921032f471cf9bec75df0a4fbc501b99cfa3e2249f,1733923,768,1024
+020,data/clean/020.png,haze,data/agenticir/haze/020.png,2026080592,"{'A': 0.85, 'beta': 1.0}",10cafa2134a7cece07f4861db5e02dbbbda869c8987d5cb118c540f96e0e83ad,1849659,768,1024
+020,data/clean/020.png,rain,data/agenticir/rain/020.png,2026080593,{'value': 70},8b85a999f97e3fd8414c42c68ecc9668003ad6bc68f28a68bb708a6b226e4c62,1970905,768,1024
+021,data/clean/021.png,noise,data/agenticir/noise/021.png,2026080600,"{'noise_type': 'Gaussian', 'sigma': 25}",133810eb964562311545fbde3b39db91dec85e004ba4f78cf281071f6deccee4,2515485,1024,896
+021,data/clean/021.png,blur,data/agenticir/blur/021.png,2026080601,"{'blur_type': 'motion', 'severity': 2}",9aa5805f0597eb0dac052c509bffa4bbb33923289ee2ba87ea6dd4d4c1c70041,1065430,1024,896
+021,data/clean/021.png,haze,data/agenticir/haze/021.png,2026080602,"{'A': 0.85, 'beta': 1.0}",2fc80d39846a76ea8ce1135defdb30281c447106750fb13c9bd4d970faaab356,1845296,1024,896
+021,data/clean/021.png,rain,data/agenticir/rain/021.png,2026080603,{'value': 70},3b8f04ed92a84878e3f2acf93fe8a3217343b6d8b2a5a4e1843ac4bab20a667f,2087835,1024,896
+022,data/clean/022.png,noise,data/agenticir/noise/022.png,2026080610,"{'noise_type': 'Gaussian', 'sigma': 25}",97a8d19bf3684d31b4daca1f4bae0c9ae268d4cf031a4348cc10e2df7d0858ca,1797998,1024,640
+022,data/clean/022.png,blur,data/agenticir/blur/022.png,2026080611,"{'blur_type': 'motion', 'severity': 0}",ee83f23c9105ecd82277ad02ea8316af3aee587b96af3a127d98da5dd52a5c6b,1037556,1024,640
+022,data/clean/022.png,haze,data/agenticir/haze/022.png,2026080612,"{'A': 0.85, 'beta': 1.0}",cb8d056c76248f647e83d68569e3aca563d168d04ed97e3adaaf33a95c6b706a,1037989,1024,640
+022,data/clean/022.png,rain,data/agenticir/rain/022.png,2026080613,{'value': 70},ec3043b21c1b16d4bc3940af03e70a1bf4111922ab33923bf667d3aff762dc16,1446790,1024,640
+023,data/clean/023.png,noise,data/agenticir/noise/023.png,2026080620,"{'noise_type': 'Gaussian', 'sigma': 25}",69d786fe51dce9b62b61de3425591e2e801f300ce7d2598f894e37b656747e26,1834256,1024,640
+023,data/clean/023.png,blur,data/agenticir/blur/023.png,2026080621,"{'blur_type': 'motion', 'severity': 1}",ffc697180e1c089c50a429a12700194e6d3c90829593c42f641c5139c155b16c,1008196,1024,640
+023,data/clean/023.png,haze,data/agenticir/haze/023.png,2026080622,"{'A': 0.85, 'beta': 1.0}",2d0a8d32a93078f72033a5291ddf655d52c6c1981d82457b75e74e375fc0a81a,1200159,1024,640
+023,data/clean/023.png,rain,data/agenticir/rain/023.png,2026080623,{'value': 70},6302f7bef48ef9989d00c0c20b22006821f455ea9db45bc0d2ab7dde0c393b61,1506744,1024,640
+024,data/clean/024.png,noise,data/agenticir/noise/024.png,2026080630,"{'noise_type': 'Gaussian', 'sigma': 25}",9a1fd00a5ca8c803c89cef88657d58ff10808ba4d8b957f9ffa97eef8519900c,1764688,1024,640
+024,data/clean/024.png,blur,data/agenticir/blur/024.png,2026080631,"{'blur_type': 'motion', 'severity': 2}",235a02be31d9a62d7ff5c7921341b4917fa5cf99d99ce09457cbe5c7bb787182,956446,1024,640
+024,data/clean/024.png,haze,data/agenticir/haze/024.png,2026080632,"{'A': 0.85, 'beta': 1.0}",aa866018eb58c7ea33b61d900d5776bb30c089812178ed77203cc476e13fa653,1162414,1024,640
+024,data/clean/024.png,rain,data/agenticir/rain/024.png,2026080633,{'value': 70},cfc821cdd8a94919a75eb10ec6d29a459322897ac3880ff50a8833deb819c323,1350394,1024,640
+025,data/clean/025.png,noise,data/agenticir/noise/025.png,2026080640,"{'noise_type': 'Gaussian', 'sigma': 25}",606ae916531746defeea6957e4df8deb5d1063b064a36e4b070f594a5cb00980,1794304,1024,640
+025,data/clean/025.png,blur,data/agenticir/blur/025.png,2026080641,"{'blur_type': 'motion', 'severity': 0}",6e1eaa5688a708f8f78fa06e336213fa25c457e278c55f31b072daafad5830c4,1105487,1024,640
+025,data/clean/025.png,haze,data/agenticir/haze/025.png,2026080642,"{'A': 0.85, 'beta': 1.0}",088f52363f9a651feeb1a70f2a1b7bd1d078363a467693d847f6f7271be7a205,1213086,1024,640
+025,data/clean/025.png,rain,data/agenticir/rain/025.png,2026080643,{'value': 70},9e32e66918c265d141a22fb8bc6f530b1830f489e85b26934e6d71914fb78791,1524918,1024,640
+026,data/clean/026.png,noise,data/agenticir/noise/026.png,2026080650,"{'noise_type': 'Gaussian', 'sigma': 25}",96dcd922e947f345d2bc04295ae9559d4c780569e5ac268e2b1c164182d6c678,2123240,1024,768
+026,data/clean/026.png,blur,data/agenticir/blur/026.png,2026080651,"{'blur_type': 'motion', 'severity': 1}",7aaa3fb85a4ead7e82f711b30338e5c377d4aac3c1f30eebe410b97bcbd3d158,908772,1024,768
+026,data/clean/026.png,haze,data/agenticir/haze/026.png,2026080652,"{'A': 0.85, 'beta': 1.0}",f3c6dae9f5143beca8d1083894547e5740b04aaabd778a3a3a1ba95e8bd2c6ef,1048885,1024,768
+026,data/clean/026.png,rain,data/agenticir/rain/026.png,2026080653,{'value': 70},7d26704d2cadf545331e2aeef2b1e0bbd0a66d17f3e1ff562813509610897d87,1538985,1024,768
+027,data/clean/027.png,noise,data/agenticir/noise/027.png,2026080660,"{'noise_type': 'Gaussian', 'sigma': 25}",ae993c3fb1412d73a40ce3e88c9b559084528fe352acc487bfd0b3c45ae57626,2156813,1024,768
+027,data/clean/027.png,blur,data/agenticir/blur/027.png,2026080661,"{'blur_type': 'motion', 'severity': 2}",2c477d3b1426702bf8ef8e9f592240adbbef3e56ab5972d1c70a7be68ff35557,1074531,1024,768
+027,data/clean/027.png,haze,data/agenticir/haze/027.png,2026080662,"{'A': 0.85, 'beta': 1.0}",b8c322b1c61abedad66dd218ad3414fd7903ccdcadd89e1c763398c1a5a227ef,1354209,1024,768
+027,data/clean/027.png,rain,data/agenticir/rain/027.png,2026080663,{'value': 70},d444cf324167f2873e89582a2c97901b373d2eeaf04b12abcb0419b7ece2aa9c,1647855,1024,768
+028,data/clean/028.png,noise,data/agenticir/noise/028.png,2026080670,"{'noise_type': 'Gaussian', 'sigma': 25}",7a9afdd3feb1cc54542062419ccf1075e84a43d960b38ceab1ec7ab53090bfad,1772006,1024,640
+028,data/clean/028.png,blur,data/agenticir/blur/028.png,2026080671,"{'blur_type': 'motion', 'severity': 0}",d2ddd946ddfd1905dd87097e7dfcbc531eab9e08538582ee2e1baaeedefbc3e9,732873,1024,640
+028,data/clean/028.png,haze,data/agenticir/haze/028.png,2026080672,"{'A': 0.85, 'beta': 1.0}",38abe7f17f0ee7aa0e4f93a07c2aad8169094931566c4ecd6d452eee0fd766d4,786515,1024,640
+028,data/clean/028.png,rain,data/agenticir/rain/028.png,2026080673,{'value': 70},edd76b0a5b9675ee4cb3bf0e0adac0c33c5086fc526c4205f7fad892bfef7818,1182963,1024,640
+029,data/clean/029.png,noise,data/agenticir/noise/029.png,2026080680,"{'noise_type': 'Gaussian', 'sigma': 25}",efc1cc0a1b7aedad6dec622368f37fe6264e1fd4faeee7b134287054302ec960,1720726,640,1024
+029,data/clean/029.png,blur,data/agenticir/blur/029.png,2026080681,"{'blur_type': 'motion', 'severity': 1}",a1cddffb9a6aa8280d8ee6183876e9bd76f0f7791c1ad1e74166fae469cd65bc,930430,640,1024
+029,data/clean/029.png,haze,data/agenticir/haze/029.png,2026080682,"{'A': 0.85, 'beta': 1.0}",1ef996d56ee9f789b83c6164c4e440bc661654b99501aac5ad2883d4e1fea7e7,1039105,640,1024
+029,data/clean/029.png,rain,data/agenticir/rain/029.png,2026080683,{'value': 70},d083a25f1ad7fdaa79ae4f7515585d7e99bf77b3a0faa79ef769d798056fe881,1375838,640,1024
+030,data/clean/030.png,noise,data/agenticir/noise/030.png,2026080690,"{'noise_type': 'Gaussian', 'sigma': 25}",7562692acce27ee747cfa7c5e882382266e37e80c8bc2220429e342ca21f30af,1632757,1024,576
+030,data/clean/030.png,blur,data/agenticir/blur/030.png,2026080691,"{'blur_type': 'motion', 'severity': 2}",e25d31657baecaa4158922b8f4111a645d4bc48f998411d12270b5e89d5d2735,678944,1024,576
+030,data/clean/030.png,haze,data/agenticir/haze/030.png,2026080692,"{'A': 0.85, 'beta': 1.0}",79f4dcc2e38b96cb751e210848f47e11a53acc97e63886bff4437a65e657c239,1015000,1024,576
+030,data/clean/030.png,rain,data/agenticir/rain/030.png,2026080693,{'value': 70},96d5a4a453d7e6e555654a8ee455dcc21af87eea021c2162d10222f8023e38e2,1287591,1024,576
+031,data/clean/031.png,noise,data/agenticir/noise/031.png,2026080700,"{'noise_type': 'Gaussian', 'sigma': 25}",7d8104e747419853571cbc493ea27cf27129748e84a69e1ff8e208c94e00c2c4,1972964,704,1024
+031,data/clean/031.png,blur,data/agenticir/blur/031.png,2026080701,"{'blur_type': 'motion', 'severity': 0}",4316eaa299be3e6efbcffd091eb9cd13e60df608b6c486522d56bebd4f7a8d2e,1260171,704,1024
+031,data/clean/031.png,haze,data/agenticir/haze/031.png,2026080702,"{'A': 0.85, 'beta': 1.0}",4d00fc504cc9c3caf2a236655071e66aafe74a3a6da8e8e0da5234cd6211ab50,1390945,704,1024
+031,data/clean/031.png,rain,data/agenticir/rain/031.png,2026080703,{'value': 70},8b735efe7152001afefd093579a676e943798277601c42cf502c3ba35c487f33,1648454,704,1024
+032,data/clean/032.png,noise,data/agenticir/noise/032.png,2026080710,"{'noise_type': 'Gaussian', 'sigma': 25}",0dfdd4a2023814e833cf434ae1e77dfcbec93fd03b668d30b48d8fb8aae1d73b,1417668,512,1024
+032,data/clean/032.png,blur,data/agenticir/blur/032.png,2026080711,"{'blur_type': 'motion', 'severity': 1}",d13837fdb895349900a22fcb70785669d3d589ca5b68b184717c361415d2cb63,653814,512,1024
+032,data/clean/032.png,haze,data/agenticir/haze/032.png,2026080712,"{'A': 0.85, 'beta': 1.0}",2f81e182ebe3cc4157a8248f464a143172e27a1a8e2efbe2986efb91319c0905,904221,512,1024
+032,data/clean/032.png,rain,data/agenticir/rain/032.png,2026080713,{'value': 70},e34f47d5eb0f32f53d34455f6b48609f47d8ccc4c275488132fd8392844831f3,1162210,512,1024
+033,data/clean/033.png,noise,data/agenticir/noise/033.png,2026080720,"{'noise_type': 'Gaussian', 'sigma': 25}",f7a892fd19b95be4b102a6268e4a91dbb81e43f41b46815f9878e9e8f06c4c82,1466440,1024,512
+033,data/clean/033.png,blur,data/agenticir/blur/033.png,2026080721,"{'blur_type': 'motion', 'severity': 2}",b65abe85a72bfbeeab02c29507022445d3212237555fb25aa561306130de2a8f,852748,1024,512
+033,data/clean/033.png,haze,data/agenticir/haze/033.png,2026080722,"{'A': 0.85, 'beta': 1.0}",50618b4aa3f1474c4120a7b168a5177c0e8c0da539a31dceda6b57602d4f5144,1159915,1024,512
+033,data/clean/033.png,rain,data/agenticir/rain/033.png,2026080723,{'value': 70},868529c9e6e454a7ce7019e7ab10a0c83505c7fd7a214a9e692b20c27369a258,1348950,1024,512
+034,data/clean/034.png,noise,data/agenticir/noise/034.png,2026080730,"{'noise_type': 'Gaussian', 'sigma': 25}",e40ee4d7a832e6b5d25f3661f6f91628b31fb6e20fd2d86f372b7b87705c7225,1983062,1024,704
+034,data/clean/034.png,blur,data/agenticir/blur/034.png,2026080731,"{'blur_type': 'motion', 'severity': 0}",d2077df2126105fd6a701e264953db64f676b575fa011a66ad2d969205187d80,1258090,1024,704
+034,data/clean/034.png,haze,data/agenticir/haze/034.png,2026080732,"{'A': 0.85, 'beta': 1.0}",f427e9e37c27949a276dab621956f21e83d8e9a42a710a342bb72357c3d91114,1235617,1024,704
+034,data/clean/034.png,rain,data/agenticir/rain/034.png,2026080733,{'value': 70},da58b8bc1fc3841d6e61794da7130ee20c478e24c1eca639935c8c0daaf3959e,1652191,1024,704
+035,data/clean/035.png,noise,data/agenticir/noise/035.png,2026080740,"{'noise_type': 'Gaussian', 'sigma': 25}",475e7c1476a867644a457d60eb97d1bb7fc96ca6853eae3e747f6d5d7e14a4ba,2076617,1024,768
+035,data/clean/035.png,blur,data/agenticir/blur/035.png,2026080741,"{'blur_type': 'motion', 'severity': 1}",fa2c638879c4e8995370fbb1aa9eafb0f584d61ec6a1345119e86b9215a553dd,903187,1024,768
+035,data/clean/035.png,haze,data/agenticir/haze/035.png,2026080742,"{'A': 0.85, 'beta': 1.0}",97a4b4e707ffdae6cab53b7271e7598facbfe13203261cd503ab0a25415f069e,1080967,1024,768
+035,data/clean/035.png,rain,data/agenticir/rain/035.png,2026080743,{'value': 70},20619c288f54b118a452c2e2a126058b74f17f8774d32bda98452f78f35f1fda,1570761,1024,768
+036,data/clean/036.png,noise,data/agenticir/noise/036.png,2026080750,"{'noise_type': 'Gaussian', 'sigma': 25}",736bdf260fda3541a6d2818f742ce4983a7b00fafb1be909c83e00691801288d,1715016,1024,640
+036,data/clean/036.png,blur,data/agenticir/blur/036.png,2026080751,"{'blur_type': 'motion', 'severity': 2}",b13504c8c41515df19464ab337cb52843e4b355e221b468b0d0391eace179bd8,997546,1024,640
+036,data/clean/036.png,haze,data/agenticir/haze/036.png,2026080752,"{'A': 0.85, 'beta': 1.0}",62ce247ce41c11e3778c2871ab7f2be2d09f87a4eb2164743d05a1a55c1d5314,1229636,1024,640
+036,data/clean/036.png,rain,data/agenticir/rain/036.png,2026080753,{'value': 70},f73690a7d419a1368387b04fcac282870e44d9d769a3b57267103e7eaf3d8fae,1467581,1024,640
+037,data/clean/037.png,noise,data/agenticir/noise/037.png,2026080760,"{'noise_type': 'Gaussian', 'sigma': 25}",d8b04083a7a1af7ce06c0ef419075db8eac2efb53e17d5a174477cee4daae6bb,1777239,1024,640
+037,data/clean/037.png,blur,data/agenticir/blur/037.png,2026080761,"{'blur_type': 'motion', 'severity': 0}",fe3b533d5ecb435c97a711bd330de8e4ae92d1e575a39a758d4652c935340471,822794,1024,640
+037,data/clean/037.png,haze,data/agenticir/haze/037.png,2026080762,"{'A': 0.85, 'beta': 1.0}",2086443fc0a6affa363bfe88a77fb359dc8cacc1d4300201ad2b796189462b80,892042,1024,640
+037,data/clean/037.png,rain,data/agenticir/rain/037.png,2026080763,{'value': 70},d9874768b5b3b3780d5aa7fac10548cd3d233c8133349b2cb3bc90147e7c5204,1231103,1024,640
+038,data/clean/038.png,noise,data/agenticir/noise/038.png,2026080770,"{'noise_type': 'Gaussian', 'sigma': 25}",9038b9a19256d2e726bd8c6a60c578b251b3c45fbde84f76669b7e64fa4c665f,1413627,512,1024
+038,data/clean/038.png,blur,data/agenticir/blur/038.png,2026080771,"{'blur_type': 'motion', 'severity': 1}",4a53fd2ce8d8ce73d1d2b28732c1174436c599391b72e0a447d76bf48b940510,811790,512,1024
+038,data/clean/038.png,haze,data/agenticir/haze/038.png,2026080772,"{'A': 0.85, 'beta': 1.0}",14466dcbbb5dd96f9f1beabe676652cc4caac6590031886ffc00c10082228f93,902440,512,1024
+038,data/clean/038.png,rain,data/agenticir/rain/038.png,2026080773,{'value': 70},e85e6bdddce977d7ad26e9fc89fa355acfe47b2e47649edb9d879b99fc03b390,1195918,512,1024
+039,data/clean/039.png,noise,data/agenticir/noise/039.png,2026080780,"{'noise_type': 'Gaussian', 'sigma': 25}",c78a1eb5ab3675eabebd5e99b9558c1eedce5003f959976b4e905d5cef3362e7,1760570,1024,640
+039,data/clean/039.png,blur,data/agenticir/blur/039.png,2026080781,"{'blur_type': 'motion', 'severity': 2}",f8fea5dd37521aed0a3972a2cdf4427aaf96f1c0bdf985dc9ea2d42ac18c59db,531900,1024,640
+039,data/clean/039.png,haze,data/agenticir/haze/039.png,2026080782,"{'A': 0.85, 'beta': 1.0}",9dad9715a171a8986166c86df81fcf1736821da6c83f43b0d13a19fcd95f1a69,543553,1024,640
+039,data/clean/039.png,rain,data/agenticir/rain/039.png,2026080783,{'value': 70},1b749c153a38b0bc3d6d7b453f49b8034086a2c1d26ba05c52c6746d1ed6e29c,1142531,1024,640
+040,data/clean/040.png,noise,data/agenticir/noise/040.png,2026080790,"{'noise_type': 'Gaussian', 'sigma': 25}",f2c7d18fd8913781c2f0052d91065f3497ca73323aa4964ec489e391a75b6a8a,1956445,704,1024
+040,data/clean/040.png,blur,data/agenticir/blur/040.png,2026080791,"{'blur_type': 'motion', 'severity': 0}",54f745da38f362eee0dcd816de6bbdd9a41cdbc606035205f63b0a4d1e440716,1015924,704,1024
+040,data/clean/040.png,haze,data/agenticir/haze/040.png,2026080792,"{'A': 0.85, 'beta': 1.0}",e9556f8756acdf3db4370793d89e78c3e2f1e8ca64e7fd042870d6102b2e5c49,1101519,704,1024
+040,data/clean/040.png,rain,data/agenticir/rain/040.png,2026080793,{'value': 70},572bf77a6c222c9b997e9756bf05eb9d1d8f398fdfd44cb02cd2288cc29c5a17,1530059,704,1024
+041,data/clean/041.png,noise,data/agenticir/noise/041.png,2026080800,"{'noise_type': 'Gaussian', 'sigma': 25}",87bb4511c16fa95eee718c9a8307d66cdac608e861f8a9a5fa7a583ddc669992,2213271,768,1024
+041,data/clean/041.png,blur,data/agenticir/blur/041.png,2026080801,"{'blur_type': 'motion', 'severity': 1}",c8d2db2e9be1838a219f40c431bba5620e7e665b487e28939dab64edc59198e3,1621729,768,1024
+041,data/clean/041.png,haze,data/agenticir/haze/041.png,2026080802,"{'A': 0.85, 'beta': 1.0}",98e389f562c238c16fed3782c9a79170427c68398e7ae100affb2215812a55bd,1780442,768,1024
+041,data/clean/041.png,rain,data/agenticir/rain/041.png,2026080803,{'value': 70},e226d1d0fba7b9f3a45015d5a47a95e2ad0da92b2f2b38511ad6f16f88db5fd0,2029131,768,1024
+042,data/clean/042.png,noise,data/agenticir/noise/042.png,2026080810,"{'noise_type': 'Gaussian', 'sigma': 25}",7c0fc65e447914f2e7c4539219032379116e35208d3f3b8e94862c22a0d656bd,1983840,704,1024
+042,data/clean/042.png,blur,data/agenticir/blur/042.png,2026080811,"{'blur_type': 'motion', 'severity': 2}",4699dac192d72793dfc1516ad12f212b97f356fa93065c75b58fcdd7b34ad19f,1008741,704,1024
+042,data/clean/042.png,haze,data/agenticir/haze/042.png,2026080812,"{'A': 0.85, 'beta': 1.0}",41fd3e3c0f280c6314c4c74d254eeb13e6bf0b9cd26d78767ce02951288350b9,1164424,704,1024
+042,data/clean/042.png,rain,data/agenticir/rain/042.png,2026080813,{'value': 70},dc15e6f6c8094a55101cbae2938c7367a449c6c2a468de497b5f5141366a5a80,1681262,704,1024
+043,data/clean/043.png,noise,data/agenticir/noise/043.png,2026080820,"{'noise_type': 'Gaussian', 'sigma': 25}",8d35032425323d022cf4d5aa1c51568dad632d9bfb016546c392cfa365d1a02b,1816891,640,1024
+043,data/clean/043.png,blur,data/agenticir/blur/043.png,2026080821,"{'blur_type': 'motion', 'severity': 0}",d9097092c181ef54d75856a4efe6617a4071f434bf3dda37100eedbef5c86c72,1291097,640,1024
+043,data/clean/043.png,haze,data/agenticir/haze/043.png,2026080822,"{'A': 0.85, 'beta': 1.0}",4400822085308798be9d63e3a538885d0ad459b00b606f8d5568a01fffdc4a33,1256252,640,1024
+043,data/clean/043.png,rain,data/agenticir/rain/043.png,2026080823,{'value': 70},13dd4c5c58c7e746eaf27e829ef38db422b99a82d3378e6176f3cd436ce9ec9e,1587062,640,1024
+044,data/clean/044.png,noise,data/agenticir/noise/044.png,2026080830,"{'noise_type': 'Gaussian', 'sigma': 25}",399c05fdba3b9dda7a3de01616bc2e170b4662be3a8a823061c1246d1a7e375f,1783530,640,1024
+044,data/clean/044.png,blur,data/agenticir/blur/044.png,2026080831,"{'blur_type': 'motion', 'severity': 1}",e209707cb981a48db6c20ae425f3b305ba43b6314d649795dc01a964e260900e,953658,640,1024
+044,data/clean/044.png,haze,data/agenticir/haze/044.png,2026080832,"{'A': 0.85, 'beta': 1.0}",34c45150d3b166cf38b55a4649462a1de36a39680d4b476770b476c44bfc5962,990498,640,1024
+044,data/clean/044.png,rain,data/agenticir/rain/044.png,2026080833,{'value': 70},5760d8097e4cf6a5b0289676999f5903b6abc34143a4b87aa37bdb24e7880bb7,1501172,640,1024
+045,data/clean/045.png,noise,data/agenticir/noise/045.png,2026080840,"{'noise_type': 'Gaussian', 'sigma': 25}",39729e4f55a8b1f44c17713b7f365b6628f5dcdfdc3bce8834666fbf261c9bc1,1817785,640,1024
+045,data/clean/045.png,blur,data/agenticir/blur/045.png,2026080841,"{'blur_type': 'motion', 'severity': 2}",f6e4023b0b956f6d99b3aebfb7865f8007c955f79d97cadcc8a40f081b3e5241,1098051,640,1024
+045,data/clean/045.png,haze,data/agenticir/haze/045.png,2026080842,"{'A': 0.85, 'beta': 1.0}",730d853e52cdaf1fb4eae3a5f05f784a7d7e6555d961c3ac183903c474cca1d3,1244989,640,1024
+045,data/clean/045.png,rain,data/agenticir/rain/045.png,2026080843,{'value': 70},3e598d26713c81ff04a914b14d3e2fb8d4ce6d1bfbb8ca7e08ca52ae6de9ad9d,1621947,640,1024
+046,data/clean/046.png,noise,data/agenticir/noise/046.png,2026080850,"{'noise_type': 'Gaussian', 'sigma': 25}",8d266d4266ae330dd2ab0da5f4e543161b993f6e3009314e068df534663df7a8,1809638,640,1024
+046,data/clean/046.png,blur,data/agenticir/blur/046.png,2026080851,"{'blur_type': 'motion', 'severity': 0}",b3ff5f2812087a577acc40f66464dd45a3d0004665a9f2bcfcb8f2e5a36cd00a,1417697,640,1024
+046,data/clean/046.png,haze,data/agenticir/haze/046.png,2026080852,"{'A': 0.85, 'beta': 1.0}",e7b34c1a215fff24169257a6e4656e380dc332df35ea56fc171d38fad0d4d941,1396095,640,1024
+046,data/clean/046.png,rain,data/agenticir/rain/046.png,2026080853,{'value': 70},e0b58573ed57ddea750f1081ec620168d4e581d2ea006fc3c2445b996ad9b5f9,1711251,640,1024
+047,data/clean/047.png,noise,data/agenticir/noise/047.png,2026080860,"{'noise_type': 'Gaussian', 'sigma': 25}",ad7b9227dcd3a25f9064905369ba04ba202b29664b7c6182afc78763bbb998c0,2170828,768,1024
+047,data/clean/047.png,blur,data/agenticir/blur/047.png,2026080861,"{'blur_type': 'motion', 'severity': 1}",c0c6b6e46c4b4973d38b63d589c2c9023b4047ebea7b4f4d0ac4d639c0fc150a,1308565,768,1024
+047,data/clean/047.png,haze,data/agenticir/haze/047.png,2026080862,"{'A': 0.85, 'beta': 1.0}",13396ab7ac2d3ce4783f4d50e0a09d75222ddc8a084d2e4aa68048439672d7b9,1324220,768,1024
+047,data/clean/047.png,rain,data/agenticir/rain/047.png,2026080863,{'value': 70},510e1a574e69492392ea9c5556e59ca48229969b7f01cc355ce8f9d2062f7955,1827424,768,1024
+048,data/clean/048.png,noise,data/agenticir/noise/048.png,2026080870,"{'noise_type': 'Gaussian', 'sigma': 25}",65e05038ed636075d4b51f735e1614d4859f5b9f9f0ce65c7f462b6fe2e47a7a,1820110,640,1024
+048,data/clean/048.png,blur,data/agenticir/blur/048.png,2026080871,"{'blur_type': 'motion', 'severity': 2}",416004e8694160ff69d6ee8a326b75299b0ca6a9f69d2d19b3f665b3ab8d99bc,1125894,640,1024
+048,data/clean/048.png,haze,data/agenticir/haze/048.png,2026080872,"{'A': 0.85, 'beta': 1.0}",02196bd73928215f3b6dc621c3feb4fc7391261963b8782b143e1d8ac171d25e,1317122,640,1024
+048,data/clean/048.png,rain,data/agenticir/rain/048.png,2026080873,{'value': 70},c7261d6bdbe3ebb153d537c0bc3a59cc8694344ad09e28e87da4c0b92e4ab4e0,1632818,640,1024
+049,data/clean/049.png,noise,data/agenticir/noise/049.png,2026080880,"{'noise_type': 'Gaussian', 'sigma': 25}",64114e93ebc569f597d6a4b905e07a3ae418cb38bdd5df4664db90065af4a492,1791676,640,1024
+049,data/clean/049.png,blur,data/agenticir/blur/049.png,2026080881,"{'blur_type': 'motion', 'severity': 0}",ad1c6412ce01f769a8b16dd14475444aa53baae241d3da5a2466564262a784d4,1079377,640,1024
+049,data/clean/049.png,haze,data/agenticir/haze/049.png,2026080882,"{'A': 0.85, 'beta': 1.0}",83df32bd302904f3f2c9ec1ca37ad3ec4b5f6aac9aaa9b883c8aaf07260ebc0b,1039093,640,1024
+049,data/clean/049.png,rain,data/agenticir/rain/049.png,2026080883,{'value': 70},e894229d61befb49312891d67e51058769201a919d7049f6bd4c2d8f6611cdf9,1499067,640,1024
+050,data/clean/050.png,noise,data/agenticir/noise/050.png,2026080890,"{'noise_type': 'Gaussian', 'sigma': 25}",9793b79ce6c2f16a9370f1e0ab34cf4e7c936f5f9941a0cefe15d89c57eefc9c,2160343,768,1024
+050,data/clean/050.png,blur,data/agenticir/blur/050.png,2026080891,"{'blur_type': 'motion', 'severity': 1}",8936b7d21019c59b2457ba544ce6746b49c2b960e9d3148ff38954f13ceecbf1,1598122,768,1024
+050,data/clean/050.png,haze,data/agenticir/haze/050.png,2026080892,"{'A': 0.85, 'beta': 1.0}",495b4590f5a67552364a0ffaa92c59bf5894a5812793b64fa88cd1c9d8594e22,1749477,768,1024
+050,data/clean/050.png,rain,data/agenticir/rain/050.png,2026080893,{'value': 70},d6d78eb67a570ece119ee943399c5b5dae260dc5519827d75af417dd50f263c2,1989071,768,1024
+051,data/clean/051.png,noise,data/agenticir/noise/051.png,2026080900,"{'noise_type': 'Gaussian', 'sigma': 25}",a058f40acdcade6ee5eaf553c4980a58cdbc7601c247c2bd67daa8662ae322fb,1789310,1024,640
+051,data/clean/051.png,blur,data/agenticir/blur/051.png,2026080901,"{'blur_type': 'motion', 'severity': 2}",7fb515c3c4c9214481891c9e42b49ecbde293a8ca34d48bcd286a126a085c037,1000889,1024,640
+051,data/clean/051.png,haze,data/agenticir/haze/051.png,2026080902,"{'A': 0.85, 'beta': 1.0}",876c5ca36b48d2ae70e0f6fd0172778ab13fcb012dd9c4557881b085387ab3c1,945874,1024,640
+051,data/clean/051.png,rain,data/agenticir/rain/051.png,2026080903,{'value': 70},77516f405a5d61afb890dd51fbad8a5b003dd6f9bfbba4358fbbfa2a6c5a15e0,1382987,1024,640
+052,data/clean/052.png,noise,data/agenticir/noise/052.png,2026080910,"{'noise_type': 'Gaussian', 'sigma': 25}",c2c25ccee51afeb868f029def0c0c89f6dba03b016190700ea5994de4fab7ca5,1795659,1024,640
+052,data/clean/052.png,blur,data/agenticir/blur/052.png,2026080911,"{'blur_type': 'motion', 'severity': 0}",3a93e26b3152127771f379eb77b94962562b0323df2ed478bddb56a5960ad003,1281786,1024,640
+052,data/clean/052.png,haze,data/agenticir/haze/052.png,2026080912,"{'A': 0.85, 'beta': 1.0}",a2fe6a98a650719eb57e3910ca8b97b9c03702e3628c7d1fa4b3207df2e9a779,1255629,1024,640
+052,data/clean/052.png,rain,data/agenticir/rain/052.png,2026080913,{'value': 70},110aa84226e48d9d57c57b826a2e1cc0b9a442331b89d2c15695b2267f9a3604,1569307,1024,640
+053,data/clean/053.png,noise,data/agenticir/noise/053.png,2026080920,"{'noise_type': 'Gaussian', 'sigma': 25}",4a0e81727360712998d36530395c1b9bb67095003489805ebb9ffdc738461025,1756405,1024,640
+053,data/clean/053.png,blur,data/agenticir/blur/053.png,2026080921,"{'blur_type': 'motion', 'severity': 1}",842dc23062da8afaf4ea1341eebde1b10cb4654c1c735af452a7d85bab0352a8,653519,1024,640
+053,data/clean/053.png,haze,data/agenticir/haze/053.png,2026080922,"{'A': 0.85, 'beta': 1.0}",f9ba7e5cd61702e40db833d5ac959e31f58887a9b84457c85a7d09e2dfa4cabe,710468,1024,640
+053,data/clean/053.png,rain,data/agenticir/rain/053.png,2026080923,{'value': 70},057960429fdc9fff2ec25a452fbbfba438360301bf2e1b3480d174a287e6e07b,1225772,1024,640
+054,data/clean/054.png,noise,data/agenticir/noise/054.png,2026080930,"{'noise_type': 'Gaussian', 'sigma': 25}",a5f63245567fe9375d8b800ec4efef95916f53356aca8ad279456f8d8c3e4b65,1779601,1024,640
+054,data/clean/054.png,blur,data/agenticir/blur/054.png,2026080931,"{'blur_type': 'motion', 'severity': 2}",1c3a34acad1eebea2ccc08497dce7f00310acbb7fa01c4342066512818b20522,698628,1024,640
+054,data/clean/054.png,haze,data/agenticir/haze/054.png,2026080932,"{'A': 0.85, 'beta': 1.0}",e07cd1b9c27b680384681153fa0e94ee3acd84922c8e57434d2f2cc318ab5fb1,887312,1024,640
+054,data/clean/054.png,rain,data/agenticir/rain/054.png,2026080933,{'value': 70},10ad886ce584b85dc3cf5c4f5ec91fdb8f5e99c4b346b7d7eb21d39941043746,1306111,1024,640
+055,data/clean/055.png,noise,data/agenticir/noise/055.png,2026080940,"{'noise_type': 'Gaussian', 'sigma': 25}",7f9407334058254c21b4eec5eeae5c470cae567728b04b5c7aa4a81e7e00445b,2129576,1024,768
+055,data/clean/055.png,blur,data/agenticir/blur/055.png,2026080941,"{'blur_type': 'motion', 'severity': 0}",d0084b10368e18df334b97115732b05a8bb12525cac34ee677ffbc3e2e44d428,749635,1024,768
+055,data/clean/055.png,haze,data/agenticir/haze/055.png,2026080942,"{'A': 0.85, 'beta': 1.0}",484c4df350c92943520422f180a05cad09d13b413ef2bb738cca5219527a51a1,956676,1024,768
+055,data/clean/055.png,rain,data/agenticir/rain/055.png,2026080943,{'value': 70},65cf3e53e346e1a58b7a0be55b9480e8a627d9d1667b528bd97184e3274c1e3f,1495243,1024,768
+056,data/clean/056.png,noise,data/agenticir/noise/056.png,2026080950,"{'noise_type': 'Gaussian', 'sigma': 25}",0160233776246af5a4425971441af9800b4036bcc8bdc781860216cd03d44b3c,1611286,1024,576
+056,data/clean/056.png,blur,data/agenticir/blur/056.png,2026080951,"{'blur_type': 'motion', 'severity': 1}",0f81bc114d93614385d13a97cb3acf48e6e0c89b040d21cf18bdd256a72b8ade,841287,1024,576
+056,data/clean/056.png,haze,data/agenticir/haze/056.png,2026080952,"{'A': 0.85, 'beta': 1.0}",5293578c2eb60ad8d60605d7a865f97a3eee4539fea97192da87a45f92e4d4d3,899230,1024,576
+056,data/clean/056.png,rain,data/agenticir/rain/056.png,2026080953,{'value': 70},593c4979eebfc324c508e67229c9c9a1b9c8ec3126884aca7182dd52a66a9d92,1257568,1024,576
+057,data/clean/057.png,noise,data/agenticir/noise/057.png,2026080960,"{'noise_type': 'Gaussian', 'sigma': 25}",0d565b2f5bbcfa1f722faa5281fdad44c4437b6eb9a80a615b4691b3e1fc0b3d,1776311,1024,640
+057,data/clean/057.png,blur,data/agenticir/blur/057.png,2026080961,"{'blur_type': 'motion', 'severity': 2}",b333d00fc866535acbb49518a301494b1bbc4d28b0fa2522807fe5b4ebe70bbb,820105,1024,640
+057,data/clean/057.png,haze,data/agenticir/haze/057.png,2026080962,"{'A': 0.85, 'beta': 1.0}",131611e51cef7a3306ef6b059c67840388d540d433d3882ba6a588e409e12afa,984796,1024,640
+057,data/clean/057.png,rain,data/agenticir/rain/057.png,2026080963,{'value': 70},ca7f6ca453ff5de25d1ce7f80475432499becedc0e206c6b57030d39e6329d76,1373257,1024,640
+058,data/clean/058.png,noise,data/agenticir/noise/058.png,2026080970,"{'noise_type': 'Gaussian', 'sigma': 25}",5f539f64ad8375f0564d2244fdd74cf72d800315615cb06b413e247278225c9c,1775084,640,1024
+058,data/clean/058.png,blur,data/agenticir/blur/058.png,2026080971,"{'blur_type': 'motion', 'severity': 0}",2d554e9316e5188940968126434f4474da3541a523ba7d70e19590b63423a7ab,929544,640,1024
+058,data/clean/058.png,haze,data/agenticir/haze/058.png,2026080972,"{'A': 0.85, 'beta': 1.0}",df70f5319ed1a173ec843e04d9c03c72fc4161577f8875c9783b998c3bf11802,883125,640,1024
+058,data/clean/058.png,rain,data/agenticir/rain/058.png,2026080973,{'value': 70},da30d3ea6a828eb2e8dfb889e5f495295ec22df5d49fff95d3a1fd18706505ec,1234333,640,1024
+059,data/clean/059.png,noise,data/agenticir/noise/059.png,2026080980,"{'noise_type': 'Gaussian', 'sigma': 25}",bb9c00e381587bbc92432f674b93ab8473274f0de85d348d69ac1c894f74842b,1916102,1024,704
+059,data/clean/059.png,blur,data/agenticir/blur/059.png,2026080981,"{'blur_type': 'motion', 'severity': 1}",5d69d1670f3588fe0007acd2f06e1496d4f75790deb970560c2e015633ff73d1,774435,1024,704
+059,data/clean/059.png,haze,data/agenticir/haze/059.png,2026080982,"{'A': 0.85, 'beta': 1.0}",5ccc43da5da1423e1cd6e8df2e5ae869d7144eb01c5ab4284d13fbd88f7200b1,787101,1024,704
+059,data/clean/059.png,rain,data/agenticir/rain/059.png,2026080983,{'value': 70},5c77b2314e8a09e4179d31aee5ea19400a02a91b92948d67cbcc4ceb69086ff5,1249019,1024,704
+060,data/clean/060.png,noise,data/agenticir/noise/060.png,2026080990,"{'noise_type': 'Gaussian', 'sigma': 25}",3319236da78f26f115b432add52d74358f27a18d9b60b4a00625fc3c71f5044d,1753580,1024,640
+060,data/clean/060.png,blur,data/agenticir/blur/060.png,2026080991,"{'blur_type': 'motion', 'severity': 2}",278ee3d02c51163e9f134b64ed4144d42a10e0adcac971d352d5562143db8e11,625538,1024,640
+060,data/clean/060.png,haze,data/agenticir/haze/060.png,2026080992,"{'A': 0.85, 'beta': 1.0}",8cd9ec57b842a18daec41cbc439d239969840b89bfe1854b242277b5096d7467,946941,1024,640
+060,data/clean/060.png,rain,data/agenticir/rain/060.png,2026080993,{'value': 70},941c973abeb09a20e2e9e2c1ce463e6e7d14bdd6a8c5dfa30b7d34d0450bc6fe,1361804,1024,640
+061,data/clean/061.png,noise,data/agenticir/noise/061.png,2026081000,"{'noise_type': 'Gaussian', 'sigma': 25}",3b1bb58771888ddc77fa476b22483a8e12316b91cc1074f7d1178c39c5849e9f,1793819,640,1024
+061,data/clean/061.png,blur,data/agenticir/blur/061.png,2026081001,"{'blur_type': 'motion', 'severity': 0}",df913cea04a613a0b152148088aedae978134bedb1bce278309795011e19f26c,1134336,640,1024
+061,data/clean/061.png,haze,data/agenticir/haze/061.png,2026081002,"{'A': 0.85, 'beta': 1.0}",e4b1b67180b1b3eb4bdeb224c00a89f1edcbd5e8aef62968d70cadeadf6c19b2,1224434,640,1024
+061,data/clean/061.png,rain,data/agenticir/rain/061.png,2026081003,{'value': 70},ca2de470ac2023ff83ffde019dd24eaf5e54ac33b29ad220689e2d4ae8777399,1482484,640,1024
+062,data/clean/062.png,noise,data/agenticir/noise/062.png,2026081010,"{'noise_type': 'Gaussian', 'sigma': 25}",6ccb252f245dc1bdf4343a51a50c001fee0e713f2b82b7f1b5ba4c41db4bff4a,2141934,768,1024
+062,data/clean/062.png,blur,data/agenticir/blur/062.png,2026081011,"{'blur_type': 'motion', 'severity': 1}",b1ee099bc86be76049a9db787ce85443a552912a4c5b9085b104f0071443ebbf,1210526,768,1024
+062,data/clean/062.png,haze,data/agenticir/haze/062.png,2026081012,"{'A': 0.85, 'beta': 1.0}",e2bf0500ba2dfc80fe474c5d46905ac127dbb8ad93396e8c154df2688945c3b2,1257169,768,1024
+062,data/clean/062.png,rain,data/agenticir/rain/062.png,2026081013,{'value': 70},8ab7720d434edcb2fd6aaa749d24d69412d1175bdd902a96f26eb586bfd8f979,1659159,768,1024
+063,data/clean/063.png,noise,data/agenticir/noise/063.png,2026081020,"{'noise_type': 'Gaussian', 'sigma': 25}",b5bb40c04637920384355cb68d709d5c7f1cc8d0d1b769ed944ccf6c5a53847f,1732116,640,1024
+063,data/clean/063.png,blur,data/agenticir/blur/063.png,2026081021,"{'blur_type': 'motion', 'severity': 2}",28a9ef71d62e756b90d6c60a0ecc5a42d5f49b3c776fcd8877adc9151567e34e,1035205,640,1024
+063,data/clean/063.png,haze,data/agenticir/haze/063.png,2026081022,"{'A': 0.85, 'beta': 1.0}",3db6fd642d68ba11e20276fcaf659ad6deea81d0aab8585d0eff21dd9b37038b,1067145,640,1024
+063,data/clean/063.png,rain,data/agenticir/rain/063.png,2026081023,{'value': 70},2e80c955cd0a3f57d3d29f09e1ab6f7a37e69b8a8b78810c10f747009f6f1296,1422505,640,1024
+064,data/clean/064.png,noise,data/agenticir/noise/064.png,2026081030,"{'noise_type': 'Gaussian', 'sigma': 25}",49a94b9d2ff94a53db92d05783a891711488c32e73c118fd79262de91d85b6cb,1934018,1024,704
+064,data/clean/064.png,blur,data/agenticir/blur/064.png,2026081031,"{'blur_type': 'motion', 'severity': 0}",44ddc4ba0dbccb2422d6c22fa4c1bd225a1107768000b134fd8d2e1c659201b4,1176509,1024,704
+064,data/clean/064.png,haze,data/agenticir/haze/064.png,2026081032,"{'A': 0.85, 'beta': 1.0}",4068fe24210f618672cd63532698aefd1c04ca1b2d1b913c5730c32104182595,1429417,1024,704
+064,data/clean/064.png,rain,data/agenticir/rain/064.png,2026081033,{'value': 70},cd7882616aaa9abf14992f06ce15b0cd2ebfcee7973eb5cfce09400d07ce97c3,1687489,1024,704
+065,data/clean/065.png,noise,data/agenticir/noise/065.png,2026081040,"{'noise_type': 'Gaussian', 'sigma': 25}",615a23800e186e51a4b7ecdf47f9809b5db0b531e1dd571c8d0020d2ac389e1a,2163074,1024,768
+065,data/clean/065.png,blur,data/agenticir/blur/065.png,2026081041,"{'blur_type': 'motion', 'severity': 1}",1f41c7d691d42fc71db49a44433afd3e29f17f65fea977bcf99004c61b111d8f,1281136,1024,768
+065,data/clean/065.png,haze,data/agenticir/haze/065.png,2026081042,"{'A': 0.85, 'beta': 1.0}",003a97d52ae6d8aad389a5903e8be194ea8a0ad9a96e4553ebdee98fab044f53,1473239,1024,768
+065,data/clean/065.png,rain,data/agenticir/rain/065.png,2026081043,{'value': 70},d08d7b74cf15aff854e3efdece8a194c7de8d81e0e407d5a1b87656f2c45f5ad,1802493,1024,768
+066,data/clean/066.png,noise,data/agenticir/noise/066.png,2026081050,"{'noise_type': 'Gaussian', 'sigma': 25}",095463e24caf7f3d0ad618b9656f8fd44de94ab3d74c25be38cb12bfbcaad0e2,2154849,768,1024
+066,data/clean/066.png,blur,data/agenticir/blur/066.png,2026081051,"{'blur_type': 'motion', 'severity': 2}",820b751eba27e905ed7d7ee7fc119cba4d96c076ea4a838a5520e3d789e9ce4b,1285383,768,1024
+066,data/clean/066.png,haze,data/agenticir/haze/066.png,2026081052,"{'A': 0.85, 'beta': 1.0}",a6a3216b96a5ec1b0d78f155074ba33e5120e2081c0cc6786bd631c5f6d93445,1324037,768,1024
+066,data/clean/066.png,rain,data/agenticir/rain/066.png,2026081053,{'value': 70},108f84e20ce8fc6e1ecdb86115bd7108140a71d0d02b1bb6b38a3ee847edf011,1753680,768,1024
+067,data/clean/067.png,noise,data/agenticir/noise/067.png,2026081060,"{'noise_type': 'Gaussian', 'sigma': 25}",0479a0060b0347c5bb7e9223850659b1ab0715b30c875bc77b25ea9c0424e420,1750707,640,1024
+067,data/clean/067.png,blur,data/agenticir/blur/067.png,2026081061,"{'blur_type': 'motion', 'severity': 0}",9f60e79b00e5eac1bd730901df90bc64104b6eed83d3cc1c4ac47c60777d8ec9,1080332,640,1024
+067,data/clean/067.png,haze,data/agenticir/haze/067.png,2026081062,"{'A': 0.85, 'beta': 1.0}",9d36a726c59f61de92e6f957a566d348915db3c51048be2d22314467087c542d,1256121,640,1024
+067,data/clean/067.png,rain,data/agenticir/rain/067.png,2026081063,{'value': 70},e4d403ea03e6008321d35d946317e559d51447a98e9c8a7e6f519386fb412e27,1408772,640,1024
+068,data/clean/068.png,noise,data/agenticir/noise/068.png,2026081070,"{'noise_type': 'Gaussian', 'sigma': 25}",4dbef5c755bc8398e341f629e29d42ef077a1ec82701239a0cbd0fe40d6613ab,1795911,1024,640
+068,data/clean/068.png,blur,data/agenticir/blur/068.png,2026081071,"{'blur_type': 'motion', 'severity': 1}",4a7c1b40c56ada45f47c1eba908b77f3a834e7349a98607d1d00d2962adec4a1,1252392,1024,640
+068,data/clean/068.png,haze,data/agenticir/haze/068.png,2026081072,"{'A': 0.85, 'beta': 1.0}",cad8f8c311399359831ed76f07a400996d2e18af0b22febcad88fa57cd0d9af2,1287268,1024,640
+068,data/clean/068.png,rain,data/agenticir/rain/068.png,2026081073,{'value': 70},6c348bd659d1470638423c728be433fd2ca50e96b04c94bed88e21f486a97f7e,1559761,1024,640
+069,data/clean/069.png,noise,data/agenticir/noise/069.png,2026081080,"{'noise_type': 'Gaussian', 'sigma': 25}",d499ef2f649b3ee8d749298177597174f702de3c31469ea1343ee316e3560914,2158492,768,1024
+069,data/clean/069.png,blur,data/agenticir/blur/069.png,2026081081,"{'blur_type': 'motion', 'severity': 2}",de971377f8d8bedd82cb7d3f280675908db068de91785b295c03494213b3f946,1070425,768,1024
+069,data/clean/069.png,haze,data/agenticir/haze/069.png,2026081082,"{'A': 0.85, 'beta': 1.0}",d976fc609ebe2d4b2d5fb913734721599eaad9d4a34c16d7ff3b7500139ba6af,1368850,768,1024
+069,data/clean/069.png,rain,data/agenticir/rain/069.png,2026081083,{'value': 70},aa3cc76db18771baceb34a9782a33c3acdfceea0100974a10372aa60228b9fb0,1782185,768,1024
+070,data/clean/070.png,noise,data/agenticir/noise/070.png,2026081090,"{'noise_type': 'Gaussian', 'sigma': 25}",826b171351b3fdd05e9d579071938d525ed62f0d1987849b6701d63d313da1b2,1750339,640,1024
+070,data/clean/070.png,blur,data/agenticir/blur/070.png,2026081091,"{'blur_type': 'motion', 'severity': 0}",a42405ca855772b80edddd11ecc60e3e07e042f9687c69189bf7b9c1dd8de2d9,813409,640,1024
+070,data/clean/070.png,haze,data/agenticir/haze/070.png,2026081092,"{'A': 0.85, 'beta': 1.0}",0deaeb102c262e4f079987122e4b1f7893c1ee9215b54752644dfb40bbf82d79,869108,640,1024
+070,data/clean/070.png,rain,data/agenticir/rain/070.png,2026081093,{'value': 70},8d24fc9864104c8caeb5436d63de239083c17cd40fa144843b093737a17e1927,1258192,640,1024
+071,data/clean/071.png,noise,data/agenticir/noise/071.png,2026081100,"{'noise_type': 'Gaussian', 'sigma': 25}",88604dc361d913ebc8f7dc4df320faa535cef6b84cbdeb2a61b6c57754501d38,1763781,640,1024
+071,data/clean/071.png,blur,data/agenticir/blur/071.png,2026081101,"{'blur_type': 'motion', 'severity': 1}",c2e7688499aff5da005ddad0654d0e25516944e3fc0fdc9496315564a02b35b3,593430,640,1024
+071,data/clean/071.png,haze,data/agenticir/haze/071.png,2026081102,"{'A': 0.85, 'beta': 1.0}",825b568ebafb55ef84f4c7d129b0dbceb91547ef67ebeb69dadb763885f70529,727080,640,1024
+071,data/clean/071.png,rain,data/agenticir/rain/071.png,2026081103,{'value': 70},3d0b04e1bb82a2c26ac079feb40eb83adf8ae031857f534c71868ee0f5b96d02,1231935,640,1024
+072,data/clean/072.png,noise,data/agenticir/noise/072.png,2026081110,"{'noise_type': 'Gaussian', 'sigma': 25}",a1345cedfd81b4fb579955dad97395fc0ecfecfacb868ddef5b80850b1c7ea52,1972672,704,1024
+072,data/clean/072.png,blur,data/agenticir/blur/072.png,2026081111,"{'blur_type': 'motion', 'severity': 2}",099466469128cd5eab4826455469585ee4373ff8623ec83b4cd7a8fb384a209a,872464,704,1024
+072,data/clean/072.png,haze,data/agenticir/haze/072.png,2026081112,"{'A': 0.85, 'beta': 1.0}",a413f8bdf166d8c00fa0258eb84857a3e8a36075aa5fe24ba015a3aea8295ae9,1030957,704,1024
+072,data/clean/072.png,rain,data/agenticir/rain/072.png,2026081113,{'value': 70},93d1a27ab5cccc4332cb97f503531d3df71dbd6fc22d06e9f68912df02a830a0,1495665,704,1024
+073,data/clean/073.png,noise,data/agenticir/noise/073.png,2026081120,"{'noise_type': 'Gaussian', 'sigma': 25}",49611301aae396d15cb4318185b75b1c22afabf57f982f9ff2a261d31e562062,2120826,1024,768
+073,data/clean/073.png,blur,data/agenticir/blur/073.png,2026081121,"{'blur_type': 'motion', 'severity': 0}",b84e472455a4ec8a80301ac48de9b391a3985947aea946de33b957251524b827,949925,1024,768
+073,data/clean/073.png,haze,data/agenticir/haze/073.png,2026081122,"{'A': 0.85, 'beta': 1.0}",bacea383e9e0d8e92f5f9a361d12d5da4824530b8d84fe934bca6eae6d7f4188,902008,1024,768
+073,data/clean/073.png,rain,data/agenticir/rain/073.png,2026081123,{'value': 70},1cae332136be58957534b7291fa33fb2b4fea70817f06b4a7a7d2d8df30546d6,1459819,1024,768
+074,data/clean/074.png,noise,data/agenticir/noise/074.png,2026081130,"{'noise_type': 'Gaussian', 'sigma': 25}",928acce8829c01ad17162c256cb0bd45314f87ea56a49898217b2aad52aad1b0,1682046,640,1024
+074,data/clean/074.png,blur,data/agenticir/blur/074.png,2026081131,"{'blur_type': 'motion', 'severity': 1}",3963780f610a3d9a578f44e6f83116a04da569b7fcfac7d3b0beb05938ea9a52,848127,640,1024
+074,data/clean/074.png,haze,data/agenticir/haze/074.png,2026081132,"{'A': 0.85, 'beta': 1.0}",4ae12be2dff5c05d029023e15f451a482fc4e12fd1cce208f5f3b425a64df1fa,829210,640,1024
+074,data/clean/074.png,rain,data/agenticir/rain/074.png,2026081133,{'value': 70},e8ce5526e4b631d2f71688a7690d9fe2621ffde62251647c9e4aa203ac0f0c81,1308705,640,1024
+075,data/clean/075.png,noise,data/agenticir/noise/075.png,2026081140,"{'noise_type': 'Gaussian', 'sigma': 25}",bc01ccfbd0f436a5b5a905c70596d53a61e5a4222cdae77519d5a1b33a69933c,1818528,640,1024
+075,data/clean/075.png,blur,data/agenticir/blur/075.png,2026081141,"{'blur_type': 'motion', 'severity': 2}",f9d54d852639e6a9f70938f090f9379c2d9e1ffce826faae5633c09c55f6fad9,1116589,640,1024
+075,data/clean/075.png,haze,data/agenticir/haze/075.png,2026081142,"{'A': 0.85, 'beta': 1.0}",e96910fcb3600cdb6568b00bc84c1cc738c1942b273f903c124c03d29aa9688a,1255123,640,1024
+075,data/clean/075.png,rain,data/agenticir/rain/075.png,2026081143,{'value': 70},695e54c945f2c2c48df6cdd9c45be044f94f388f4961d4af85f9235a368d5941,1535869,640,1024
+076,data/clean/076.png,noise,data/agenticir/noise/076.png,2026081150,"{'noise_type': 'Gaussian', 'sigma': 25}",b586ebbe359a5a8c8c8cd542cf2a893132a613320c47e6a342c5c0501812c210,1798888,640,1024
+076,data/clean/076.png,blur,data/agenticir/blur/076.png,2026081151,"{'blur_type': 'motion', 'severity': 0}",8ab1bc173c9a362f5d48f9ee15e1a00e563b8d42bfdd409da8adfa9d2f7eb6ae,921705,640,1024
+076,data/clean/076.png,haze,data/agenticir/haze/076.png,2026081152,"{'A': 0.85, 'beta': 1.0}",a44ce55c570107f96aff645be6191c2e796bee9ea07ad8429359d390c0406156,898295,640,1024
+076,data/clean/076.png,rain,data/agenticir/rain/076.png,2026081153,{'value': 70},689d03506c3b483343bfcb622996a6afd9533943e301610492a5ea2d94ee3695,1347393,640,1024
+077,data/clean/077.png,noise,data/agenticir/noise/077.png,2026081160,"{'noise_type': 'Gaussian', 'sigma': 25}",4b9f12d1f5b8f909dde9bf451758a511123cf46f208c65cc6ee7f4dc2031843d,1792984,640,1024
+077,data/clean/077.png,blur,data/agenticir/blur/077.png,2026081161,"{'blur_type': 'motion', 'severity': 1}",c124fcb509e26d2080358717cd4b4f934807dbc9800f2afa3ebb550e67db89f8,996674,640,1024
+077,data/clean/077.png,haze,data/agenticir/haze/077.png,2026081162,"{'A': 0.85, 'beta': 1.0}",6c4e70e7022c2e33f40d0dc43361198ac9e8787cdb6bab46b9a046f901a3acff,1054243,640,1024
+077,data/clean/077.png,rain,data/agenticir/rain/077.png,2026081163,{'value': 70},e4172459cc1b5f6cabd88abc7aeb07ea5d85bdcf37bd3c8535a32b181d240bc6,1346195,640,1024
+078,data/clean/078.png,noise,data/agenticir/noise/078.png,2026081170,"{'noise_type': 'Gaussian', 'sigma': 25}",d2351b4c4119fff556bfb532fe194f988e5cc7efa999ecf8511a2d297f895c72,2143031,768,1024
+078,data/clean/078.png,blur,data/agenticir/blur/078.png,2026081171,"{'blur_type': 'motion', 'severity': 2}",6094e1123c284cac4389e35a4d9c806f4ab28e9b3c0f5a14369a739245e8b6d1,1090257,768,1024
+078,data/clean/078.png,haze,data/agenticir/haze/078.png,2026081172,"{'A': 0.85, 'beta': 1.0}",1f26abfa1f5c661c0de1b9a622ceb8aa94ff6280a23c923e20eaa309013bb41b,1465027,768,1024
+078,data/clean/078.png,rain,data/agenticir/rain/078.png,2026081173,{'value': 70},e36080407af0c565188cab12b9ece21787348cb9b69286ca9259852dd7bd716c,1819114,768,1024
+079,data/clean/079.png,noise,data/agenticir/noise/079.png,2026081180,"{'noise_type': 'Gaussian', 'sigma': 25}",a67610495b5414ee99f174876bda433d23a3af33c4c7cf386200bc1039221d8f,1963333,704,1024
+079,data/clean/079.png,blur,data/agenticir/blur/079.png,2026081181,"{'blur_type': 'motion', 'severity': 0}",b7311586a3d1e88325c72994cf90058486671e0fc777340043b718c5ec990367,1098937,704,1024
+079,data/clean/079.png,haze,data/agenticir/haze/079.png,2026081182,"{'A': 0.85, 'beta': 1.0}",f6a8c146b9ee84ba3b086f83308d9c94e6e02b4cb0d7fc5399d376b0490a34c3,1152741,704,1024
+079,data/clean/079.png,rain,data/agenticir/rain/079.png,2026081183,{'value': 70},eef68c56538afc171691102cd7efee39c02b90c9dc5e7605fbb6869f3e8e6920,1573494,704,1024
+080,data/clean/080.png,noise,data/agenticir/noise/080.png,2026081190,"{'noise_type': 'Gaussian', 'sigma': 25}",a822918f57b3e553ab0c881d7450281aa3c9df582e72760ccfc425eca86b041c,1773016,640,1024
+080,data/clean/080.png,blur,data/agenticir/blur/080.png,2026081191,"{'blur_type': 'motion', 'severity': 1}",28dc11efc8680692ef657675de8163881cf8d323c5003846289c7f2932027789,804654,640,1024
+080,data/clean/080.png,haze,data/agenticir/haze/080.png,2026081192,"{'A': 0.85, 'beta': 1.0}",f3b9652f84dd9d1d8ca79b3d09f71ca4dd4125395952bed8d22b1d042f334d04,816219,640,1024
+080,data/clean/080.png,rain,data/agenticir/rain/080.png,2026081193,{'value': 70},aacb18a0145141f51e55f125afee63844d98bc3ce35cb8f7fca6a014cc8b8495,1262602,640,1024
+081,data/clean/081.png,noise,data/agenticir/noise/081.png,2026081200,"{'noise_type': 'Gaussian', 'sigma': 25}",4d5217a8bc91d8f01e37d9b6c6706f6db090c1c7a4554ae84523116621c75123,2139227,768,1024
+081,data/clean/081.png,blur,data/agenticir/blur/081.png,2026081201,"{'blur_type': 'motion', 'severity': 2}",06c9ebad94fecd3e29a543f06c78dd95ad820454e10b59ef6ba367585399441c,1146635,768,1024
+081,data/clean/081.png,haze,data/agenticir/haze/081.png,2026081202,"{'A': 0.85, 'beta': 1.0}",99551ba2e3521fc8709e384ae86502503851cf4732db2aa8927277d6007a91be,1395034,768,1024
+081,data/clean/081.png,rain,data/agenticir/rain/081.png,2026081203,{'value': 70},7c83bbbcee66a16672243d805c0e95913bcddebce9e4ffd0c5c7203f23c21391,1731733,768,1024
+082,data/clean/082.png,noise,data/agenticir/noise/082.png,2026081210,"{'noise_type': 'Gaussian', 'sigma': 25}",7f868e9466f64fb6244ebaedd5d87baaba4b7af8197b7a23d7dc01342cd4052a,1627745,1024,640
+082,data/clean/082.png,blur,data/agenticir/blur/082.png,2026081211,"{'blur_type': 'motion', 'severity': 0}",c0c53c2cb183d28da8457d8c63de6e8413c5835de78ca60f3f18809666845a35,788492,1024,640
+082,data/clean/082.png,haze,data/agenticir/haze/082.png,2026081212,"{'A': 0.85, 'beta': 1.0}",4dbe22d001e26ba019ec5eaad9f3ba8d015fefe8aa4d281b950c99438cde4ed6,798697,1024,640
+082,data/clean/082.png,rain,data/agenticir/rain/082.png,2026081213,{'value': 70},1bf5fcfae7fa4f13c70661e2f54d078a04260a65139d302744a0ee46cd94041d,1256597,1024,640
+083,data/clean/083.png,noise,data/agenticir/noise/083.png,2026081220,"{'noise_type': 'Gaussian', 'sigma': 25}",0c7207998493d4d0d22c8ed23dd84db57dc71f3b9706d8fcafeedd9cd3c3bb49,1987949,704,1024
+083,data/clean/083.png,blur,data/agenticir/blur/083.png,2026081221,"{'blur_type': 'motion', 'severity': 1}",f45107bcc4bc2fe554caf69bcb3ea0adb6b02b6e817e67ed0b6c66680a5d243a,1091553,704,1024
+083,data/clean/083.png,haze,data/agenticir/haze/083.png,2026081222,"{'A': 0.85, 'beta': 1.0}",393c14a62ee464b2b804ce19009a41ba0573ce2225187ac5c6ee6f26dc4cee25,1085944,704,1024
+083,data/clean/083.png,rain,data/agenticir/rain/083.png,2026081223,{'value': 70},409b16e6c2d3c335d1ffff3e06c3059b0c9b9bd7958f397300a876fb485461ac,1579219,704,1024
+084,data/clean/084.png,noise,data/agenticir/noise/084.png,2026081230,"{'noise_type': 'Gaussian', 'sigma': 25}",2787c555e3b4310df41b2f2e6884e5b684e4b251ec72b9919f35ce8d46d01ff9,1718213,1024,640
+084,data/clean/084.png,blur,data/agenticir/blur/084.png,2026081231,"{'blur_type': 'motion', 'severity': 2}",e4691c5544f217c7d1554824ad1c00eb80887a2efb1974c73b915c2f41c66008,691149,1024,640
+084,data/clean/084.png,haze,data/agenticir/haze/084.png,2026081232,"{'A': 0.85, 'beta': 1.0}",02a2a77f7e0dc2331471271235d81b0fdb662f7a09d5369aeb0b1a237efaf55a,815769,1024,640
+084,data/clean/084.png,rain,data/agenticir/rain/084.png,2026081233,{'value': 70},7835691724201d6fd820192eae8eb829c43fd67aef9c38bbe3f513faac8ccbaf,1098896,1024,640
+085,data/clean/085.png,noise,data/agenticir/noise/085.png,2026081240,"{'noise_type': 'Gaussian', 'sigma': 25}",a880f21224a0f466309387f91fce8e871fd499811de02176461b05dedec122e9,1755221,1024,640
+085,data/clean/085.png,blur,data/agenticir/blur/085.png,2026081241,"{'blur_type': 'motion', 'severity': 0}",6940ff4056e2b3fe682d8c011e809d3e974c4c5b17082f6db7b541915fe7a241,752269,1024,640
+085,data/clean/085.png,haze,data/agenticir/haze/085.png,2026081242,"{'A': 0.85, 'beta': 1.0}",74e354580e0bccf1682f7298d75039fe4424a5d756614968f0dbe7111f9a0e54,765223,1024,640
+085,data/clean/085.png,rain,data/agenticir/rain/085.png,2026081243,{'value': 70},8f9d2614e7c44326b71f4e142bba0130d11fd5dfc4ee5cb0d07225f686d14079,1184332,1024,640
+086,data/clean/086.png,noise,data/agenticir/noise/086.png,2026081250,"{'noise_type': 'Gaussian', 'sigma': 25}",5543713d05bfb059e5c09c08cae55c2c21c78236a9f3aeb6d0df0706a518fb8b,1811326,1024,640
+086,data/clean/086.png,blur,data/agenticir/blur/086.png,2026081251,"{'blur_type': 'motion', 'severity': 1}",07d7032a7816df4504fa0436e22e9934c9a41c65afbb9b3c542ca2ad79fc0d77,869282,1024,640
+086,data/clean/086.png,haze,data/agenticir/haze/086.png,2026081252,"{'A': 0.85, 'beta': 1.0}",59910de765fb00639d45e1d8a3be6f86766bef0eee1708f85e42bc729ea1f887,1106037,1024,640
+086,data/clean/086.png,rain,data/agenticir/rain/086.png,2026081253,{'value': 70},d301d829f1f3ea297d5e8c89f4058f37ef1f9f4640fed5805c5f8bd881d1da97,1311463,1024,640
+087,data/clean/087.png,noise,data/agenticir/noise/087.png,2026081260,"{'noise_type': 'Gaussian', 'sigma': 25}",68df2b9cd11df217b0ac7550d2ef7e405cbba9a9776c2ca1930e1b0089fe0ce9,1780670,640,1024
+087,data/clean/087.png,blur,data/agenticir/blur/087.png,2026081261,"{'blur_type': 'motion', 'severity': 2}",3f946f09454ea95d169c0327d594e79a1061daa49d37e01c0b428ff7412f36a4,949517,640,1024
+087,data/clean/087.png,haze,data/agenticir/haze/087.png,2026081262,"{'A': 0.85, 'beta': 1.0}",602792f4379128556a101fb5bcd0c7772c93d3acd2dfe281a56b37f20d79688c,1101144,640,1024
+087,data/clean/087.png,rain,data/agenticir/rain/087.png,2026081263,{'value': 70},cfc54bc577827587161efb39bd695f9a9fdf56493f0064981f7639a9017fc7a8,1494105,640,1024
+088,data/clean/088.png,noise,data/agenticir/noise/088.png,2026081270,"{'noise_type': 'Gaussian', 'sigma': 25}",da80c399416966aa1485eec5690d3f15c917448c746afe16625108addfc78a85,2122544,1024,768
+088,data/clean/088.png,blur,data/agenticir/blur/088.png,2026081271,"{'blur_type': 'motion', 'severity': 0}",474974f211101337a856e733bfb3f28c32d6f1ca98c35f534bb349aa85148991,923279,1024,768
+088,data/clean/088.png,haze,data/agenticir/haze/088.png,2026081272,"{'A': 0.85, 'beta': 1.0}",98f66394f2acaa96d4918f3090549021438a09390e15737fd97fa725cfc1462b,859306,1024,768
+088,data/clean/088.png,rain,data/agenticir/rain/088.png,2026081273,{'value': 70},eec308260efd2830e1527f30683ddaa825863dd964b145f5665077a3e6466a3b,1488349,1024,768
+089,data/clean/089.png,noise,data/agenticir/noise/089.png,2026081280,"{'noise_type': 'Gaussian', 'sigma': 25}",73e5f3e7149e484480f67a0d543a452db617638edca4a11df9f41bc5d37c31a6,1788541,1024,640
+089,data/clean/089.png,blur,data/agenticir/blur/089.png,2026081281,"{'blur_type': 'motion', 'severity': 1}",05c15a35f49df13b23511c123e5224802cfdeeac1f6fbdd2723fa2843ef0350f,1115863,1024,640
+089,data/clean/089.png,haze,data/agenticir/haze/089.png,2026081282,"{'A': 0.85, 'beta': 1.0}",18feab576f2ca86c729608c8773b24cfb63ac8102272b766cf2bd37a86a65f4d,1086231,1024,640
+089,data/clean/089.png,rain,data/agenticir/rain/089.png,2026081283,{'value': 70},fc2496c1c388553f651b65cf972c2879bb940774fc1a1e67e26975dce4324450,1469296,1024,640
+090,data/clean/090.png,noise,data/agenticir/noise/090.png,2026081290,"{'noise_type': 'Gaussian', 'sigma': 25}",aa5fea7ddd061a99803ba63410c0a9f47ea7c315e55779d007a6b3c29c8cc2f1,1969847,704,1024
+090,data/clean/090.png,blur,data/agenticir/blur/090.png,2026081291,"{'blur_type': 'motion', 'severity': 2}",9e8a2165d2cfe61ddc89ef8e41ebbdedc309a84c733d6fb53ce829e2b6dffd0d,1030248,704,1024
+090,data/clean/090.png,haze,data/agenticir/haze/090.png,2026081292,"{'A': 0.85, 'beta': 1.0}",00b012588452f1613fed1da47ddcf8d67776bda8513359998b2bb927c6698119,1075302,704,1024
+090,data/clean/090.png,rain,data/agenticir/rain/090.png,2026081293,{'value': 70},0bfdf44a998c408f7657e7b1a73e32273257b98b06657e69eeef05ecb3c22090,1486245,704,1024
+091,data/clean/091.png,noise,data/agenticir/noise/091.png,2026081300,"{'noise_type': 'Gaussian', 'sigma': 25}",81adebb711d6604139dfe009c54b4dcb027d87be35b68e03d42cb049e52ca713,1824406,1024,640
+091,data/clean/091.png,blur,data/agenticir/blur/091.png,2026081301,"{'blur_type': 'motion', 'severity': 0}",5ecae39fc31f053e82e30dcc69c915db506fcab7a801d1c1c391859b1c7546af,1186505,1024,640
+091,data/clean/091.png,haze,data/agenticir/haze/091.png,2026081302,"{'A': 0.85, 'beta': 1.0}",fadc4ec0e29193fafeb73290af66748a060f63cba9e795f0a9f46d51ab1ca972,1088861,1024,640
+091,data/clean/091.png,rain,data/agenticir/rain/091.png,2026081303,{'value': 70},4bb2d0c539fc3412ccd74ecf16bf5f7575ea32d7e8b3ea926719d9e18f2618b4,1406404,1024,640
+092,data/clean/092.png,noise,data/agenticir/noise/092.png,2026081310,"{'noise_type': 'Gaussian', 'sigma': 25}",3055b9857a77e39b9368d13512680696c00fa00ce1114fbec3fa79da193489bb,2038255,1024,704
+092,data/clean/092.png,blur,data/agenticir/blur/092.png,2026081311,"{'blur_type': 'motion', 'severity': 1}",52cf9024487b60bb435b1a51a73c466ecd3678ec611bc8b483d59c156d63d3d8,1291519,1024,704
+092,data/clean/092.png,haze,data/agenticir/haze/092.png,2026081312,"{'A': 0.85, 'beta': 1.0}",dba9768bf7ae3828159034163eef46badbb1117042936692b2ecd1362bc01b03,1422852,1024,704
+092,data/clean/092.png,rain,data/agenticir/rain/092.png,2026081313,{'value': 70},8a8ea8a55d65fc1464c2a1db6a683a0c892b533a9d84eafe20ae6971c1bb3503,1811632,1024,704
+093,data/clean/093.png,noise,data/agenticir/noise/093.png,2026081320,"{'noise_type': 'Gaussian', 'sigma': 25}",c40b366e58ce9e8c4af1e67a3f0a52e1c26a983ed4a2dab9b4d178d963bf8b52,2873677,1024,1024
+093,data/clean/093.png,blur,data/agenticir/blur/093.png,2026081321,"{'blur_type': 'motion', 'severity': 2}",49ec5cbd8f5894950b08d1d4f0c2b3be18d51b4e9f462aaa9fc730a15deaa815,1337435,1024,1024
+093,data/clean/093.png,haze,data/agenticir/haze/093.png,2026081322,"{'A': 0.85, 'beta': 1.0}",cf7ee51bc5c03ab3aa7c3debc4516707e99c7eee79209f5f7630b0e79163437a,1276127,1024,1024
+093,data/clean/093.png,rain,data/agenticir/rain/093.png,2026081323,{'value': 70},75720ec3da411ff86fbfe785f58deffbfe4dd811ed24a5aff2890352c855ced5,1721396,1024,1024
+094,data/clean/094.png,noise,data/agenticir/noise/094.png,2026081330,"{'noise_type': 'Gaussian', 'sigma': 25}",0c884325d63b5d764d67a7574efae22e855b0f74334cae9ceccc215b1dd1dd35,1773918,640,1024
+094,data/clean/094.png,blur,data/agenticir/blur/094.png,2026081331,"{'blur_type': 'motion', 'severity': 0}",c05542e41b23027219cf4f10e3ffc4702ef8aa2a8d69cb362067dcd37f2969c0,971131,640,1024
+094,data/clean/094.png,haze,data/agenticir/haze/094.png,2026081332,"{'A': 0.85, 'beta': 1.0}",234636bcf64f0d0b005a3a12fa0a5f656513c77d950c65f56624435dd37b3be9,941290,640,1024
+094,data/clean/094.png,rain,data/agenticir/rain/094.png,2026081333,{'value': 70},2a31ab2f750cb5187c45c9102ff93d9d696104a3d825ee8afda19f7a688fa17d,1279258,640,1024
+095,data/clean/095.png,noise,data/agenticir/noise/095.png,2026081340,"{'noise_type': 'Gaussian', 'sigma': 25}",81aec07a8d33d2e8323f34ab7793b2dca71125162d3cef1b0a5672f1dcdf17b0,1657564,576,1024
+095,data/clean/095.png,blur,data/agenticir/blur/095.png,2026081341,"{'blur_type': 'motion', 'severity': 1}",501bc73f50b5766779580b6f388a3ae3e3aaf235f3108a7094d37b3ef46b5ac8,1285782,576,1024
+095,data/clean/095.png,haze,data/agenticir/haze/095.png,2026081342,"{'A': 0.85, 'beta': 1.0}",dfcf92947673fbf0fac2eecb196c9c4957f3c401f9a7de1089dec5816efe1e83,1222427,576,1024
+095,data/clean/095.png,rain,data/agenticir/rain/095.png,2026081343,{'value': 70},ad8da34efac05077781ff6fab51ec13f6a8d0badb6aec25b55075c5515519ebd,1382601,576,1024
+096,data/clean/096.png,noise,data/agenticir/noise/096.png,2026081350,"{'noise_type': 'Gaussian', 'sigma': 25}",539a1be7838b50311b4837c5a5bc0738a3d2bb53effb1375a556144ae4d30784,1815797,1024,640
+096,data/clean/096.png,blur,data/agenticir/blur/096.png,2026081351,"{'blur_type': 'motion', 'severity': 2}",280582723d791495b8491b086a369ceb721d96bb0725b48306859b20e0e6c4d3,890925,1024,640
+096,data/clean/096.png,haze,data/agenticir/haze/096.png,2026081352,"{'A': 0.85, 'beta': 1.0}",cf63746a5bc333e327370c953fe844f276aecaa0d92b9b5fcd6d5beedb7cc5ea,1032633,1024,640
+096,data/clean/096.png,rain,data/agenticir/rain/096.png,2026081353,{'value': 70},3fa677d5ae8133655f1c7d19e402beab58fe4950995535b8143b57d6c548bda6,1392685,1024,640
+097,data/clean/097.png,noise,data/agenticir/noise/097.png,2026081360,"{'noise_type': 'Gaussian', 'sigma': 25}",3890a5a781b075dda1df5dac4697f32c74952e70431ad008e7e3b155bedef4b3,1787495,640,1024
+097,data/clean/097.png,blur,data/agenticir/blur/097.png,2026081361,"{'blur_type': 'motion', 'severity': 0}",4830a03cbfce266835a823c26113efd7d879b9e551455dda0762c4d74d17e7c7,1033200,640,1024
+097,data/clean/097.png,haze,data/agenticir/haze/097.png,2026081362,"{'A': 0.85, 'beta': 1.0}",5cc535b60bbf94d79c689616be101eda01efc7d10a7dd87445ee5bbff76be24a,1018036,640,1024
+097,data/clean/097.png,rain,data/agenticir/rain/097.png,2026081363,{'value': 70},483ef3a131df7bcd007d3b9cc2adef5ff20048ade75c3a2863e6fb22ded3a2bf,1320200,640,1024
+098,data/clean/098.png,noise,data/agenticir/noise/098.png,2026081370,"{'noise_type': 'Gaussian', 'sigma': 25}",8d6f3f1f16335a08d322559b4e74d51e2f7203323088f17dcce435f1802fca06,2209757,1024,768
+098,data/clean/098.png,blur,data/agenticir/blur/098.png,2026081371,"{'blur_type': 'motion', 'severity': 1}",38ab997322de35722087037741c6ed408263c389f791fb047500e3602e0d84a5,1551854,1024,768
+098,data/clean/098.png,haze,data/agenticir/haze/098.png,2026081372,"{'A': 0.85, 'beta': 1.0}",9a838777ca827f34c55b86ba67820fbc0a806b86f54cc622e20b733f6d61a934,1458077,1024,768
+098,data/clean/098.png,rain,data/agenticir/rain/098.png,2026081373,{'value': 70},ac02d025c2f93fd9686b366b98ffeae0f15ef4c93fa5bbd00d18490e100733d8,1836780,1024,768
+099,data/clean/099.png,noise,data/agenticir/noise/099.png,2026081380,"{'noise_type': 'Gaussian', 'sigma': 25}",b7ae603774dec3d8bbead362baaa14c8b472639f83b69edbb66f58eef717dd4d,1781784,1024,640
+099,data/clean/099.png,blur,data/agenticir/blur/099.png,2026081381,"{'blur_type': 'motion', 'severity': 2}",6985869ced4fec2eea518623844c4864ec89753062450b9f5d5071fff2f2aa4c,852621,1024,640
+099,data/clean/099.png,haze,data/agenticir/haze/099.png,2026081382,"{'A': 0.85, 'beta': 1.0}",3f126a195ffc7d781dd9eedb394c48c660cd8708a58f6997a4dda1a5d8746bbc,1029219,1024,640
+099,data/clean/099.png,rain,data/agenticir/rain/099.png,2026081383,{'value': 70},9870008ec3ab5f9c2a08258c4529aa0517f1a04ff1d67260f5c5b7cba2859f57,1414167,1024,640
+100,data/clean/100.png,noise,data/agenticir/noise/100.png,2026081390,"{'noise_type': 'Gaussian', 'sigma': 25}",c41983e0eb00a5f058518a4983048913c23092c9feae2e0d3c9e994ff5379338,1791888,1024,640
+100,data/clean/100.png,blur,data/agenticir/blur/100.png,2026081391,"{'blur_type': 'motion', 'severity': 0}",d655bcf42b98cb5cf92feae0749f9bb9383db52d9eb99839a14690d167e4aa17,1104471,1024,640
+100,data/clean/100.png,haze,data/agenticir/haze/100.png,2026081392,"{'A': 0.85, 'beta': 1.0}",b4844ef6b2b47e1f0e2bcf9bf5b02874fd5225fae7ee4caf743ac49185fa0929,1007101,1024,640
+100,data/clean/100.png,rain,data/agenticir/rain/100.png,2026081393,{'value': 70},b9c2082425594a8c6e9d62b0350fd7d146145f3b0e93132fecf98a6a7c4ffb61,1357684,1024,640

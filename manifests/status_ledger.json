@@ -1,0 +1,32 @@
+{
+  "workspace": "/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang",
+  "required_workspace_from_agents": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "path_discrepancy": "The required path in agents.md is not the current permitted workspace; all work remains in the current workspace.",
+  "scope": {
+    "clean_sources": {"target": 100, "status": "COMPLETE", "count": 100},
+    "agenticir_noise": {"target": 100, "status": "COMPLETE", "count": 100},
+    "agenticir_blur": {"target": 100, "status": "COMPLETE", "count": 100},
+    "agenticir_haze": {"target": 100, "status": "COMPLETE", "count": 100},
+    "agenticir_rain": {"target": 100, "status": "COMPLETE", "count": 100},
+    "gendeg_low_light_L1": {"target": 100, "status": "MISSING", "count": 0},
+    "gendeg_low_light_L2": {"target": 100, "status": "MISSING", "count": 0},
+    "gendeg_low_light_L3": {"target": 100, "status": "MISSING", "count": 0},
+    "gendeg_low_light_L4": {"target": 100, "status": "MISSING", "count": 0},
+    "gendeg_low_light_L5": {"target": 100, "status": "MISSING", "count": 0}
+  },
+  "assets": {
+    "agenticir_implementation": {"status": "VERIFIED", "revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6"},
+    "gendeg_implementation": {"status": "VERIFIED", "revision": "24656bfd4458e87f0efefae4692e7ad48dd4ca44"},
+    "gendeg_checkpoint": {"status": "VERIFIED_ARCHIVE", "generator": "checkpoints/gendeg.ckpt", "generator_bytes": 7706335711, "generator_sha256": "015e05fcc9be55ad5ac62a12bffd88a05c06230ebd63c01baf9ca92b5c989a71", "structure": "checkpoints/nafnet_sd.ckpt", "structure_bytes": 464151290, "structure_sha256": "735c31ec60b8f1ad97dc1636ac258089ddd134f7715dc84b38cd45802d50d7ff", "validation": "PyTorchFileReader and unzip test passed"},
+    "clean_depth_pairs": {"status": "VERIFIED", "count": 100, "manifest": "manifests/agenticir_100x4.csv"}
+  },
+  "downloads": [
+    {"source": "AgenticIR official Google Drive HQ.zip", "destination": "downloads/HQ.zip", "status": "COMPLETE", "sha256": "ce9401ac8140ed057bf6aa8da6aec995016263c07fa9307a9acadf7c9c3fcae3", "files": 100},
+    {"source": "AgenticIR official Google Drive depth.zip", "destination": "downloads/depth.zip", "status": "COMPLETE", "sha256": "14bc69d773ae28de774631ae1edf0efe62fd8b4ef7fdee311a016940f1efa97d", "files": 100},
+    {"source": "GenDeg official generator SharePoint", "destination": "downloads/gendeg.ckpt.part", "status": "FAILED", "http_status": 401, "file_type": "empty response", "requires_auth": true},
+    {"source": "GenDeg official structure checkpoint SharePoint", "destination": "downloads/nafnet_sd.ckpt.part", "status": "FAILED", "http_status": 200, "file_type": "HTML share page", "checkpoint_verified": false}
+  ],
+  "forbidden_downloads": {"GenIRData": "NOT_STARTED", "LSDIR": "NOT_STARTED", "FoundIR": "NOT_STARTED"},
+  "vlm_training_or_evaluation": "NOT_STARTED",
+  "last_updated": "2026-08-04T02:50:00Z"
+}
