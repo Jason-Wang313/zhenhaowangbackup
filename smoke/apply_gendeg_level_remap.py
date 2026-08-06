@@ -42,18 +42,36 @@ def mean_luma(path: Path) -> float:
 
 
 def darken_to_target(source: Path, target: Path, target_luma: float) -> float:
-    """Apply one global gamma curve and return the resulting luminance."""
+    """Apply a measured global gamma curve and return resulting luminance.
+
+    A log-ratio gamma estimate is not reliable for arbitrary RGB histograms,
+    so this searches gamma values against the actual rendered mean luminance.
+    """
     with Image.open(source).convert("RGB") as im:
-        pixels = list(im.getdata())
-        raw = sum(0.2126 * r + 0.7152 * g + 0.0722 * b for r, g, b in pixels) / len(pixels)
+        def render(gamma: float) -> Image.Image:
+            return im.point(lambda value: int(round(255.0 * (value / 255.0) ** gamma)))
+
+        def measured(image: Image.Image) -> float:
+            pixels = list(image.getdata())
+            return sum(0.2126 * r + 0.7152 * g + 0.0722 * b for r, g, b in pixels) / len(pixels)
+
+        raw = measured(im)
         if raw <= 0.001:
             out = im
         else:
-            # Work in [0, 1]. The gamma curve preserves spatial structure.
-            desired = max(0.001, min(255.0, target_luma)) / 255.0
-            current = max(0.001, raw) / 255.0
-            gamma = math.log(desired) / math.log(current)
-            out = im.point(lambda value: int(round(255.0 * (value / 255.0) ** gamma)))
+            desired = max(0.5, min(255.0, target_luma))
+            if desired >= raw:
+                gamma = max(0.05, math.log(desired / 255.0) / math.log(raw / 255.0))
+                out = render(gamma)
+            else:
+                low, high = 1.0, 32.0
+                for _ in range(32):
+                    gamma = (low + high) / 2.0
+                    if measured(render(gamma)) > desired:
+                        low = gamma
+                    else:
+                        high = gamma
+                out = render(high)
         target.parent.mkdir(parents=True, exist_ok=True)
         out.save(target)
     return mean_luma(target)
