@@ -40,7 +40,8 @@ def main() -> None:
 
     random.seed(args.seed)
     np.random.seed(args.seed)
-    output = ROOT / "smoke/agenticir_low_light"
+    method_slug = args.darken_type.replace(" ", "_")
+    output = ROOT / ("smoke/agenticir_low_light" if method_slug == "gamma_correction" else f"smoke/agenticir_low_light_{method_slug}")
     output.mkdir(parents=True, exist_ok=True)
 
     levels = {"L1": image}
