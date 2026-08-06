@@ -45,8 +45,9 @@ def main() -> None:
     prompt = "a photograph in low-light conditions"
     clean_model = impl.load_clean(source, args.resolution)
 
-    raw_root = ROOT / "smoke/gendeg_validation_002_raw"
-    final_root = ROOT / "smoke/gendeg_validation_002"
+    source_id = source.stem
+    raw_root = ROOT / f"smoke/gendeg_validation_{source_id}_raw"
+    final_root = ROOT / f"smoke/gendeg_validation_{source_id}"
     raw_root.mkdir(parents=True, exist_ok=True)
     final_root.mkdir(parents=True, exist_ok=True)
 
@@ -60,8 +61,8 @@ def main() -> None:
         calibrated, gamma = impl.calibrate_exposure(
             raw, clean_model, impl.TARGET_LUMINANCE_RATIO[level]
         )
-        raw_path = raw_root / f"002_{level}.png"
-        final_path = final_root / f"002_{level}.png"
+        raw_path = raw_root / f"{source_id}_{level}.png"
+        final_path = final_root / f"{source_id}_{level}.png"
         impl.write_output(raw, raw_path)
         impl.write_output(calibrated, final_path)
         raw_paths[level] = raw_path
