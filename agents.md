@@ -282,3 +282,68 @@ Begin now.
 Read AGENTS.md, verify the workspace path, perform the initial data/download/process/disk audit, and then execute every experiment that is not blocked.
 
 Continue automatically through newly unblocked work. Recheck downloads after every milestone. Do not stop merely because one download is slow.
+
+GENDEG VISUAL-CALIBRATION RECORD (CURRENT APPROVED RULE)
+
+The current visually approved five-level smoke rule is a two-stage process:
+
+1. Generate the official GenDeg sample using the verified local checkpoint and
+   the parameters below.
+2. Apply the final review mapping below. The raw GenDeg images remain preserved
+   separately for audit and are never overwritten by the review remap.
+
+Generator/runtime parameters:
+
+- checkpoint: `checkpoints/gendeg.ckpt`
+- GenDeg implementation revision: `24656bfd4458e87f0efefae4692e7ad48dd4ca44`
+- prompt: `a photograph in low-light conditions`
+- output resolution: 512 x 512
+- diffusion steps: 100
+- classifier-free guidance scale: 7.5
+- structure/conditioning scale: 1.5
+- smoke seed base: 2026080400
+- full-batch seed for source index `i`: `2026080400 + i * 10`
+- official conditioning levels:
+  - L1: `(mu=0.10, sigma=0.05)`
+  - L2: `(mu=0.22, sigma=0.10)`
+  - L3: `(mu=0.34, sigma=0.16)`
+  - L4: `(mu=0.48, sigma=0.23)`
+  - L5: `(mu=0.62, sigma=0.30)`
+
+Initial exposure calibration targets used after official sampling:
+
+- original calibrated L1: 75% of clean luminance
+- original calibrated L2: 60% of clean luminance
+- original calibrated L3: 45% of clean luminance
+- original calibrated L4: 30% of clean luminance
+- original calibrated L5: 18% of clean luminance
+
+Current final review mapping:
+
+- new L1: clean source copied byte-for-byte
+- new L2: original calibrated L3
+- new L3: original calibrated L4
+- new L4: original calibrated L5
+- new L5: original calibrated L5 darkened again
+
+New L5 calibration rule:
+
+- initial target is 10% of clean luminance;
+- target is additionally limited to 55% of the old L5 and 55% of new L4;
+- after rendering, if measured new-L5 luminance is not below 65% of new-L4
+  luminance, halve the target and repeat, up to six tightening passes;
+- this is a visual-quality floor/ordering rule, not a claim that GenDeg's
+  official `(mu, sigma)` values directly equal brightness percentages.
+
+Measured approved smoke reference (`data/clean/001.png`):
+
+- clean/new L1 luminance: 92.95
+- new L2 luminance: 38.90
+- new L3 luminance: 26.70
+- new L4 luminance: 16.01
+- new L5 luminance: 8.41
+- new L5 is approximately 9% of clean luminance and 52.5% of new L4
+
+The remap implementation is `smoke/apply_gendeg_level_remap.py`. Any new
+non-tiger validation sample must use the same generator, calibration, mapping,
+and visual inspection criteria unless the user explicitly approves a change.
