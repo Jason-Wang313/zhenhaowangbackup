@@ -17,14 +17,16 @@ OUT = ROOT / "smoke/agenticir_low_light_linear_mapping_calibrated"
 TARGETS = {"L2": 0.75, "L3": 0.60, "L4": 0.45, "L5": 0.30}
 DARKER_TARGETS = {"L2": 0.60, "L3": 0.45, "L4": 0.30, "L5": 0.18}
 DARKER_23_TARGETS = {"L2": 0.50, "L3": 0.38, "L4": 0.30, "L5": 0.18}
+VERY_DARK_TARGETS = {"L2": 0.35, "L3": 0.18, "L4": 0.09, "L5": 0.04}
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--darker", action="store_true")
     parser.add_argument("--darker-23", action="store_true")
+    parser.add_argument("--very-dark", action="store_true")
     args = parser.parse_args()
-    if args.darker and args.darker_23:
+    if sum([args.darker, args.darker_23, args.very_dark]) > 1:
         parser.error("choose only one darker mode")
     if not SOURCE.is_file():
         raise RuntimeError(f"missing source: {SOURCE}")
@@ -38,6 +40,9 @@ def main() -> None:
     elif args.darker_23:
         output = ROOT / "smoke/agenticir_low_light_linear_mapping_calibrated_darker_23"
         targets = DARKER_23_TARGETS
+    elif args.very_dark:
+        output = ROOT / "smoke/agenticir_low_light_linear_mapping_calibrated_very_dark"
+        targets = VERY_DARK_TARGETS
     output.mkdir(parents=True, exist_ok=True)
     clean_luma = mean_luma(SOURCE)
     shutil.copy2(SOURCE, output / "001_L1.png")
