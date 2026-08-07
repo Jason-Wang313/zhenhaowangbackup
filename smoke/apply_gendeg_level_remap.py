@@ -57,7 +57,9 @@ def darken_to_target(source: Path, target: Path, target_luma: float) -> float:
             values = np.rint(pixels * scale).clip(0, 255).astype(np.uint8)
             out = Image.fromarray(values, mode="RGB")
         target.parent.mkdir(parents=True, exist_ok=True)
-        out.save(target)
+        temporary = target.with_suffix(target.suffix + ".tmp")
+        out.save(temporary, format="PNG")
+        temporary.replace(target)
     return mean_luma(target)
 
 
