@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+import argparse
 
 from PIL import Image
 import numpy as np
@@ -11,12 +12,17 @@ SOURCE = ROOT / "data/clean/001.png"
 CURRENT = ROOT / "smoke/agenticir_low_light_linear_mapping_calibrated_darker_23"
 OUTPUT = ROOT / "smoke/agenticir_low_light_linear_mapping_calibrated_l5_14"
 
+parser = argparse.ArgumentParser()
+parser.add_argument("--percent", type=float, default=14.0)
+args = parser.parse_args()
+OUTPUT = ROOT / f"smoke/agenticir_low_light_linear_mapping_calibrated_l5_{str(args.percent).replace('.', '_')}"
+
 OUTPUT.mkdir(parents=True, exist_ok=True)
 for level in ("L1", "L2", "L3", "L4"):
     shutil.copy2(CURRENT / f"001_{level}.png", OUTPUT / f"001_{level}.png")
 
 clean_luma = mean_luma(SOURCE)
-target_luma = clean_luma * 0.14
+target_luma = clean_luma * (args.percent / 100.0)
 source = CURRENT / "001_L5.png"
 with Image.open(source).convert("RGB") as image:
     pixels = np.asarray(image, dtype=np.float32)
