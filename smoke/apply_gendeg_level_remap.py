@@ -20,6 +20,7 @@ import shutil
 import time
 from pathlib import Path
 
+import numpy as np
 from PIL import Image
 
 
@@ -42,36 +43,19 @@ def mean_luma(path: Path) -> float:
 
 
 def darken_to_target(source: Path, target: Path, target_luma: float) -> float:
-    """Apply a measured global gamma curve and return resulting luminance.
-
-    A log-ratio gamma estimate is not reliable for arbitrary RGB histograms,
-    so this searches gamma values against the actual rendered mean luminance.
-    """
+    """Apply a measured global exposure scale and return resulting luminance."""
     with Image.open(source).convert("RGB") as im:
-        def render(gamma: float) -> Image.Image:
-            return im.point(lambda value: int(round(255.0 * (value / 255.0) ** gamma)))
+        pixels = np.asarray(im, dtype=np.float32)
+        weights = np.array([0.2126, 0.7152, 0.0722], dtype=np.float32)
 
-        def measured(image: Image.Image) -> float:
-            pixels = list(image.getdata())
-            return sum(0.2126 * r + 0.7152 * g + 0.0722 * b for r, g, b in pixels) / len(pixels)
-
-        raw = measured(im)
+        raw = float(np.tensordot(pixels, weights, axes=([-1], [0])).mean())
         if raw <= 0.001:
             out = im
         else:
             desired = max(0.5, min(255.0, target_luma))
-            if desired >= raw:
-                gamma = max(0.05, math.log(desired / 255.0) / math.log(raw / 255.0))
-                out = render(gamma)
-            else:
-                low, high = 1.0, 32.0
-                for _ in range(32):
-                    gamma = (low + high) / 2.0
-                    if measured(render(gamma)) > desired:
-                        low = gamma
-                    else:
-                        high = gamma
-                out = render(high)
+            scale = desired / raw
+            values = np.rint(pixels * scale).clip(0, 255).astype(np.uint8)
+            out = Image.fromarray(values, mode="RGB")
         target.parent.mkdir(parents=True, exist_ok=True)
         out.save(target)
     return mean_luma(target)
