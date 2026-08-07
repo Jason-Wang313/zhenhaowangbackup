@@ -15,7 +15,8 @@ OUTPUT = ROOT / "smoke/agenticir_low_light_linear_mapping_calibrated_l5_14"
 parser = argparse.ArgumentParser()
 parser.add_argument("--percent", type=float, default=14.0)
 args = parser.parse_args()
-OUTPUT = ROOT / f"smoke/agenticir_low_light_linear_mapping_calibrated_l5_{str(args.percent).replace('.', '_')}"
+target_tag = f"{args.percent:g}".replace('.', '_')
+OUTPUT = ROOT / f"smoke/agenticir_low_light_linear_mapping_calibrated_l5_{target_tag}"
 
 OUTPUT.mkdir(parents=True, exist_ok=True)
 for level in ("L1", "L2", "L3", "L4"):
