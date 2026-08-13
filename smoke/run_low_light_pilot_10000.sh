@@ -5,10 +5,10 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PYTHON="${LOW_LIGHT_PYTHON:-$ROOT/.venv/flux2-smoke/bin/python}"
 SOURCE_ROOT="${LOW_LIGHT_SOURCE_ROOT:-$ROOT/data/clean_pool}"
 DATASET_METADATA="${LOW_LIGHT_DATASET_METADATA:-$ROOT/manifests/clean_source_datasets.json}"
-SOURCE_MANIFEST="$ROOT/manifests/low_light_source_pool.json"
-PAIR_MANIFEST="$ROOT/manifests/low_light_pilot_10000.csv"
-PAIR_METADATA="$ROOT/manifests/low_light_pilot_10000.json"
-OUTPUT_ROOT="$ROOT/data/low_light_pilot"
+SOURCE_MANIFEST="${LOW_LIGHT_SOURCE_MANIFEST:-$ROOT/manifests/low_light_source_pool.json}"
+PAIR_MANIFEST="${LOW_LIGHT_PAIR_MANIFEST:-$ROOT/manifests/low_light_pilot_10000.csv}"
+PAIR_METADATA="${LOW_LIGHT_PAIR_METADATA:-$ROOT/manifests/low_light_pilot_10000.json}"
+OUTPUT_ROOT="${LOW_LIGHT_OUTPUT_ROOT:-$ROOT/data/low_light_pilot}"
 
 if [[ ! -x "$PYTHON" ]]; then
   echo "ERROR: validated workspace Python is unavailable: $PYTHON" >&2
