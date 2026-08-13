@@ -1,10 +1,14 @@
 # Default-deny backup scope: large/private runtime assets stay local.
 *
 !.gitignore
+!.gitattributes
 !agents.md
 !README.md
+!/generate_low_light_pilot.py
 !smoke/
 !smoke/*.py
+!smoke/*.sh
+!smoke/*.txt
 !smoke/**/*.py
 !smoke/run_gendeg_custom_batch.pyc
 !pytorch_lightning/
@@ -18,6 +22,8 @@
 !reports/qa/*.md
 !logs/
 !logs/project_journal.md
+!patches/
+!patches/*.patch
 
 # Explicitly excluded even if a parent directory is later whitelisted.
 checkpoints/

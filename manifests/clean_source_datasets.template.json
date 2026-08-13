@@ -1,0 +1,17 @@
+{
+  "mio100": {
+    "source": "FILL_WITH_OFFICIAL_SOURCE_URL_OR_CITATION",
+    "license": "FILL_WITH_VERIFIED_LICENSE_OR_TERMS",
+    "license_status": "pending"
+  },
+  "div2k": {
+    "source": "https://data.vision.ee.ethz.ch/cvl/DIV2K/",
+    "license": "FILL_WITH_VERIFIED_LICENSE_OR_TERMS",
+    "license_status": "pending"
+  },
+  "lsdir": {
+    "source": "https://ofsoundof.github.io/lsdir-data/",
+    "license": "FILL_WITH_VERIFIED_LICENSE_OR_TERMS",
+    "license_status": "pending"
+  }
+}
