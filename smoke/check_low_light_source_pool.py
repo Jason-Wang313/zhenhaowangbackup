@@ -120,8 +120,11 @@ def main() -> None:
     parser.add_argument("--min-height", type=int, default=512)
     parser.add_argument("--near-duplicate-distance", type=int, default=4)
     parser.add_argument("--seed", type=int, default=2026080600)
-    parser.add_argument("--dataset-metadata", type=Path)
-    parser.add_argument("--allow-missing-license-metadata", action="store_true")
+    parser.add_argument(
+        "--dataset-metadata",
+        type=Path,
+        help="Optional source/license notes to copy into the manifest; never blocks generation.",
+    )
     parser.add_argument("--foundir-sha256-index", type=Path)
     parser.add_argument("--output", type=Path, default=ROOT / "manifests/low_light_source_pool.json")
     args = parser.parse_args()
@@ -139,13 +142,6 @@ def main() -> None:
         raise SystemExit(f"QUOTA_TOTAL_MISMATCH {sum(quotas.values())} != {args.required}")
 
     metadata = load_dataset_metadata(args.dataset_metadata)
-    if not args.allow_missing_license_metadata:
-        for dataset in quotas:
-            entry = metadata.get(dataset, {})
-            if not entry.get("source") or not entry.get("license") or entry.get("license_status") != "approved":
-                raise SystemExit(
-                    f"UNAPPROVED_DATASET_METADATA {dataset}; provide source, license, and license_status=approved"
-                )
     blocked_hashes = read_blocked_hashes(args.foundir_sha256_index)
 
     candidates: dict[str, list[tuple[Path, Path]]] = defaultdict(list)
@@ -247,7 +243,7 @@ def main() -> None:
         "realized_quotas": realized,
         "pilot_pairs_if_complete": len(records) * 5,
         "foundir_overlap_check": "completed" if blocked_hashes is not None else "not_run_no_index",
-        "license_metadata_enforced": not args.allow_missing_license_metadata,
+        "license_metadata_status": "recorded" if metadata else "not_provided_optional",
         "ready_for_10000_pair_pilot": ready,
         "records": records,
         "rejected": rejected,

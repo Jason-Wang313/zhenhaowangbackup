@@ -112,9 +112,6 @@ def main() -> None:
             raise SystemExit(f"BAD_LEVEL {level}")
         if row["degradation_type"] != "low_light":
             raise SystemExit(f"BAD_DEGRADATION_TYPE {pair}")
-        if row["source_license_status"] != "approved" and not args.allow_smoke_license:
-            raise SystemExit(f"UNAPPROVED_SOURCE_LICENSE {source_id}")
-
         for field in REQUIRED_FIELDS:
             if not row[field]:
                 raise SystemExit(f"EMPTY_FIELD {pair} {field}")

@@ -14,23 +14,21 @@ if [[ ! -x "$PYTHON" ]]; then
   echo "ERROR: validated workspace Python is unavailable: $PYTHON" >&2
   exit 1
 fi
-if [[ ! -f "$DATASET_METADATA" ]]; then
-  echo "ERROR: approved dataset metadata is unavailable: $DATASET_METADATA" >&2
-  echo "Copy manifests/clean_source_datasets.template.json and replace all pending values." >&2
-  exit 1
-fi
-
 overlap_args=()
 if [[ -n "${FOUNDIR_SHA256_INDEX:-}" ]]; then
   overlap_args=(--foundir-sha256-index "$FOUNDIR_SHA256_INDEX")
+fi
+metadata_args=()
+if [[ -f "$DATASET_METADATA" ]]; then
+  metadata_args=(--dataset-metadata "$DATASET_METADATA")
 fi
 
 cd "$ROOT"
 "$PYTHON" -c "import cv2, numpy, PIL; assert numpy.__version__ == '1.26.4'; print('CPU dependency preflight PASS')"
 "$PYTHON" "$ROOT/smoke/check_low_light_source_pool.py" \
   --source-root "$SOURCE_ROOT" \
-  --dataset-metadata "$DATASET_METADATA" \
   --output "$SOURCE_MANIFEST" \
+  "${metadata_args[@]}" \
   "${overlap_args[@]}"
 "$PYTHON" "$ROOT/generate_low_light_pilot.py" \
   --source-manifest "$SOURCE_MANIFEST" \

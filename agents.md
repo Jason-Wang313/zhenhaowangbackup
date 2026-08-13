@@ -345,11 +345,14 @@ Stage the inputs separately under `data/clean_pool/mio100`,
 train/validation/test splitting, the source-pool gate must verify readable RGB
 content, minimum crop-compatible resolution, exact SHA-256 uniqueness,
 near-duplicate screening, dataset-prefixed source IDs, exact per-dataset quotas,
-and source/license metadata. If a FoundIR evaluation hash/index is available,
-screen source overlap and record the result. An unavailable overlap index must
-be reported as not checked rather than falsely reported as clean. Never use
-DIV2K validation/test images, arbitrary web-scraped images, or unverified
-license/source records. Do not generate the 100,000-record dataset at this
+and dataset provenance. Source/license notes should be recorded when available,
+but missing manual license metadata does not block this pilot. FoundIR overlap
+screening is an optional dataset-leakage check, unrelated to the FLUX.2 GPU smoke:
+run it only if a FoundIR SHA-256 index is available, otherwise record
+`not_run_no_index` and continue. It is good to have before final FoundIR metric
+reporting, but it is not mandatory and must never block source acquisition,
+the 10,000-pair pilot, restoration training, or smoke testing. Never use DIV2K validation/test images or
+arbitrary web-scraped images. Do not generate the 100,000-record dataset at this
 stage; finish and validate only this 10,000-pair pilot.
 
 Canonical Qwen-VL target output:

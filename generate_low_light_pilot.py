@@ -114,11 +114,11 @@ def split_sources(source_ids: list[str], seed: int) -> dict[str, str]:
     }
 
 
-def load_manifest_sources(path: Path, require_approved_license: bool) -> list[Source]:
+def load_manifest_sources(path: Path, production: bool) -> list[Source]:
     if not path.is_file():
         raise SystemExit(f"MISSING_SOURCE_MANIFEST {path}")
     payload = json.loads(path.read_text())
-    if require_approved_license and payload.get("ready_for_10000_pair_pilot") is not True:
+    if production and payload.get("ready_for_10000_pair_pilot") is not True:
         raise SystemExit("SOURCE_MANIFEST_NOT_READY_FOR_10000_PAIR_PILOT")
     records = payload.get("records")
     if not isinstance(records, list):
@@ -127,7 +127,7 @@ def load_manifest_sources(path: Path, require_approved_license: bool) -> list[So
     seen_ids: set[str] = set()
     seen_hashes: set[str] = set()
     for record in records:
-        required = {"source_id", "dataset", "path", "sha256", "license", "license_status"}
+        required = {"source_id", "dataset", "path", "sha256"}
         missing = sorted(required - record.keys())
         if missing:
             raise SystemExit(f"BAD_SOURCE_RECORD missing {','.join(missing)}")
@@ -140,8 +140,6 @@ def load_manifest_sources(path: Path, require_approved_license: bool) -> list[So
             raise SystemExit(f"DUPLICATE_SOURCE_ID {source_id}")
         if expected_hash in seen_hashes:
             raise SystemExit(f"DUPLICATE_SOURCE_SHA256 {source_id}")
-        if require_approved_license and record["license_status"] != "approved":
-            raise SystemExit(f"UNAPPROVED_SOURCE_LICENSE {source_id}")
         source_path = resolve_manifest_path(str(record["path"]))
         if not source_path.is_file():
             raise SystemExit(f"MISSING_SOURCE_FILE {source_path}")
@@ -154,13 +152,13 @@ def load_manifest_sources(path: Path, require_approved_license: bool) -> list[So
                 dataset=dataset,
                 path=source_path,
                 expected_sha256=expected_hash,
-                license_name=str(record["license"]),
-                license_status=str(record["license_status"]),
+                license_name=str(record.get("license", "UNKNOWN")),
+                license_status=str(record.get("license_status", "not_provided")),
             )
         )
         seen_ids.add(source_id)
         seen_hashes.add(expected_hash)
-    if require_approved_license:
+    if production:
         counts = {dataset: sum(1 for source in sources if source.dataset == dataset) for dataset in PRODUCTION_QUOTAS}
         if counts != PRODUCTION_QUOTAS or len(sources) != sum(PRODUCTION_QUOTAS.values()):
             raise SystemExit(f"BAD_PRODUCTION_SOURCE_COMPOSITION {counts}")
@@ -216,7 +214,7 @@ def main() -> None:
     sources = (
         load_smoke_sources(args.source_root)
         if args.source_root is not None
-        else load_manifest_sources(source_manifest, require_approved_license=not args.allow_fewer_sources)
+        else load_manifest_sources(source_manifest, production=not args.allow_fewer_sources)
     )
     if len(sources) < args.num_sources and not args.allow_fewer_sources:
         raise SystemExit(f"NEED_{args.num_sources}_VERIFIED_SOURCES_FOUND_{len(sources)}")

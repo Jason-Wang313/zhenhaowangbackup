@@ -135,7 +135,10 @@ expected_versions = {
 }
 for name, expected in expected_versions.items():
     actual = actual_versions[name]
-    if actual != expected:
+    # CUDA wheel builds append a local tag such as +cu128. The public package
+    # version is still 0.22.0 and the CUDA build tag is validated with PyTorch.
+    comparable_actual = actual.split("+", 1)[0] if name == "torchvision" else actual
+    if comparable_actual != expected:
         raise SystemExit(f"BAD_VERSION {name}: expected {expected}, got {actual}")
 if not torch.__version__.startswith("2.7.0a0+"):
     raise SystemExit(f"BAD_VERSION torch: expected validated NVIDIA 2.7.0a0 build, got {torch.__version__}")
