@@ -3,32 +3,27 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 ARCHIVE="$ROOT/downloads/source_pool/shard-00.tar.gz"
-STAGING="$ROOT/downloads/source_pool/lsdir_shard_00"
 DESTINATION="$ROOT/data/clean_pool/lsdir"
 TARGET=1100
+CANDIDATES=1300
+PYTHON="${LOW_LIGHT_PYTHON:-$ROOT/.venv/flux2-smoke/bin/python}"
 
 if [[ ! -f "$ARCHIVE" ]]; then
   echo "ERROR: missing LSDIR shard: $ARCHIVE" >&2
   exit 1
 fi
 tar -tzf "$ARCHIVE" >/dev/null
-mkdir -p "$STAGING" "$DESTINATION"
-tar -xzf "$ARCHIVE" -C "$STAGING"
-
-mapfile -t images < <(find "$STAGING" -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' \) | sort)
-if [[ "${#images[@]}" -lt "$TARGET" ]]; then
-  echo "ERROR: shard-00 contains only ${#images[@]} images; need $TARGET" >&2
+if [[ ! -x "$PYTHON" ]]; then
+  echo "ERROR: validated workspace Python is unavailable: $PYTHON" >&2
   exit 1
 fi
-for ((index=0; index<TARGET; index++)); do
-  source="${images[$index]}"
-  name="$(basename "$source")"
-  cp --update=none "$source" "$DESTINATION/$name"
-done
+mkdir -p "$DESTINATION"
+"$PYTHON" "$ROOT/smoke/source_pool/stream_lsdir_candidates.py" \
+  --archive "$ARCHIVE" --count "$CANDIDATES" --output "$DESTINATION"
 
 count="$(find "$DESTINATION" -maxdepth 1 -type f | wc -l)"
-if [[ "$count" -ne "$TARGET" ]]; then
-  echo "ERROR: expected $TARGET staged LSDIR images, found $count" >&2
+if [[ "$count" -ne "$CANDIDATES" ]]; then
+  echo "ERROR: expected $CANDIDATES staged LSDIR candidates, found $count" >&2
   exit 1
 fi
-echo "LSDIR TRAIN SAMPLE STAGING PASS: $count images from shard-00"
+echo "LSDIR TRAIN CANDIDATE STAGING PASS: $count images from shard-00"

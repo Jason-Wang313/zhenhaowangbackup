@@ -355,6 +355,21 @@ the 10,000-pair pilot, restoration training, or smoke testing. Never use DIV2K v
 arbitrary web-scraped images. Do not generate the 100,000-record dataset at this
 stage; finish and validate only this 10,000-pair pilot.
 
+SOURCE ACQUISITION STATUS — 2026-08-13
+
+- MiO100/AgenticIR: 100 images copied to `data/clean_pool/mio100`.
+- DIV2K: the official `DIV2K_train_HR.zip` was downloaded, integrity-tested,
+  and all 800 train-HR images were extracted to `data/clean_pool/div2k`.
+- Partial source-pool verification passed for 900/900 sources with no rejected
+  files: readable RGB, minimum resolution, exact SHA-256, and perceptual-hash
+  checks all passed.
+- LSDIR: the official Hugging Face repository is auto-gated. Its file listing
+  is visible, but downloading `shard-00.tar.gz` requires the user's Hugging
+  Face account to be authorized. After the user runs `hf auth login` in the
+  network-enabled CPU terminal, download only the official training shard and
+  run `smoke/source_pool/finalize_lsdir_sample.sh`. This is the only current
+  blocker to reaching 2,000 sources; it is not a GPU or code blocker.
+
 Canonical Qwen-VL target output:
 
 ```json
