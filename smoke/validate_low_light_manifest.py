@@ -6,6 +6,7 @@ import argparse
 import csv
 import hashlib
 from collections import Counter, defaultdict
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import cv2
@@ -53,12 +54,18 @@ def digest(path: Path) -> str:
 
 
 def image_info(path: Path) -> tuple[tuple[int, int], float]:
+    cv2.setNumThreads(1)
     image = cv2.imread(str(path), cv2.IMREAD_COLOR)
     if image is None:
         raise SystemExit(f"UNREADABLE_IMAGE {path}")
     rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32)
     value = float(np.tensordot(rgb, WEIGHTS, axes=([-1], [0])).mean())
     return image.shape[:2], value
+
+
+def analyze_file(path: Path) -> tuple[Path, str, tuple[int, int], float]:
+    shape, value = image_info(path)
+    return path, digest(path), shape, value
 
 
 def main() -> None:
@@ -73,7 +80,11 @@ def main() -> None:
         metavar="DATASET=COUNT",
     )
     parser.add_argument("--allow-smoke-license", action="store_true")
+    parser.add_argument("--workers", type=int, default=1)
     args = parser.parse_args()
+
+    if args.workers <= 0:
+        raise SystemExit("BAD_WORKER_COUNT")
 
     with args.manifest.open(newline="") as handle:
         reader = csv.DictReader(handle)
@@ -100,6 +111,36 @@ def main() -> None:
     file_hash_cache: dict[Path, str] = {}
     image_info_cache: dict[Path, tuple[tuple[int, int], float]] = {}
 
+    unique_paths: list[Path] = []
+    seen_paths: set[Path] = set()
+    for row in rows:
+        for field in ("clean_path", "degraded_path"):
+            path = resolve_path(row[field])
+            if path in seen_paths:
+                continue
+            if not path.is_file():
+                raise SystemExit(f"MISSING_FILE {path}")
+            seen_paths.add(path)
+            unique_paths.append(path)
+
+    iterator = map(analyze_file, unique_paths)
+    executor: ProcessPoolExecutor | None = None
+    if args.workers > 1:
+        executor = ProcessPoolExecutor(max_workers=args.workers)
+        iterator = executor.map(analyze_file, unique_paths, chunksize=1)
+    try:
+        for completed, (path, file_digest, shape, value) in enumerate(iterator, start=1):
+            file_hash_cache[path] = file_digest
+            image_info_cache[path] = (shape, value)
+            if completed % 250 == 0 or completed == len(unique_paths):
+                print(
+                    f"LOW_LIGHT_VALIDATION_PROGRESS {completed}/{len(unique_paths)} files",
+                    flush=True,
+                )
+    finally:
+        if executor is not None:
+            executor.shutdown()
+
     for row in rows:
         pair = row["pair_id"]
         if pair in seen_pairs:
@@ -117,12 +158,6 @@ def main() -> None:
                 raise SystemExit(f"EMPTY_FIELD {pair} {field}")
         clean_path = resolve_path(row["clean_path"])
         degraded_path = resolve_path(row["degraded_path"])
-        for path in (clean_path, degraded_path):
-            if not path.is_file():
-                raise SystemExit(f"MISSING_FILE {path}")
-            file_hash_cache.setdefault(path, digest(path))
-            if path not in image_info_cache:
-                image_info_cache[path] = image_info(path)
         if file_hash_cache[clean_path] != row["clean_sha256"]:
             raise SystemExit(f"BAD_CLEAN_HASH {pair}")
         if file_hash_cache[degraded_path] != row["degraded_sha256"]:

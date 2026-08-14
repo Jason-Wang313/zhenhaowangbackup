@@ -1,0 +1,28 @@
+{
+  "schema_version": 2,
+  "pairs": 10000,
+  "sources": 2000,
+  "levels": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ],
+  "source_datasets": {
+    "div2k": 800,
+    "lsdir": 1100,
+    "mio100": 100
+  },
+  "splits": {
+    "train": 1600,
+    "validation": 200,
+    "test": 200
+  },
+  "seed": 2026080600,
+  "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6",
+  "generator_revision": "generate_low_light_pilot.py:v3-resume",
+  "resume": true,
+  "manifest": "manifests/low_light_pilot_10000.csv",
+  "output_root": "data/low_light_pilot"
+}

@@ -653,3 +653,63 @@ conditioning; a checkpoint is unavailable or its license is unsuitable; the
 model hallucinates content in the baseline; the baseline cannot run on the
 available GPU; Qwen output cannot be injected without changing the baseline
 architecture; or the two experiments cannot be made computationally fair.
+
+LOW-LIGHT 10,000-PAIR PILOT — COMPLETED 2026-08-14
+
+The low-light-first pilot is complete. This milestone covers only the approved
+10,000-pair pilot; it does not authorize or claim generation or training on a
+100,000-image dataset.
+
+Authoritative artifacts:
+
+- verified source manifest: `manifests/low_light_source_pool_2000.json`
+- paired-record manifest: `manifests/low_light_pilot_10000.csv`
+- generation metadata: `manifests/low_light_pilot_10000.json`
+- generated files: `data/low_light_pilot/` (runtime data; never commit to Git)
+
+Final verified composition:
+
+- 2,000 unique clean sources: MiO100 `100`, DIV2K train `800`, LSDIR train
+  `1,100`
+- 10,000 paired records and 10,000 physical output files
+- L1, L2, L3, L4, and L5: exactly `2,000` records each
+- source-disjoint split: train `1,600`, validation `200`, test `200`
+- physical layout: `2,000` clean files and `8,000` degraded files
+- no generated `.partial` or temporary PNG files remained at completion
+- FoundIR overlap screening was not run because no FoundIR hash index was
+  available; as frozen above, this is recommended but not a pilot blocker
+
+The interrupted generation was resumed with
+`generate_low_light_pilot.py:v3-resume`. Resume mode verifies existing clean
+files by SHA-256 and existing degraded files by exact expected pixels before
+reusing them. It refuses to overwrite any differing existing output. The final
+run safely reused `5,296` files and wrote only the `4,704` missing files.
+
+The independent validator was run over all 10,000 physical files with two
+low-memory workers and completed with:
+
+```text
+LOW_LIGHT MANIFEST PASS: 10000 pairs, 2000 sources
+levels {'L1': 2000, 'L2': 2000, 'L3': 2000, 'L4': 2000, 'L5': 2000}
+source_splits {'train': 1600, 'validation': 200, 'test': 200}
+source_datasets {'mio100': 100, 'div2k': 800, 'lsdir': 1100}
+```
+
+The CPU coding-agent container exposed many host CPUs but had a 4 GiB cgroup
+memory limit. Sixteen workers were therefore rejected after an OOM termination;
+the successful reproducible configuration used two workers with OpenCV/BLAS
+thread counts limited to one per worker. The validator retains every original
+fail-closed hash, image-readability, shape, luminance, level-set, split-leakage,
+and dataset-composition check while adding bounded parallelism and progress
+output.
+
+The authoritative rerun/verification command is:
+
+```bash
+LOW_LIGHT_WORKERS=2 smoke/run_low_light_pilot_10000.sh
+```
+
+The launcher defaults to safe resume, the verified 2,000-source manifest, two
+workers, and one numerical-library thread per worker. A rerun verifies and
+reuses matching generated files and fails closed instead of overwriting any
+differing output.

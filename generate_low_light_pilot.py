@@ -9,10 +9,12 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import io
 import json
 import random
 import shutil
 import sys
+from concurrent.futures import ProcessPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -89,6 +91,20 @@ def atomic_write(path: Path, image: np.ndarray) -> None:
     if not cv2.imwrite(str(temporary), image):
         raise RuntimeError(f"failed to write {temporary}")
     temporary.replace(path)
+
+
+def write_text_safely(path: Path, content: str, resume: bool) -> str:
+    """Write generated metadata without replacing a differing resume target."""
+    encoded = content.encode()
+    if path.exists() and resume:
+        if path.read_bytes() != encoded:
+            raise RuntimeError(f"resume target differs; refusing to overwrite: {path}")
+        return "reused"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(f".{path.name}.tmp")
+    temporary.write_bytes(encoded)
+    temporary.replace(path)
+    return "written"
 
 
 def manifest_path(path: Path) -> str:
@@ -187,6 +203,103 @@ def load_smoke_sources(root: Path) -> list[Source]:
     return sources
 
 
+def process_source(
+    task: tuple[int, Source, int, str, Path, bool],
+) -> tuple[list[dict[str, object]], int, int]:
+    index, source, seed, split, output_root, resume = task
+    cv2.setNumThreads(1)
+    sys.path.insert(0, str(AGENTICIR_DEPS))
+    from add_single_degradation import darken
+
+    source_seed = seed + index * 10
+    clean = cv2.imread(str(source.path), cv2.IMREAD_COLOR)
+    if clean is None:
+        raise RuntimeError(f"cannot read source image: {source.path}")
+    clean_luma = luma(clean)
+    if clean_luma <= 0:
+        raise RuntimeError(f"zero-luminance source image: {source.path}")
+    np.random.seed(source_seed)
+
+    suffix = source.path.suffix.lower()
+    clean_rel = Path("clean") / f"{source.source_id}{suffix}"
+    clean_out = output_root / clean_rel
+    clean_out.parent.mkdir(parents=True, exist_ok=True)
+    reused = 0
+    written = 0
+    if resume and clean_out.exists():
+        clean_hash = sha256(clean_out)
+        if clean_hash != source.expected_sha256:
+            raise RuntimeError(f"resume clean file differs; refusing to overwrite: {source.source_id}")
+        reused += 1
+    else:
+        shutil.copy2(source.path, clean_out)
+        clean_hash = sha256(clean_out)
+        if clean_hash != source.expected_sha256:
+            raise RuntimeError(f"byte-preserving copy failed: {source.source_id}")
+        written += 1
+
+    rows: list[dict[str, object]] = []
+    for level_index, level in enumerate(TARGET_RATIOS):
+        level_seed = source_seed
+        if level == "L1":
+            result, raw_luma, factor = clean, clean_luma, 1.0
+            official_level = "clean"
+            degraded_out = clean_out
+        else:
+            result = darken(clean, level=level_index, darken_type="linear mapping")
+            raw_luma = luma(result)
+            if raw_luma <= 0:
+                raise RuntimeError(f"zero-luminance degradation: {source.source_id} {level}")
+            target_luma = clean_luma * TARGET_RATIOS[level]
+            factor = target_luma / raw_luma
+            result = np.rint(result.astype(np.float32) * factor).clip(0, 255).astype(np.uint8)
+            official_level = str(level_index)
+            degraded_out = output_root / "pairs" / source.source_id / f"{level}.png"
+            if resume and degraded_out.exists():
+                existing = cv2.imread(str(degraded_out), cv2.IMREAD_COLOR)
+                if existing is None or existing.shape != result.shape or not np.array_equal(existing, result):
+                    raise RuntimeError(
+                        f"resume degraded file differs; refusing to overwrite: {source.source_id} {level}"
+                    )
+                reused += 1
+            else:
+                atomic_write(degraded_out, result)
+                written += 1
+
+        final_luma = luma(result)
+        ratio = final_luma / clean_luma
+        low, high = INTERVALS[level]
+        if not low <= ratio <= high:
+            raise RuntimeError(f"{source.source_id} {level} ratio {ratio:.5f} outside [{low}, {high}]")
+        rows.append(
+            {
+                "pair_id": f"{source.source_id}_{level}",
+                "source_id": source.source_id,
+                "source_dataset": source.dataset,
+                "source_original_path": manifest_path(source.path),
+                "source_license": source.license_name,
+                "source_license_status": source.license_status,
+                "clean_path": manifest_path(clean_out),
+                "degraded_path": manifest_path(degraded_out),
+                "degradation_type": "low_light",
+                "project_level": level,
+                "official_agenticir_level": official_level,
+                "darkening_method": "linear mapping",
+                "seed": level_seed,
+                "raw_luminance": f"{raw_luma:.6f}",
+                "final_luminance": f"{final_luma:.6f}",
+                "target_ratio": TARGET_RATIOS[level],
+                "calibration_factor": f"{factor:.9f}",
+                "agenticir_revision": AGENTICIR_REVISION,
+                "generator_revision": "generate_low_light_pilot.py:v3-resume",
+                "split": split,
+                "clean_sha256": clean_hash,
+                "degraded_sha256": sha256(degraded_out),
+            }
+        )
+    return rows, reused, written
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     inputs = parser.add_mutually_exclusive_group()
@@ -197,6 +310,12 @@ def main() -> None:
     parser.add_argument("--metadata", type=Path, default=ROOT / "manifests/low_light_pilot_10000.json")
     parser.add_argument("--num-sources", type=int, default=2000)
     parser.add_argument("--seed", type=int, default=2026080600)
+    parser.add_argument("--workers", type=int, default=1)
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Verify and reuse matching outputs; never overwrite a differing existing file.",
+    )
     parser.add_argument(
         "--allow-fewer-sources",
         action="store_true",
@@ -204,7 +323,7 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    if args.num_sources <= 0:
+    if args.num_sources <= 0 or args.workers <= 0:
         raise SystemExit("BAD_NUM_SOURCES")
     if not args.allow_fewer_sources and args.num_sources != sum(PRODUCTION_QUOTAS.values()):
         raise SystemExit("PRODUCTION_NUM_SOURCES_MUST_BE_2000")
@@ -222,85 +341,38 @@ def main() -> None:
     if not sources:
         raise SystemExit("NO_VALID_SOURCES")
 
-    sys.path.insert(0, str(AGENTICIR_DEPS))
-    from add_single_degradation import darken  # noqa: E402
-
     splits = split_sources([source.source_id for source in sources], args.seed)
+    tasks = [
+        (index, source, args.seed, splits[source.source_id], args.output_root, args.resume)
+        for index, source in enumerate(sources)
+    ]
     rows: list[dict[str, object]] = []
-    for index, source in enumerate(sources):
-        source_seed = args.seed + index * 10
-        clean = cv2.imread(str(source.path), cv2.IMREAD_COLOR)
-        if clean is None:
-            raise RuntimeError(f"cannot read source image: {source.path}")
-        clean_luma = luma(clean)
-        if clean_luma <= 0:
-            raise RuntimeError(f"zero-luminance source image: {source.path}")
-        np.random.seed(source_seed)
+    reused = 0
+    written = 0
+    iterator = map(process_source, tasks)
+    if args.workers > 1:
+        executor = ProcessPoolExecutor(max_workers=args.workers)
+        iterator = executor.map(process_source, tasks, chunksize=1)
+    try:
+        for completed, (source_rows, source_reused, source_written) in enumerate(iterator, start=1):
+            rows.extend(source_rows)
+            reused += source_reused
+            written += source_written
+            if completed % 50 == 0 or completed == len(tasks):
+                print(
+                    f"LOW_LIGHT_PROGRESS {completed}/{len(tasks)} sources "
+                    f"reused={reused} written={written}",
+                    flush=True,
+                )
+    finally:
+        if args.workers > 1:
+            executor.shutdown()
 
-        suffix = source.path.suffix.lower()
-        clean_rel = Path("clean") / f"{source.source_id}{suffix}"
-        clean_out = args.output_root / clean_rel
-        clean_out.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(source.path, clean_out)
-        clean_hash = sha256(clean_out)
-        if clean_hash != source.expected_sha256:
-            raise RuntimeError(f"byte-preserving copy failed: {source.source_id}")
-
-        for level_index, level in enumerate(TARGET_RATIOS):
-            level_seed = source_seed
-            if level == "L1":
-                result, raw_luma, factor = clean, clean_luma, 1.0
-                official_level = "clean"
-                degraded_out = clean_out
-            else:
-                result = darken(clean, level=level_index, darken_type="linear mapping")
-                raw_luma = luma(result)
-                if raw_luma <= 0:
-                    raise RuntimeError(f"zero-luminance degradation: {source.source_id} {level}")
-                target_luma = clean_luma * TARGET_RATIOS[level]
-                factor = target_luma / raw_luma
-                result = np.rint(result.astype(np.float32) * factor).clip(0, 255).astype(np.uint8)
-                official_level = str(level_index)
-                degraded_out = args.output_root / "pairs" / source.source_id / f"{level}.png"
-                atomic_write(degraded_out, result)
-
-            final_luma = luma(result)
-            ratio = final_luma / clean_luma
-            low, high = INTERVALS[level]
-            if not low <= ratio <= high:
-                raise RuntimeError(f"{source.source_id} {level} ratio {ratio:.5f} outside [{low}, {high}]")
-            rows.append(
-                {
-                    "pair_id": f"{source.source_id}_{level}",
-                    "source_id": source.source_id,
-                    "source_dataset": source.dataset,
-                    "source_original_path": manifest_path(source.path),
-                    "source_license": source.license_name,
-                    "source_license_status": source.license_status,
-                    "clean_path": manifest_path(clean_out),
-                    "degraded_path": manifest_path(degraded_out),
-                    "degradation_type": "low_light",
-                    "project_level": level,
-                    "official_agenticir_level": official_level,
-                    "darkening_method": "linear mapping",
-                    "seed": level_seed,
-                    "raw_luminance": f"{raw_luma:.6f}",
-                    "final_luminance": f"{final_luma:.6f}",
-                    "target_ratio": TARGET_RATIOS[level],
-                    "calibration_factor": f"{factor:.9f}",
-                    "agenticir_revision": AGENTICIR_REVISION,
-                    "generator_revision": "generate_low_light_pilot.py:v2",
-                    "split": splits[source.source_id],
-                    "clean_sha256": clean_hash,
-                    "degraded_sha256": sha256(degraded_out),
-                }
-            )
-
-    args.manifest.parent.mkdir(parents=True, exist_ok=True)
-    with args.manifest.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
-        writer.writeheader()
-        writer.writerows(rows)
+    csv_buffer = io.StringIO(newline="")
+    writer = csv.DictWriter(csv_buffer, fieldnames=FIELDS, lineterminator="\n")
+    writer.writeheader()
+    writer.writerows(rows)
+    write_text_safely(args.manifest, csv_buffer.getvalue(), args.resume)
     summary = {
         "schema_version": 2,
         "pairs": len(rows),
@@ -316,11 +388,12 @@ def main() -> None:
         },
         "seed": args.seed,
         "agenticir_revision": AGENTICIR_REVISION,
+        "generator_revision": "generate_low_light_pilot.py:v3-resume",
+        "resume": args.resume,
         "manifest": manifest_path(args.manifest),
         "output_root": manifest_path(args.output_root),
     }
-    args.metadata.parent.mkdir(parents=True, exist_ok=True)
-    args.metadata.write_text(json.dumps(summary, indent=2) + "\n")
+    write_text_safely(args.metadata, json.dumps(summary, indent=2) + "\n", args.resume)
     print(json.dumps(summary, indent=2))
 
 
