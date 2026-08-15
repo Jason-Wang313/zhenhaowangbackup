@@ -8,6 +8,7 @@ import io
 import json
 import math
 import os
+import re
 import sys
 import hashlib
 from pathlib import Path
@@ -87,6 +88,8 @@ def validate_reusable_evaluation(
     checkpoint: Path,
     config_sha256: str,
     samples: int,
+    guidance: float,
+    evaluation_name: str,
 ) -> None:
     expected_checkpoint = str(checkpoint.relative_to(ROOT))
     if (
@@ -94,6 +97,8 @@ def validate_reusable_evaluation(
         or existing.get("checkpoint_sha256") != sha256(checkpoint)
         or existing.get("config_sha256") != config_sha256
         or existing.get("samples") != samples
+        or existing.get("guidance") != guidance
+        or existing.get("evaluation_name") != evaluation_name
         or "automatic_gate_pass" not in existing
     ):
         raise RuntimeError("existing evaluation metadata does not match this run")
@@ -149,6 +154,16 @@ def make_contact_sheets(rows: list[tuple[str, Image.Image, Image.Image, Image.Im
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
+    parser.add_argument(
+        "--guidance",
+        type=float,
+        help="Diagnostic CFG override; 1.0 is the conditional-only path used in training.",
+    )
+    parser.add_argument(
+        "--evaluation-name",
+        default="evaluation",
+        help="New output subdirectory name; existing differing artifacts are never overwritten.",
+    )
     args = parser.parse_args()
     config = load_train_config(args.config)
     if config.raw.get("status") != "approved_for_16_pair_gpu_smoke_only":
@@ -162,7 +177,14 @@ def main() -> None:
     )
     if not torch.cuda.is_available():
         raise SystemExit("CUDA_NOT_AVAILABLE")
+    if re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", args.evaluation_name) is None:
+        raise SystemExit("BAD_EVALUATION_NAME")
     device = torch.device("cuda")
+    inference = config.section("inference")
+    guidance = float(inference["guidance"] if args.guidance is None else args.guidance)
+    if not math.isfinite(guidance) or guidance <= 0:
+        raise SystemExit("BAD_GUIDANCE")
+    sample_count = int(inference["num_samples"])
     output_dir = config.workspace_path("runtime", "output_dir")
     training_summary_path = output_dir / "training_summary.json"
     if not training_summary_path.is_file():
@@ -174,7 +196,7 @@ def main() -> None:
     expected_checkpoint_sha = training_summary.get("checkpoint_sha256")
     if expected_checkpoint_sha != sha256(checkpoint):
         raise SystemExit("TRAINING_CHECKPOINT_SHA256_MISMATCH")
-    eval_dir = output_dir / "evaluation"
+    eval_dir = output_dir / args.evaluation_name
     metrics_path = eval_dir / "metrics.json"
     if metrics_path.exists():
         existing = json.loads(metrics_path.read_text())
@@ -183,7 +205,9 @@ def main() -> None:
                 existing,
                 checkpoint=checkpoint,
                 config_sha256=config.sha256,
-                samples=int(config.section("inference")["num_samples"]),
+                samples=sample_count,
+                guidance=guidance,
+                evaluation_name=args.evaluation_name,
             )
         except RuntimeError as exc:
             raise SystemExit(f"EXISTING_EVALUATION_INVALID {exc}") from exc
@@ -199,8 +223,6 @@ def main() -> None:
         crop_size=int(data["crop_size"]),
         seed=int(config.section("training")["seed"]),
     )
-    inference = config.section("inference")
-    sample_count = int(inference["num_samples"])
     if sample_count != len(dataset):
         raise SystemExit(f"OVERFIT_EVAL_MUST_COVER_ALL_RECORDS {sample_count} != {len(dataset)}")
 
@@ -258,7 +280,7 @@ def main() -> None:
                     context,
                     context_ids,
                     timesteps=schedule,
-                    guidance=float(inference["guidance"]),
+                    guidance=guidance,
                     img_cond_seq=reference_tokens,
                     img_cond_seq_ids=reference_ids,
                 )
@@ -298,6 +320,9 @@ def main() -> None:
         "checkpoint_sha256": expected_checkpoint_sha,
         "config_sha256": config.sha256,
         "samples": len(per_image),
+        "guidance": guidance,
+        "evaluation_name": args.evaluation_name,
+        "guidance_override": args.guidance is not None,
         "degraded_l2_l5_mean_psnr": mean(degraded_only, "degraded_psnr"),
         "restored_l2_l5_mean_psnr": mean(degraded_only, "restored_psnr"),
         "degraded_l2_l5_mean_ssim": mean(degraded_only, "degraded_ssim"),

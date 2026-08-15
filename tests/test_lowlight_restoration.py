@@ -270,6 +270,8 @@ class EvaluationReuseTests(unittest.TestCase):
                 "checkpoint_sha256": sha256(checkpoint),
                 "config_sha256": "a" * 64,
                 "samples": 1,
+                "guidance": 1.0,
+                "evaluation_name": "evaluation_test",
                 "automatic_gate_pass": False,
                 "per_image": [{"restored_path": str(restored.relative_to(ROOT))}],
                 "contact_sheets": [str(contact.relative_to(ROOT))],
@@ -280,6 +282,8 @@ class EvaluationReuseTests(unittest.TestCase):
                     checkpoint=checkpoint,
                     config_sha256="a" * 64,
                     samples=1,
+                    guidance=1.0,
+                    evaluation_name="evaluation_test",
                 )
 
 
