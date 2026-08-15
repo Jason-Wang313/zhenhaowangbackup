@@ -5,6 +5,13 @@
 !agents.md
 !README.md
 !/generate_low_light_pilot.py
+!/train_flux2_lowlight.py
+!lowlight_restoration/
+!lowlight_restoration/*.py
+!configs/
+!configs/*.json
+!tests/
+!tests/*.py
 !smoke/
 !smoke/**/
 !smoke/*.py
@@ -20,6 +27,7 @@
 !manifests/*.csv
 !manifests/*.json
 !reports/
+!reports/*.md
 !reports/qa/
 !reports/qa/*.md
 !logs/

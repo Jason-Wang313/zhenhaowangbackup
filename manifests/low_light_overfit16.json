@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "purpose": "FLUX.2 low-light restoration 16-pair overfit smoke",
+  "source_manifest": "manifests/low_light_pilot_10000.csv",
+  "source_manifest_sha256": "e1ea9132bc0d5e55b30998c51c8e37a0363f29b2a23e7851ee804f3100d4a784",
+  "output_manifest": "manifests/low_light_overfit16.csv",
+  "output_manifest_sha256": "abcdc811470db8d1b74de622fbc95f53417f3f520134aa206448e4a648fe3d11",
+  "seed": 2026081501,
+  "records": 16,
+  "unique_sources": 16,
+  "split": "train",
+  "levels": {
+    "L4": 3,
+    "L2": 3,
+    "L1": 3,
+    "L5": 4,
+    "L3": 3
+  },
+  "pair_ids": [
+    "div2k_0680_L4",
+    "lsdir_0000963_L2",
+    "lsdir_0000611_L1",
+    "div2k_0689_L4",
+    "lsdir_0000329_L4",
+    "lsdir_0000645_L5",
+    "div2k_0360_L1",
+    "lsdir_0000863_L5",
+    "lsdir_0000250_L3",
+    "lsdir_0000058_L5",
+    "div2k_0618_L1",
+    "div2k_0026_L2",
+    "lsdir_0001916_L5",
+    "lsdir_0000369_L3",
+    "div2k_0375_L2",
+    "mio100_065_L3"
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "run_name": "flux2_lowlight_baseline_overfit16",
+  "status": "approved_for_16_pair_gpu_smoke_only",
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "dtype": "bfloat16",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "text_encoder": "models/qwen3-4b-fp8",
+    "prompt": "Restore the low-light reference image faithfully to its clean, well-lit appearance. Preserve all content, geometry, identity, texture, and natural color."
+  },
+  "data": {
+    "manifest": "manifests/low_light_overfit16.csv",
+    "split": "train",
+    "degradation_type": "low_light",
+    "expected_records": 16,
+    "expected_unique_sources": 16,
+    "crop_size": 512
+  },
+  "lora": {
+    "rank": 8,
+    "alpha": 8.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "seed": 2026081502,
+    "max_steps": 100,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "checkpoint_every": 25,
+    "log_every": 1,
+    "timestep_sampling": "uniform",
+    "reference_time_coordinate": 10
+  },
+  "inference": {
+    "seed": 2026081503,
+    "num_steps": 50,
+    "guidance": 4.0,
+    "num_samples": 16
+  },
+  "runtime": {
+    "device": "cuda",
+    "offline": true,
+    "minimum_vram_gib": 40,
+    "output_dir": "checkpoints/lowlight_baseline_overfit16"
+  }
+}

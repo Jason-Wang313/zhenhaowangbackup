@@ -740,3 +740,39 @@ The launcher defaults to safe resume, the verified 2,000-source manifest, two
 workers, and one numerical-library thread per worker. A rerun verifies and
 reuses matching generated files and fails closed instead of overwriting any
 differing output.
+
+LOWLIGHT BASELINE CPU READINESS — VERIFIED 2026-08-15
+
+This status is CPU-side readiness evidence only. No new GPU training,
+restoration evaluation, visual identity decision, or FoundIR result is claimed.
+
+- The Stage 1 architecture audit is recorded in
+  `reports/lowlight_stage1_architecture_audit.md`. It explicitly identifies the
+  rectified-flow training objective as project-derived because the local BFL
+  FLUX.2 checkout is inference-only and contains no official training loop.
+- The trainer now publishes checkpoint artifacts without overwrite, records
+  and verifies adapter/optimizer SHA-256 values, reconstructs a missing JSONL
+  metric after a completed-checkpoint interruption, rejects partial or
+  differing artifacts, and records Git/FLUX revisions, exact config,
+  command, environment, and output paths.
+- The loss-decrease gate now compares an initial and final deterministic probe
+  using fixed records, crop, noise seed, and timestep, rather than unrelated
+  stochastic minibatches.
+- Nine CPU unit tests passed. They cover deterministic aligned crops,
+  rectified-flow/reference layout, zero-init LoRA behavior and gradient scope,
+  LoRA checkpoint round trip, config rejection, deterministic index ordering,
+  interrupted-summary recovery, non-finite metric rejection, and refusal to
+  reuse a failed evaluation.
+- Python compilation, launcher shell syntax, and `git diff --check` passed.
+- CPU preflight passed both with `--skip-large-hashes` and with all model/text
+  encoder SHA-256 checks enabled. It verified 16 records, 16 unique sources,
+  all L1-L5 levels, 50 LoRA targets, 8,110,080 trainable parameters, and config
+  SHA-256
+  `62740e0e0f26c4001057adf9d955259b7c8d89553245a2c1565a22599e7d0804`.
+- The CPU allocation exposed 128 logical Intel Xeon Gold 6530 CPUs, a 300 GiB
+  cgroup memory limit, about 1.85 GiB cgroup use at inspection, and about
+  964 TiB free on the shared filesystem. The validated interpreter reported
+  Python 3.12.13 and PyTorch 2.7.0+cu128 with CUDA 12.8 support, but
+  `torch.cuda.is_available()` was false in this coding-agent terminal.
+- Full 8,000-pair training remains unauthorized until the offline H100
+  16-pair automatic gate and human contact-sheet identity review both pass.
