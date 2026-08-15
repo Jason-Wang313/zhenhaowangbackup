@@ -24,6 +24,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "third_party/flux2/src"))
 
 from lowlight_restoration.config import load_train_config
+from lowlight_restoration.authorization import validate_run_authorization
 from lowlight_restoration.data import load_pair_manifest
 
 EXPECTED_FLUX_REVISION = "50fe5162777813d869182b139e83b10743caef15"
@@ -47,6 +48,11 @@ EXPECTED_TEXT_ENCODER_FILES = {
         "79f82dbc594a0237e24982800665eb0ddbe8c7bbdf3ac49c2a0005682aca15dc",
     ),
 }
+EXPECTED_ALEXNET = (
+    ROOT / "models/torch/hub/checkpoints/alexnet-owt-7be5be79.pth",
+    244_408_911,
+    "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
+)
 
 
 def sha256(path: Path) -> str:
@@ -69,8 +75,10 @@ def main() -> None:
     args = parser.parse_args()
 
     config = load_train_config(args.config)
-    if config.raw.get("status") != "approved_for_16_pair_gpu_smoke_only":
-        raise SystemExit("CONFIG_NOT_APPROVED_FOR_OVERFIT_SMOKE")
+    try:
+        authorized_scope = validate_run_authorization(config)
+    except RuntimeError as exc:
+        raise SystemExit(f"RUN_NOT_AUTHORIZED {exc}") from exc
     expected_prefix = ROOT / ".venv/flux2-smoke"
     if Path(sys.prefix).resolve() != expected_prefix.resolve():
         raise SystemExit(f"WRONG_PYTHON expected={expected_prefix} actual={sys.prefix}")
@@ -115,6 +123,23 @@ def main() -> None:
             importlib.import_module(module)
         except Exception as exc:
             raise SystemExit(f"MISSING_OR_BROKEN_IMPORT {module}: {exc}") from exc
+
+    if authorized_scope == "full_baseline":
+        os.environ["TORCH_HOME"] = str(ROOT / "models/torch")
+        try:
+            importlib.import_module("torchmetrics")
+        except Exception as exc:
+            raise SystemExit(f"MISSING_OR_BROKEN_IMPORT torchmetrics: {exc}") from exc
+        alexnet_path, expected_size, expected_digest = EXPECTED_ALEXNET
+        if not alexnet_path.is_file() or alexnet_path.stat().st_size != expected_size:
+            raise SystemExit(f"BAD_LPIPS_ALEXNET_FILE {alexnet_path}")
+        if sha256(alexnet_path) != expected_digest:
+            raise SystemExit(f"BAD_LPIPS_ALEXNET_SHA256 {alexnet_path}")
+        from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
+
+        lpips = LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True)
+        del lpips
+        print(f"OK_LPIPS alexnet_sha256={expected_digest}")
 
     model = config.section("model")
     flow_shapes: dict[str, tuple[int, ...]] = {}
@@ -211,7 +236,10 @@ def main() -> None:
         if not re.search(r"(cu|nv)", torch.__version__, re.IGNORECASE):
             raise SystemExit(f"TORCH_IS_NOT_A_CUDA_BUILD {torch.__version__}")
         print(f"OK_CUDA name={properties.name} bytes={properties.total_memory}")
-    print(f"LOWLIGHT_BASELINE_PREFLIGHT_PASS cpu_only={args.cpu_only} config_sha256={config.sha256}")
+    print(
+        "LOWLIGHT_BASELINE_PREFLIGHT_PASS "
+        f"scope={authorized_scope} cpu_only={args.cpu_only} config_sha256={config.sha256}"
+    )
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "run_name": "flux2_lowlight_baseline_full",
-  "status": "PROVISIONAL_BLOCKED_UNTIL_OVERFIT16_PASSES",
+  "status": "approved_after_overfit16_guidance1_pass",
   "model": {
     "name": "flux.2-klein-base-4b",
     "dtype": "bfloat16",
@@ -46,7 +46,7 @@
   "inference": {
     "seed": 2026081503,
     "num_steps": 50,
-    "guidance": 4.0,
+    "guidance": 1.0,
     "num_samples": 1000
   },
   "runtime": {

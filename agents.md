@@ -800,3 +800,29 @@ conditional-only inference setting and is frozen for the next baseline stage.
 
 The overfit result authorizes preparation and preflight of the full 8,000-pair
 baseline. It does not itself authorize a FoundIR or Phase 1 success claim.
+
+LOWLIGHT FULL BASELINE PIPELINE — CPU-VERIFIED READINESS 2026-08-15
+
+The fixed full baseline pipeline is implemented for the already approved
+Lowlight-only scope. This is readiness evidence, not a GPU training result,
+FoundIR result, Qwen-VL result, or Phase 1 completion claim.
+
+- Frozen config: `configs/lowlight_flux2_full.json`
+- Config SHA-256:
+  `c71235efe88e8f3bc98ca863350af372a78aa35f1a2cc065a1867c5bb6bfde18`
+- Launcher: `smoke/run_lowlight_baseline_full.sh`
+- Split evaluator: `evaluate_flux2_lowlight_split.py`
+- Readiness report: `reports/lowlight_full_baseline_readiness_2026-08-15.md`
+- Training: 8,000 records / 1,600 sources / 4,000 steps
+- Evaluation: fixed 1,000-record validation then fixed 1,000-record internal test
+- Inference: 50 steps, guidance 1.0
+- Metrics: PSNR, SSIM, and offline AlexNet LPIPS, overall and per level
+- Restart evidence: hashed per-image JSON sidecars, restored PNGs, aggregate
+  metrics, and stratified/worst-case contact sheets
+
+Authorization fails closed unless the exact full config and the passing
+overfit gate match. Runtime authorization also re-hashes the overfit checkpoint
+and its passing guidance-1 metrics. Fifteen CPU unit tests, Python compilation,
+shell syntax, the 8,000-record preflight with large model hashes skipped, and
+the independent preflight with all FLUX/VAE/text-encoder hashes passed. Do not
+run the H100 launcher until diff review, commit, and push have also passed.

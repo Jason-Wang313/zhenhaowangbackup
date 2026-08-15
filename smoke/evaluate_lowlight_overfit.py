@@ -132,7 +132,12 @@ def labeled_thumbnail(image: Image.Image, label: str, size: int = 256) -> Image.
     return canvas
 
 
-def make_contact_sheets(rows: list[tuple[str, Image.Image, Image.Image, Image.Image]], output_dir: Path) -> list[str]:
+def make_contact_sheets(
+    rows: list[tuple[str, Image.Image, Image.Image, Image.Image]],
+    output_dir: Path,
+    *,
+    prefix: str = "contact_sheet",
+) -> list[str]:
     paths: list[str] = []
     rows_per_sheet = 8
     cell = 256
@@ -145,7 +150,7 @@ def make_contact_sheets(rows: list[tuple[str, Image.Image, Image.Image, Image.Im
             ):
                 tile = labeled_thumbnail(image, f"{pair_id} | {name}", size=cell)
                 sheet.paste(tile, (column * cell, row_index * (cell + 24)))
-        path = output_dir / f"contact_sheet_{sheet_index + 1}.jpg"
+        path = output_dir / f"{prefix}_{sheet_index + 1}.jpg"
         save_image_once_or_verify(path, sheet, quality=92)
         paths.append(str(path.relative_to(ROOT)))
     return paths

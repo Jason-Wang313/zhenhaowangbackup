@@ -6,6 +6,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
 import torch
@@ -13,6 +14,8 @@ from PIL import Image
 from torch import nn
 
 from lowlight_restoration.config import TrainConfig, load_train_config
+from lowlight_restoration import authorization
+from lowlight_restoration.authorization import validate_run_authorization
 from lowlight_restoration.data import LowLightPairDataset, load_pair_manifest
 from lowlight_restoration.flow import build_reference_flow_batch
 from lowlight_restoration.lora import (
@@ -22,8 +25,14 @@ from lowlight_restoration.lora import (
     save_lora_checkpoint,
 )
 from smoke.evaluate_lowlight_overfit import (
+    make_contact_sheets,
     require_finite_numbers as require_finite_evaluation_metrics,
     validate_reusable_evaluation,
+)
+from evaluate_flux2_lowlight_split import (
+    atomic_write_json,
+    validate_reusable_aggregate,
+    validate_reusable_record,
 )
 from train_flux2_lowlight import (
     ROOT,
@@ -251,6 +260,52 @@ class TrainingControlTests(unittest.TestCase):
             self.assertTrue(summary["loss_decreased"])
 
 
+class AuthorizationTests(unittest.TestCase):
+    def test_static_full_authorization_succeeds_without_runtime_artifacts(self) -> None:
+        config = load_train_config(ROOT / "configs/lowlight_flux2_full.json")
+        self.assertEqual(
+            validate_run_authorization(config, require_artifacts=False),
+            "full_baseline",
+        )
+
+    def test_changed_full_config_is_not_authorized(self) -> None:
+        raw = json.loads((ROOT / "configs/lowlight_flux2_full.json").read_text())
+        raw["training"]["max_steps"] += 1
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            path = Path(directory) / "changed_full.json"
+            path.write_text(json.dumps(raw, indent=2) + "\n")
+            config = load_train_config(path)
+            with self.assertRaisesRegex(RuntimeError, "config hash has changed"):
+                validate_run_authorization(config, require_artifacts=False)
+
+    def test_full_authorization_requires_a_valid_gate(self) -> None:
+        config = load_train_config(ROOT / "configs/lowlight_flux2_full.json")
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            missing = Path(directory) / "missing_gate.json"
+            with patch.object(authorization, "GATE_PATH", missing):
+                with self.assertRaisesRegex(RuntimeError, "missing overfit authorization gate"):
+                    validate_run_authorization(config)
+
+    def test_full_authorization_rejects_gate_artifact_hash_mismatch(self) -> None:
+        config = load_train_config(ROOT / "configs/lowlight_flux2_full.json")
+        gate = json.loads((ROOT / "configs/lowlight_overfit16_gate.json").read_text())
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            root = Path(directory)
+            checkpoint = root / "checkpoint.safetensors"
+            evaluation = root / "metrics.json"
+            checkpoint.write_bytes(b"changed checkpoint")
+            evaluation.write_bytes(b"metrics")
+            gate["checkpoint"] = str(checkpoint.relative_to(ROOT))
+            gate["evaluation"] = str(evaluation.relative_to(ROOT))
+            gate["checkpoint_sha256"] = "0" * 64
+            gate["evaluation_sha256"] = sha256(evaluation)
+            gate_path = root / "gate.json"
+            gate_path.write_text(json.dumps(gate))
+            with patch.object(authorization, "GATE_PATH", gate_path):
+                with self.assertRaisesRegex(RuntimeError, "artifact missing or hash mismatch"):
+                    validate_run_authorization(config)
+
+
 class EvaluationReuseTests(unittest.TestCase):
     def test_non_finite_metric_is_rejected(self) -> None:
         with self.assertRaisesRegex(RuntimeError, "non-finite metric"):
@@ -285,6 +340,92 @@ class EvaluationReuseTests(unittest.TestCase):
                     guidance=1.0,
                     evaluation_name="evaluation_test",
                 )
+
+    def test_split_record_and_aggregate_reuse_validate_all_hashes(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            root = Path(directory)
+            result_dir = root / "records"
+            restored = root / "sample_restored.png"
+            restored.write_bytes(b"restored image evidence")
+            record = {
+                "schema_version": 1,
+                "pair_id": "sample_L2",
+                "project_level": "L2",
+                "index": 0,
+                "split": "validation",
+                "checkpoint_sha256": "a" * 64,
+                "config_sha256": "b" * 64,
+                "guidance": 1.0,
+                "restored_path": str(restored.relative_to(ROOT)),
+                "restored_sha256": sha256(restored),
+                "restored_psnr": 20.0,
+            }
+            validate_reusable_record(
+                record,
+                pair_id="sample_L2",
+                project_level="L2",
+                index=0,
+                split="validation",
+                checkpoint_sha256="a" * 64,
+                config_sha256="b" * 64,
+                guidance=1.0,
+            )
+            sidecar = result_dir / "0000_sample_L2.json"
+            atomic_write_json(sidecar, record)
+            contact = root / "contact.jpg"
+            contact.write_bytes(b"contact sheet evidence")
+            contact_relative = str(contact.relative_to(ROOT))
+            aggregate = {
+                "schema_version": 1,
+                "split": "validation",
+                "evaluation_name": "validation_test",
+                "checkpoint_sha256": "a" * 64,
+                "config_sha256": "b" * 64,
+                "guidance": 1.0,
+                "samples": 1,
+                "automatic_sanity_pass": True,
+                "per_image": [record],
+                "contact_sheets": [contact_relative],
+                "contact_sheet_sha256": {contact_relative: sha256(contact)},
+            }
+            validate_reusable_aggregate(
+                aggregate,
+                split="validation",
+                evaluation_name="validation_test",
+                checkpoint_sha256="a" * 64,
+                config_sha256="b" * 64,
+                guidance=1.0,
+                samples=1,
+                pair_ids=["sample_L2"],
+                project_levels=["L2"],
+                result_dir=result_dir,
+            )
+            restored.write_bytes(b"tampered")
+            with self.assertRaisesRegex(RuntimeError, "restored image hash mismatch"):
+                validate_reusable_aggregate(
+                    aggregate,
+                    split="validation",
+                    evaluation_name="validation_test",
+                    checkpoint_sha256="a" * 64,
+                    config_sha256="b" * 64,
+                    guidance=1.0,
+                    samples=1,
+                    pair_ids=["sample_L2"],
+                    project_levels=["L2"],
+                    result_dir=result_dir,
+                )
+
+    def test_contact_sheet_prefix_is_honored(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            root = Path(directory)
+            image = Image.new("RGB", (8, 8), "gray")
+            paths = make_contact_sheets(
+                [("sample", image, image, image)],
+                root,
+                prefix="contact_custom",
+            )
+            self.assertEqual(Path(paths[0]).name, "contact_custom_1.jpg")
+            self.assertTrue((ROOT / paths[0]).is_file())
 
 
 if __name__ == "__main__":

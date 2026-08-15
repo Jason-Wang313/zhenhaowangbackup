@@ -26,6 +26,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "third_party/flux2/src"))
 
 from lowlight_restoration.config import TrainConfig, load_train_config
+from lowlight_restoration.authorization import validate_run_authorization
 from lowlight_restoration.data import LowLightPairDataset, load_pair_manifest
 from lowlight_restoration.flow import build_reference_flow_batch
 from lowlight_restoration.lora import (
@@ -321,6 +322,20 @@ def runtime_provenance(config: TrainConfig, output_dir: Path) -> dict[str, objec
             "compute_capability": list(torch.cuda.get_device_capability(0)),
             "device_count": torch.cuda.device_count(),
         }
+    output_paths = {
+        "output_dir": str(output_dir.relative_to(ROOT)),
+        "frozen_config": str((output_dir / "config.json").relative_to(ROOT)),
+        "metrics": str((output_dir / "metrics.jsonl").relative_to(ROOT)),
+        "prompt_context": str(prompt_context_path(output_dir).relative_to(ROOT)),
+        "training_summary": str((output_dir / "training_summary.json").relative_to(ROOT)),
+    }
+    if config.raw.get("run_name") == "flux2_lowlight_baseline_full":
+        output_paths.update(
+            validation_evaluation=str((output_dir / "validation_full").relative_to(ROOT)),
+            test_evaluation=str((output_dir / "test_full").relative_to(ROOT)),
+        )
+    else:
+        output_paths["evaluation_dir"] = str((output_dir / "evaluation").relative_to(ROOT))
     return {
         "git_revision": git_revision(ROOT),
         "flux_revision": git_revision(ROOT / "third_party/flux2"),
@@ -337,14 +352,7 @@ def runtime_provenance(config: TrainConfig, output_dir: Path) -> dict[str, objec
             "gpu": gpu,
         },
         "config": config.raw,
-        "output_paths": {
-            "output_dir": str(output_dir.relative_to(ROOT)),
-            "frozen_config": str((output_dir / "config.json").relative_to(ROOT)),
-            "metrics": str((output_dir / "metrics.jsonl").relative_to(ROOT)),
-            "prompt_context": str(prompt_context_path(output_dir).relative_to(ROOT)),
-            "training_summary": str((output_dir / "training_summary.json").relative_to(ROOT)),
-            "evaluation_dir": str((output_dir / "evaluation").relative_to(ROOT)),
-        },
+        "output_paths": output_paths,
     }
 
 
@@ -531,8 +539,11 @@ def main() -> None:
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     config = load_train_config(args.config)
-    if config.raw.get("status") != "approved_for_16_pair_gpu_smoke_only":
-        raise SystemExit("ONLY_THE_16_PAIR_SMOKE_IS_CURRENTLY_AUTHORIZED")
+    try:
+        authorized_scope = validate_run_authorization(config)
+    except RuntimeError as exc:
+        raise SystemExit(f"RUN_NOT_AUTHORIZED {exc}") from exc
+    print(f"RUN_AUTHORIZATION_PASS scope={authorized_scope}", flush=True)
 
     os.environ.update(
         HF_HUB_OFFLINE="1",
