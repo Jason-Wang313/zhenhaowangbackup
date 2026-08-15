@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "gate": "flux2_lowlight_baseline_overfit16",
+  "status": "passed",
+  "approved_next_scope": "prepare_full_8000_pair_baseline",
+  "training_git_revision": "265050404ab2a36cd9f11514067ec97c1a5c951a",
+  "evaluation_git_revision": "02144fe2ff506f45ebdb607f9951082854a434fa",
+  "flux_revision": "50fe5162777813d869182b139e83b10743caef15",
+  "config_sha256": "62740e0e0f26c4001057adf9d955259b7c8d89553245a2c1565a22599e7d0804",
+  "checkpoint": "checkpoints/lowlight_baseline_overfit16/step_000100.safetensors",
+  "checkpoint_sha256": "94ecd1c32e7a137ed153b581ea0b12c879d7e5e3c0698375a3d2293ecb6481c7",
+  "evaluation": "checkpoints/lowlight_baseline_overfit16/evaluation_guidance_1/metrics.json",
+  "evaluation_sha256": "9ffb568a500eb378a2ad81ccd4ff4f329bf47b3dcb589dbe5d12623aeba96edc",
+  "guidance": 1.0,
+  "automatic_gate_pass": true,
+  "visual_identity_gate_pass": true,
+  "visual_review": "All 16 scenes preserve geometry, objects, layout, and semantic identity; no structural hallucination observed. Tonal caveats are documented in reports/lowlight_overfit16_result_2026-08-15.md.",
+  "reviewed_utc_date": "2026-08-15"
+}

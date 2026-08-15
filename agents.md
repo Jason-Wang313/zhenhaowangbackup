@@ -776,3 +776,27 @@ restoration evaluation, visual identity decision, or FoundIR result is claimed.
   `torch.cuda.is_available()` was false in this coding-agent terminal.
 - Full 8,000-pair training remains unauthorized until the offline H100
   16-pair automatic gate and human contact-sheet identity review both pass.
+
+LOWLIGHT FLUX.2 OVERFIT16 GATE — PASSED 2026-08-15
+
+The bounded 16-pair FLUX.2 Lowlight overfit gate passed on the H100 at
+guidance 1.0. The original guidance 4.0 evaluation is retained as a failed
+diagnostic: it over-amplified color/exposure and failed the L1 identity floor.
+Training used only the conditional prompt path, so guidance 1.0 is the matched
+conditional-only inference setting and is frozen for the next baseline stage.
+
+- Exact result report: `reports/lowlight_overfit16_result_2026-08-15.md`
+- Machine-readable gate: `configs/lowlight_overfit16_gate.json`
+- checkpoint SHA-256:
+  `94ecd1c32e7a137ed153b581ea0b12c879d7e5e3c0698375a3d2293ecb6481c7`
+- passing metrics SHA-256:
+  `9ffb568a500eb378a2ad81ccd4ff4f329bf47b3dcb589dbe5d12623aeba96edc`
+- L2-L5 mean PSNR: `9.2784 -> 22.1979 dB`
+- L2-L5 mean SSIM: `0.4287 -> 0.8537`
+- restored L1 mean SSIM: `0.7731`
+- automatic gate: pass
+- visual identity gate: pass; all scenes, objects, and layouts are preserved,
+  with no structural hallucination observed
+
+The overfit result authorizes preparation and preflight of the full 8,000-pair
+baseline. It does not itself authorize a FoundIR or Phase 1 success claim.
