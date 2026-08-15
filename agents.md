@@ -78,6 +78,33 @@ All-in-One图像增强
 T：合同生效日期
  T+N：合同生效日期后N个月
 
+CONFIRMED RESPONSIBILITY SCOPE AND LOWLIGHT-FIRST SOW GATE — 2026-08-15
+
+The project user is responsible only for the `VLM Guided All-in-One` image
+enhancement workstream. The separate `亮色大模型` workstream is owned and
+handled by another project member; it is out of scope for this workspace and
+for this agent's execution goals. Keep the original SOW text above as contract
+context, but do not plan, implement, train, evaluate, or claim completion of
+the `亮色大模型` deliverables unless the user explicitly changes this scope.
+
+For the user's All-in-One workstream, FoundIR-Lowlight may be evaluated before
+Blur, Noise, Haze, and Rain. The current independent Phase 1 lowlight gate is:
+
+- dataset: the official FoundIR-Lowlight evaluation split;
+- metrics: restored-image PSNR and LPIPS;
+- pass thresholds: PSNR `>=15.1 dB` and LPIPS `<=0.34`;
+- systems: first the FLUX.2 restoration baseline, then the same restoration
+  backbone with Qwen-VL degradation type/severity conditioning;
+- evidence: exact test manifest, checkpoint, code revision, configuration,
+  command, output images, and metric JSON/CSV must be retained.
+
+Passing this gate may be reported as `FoundIR-Lowlight Phase 1 sub-target
+passed`. It must not be reported as complete Phase 1 SOW acceptance because
+the original All-in-One acceptance table independently lists Blur, Noise,
+Lowlight, Haze, and Rain. The other four tasks are not prerequisites for
+running or passing the lowlight gate; they remain later work for the full
+All-in-One Phase 1 deliverable.
+
 3.	项目监控和管理 请按项目实际情况进行拟定，此部分将写入合同中，交流过程、记录需留存。
 本项目采用如下项目管理机制（供参考）：
 1.	项目双月月报。
