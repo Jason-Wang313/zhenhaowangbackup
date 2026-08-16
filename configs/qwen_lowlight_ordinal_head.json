@@ -1,0 +1,85 @@
+{
+  "schema_version": 3,
+  "status": "approved_for_frozen_qwen_ordinal_train_selection_and_validation_only",
+  "base_model_config": {
+    "path": "configs/qwen_lowlight_smoke25.json",
+    "sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1"
+  },
+  "frozen_validation_config": {
+    "path": "configs/qwen_lowlight_fewshot_validation25.json",
+    "sha256": "25a1ad4085e13b4fffcef9e5f5c13238fa5188af4665d5eb13f7f68ab0d0d3d1"
+  },
+  "head_selection_protocol": {
+    "degradation": "low_light",
+    "calibration_mode": "frozen_visual_head",
+    "calibration_split": "train_head",
+    "validation_split": "train_selection",
+    "protected_splits": [
+      "validation",
+      "test",
+      "foundir_test"
+    ],
+    "baseline_name": "head_train_mean_luminance_centroid",
+    "gates": {
+      "structured_output_rate": 1.0,
+      "require_all_predicted_levels": true,
+      "minimum_per_level_recall": 0.4,
+      "minimum_accuracy": 0.6,
+      "require_baseline_match": true
+    }
+  },
+  "final_validation_protocol": {
+    "degradation": "low_light",
+    "calibration_mode": "frozen_visual_head",
+    "calibration_split": "train",
+    "validation_split": "validation",
+    "protected_splits": [
+      "test",
+      "foundir_test"
+    ],
+    "baseline_name": "train_mean_luminance_centroid",
+    "gates": {
+      "structured_output_rate": 1.0,
+      "require_all_predicted_levels": true,
+      "minimum_per_level_recall": 0.4,
+      "minimum_accuracy": 0.6,
+      "require_baseline_match": true
+    }
+  },
+  "data": {
+    "manifest": "manifests/low_light_pilot_10000.csv",
+    "manifest_sha256": "e1ea9132bc0d5e55b30998c51c8e37a0363f29b2a23e7851ee804f3100d4a784",
+    "source_selection_seed": 2026081606,
+    "selected_train_sources": 300,
+    "head_train_sources": 240,
+    "head_selection_sources": 60,
+    "records_per_source": 5,
+    "final_validation_samples": 25,
+    "final_validation_sources": 25,
+    "final_validation_selection_seed": 2026081604
+  },
+  "features": {
+    "pooling": "token_mean_and_std",
+    "embedding_dim": 3584,
+    "feature_dim": 7168,
+    "extraction_batch_size": 5,
+    "cache_schema_version": 1
+  },
+  "head": {
+    "type": "coral_linear",
+    "expected_trainable_parameters": 28676,
+    "epochs": 300,
+    "batch_size": 128,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "monotonic_penalty_weight": 0.1,
+    "early_stopping_patience": 60,
+    "seed": 2026081607
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_ordinal_head"
+  }
+}
