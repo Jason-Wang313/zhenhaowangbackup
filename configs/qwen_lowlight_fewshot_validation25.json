@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "status": "approved_for_lowlight_calibrated_validation25_only",
+  "base_model_config": {
+    "path": "configs/qwen_lowlight_smoke25.json",
+    "sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1"
+  },
+  "assessment_protocol": {
+    "degradation": "low_light",
+    "calibration_mode": "visual_few_shot",
+    "calibration_split": "train",
+    "validation_split": "validation",
+    "protected_splits": [
+      "test",
+      "foundir_test"
+    ],
+    "baseline_name": "train_mean_luminance_centroid",
+    "gates": {
+      "structured_output_rate": 1.0,
+      "require_all_predicted_levels": true,
+      "minimum_per_level_recall": 0.4,
+      "minimum_accuracy": 0.6,
+      "require_baseline_match": true
+    }
+  },
+  "data": {
+    "manifest": "manifests/low_light_pilot_10000.csv",
+    "manifest_sha256": "e1ea9132bc0d5e55b30998c51c8e37a0363f29b2a23e7851ee804f3100d4a784",
+    "calibration_source_ids": [
+      "lsdir_0000773",
+      "div2k_0509",
+      "div2k_0413"
+    ],
+    "expected_calibration_records": 15,
+    "validation_samples": 25,
+    "validation_samples_per_level": 5,
+    "require_unique_validation_sources": true,
+    "expected_validation_sources": 25,
+    "validation_selection_seed": 2026081604
+  },
+  "prompt": {
+    "version": "project_level_visual_few_shot_v1",
+    "calibration_order": "source_then_level",
+    "query_image_position": "last"
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 64
+  },
+  "runtime": {
+    "seed": 2026081605,
+    "offline": true,
+    "device": "cuda",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_fewshot_validation25"
+  }
+}

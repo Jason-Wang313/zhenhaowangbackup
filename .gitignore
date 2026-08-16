@@ -7,6 +7,7 @@
 !/generate_low_light_pilot.py
 !/train_flux2_lowlight.py
 !/evaluate_flux2_lowlight_split.py
+!/predict_qwen_lowlight_fewshot.py
 !lowlight_restoration/
 !lowlight_restoration/*.py
 !configs/
