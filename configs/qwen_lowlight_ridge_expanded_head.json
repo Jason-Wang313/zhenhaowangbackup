@@ -1,0 +1,185 @@
+{
+  "schema_version": 5,
+  "status": "approved_for_expanded_train_only_selection_and_one_unexposed_validation",
+  "base_model_config": {
+    "path": "configs/qwen_lowlight_smoke25.json",
+    "sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1"
+  },
+  "failed_ridge_validation": {
+    "path": "checkpoints/qwen_lowlight_ridge_head/metrics.json",
+    "sha256": "4baf465aab731a845249a3bdbbdbec7e642439bae892686a0a7f5b09f6c5b0fd",
+    "expected_exposed_sources": 25
+  },
+  "selection_protocol": {
+    "degradation": "low_light",
+    "calibration_mode": "frozen_visual_head",
+    "calibration_split": "train_fit",
+    "validation_split": "train_selection",
+    "protected_splits": [
+      "validation",
+      "test",
+      "foundir_test"
+    ],
+    "baseline_name": "train_fit_mean_luminance_centroid",
+    "gates": {
+      "structured_output_rate": 1.0,
+      "require_all_predicted_levels": true,
+      "minimum_per_level_recall": 0.4,
+      "minimum_accuracy": 0.6,
+      "require_baseline_match": true
+    }
+  },
+  "final_validation_protocol": {
+    "degradation": "low_light",
+    "calibration_mode": "frozen_visual_head",
+    "calibration_split": "train",
+    "validation_split": "validation_unexposed",
+    "protected_splits": [
+      "test",
+      "foundir_test"
+    ],
+    "baseline_name": "all_train_mean_luminance_centroid",
+    "gates": {
+      "structured_output_rate": 1.0,
+      "require_all_predicted_levels": true,
+      "minimum_per_level_recall": 0.4,
+      "minimum_accuracy": 0.6,
+      "require_baseline_match": true
+    }
+  },
+  "data": {
+    "manifest": "manifests/low_light_pilot_10000.csv",
+    "manifest_sha256": "e1ea9132bc0d5e55b30998c51c8e37a0363f29b2a23e7851ee804f3100d4a784",
+    "records_per_source": 5,
+    "train_sources": 1600,
+    "train_records": 8000,
+    "train_source_dataset_counts": {
+      "div2k": 631,
+      "lsdir": 884,
+      "mio100": 85
+    },
+    "train_partition_seed": 2026081611,
+    "selection_source_quotas": {
+      "div2k": 126,
+      "lsdir": 177,
+      "mio100": 17
+    },
+    "fit_sources": 1280,
+    "fit_records": 6400,
+    "fit_source_dataset_counts": {
+      "div2k": 505,
+      "lsdir": 707,
+      "mio100": 68
+    },
+    "selection_sources": 320,
+    "selection_records": 1600,
+    "selection_source_dataset_counts": {
+      "div2k": 126,
+      "lsdir": 177,
+      "mio100": 17
+    },
+    "fit_bundle_sha256": "721eb7694fae0ba9222c4ef38729948358de63122ab9ce15cdb39dad802c4780",
+    "selection_bundle_sha256": "75fb05afe9a273c6d9d8b19c62760df58ca89438dbb34fb4ef39170a419ce944",
+    "validation_sources_total": 200,
+    "validation_selection_seed": 2026081613,
+    "validation_source_quotas": {
+      "div2k": 22,
+      "lsdir": 27,
+      "mio100": 1
+    },
+    "validation_sources": 50,
+    "validation_records": 250,
+    "validation_source_dataset_counts": {
+      "div2k": 22,
+      "lsdir": 27,
+      "mio100": 1
+    },
+    "validation_bundle_sha256": "c8e017fd19b9527610890e3976ceb536f0ae6ff5ebc9680094bc0538542e00ea",
+    "expected_validation_source_ids": [
+      "div2k_0002",
+      "div2k_0082",
+      "div2k_0098",
+      "div2k_0123",
+      "div2k_0186",
+      "div2k_0239",
+      "div2k_0272",
+      "div2k_0323",
+      "div2k_0347",
+      "div2k_0373",
+      "div2k_0394",
+      "div2k_0452",
+      "div2k_0479",
+      "div2k_0493",
+      "div2k_0498",
+      "div2k_0548",
+      "div2k_0571",
+      "div2k_0583",
+      "div2k_0651",
+      "div2k_0715",
+      "div2k_0721",
+      "div2k_0798",
+      "lsdir_0000050",
+      "lsdir_0000209",
+      "lsdir_0000268",
+      "lsdir_0000286",
+      "lsdir_0000288",
+      "lsdir_0000395",
+      "lsdir_0000446",
+      "lsdir_0000470",
+      "lsdir_0000471",
+      "lsdir_0000490",
+      "lsdir_0000538",
+      "lsdir_0000572",
+      "lsdir_0000581",
+      "lsdir_0000600",
+      "lsdir_0000665",
+      "lsdir_0000723",
+      "lsdir_0000748",
+      "lsdir_0000767",
+      "lsdir_0000811",
+      "lsdir_0000840",
+      "lsdir_0000908",
+      "lsdir_0000927",
+      "lsdir_0000991",
+      "lsdir_0001251",
+      "lsdir_0001459",
+      "lsdir_0001817",
+      "lsdir_0001974",
+      "mio100_008"
+    ]
+  },
+  "features": {
+    "pooling": "token_mean_and_std",
+    "embedding_dim": 3584,
+    "feature_dim": 7168,
+    "extraction_batch_size": 20,
+    "cache_schema_version": 2,
+    "extractor_path": "train_qwen_lowlight_ordinal_head.py",
+    "extractor_sha256": "12fb32fb7b090fc1181e5cb65fb60de1412cfafd5ebaad9be4949d474dfa6569",
+    "feature_dir": "checkpoints/qwen_lowlight_ridge_expanded_head/features"
+  },
+  "ridge": {
+    "type": "scalar_ridge_regression",
+    "solver": "lsqr",
+    "candidate_alphas": [
+      300.0,
+      1000.0,
+      3000.0,
+      10000.0,
+      30000.0
+    ],
+    "tolerance": 0.00001,
+    "maximum_iterations": 10000,
+    "fit_intercept": true,
+    "standardization": "train_fit_mean_and_std",
+    "decoding": "nearest_integer_clipped_1_5",
+    "expected_fitted_parameters": 7169,
+    "candidate_selection_key": "gate_then_accuracy_then_negative_mae_then_min_recall_then_negative_alpha"
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_ridge_expanded_head"
+  }
+}
