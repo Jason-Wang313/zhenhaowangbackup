@@ -1,0 +1,1070 @@
+{
+  "benchmark": "FoundIR isolated Lowlight",
+  "category": "14Lowlight",
+  "category_counts": {
+    "01Blur": 150,
+    "02Blur_Noise": 50,
+    "03Blur_JPEG": 50,
+    "04Blur_Noise_JPEG": 50,
+    "05Noise": 100,
+    "06JPEG": 50,
+    "07Noise_JPEG": 50,
+    "08Haze": 200,
+    "09Lowlight_Haze": 100,
+    "10Rain": 100,
+    "11Raindrop": 100,
+    "12NightRain": 50,
+    "13Rain_Haze": 50,
+    "14Lowlight": 50,
+    "15Lowlight_Blur": 100,
+    "16Lowlight_Noise": 50,
+    "17Lowlight_JPEG": 50,
+    "18Lowlight_Blur_Noise": 50,
+    "19Lowlight_Blur_JPEG": 50,
+    "20Lowlight_Noise_JPEG": 50
+  },
+  "foundir_revision": "6d19958499622d90ca71fe971d83b1e428c17cd0",
+  "full_test_pairs_validated": 1500,
+  "full_test_source_overlap_count": 50,
+  "full_test_source_overlaps": [
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1301",
+      "sha256": "bed05225952f5287698e4708e50cfa0e54ecf2d57345a2b3cd9c154361d78680",
+      "source_id": "div2k_0519"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1302",
+      "sha256": "6019b87ece0491042fe46b9d0507bc3a6e3a7e03ca9943f7ce253e32d5813348",
+      "source_id": "div2k_0520"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1303",
+      "sha256": "9797249d3cf7ba12300961867486ffdaa4f91d6c54a48763baf75b2d1cee300d",
+      "source_id": "div2k_0521"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1304",
+      "sha256": "6daa4061e78f91000bdf63d4c12a0bbe10ad9167bf1c936d21b09a773884bffa",
+      "source_id": "div2k_0522"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1305",
+      "sha256": "b7060a513717d717519d925c485348f2dfe5421add4c23e05c79eb1f94157d35",
+      "source_id": "div2k_0524"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1306",
+      "sha256": "e347389b77d0efb1fcb269972d6df98e224fd19aec2faadae828438bd4dae342",
+      "source_id": "lsdir_0000525"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1307",
+      "sha256": "76fef162f7bda6937a050af69d4ceeffb138dbfaa2e7a3c949ba1a3c48cde2a5",
+      "source_id": "div2k_0525"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1308",
+      "sha256": "64397c723e8d27d3551ba38085f0419f37eacce82b2039a6c8a9b9aeea8b8472",
+      "source_id": "div2k_0526"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1309",
+      "sha256": "ed495c1357ee738132962a9d8c004d3b049beb8b6bc65a173ce38590b7a6a434",
+      "source_id": "div2k_0528"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1310",
+      "sha256": "908f2a6598d2dd7b8235a7771e43c2e6125d78f3fffb9aa3237bd8820b5b7ecb",
+      "source_id": "div2k_0529"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1311",
+      "sha256": "5c168f40faf4e4169a6bbdd1d642ec3dadf38b3611baa1d4686d3c2ca5337a86",
+      "source_id": "div2k_0530"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1312",
+      "sha256": "fd16d1468720f60fa96e51f4cd4129c335e4d09256c41b4696f451e9aab4bc44",
+      "source_id": "lsdir_0000531"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1313",
+      "sha256": "bf9c0d8878b78c8c3c82b9cb9a1a36a696161cbc602bc6f0267e551309c712da",
+      "source_id": "div2k_0531"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1314",
+      "sha256": "7ba86c1611b519eb262f012dcccbd8b13a63e3ba2bc1a0da85cf52143763dbdc",
+      "source_id": "div2k_0532"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1315",
+      "sha256": "1da5abd8e3db0373cfa9226c0b211d748bcabeb70ad9dbf28a30702acf97e477",
+      "source_id": "div2k_0533"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1316",
+      "sha256": "c605f2a1092cafc85280d618eb55344c58830313dc75b0469a8f7321f11aa4d3",
+      "source_id": "div2k_0534"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1317",
+      "sha256": "e619c6b6e1aacf30559bef4bac7be7ae807a5bb3225242320e2be442572edce7",
+      "source_id": "div2k_0535"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1318",
+      "sha256": "05fed5b4b8574ace4231d0b3ec4b98ae0a655afeeb8e556b153c37209302b7a8",
+      "source_id": "div2k_0536"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1319",
+      "sha256": "3e3438cc9aafb4bc8c1a60f6d2bd2e29b116e523a2a29fde7e655830a2465976",
+      "source_id": "div2k_0537"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1320",
+      "sha256": "b6484a70b81b1430e9bf3431fc5e63d00930a1dfcb2e423b4089b30d9e173550",
+      "source_id": "div2k_0538"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1321",
+      "sha256": "6bc898b6506ced093b01b8641acfc53557cfdfcddcfe35ac1297e0ef2714ee3e",
+      "source_id": "div2k_0539"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1322",
+      "sha256": "112f18e50834de5f484980461e479b16beabc7b1ae3f5a94a64f1e1f061276ba",
+      "source_id": "lsdir_0000540"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1323",
+      "sha256": "f401a97c2133d495e9b7dfade5acf7e9d6df9d9bc0deebedec206419f9288092",
+      "source_id": "div2k_0540"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1324",
+      "sha256": "1dcdf97b4be0a0460c4aec5e63c2a75883d9fa94d9019bb2a94850845269f6d0",
+      "source_id": "lsdir_0000541"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1325",
+      "sha256": "c8fb654e354377d740cebcd63cda9c93a6241afe90c89339025ae7fb10d9d828",
+      "source_id": "div2k_0541"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1326",
+      "sha256": "1525e02c208488301f6e6441073bfb09e54e44c6c9654bdf131e55bfc9b56431",
+      "source_id": "div2k_0542"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1327",
+      "sha256": "da48e00062ae6ddc8f7650da52b2d2e0181151eeae5dde239837a8b8c2f6188a",
+      "source_id": "div2k_0543"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1328",
+      "sha256": "32f5b8e637f2bdc9a8c8dda0ec079d9840b686e689b37dff08f3f24b72c3eac2",
+      "source_id": "div2k_0544"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1329",
+      "sha256": "0946aeab167f83bfd80af99d1f813e382cebc3cb0c8dee924c2e43d71cec5e8e",
+      "source_id": "div2k_0545"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1330",
+      "sha256": "f06ecf4a96ff719f4b89d3b2cf6cec511d68635ebfb9d30fdbbc4440f2f8f8d9",
+      "source_id": "div2k_0546"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1331",
+      "sha256": "e35ac8fe89fbdd9b864854580e4aa9411462669ad2aeb333e280fa69c9d9bd6a",
+      "source_id": "div2k_0547"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1332",
+      "sha256": "76190df48f04999dc0004ab21d2cf54d67de21d632d62b1079b3527e173b0660",
+      "source_id": "div2k_0548"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1333",
+      "sha256": "5b82d0adc8dddf470b7d987cce8073059d70a2c85c6514983adf7bacea79d7d0",
+      "source_id": "div2k_0549"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1334",
+      "sha256": "098ad6d0641079afce86a3a4edca4e023ef3d2c5a6716b6a31fa9be905a873e9",
+      "source_id": "div2k_0550"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1335",
+      "sha256": "a5455a46fbfa40345b2dc16aeac9d5bb21b17cf6c2093bb9d494a25dce727e99",
+      "source_id": "div2k_0551"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1336",
+      "sha256": "f9df0098e74193220733c901b4b50602104700049a60f3f3fc15c463b4d91abc",
+      "source_id": "div2k_0552"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1337",
+      "sha256": "819d5ff728dd0d8336c7fdd3aec1019404301f95d25b287d3d1387d5ee712aa6",
+      "source_id": "div2k_0553"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1338",
+      "sha256": "20090d3624cbf5be53598c508b3c8a050fb6ede0a5f6e9ad712fc2ed25b73fe9",
+      "source_id": "div2k_0554"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1339",
+      "sha256": "3813bd5e58461f9fe1967b1dc75ed61c9e4d75639a33a5a0be9ddc693eee7cfa",
+      "source_id": "div2k_0555"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1340",
+      "sha256": "c684f091d31a184171ffaa5f387874c65d946ee17be101f12cf1ccef2714d39d",
+      "source_id": "div2k_0556"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1341",
+      "sha256": "ea6551bea725f1284a46fef889e1ec123802b6f204ef76691457c8352736aebe",
+      "source_id": "div2k_0557"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1342",
+      "sha256": "dc9cb5368665112c694414cf35d788150bafc61f8e9e8b623ecd6e06eaa7ab48",
+      "source_id": "div2k_0558"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1343",
+      "sha256": "1a1c4f64759b3681aebdf66489236b925144c7e2dc3238d923ba4484231458b7",
+      "source_id": "div2k_0559"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1344",
+      "sha256": "f67b37ce0d00a223d3d5689353e24a08740e0b7a4eed1ca2584aaa1d0258ed11",
+      "source_id": "div2k_0560"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1345",
+      "sha256": "a5683781ed88cacd5f9091fbceef52a684143b319be55394e02e0626506fc4a4",
+      "source_id": "div2k_0561"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1346",
+      "sha256": "1775c24397421736e217e1120a945d1e57e315875dfa16dec10a0a21109e2bbd",
+      "source_id": "div2k_0562"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1347",
+      "sha256": "73f3420f150193420e4bd3df45aa2abed07abd8e6dcb9e0ec8f9cf5146abc06d",
+      "source_id": "div2k_0563"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1348",
+      "sha256": "3a26172d565dcad9a97853afd7961688b99fd9a57e0af30a2fbd5805874c07bc",
+      "source_id": "div2k_0564"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1349",
+      "sha256": "6db96eb9bcc86e8d8f745e3f398a7663e8fff5889f627f1850e7caf16cbf2656",
+      "source_id": "div2k_0565"
+    },
+    {
+      "category": "17Lowlight_JPEG",
+      "pair_id": "1350",
+      "sha256": "d49e238e153e0919bdceaf9e68b365aa27ebb9fead74402afb07a083b79e12d8",
+      "source_id": "div2k_0566"
+    }
+  ],
+  "gt_archive": "downloads/foundir_official/GT.zip",
+  "gt_archive_bytes": 5844293121,
+  "gt_archive_sha256": "449fd43f27df42a31bfee2eef60cf09788315f2b0801ffbbf42b8f68420b0e77",
+  "isolated_lowlight_source_overlap_count": 0,
+  "lq_archive": "downloads/foundir_official/LQ.zip",
+  "lq_archive_bytes": 2444345354,
+  "lq_archive_sha256": "b61ac0a23501b0ee968b463bb07fa179615193138d6fe2c003a22fb716b11446",
+  "meta_path": "third_party/foundir/Testset_meta_info.txt",
+  "meta_sha256": "15467efd89a55d70a381f813d29f84b4c63ae5a958ef67ffa9bcf1883deb3761",
+  "metric_path": "third_party/foundir/cal_metrics.py",
+  "metric_sha256": "bf5bbff7c73b3a8a9623180764ff6ded6cdf4e03960d12825a5b68eaacaf9b32",
+  "pair_id_range": [
+    "1101",
+    "1150"
+  ],
+  "pairs": 50,
+  "protocol": {
+    "aggregation": "unweighted arithmetic mean over 50 pairs",
+    "input": "official paired LQ image",
+    "metric_resize_or_crop": "none",
+    "metrics": [
+      "PSNR",
+      "SSIM",
+      "LPIPS"
+    ],
+    "phase1_thresholds": {
+      "lpips_max": 0.34,
+      "psnr_min_db": 15.1
+    },
+    "selection": "14Lowlight only; IDs 1101-1150",
+    "target": "official paired GT image",
+    "tensor": "PIL RGB -> float32 NCHW / 255.0"
+  },
+  "records": [
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1622699,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1101.png",
+      "gt_sha256": "d02fab944d0ece941002af95460c90d35d3533d41e3764394712e35f27208d2b",
+      "height": 1528,
+      "lq_bytes": 739688,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1101.png",
+      "lq_sha256": "c13d76b2147751a3ca2fd10159790444b62c135247eb6f10857f2cf6da7dc960",
+      "pair_id": "1101",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1981769,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1102.png",
+      "gt_sha256": "d635b7dd3fc06e211a600bb3c9c56053211dad89e95ca907fc0226ca661358e3",
+      "height": 1528,
+      "lq_bytes": 707919,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1102.png",
+      "lq_sha256": "ddc3723326b762d3e3efec6bb7801ccfc98072621b02147f67db4d67a0d59cdf",
+      "pair_id": "1102",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2153643,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1103.png",
+      "gt_sha256": "c0b4d21268dd14b3b444d92ad3e765ebab03a6f63db2565c5d6cec3bc1d43818",
+      "height": 1528,
+      "lq_bytes": 696233,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1103.png",
+      "lq_sha256": "9fb1094b1bb34b35f4ce607d62cdb0ca94382f07f2939765e6d8a52933403fcf",
+      "pair_id": "1103",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1921280,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1104.png",
+      "gt_sha256": "24af2e48eb0032c5389a84ff0ff9c40ed4700a0de4f39f880a15187521c979d0",
+      "height": 1528,
+      "lq_bytes": 762643,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1104.png",
+      "lq_sha256": "4329820a093ea985d13ca83dc85aa752b9fa8e0948cde1f2f2e2ad4b88cee708",
+      "pair_id": "1104",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1404225,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1105.png",
+      "gt_sha256": "d4987263320a9e9c0f6075bd726639ef5697f6f9c14fd4ba2fe531d2f98dfbfb",
+      "height": 1528,
+      "lq_bytes": 636946,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1105.png",
+      "lq_sha256": "17765a7457e3430597f3ab4896a9ab22d701eb9bc9b283be0a1a396ffb9f3058",
+      "pair_id": "1105",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1855763,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1106.png",
+      "gt_sha256": "4a8a2ed1f2431f98742803ad9d60cec6c5883de1d599b58799e8d0c02b98deeb",
+      "height": 1528,
+      "lq_bytes": 749665,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1106.png",
+      "lq_sha256": "7b3209dadac394520a6dfead9e6cb17268eeef7a681530b8a9b3bd064a281746",
+      "pair_id": "1106",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2005341,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1107.png",
+      "gt_sha256": "b49fb759441281854f9e1a3e488583a89d553e55f965b930aa20def84fb0aa2c",
+      "height": 1528,
+      "lq_bytes": 776139,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1107.png",
+      "lq_sha256": "d3bcc410913ed20bc4f2a5414a2989e61c2d401089281d0f843d346afe352cef",
+      "pair_id": "1107",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1369551,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1108.png",
+      "gt_sha256": "0d35cb79e80bd4dfda37f88dc868de925661bec0cffc2e5ad2c19d9b417ea59d",
+      "height": 1528,
+      "lq_bytes": 812350,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1108.png",
+      "lq_sha256": "9864f45a17539554edce59f7ef02a72bdde227a70a9b7e1bc88fa65a1040a0b5",
+      "pair_id": "1108",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1177586,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1109.png",
+      "gt_sha256": "a2409f04abda16537f97d7382339ccb2b7c6065766befe20276873c3a2a591ce",
+      "height": 1528,
+      "lq_bytes": 751785,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1109.png",
+      "lq_sha256": "c392f415e76adcf54447df803b0a002e72e01a6b7b939e80da218787bc125b05",
+      "pair_id": "1109",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2190055,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1110.png",
+      "gt_sha256": "f356b5025b636831408f7fe3b3e1d130a1e92435404bbb0c4764eca50ee74b5d",
+      "height": 1528,
+      "lq_bytes": 1217053,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1110.png",
+      "lq_sha256": "d2e4e32ab6f40ae7967f4ba5a97ce5fbaa70b4cc1de092beb67b6474354445a1",
+      "pair_id": "1110",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1576360,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1111.png",
+      "gt_sha256": "0e1594e527872fa2f3ece8cfe83ca8dbdda5dbd9ab5101df1c3d63609ebc9e5a",
+      "height": 1528,
+      "lq_bytes": 874685,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1111.png",
+      "lq_sha256": "3499ffad0c435b5fa5d771505c4048a19238abbb0c4d5a8306c1b2a0cffdaf04",
+      "pair_id": "1111",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2848046,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1112.png",
+      "gt_sha256": "b8c7ad2b49bb8deb2c3ffbb2506275b0245fe30e5a6d8bbd7e9fa46894e5ef4b",
+      "height": 1528,
+      "lq_bytes": 1014612,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1112.png",
+      "lq_sha256": "71b21e4a6ed6b69a395b91c8f61c17fdb885cc8b50eb438c0353c282a8c693e2",
+      "pair_id": "1112",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1566675,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1113.png",
+      "gt_sha256": "24262b49b114af942efac16258678e2e1ec6721319fb6eb91e320bb8a2b3a875",
+      "height": 1528,
+      "lq_bytes": 939920,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1113.png",
+      "lq_sha256": "8bbcf6866820532b42c41a843e494201ec6ac1216e9034886e44ab3719d187d6",
+      "pair_id": "1113",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1359009,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1114.png",
+      "gt_sha256": "7338c645bbcb4664cc77daf35652a5e4db6b549ef1d5bfb064f1ef20ab540d1d",
+      "height": 1528,
+      "lq_bytes": 847592,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1114.png",
+      "lq_sha256": "4bd6002dee6f2c1cc18df19fbeeb56ce99528566ea9014c7dd3c9b77237344a0",
+      "pair_id": "1114",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1254923,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1115.png",
+      "gt_sha256": "8ef987b8913cd2bdb8212f4a7f78619e1015ab48a191db50303f1153a9000dc8",
+      "height": 1528,
+      "lq_bytes": 872322,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1115.png",
+      "lq_sha256": "7e92c2beaa44b2c170a8c669603579e245bea41fa07fb8a9c811f4a5a3bf8f9f",
+      "pair_id": "1115",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1812063,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1116.png",
+      "gt_sha256": "68f1fd3f54cd13105216f59742c0bf2e59f51615d54281dfb7e8e37131999da7",
+      "height": 1528,
+      "lq_bytes": 897879,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1116.png",
+      "lq_sha256": "a02b253d6d7d61a7d40712bfda655853e474a5eb6405339f7fe1e9520a884657",
+      "pair_id": "1116",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1577664,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1117.png",
+      "gt_sha256": "2eebf42944bdfa104a0ab4d4385c6b86ff5bfd5853c17ef0f6fff1739cfe1b2c",
+      "height": 1528,
+      "lq_bytes": 761915,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1117.png",
+      "lq_sha256": "77ca4567f3e28f81c03980058d59cb951471d0b8d8af73cc35915265be3ef5a1",
+      "pair_id": "1117",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2007934,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1118.png",
+      "gt_sha256": "9b8ff69608fe9332058eb141c5bf7aec26626537cc84b3247ec82892a1dbdd29",
+      "height": 1528,
+      "lq_bytes": 1057213,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1118.png",
+      "lq_sha256": "1d7924634c3b21ae4b71e06a806fd488f1228779ab1223b2a1480abf13f37cb7",
+      "pair_id": "1118",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1743004,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1119.png",
+      "gt_sha256": "44fdbad50064557a637fa683b2532fe3485ddc1dcdabe10842bc560d0be59470",
+      "height": 1528,
+      "lq_bytes": 908567,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1119.png",
+      "lq_sha256": "07467737104c6bc339d823814721558255c952b341d67a51d76e1c462e8f9b74",
+      "pair_id": "1119",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1569476,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1120.png",
+      "gt_sha256": "398ba5da82b7f9ff3fb4359cea69aac638878c27119b616053cbc939d3285c0b",
+      "height": 1528,
+      "lq_bytes": 1001636,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1120.png",
+      "lq_sha256": "74f2907e2c12042ea5e843c25de6e4dbf65c1db001ed1bbf949ebcee87803d62",
+      "pair_id": "1120",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2211879,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1121.png",
+      "gt_sha256": "dad92fd2962cecda873a90f38c863d3a87cd180b1b2cd2f1133481eec63566d1",
+      "height": 1528,
+      "lq_bytes": 805576,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1121.png",
+      "lq_sha256": "5c3f8335a728041f8b7295666dd34016b0cb155968c9ab35433ae1b30d73be70",
+      "pair_id": "1121",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1586802,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1122.png",
+      "gt_sha256": "26c3627ac4f60d991acf0a76d2cf769beeb9f6bd805839278a2cbfce70781a2c",
+      "height": 1528,
+      "lq_bytes": 932912,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1122.png",
+      "lq_sha256": "dbbda8a51a1f0a66a27c5aba8ee11b58b543553ca8c73f404bab930b24263525",
+      "pair_id": "1122",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2254635,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1123.png",
+      "gt_sha256": "136d8a3358611669a5cbc929b5aa6fcad5c13c543755c974d0c2171bd659d818",
+      "height": 1528,
+      "lq_bytes": 906573,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1123.png",
+      "lq_sha256": "50244377d867d9cc110e4f6daa252c20f216e96ab04bd1288c24e3d7cd93b707",
+      "pair_id": "1123",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2599907,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1124.png",
+      "gt_sha256": "8dd572afdb68404c9d712915a4d4fbdabcafe37fab080df48ed27899dd7ed401",
+      "height": 1528,
+      "lq_bytes": 1224557,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1124.png",
+      "lq_sha256": "6d58dd8ef90c7462bc3e2d64b43ccd7a23835a99bbd470e0bf9383f367c5c27b",
+      "pair_id": "1124",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1787419,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1125.png",
+      "gt_sha256": "a63a033d93bc32becffe3eb81f5d5390251212d6e56b701acb92aeef98b73a12",
+      "height": 1528,
+      "lq_bytes": 746975,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1125.png",
+      "lq_sha256": "a6fa03d3429d37856a7895b1ca73c824defc2fa95e8e118031a2266022a492c0",
+      "pair_id": "1125",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1956343,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1126.png",
+      "gt_sha256": "319c73d93ed56ef30ac534664bd8a4e5bff8eb23570ffb009884b8e7f1a10f75",
+      "height": 1528,
+      "lq_bytes": 827360,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1126.png",
+      "lq_sha256": "e5b9686f5e06139b9c306d1cc77bde553c897e6724c1e81be88115c16e9f96dc",
+      "pair_id": "1126",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 4052545,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1127.png",
+      "gt_sha256": "cd5872310135418fae9884a73afc6627e8bc46e499af0b6b46c66910ed39bd24",
+      "height": 1528,
+      "lq_bytes": 839218,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1127.png",
+      "lq_sha256": "9eb2e0ce7dbbf8e27849b4977ab14e98c7b487b93c5d29a1d1cdfd0f3304e7ad",
+      "pair_id": "1127",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 2070222,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1128.png",
+      "gt_sha256": "2e73b28dc5937d84cced6102dc16307355cc86bfa5527aa4db8beef4e2167ad9",
+      "height": 1528,
+      "lq_bytes": 879927,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1128.png",
+      "lq_sha256": "85d9162e926d2f55a7fc1fbbdcf51dab15edd402b22c3582503af7b7eb46ee3a",
+      "pair_id": "1128",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 3864009,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1129.png",
+      "gt_sha256": "a93507dc614e4f9115d16f74841cdaada44a690e18e36b4684c32f231fff5eea",
+      "height": 1528,
+      "lq_bytes": 1246146,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1129.png",
+      "lq_sha256": "2098333a945c830d69280125e7489e93ddc456eafb77a7048dfbd9f89a88600b",
+      "pair_id": "1129",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1264828,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1130.png",
+      "gt_sha256": "0c05090a04334d921072ed1b419524def14f22ae9411c443e7c8acbc4a6b7f60",
+      "height": 1528,
+      "lq_bytes": 685631,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1130.png",
+      "lq_sha256": "5e1fa392c60660c66f5362ee9c58c8d64c9df4cf04d0bbfa23c41c84fae8a486",
+      "pair_id": "1130",
+      "width": 2720
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1694007,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1131.png",
+      "gt_sha256": "9fb26c2e0a17a0949599e6f89d5453fd9c6cc16a70bcc82a02f186f3553be823",
+      "height": 1688,
+      "lq_bytes": 935395,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1131.png",
+      "lq_sha256": "aec1671c5a360d5128f2a808c0150e48b0cc6a46c45550e36e59a7067d20725f",
+      "pair_id": "1131",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1694007,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1132.png",
+      "gt_sha256": "9fb26c2e0a17a0949599e6f89d5453fd9c6cc16a70bcc82a02f186f3553be823",
+      "height": 1688,
+      "lq_bytes": 875095,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1132.png",
+      "lq_sha256": "f3f33212842a651d556b37f75286b8263062ef8a3af4db021db8957999ae9327",
+      "pair_id": "1132",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1694007,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1133.png",
+      "gt_sha256": "9fb26c2e0a17a0949599e6f89d5453fd9c6cc16a70bcc82a02f186f3553be823",
+      "height": 1688,
+      "lq_bytes": 733713,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1133.png",
+      "lq_sha256": "cc183df76ab0c35dfbb5d02029a527f3c74c8428ae914821c697ec91b1bcf825",
+      "pair_id": "1133",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1694007,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1134.png",
+      "gt_sha256": "9fb26c2e0a17a0949599e6f89d5453fd9c6cc16a70bcc82a02f186f3553be823",
+      "height": 1688,
+      "lq_bytes": 793366,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1134.png",
+      "lq_sha256": "c867f4d0540cfee8a6c58c9fd7937483e40303edccfe416e0fa7c1ee53453dcb",
+      "pair_id": "1134",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1676350,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1135.png",
+      "gt_sha256": "1f03c8459293c544b410e072f16a5e61274ee7cc32cfed8ee608f8fe2d42905a",
+      "height": 1688,
+      "lq_bytes": 905762,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1135.png",
+      "lq_sha256": "7c32c7cc45175b1265d3208f8035a3c62d0ba9e7750ca4ada19084f004b9b719",
+      "pair_id": "1135",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1676350,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1136.png",
+      "gt_sha256": "1f03c8459293c544b410e072f16a5e61274ee7cc32cfed8ee608f8fe2d42905a",
+      "height": 1688,
+      "lq_bytes": 812601,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1136.png",
+      "lq_sha256": "ce0fda5289ff118696f9cfb62e76249ae27b99e640c0a0fc519618496d3804cf",
+      "pair_id": "1136",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1676350,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1137.png",
+      "gt_sha256": "1f03c8459293c544b410e072f16a5e61274ee7cc32cfed8ee608f8fe2d42905a",
+      "height": 1688,
+      "lq_bytes": 856326,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1137.png",
+      "lq_sha256": "259be6d9c29c8f33a7bfb88bea4d3142f9dbe2353b0bb6bf4dd782c3638e465a",
+      "pair_id": "1137",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1676350,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1138.png",
+      "gt_sha256": "1f03c8459293c544b410e072f16a5e61274ee7cc32cfed8ee608f8fe2d42905a",
+      "height": 1688,
+      "lq_bytes": 971814,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1138.png",
+      "lq_sha256": "1b561e0c62667f71db69ff7fae5332b33ceebb3c86640a93cbd625c9c49f05a1",
+      "pair_id": "1138",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1541636,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1139.png",
+      "gt_sha256": "0cbe1df1ba6cb1a42847ce3aaaf76021445fe7800be842fc94650033b0207f89",
+      "height": 1688,
+      "lq_bytes": 870425,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1139.png",
+      "lq_sha256": "207ae00a90b2a5aa7584650bc6e1aaab0d5e4898c785aef01ca5a6ddebf321f2",
+      "pair_id": "1139",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1541636,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1140.png",
+      "gt_sha256": "0cbe1df1ba6cb1a42847ce3aaaf76021445fe7800be842fc94650033b0207f89",
+      "height": 1688,
+      "lq_bytes": 769358,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1140.png",
+      "lq_sha256": "fbfc0bc2c419cd02f18c165bfbf00d1f56a10e4a79c98602e9a180a61484b728",
+      "pair_id": "1140",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1541636,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1141.png",
+      "gt_sha256": "0cbe1df1ba6cb1a42847ce3aaaf76021445fe7800be842fc94650033b0207f89",
+      "height": 1688,
+      "lq_bytes": 855971,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1141.png",
+      "lq_sha256": "6a4a7bb6c6807c3614096258d6bb4f0dd0e1cc6562863809e001a6383b6336c1",
+      "pair_id": "1141",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1541636,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1142.png",
+      "gt_sha256": "0cbe1df1ba6cb1a42847ce3aaaf76021445fe7800be842fc94650033b0207f89",
+      "height": 1688,
+      "lq_bytes": 826833,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1142.png",
+      "lq_sha256": "c23bb68a32ec16f3aa37e940a45e7b110884a51ce448bac38cf57fc22cdf3dfb",
+      "pair_id": "1142",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1755541,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1143.png",
+      "gt_sha256": "d2a8ddc29754b34d5f231cf14c40dacd38d79cb480d8e257e6ed3d0a210ec882",
+      "height": 1688,
+      "lq_bytes": 1027785,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1143.png",
+      "lq_sha256": "a5a9447de4d425d35222c22c1066e5179cda1dc76278b752f78b7d0a7202b44c",
+      "pair_id": "1143",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1755541,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1144.png",
+      "gt_sha256": "d2a8ddc29754b34d5f231cf14c40dacd38d79cb480d8e257e6ed3d0a210ec882",
+      "height": 1688,
+      "lq_bytes": 1304141,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1144.png",
+      "lq_sha256": "4663476353fcd2a8ba26744dce3ad6add0500e046c33e2a7b2a160f1abec7075",
+      "pair_id": "1144",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1755541,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1145.png",
+      "gt_sha256": "d2a8ddc29754b34d5f231cf14c40dacd38d79cb480d8e257e6ed3d0a210ec882",
+      "height": 1688,
+      "lq_bytes": 1018754,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1145.png",
+      "lq_sha256": "1f2d4b252c59fb6c1d891fdabd630b18daf2529a16ff8460573e86bed5ae9d49",
+      "pair_id": "1145",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 1755541,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1146.png",
+      "gt_sha256": "d2a8ddc29754b34d5f231cf14c40dacd38d79cb480d8e257e6ed3d0a210ec882",
+      "height": 1688,
+      "lq_bytes": 849641,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1146.png",
+      "lq_sha256": "1b51bf682c305fd12a20970bf8126c21421138394595c0e6fa944af20208ce5d",
+      "pair_id": "1146",
+      "width": 3008
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 691239,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1147.png",
+      "gt_sha256": "f31ad672b444519d03628bd58998c241121be089c186d5e773eccc5249f4dc52",
+      "height": 2456,
+      "lq_bytes": 1157864,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1147.png",
+      "lq_sha256": "227f995fa5aa1a1f77bbc2dc65c2647865bf4f90bbb58dfa44812f7d167420b9",
+      "pair_id": "1147",
+      "width": 3680
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 691239,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1148.png",
+      "gt_sha256": "f31ad672b444519d03628bd58998c241121be089c186d5e773eccc5249f4dc52",
+      "height": 2456,
+      "lq_bytes": 1470572,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1148.png",
+      "lq_sha256": "6e49347598bf615861272e8e9666946b4c89460633805275da93941b2a4c7d91",
+      "pair_id": "1148",
+      "width": 3680
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 691239,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1149.png",
+      "gt_sha256": "f31ad672b444519d03628bd58998c241121be089c186d5e773eccc5249f4dc52",
+      "height": 2456,
+      "lq_bytes": 1180712,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1149.png",
+      "lq_sha256": "60a4c0ba1ed27aa2136cecb0185472f0aefb6da35ff17671d58e7b8ed0b744c8",
+      "pair_id": "1149",
+      "width": 3680
+    },
+    {
+      "category": "14Lowlight",
+      "gt_bytes": 691239,
+      "gt_mode": "RGB",
+      "gt_path": "downloads/foundir_official/extracted_gt/14Lowlight/1150.png",
+      "gt_sha256": "f31ad672b444519d03628bd58998c241121be089c186d5e773eccc5249f4dc52",
+      "height": 2456,
+      "lq_bytes": 1303360,
+      "lq_mode": "RGB",
+      "lq_path": "downloads/foundir_official/extracted_lq/14Lowlight/1150.png",
+      "lq_sha256": "b0586d964eb0a9898ffb9a556ab372d2c92245180103177b137e04065bf8114d",
+      "pair_id": "1150",
+      "width": 3680
+    }
+  ],
+  "schema_version": 1,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_overlap_method": "exact SHA-256 against all 1,500 official GT images",
+  "status": "official_foundir_isolated_lowlight_validated"
+}
