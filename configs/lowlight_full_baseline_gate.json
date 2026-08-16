@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "gate": "flux2_lowlight_baseline_full_internal",
+  "status": "passed",
+  "approved_next_scope": "prepare_qwen_vl_lowlight_baseline_comparison",
+  "training_git_revision": "4e878b38caa4eef987a9a3900a8b6ae160f60210",
+  "flux_revision": "50fe5162777813d869182b139e83b10743caef15",
+  "config_sha256": "c71235efe88e8f3bc98ca863350af372a78aa35f1a2cc065a1867c5bb6bfde18",
+  "checkpoint": "checkpoints/lowlight_baseline_full/step_004000.safetensors",
+  "checkpoint_sha256": "fa51deac872e3df57f147631361841039c386ef43f58a17a56fb68b9924e8f22",
+  "training_summary": "checkpoints/lowlight_baseline_full/training_summary.json",
+  "training_summary_sha256": "4581852a5ed35a1654f239040cd050d5ee40b462a22b57215c50f8afb3cd538b",
+  "validation_metrics": "checkpoints/lowlight_baseline_full/validation_full/metrics.json",
+  "validation_metrics_sha256": "b1b78a9afa5174786702ac17fc2db44524ba374a2264c42067ba68fa3ff08e51",
+  "test_metrics": "checkpoints/lowlight_baseline_full/test_full/metrics.json",
+  "test_metrics_sha256": "6bac93cb0a45556787364c553242d15463b2ea0a5a18d5738054b2a87e1a1da4",
+  "validation_automatic_sanity_pass": true,
+  "test_automatic_sanity_pass": true,
+  "visual_identity_gate_pass": true,
+  "visual_review": "Stratified, worst-PSNR, and worst-L1-SSIM sheets preserve scene structure, object identity, and layout without structural hallucination. A few extremely dark or nearly uniform crops remain under-restored, and individual L1 crops show tonal or texture shifts; limitations are documented in reports/lowlight_full_baseline_result_2026-08-16.md.",
+  "reviewed_utc_date": "2026-08-16"
+}

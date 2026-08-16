@@ -824,5 +824,38 @@ Authorization fails closed unless the exact full config and the passing
 overfit gate match. Runtime authorization also re-hashes the overfit checkpoint
 and its passing guidance-1 metrics. Fifteen CPU unit tests, Python compilation,
 shell syntax, the 8,000-record preflight with large model hashes skipped, and
-the independent preflight with all FLUX/VAE/text-encoder hashes passed. Do not
-run the H100 launcher until diff review, commit, and push have also passed.
+the independent preflight with all FLUX/VAE/text-encoder hashes passed before
+the full H100 launcher was run.
+
+LOWLIGHT FULL INTERNAL BASELINE — PASSED 2026-08-16
+
+The fixed FLUX.2 full baseline completed 4,000 H100 training steps and complete
+evaluation on the 1,000-record validation and 1,000-record internal-test
+splits. Both automatic gates and the contact-sheet visual identity review
+passed. This authorizes preparation of the Qwen-VL Lowlight conditioning
+comparison only; it is not an official FoundIR result or a Phase 1 completion
+claim.
+
+- Result report: `reports/lowlight_full_baseline_result_2026-08-16.md`
+- Machine-readable gate: `configs/lowlight_full_baseline_gate.json`
+- Checkpoint:
+  `checkpoints/lowlight_baseline_full/step_004000.safetensors`
+- Checkpoint SHA-256:
+  `fa51deac872e3df57f147631361841039c386ef43f58a17a56fb68b9924e8f22`
+- Training-summary SHA-256:
+  `4581852a5ed35a1654f239040cd050d5ee40b462a22b57215c50f8afb3cd538b`
+- Validation-metrics SHA-256:
+  `b1b78a9afa5174786702ac17fc2db44524ba374a2264c42067ba68fa3ff08e51`
+- Internal-test-metrics SHA-256:
+  `6bac93cb0a45556787364c553242d15463b2ea0a5a18d5738054b2a87e1a1da4`
+- Validation L2-L5: PSNR `24.9051`, SSIM `0.8913`, LPIPS `0.0411`
+- Internal test L2-L5: PSNR `24.7723`, SSIM `0.8858`, LPIPS `0.0440`
+- Validation L1 identity: PSNR `31.4672`, SSIM `0.9317`, LPIPS `0.0172`
+- Internal-test L1 identity: PSNR `31.6674`, SSIM `0.9266`, LPIPS `0.0185`
+
+The stratified and worst-case sheets preserve scene structure and identity
+without structural hallucination. Genuine failure cases remain: several
+extremely dark or nearly uniform crops are under-restored, including
+`div2k_0452_L5` validation at `3.01 dB`, and some individual L1 crops show
+tonal/texture changes despite the strong mean identity score. Preserve these
+outliers in the later fair comparison.
