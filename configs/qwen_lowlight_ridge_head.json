@@ -1,0 +1,81 @@
+{
+  "schema_version": 4,
+  "status": "approved_for_cached_qwen_ridge_selection_and_fixed_validation_only",
+  "feature_config": {
+    "path": "configs/qwen_lowlight_ordinal_head.json",
+    "sha256": "6bb849efd4c97cb817d14b4d4c6eb4ae9abe24cc9d22554139d0b12baf29824d"
+  },
+  "failed_linear_selection": {
+    "path": "checkpoints/qwen_lowlight_ordinal_head/selection_metrics.json",
+    "sha256": "1e6fdd301326846be74b7c208c02dfd8b47dd080bae0a7bcc91a85f952d43b17"
+  },
+  "selection_protocol": {
+    "degradation": "low_light",
+    "calibration_mode": "frozen_visual_head",
+    "calibration_split": "train_head",
+    "validation_split": "train_selection",
+    "protected_splits": [
+      "validation",
+      "test",
+      "foundir_test"
+    ],
+    "baseline_name": "head_train_mean_luminance_centroid",
+    "gates": {
+      "structured_output_rate": 1.0,
+      "require_all_predicted_levels": true,
+      "minimum_per_level_recall": 0.4,
+      "minimum_accuracy": 0.6,
+      "require_baseline_match": true
+    }
+  },
+  "final_validation_protocol": {
+    "degradation": "low_light",
+    "calibration_mode": "frozen_visual_head",
+    "calibration_split": "train",
+    "validation_split": "validation",
+    "protected_splits": [
+      "test",
+      "foundir_test"
+    ],
+    "baseline_name": "train_mean_luminance_centroid",
+    "gates": {
+      "structured_output_rate": 1.0,
+      "require_all_predicted_levels": true,
+      "minimum_per_level_recall": 0.4,
+      "minimum_accuracy": 0.6,
+      "require_baseline_match": true
+    }
+  },
+  "ridge": {
+    "solver": "lsqr",
+    "alpha": 1000.0,
+    "tolerance": 0.00001,
+    "maximum_iterations": 10000,
+    "fit_intercept": true,
+    "expected_fitted_parameters": 7169,
+    "selection_choice_set": {
+      "model_family": "scalar_ridge_regression",
+      "alphas": [
+        0.1,
+        1.0,
+        10.0,
+        100.0,
+        1000.0,
+        10000.0
+      ]
+    }
+  },
+  "cache": {
+    "feature_dir": "checkpoints/qwen_lowlight_ordinal_head/features",
+    "feature_config_sha256": "6bb849efd4c97cb817d14b4d4c6eb4ae9abe24cc9d22554139d0b12baf29824d",
+    "extractor_sha256": "12fb32fb7b090fc1181e5cb65fb60de1412cfafd5ebaad9be4949d474dfa6569",
+    "feature_dim": 7168,
+    "required_cached_train_selection_features": 1500
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_ridge_head"
+  }
+}

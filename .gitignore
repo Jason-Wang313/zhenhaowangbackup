@@ -9,6 +9,7 @@
 !/evaluate_flux2_lowlight_split.py
 !/predict_qwen_lowlight_fewshot.py
 !/train_qwen_lowlight_ordinal_head.py
+!/train_qwen_lowlight_ridge_head.py
 !lowlight_restoration/
 !lowlight_restoration/*.py
 !configs/
