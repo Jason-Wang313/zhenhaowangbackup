@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "run_name": "flux2_lowlight_qwen_conditioned_full",
+  "status": "approved_after_expanded_qwen_ridge_pass",
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "dtype": "bfloat16",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "text_encoder": "models/qwen3-4b-fp8",
+    "prompt": "Restore the low-light reference image faithfully to its clean, well-lit appearance. Preserve all content, geometry, identity, texture, and natural color."
+  },
+  "data": {
+    "manifest": "manifests/low_light_pilot_10000.csv",
+    "split": "train",
+    "degradation_type": "low_light",
+    "expected_records": 8000,
+    "expected_unique_sources": 1600,
+    "crop_size": 512
+  },
+  "lora": {
+    "rank": 8,
+    "alpha": 8.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "seed": 2026081502,
+    "max_steps": 4000,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "checkpoint_every": 250,
+    "log_every": 10,
+    "timestep_sampling": "uniform",
+    "reference_time_coordinate": 10
+  },
+  "inference": {
+    "seed": 2026081503,
+    "num_steps": 50,
+    "guidance": 1.0,
+    "num_samples": 1000
+  },
+  "condition": {
+    "mode": "frozen_qwen_ridge_predicted_level",
+    "degradation_type": "low_light",
+    "adapter_type": "append_one_learned_context_token",
+    "context_dim": 7680,
+    "levels": 5,
+    "init_std": 0.02,
+    "expected_trainable_parameters": 38400,
+    "expected_total_trainable_parameters": 8148480,
+    "baseline_config": "configs/lowlight_flux2_full.json",
+    "baseline_config_sha256": "c71235efe88e8f3bc98ca863350af372a78aa35f1a2cc065a1867c5bb6bfde18",
+    "baseline_gate": "configs/lowlight_full_baseline_gate.json",
+    "baseline_gate_sha256": "8a5f33c8a860e1d23ac74b3bcdd02f243d54d56d1190dd62f739488c6f4d8c07",
+    "baseline_prompt_context": "checkpoints/lowlight_baseline_full/prompt_context.safetensors",
+    "baseline_prompt_context_sha256": "35c478104b2d0fcdca16470e0a85deb5fd3030f9f9d6d50501e459647cbcb1bb",
+    "baseline_prompt_metadata": "checkpoints/lowlight_baseline_full/prompt_context.safetensors.json",
+    "baseline_prompt_metadata_sha256": "39a46bf879761b1f5ddeb6853b9491b516557341fc9da6a99486957cd423ec7a",
+    "qwen_base_config": "configs/qwen_lowlight_smoke25.json",
+    "qwen_base_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "qwen_expanded_config": "configs/qwen_lowlight_ridge_expanded_head.json",
+    "qwen_expanded_config_sha256": "b04bf893e073cf50423a384456398b12ce92625a979453c8f8c61e210f8bd33c",
+    "qwen_metrics": "checkpoints/qwen_lowlight_ridge_expanded_head/metrics.json",
+    "qwen_metrics_sha256": "18285e16fad062d8653e9468159f6679531a7f97ea1d5b794bc12fe4994cc29a",
+    "qwen_checkpoint": "checkpoints/qwen_lowlight_ridge_expanded_head/ridge_head.safetensors",
+    "qwen_checkpoint_sha256": "27f58645d992c97f8b3e44af82a2a9ae11d93d0fa4bc5090b3d1bde39271b368",
+    "qwen_model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "feature_extractor": "train_qwen_lowlight_ordinal_head.py",
+    "feature_extractor_sha256": "12fb32fb7b090fc1181e5cb65fb60de1412cfafd5ebaad9be4949d474dfa6569",
+    "feature_dir": "checkpoints/qwen_lowlight_ridge_expanded_head/features",
+    "feature_dim": 7168,
+    "feature_cache_schema_version": 2,
+    "feature_extraction_batch_size": 20,
+    "prediction_output_dir": "checkpoints/qwen_lowlight_condition_predictions",
+    "prediction_manifest": "checkpoints/qwen_lowlight_condition_predictions/predictions.json",
+    "expected_prediction_records": 10000,
+    "expected_prediction_splits": {
+      "train": 8000,
+      "validation": 1000,
+      "test": 1000
+    }
+  },
+  "comparison": {
+    "baseline_validation_metrics": "checkpoints/lowlight_baseline_full/validation_full/metrics.json",
+    "baseline_validation_metrics_sha256": "b1b78a9afa5174786702ac17fc2db44524ba374a2264c42067ba68fa3ff08e51",
+    "baseline_test_metrics": "checkpoints/lowlight_baseline_full/test_full/metrics.json",
+    "baseline_test_metrics_sha256": "6bac93cb0a45556787364c553242d15463b2ea0a5a18d5738054b2a87e1a1da4",
+    "primary_scope": "test_l2_l5",
+    "require_psnr_improvement": true,
+    "require_ssim_improvement": true,
+    "require_lpips_improvement": true,
+    "maximum_l1_ssim_regression": 0.01
+  },
+  "implementation": {
+    "lowlight_restoration/condition_adapter.py": "f1745b143109db141dd95a639a34369d42a5314dd5724bf92943585c43f8729e",
+    "lowlight_restoration/conditioned_checkpoint.py": "41a3224745c8533d4fec326dc5e35b415b5ac23124a225a2ee382ccaec18f91c",
+    "lowlight_restoration/qwen_predictions.py": "f22dc699aebc53163b719ddd7016819b9e537a694cbbd3e9d3910ad4a67e0047",
+    "lowlight_restoration/flow.py": "495f455064f8012bbce32bfdbad981ff3fd0e68dcfe800969d17b8b163277067",
+    "lowlight_restoration/lora.py": "b0c3b93644073985d33df7472e5191ec13450a64dad96a25bee2e92ed044bcb2",
+    "lowlight_restoration/data.py": "050995baf74db2b08f837be307b5290b1049121e98689889b9f6f70296ab6a7a",
+    "lowlight_restoration/config.py": "203b36a38af9a4a4a81b303f7737186edeecca83f2b15b62d551fe49b5e73920",
+    "train_flux2_lowlight.py": "6a6896f60e41511eb5deb195b4591479fbc0c8c4bd80ac14fbadc750e48b9761",
+    "evaluate_flux2_lowlight_split.py": "e8b2de1d1902ca40d23960d07b9524376ddecbd32e269165852c43609d2051b0",
+    "smoke/evaluate_lowlight_overfit.py": "087a572481c15691e5cc90d1b2b7003190d2684f824ee196252bc5d1cd4212d8",
+    "smoke/export_qwen_lowlight_condition_predictions.py": "04edeb365f70e117c862bca7238f26457a833c1065dbfd8bfe77f8866507b126",
+    "smoke/train_flux2_lowlight_qwen_conditioned.py": "17de8327e60eb2db0e955ed31597e0fde1597a2e4a50662d6ce3153d2974d482",
+    "smoke/evaluate_flux2_lowlight_qwen_conditioned.py": "a71ff331dea088088e61c3633112461f30b09f657d95c2647970496cb379632e",
+    "smoke/compare_lowlight_baseline_qwen.py": "13d53226b4f5908bb2647c290e1d3e2ac441af5b2ecae9a8f61fc468e5754b32",
+    "smoke/lowlight_qwen_conditioned_preflight.py": "07d2d8515e956ac4d121c297e9928423e884c2d309a867e58504e2bf4eab464f",
+    "smoke/run_lowlight_qwen_conditioned_full.sh": "1f9bc146c9802b08246f336a6193dc14376123ab70ab4bebb4e4efbb850a887f"
+  },
+  "runtime": {
+    "device": "cuda",
+    "offline": true,
+    "minimum_vram_gib": 40,
+    "output_dir": "checkpoints/lowlight_qwen_conditioned_full"
+  }
+}
