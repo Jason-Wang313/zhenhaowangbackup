@@ -262,8 +262,10 @@ degradation types. This interpretation was confirmed by the project advisor.
 - Three degradations: one clean crop receives three degradations, for example
   `low_light L3 + noise L2 + rain L4` or `blur L4 + haze L3 + rain L2`.
 
-Severity is independently assigned to each degradation in a combination. The
-canonical structured label is:
+Severity is independently assigned to each active degradation in a
+combination. Active degradations use project levels L2-L5 only. Project L1 is
+reserved for a clean-only crop and is never attached to an active degradation
+type. The canonical structured label is:
 
 ```json
 {
@@ -274,8 +276,18 @@ canonical structured label is:
 
 The generator and manifest must preserve the degradation list, each component
 level, application order, component parameters, source ID, crop coordinates,
-and random seed. The advisor must confirm any future balancing ratios between
-single, double, and triple combinations before the 100k dataset is generated.
+and random seed.
+
+The degraded-record composition is frozen at `1:1:1` for single, double, and
+triple degradations. This ratio is directly supported by the official
+AgenticIR DepictQA synthesis implementation at
+`third_party/AgenticIR/installation/tune_depictqa/synthesize_lq.py`: its loop
+uses `n_degra=1,2,3` and generates exactly `5,000` images for each category.
+That evidence supports only the degraded-record `1:1:1` ratio. AgenticIR uses
+eight degradation names in that script, whereas this project selects five:
+Lowlight, Noise, Blur, Haze, and Rain. AgenticIR internal levels 1-4 are four
+actual degraded strengths; they map to project L2-L5 and must not be confused
+with project L1.
 
 CURRENT FROZEN AGENTICIR BLUR PILOT RECIPE
 
@@ -336,26 +348,47 @@ Confirmed data composition:
   `low_light L3 + noise L2`.
 - Triple samples contain three simultaneous degradations, such as
   `low_light L3 + noise L2 + rain L4`.
-- Each degradation in a combination has its own independent L1-L5 level.
-- L1 is clean; L2-L5 are the four project-selected degraded severities.
+- Each active degradation in a combination has its own independent project
+  L2-L5 level.
+- Project L1 is always clean. No degradation operator is applied. Here a
+  literal clean image means an unmodified clean crop after shared preprocessing,
+  not necessarily a byte-identical copy of the original full-resolution source
+  file.
+- A clean-only record has the canonical label
+  `{"degradations":[],"levels":{}}`. Labels such as `low_light L1` or
+  `low_light L1 + noise L1` are forbidden.
+- AgenticIR internal levels 1-4 map to project L2-L5; AgenticIR internal level
+  1 is a real degraded strength, not project L1.
 - The five-level convention is a project design choice for structured labels,
   not an exact SOW requirement.
 
-Target dataset construction:
+CONFIRMED 100,000-RECORD QWEN-VL CORPUS POLICY — 2026-08-17
 
 - Use approved clean sources from DIV2K, MiO100, and a selected LSDIR subset.
 - Split by original source image before cropping. Crops from one source must
   stay in the same train, validation, or test split.
 - Generate aligned fixed-size crops. For haze, estimate depth on the full
   image first and crop the RGB image and depth map identically.
-- Produce approximately 100,000 multimodal records.
-- Use the selected balanced composition: approximately one third single,
-  one third double, and one third triple samples.
-- Within each group, use balanced quotas for the five single combinations, ten
-  double combinations, and ten triple combinations, while randomizing source,
-  crop, independent levels, parameters, and seeds inside each quota.
-- Run a small smoke test using all five degradation types and all three
-  composition categories before producing the full dataset.
+- Produce `100,000` multimodal records in total: `80,000` train, `10,000`
+  validation, and `10,000` fixed test records. Split original sources before
+  cropping; the fixed test is never used for training, checkpoint selection, or
+  tuning.
+- The project-selected composition is `10,000` clean-only, `30,000` single,
+  `30,000` double, and `30,000` triple records. The 10% clean quota is a
+  project choice that gives Qwen-VL a negative class; it is not derived from
+  AgenticIR.
+- Preserve `1:1:1` across the `90,000` degraded records. Split each composition
+  source-disjointly as follows: train `8,000/24,000/24,000/24,000`, validation
+  `1,000/3,000/3,000/3,000`, and test `1,000/3,000/3,000/3,000` for
+  clean/single/double/triple respectively.
+- Within the degraded groups, balance the five single combinations at `6,000`
+  each, the ten double combinations at `3,000` each, and the ten triple
+  combinations at `3,000` each. Randomize source, crop, independent L2-L5
+  levels, parameters, application order, and seed inside each quota, while
+  recording every realized value in the manifest.
+- Run a small smoke test covering clean-only records, all five degradation
+  types, and all three degraded composition categories before producing the
+  full dataset.
 
 LOW-LIGHT 10,000-PAIR PILOT CLEAN-SOURCE RULE
 
@@ -656,9 +689,10 @@ STAGE 4 — DATA SCALE ONLY AFTER THE ABLATION IS VALID
 Do not create 100k records before the backbone and injection interface are
 validated. After the smoke comparison is reproducible, build the larger data
 using DIV2K, MiO100, and an approved LSDIR subset. Split original sources
-before cropping. Generate one-, two-, and three-degradation samples with
-independent levels, balanced approximately one-third proportions, and balanced
-combination quotas; randomize samples and parameters inside each quota.
+before cropping. Build `10,000` clean-only records plus `30,000` each of
+single-, double-, and triple-degradation records. Active components use
+independent project L2-L5 levels. Keep balanced combination quotas and randomize
+samples, application order, and parameters inside each quota.
 
 REQUIRED HANDOFF ARTIFACTS
 
