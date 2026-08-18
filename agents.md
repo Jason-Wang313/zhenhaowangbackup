@@ -40,10 +40,9 @@ Advisor architecture image:
 
 - canonical filename: `advisor_vlm_guided_all_in_one_main_route.jpg`
 - verified SHA-256 of the advisor upload:
-  `40fc4f20a24e393fd100956b570df0916e27292f76f77d1e58e5fb9602620703`
-- the uploaded source disappeared from the workspace before its confirmed
-  rename could be executed; restore the exact verified image at the canonical
-  path when the user re-uploads it, and do not substitute or regenerate it
+  `02e32805142e64a7c191469fa4fbe4d4169914b25e3fa9df75853d4cde266194`
+- this image is the advisor-provided main-route authority; preserve it, keep it
+  tracked with this document, and do not substitute or regenerate it
 
 The authoritative route has two stages:
 

@@ -3,6 +3,7 @@
 !.gitignore
 !.gitattributes
 !agents.md
+!advisor_vlm_guided_all_in_one_main_route.jpg
 !README.md
 !/generate_low_light_pilot.py
 !/train_flux2_lowlight.py
