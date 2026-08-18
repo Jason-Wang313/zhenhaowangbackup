@@ -28,6 +28,65 @@ Do not inspect, modify, delete, or execute commands in any other user's director
 
 Assume this is a fresh start. Treat every dataset, checkpoint, download, environment, manifest, and result as UNKNOWN until checked directly.
 
+READ FIRST — AUTHORITATIVE ADVISOR-PROVIDED MAIN PROJECT ROUTE — 2026-08-18
+
+This section is the first project-route authority for every fresh agent. If a
+later historical plan, experiment handoff, or result conflicts with this
+section, follow this section. Preserve the contract text and experimental
+history below as evidence; do not mistake them for the current implementation
+route.
+
+Advisor architecture image:
+
+- canonical filename: `advisor_vlm_guided_all_in_one_main_route.jpg`
+- verified SHA-256 of the advisor upload:
+  `40fc4f20a24e393fd100956b570df0916e27292f76f77d1e58e5fb9602620703`
+- the uploaded source disappeared from the workspace before its confirmed
+  rename could be executed; restore the exact verified image at the canonical
+  path when the user re-uploads it, and do not substitute or regenerate it
+
+The authoritative route has two stages:
+
+1. Train a degradation-aware VLM with supervised cross-entropy. A degraded
+   image and a degradation-assessment question are inputs; degradation type
+   and independent severity labels are targets. Following the advisor diagram,
+   train the vision encoder and multimodal VLM path while keeping the text
+   tokenizer and LLM decoder frozen. This is real degradation-aware VLM
+   training, not a frozen-feature linear probe.
+2. Validate the trained VLM on the downstream image-enhancement domain it must
+   analyze. Synthetic validation alone is insufficient. Keep the official
+   FoundIR test protected from tuning; use it only for a frozen, predeclared
+   final evaluation, and use a separate labeled real-domain validation set for
+   any iterative VLM development.
+3. Freeze the validated degradation-aware VLM. For restoration, feed the
+   degraded image to both the frozen VLM and the trainable diffusion model;
+   use the VLM's predicted degradation types and severities to guide the
+   diffusion restoration model. Then evaluate the complete frozen system on
+   the official FoundIR task protocol.
+
+CURRENT ROUTE DECISIONS AND DEPRECATED PROTOTYPES
+
+- AgenticIR is the approved synthetic-degradation basis. GenDeg is abandoned,
+  removed from the active workspace, and must not be downloaded, restored, or
+  restarted. Historical Git commits, reports, manifests, and logs may mention
+  it only as superseded evidence.
+- The frozen `Qwen2.5-VL-7B-Instruct` mean/std visual-feature extractor plus
+  7,169-parameter scalar ridge head is a preliminary linear-probe baseline,
+  not the final VLM. It achieved only `68%` severity accuracy on its independent
+  synthetic validation and did not perform the advisor-directed cross-entropy
+  VLM fine-tuning.
+- The one-learned-context-token Qwen-conditioned FLUX.2 run is a preserved
+  negative/near-null ablation, not the final conditioning architecture. On the
+  internal synthetic L2-L5 test it changed PSNR by only `+0.03683 dB`, SSIM by
+  `+0.000163`, and LPIPS by `-0.000357`, with no convincing visible benefit.
+- Those internal synthetic results are not FoundIR results and do not establish
+  a Phase 1 SOW pass. Do not continue optimizing that frozen-ridge/one-token
+  route unless the user explicitly reauthorizes it as a diagnostic.
+- The verified Lowlight data, manifests, Qwen/FLUX environments, FLUX
+  restoration baseline, evaluator, official FoundIR acquisition, and negative
+  experimental evidence remain reusable foundations for the authoritative
+  route.
+
 
 
 1.	合作需求/任务
@@ -113,9 +172,8 @@ All-in-One Phase 1 deliverable.
 
 CURRENT FROZEN AGENTICIR LOW-LIGHT PILOT RECIPE
 
-GenDeg is not used for the low-light pilot. The frozen low-light recipe is the
-official AgenticIR synthetic `dark` degradation followed by project-level
-luminance calibration.
+The frozen low-light recipe is the official AgenticIR synthetic `dark`
+degradation followed by project-level luminance calibration.
 
 Implementation and source:
 
@@ -463,14 +521,15 @@ FoundIR Lowlight, with the Phase 1 target of PSNR `>=15.1 dB` and LPIPS
 `<=0.34`. FoundIR PSNR/LPIPS cannot be obtained from standalone Qwen-VL
 predictions.
 
-FRESH-THREAD EXECUTION SPECIFICATION — READ THIS BEFORE ACTING
+HISTORICAL FRESH-THREAD EXECUTION SPECIFICATION — SUPERSEDED
 
-This section is the authoritative handoff for a new agent. Work only inside
-`/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang`. Do not restart old
-GenDeg work, do not delete existing files, and do not generate the 100k Qwen-VL
-dataset yet. The immediate objective is to select and validate a DiT-based
-image-restoration backbone, then prepare a fair baseline-versus-Qwen-VL gain
-experiment.
+This section records an earlier execution plan and is retained only for
+provenance. It is superseded by `READ FIRST — AUTHORITATIVE ADVISOR-PROVIDED
+MAIN PROJECT ROUTE — 2026-08-18` above. Do not resume its frozen-feature
+baseline-versus-Qwen objective as the main project route. Work only inside
+`/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang`, preserve existing
+evidence, and do not generate the 100k Qwen-VL dataset without a separately
+approved current plan.
 
 PROJECT QUESTION
 

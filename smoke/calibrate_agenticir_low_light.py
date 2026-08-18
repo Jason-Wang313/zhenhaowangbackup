@@ -7,7 +7,7 @@ import argparse
 
 from PIL import Image
 
-from apply_gendeg_level_remap import darken_to_target, mean_luma
+from lowlight_luminance import darken_to_target, mean_luma
 
 
 ROOT = Path(__file__).resolve().parents[1]

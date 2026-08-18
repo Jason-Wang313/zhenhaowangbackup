@@ -23,7 +23,6 @@
 !smoke/*.txt
 !smoke/**/*.py
 !smoke/**/*.sh
-!smoke/run_gendeg_custom_batch.pyc
 !pytorch_lightning/
 !pytorch_lightning/*.py
 !pytorch_lightning/**/*.py

@@ -5,7 +5,7 @@ import argparse
 from PIL import Image
 import numpy as np
 
-from apply_gendeg_level_remap import mean_luma
+from lowlight_luminance import mean_luma
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "data/clean/001.png"
