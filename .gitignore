@@ -3,6 +3,7 @@
 !.gitignore
 !.gitattributes
 !agents.md
+!SESSION_HANDOFF_2026-08-18.md
 !advisor_vlm_guided_all_in_one_main_route.jpg
 !README.md
 !/generate_low_light_pilot.py

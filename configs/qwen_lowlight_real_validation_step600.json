@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_frozen_qwen_real_lowlight_validation_only",
+  "scope": "frozen_step600_non_FoundIR_real_Lowlight_validation",
+  "official_foundir_used": false,
+  "model_predictions_consulted_during_selection": false,
+  "model": {
+    "inventory_config": "configs/qwen_lowlight_smoke25.json",
+    "inventory_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "repository": "Qwen/Qwen2.5-VL-7B-Instruct",
+    "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "architecture": "Qwen2_5_VLForConditionalGeneration",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "expected_parameter_groups": {
+      "visual.patch_embed": 1505280,
+      "visual.blocks": 630470400,
+      "visual.merger": 44574464,
+      "language_model": 7070619136,
+      "lm_head": 544997376
+    },
+    "expected_trainable_parameters": 676550144,
+    "expected_frozen_parameters": 7615616512,
+    "expected_total_parameters": 8292166656,
+    "pilot_config": "configs/qwen_lowlight_supervised_pilot_8k_ddp8.json",
+    "pilot_config_sha256": "28b243cf3a98aee12aa271334baa50e1a2bc5937467f9f3781acbd6e93d35dff",
+    "pilot_summary": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8/training_summary.json",
+    "pilot_summary_sha256": "1eec630a055f1aee74a7419e3427eb16f6a1de0cac59f9eb01468284dacf2404",
+    "selected_checkpoint_step": 600,
+    "selected_visual_checkpoint": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8/checkpoints/step_000600/visual.safetensors",
+    "selected_visual_sha256": "b0e65a8597077973a2a103dc3369e0cb1ea703de95e2e4841d359c3d34eff77f",
+    "selected_checkpoint_metadata": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8/checkpoints/step_000600/metadata.json",
+    "selected_checkpoint_metadata_sha256": "62b2b84e5bc42e63451d378a7546834be3a22420b1677b16c1ec98c242fcff16"
+  },
+  "processor": {
+    "use_fast": false,
+    "padding_side": "right",
+    "min_pixels": 100352,
+    "max_pixels": 100352,
+    "minimum_visual_tokens": 100,
+    "maximum_visual_tokens": 156
+  },
+  "prompt": {
+    "system_prompt_sha256": "12f91f47e46321afbdd5eaf8d0260c44c5a16d98c4a8ec36ae7571e9d870cfb7",
+    "degradation_question_sha256": "40c6bfc2891e0b57eee42bddc43d10874d1b766452d0f9f45bb3d74a6b800f20",
+    "target_schema": "project_clean_l1_active_lowlight_l2_l5_v1"
+  },
+  "data": {
+    "manifest": "manifests/qwen_lowlight_real_validation.csv",
+    "manifest_sha256": "52f6fc9c5cdc0347559b37a30f7f5a607ac9a3d5576c6b9e8dc22424c478106b",
+    "metadata": "manifests/qwen_lowlight_real_validation.json",
+    "metadata_sha256": "3b9be6683208580f51ddb93779436270b28e97ab4b27a2df720bfc6238cdd1fb",
+    "records": 233,
+    "annotation_kind": "reference_based_proxy_not_human_ground_truth",
+    "official_foundir_used": false,
+    "model_predictions_consulted_during_selection": false,
+    "acquisition": {
+      "sice_repository": "okhater/SICE",
+      "sice_revision": "1a65a70ad5ae9feef5f8402dfa42347652ce1f2c",
+      "lolv2_official_file_id": "1dzuLCk9_gE2bFF222n3-7GVUlSVHpMYC",
+      "lolv2_archive": "data/real_lowlight_validation/sources/LOL-v2.verified.zip",
+      "lolv2_archive_bytes": 1046491030,
+      "lolv2_archive_sha256": "9820d8b112438d94d1f5d4d25817eee618a8cf4bc63a65cd6b19f5a98c3faefa",
+      "lolv2_zip_crc_check_passed": true
+    },
+    "subsets": {
+      "sice_balanced_proxy": {
+        "role": "primary_balanced_real_domain_proxy_gate",
+        "records": 90,
+        "levels_present": [1, 2, 3, 4, 5],
+        "records_per_level": {
+          "1": 18,
+          "2": 18,
+          "3": 18,
+          "4": 18,
+          "5": 18
+        },
+        "record_bundle_sha256": "06c9be3f3cf7bf4dbdac6422157daab97680fd4e71b71cf0cea83dc55c8f4b28"
+      },
+      "lolv2_extreme_stress_proxy": {
+        "role": "separate_skewed_extreme_low_light_stress_gate",
+        "records": 143,
+        "levels_present": [1, 3, 4, 5],
+        "records_per_level": {
+          "1": 43,
+          "3": 2,
+          "4": 29,
+          "5": 69
+        },
+        "record_bundle_sha256": "ed03ce5f4985be9b984abd0764f2d5ba11dc32f18c6ce459443a818f19a4272e",
+        "normal_reference_files": 100,
+        "unique_normal_reference_images": 43,
+        "clean_proxy_records_deduplicated_by_exact_reference_sha256": true
+      }
+    }
+  },
+  "evaluation": {
+    "seed": 2026081907,
+    "do_sample": false,
+    "batch_size": 5,
+    "max_new_tokens": 64,
+    "subset_order": [
+      "sice_balanced_proxy",
+      "lolv2_extreme_stress_proxy"
+    ],
+    "selected_gpu_count": 1,
+    "gpu_count_rationale": "This is a small frozen 233-image inference gate. One H100 or H200 avoids seven extra 8B-model loads and distributed startup overhead; the prior DDP8 pilot evaluated 1000 images in about 35-37 seconds after loading."
+  },
+  "gates": {
+    "thresholds_frozen_before_model_inference": true,
+    "automatic_pass_requires": [
+      "sice_balanced_proxy",
+      "lolv2_extreme_stress_proxy"
+    ],
+    "rationale": "Exact proxy severity is noisier than synthetic ground truth, so the primary gate emphasizes clearly-above-chance exact accuracy, ordinal within-one accuracy, MAE, and QWK. The skewed LOL-v2 stress gate separately requires clean/low-light detection and nonzero L4 discrimination instead of treating its class-skewed exact accuracy as sufficient.",
+    "subsets": {
+      "sice_balanced_proxy": {
+        "required_levels": [1, 2, 3, 4, 5],
+        "minimum_valid_structured_output_rate": 0.99,
+        "minimum_degradation_type_accuracy": 0.85,
+        "minimum_degradation_type_macro_f1": 0.75,
+        "minimum_severity_accuracy": 0.50,
+        "minimum_severity_macro_f1": 0.45,
+        "maximum_severity_mean_absolute_error": 0.75,
+        "minimum_within_one_level_accuracy": 0.85,
+        "minimum_per_level_accuracy": 0.25,
+        "minimum_quadratic_weighted_kappa": 0.60
+      },
+      "lolv2_extreme_stress_proxy": {
+        "required_levels": [1, 4, 5],
+        "minimum_valid_structured_output_rate": 0.99,
+        "minimum_degradation_type_accuracy": 0.90,
+        "minimum_degradation_type_macro_f1": 0.90,
+        "minimum_severity_accuracy": 0.60,
+        "minimum_severity_macro_f1": 0.35,
+        "maximum_severity_mean_absolute_error": 0.65,
+        "minimum_within_one_level_accuracy": 0.90,
+        "minimum_per_level_accuracy": 0.25,
+        "minimum_quadratic_weighted_kappa": 0.75
+      }
+    }
+  },
+  "runtime": {
+    "seed": 2026081907,
+    "offline": true,
+    "device": "cuda",
+    "required_visible_device_count": 1,
+    "minimum_gpu_memory_gib": 70,
+    "deterministic_algorithms": true,
+    "sdpa_backend": "math",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_real_validation_step600",
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1"
+  },
+  "telemetry": {
+    "csv": "logs/qwen_lowlight_real_validation_step600_gpu.csv",
+    "sample_interval_seconds": 2,
+    "monitor_all_selected_gpus": true
+  }
+}

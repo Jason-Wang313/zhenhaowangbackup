@@ -79,7 +79,7 @@ CURRENT ROUTE DECISIONS AND DEPRECATED PROTOTYPES
   internal synthetic L2-L5 test it changed PSNR by only `+0.03683 dB`, SSIM by
   `+0.000163`, and LPIPS by `-0.000357`, with no convincing visible benefit.
 - Those internal synthetic results are not FoundIR results and do not establish
-  a Phase 1 SOW pass. Do not continue optimizing that frozen-ridge/one-token
+  an SOW Stage 1 pass. Do not continue optimizing that frozen-ridge/one-token
   route unless the user explicitly reauthorizes it as a diagnostic.
 - The verified Lowlight data, manifests, Qwen/FLUX environments, FLUX
   restoration baseline, evaluator, official FoundIR acquisition, and negative
@@ -146,7 +146,8 @@ context, but do not plan, implement, train, evaluate, or claim completion of
 the `亮色大模型` deliverables unless the user explicitly changes this scope.
 
 For the user's All-in-One workstream, FoundIR-Lowlight may be evaluated before
-Blur, Noise, Haze, and Rain. The current independent Phase 1 lowlight gate is:
+Blur, Noise, Haze, and Rain. The current independent SOW Stage 1 Lowlight gate
+is:
 
 - dataset: the official FoundIR-Lowlight evaluation split;
 - metrics: restored-image PSNR and LPIPS;
@@ -156,12 +157,12 @@ Blur, Noise, Haze, and Rain. The current independent Phase 1 lowlight gate is:
 - evidence: exact test manifest, checkpoint, code revision, configuration,
   command, output images, and metric JSON/CSV must be retained.
 
-Passing this gate may be reported as `FoundIR-Lowlight Phase 1 sub-target
-passed`. It must not be reported as complete Phase 1 SOW acceptance because
+Passing this gate may be reported as `FoundIR-Lowlight SOW Stage 1 sub-target
+passed`. It must not be reported as complete SOW Stage 1 acceptance because
 the original All-in-One acceptance table independently lists Blur, Noise,
-Lowlight, Haze, and Rain. The other four tasks are not prerequisites for
-running or passing the lowlight gate; they remain later work for the full
-All-in-One Phase 1 deliverable.
+  Lowlight, Haze, and Rain. The other four tasks are not prerequisites for
+  running or passing the Lowlight gate; they remain later work for the full
+  All-in-One SOW Stage 1 deliverable.
 
 3.	项目监控和管理 请按项目实际情况进行拟定，此部分将写入合同中，交流过程、记录需留存。
 本项目采用如下项目管理机制（供参考）：
@@ -392,9 +393,9 @@ For each pixel, normalized depth `d` gives transmission `t=exp(-beta*d)`,
 then the result is `image*t + A*255*(1-t)`, clipped to `[0,255]`. The
 current beta means are 6 times AgenticIR's original `[0.4, 0.6, 1.2, 1.8]`.
 
-QWEN-VL PHASE 1 PLAN — DATA AND DEGRADATION UNDERSTANDING
+CURRENT SOW STAGE 1 PLAN — DATA AND DEGRADATION UNDERSTANDING
 
-The immediate Phase 1 work is to construct and evaluate Qwen-VL as a
+The immediate SOW Stage 1 work is to construct and evaluate Qwen-VL as a
 structured degradation-understanding model. Qwen-VL will receive a degraded
 image and predict the degradation types and independent severity levels.
 
@@ -509,46 +510,22 @@ Qwen-VL evaluation:
 - Qwen-VL accuracy is an internal degradation-understanding metric; it is not
   the FoundIR restoration metric.
 
-KNOWN COMPLEMENTARY COMPONENT NOT YET FINALIZED
+CURRENT ADVISOR-ROUTE COMPLEMENTARY MODULE
 
-The All-in-One image-restoration model is not yet selected or finalized. It is
-not part of the current Qwen-VL data-generation/training step. Later, it must
-be added as the complementary downstream module: Qwen-VL analyzes the input
-and the restoration model uses that analysis to produce the enhanced image.
-The complete Qwen-VL plus restoration system will then be evaluated on
-FoundIR Lowlight, with the Phase 1 target of PSNR `>=15.1 dB` and LPIPS
-`<=0.34`. FoundIR PSNR/LPIPS cannot be obtained from standalone Qwen-VL
-predictions.
+The advisor route is now explicit: train and validate a degradation-aware VLM
+first, then freeze it and use its full structured degradation description to
+guide the trainable diffusion restoration model. The current Lowlight slice is
+the first implementation target. FoundIR PSNR/LPIPS evaluate the complete
+VLM-guided restoration pipeline, not standalone VLM predictions. The SOW
+Stage 1 Lowlight sub-target is PSNR `>=15.1 dB` and LPIPS `<=0.34`.
 
-HISTORICAL FRESH-THREAD EXECUTION SPECIFICATION — SUPERSEDED
+HISTORICAL FRESH-THREAD ROUTE — SUPERSEDED
 
-This section records an earlier execution plan and is retained only for
-provenance. It is superseded by `READ FIRST — AUTHORITATIVE ADVISOR-PROVIDED
-MAIN PROJECT ROUTE — 2026-08-18` above. Do not resume its frozen-feature
-baseline-versus-Qwen objective as the main project route. Work only inside
-`/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang`, preserve existing
-evidence, and do not generate the 100k Qwen-VL dataset without a separately
-approved current plan.
-
-PROJECT QUESTION
-
-Answer only this scientific question:
-
-> With the same diffusion restoration model, data, source split, preprocessing,
-> training budget, and evaluation conditions, does adding Qwen-VL degradation
-> type and severity information improve restoration quality?
-
-The two required systems are:
-
-```text
-Baseline: degraded image -> diffusion restoration model -> restored image
-Qwen:     degraded image -> Qwen-VL type/severity -> condition adapter
-          -> the same diffusion restoration model -> restored image
-```
-
-Do not compare two different restoration backbones, chain two restoration
-models, restore an image twice, or change the data/training budget between the
-two systems.
+An earlier route compared a frozen Qwen visual-feature extractor/ridge head
+and a one-token diffusion condition using synthetic data. That route was a
+diagnostic negative/near-null ablation, not advisor-directed VLM fine-tuning.
+It is retained only as historical evidence; do not resume it as the main
+project route, and do not describe it as Qwen fine-tuning.
 
 ADVISOR-DIRECTED BACKBONE POLICY
 
@@ -602,10 +579,13 @@ Before editing code or downloading anything, inspect this workspace and record:
 5. The smallest reproducible inference command and a plan for deterministic
    output.
 
-STAGE 0 AUDIT STATUS — 2026-08-13
+STAGE 0 AUDIT STATUS — 2026-08-13 (HISTORICAL SNAPSHOT)
 
-The local audit is recorded in `reports/model_audit_stage0.md`. This Codex session
-has no visible GPU and no local Z-Image, FLUX, SDXL, or SD2.1 candidate weights.
+The local audit is recorded in `reports/model_audit_stage0.md`. At that time
+the Codex session had no visible GPU and no local Z-Image, FLUX, SDXL, or SD2.1
+candidate weights. The later FLUX.2 Lowlight baseline is recorded in the
+completed-result sections below; do not interpret this old snapshot as current
+training status.
 The official FLUX.2 source is now available in the shared workspace at
 `third_party/flux2` revision `50fe5162777813d869182b139e83b10743caef15`; the GPU
 environment must install it from that local path because it cannot reach GitHub.
@@ -615,38 +595,37 @@ model under Apache-2.0. Its offline end-to-end GPU smoke test passed on an NVIDI
 H100 80 GB: all FLUX.2, autoencoder, and Qwen3-4B-FP8 files passed exact size,
 SHA-256, and SafeTensors checks; a 512x512 two-step image was generated at
 `output/sample_0.png`. This proves that the local stack loads and performs basic
-generation. It does not yet prove restoration quality, faithful degraded-image
+generation. It did not prove restoration quality, faithful degraded-image
 conditioning, scene-identity preservation, or FoundIR performance. FLUX.1-dev
-is not the first choice because it is a gated 12B model under a non-commercial
-license. No restoration training has started.
+was not the first choice because it is a gated 12B model under a non-commercial
+license.
 
 ENVIRONMENT AND GPU EXECUTION RULE
 
-The terminal available directly to the coding agent is CPU-only and has internet
-access. GPU visibility is not assumed here; `nvidia-smi` may be unavailable and
-PyTorch may report `torch.cuda.is_available() == False`. Do not attempt expensive
-DiT, Qwen-VL, or restoration training in this CPU session.
-
-The user manually launches GPU work in a separate GPU-enabled interface that has
-no internet access. Both interfaces mount the exact same workspace filesystem,
-so repository files, model weights, logs, outputs, and workspace-local virtual
-environments written on one side are visible on the other. GPU visibility,
-running processes, shell variables, and packages installed into an interpreter
-outside the shared workspace are not automatically shared. Always use an
-explicit shared-workspace interpreter path (for the FLUX.2 smoke,
-`.venv/flux2-smoke/bin/python`) and a checked-in launcher instead of relying on
-the active shell's `python` or remembered environment variables.
+The coding-agent terminal may be CPU-only. The newly provisioned user GPU
+environment is reported as 169 CPU cores, 1,800 GB system RAM, and 8 NVIDIA
+H200 GPUs (expected 141 GB HBM per GPU); verify with `lscpu`, `free -h`, and
+`nvidia-smi` before the first run. The user launches GPU work in a separate
+GPU-enabled interface. Both interfaces mount the exact same workspace
+filesystem, so repository files, model weights, logs, outputs, and
+workspace-local environments are visible on the other side. GPU visibility,
+running processes, shell variables, and packages installed outside the shared
+workspace are not automatically shared.
 
 The agent must therefore:
 
 - prepare and verify code, configs, manifests, and commands in this workspace;
-- provide exact copy-paste terminal commands for the user's GPU interface;
-- keep training/inference commands offline-compatible when that environment has
-  no internet access;
-- never claim GPU training or evaluation completed unless the user supplies the
+- provide one exact copy-paste **tmux** command for every GPU gate, creating or
+  attaching to a named session before launching the job;
+- include the matching `tmux attach -t <session>` or log-monitor command so a
+  browser/VS Code tab can be closed without terminating the job;
+- make the intended `CUDA_VISIBLE_DEVICES` set explicit and use a checked-in
+  launcher plus an explicit shared-workspace interpreter;
+- keep training/inference commands offline-compatible when required;
+- never claim GPU training or evaluation completed unless the user supplies
   terminal output or the shared workspace contains verifiable outputs;
-- after the user runs a command, inspect its logs/checkpoints/metrics here when
-  available and give the next command.
+- after the user runs a command, inspect its logs/checkpoints/metrics here and
+  give the next command only after the current gate is reported.
 
 REPOSITORY AND GITHUB CHECKPOINT RULE
 
@@ -687,70 +666,6 @@ session.
 
 Do not start Qwen-VL training, full synthetic-data generation, or a large
 checkpoint download until this audit identifies one viable backbone.
-
-STAGE 1 — LOW-LIGHT RESTORATION BASELINE
-
-Use the existing calibrated AgenticIR low-light recipe for a small paired
-training/validation smoke set. The clean target and degraded input must be
-paired, and the source split must be source-disjoint. Start with low-light only
-because Phase 1 FoundIR validation is Lowlight-first.
-
-Initially freeze the pretrained DiT, VAE, and text encoder. Train only the
-minimum image-conditioning restoration adapter/LoRA needed to map a degraded
-image to its clean target. Confirm that the model preserves scene identity;
-an attractive but newly invented image is a failure for restoration.
-
-Record: checkpoint hash, code revision, config, resolution, precision, seed,
-batch size, optimizer, learning rate, training steps, GPU count, adapter rank,
-sampling steps, and all output paths.
-
-STAGE 2 — QWEN-VL CONDITIONING ABLATION
-
-Only after the baseline runs, add Qwen-VL. Qwen-VL should output only
-degradation type(s) and independent severity level(s), for example:
-
-```json
-{"degradations":["low_light","noise"],"levels":{"low_light":3,"noise":2}}
-```
-
-Do not add captions, aesthetic descriptions, object descriptions, or extra
-instructions in the first ablation. Convert the structured output into a
-condition embedding with a small condition adapter and inject it into the same
-DiT restoration path. Freeze Qwen-VL initially unless later evidence shows
-that an end-to-end update is necessary.
-
-The baseline and Qwen experiments must use the same pairs, split, crop size,
-preprocessing, optimizer, learning rate, steps, batch size, precision, GPU
-budget, DiT weights, restoration-adapter design, and sampling parameters. The
-only intended difference is whether the Qwen-VL degradation condition is
-available. Also run an oracle-condition diagnostic using ground-truth labels if
-useful; clearly separate it from predicted-Qwen results.
-
-STAGE 3 — EVALUATION
-
-Use a fixed, source-disjoint internal test set for Qwen-VL understanding:
-
-- degradation type accuracy and macro-F1;
-- per-component severity accuracy;
-- combination exact-match accuracy;
-- severity mean absolute error;
-- valid structured-output rate.
-
-Use the same fixed FoundIR Lowlight test set for restoration. Report PSNR,
-SSIM, LPIPS, visual structure/color preservation, and failure cases for both
-baseline and Qwen systems. The Phase 1 SOW targets are PSNR `>=15.1 dB` and
-LPIPS `<=0.34`. FoundIR metrics evaluate the complete restoration pipeline,
-not standalone Qwen-VL classification.
-
-STAGE 4 — DATA SCALE ONLY AFTER THE ABLATION IS VALID
-
-Do not create 100k records before the backbone and injection interface are
-validated. After the smoke comparison is reproducible, build the larger data
-using DIV2K, MiO100, and an approved LSDIR subset. Split original sources
-before cropping. Build `10,000` clean-only records plus `30,000` each of
-single-, double-, and triple-degradation records. Active components use
-independent project L2-L5 levels. Keep balanced combination quotas and randomize
-samples, application order, and parameters inside each quota.
 
 REQUIRED HANDOFF ARTIFACTS
 
@@ -891,13 +806,13 @@ conditional-only inference setting and is frozen for the next baseline stage.
   with no structural hallucination observed
 
 The overfit result authorizes preparation and preflight of the full 8,000-pair
-baseline. It does not itself authorize a FoundIR or Phase 1 success claim.
+baseline. It does not itself authorize a FoundIR or SOW Stage 1 success claim.
 
 LOWLIGHT FULL BASELINE PIPELINE — CPU-VERIFIED READINESS 2026-08-15
 
 The fixed full baseline pipeline is implemented for the already approved
 Lowlight-only scope. This is readiness evidence, not a GPU training result,
-FoundIR result, Qwen-VL result, or Phase 1 completion claim.
+FoundIR result, Qwen-VL result, or SOW Stage 1 completion claim.
 
 - Frozen config: `configs/lowlight_flux2_full.json`
 - Config SHA-256:
@@ -925,7 +840,7 @@ The fixed FLUX.2 full baseline completed 4,000 H100 training steps and complete
 evaluation on the 1,000-record validation and 1,000-record internal-test
 splits. Both automatic gates and the contact-sheet visual identity review
 passed. This authorizes preparation of the Qwen-VL Lowlight conditioning
-comparison only; it is not an official FoundIR result or a Phase 1 completion
+comparison only; it is not an official FoundIR result or an SOW Stage 1 completion
 claim.
 
 - Result report: `reports/lowlight_full_baseline_result_2026-08-16.md`

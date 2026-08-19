@@ -1,0 +1,3898 @@
+{
+  "annotation_kind": "reference_based_proxy_not_human_ground_truth",
+  "annotation_warning": "Project L1--L5 values are proxy labels derived from paired references; they are not official SICE or LOL-v2 severity ground truth.",
+  "manifest_csv": "manifests/qwen_lowlight_real_validation.csv",
+  "manifest_sha256": "52f6fc9c5cdc0347559b37a30f7f5a607ac9a3d5576c6b9e8dc22424c478106b",
+  "model_predictions_consulted_during_selection": false,
+  "official_foundir_used": false,
+  "record_bundle_sha256": "1ad84e7c2d7bab2906eb0fe8bcd6a578d2a4a2ddc5ff0d0b03664bd4d41a7104",
+  "records": 233,
+  "schema_version": 1,
+  "scope": "non_FoundIR_real_Lowlight_VLM_validation",
+  "sice_selection": {
+    "annotation_is_proxy": true,
+    "candidate_count": 176,
+    "clean_selection_count": 18,
+    "eligible_count_by_level": {
+      "2": 52,
+      "3": 18,
+      "4": 43,
+      "5": 39
+    },
+    "maximum_anchor_error_ev": 0.75,
+    "maximum_per_level": 25,
+    "minimum_per_level": 18,
+    "model_predictions_consulted_during_selection": false,
+    "record_count_by_level": {
+      "L1": 18,
+      "L2": 18,
+      "L3": 18,
+      "L4": 18,
+      "L5": 18
+    },
+    "rejected_outside_anchor_tolerance": 24,
+    "seed": 2026081906,
+    "selected_count": 72,
+    "selected_per_level": 18
+  },
+  "source_file_count": 423,
+  "source_file_inventory_sha256": "333c6b60d5b1b3804c2743d3237713a40133dd7846fb25e597063b76a6dc1d93",
+  "source_files": [
+    {
+      "bytes": 328321,
+      "height": 400,
+      "mean_luma": 15.112953591666665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00690.png",
+      "sha256": "7f8cdf2ca55801031f23829161ca96a381f3134dbda0da9dcdaa3815c870dacb",
+      "width": 600
+    },
+    {
+      "bytes": 328520,
+      "height": 400,
+      "mean_luma": 15.0558976925,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00691.png",
+      "sha256": "e87c278738a5d971c5a2fef4fe84006f61b5d27efa03727b0d58049b91422484",
+      "width": 600
+    },
+    {
+      "bytes": 331829,
+      "height": 400,
+      "mean_luma": 11.346423482499999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00692.png",
+      "sha256": "a877bf960eac6051c11f2abd43534693bd29bc359db1ad10ec26952b718eec09",
+      "width": 600
+    },
+    {
+      "bytes": 332319,
+      "height": 400,
+      "mean_luma": 11.176249196666667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00693.png",
+      "sha256": "6dad45129f3007a7d61f1b4fe757f5dca53d92765476e660517da2cd0afb0fa0",
+      "width": 600
+    },
+    {
+      "bytes": 331600,
+      "height": 400,
+      "mean_luma": 11.936983039166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00694.png",
+      "sha256": "ed0d82c8e33a5a03166ee7dc0dd0666472a8b288db3e273ebb1e4d60aed7738e",
+      "width": 600
+    },
+    {
+      "bytes": 331804,
+      "height": 400,
+      "mean_luma": 11.919419088333331,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00695.png",
+      "sha256": "ed1aa8a879f9f1c9e70c52f34f855c13921a5d0bb66351fa7847868f6e001c15",
+      "width": 600
+    },
+    {
+      "bytes": 297001,
+      "height": 400,
+      "mean_luma": 7.201284919166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00696.png",
+      "sha256": "090c9c3a17554d8e4494d6fb01b26bdd50d6d23d29d0dc1de534dc66d72cc0ec",
+      "width": 600
+    },
+    {
+      "bytes": 297086,
+      "height": 400,
+      "mean_luma": 7.197121976666666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00697.png",
+      "sha256": "9ec51698c0114abdde47e6f595bbbfec28f37def6d1dbe1be8bac8ce478944c3",
+      "width": 600
+    },
+    {
+      "bytes": 299676,
+      "height": 400,
+      "mean_luma": 7.244962461666666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00698.png",
+      "sha256": "cf25b7f8b12064e45e502ef8ff9e6998f4d8150a1dde9f842ef5db618080d6bc",
+      "width": 600
+    },
+    {
+      "bytes": 299899,
+      "height": 400,
+      "mean_luma": 7.271725469166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00699.png",
+      "sha256": "67d808818f68b9d28de54f0659e7062ae420b763b1e2616304a4efff9f20c53b",
+      "width": 600
+    },
+    {
+      "bytes": 324627,
+      "height": 400,
+      "mean_luma": 21.307413429166665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00700.png",
+      "sha256": "752d49c6ebe1541b435cf83aae992da0df8d6e1a36798bd2d2b388952ecc895d",
+      "width": 600
+    },
+    {
+      "bytes": 325014,
+      "height": 400,
+      "mean_luma": 21.276349213333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00701.png",
+      "sha256": "f22a51ff37a2fce8dc2cf2cf1ee6875b324c74a2db82799e43386ed173957350",
+      "width": 600
+    },
+    {
+      "bytes": 320034,
+      "height": 400,
+      "mean_luma": 10.493141029166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00702.png",
+      "sha256": "dc71c4535a269fdc1c91f3d0398b767b81e977d37df3267bd3e27fe942bb00ee",
+      "width": 600
+    },
+    {
+      "bytes": 319732,
+      "height": 400,
+      "mean_luma": 10.453604943333334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00703.png",
+      "sha256": "8d67fb83a55062a44a23f790005bb70cea0a1f4c34c00e5bad54a3c4cfa4c284",
+      "width": 600
+    },
+    {
+      "bytes": 319151,
+      "height": 400,
+      "mean_luma": 10.331551220833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00704.png",
+      "sha256": "53684f677c20476a0ecab1ec6cef229a00bfcc097426c20b0b6c4e89bcca4446",
+      "width": 600
+    },
+    {
+      "bytes": 309785,
+      "height": 400,
+      "mean_luma": 8.514849971666665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00705.png",
+      "sha256": "fa598707a4eb957a325c105897f5fddadb1ecbae8919de849d96cdb77a8ef251",
+      "width": 600
+    },
+    {
+      "bytes": 310021,
+      "height": 400,
+      "mean_luma": 8.218735905833332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00706.png",
+      "sha256": "15cb47bd557e8aaf465e223104a83d9271c20e820b37e231f400a716ca65a5b1",
+      "width": 600
+    },
+    {
+      "bytes": 310149,
+      "height": 400,
+      "mean_luma": 8.471036615833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00707.png",
+      "sha256": "857ee110e98f4161a86e458df08b2543454d88b7559b9a3d60f605467ac24288",
+      "width": 600
+    },
+    {
+      "bytes": 311707,
+      "height": 400,
+      "mean_luma": 11.431763033333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00708.png",
+      "sha256": "381220d07dadf72ee75ab5b10a70afea12ff317dea605dfc02412aea50e1b1c6",
+      "width": 600
+    },
+    {
+      "bytes": 311786,
+      "height": 400,
+      "mean_luma": 11.949700325833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00709.png",
+      "sha256": "94eb9a8a713bace919b65816b0aea3095c7580959da3625780cfb28d6fbccf4b",
+      "width": 600
+    },
+    {
+      "bytes": 323939,
+      "height": 400,
+      "mean_luma": 30.555986877499997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00710.png",
+      "sha256": "07f883cbde75f7215f089b75c6d7b422a99bea4d1cddec80e9e8d0528cb7e361",
+      "width": 600
+    },
+    {
+      "bytes": 323926,
+      "height": 400,
+      "mean_luma": 30.471482210833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00711.png",
+      "sha256": "b0af6666535439741b13363ca35bb65584a5ff7df39f5d33db0c77f30a9b1828",
+      "width": 600
+    },
+    {
+      "bytes": 318017,
+      "height": 400,
+      "mean_luma": 31.543253066666665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00712.png",
+      "sha256": "e9fd526f7866fc8087c58d82a774a50a769014e64651dd018381ca7aaf564a53",
+      "width": 600
+    },
+    {
+      "bytes": 318008,
+      "height": 400,
+      "mean_luma": 31.836292269166663,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00713.png",
+      "sha256": "0a1eb9fa773d9f911a71dd6daaa3e177cb32b88adecf73919ce68d49642b7534",
+      "width": 600
+    },
+    {
+      "bytes": 384382,
+      "height": 400,
+      "mean_luma": 14.174201706666665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00714.png",
+      "sha256": "df84eb73c3391a0331d1b464a2f6aba112ac49a4a90d51d7f8ad65e8c2a7a306",
+      "width": 600
+    },
+    {
+      "bytes": 386667,
+      "height": 400,
+      "mean_luma": 14.499667736666668,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00715.png",
+      "sha256": "9a0bcf7b95223063d467bb849e4e69a9b66cb08e25a2a6ce023a5d2b868fd556",
+      "width": 600
+    },
+    {
+      "bytes": 336152,
+      "height": 400,
+      "mean_luma": 27.139012403333332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00716.png",
+      "sha256": "02d0e34b3529d8ab07cc8c78b9d23c8a5459fcb83128d546c344a415fa54d0a6",
+      "width": 600
+    },
+    {
+      "bytes": 313452,
+      "height": 400,
+      "mean_luma": 10.050148805833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00717.png",
+      "sha256": "0d38a3af48ba9d2389535c4c5bd3cd091b1575af7364e8fa914bf0f8af944e69",
+      "width": 600
+    },
+    {
+      "bytes": 374586,
+      "height": 400,
+      "mean_luma": 33.43463576416667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00718.png",
+      "sha256": "125b42fd471fc6a9e602817d8f32ae8675b29976230c42bf25c3470d847bbd23",
+      "width": 600
+    },
+    {
+      "bytes": 374714,
+      "height": 400,
+      "mean_luma": 33.342686488333335,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00719.png",
+      "sha256": "2c3b0788f670926bf75f585816e4ed017f59ebc6155f7dacc143d9ba3940e804",
+      "width": 600
+    },
+    {
+      "bytes": 342247,
+      "height": 400,
+      "mean_luma": 10.5292047725,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00720.png",
+      "sha256": "6cfa00ad991e7e452ed1c6dddbc00eef6477f01859a0d02d6ffb16f087cef189",
+      "width": 600
+    },
+    {
+      "bytes": 342485,
+      "height": 400,
+      "mean_luma": 10.706678272499998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00721.png",
+      "sha256": "a72545ef7dde658a071ee46be72d78ed4d5cdbf7c21ee738af719b4db8c90cbf",
+      "width": 600
+    },
+    {
+      "bytes": 400371,
+      "height": 400,
+      "mean_luma": 19.092035160000002,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00722.png",
+      "sha256": "a4f46b1c28bec55b6a8305415cc91f6fdccd4d43a2685a937b4897fe223498f4",
+      "width": 600
+    },
+    {
+      "bytes": 399887,
+      "height": 400,
+      "mean_luma": 19.010382191666668,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00723.png",
+      "sha256": "d8dfa980763a2b108388f7c979a567b858ad9ab7dc8a7c13ccd8997f0087a77f",
+      "width": 600
+    },
+    {
+      "bytes": 389999,
+      "height": 400,
+      "mean_luma": 14.615358875,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00724.png",
+      "sha256": "91002d92de461acd75eb659db7942a933e633bd041b041eb124d1629556ca88d",
+      "width": 600
+    },
+    {
+      "bytes": 392200,
+      "height": 400,
+      "mean_luma": 15.056858055,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00725.png",
+      "sha256": "b167ecbc1717f0c0590aa43972f1d28b39a8e91e341caa737124e68701f7242e",
+      "width": 600
+    },
+    {
+      "bytes": 440723,
+      "height": 400,
+      "mean_luma": 22.281696377499998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00726.png",
+      "sha256": "b9c597ee75a3e860dd3e8116ffbee3c783be2ff8addf2ede90a3cfa1dd8c1e5d",
+      "width": 600
+    },
+    {
+      "bytes": 443903,
+      "height": 400,
+      "mean_luma": 21.973832475,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00727.png",
+      "sha256": "63a67ad5baef986843bfc2d9e4077a34ab14d4df38b2041764ad0ce420677eb4",
+      "width": 600
+    },
+    {
+      "bytes": 443794,
+      "height": 400,
+      "mean_luma": 21.915279312499997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00728.png",
+      "sha256": "066205a173a6025301d5b4fe10f6a4ad709eb7127cddc982600641df31c64b62",
+      "width": 600
+    },
+    {
+      "bytes": 351823,
+      "height": 400,
+      "mean_luma": 36.26593779,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00729.png",
+      "sha256": "bbab57ce47b0d552ce4c81596c81791d7e63f0615c438113efb1bd599bed9cf1",
+      "width": 600
+    },
+    {
+      "bytes": 353846,
+      "height": 400,
+      "mean_luma": 36.11199556916666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00730.png",
+      "sha256": "7b57a6ecf87b9b77347c5c42b1d67908a54899dbbff84b892d75e15c822e1ab9",
+      "width": 600
+    },
+    {
+      "bytes": 345793,
+      "height": 400,
+      "mean_luma": 25.563361304166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00731.png",
+      "sha256": "ca5cdb67fc95e9352dbd844b94a83a8745a03a5c6405489ac472db607ea85ed3",
+      "width": 600
+    },
+    {
+      "bytes": 348053,
+      "height": 400,
+      "mean_luma": 25.373788649166663,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00732.png",
+      "sha256": "0a3e15d1dff0efb82a40ac8233b99344506c9bee014ca40766a4f0d0efeef764",
+      "width": 600
+    },
+    {
+      "bytes": 351052,
+      "height": 400,
+      "mean_luma": 25.799029100833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00733.png",
+      "sha256": "26471c3e904d817e3e79f67ab9ea89f5bed35b66c788d6007161662a9e3d39e3",
+      "width": 600
+    },
+    {
+      "bytes": 351491,
+      "height": 400,
+      "mean_luma": 25.986234915000004,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00734.png",
+      "sha256": "61a5c1062287649e0f6952c7ee3b0e6331ace81b69d760be621f710af132db63",
+      "width": 600
+    },
+    {
+      "bytes": 401153,
+      "height": 400,
+      "mean_luma": 21.377761224166665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00735.png",
+      "sha256": "971e4d7c4b982224505487e49bad8bbf54f52fce457d9dcac52494755efd91cd",
+      "width": 600
+    },
+    {
+      "bytes": 401155,
+      "height": 400,
+      "mean_luma": 21.366209255833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00736.png",
+      "sha256": "f5558e3d749ac0a5368dc4e9aca6424728b35390a4617c67834362a3146b31f5",
+      "width": 600
+    },
+    {
+      "bytes": 353396,
+      "height": 400,
+      "mean_luma": 20.9588724425,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00737.png",
+      "sha256": "ab7a033cfad7a2aac0810589639e5c98eb6b271e19c96ba8d7c6e3f0ca9f9ba2",
+      "width": 600
+    },
+    {
+      "bytes": 357070,
+      "height": 400,
+      "mean_luma": 20.536392894166664,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00738.png",
+      "sha256": "5da4ef0d3040fcc5fa53c54ca8f104e729a10170dcf76a54291daed97c843b17",
+      "width": 600
+    },
+    {
+      "bytes": 296229,
+      "height": 400,
+      "mean_luma": 8.90595799,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00739.png",
+      "sha256": "2d25997c61cccfeab6ae8efc8396f5b538128a5ec68f389c3e6d96cd25e7a897",
+      "width": 600
+    },
+    {
+      "bytes": 295779,
+      "height": 400,
+      "mean_luma": 8.849899636666667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00740.png",
+      "sha256": "4c27ba5f77baffd2c2c6fe76214e808bfc634b6b849e0d9992e0c82d1c0e6572",
+      "width": 600
+    },
+    {
+      "bytes": 331877,
+      "height": 400,
+      "mean_luma": 17.857223529166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00741.png",
+      "sha256": "2138b68d7e0d5ed0e7242120232bcfc2f26e110862f109872ae35f23ab496205",
+      "width": 600
+    },
+    {
+      "bytes": 295611,
+      "height": 400,
+      "mean_luma": 5.325992276666667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00742.png",
+      "sha256": "fe5c817ee33be5e294d61f616e73e404edb3288e268a76163bbb4cf3b4196376",
+      "width": 600
+    },
+    {
+      "bytes": 338004,
+      "height": 400,
+      "mean_luma": 20.501454195833336,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00743.png",
+      "sha256": "bcda3a0afc450e7aad0813098108dda25314d71e901a99c7078b895f081cd9a1",
+      "width": 600
+    },
+    {
+      "bytes": 324871,
+      "height": 400,
+      "mean_luma": 13.6573313125,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00744.png",
+      "sha256": "c95f7bbb8eedbb249868d3e1ab3755dd6622fb97d39b8a1bfad3d9ed8233942f",
+      "width": 600
+    },
+    {
+      "bytes": 367235,
+      "height": 400,
+      "mean_luma": 21.6478021125,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00745.png",
+      "sha256": "f7a39764d02391e82bbe318befa58934be62d8695159e0e23e55f6519c971c86",
+      "width": 600
+    },
+    {
+      "bytes": 368940,
+      "height": 400,
+      "mean_luma": 21.463470340833332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00746.png",
+      "sha256": "a6c8ca038544806c6408960077331005ba8ecc41fb565278abe0b9ce3e16c10a",
+      "width": 600
+    },
+    {
+      "bytes": 334273,
+      "height": 400,
+      "mean_luma": 13.225449112499998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00747.png",
+      "sha256": "936acd1168739c5491358a15c2dab0e01fdc4e2dcaaa2f0ca1005d3b941095e1",
+      "width": 600
+    },
+    {
+      "bytes": 335161,
+      "height": 400,
+      "mean_luma": 13.303772280833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00748.png",
+      "sha256": "325c720df5669e37b9f192bfa9a60add144b82e5e68d9f684c0010a0047b0056",
+      "width": 600
+    },
+    {
+      "bytes": 327197,
+      "height": 400,
+      "mean_luma": 12.343492655833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00749.png",
+      "sha256": "60e6eb9d0a806abac4d85b000399feb8eb477c5a00d524962e6e72463d799504",
+      "width": 600
+    },
+    {
+      "bytes": 326786,
+      "height": 400,
+      "mean_luma": 11.510216651666667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00750.png",
+      "sha256": "315a54142475f9b68b007ee0e084b6b24ce0926a52c7e670e4bcfc829c9e8bfe",
+      "width": 600
+    },
+    {
+      "bytes": 305555,
+      "height": 400,
+      "mean_luma": 9.816802125833332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00751.png",
+      "sha256": "bbd7b09e15ea8ba705b3d80c16fc6e3cefb02c5cccce18c868d77b0e72569c14",
+      "width": 600
+    },
+    {
+      "bytes": 307465,
+      "height": 400,
+      "mean_luma": 9.98539051,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00752.png",
+      "sha256": "e4ed9e34676630d0e6c4a98014273165a6ffe3ac3685ae30cb78e0fb8d58e419",
+      "width": 600
+    },
+    {
+      "bytes": 329123,
+      "height": 400,
+      "mean_luma": 11.46213412,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00753.png",
+      "sha256": "3a827ab5b939fbfca4edd5c6c9c02c497d38c2eddffa64b61f85b069b7f6ffde",
+      "width": 600
+    },
+    {
+      "bytes": 328808,
+      "height": 400,
+      "mean_luma": 11.359924897500001,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00754.png",
+      "sha256": "8e91275ecefd3f44a575017ecdb8944acc0f0ea367073276d19303016360b273",
+      "width": 600
+    },
+    {
+      "bytes": 295995,
+      "height": 400,
+      "mean_luma": 5.9368385408333335,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00755.png",
+      "sha256": "7e45cb6aa8e613dd0ac0de6fc5a1615ff6d3c3a821551229f3ac9643619689f6",
+      "width": 600
+    },
+    {
+      "bytes": 295425,
+      "height": 400,
+      "mean_luma": 5.869298836666666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00756.png",
+      "sha256": "8639eb472576c0f089a5a5d5250844a1f4ee684293729090eb19f6a1d176271e",
+      "width": 600
+    },
+    {
+      "bytes": 311926,
+      "height": 400,
+      "mean_luma": 8.881235844166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00757.png",
+      "sha256": "df52ffdfcc209c2f53397f007638796a3173dfe051a844e6cbe541c9f140b1c3",
+      "width": 600
+    },
+    {
+      "bytes": 328824,
+      "height": 400,
+      "mean_luma": 8.9442039025,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00758.png",
+      "sha256": "f74f4c71ed6c94f602030990586642e981ff7955471db42a05715f5aa869e2b3",
+      "width": 600
+    },
+    {
+      "bytes": 334048,
+      "height": 400,
+      "mean_luma": 16.05782800333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00759.png",
+      "sha256": "441ca169a4dbf062e37697586bf3cc4fc004dda00ae804fc03f28cb77c7f8ed4",
+      "width": 600
+    },
+    {
+      "bytes": 334388,
+      "height": 400,
+      "mean_luma": 15.965262659999997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00760.png",
+      "sha256": "ac26a4f786b5b4f37f14d37708bff6a6bbd5bb94a8cf5ec0d5ff9563db9f1e1d",
+      "width": 600
+    },
+    {
+      "bytes": 304204,
+      "height": 400,
+      "mean_luma": 11.591609302499998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00761.png",
+      "sha256": "3f9f9bf383aa6ffe657360ba623ec586d0a1f01252b8f6855c93a3aa49f7ff8d",
+      "width": 600
+    },
+    {
+      "bytes": 303563,
+      "height": 400,
+      "mean_luma": 11.266451891666664,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00762.png",
+      "sha256": "349787672bd07ea7372f710a2a142401ab44bf8051d8412ba60b334e42d5b06f",
+      "width": 600
+    },
+    {
+      "bytes": 318811,
+      "height": 400,
+      "mean_luma": 14.021207231666665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00763.png",
+      "sha256": "7c3c50ff1885fc726f4d481f5238e21c6afbc827a087a6946213d2e7e30637b9",
+      "width": 600
+    },
+    {
+      "bytes": 319764,
+      "height": 400,
+      "mean_luma": 13.097909106666668,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00764.png",
+      "sha256": "8a1f2b6332aab6205e279e2a0a46ce5b99b39b41522685e09ccc345bbe4d919a",
+      "width": 600
+    },
+    {
+      "bytes": 359614,
+      "height": 400,
+      "mean_luma": 11.558983891666665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00765.png",
+      "sha256": "6a49696dc002b52d74a45787b7f29cab2902c6eeb4491c90f9279262a0f7ff16",
+      "width": 600
+    },
+    {
+      "bytes": 360121,
+      "height": 400,
+      "mean_luma": 11.531870696666667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00766.png",
+      "sha256": "6777b0faf076fa40c7d9f38164b1b57092b247f4c50510160cb91aa16806889b",
+      "width": 600
+    },
+    {
+      "bytes": 282755,
+      "height": 400,
+      "mean_luma": 5.229599334166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00767.png",
+      "sha256": "8701cafeb5cc3669911dfd53951fba1bf98535e6e20492b0ac29c545c40cc966",
+      "width": 600
+    },
+    {
+      "bytes": 301934,
+      "height": 400,
+      "mean_luma": 5.013036508333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00768.png",
+      "sha256": "a9977127cb9dcf87ccbb89e7a97ad643deb667f30b674a58241c04f52d88ee33",
+      "width": 600
+    },
+    {
+      "bytes": 314793,
+      "height": 400,
+      "mean_luma": 10.549172108333332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00769.png",
+      "sha256": "860c32c92721a72ee2c5f95ea036abb995872fa229345007fd5847f4879b3e01",
+      "width": 600
+    },
+    {
+      "bytes": 315279,
+      "height": 400,
+      "mean_luma": 10.601695680833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00770.png",
+      "sha256": "664ac5e57a53adb8009cfe74c848201cae7b3ffc4a9b3d5dcf1fb6cf30ed30b0",
+      "width": 600
+    },
+    {
+      "bytes": 346233,
+      "height": 400,
+      "mean_luma": 15.278367059999999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00771.png",
+      "sha256": "a65a178257d2f2158e4b856b5418edee2c8a920ca24cb803180441fab54cc551",
+      "width": 600
+    },
+    {
+      "bytes": 346082,
+      "height": 400,
+      "mean_luma": 15.211101082499997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00772.png",
+      "sha256": "c6dbabf4b5dc28976963c817052b73841516335815378bcb0eb07291d4511a61",
+      "width": 600
+    },
+    {
+      "bytes": 304543,
+      "height": 400,
+      "mean_luma": 7.597460354999999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00773.png",
+      "sha256": "f9f758791d32f88554de9510389e831ae28824604addfdf1c5efb40804830d7d",
+      "width": 600
+    },
+    {
+      "bytes": 303881,
+      "height": 400,
+      "mean_luma": 7.782293166666666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00774.png",
+      "sha256": "cd116efff2aee08f232758855e42fbe7a27a2d1c87bdf11ff9c247a701036d84",
+      "width": 600
+    },
+    {
+      "bytes": 358304,
+      "height": 400,
+      "mean_luma": 13.944207773333332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00775.png",
+      "sha256": "0e25810cea9d2bf812463d6bd3ddff7ab6bc32355ee8c143e3f9df38385292c8",
+      "width": 600
+    },
+    {
+      "bytes": 357698,
+      "height": 400,
+      "mean_luma": 13.970155468333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00776.png",
+      "sha256": "07fd511fbd148cb07dd20a94b03ca14e558cc7e3fb32e130515474fd0525621b",
+      "width": 600
+    },
+    {
+      "bytes": 327538,
+      "height": 400,
+      "mean_luma": 8.208568214166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00777.png",
+      "sha256": "281882ffde0ed06a1a68b8c67a16800b9aeab1288cf94d7b4e44704f77d5b722",
+      "width": 600
+    },
+    {
+      "bytes": 324094,
+      "height": 400,
+      "mean_luma": 7.825206811666666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00778.png",
+      "sha256": "26667c53ff5d97a794c3bfed729a6fb88ed5298e834787b28a21852853a2e830",
+      "width": 600
+    },
+    {
+      "bytes": 316784,
+      "height": 400,
+      "mean_luma": 10.793799819166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00779.png",
+      "sha256": "f593a0f7fd0dac7713f6596c4fab6495e766710ac51d7d684ce1c475ac52efb3",
+      "width": 600
+    },
+    {
+      "bytes": 316115,
+      "height": 400,
+      "mean_luma": 10.699856637499998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00780.png",
+      "sha256": "f78aad566110d3c2efc7dc3ebc086043385af27231f44d3b03780becb492e972",
+      "width": 600
+    },
+    {
+      "bytes": 399182,
+      "height": 400,
+      "mean_luma": 15.56219705,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00781.png",
+      "sha256": "05311ef6ffc6bd403b481a72d90a0bd467547e513f5817f6914de0d0d3b755c9",
+      "width": 600
+    },
+    {
+      "bytes": 399137,
+      "height": 400,
+      "mean_luma": 15.485534823333332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00782.png",
+      "sha256": "7680b89f759ba3599d0a1fe0e318bba8560f31fb47c7d4bb460ed581820a3ded",
+      "width": 600
+    },
+    {
+      "bytes": 399143,
+      "height": 400,
+      "mean_luma": 15.497075954999998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00783.png",
+      "sha256": "40bb08b5533904b5acf3a7edfc621fc351f9162ce4f433b304d9b0bda8a99fe6",
+      "width": 600
+    },
+    {
+      "bytes": 340536,
+      "height": 400,
+      "mean_luma": 7.57258077,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00784.png",
+      "sha256": "b5881598c7818816b1795b55fed82a365785f01348ebe2ee29a84c5c9ee097aa",
+      "width": 600
+    },
+    {
+      "bytes": 340750,
+      "height": 400,
+      "mean_luma": 7.5603368474999995,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00785.png",
+      "sha256": "14a1948289a813de7ab8ff04064bea4fe473ab2144608ea430b2979eac9c55f1",
+      "width": 600
+    },
+    {
+      "bytes": 340303,
+      "height": 400,
+      "mean_luma": 7.554611214166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00786.png",
+      "sha256": "dcfb551261a56cb581e72d6485230bcf9bbdc64d59a15ee8aba348815f5bf797",
+      "width": 600
+    },
+    {
+      "bytes": 286923,
+      "height": 400,
+      "mean_luma": 3.7612813499999995,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00787.png",
+      "sha256": "406e50441057d5d12f5425a37db2317682cce9cc89f37c511be53b0df013915d",
+      "width": 600
+    },
+    {
+      "bytes": 284935,
+      "height": 400,
+      "mean_luma": 3.591609975833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00788.png",
+      "sha256": "ef2312ac69afcff788f9eb92afcda7c9a3f568e76514f3e3c7971e3b6216a455",
+      "width": 600
+    },
+    {
+      "bytes": 285466,
+      "height": 400,
+      "mean_luma": 3.6116999775,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Low/low00789.png",
+      "sha256": "5bf9f5a81ab9f4ffba6980839cdaac1245f0c805b4df4c3c9564a51446da0a9c",
+      "width": 600
+    },
+    {
+      "bytes": 404933,
+      "height": 400,
+      "mean_luma": 113.24920848916665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00690.png",
+      "sha256": "310e2d0531e0109f18425c17d854e4e7ce634b1761ec264c9029b029aab7adc1",
+      "width": 600
+    },
+    {
+      "bytes": 404933,
+      "height": 400,
+      "mean_luma": 113.24920848916665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00691.png",
+      "sha256": "310e2d0531e0109f18425c17d854e4e7ce634b1761ec264c9029b029aab7adc1",
+      "width": 600
+    },
+    {
+      "bytes": 457173,
+      "height": 400,
+      "mean_luma": 108.6131668575,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00692.png",
+      "sha256": "c76bedc4e349c8b547ecdbe27ab4976349f65315296823d2d3d7271b0ad09892",
+      "width": 600
+    },
+    {
+      "bytes": 457173,
+      "height": 400,
+      "mean_luma": 108.6131668575,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00693.png",
+      "sha256": "c76bedc4e349c8b547ecdbe27ab4976349f65315296823d2d3d7271b0ad09892",
+      "width": 600
+    },
+    {
+      "bytes": 438798,
+      "height": 400,
+      "mean_luma": 115.77595533166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00694.png",
+      "sha256": "c088836479db972020679507b1b3eb9c96f32d0df1cfc21a364755b04af0e179",
+      "width": 600
+    },
+    {
+      "bytes": 438798,
+      "height": 400,
+      "mean_luma": 115.77595533166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00695.png",
+      "sha256": "c088836479db972020679507b1b3eb9c96f32d0df1cfc21a364755b04af0e179",
+      "width": 600
+    },
+    {
+      "bytes": 414702,
+      "height": 400,
+      "mean_luma": 97.86344043083332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00696.png",
+      "sha256": "f7118b2251a5a030ef9a29206c698f9883c186a7cb95c066208b3f415793f525",
+      "width": 600
+    },
+    {
+      "bytes": 414702,
+      "height": 400,
+      "mean_luma": 97.86344043083332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00697.png",
+      "sha256": "f7118b2251a5a030ef9a29206c698f9883c186a7cb95c066208b3f415793f525",
+      "width": 600
+    },
+    {
+      "bytes": 361828,
+      "height": 400,
+      "mean_luma": 99.28646902583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00698.png",
+      "sha256": "8c68c7d1d91010be3a29edb9ecbf427ff17ba6c551fcde6e627dc5fed3f7966a",
+      "width": 600
+    },
+    {
+      "bytes": 361828,
+      "height": 400,
+      "mean_luma": 99.28646902583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00699.png",
+      "sha256": "8c68c7d1d91010be3a29edb9ecbf427ff17ba6c551fcde6e627dc5fed3f7966a",
+      "width": 600
+    },
+    {
+      "bytes": 361828,
+      "height": 400,
+      "mean_luma": 99.28646902583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00700.png",
+      "sha256": "8c68c7d1d91010be3a29edb9ecbf427ff17ba6c551fcde6e627dc5fed3f7966a",
+      "width": 600
+    },
+    {
+      "bytes": 361828,
+      "height": 400,
+      "mean_luma": 99.28646902583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00701.png",
+      "sha256": "8c68c7d1d91010be3a29edb9ecbf427ff17ba6c551fcde6e627dc5fed3f7966a",
+      "width": 600
+    },
+    {
+      "bytes": 392040,
+      "height": 400,
+      "mean_luma": 137.63848063833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00702.png",
+      "sha256": "2537803af2361568dabe0c25caecf86e488c51bb4c8cde1adaac3ab157d16aa8",
+      "width": 600
+    },
+    {
+      "bytes": 392040,
+      "height": 400,
+      "mean_luma": 137.63848063833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00703.png",
+      "sha256": "2537803af2361568dabe0c25caecf86e488c51bb4c8cde1adaac3ab157d16aa8",
+      "width": 600
+    },
+    {
+      "bytes": 392040,
+      "height": 400,
+      "mean_luma": 137.63848063833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00704.png",
+      "sha256": "2537803af2361568dabe0c25caecf86e488c51bb4c8cde1adaac3ab157d16aa8",
+      "width": 600
+    },
+    {
+      "bytes": 379576,
+      "height": 400,
+      "mean_luma": 129.60613432499997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00705.png",
+      "sha256": "955efda1be9f6b888636583973cfef77902490b2ad646c2b76698803082e0565",
+      "width": 600
+    },
+    {
+      "bytes": 379576,
+      "height": 400,
+      "mean_luma": 129.60613432499997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00706.png",
+      "sha256": "955efda1be9f6b888636583973cfef77902490b2ad646c2b76698803082e0565",
+      "width": 600
+    },
+    {
+      "bytes": 379576,
+      "height": 400,
+      "mean_luma": 129.60613432499997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00707.png",
+      "sha256": "955efda1be9f6b888636583973cfef77902490b2ad646c2b76698803082e0565",
+      "width": 600
+    },
+    {
+      "bytes": 351284,
+      "height": 400,
+      "mean_luma": 91.652065255,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00708.png",
+      "sha256": "ade9d7c959f6557aceba8b1137d3231be1ccdb6beaacdfaa9fdcb26a9a9b2530",
+      "width": 600
+    },
+    {
+      "bytes": 351284,
+      "height": 400,
+      "mean_luma": 91.652065255,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00709.png",
+      "sha256": "ade9d7c959f6557aceba8b1137d3231be1ccdb6beaacdfaa9fdcb26a9a9b2530",
+      "width": 600
+    },
+    {
+      "bytes": 334712,
+      "height": 400,
+      "mean_luma": 128.72730311,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00710.png",
+      "sha256": "5a7682014c8416c5152dd00908f1d32d248f6b92fd8c1b2c76d5bd6f040c5ff1",
+      "width": 600
+    },
+    {
+      "bytes": 334712,
+      "height": 400,
+      "mean_luma": 128.72730311,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00711.png",
+      "sha256": "5a7682014c8416c5152dd00908f1d32d248f6b92fd8c1b2c76d5bd6f040c5ff1",
+      "width": 600
+    },
+    {
+      "bytes": 328749,
+      "height": 400,
+      "mean_luma": 146.97286887083334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00712.png",
+      "sha256": "811994b31936424b79aded970fe3e777925077d7795b305c05851b161295e90d",
+      "width": 600
+    },
+    {
+      "bytes": 328749,
+      "height": 400,
+      "mean_luma": 146.97286887083334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00713.png",
+      "sha256": "811994b31936424b79aded970fe3e777925077d7795b305c05851b161295e90d",
+      "width": 600
+    },
+    {
+      "bytes": 529562,
+      "height": 400,
+      "mean_luma": 88.67122617,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00714.png",
+      "sha256": "096d88fdcaf33947d4311fbbd23a58fa709cc64fa9cc5e5bb24416da951519aa",
+      "width": 600
+    },
+    {
+      "bytes": 529562,
+      "height": 400,
+      "mean_luma": 88.67122617,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00715.png",
+      "sha256": "096d88fdcaf33947d4311fbbd23a58fa709cc64fa9cc5e5bb24416da951519aa",
+      "width": 600
+    },
+    {
+      "bytes": 375166,
+      "height": 400,
+      "mean_luma": 115.07287218583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00716.png",
+      "sha256": "387977a827e03162a17b1b21645107829240aa7a75ee64b235d71eca591f12d3",
+      "width": 600
+    },
+    {
+      "bytes": 375166,
+      "height": 400,
+      "mean_luma": 115.07287218583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00717.png",
+      "sha256": "387977a827e03162a17b1b21645107829240aa7a75ee64b235d71eca591f12d3",
+      "width": 600
+    },
+    {
+      "bytes": 436716,
+      "height": 400,
+      "mean_luma": 101.98428022249999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00718.png",
+      "sha256": "bd8b9a9831d923afb3da31824efa748415a5adc9fd6f828b94abc909c710983a",
+      "width": 600
+    },
+    {
+      "bytes": 436716,
+      "height": 400,
+      "mean_luma": 101.98428022249999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00719.png",
+      "sha256": "bd8b9a9831d923afb3da31824efa748415a5adc9fd6f828b94abc909c710983a",
+      "width": 600
+    },
+    {
+      "bytes": 449936,
+      "height": 400,
+      "mean_luma": 77.56803848166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00720.png",
+      "sha256": "69fa7a506a47d69f2dfb7d3c47525b3a460acd487ebdcc8fc34594d84823d5b5",
+      "width": 600
+    },
+    {
+      "bytes": 449936,
+      "height": 400,
+      "mean_luma": 77.56803848166666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00721.png",
+      "sha256": "69fa7a506a47d69f2dfb7d3c47525b3a460acd487ebdcc8fc34594d84823d5b5",
+      "width": 600
+    },
+    {
+      "bytes": 512229,
+      "height": 400,
+      "mean_luma": 76.81287843499999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00722.png",
+      "sha256": "f3ae8c4507ab466a0d04174dbbefa94f3726ca81b1012b56c1189431a943f263",
+      "width": 600
+    },
+    {
+      "bytes": 512229,
+      "height": 400,
+      "mean_luma": 76.81287843499999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00723.png",
+      "sha256": "f3ae8c4507ab466a0d04174dbbefa94f3726ca81b1012b56c1189431a943f263",
+      "width": 600
+    },
+    {
+      "bytes": 523016,
+      "height": 400,
+      "mean_luma": 72.16335852166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00724.png",
+      "sha256": "2080e9a3de87617a3d427b27a8a8133a08adea9c19847ebf2459013256707734",
+      "width": 600
+    },
+    {
+      "bytes": 523016,
+      "height": 400,
+      "mean_luma": 72.16335852166667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00725.png",
+      "sha256": "2080e9a3de87617a3d427b27a8a8133a08adea9c19847ebf2459013256707734",
+      "width": 600
+    },
+    {
+      "bytes": 582706,
+      "height": 400,
+      "mean_luma": 85.10179038333334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00726.png",
+      "sha256": "74c063db6d05356bf7e3ff2dcd83b17f9754cb7e303372a104e738cb15d51c60",
+      "width": 600
+    },
+    {
+      "bytes": 582706,
+      "height": 400,
+      "mean_luma": 85.10179038333334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00727.png",
+      "sha256": "74c063db6d05356bf7e3ff2dcd83b17f9754cb7e303372a104e738cb15d51c60",
+      "width": 600
+    },
+    {
+      "bytes": 582706,
+      "height": 400,
+      "mean_luma": 85.10179038333334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00728.png",
+      "sha256": "74c063db6d05356bf7e3ff2dcd83b17f9754cb7e303372a104e738cb15d51c60",
+      "width": 600
+    },
+    {
+      "bytes": 381665,
+      "height": 400,
+      "mean_luma": 98.41472793583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00729.png",
+      "sha256": "5bf739df6237ea0d5f728cbdef741e0c02a38d2907039d5102deb324bbaa337a",
+      "width": 600
+    },
+    {
+      "bytes": 381665,
+      "height": 400,
+      "mean_luma": 98.41472793583333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00730.png",
+      "sha256": "5bf739df6237ea0d5f728cbdef741e0c02a38d2907039d5102deb324bbaa337a",
+      "width": 600
+    },
+    {
+      "bytes": 431218,
+      "height": 400,
+      "mean_luma": 97.54927556833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00731.png",
+      "sha256": "7f8be1987f2200ab186331fa6dbf50a0a529cd3f9a1434578b594f415c827a45",
+      "width": 600
+    },
+    {
+      "bytes": 431218,
+      "height": 400,
+      "mean_luma": 97.54927556833333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00732.png",
+      "sha256": "7f8be1987f2200ab186331fa6dbf50a0a529cd3f9a1434578b594f415c827a45",
+      "width": 600
+    },
+    {
+      "bytes": 421010,
+      "height": 400,
+      "mean_luma": 98.75994254749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00733.png",
+      "sha256": "029a28e53407e7a6953495d3f738779a78a8f638215b4a7203692d353246310b",
+      "width": 600
+    },
+    {
+      "bytes": 421010,
+      "height": 400,
+      "mean_luma": 98.75994254749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00734.png",
+      "sha256": "029a28e53407e7a6953495d3f738779a78a8f638215b4a7203692d353246310b",
+      "width": 600
+    },
+    {
+      "bytes": 503016,
+      "height": 400,
+      "mean_luma": 98.88810618666666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00735.png",
+      "sha256": "530e5cc19afe62044e65ae0c610158e32bc29c211c888bb258fd21f54fb64c3f",
+      "width": 600
+    },
+    {
+      "bytes": 503016,
+      "height": 400,
+      "mean_luma": 98.88810618666666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00736.png",
+      "sha256": "530e5cc19afe62044e65ae0c610158e32bc29c211c888bb258fd21f54fb64c3f",
+      "width": 600
+    },
+    {
+      "bytes": 444530,
+      "height": 400,
+      "mean_luma": 98.77249366,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00737.png",
+      "sha256": "781118c228f86aee478ef68af6827f4331bc5937a6e59b556880c1e63cda99fe",
+      "width": 600
+    },
+    {
+      "bytes": 444530,
+      "height": 400,
+      "mean_luma": 98.77249366,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00738.png",
+      "sha256": "781118c228f86aee478ef68af6827f4331bc5937a6e59b556880c1e63cda99fe",
+      "width": 600
+    },
+    {
+      "bytes": 355378,
+      "height": 400,
+      "mean_luma": 103.185101945,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00739.png",
+      "sha256": "5ab56b5c70043bc36cb57a0915cdd0d35ec4e4ff3fe6605654dd86b6506ff7bb",
+      "width": 600
+    },
+    {
+      "bytes": 355378,
+      "height": 400,
+      "mean_luma": 103.185101945,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00740.png",
+      "sha256": "5ab56b5c70043bc36cb57a0915cdd0d35ec4e4ff3fe6605654dd86b6506ff7bb",
+      "width": 600
+    },
+    {
+      "bytes": 400046,
+      "height": 400,
+      "mean_luma": 96.52922764499999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00741.png",
+      "sha256": "c74919a01598239884ccd69d3def178a8b35c9e3a79ca9b24688678e89f4dfe1",
+      "width": 600
+    },
+    {
+      "bytes": 400046,
+      "height": 400,
+      "mean_luma": 96.52922764499999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00742.png",
+      "sha256": "c74919a01598239884ccd69d3def178a8b35c9e3a79ca9b24688678e89f4dfe1",
+      "width": 600
+    },
+    {
+      "bytes": 395390,
+      "height": 400,
+      "mean_luma": 97.7878276825,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00743.png",
+      "sha256": "5026cdb9c88e4cbd00c95f5d680e7bae50409815c3e00861f65203d808f677ec",
+      "width": 600
+    },
+    {
+      "bytes": 395390,
+      "height": 400,
+      "mean_luma": 97.7878276825,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00744.png",
+      "sha256": "5026cdb9c88e4cbd00c95f5d680e7bae50409815c3e00861f65203d808f677ec",
+      "width": 600
+    },
+    {
+      "bytes": 457219,
+      "height": 400,
+      "mean_luma": 101.8454937125,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00745.png",
+      "sha256": "fea6b16cc94c8091ef1d05a1d59c8bcd21e63089937b611026b39eaa307c1989",
+      "width": 600
+    },
+    {
+      "bytes": 457219,
+      "height": 400,
+      "mean_luma": 101.8454937125,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00746.png",
+      "sha256": "fea6b16cc94c8091ef1d05a1d59c8bcd21e63089937b611026b39eaa307c1989",
+      "width": 600
+    },
+    {
+      "bytes": 395379,
+      "height": 400,
+      "mean_luma": 91.62345001749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00747.png",
+      "sha256": "64133deb814e9983038f46d65e5668dc02828d3187c84ef535f06c7733c450ca",
+      "width": 600
+    },
+    {
+      "bytes": 395379,
+      "height": 400,
+      "mean_luma": 91.62345001749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00748.png",
+      "sha256": "64133deb814e9983038f46d65e5668dc02828d3187c84ef535f06c7733c450ca",
+      "width": 600
+    },
+    {
+      "bytes": 355860,
+      "height": 400,
+      "mean_luma": 101.1037229775,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00749.png",
+      "sha256": "5a90c66f6dd1f2a6afd1e365193a2612489486b5db6fe4a8ace643bc0a295638",
+      "width": 600
+    },
+    {
+      "bytes": 355860,
+      "height": 400,
+      "mean_luma": 101.1037229775,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00750.png",
+      "sha256": "5a90c66f6dd1f2a6afd1e365193a2612489486b5db6fe4a8ace643bc0a295638",
+      "width": 600
+    },
+    {
+      "bytes": 346047,
+      "height": 400,
+      "mean_luma": 86.84628218333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00751.png",
+      "sha256": "337119f7a5fc2f09a9663181aebcab075fe227615b08323dc7010bb9007a8900",
+      "width": 600
+    },
+    {
+      "bytes": 346047,
+      "height": 400,
+      "mean_luma": 86.84628218333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00752.png",
+      "sha256": "337119f7a5fc2f09a9663181aebcab075fe227615b08323dc7010bb9007a8900",
+      "width": 600
+    },
+    {
+      "bytes": 404001,
+      "height": 400,
+      "mean_luma": 70.46363040083332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00753.png",
+      "sha256": "9504c69b64a14fcdc09c7d08b470e33594ebc48cd1c5f623d116746d75ec45a8",
+      "width": 600
+    },
+    {
+      "bytes": 404001,
+      "height": 400,
+      "mean_luma": 70.46363040083332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00754.png",
+      "sha256": "9504c69b64a14fcdc09c7d08b470e33594ebc48cd1c5f623d116746d75ec45a8",
+      "width": 600
+    },
+    {
+      "bytes": 404001,
+      "height": 400,
+      "mean_luma": 70.46363040083332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00755.png",
+      "sha256": "9504c69b64a14fcdc09c7d08b470e33594ebc48cd1c5f623d116746d75ec45a8",
+      "width": 600
+    },
+    {
+      "bytes": 404001,
+      "height": 400,
+      "mean_luma": 70.46363040083332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00756.png",
+      "sha256": "9504c69b64a14fcdc09c7d08b470e33594ebc48cd1c5f623d116746d75ec45a8",
+      "width": 600
+    },
+    {
+      "bytes": 391418,
+      "height": 400,
+      "mean_luma": 97.74267157416668,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00757.png",
+      "sha256": "8aa67f12acb1a78e3a3d299b91f3008e87ad1ec1ac91661e21a14b95e9cbed46",
+      "width": 600
+    },
+    {
+      "bytes": 391418,
+      "height": 400,
+      "mean_luma": 97.74267157416668,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00758.png",
+      "sha256": "8aa67f12acb1a78e3a3d299b91f3008e87ad1ec1ac91661e21a14b95e9cbed46",
+      "width": 600
+    },
+    {
+      "bytes": 396907,
+      "height": 400,
+      "mean_luma": 74.62774502416666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00759.png",
+      "sha256": "494847243e55623c58eacd098d60740ebc97de4ffce23d7e66de48e8d5d8fc4d",
+      "width": 600
+    },
+    {
+      "bytes": 396907,
+      "height": 400,
+      "mean_luma": 74.62774502416666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00760.png",
+      "sha256": "494847243e55623c58eacd098d60740ebc97de4ffce23d7e66de48e8d5d8fc4d",
+      "width": 600
+    },
+    {
+      "bytes": 350972,
+      "height": 400,
+      "mean_luma": 76.39480165249999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00761.png",
+      "sha256": "32cf330c7402fd8a3ac463fd69c40193b3c24b5ffcb2192b31986a183a46acbe",
+      "width": 600
+    },
+    {
+      "bytes": 350972,
+      "height": 400,
+      "mean_luma": 76.39480165249999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00762.png",
+      "sha256": "32cf330c7402fd8a3ac463fd69c40193b3c24b5ffcb2192b31986a183a46acbe",
+      "width": 600
+    },
+    {
+      "bytes": 317806,
+      "height": 400,
+      "mean_luma": 66.31083273,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00763.png",
+      "sha256": "73f7517380347dbd12d7756560edc052bfe5250d9a43d108f6b7509a2b22e54f",
+      "width": 600
+    },
+    {
+      "bytes": 317806,
+      "height": 400,
+      "mean_luma": 66.31083273,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00764.png",
+      "sha256": "73f7517380347dbd12d7756560edc052bfe5250d9a43d108f6b7509a2b22e54f",
+      "width": 600
+    },
+    {
+      "bytes": 478260,
+      "height": 400,
+      "mean_luma": 80.35282238833332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00765.png",
+      "sha256": "59ad4d62f98fdfb7a41d89e045e013d042f8d7f1fef284c03b1d49e523b5d00f",
+      "width": 600
+    },
+    {
+      "bytes": 478260,
+      "height": 400,
+      "mean_luma": 80.35282238833332,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00766.png",
+      "sha256": "59ad4d62f98fdfb7a41d89e045e013d042f8d7f1fef284c03b1d49e523b5d00f",
+      "width": 600
+    },
+    {
+      "bytes": 399041,
+      "height": 400,
+      "mean_luma": 72.30446280249998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00767.png",
+      "sha256": "397b1c455456e0eca52106c5b1110eb28bec451aa7b5dd5207d6708f267ecb85",
+      "width": 600
+    },
+    {
+      "bytes": 399041,
+      "height": 400,
+      "mean_luma": 72.30446280249998,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00768.png",
+      "sha256": "397b1c455456e0eca52106c5b1110eb28bec451aa7b5dd5207d6708f267ecb85",
+      "width": 600
+    },
+    {
+      "bytes": 351525,
+      "height": 400,
+      "mean_luma": 58.713429929166665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00769.png",
+      "sha256": "f8139e6c678809cc8ff76388e1637a78cb9384c9e1febc4092e2b71fa5095a04",
+      "width": 600
+    },
+    {
+      "bytes": 351525,
+      "height": 400,
+      "mean_luma": 58.713429929166665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00770.png",
+      "sha256": "f8139e6c678809cc8ff76388e1637a78cb9384c9e1febc4092e2b71fa5095a04",
+      "width": 600
+    },
+    {
+      "bytes": 399319,
+      "height": 400,
+      "mean_luma": 75.60329014499999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00771.png",
+      "sha256": "6170492e7ea5c903c59b88e2b9ba16bf685f1561dd27a3c27296faf696590ada",
+      "width": 600
+    },
+    {
+      "bytes": 399319,
+      "height": 400,
+      "mean_luma": 75.60329014499999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00772.png",
+      "sha256": "6170492e7ea5c903c59b88e2b9ba16bf685f1561dd27a3c27296faf696590ada",
+      "width": 600
+    },
+    {
+      "bytes": 382327,
+      "height": 400,
+      "mean_luma": 96.26850434833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00773.png",
+      "sha256": "e8b6ef5a125de71150eb5d6217da05789f8198c55c0daad147eedf2fef18ad83",
+      "width": 600
+    },
+    {
+      "bytes": 382327,
+      "height": 400,
+      "mean_luma": 96.26850434833334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00774.png",
+      "sha256": "e8b6ef5a125de71150eb5d6217da05789f8198c55c0daad147eedf2fef18ad83",
+      "width": 600
+    },
+    {
+      "bytes": 485410,
+      "height": 400,
+      "mean_luma": 89.05585727333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00775.png",
+      "sha256": "e50e00b02148a9408bffa545a7f0bc2ffb01a3c68a24977916cc26c022760e58",
+      "width": 600
+    },
+    {
+      "bytes": 485410,
+      "height": 400,
+      "mean_luma": 89.05585727333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00776.png",
+      "sha256": "e50e00b02148a9408bffa545a7f0bc2ffb01a3c68a24977916cc26c022760e58",
+      "width": 600
+    },
+    {
+      "bytes": 485410,
+      "height": 400,
+      "mean_luma": 89.05585727333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00777.png",
+      "sha256": "e50e00b02148a9408bffa545a7f0bc2ffb01a3c68a24977916cc26c022760e58",
+      "width": 600
+    },
+    {
+      "bytes": 485410,
+      "height": 400,
+      "mean_luma": 89.05585727333333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00778.png",
+      "sha256": "e50e00b02148a9408bffa545a7f0bc2ffb01a3c68a24977916cc26c022760e58",
+      "width": 600
+    },
+    {
+      "bytes": 369522,
+      "height": 400,
+      "mean_luma": 63.62758506916666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00779.png",
+      "sha256": "78dbc708ccb83312f838934a081480ba3595b363bed9b3f590fe192527db1ed4",
+      "width": 600
+    },
+    {
+      "bytes": 369522,
+      "height": 400,
+      "mean_luma": 63.62758506916666,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00780.png",
+      "sha256": "78dbc708ccb83312f838934a081480ba3595b363bed9b3f590fe192527db1ed4",
+      "width": 600
+    },
+    {
+      "bytes": 546485,
+      "height": 400,
+      "mean_luma": 104.35318115749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00781.png",
+      "sha256": "a10b6c0bbcf9b1e33aa1b402e961406a6e5a283352387cdde1d5f792dae99c41",
+      "width": 600
+    },
+    {
+      "bytes": 546485,
+      "height": 400,
+      "mean_luma": 104.35318115749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00782.png",
+      "sha256": "a10b6c0bbcf9b1e33aa1b402e961406a6e5a283352387cdde1d5f792dae99c41",
+      "width": 600
+    },
+    {
+      "bytes": 546485,
+      "height": 400,
+      "mean_luma": 104.35318115749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00783.png",
+      "sha256": "a10b6c0bbcf9b1e33aa1b402e961406a6e5a283352387cdde1d5f792dae99c41",
+      "width": 600
+    },
+    {
+      "bytes": 546485,
+      "height": 400,
+      "mean_luma": 104.35318115749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00784.png",
+      "sha256": "a10b6c0bbcf9b1e33aa1b402e961406a6e5a283352387cdde1d5f792dae99c41",
+      "width": 600
+    },
+    {
+      "bytes": 546485,
+      "height": 400,
+      "mean_luma": 104.35318115749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00785.png",
+      "sha256": "a10b6c0bbcf9b1e33aa1b402e961406a6e5a283352387cdde1d5f792dae99c41",
+      "width": 600
+    },
+    {
+      "bytes": 546485,
+      "height": 400,
+      "mean_luma": 104.35318115749999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00786.png",
+      "sha256": "a10b6c0bbcf9b1e33aa1b402e961406a6e5a283352387cdde1d5f792dae99c41",
+      "width": 600
+    },
+    {
+      "bytes": 461732,
+      "height": 400,
+      "mean_luma": 78.04804660083333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00787.png",
+      "sha256": "e9e249ba5276535ebe3e56229cd34f97e707e0e6807b9efa87e9e636f19f3ad9",
+      "width": 600
+    },
+    {
+      "bytes": 461732,
+      "height": 400,
+      "mean_luma": 78.04804660083333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00788.png",
+      "sha256": "e9e249ba5276535ebe3e56229cd34f97e707e0e6807b9efa87e9e636f19f3ad9",
+      "width": 600
+    },
+    {
+      "bytes": 461732,
+      "height": 400,
+      "mean_luma": 78.04804660083333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/lolv2_official_9820d8b11243/LOL-v2/Real_captured/Test/Normal/normal00789.png",
+      "sha256": "e9e249ba5276535ebe3e56229cd34f97e707e0e6807b9efa87e9e636f19f3ad9",
+      "width": 600
+    },
+    {
+      "bytes": 2016261,
+      "height": 3972,
+      "mean_luma": 120.04919292138557,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_10/label.jpg",
+      "sha256": "7601b6259b197c081c476ab95e9a07caeae4d176a0e9f82dfcd670ff735e4bab",
+      "width": 5973
+    },
+    {
+      "bytes": 676906,
+      "height": 3972,
+      "mean_luma": 17.54863320867873,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_10/low1.jpg",
+      "sha256": "0159a49d4abcf8bfcce0407e8e00978d8f48c6cb05a2beb1a24632bc8b6711cb",
+      "width": 5973
+    },
+    {
+      "bytes": 860017,
+      "height": 3972,
+      "mean_luma": 31.811637359676105,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_10/low2.jpg",
+      "sha256": "1c58af86493e74d55dbde2f1a02913357a8602313d717eb21661743c4b33cc55",
+      "width": 5973
+    },
+    {
+      "bytes": 1191310,
+      "height": 3972,
+      "mean_luma": 65.77497495291416,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_10/low3.jpg",
+      "sha256": "e9bea42ac8e953022a7d7b9eaa2af7a57bd0474fce76ac2e70785f17f4ef01fa",
+      "width": 5973
+    },
+    {
+      "bytes": 1762418,
+      "height": 3264,
+      "mean_luma": 125.26958412488335,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_100/label.jpg",
+      "sha256": "31383dcb40e1eef632d241e1eb2429062f5e698a33c3e40e7f93bd8bacc9797d",
+      "width": 4896
+    },
+    {
+      "bytes": 1010281,
+      "height": 3264,
+      "mean_luma": 28.288123994176914,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_100/low1.jpg",
+      "sha256": "1807c372ef9f7cc8842498fcf009a5744802cce8a2081863c979199c76bde828",
+      "width": 4896
+    },
+    {
+      "bytes": 1217733,
+      "height": 3264,
+      "mean_luma": 44.65826990541749,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_100/low2.jpg",
+      "sha256": "1a16158b4adfcded37e42752bdb7d593745848f30c5f58f26b95bbe1ea502cd1",
+      "width": 4896
+    },
+    {
+      "bytes": 1451183,
+      "height": 3264,
+      "mean_luma": 71.41159027110716,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_100/low3.jpg",
+      "sha256": "fecc635b1b606d773baa2a598aa859fd1076dc297e00b9e95fc51554f26534c9",
+      "width": 4896
+    },
+    {
+      "bytes": 1024419,
+      "height": 3264,
+      "mean_luma": 132.7765921626698,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_101/label.jpg",
+      "sha256": "126518e1d02d20449eb0682a2ba367e91215d31662296a003544b5f4bebba23d",
+      "width": 4896
+    },
+    {
+      "bytes": 635457,
+      "height": 3264,
+      "mean_luma": 62.28681138235345,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_101/low1.jpg",
+      "sha256": "179f53a15240211e15780f58ad6f669d587e707b386ef4696de0cc00d0a2de42",
+      "width": 4896
+    },
+    {
+      "bytes": 673077,
+      "height": 3264,
+      "mean_luma": 90.59051615899935,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_101/low2.jpg",
+      "sha256": "8954b8b513509acc131ddc786a574f12bab580398767da6231c01b9aec21f87d",
+      "width": 4896
+    },
+    {
+      "bytes": 695474,
+      "height": 3264,
+      "mean_luma": 120.50293303888779,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_101/low3.jpg",
+      "sha256": "2f2e8e73f134d4f8e8b1a2eed6b39729c67ceac8a4c541e7904c481680a1a2f8",
+      "width": 4896
+    },
+    {
+      "bytes": 651339,
+      "height": 2592,
+      "mean_luma": 124.31535820324456,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_102/label.jpg",
+      "sha256": "eeaec489095f2f5a5cb9ee6c98edf0ee95f2dbd057296f838942f4387d9fe699",
+      "width": 3872
+    },
+    {
+      "bytes": 393170,
+      "height": 2592,
+      "mean_luma": 110.68744072356296,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_102/low1.jpg",
+      "sha256": "a5b4263656fe1220fcfe5da0990af5b5d7993f03cdc3394d5fedb8002d61006f",
+      "width": 3872
+    },
+    {
+      "bytes": 253476,
+      "height": 2592,
+      "mean_luma": 19.444711463673986,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_102/low2.jpg",
+      "sha256": "ca8fcc2f5825780445f0efa9695018c19b68d905a891b1838fa6b1ccb078c980",
+      "width": 3872
+    },
+    {
+      "bytes": 277812,
+      "height": 2592,
+      "mean_luma": 30.166374287939366,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_102/low3.jpg",
+      "sha256": "439d446cbd38415b3486db7ef8d64bde50e02168cf4cd63e154d8506e109bd5b",
+      "width": 3872
+    },
+    {
+      "bytes": 314400,
+      "height": 2592,
+      "mean_luma": 45.8401127181697,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_102/low4.jpg",
+      "sha256": "6a0ad2486c5c039c1b0f28a8eb2cdb71947bc4cb02401ef246356cd61b566fa6",
+      "width": 3872
+    },
+    {
+      "bytes": 519248,
+      "height": 2592,
+      "mean_luma": 121.93121738480527,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_103/label.jpg",
+      "sha256": "1e6d5fdf60401828a48236bf03837dfc7657ccfdab765ad910c2160c4e53a246",
+      "width": 3872
+    },
+    {
+      "bytes": 345348,
+      "height": 2592,
+      "mean_luma": 94.32009550175444,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_103/low1.jpg",
+      "sha256": "d804632bea0abf85d9fdd69560da07c523753f1efaa1169fc47b48611adce524",
+      "width": 3872
+    },
+    {
+      "bytes": 238737,
+      "height": 2592,
+      "mean_luma": 16.094646980418133,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_103/low2.jpg",
+      "sha256": "f2101d540a55896621109409a819477ea82d3b6d43964a0bd0bdf02e6e9a3956",
+      "width": 3872
+    },
+    {
+      "bytes": 262379,
+      "height": 2592,
+      "mean_luma": 26.31676791462606,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_103/low3.jpg",
+      "sha256": "673aec7381d55b07ca386a60d577f248cfaff86f5a03a942b6f8021b80ae10a7",
+      "width": 3872
+    },
+    {
+      "bytes": 293437,
+      "height": 2592,
+      "mean_luma": 41.420659875208045,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_103/low4.jpg",
+      "sha256": "135085f27ef0001c5e5685475f30b9ebc6c8720778f03bd808cca959943a39b6",
+      "width": 3872
+    },
+    {
+      "bytes": 2704149,
+      "height": 4000,
+      "mean_luma": 123.80336814703334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_11/label.jpg",
+      "sha256": "2fe5542fb284300e8e3845ca68efa97621bcf6e49dd2a1427b1e7526eeb4dcfe",
+      "width": 6000
+    },
+    {
+      "bytes": 1178488,
+      "height": 4000,
+      "mean_luma": 24.252368617066665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_11/low1.jpg",
+      "sha256": "647349e90d53e65e7d4e4f72a1fdeeeaf0affa441b64331638d8a260ce3db640",
+      "width": 6000
+    },
+    {
+      "bytes": 1483464,
+      "height": 4000,
+      "mean_luma": 39.929212829425,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_11/low2.jpg",
+      "sha256": "9e4525ae27c01fcaa5da7a44bf19e961d96e62475ec7d1ecb85e29801fec9e5f",
+      "width": 6000
+    },
+    {
+      "bytes": 2378310,
+      "height": 4000,
+      "mean_luma": 68.32764344349167,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_11/low3.jpg",
+      "sha256": "9baab755109955651e0ac41b3085ad0dfc3c085da7597073bbf9234be168d5df",
+      "width": 6000
+    },
+    {
+      "bytes": 358863,
+      "height": 1080,
+      "mean_luma": 128.78139790788964,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_16/label.jpg",
+      "sha256": "6f58c59b09e62ea654726ea7c341f0e74a332dadc7ad1040dc6bf002ed65c4f5",
+      "width": 1920
+    },
+    {
+      "bytes": 104942,
+      "height": 1080,
+      "mean_luma": 18.97714299729938,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_16/low1.jpg",
+      "sha256": "408a8b3a1b3589540665f56cd97e050415f35ea87bc1753bd55ae408c4b45ed8",
+      "width": 1920
+    },
+    {
+      "bytes": 154189,
+      "height": 1080,
+      "mean_luma": 34.70449073562885,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_16/low2.jpg",
+      "sha256": "65e587403ce3ca36980b4d4d1d80e5d12e1d5bfd12c9e993e3d6e9b538e7ca08",
+      "width": 1920
+    },
+    {
+      "bytes": 236780,
+      "height": 1080,
+      "mean_luma": 71.86044226938657,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_16/low3.jpg",
+      "sha256": "2eee4e5b6dfaa9f5912ba6c8efb1aff08f06f7e68d982478fe721c16d5798e14",
+      "width": 1920
+    },
+    {
+      "bytes": 1428694,
+      "height": 3000,
+      "mean_luma": 141.11207901783334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_17/label.jpg",
+      "sha256": "4a61b14006286b1c2cbb1904099da175c3ff0e35919744ae532bb5b3f2fa3102",
+      "width": 4000
+    },
+    {
+      "bytes": 514972,
+      "height": 3000,
+      "mean_luma": 22.076682187933333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_17/low1.jpg",
+      "sha256": "1a3ae3bd004f993823b0c2e0586b364c63d99c224d0cf44a66d7edd9f7101a2f",
+      "width": 4000
+    },
+    {
+      "bytes": 726704,
+      "height": 3000,
+      "mean_luma": 40.27594898619999,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_17/low2.jpg",
+      "sha256": "0dbdbe4f38eccbcc1c34771642079366b2cb4911cfbc4007fc6e01a0b22defa6",
+      "width": 4000
+    },
+    {
+      "bytes": 1053252,
+      "height": 3000,
+      "mean_luma": 80.88920242576667,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_17/low3.jpg",
+      "sha256": "41c8d8e9f5bf100b743657f3e37a8c91995d7c68cdb23accf1c69e6f3b441039",
+      "width": 4000
+    },
+    {
+      "bytes": 1231385,
+      "height": 2736,
+      "mean_luma": 125.39534603545883,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_23/label.jpg",
+      "sha256": "514a3621e8ce2b7ff9dc8e93f76dd8310ee7437d5f282443d64994cc67c38891",
+      "width": 3648
+    },
+    {
+      "bytes": 491773,
+      "height": 2736,
+      "mean_luma": 20.4288292910038,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_23/low1.jpg",
+      "sha256": "5e474b8c4498771100146a08bd53921b4333b479808552283d78ffb0f5ff2311",
+      "width": 3648
+    },
+    {
+      "bytes": 691101,
+      "height": 2736,
+      "mean_luma": 36.89241989628619,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_23/low2.jpg",
+      "sha256": "2a2c85a79712b5904e8baf162634805b0a69f4692059ca1b8455d84c14a0eac5",
+      "width": 3648
+    },
+    {
+      "bytes": 932180,
+      "height": 2736,
+      "mean_luma": 74.15537243891549,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_23/low3.jpg",
+      "sha256": "fc35647c586655a1adc747cae329946293b390f47aa94d2c4c97e388c9b6b0ca",
+      "width": 3648
+    },
+    {
+      "bytes": 1942892,
+      "height": 3648,
+      "mean_luma": 127.0369185101225,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_28/label.jpg",
+      "sha256": "013b01476fab5980fb91ee2cddf602615ff61e65d495af5f6b91bd87edb905d9",
+      "width": 5472
+    },
+    {
+      "bytes": 1095631,
+      "height": 3648,
+      "mean_luma": 31.298880234934064,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_28/low1.jpg",
+      "sha256": "748cfe6874877ac46275167a4c2de8dd77cb5c11209bedab074badb56c205def",
+      "width": 5472
+    },
+    {
+      "bytes": 1270593,
+      "height": 3648,
+      "mean_luma": 44.95764389926468,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_28/low2.jpg",
+      "sha256": "33736c10592b2aa6acd14c14baa2aaa34130f77fa031787ae636fb7508503881",
+      "width": 5472
+    },
+    {
+      "bytes": 1501864,
+      "height": 3648,
+      "mean_luma": 68.07057236877172,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_28/low3.jpg",
+      "sha256": "e22886a2e93b06d075db82ad33bb7bc8106a53d09c377ba9319bd9695fef8e40",
+      "width": 5472
+    },
+    {
+      "bytes": 1584324,
+      "height": 3648,
+      "mean_luma": 91.07648191585993,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_28/low4.jpg",
+      "sha256": "359f0b86ef5a0521fe1e59901d18b6445e1ee708e735de8f37f85557249761ab",
+      "width": 5472
+    },
+    {
+      "bytes": 1718421,
+      "height": 3217,
+      "mean_luma": 116.35139742233073,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_31/label.jpg",
+      "sha256": "304cb4fd259bf3a9b633d68f501509efa8c16bdeb692a2fe1316e6da1eccc86c",
+      "width": 5381
+    },
+    {
+      "bytes": 1026923,
+      "height": 3217,
+      "mean_luma": 49.0782138563847,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_31/low1.jpg",
+      "sha256": "c8b6ed9884786a746134f21c41cadd284ef15d7a21ede3fd668a56e0231a7b53",
+      "width": 5381
+    },
+    {
+      "bytes": 1008317,
+      "height": 3217,
+      "mean_luma": 47.17159750158818,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_31/low2.jpg",
+      "sha256": "43548cb221263b8e1cf8b7e9401b21853db1a35ecb8b3b9e18d67b7ffb921e8a",
+      "width": 5381
+    },
+    {
+      "bytes": 1124309,
+      "height": 3217,
+      "mean_luma": 60.37618161588943,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_31/low3.jpg",
+      "sha256": "9c0b58bb7adf4d05b29b75ba5ed08f95faafd75c0e3d7d3146b6e648a0731a45",
+      "width": 5381
+    },
+    {
+      "bytes": 1287540,
+      "height": 3217,
+      "mean_luma": 85.45250807368193,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_31/low4.jpg",
+      "sha256": "9b650b9ec43e5f68639e4239dab5974836fe1b4a2269df5440881fb1ccba0bcf",
+      "width": 5381
+    },
+    {
+      "bytes": 1232255,
+      "height": 3264,
+      "mean_luma": 122.7401895655617,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_33/label.jpg",
+      "sha256": "a42513f2ee88188fb6d508d15c358dea2b69bcc53f934048b34ab7136237c264",
+      "width": 4896
+    },
+    {
+      "bytes": 713382,
+      "height": 3264,
+      "mean_luma": 19.663531866011567,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_33/low1.jpg",
+      "sha256": "17682bb639692857d91fe1f37b853feb446ca7087c3f64e50936a99824b7a931",
+      "width": 4896
+    },
+    {
+      "bytes": 838277,
+      "height": 3264,
+      "mean_luma": 34.00957977461843,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_33/low2.jpg",
+      "sha256": "88d2bec994dc0b3aa6f6946ef185f446f96bc25ddd0c395c0c0341c2e9ee7c57",
+      "width": 4896
+    },
+    {
+      "bytes": 989483,
+      "height": 3264,
+      "mean_luma": 56.17469653317183,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_33/low3.jpg",
+      "sha256": "6f155784a29bcbab485ab583205a3f58ed7b037cfab8dc7277dd6ae6537b7194",
+      "width": 4896
+    },
+    {
+      "bytes": 1827123,
+      "height": 3264,
+      "mean_luma": 128.31960678235984,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_34/label.jpg",
+      "sha256": "465c828791bc1ee22cd132d4764f69d47bfbb269d9bd3d65d0e47320f34f4a50",
+      "width": 4896
+    },
+    {
+      "bytes": 1110907,
+      "height": 3264,
+      "mean_luma": 34.76744328283193,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_34/low1.jpg",
+      "sha256": "670002fda03d2856100169014b633cf59248450e9b874c1ed1e4fe39cf9fe71f",
+      "width": 4896
+    },
+    {
+      "bytes": 1341976,
+      "height": 3264,
+      "mean_luma": 56.01848191599735,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_34/low2.jpg",
+      "sha256": "1202df574ff40c144ebbc85dfa5f64604aec886ad1b4824f9401a2a4ec11eb59",
+      "width": 4896
+    },
+    {
+      "bytes": 1539764,
+      "height": 3264,
+      "mean_luma": 85.26183621871695,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_34/low3.jpg",
+      "sha256": "f7e08649e9979703892966fec898356a31cf860909c3b51167b7d0260bf516b7",
+      "width": 4896
+    },
+    {
+      "bytes": 1464520,
+      "height": 2287,
+      "mean_luma": 119.98322276743636,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_37/label.jpg",
+      "sha256": "ccd20fdfc8c5959766561dae755f5d87bee1930c64d92cf7632a1953ce71514e",
+      "width": 3631
+    },
+    {
+      "bytes": 852837,
+      "height": 2287,
+      "mean_luma": 47.22850234622741,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_37/low1.jpg",
+      "sha256": "15a1d9d3ca54f9e920f7f759bfbd9b76af790a651a4e582ed67acbcf5c4a291d",
+      "width": 3631
+    },
+    {
+      "bytes": 764314,
+      "height": 2287,
+      "mean_luma": 36.16504163465335,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_37/low2.jpg",
+      "sha256": "925bc1834a8bd3a547b2c8cb5aa644f0f90aa5d3f9718cf9dc5a49950d1a565b",
+      "width": 3631
+    },
+    {
+      "bytes": 959358,
+      "height": 2287,
+      "mean_luma": 63.32953912587967,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_37/low3.jpg",
+      "sha256": "5891f411c4c11414652d0c54c4ca1f86d600965a5212224d902ca033fa276586",
+      "width": 3631
+    },
+    {
+      "bytes": 1057547,
+      "height": 2287,
+      "mean_luma": 81.15678933061595,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_37/low4.jpg",
+      "sha256": "94270d47b9d6ce6326d8464a0e1783e0c525d2924f567afc68e60ba7c3cc6fc7",
+      "width": 3631
+    },
+    {
+      "bytes": 2192793,
+      "height": 3648,
+      "mean_luma": 116.58671975852343,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_38/label.jpg",
+      "sha256": "7740d1695c183f6ef584bd18e7837dce2b2ea196525c9f5d02c6fe44157321e3",
+      "width": 5472
+    },
+    {
+      "bytes": 1136600,
+      "height": 3648,
+      "mean_luma": 32.33734653533218,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_38/low1.jpg",
+      "sha256": "36869cd86ce922acf4b9a1fd1e848cafa751dfc1ece53b2530720043452eccdc",
+      "width": 5472
+    },
+    {
+      "bytes": 939424,
+      "height": 3648,
+      "mean_luma": 21.32130860237645,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_38/low2.jpg",
+      "sha256": "54ea2427db1991fb79f8fa2f012fd370b65bbe452882dda65cac1df75b6f36eb",
+      "width": 5472
+    },
+    {
+      "bytes": 1322570,
+      "height": 3648,
+      "mean_luma": 46.52554581063003,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_38/low3.jpg",
+      "sha256": "0a82e49a1a5688fe7dd6e73c95ab6fbc2f8a93850949199f515f666d8fa605b8",
+      "width": 5472
+    },
+    {
+      "bytes": 1651131,
+      "height": 3648,
+      "mean_luma": 82.39256337422732,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_38/low4.jpg",
+      "sha256": "8f3b2fda096ac73cdd3b2ce4e670c8ae3182f6b4a04319306841e02dd00776eb",
+      "width": 5472
+    },
+    {
+      "bytes": 2236123,
+      "height": 3648,
+      "mean_luma": 137.42826663996576,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_39/label.jpg",
+      "sha256": "8458cce5eb693591893c21d279b0611cff05560cf6e370ac8d2ce19d575f6c26",
+      "width": 5472
+    },
+    {
+      "bytes": 614993,
+      "height": 3648,
+      "mean_luma": 8.696368271216866,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_39/low1.jpg",
+      "sha256": "a312f2e7d0d8b694a30d29520263c64c192463da25911dbce55c1d3d00c2aeb1",
+      "width": 5472
+    },
+    {
+      "bytes": 576990,
+      "height": 3648,
+      "mean_luma": 6.56494172471738,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_39/low2.jpg",
+      "sha256": "7a0e860b9473aa95f6ecc9fa3b5d2f27f9a8ee94bfd4b147e46236cf4785de91",
+      "width": 5472
+    },
+    {
+      "bytes": 687502,
+      "height": 3648,
+      "mean_luma": 11.790944617564618,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_39/low3.jpg",
+      "sha256": "6e6d728ccfa778bd5c79825314432f0834e3ca593a53621f3bbc4d7bbd2e5b12",
+      "width": 5472
+    },
+    {
+      "bytes": 1961878,
+      "height": 3648,
+      "mean_luma": 76.0738982379995,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_39/low4.jpg",
+      "sha256": "e2cff383af57189a05081dde96e4952def3ede6e5c1931bf2d64f7daf0dabb63",
+      "width": 5472
+    },
+    {
+      "bytes": 1839046,
+      "height": 3999,
+      "mean_luma": 125.2837626447382,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_4/label.jpg",
+      "sha256": "3f27f9ee3473c2211e37f42553f9dd762784e328d4739fe2bf9b90e780cf7e1b",
+      "width": 5997
+    },
+    {
+      "bytes": 628327,
+      "height": 3999,
+      "mean_luma": 18.562171974517724,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_4/low1.jpg",
+      "sha256": "19f7614068a57b45a122e7bade7fe42de8f4295a347005787f18f1f40e49d3ec",
+      "width": 5997
+    },
+    {
+      "bytes": 797454,
+      "height": 3999,
+      "mean_luma": 33.72213254584282,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_4/low2.jpg",
+      "sha256": "5fb370d5ca0366d37eaf49716759c74bc9587fb7687d67e1aba8c6b84560f928",
+      "width": 5997
+    },
+    {
+      "bytes": 1146357,
+      "height": 3999,
+      "mean_luma": 69.82030426104942,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_4/low3.jpg",
+      "sha256": "4deff1195e425a0ddde4aa2c65de13817a03637b63d4f52f5bf34890ac345add",
+      "width": 5997
+    },
+    {
+      "bytes": 1752584,
+      "height": 3648,
+      "mean_luma": 122.12394784328671,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_46/label.jpg",
+      "sha256": "f0542b41ca98404ced005d6b590ba3bf8e1fd9ae492408317d154fd2922f4460",
+      "width": 5472
+    },
+    {
+      "bytes": 713960,
+      "height": 3648,
+      "mean_luma": 8.930151675134816,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_46/low1.jpg",
+      "sha256": "bdbd20e9e0661f2ffe2ec8fec10d93ada58a243947ecccccc5a35803ef2ff7a5",
+      "width": 5472
+    },
+    {
+      "bytes": 683212,
+      "height": 3648,
+      "mean_luma": 7.007000186966582,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_46/low2.jpg",
+      "sha256": "db0ef2114ddf94e82bcfe603a00f300c1587acc4e843529f00691d364fb4b756",
+      "width": 5472
+    },
+    {
+      "bytes": 728134,
+      "height": 3648,
+      "mean_luma": 10.900973792166418,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_46/low3.jpg",
+      "sha256": "bd23779b5e0484ee749d0664e462a3cdadb8b4fa9b277c5895b71a14757373ab",
+      "width": 5472
+    },
+    {
+      "bytes": 1134590,
+      "height": 3648,
+      "mean_luma": 44.52923164898093,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_46/low4.jpg",
+      "sha256": "ae123bd5420ec2d667aa17fc0b6260a5a370a1969571ee20bd0b570123717e8c",
+      "width": 5472
+    },
+    {
+      "bytes": 440783,
+      "height": 2448,
+      "mean_luma": 105.43972800790762,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_49/label.jpg",
+      "sha256": "ecab2a473799a8817928e527af88a85414e28fb05b198642e71aab51eab314e2",
+      "width": 3264
+    },
+    {
+      "bytes": 252761,
+      "height": 2448,
+      "mean_luma": 22.381410665844665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_49/low1.jpg",
+      "sha256": "0750a0633b6bf128c6b6f020f1556e7d8363aee46c8ee99edd90fd5401ee73f7",
+      "width": 3264
+    },
+    {
+      "bytes": 369507,
+      "height": 2448,
+      "mean_luma": 46.590243842862925,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_49/low2.jpg",
+      "sha256": "f3029e35e6f725a3c1d42dae4577cdf5c652f34f15a1c1807591e0a130186b47",
+      "width": 3264
+    },
+    {
+      "bytes": 427124,
+      "height": 2448,
+      "mean_luma": 90.40662994223476,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_49/low3.jpg",
+      "sha256": "9145105bda479d31ed953b21f6368e3b3c838c6b1dfd0652033a0ed6c0e4f6f4",
+      "width": 3264
+    },
+    {
+      "bytes": 399367,
+      "height": 2448,
+      "mean_luma": 211.59916019840125,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_49/low4.jpg",
+      "sha256": "d384163ffa60a96c3c2077b30df2a24771e8cc1ae51994cfcf6c10bba2620b2d",
+      "width": 3264
+    },
+    {
+      "bytes": 230573,
+      "height": 2448,
+      "mean_luma": 247.44219510457214,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_49/low5.jpg",
+      "sha256": "d6d345d560d36d661a129e8dd15e54ccf8a93cc7af54bb369b55770ece989d26",
+      "width": 3264
+    },
+    {
+      "bytes": 3772066,
+      "height": 3368,
+      "mean_luma": 126.65862596714173,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_5/label.jpg",
+      "sha256": "e0ad1248198bc4a2ad4256cb01f8eafc5a6284cb0e7a38bbae397000db6e81fc",
+      "width": 6000
+    },
+    {
+      "bytes": 1942006,
+      "height": 3368,
+      "mean_luma": 28.889925442309973,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_5/low1.jpg",
+      "sha256": "442cceecf7d650bc9c2061cd0ba752aaff937b4ef48d1250df56dc51270c6d32",
+      "width": 6000
+    },
+    {
+      "bytes": 2567354,
+      "height": 3368,
+      "mean_luma": 48.445554422832544,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_5/low2.jpg",
+      "sha256": "a5c6cd4de284aebd364c2df014a94f40c8a6370791b1fbfc0f272127e478c1b1",
+      "width": 6000
+    },
+    {
+      "bytes": 3274692,
+      "height": 3368,
+      "mean_luma": 86.73410528581749,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_5/low3.jpg",
+      "sha256": "ad98010e2c260b8acdd9556ed764751cfdd3ee6dac1eda3993db0e28ae343b9a",
+      "width": 6000
+    },
+    {
+      "bytes": 2445770,
+      "height": 3577,
+      "mean_luma": 106.71551993294194,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_50/label.jpg",
+      "sha256": "74cc3b1f1b9ef67d4071226a751aa7638efb63440d40cb5bb3b079a4d525dea8",
+      "width": 6000
+    },
+    {
+      "bytes": 1290359,
+      "height": 3577,
+      "mean_luma": 42.91435642101388,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_50/low1.jpg",
+      "sha256": "c5d163ec1f1ca072a4508912c89e6123be9286bd14607119c6844a5ad500ad23",
+      "width": 6000
+    },
+    {
+      "bytes": 1108868,
+      "height": 3577,
+      "mean_luma": 34.2224593165595,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_50/low2.jpg",
+      "sha256": "99a5d09680c0ea404d9c439bb280996a9c597d727db11f2f67fb4e63c8aa9505",
+      "width": 6000
+    },
+    {
+      "bytes": 1445830,
+      "height": 3577,
+      "mean_luma": 53.09083928846333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_50/low3.jpg",
+      "sha256": "0bd669ef8b7e7b38f37a8e6b084c8a2566da52c8b2eb5a2815525d9e928c10ca",
+      "width": 6000
+    },
+    {
+      "bytes": 2033372,
+      "height": 3577,
+      "mean_luma": 88.59184987472743,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_50/low4.jpg",
+      "sha256": "5457fb4b00573e5816973712ed15f9db901f8bf8cf79177b71cf89c90a9b9cad",
+      "width": 6000
+    },
+    {
+      "bytes": 6870342,
+      "height": 3264,
+      "mean_luma": 123.5441896929291,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_51/label.jpg",
+      "sha256": "c78f82643a3d50919e4c2e016d32449bad1852b3aff44b05ab2d3d6ebf3bc70f",
+      "width": 4896
+    },
+    {
+      "bytes": 442271,
+      "height": 3264,
+      "mean_luma": 4.544724051984713,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_51/low1.jpg",
+      "sha256": "f182463ccc4ebe6bd9be9698b7ad609cc46e2d04d4c479b15fbfa05f15dfb004",
+      "width": 4896
+    },
+    {
+      "bytes": 708389,
+      "height": 3264,
+      "mean_luma": 11.327381779881836,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_51/low2.jpg",
+      "sha256": "2c6db7f091e3da24cfa82279810b5078bcf4660903855960f1fceee8af4504c1",
+      "width": 4896
+    },
+    {
+      "bytes": 1148110,
+      "height": 3264,
+      "mean_luma": 25.634835523934605,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_51/low3.jpg",
+      "sha256": "4edc9a13949a2f0c79d9a60cd9b2fff280af1990cc7e3db669d6201d640142dd",
+      "width": 4896
+    },
+    {
+      "bytes": 1366792,
+      "height": 3264,
+      "mean_luma": 223.89471485154698,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_51/low4.jpg",
+      "sha256": "1c6f04f9cbae7d3cc06c4c31c93647d407ab1eb3c4ab317e2eb03fa81f43cbaa",
+      "width": 4896
+    },
+    {
+      "bytes": 1096863,
+      "height": 1952,
+      "mean_luma": 127.97946208708764,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_52/label.jpg",
+      "sha256": "4f2b2c47a561f56844fe435bae82d9d2600da51214802b55ab55be25879cd554",
+      "width": 3264
+    },
+    {
+      "bytes": 460169,
+      "height": 1952,
+      "mean_luma": 22.114184351017556,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_52/low1.jpg",
+      "sha256": "9a3602b464aab924792f753a4383472dd6b8e57108d409b8848ad0b37206138b",
+      "width": 3264
+    },
+    {
+      "bytes": 608187,
+      "height": 1952,
+      "mean_luma": 37.5594165218303,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_52/low2.jpg",
+      "sha256": "8d2d2f1cfaa905a6700d382ff9f1392ef45607b7168a9c7014d788d61c74aff2",
+      "width": 3264
+    },
+    {
+      "bytes": 833810,
+      "height": 1952,
+      "mean_luma": 70.82076840150123,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_52/low3.jpg",
+      "sha256": "e094ca8e77a0e5e7ced21ccdf1e893dbc6943ce0005aeef906a6dd105d6d9f2f",
+      "width": 3264
+    },
+    {
+      "bytes": 1586410,
+      "height": 3467,
+      "mean_luma": 111.17833526420623,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_55/label.jpg",
+      "sha256": "1cf5223cd86e6c0a9753618ed92738dbd81ab82d38f0ad1e318d06dd1e34d177",
+      "width": 5703
+    },
+    {
+      "bytes": 702825,
+      "height": 3467,
+      "mean_luma": 16.739011210966293,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_55/low1.jpg",
+      "sha256": "a9728ed49bd6300d4924b79895a16551c8a78bae222612819a008184b89dbe1e",
+      "width": 5703
+    },
+    {
+      "bytes": 601489,
+      "height": 3467,
+      "mean_luma": 11.75895896288449,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_55/low2.jpg",
+      "sha256": "9be9810ee851fe9b0c4efe4cdfdcf32440c5ed3792bc9e3d5e1db75b2374c42e",
+      "width": 5703
+    },
+    {
+      "bytes": 800323,
+      "height": 3467,
+      "mean_luma": 23.63711915378994,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_55/low3.jpg",
+      "sha256": "2b0eda61b82b1173bee5728a407e35390fc49bb1051e5a050583073acc46a124",
+      "width": 5703
+    },
+    {
+      "bytes": 1239918,
+      "height": 3467,
+      "mean_luma": 66.28800442259097,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_55/low4.jpg",
+      "sha256": "9b6a587dcaf5fd31c3b254a15fcac4303d5f34d4b4350a6b9fe5a8fcd6eda38e",
+      "width": 5703
+    },
+    {
+      "bytes": 1414877,
+      "height": 3130,
+      "mean_luma": 125.01264880384062,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_56/label.jpg",
+      "sha256": "2b6e0829972e8b0170c0ffb432ae581f340cafd51a2144a7d3b2762f7169c186",
+      "width": 4916
+    },
+    {
+      "bytes": 785423,
+      "height": 3130,
+      "mean_luma": 38.049714782661816,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_56/low1.jpg",
+      "sha256": "e6c78b329170b4ed56d7e82a45669397d837033880060a734591df140a75f8bb",
+      "width": 4916
+    },
+    {
+      "bytes": 709105,
+      "height": 3130,
+      "mean_luma": 30.218001109606238,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_56/low2.jpg",
+      "sha256": "d4eb4898c6eb24e2d76bb8c2b952bc3e3b4ca50e6a37102d05991f5c473ac929",
+      "width": 4916
+    },
+    {
+      "bytes": 905079,
+      "height": 3130,
+      "mean_luma": 52.31023470449234,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_56/low3.jpg",
+      "sha256": "4bc7e65c946dfccd2efebd769a8a70080886b7c8a14d3e71ef185e549d398e71",
+      "width": 4916
+    },
+    {
+      "bytes": 1136120,
+      "height": 3130,
+      "mean_luma": 96.96863218888834,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_56/low4.jpg",
+      "sha256": "425f1ab5e9900552c31909d4045e6e307a725470e9dd586ec7b14184db6813c1",
+      "width": 4916
+    },
+    {
+      "bytes": 901972,
+      "height": 2592,
+      "mean_luma": 118.4334761153398,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_57/label.jpg",
+      "sha256": "6a2070dd9dbeb3bb5da1ca71a1859d5e886418cfca18cb51ff5accfedf8c23ca",
+      "width": 3872
+    },
+    {
+      "bytes": 242418,
+      "height": 2592,
+      "mean_luma": 12.149057696559982,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_57/low1.jpg",
+      "sha256": "1818adc76b61c37d66189d64cad39ce96024151dc94df55e59eef0dbf52bce78",
+      "width": 3872
+    },
+    {
+      "bytes": 291994,
+      "height": 2592,
+      "mean_luma": 22.287703706633092,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_57/low2.jpg",
+      "sha256": "b1df74a048774e5d87df58d4b8d53b4c3985bd1697807298ed4e9de1afec98ed",
+      "width": 3872
+    },
+    {
+      "bytes": 398274,
+      "height": 2592,
+      "mean_luma": 47.72479404122506,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_57/low3.jpg",
+      "sha256": "95d70455497b68637a19da5c265b497613cf520a3fed7f9665b3ed4f9fe8e0d8",
+      "width": 3872
+    },
+    {
+      "bytes": 2378698,
+      "height": 3648,
+      "mean_luma": 119.73778048222569,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/label.jpg",
+      "sha256": "a9e4a18621f472558a03a7f82f1318d6b9e8ad4a4604a98ca631160fb3ee8c26",
+      "width": 5472
+    },
+    {
+      "bytes": 1033985,
+      "height": 3648,
+      "mean_luma": 20.503565503678615,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low1.jpg",
+      "sha256": "c80c2f39abc3df22b824b67a8771b7fd5c11fa26c1a45671741121f7c4b9b312",
+      "width": 5472
+    },
+    {
+      "bytes": 824457,
+      "height": 3648,
+      "mean_luma": 13.77922257161859,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low2.jpg",
+      "sha256": "92b14c5a69244871ca5db4ac84d25cef26d01630169e27d1718534e22679c830",
+      "width": 5472
+    },
+    {
+      "bytes": 1295071,
+      "height": 3648,
+      "mean_luma": 29.776885060076577,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low3.jpg",
+      "sha256": "984ea9a9ecdefd4e1684be846d14f1c8fa7e7a195fd02f67fc49bde61fca1724",
+      "width": 5472
+    },
+    {
+      "bytes": 1908900,
+      "height": 3648,
+      "mean_luma": 67.22261723978973,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low4.jpg",
+      "sha256": "61328034f11720d0a8e5e72c9adf433471094ec11228ec9458c82c9e678324c2",
+      "width": 5472
+    },
+    {
+      "bytes": 2095786,
+      "height": 3648,
+      "mean_luma": 92.10047626802839,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low5.jpg",
+      "sha256": "8da8859d9240bb93cb7519f8fffa49a6f1df5866fbd28d8fa543d98dae17de36",
+      "width": 5472
+    },
+    {
+      "bytes": 2182356,
+      "height": 3648,
+      "mean_luma": 153.71314661677752,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low6.jpg",
+      "sha256": "e50bdf0bdd83c18aa2e1a60851885adc275ad10e673dc38a754f19597974c4ac",
+      "width": 5472
+    },
+    {
+      "bytes": 2354482,
+      "height": 3648,
+      "mean_luma": 125.66951811077087,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low7.jpg",
+      "sha256": "68cfe575793dbc8123cd910d25a9d80a414335ac582cf533ad1d8726683a2aca",
+      "width": 5472
+    },
+    {
+      "bytes": 1891235,
+      "height": 3648,
+      "mean_luma": 180.90610518569014,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_58/low8.jpg",
+      "sha256": "ce5220e392471e0a99681d9701ee129a7d1d15d62f319cc09ff0149ed0248936",
+      "width": 5472
+    },
+    {
+      "bytes": 1517968,
+      "height": 3535,
+      "mean_luma": 111.25752950616862,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_59/label.jpg",
+      "sha256": "9745eec47b31266a330f90e83a2641a3f1edd0027340349f454b4742720c4526",
+      "width": 5527
+    },
+    {
+      "bytes": 712399,
+      "height": 3535,
+      "mean_luma": 18.22519075089013,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_59/low1.jpg",
+      "sha256": "932adf4b5a08dc38358b8240a9bdb2f31c3f3baad08083e5fb44d3d36abc44f3",
+      "width": 5527
+    },
+    {
+      "bytes": 663807,
+      "height": 3535,
+      "mean_luma": 13.995997485160286,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_59/low2.jpg",
+      "sha256": "c504d963b04de1f5a4d7274e30af4752ec69b4993aa72ec10e55738f090359d4",
+      "width": 5527
+    },
+    {
+      "bytes": 754366,
+      "height": 3535,
+      "mean_luma": 23.628528907630766,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_59/low3.jpg",
+      "sha256": "cf8dcf4a73871e48cf71e8b58c5ac7daacbe6b1d132cdfd76968eee941b3619d",
+      "width": 5527
+    },
+    {
+      "bytes": 1036111,
+      "height": 3535,
+      "mean_luma": 56.32742792326419,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_59/low4.jpg",
+      "sha256": "79f5e5626b17491574eae35678c57dad08cb842ee4d0d119d58100f9a4d91b42",
+      "width": 5527
+    },
+    {
+      "bytes": 2546557,
+      "height": 3367,
+      "mean_luma": 119.24786855091737,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_6/label.jpg",
+      "sha256": "a995a7eeefda672d4e70035a997fba737eeec7867de8f923f58de72da7e9b921",
+      "width": 5997
+    },
+    {
+      "bytes": 845747,
+      "height": 3367,
+      "mean_luma": 21.03421146979786,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_6/low1.jpg",
+      "sha256": "a4b6c6a1928f83eda075a505de834de01f098746e94c2c8aefd74fd4fa434189",
+      "width": 5997
+    },
+    {
+      "bytes": 1144509,
+      "height": 3367,
+      "mean_luma": 35.612074350946386,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_6/low2.jpg",
+      "sha256": "8aa7f007fc00397c9e0e0b2161f41a38a757076fa7c18e7dead3beeba0aae609",
+      "width": 5997
+    },
+    {
+      "bytes": 1625342,
+      "height": 3367,
+      "mean_luma": 64.11840289585442,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_6/low3.jpg",
+      "sha256": "b89c18e78f9dd6c356cd12e1baf979ddc87e319253e731f719ead589ec637667",
+      "width": 5997
+    },
+    {
+      "bytes": 1675178,
+      "height": 3455,
+      "mean_luma": 90.33898411672936,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_60/label.jpg",
+      "sha256": "cbde16b76494cb3867df0172813a61b7d30ca57d966cfac3c3c3fa8ac9fbb94e",
+      "width": 6000
+    },
+    {
+      "bytes": 535817,
+      "height": 3455,
+      "mean_luma": 10.286936234191991,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_60/low1.jpg",
+      "sha256": "089e9da05b6a0847f48d6334abbdc64f47db8a4887e9c4006fb72b3caaf4b064",
+      "width": 6000
+    },
+    {
+      "bytes": 510275,
+      "height": 3455,
+      "mean_luma": 9.046280564380126,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_60/low2.jpg",
+      "sha256": "fa0bfc0c551a0288b0c530ec9abc4ab3a451d5b665747098ba6c56bd9cd05786",
+      "width": 6000
+    },
+    {
+      "bytes": 556933,
+      "height": 3455,
+      "mean_luma": 11.592222905479979,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_60/low3.jpg",
+      "sha256": "0be9a44a5a459a3230475f3f8f33f8f4e9f50d589ae4d98f55c08d3832e1a3a9",
+      "width": 6000
+    },
+    {
+      "bytes": 1364931,
+      "height": 3455,
+      "mean_luma": 55.49957518712011,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_60/low4.jpg",
+      "sha256": "0c27faa9174237fc9cf75bc8e5905bda0517677ea8ddca7e0d8f41789c1e5e3e",
+      "width": 6000
+    },
+    {
+      "bytes": 594508,
+      "height": 2236,
+      "mean_luma": 118.88776579651021,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_61/label.jpg",
+      "sha256": "b503da43d6ed7b9406f47f3a0baf2ced0b1806a1ea6bd74565daf638ec4e0cd8",
+      "width": 3772
+    },
+    {
+      "bytes": 231590,
+      "height": 2236,
+      "mean_luma": 12.720233355299476,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_61/low1.jpg",
+      "sha256": "73ee2da248846e50eafbd40f1d247ea332b25a74a9acfc710735011e4a5f6160",
+      "width": 3772
+    },
+    {
+      "bytes": 315501,
+      "height": 2236,
+      "mean_luma": 31.973461823728933,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_61/low2.jpg",
+      "sha256": "c60f533c22b6b2ec35c27c12beff7adff99c702415c59cc68cc72995bb454f88",
+      "width": 3772
+    },
+    {
+      "bytes": 418154,
+      "height": 2236,
+      "mean_luma": 75.32853388345914,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_61/low3.jpg",
+      "sha256": "1d71f3050ab783596df69cd9823378f4d6af6119230b814ff7a3b5b10cbd510e",
+      "width": 3772
+    },
+    {
+      "bytes": 488054,
+      "height": 2236,
+      "mean_luma": 137.5518659336662,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_61/low4.jpg",
+      "sha256": "377db6f8a1e404f6980f4fa6470abccd563de18d5f63e981cdcd67409923d7dd",
+      "width": 3772
+    },
+    {
+      "bytes": 449152,
+      "height": 2236,
+      "mean_luma": 201.4036627491525,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_61/low5.jpg",
+      "sha256": "50bb70f18f1504da05fd85eb676c629c5a026cccc8bdb3ab0307d74e3da1f344",
+      "width": 3772
+    },
+    {
+      "bytes": 1367645,
+      "height": 4000,
+      "mean_luma": 122.432845941525,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_62/label.jpg",
+      "sha256": "c9e8b765e857ec2fa18b66c3621afce12c4637a7018d155988c69ff9b333d57d",
+      "width": 6000
+    },
+    {
+      "bytes": 575846,
+      "height": 4000,
+      "mean_luma": 11.050010545816665,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_62/low1.jpg",
+      "sha256": "38174452e90eb0abbe5c12fd85bfd86c21dbac663b0485864e5dbec7972d1334",
+      "width": 6000
+    },
+    {
+      "bytes": 841525,
+      "height": 4000,
+      "mean_luma": 33.779530665366664,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_62/low2.jpg",
+      "sha256": "aa3d75d54ea96717ca122ca3560b58a1c0cef3eb485d116193cc3d4e7c946021",
+      "width": 6000
+    },
+    {
+      "bytes": 1033054,
+      "height": 4000,
+      "mean_luma": 83.22377438028333,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_62/low3.jpg",
+      "sha256": "03078a19e816b574b4337a68e06cf24fad3790e20000515d942a69dbbdf53f13",
+      "width": 6000
+    },
+    {
+      "bytes": 1185141,
+      "height": 4000,
+      "mean_luma": 146.42324732028334,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_62/low4.jpg",
+      "sha256": "466c6bfb2276fbe585885cecacedade525476e4afa5a71076a1f55b3f754a111",
+      "width": 6000
+    },
+    {
+      "bytes": 1142790,
+      "height": 4000,
+      "mean_luma": 200.8844984399417,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_62/low5.jpg",
+      "sha256": "df85bb50806ac1d288bdee30546243e35193e2f321d0973c612700648a3a9231",
+      "width": 6000
+    },
+    {
+      "bytes": 1321506,
+      "height": 2592,
+      "mean_luma": 126.02407003052143,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_63/label.jpg",
+      "sha256": "6a4997c8c6228462c6b3417d5b0c0e6c0d68a2302bfd3f34a2ee6f4194f4af00",
+      "width": 3872
+    },
+    {
+      "bytes": 1080193,
+      "height": 2592,
+      "mean_luma": 118.51013361664707,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_63/low1.jpg",
+      "sha256": "08ac814fcde08b588f33c5216195a28453de86ac42885cbf418b4d9fe1c0100e",
+      "width": 3872
+    },
+    {
+      "bytes": 666292,
+      "height": 2592,
+      "mean_luma": 25.254090141690742,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_63/low2.jpg",
+      "sha256": "6a1bd2c13137ec78fc3afe1afce336d9d8b46a454c5c8d963d00813e5a2630bb",
+      "width": 3872
+    },
+    {
+      "bytes": 783895,
+      "height": 2592,
+      "mean_luma": 39.23206045004576,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_63/low3.jpg",
+      "sha256": "f89758a1a4ab2d056334d1ff639d53b91f3e94d6c3cb6873a07eed8311243a9f",
+      "width": 3872
+    },
+    {
+      "bytes": 899090,
+      "height": 2592,
+      "mean_luma": 57.24396194680389,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_63/low4.jpg",
+      "sha256": "265962fa0a95ed9eaec04ffe008912eb658995e2348e2b74b1faf03b41d32beb",
+      "width": 3872
+    },
+    {
+      "bytes": 1818368,
+      "height": 3264,
+      "mean_luma": 126.62599495035965,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_64/label.jpg",
+      "sha256": "3fc7be91370881c29da545dddf7a1d95336b09a5901fda3a3c5a747bf6cc17ed",
+      "width": 4896
+    },
+    {
+      "bytes": 1090588,
+      "height": 3264,
+      "mean_luma": 37.842009917221844,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_64/low1.jpg",
+      "sha256": "23b3480b872dfb8cf0445611dd7d451cac6b6dc835fe5fdd84a6adb3ef736eb4",
+      "width": 4896
+    },
+    {
+      "bytes": 1244157,
+      "height": 3264,
+      "mean_luma": 61.31714124714402,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_64/low2.jpg",
+      "sha256": "15240165c41f32844d5b03f81a77165e9fa169e862aaaa82badfc51e494e6663",
+      "width": 4896
+    },
+    {
+      "bytes": 1349382,
+      "height": 3264,
+      "mean_luma": 93.29485461919194,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_64/low3.jpg",
+      "sha256": "73a2e50c0464b45f249869e0d670cccfecf5e5f2040adef26cddc98f4232c97c",
+      "width": 4896
+    },
+    {
+      "bytes": 1479240,
+      "height": 3264,
+      "mean_luma": 133.45674175668861,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_65/label.jpg",
+      "sha256": "e0a6daca79916197ed1d09cd604531e733a06bf20bb70e8b343d998b6bb40cf9",
+      "width": 4896
+    },
+    {
+      "bytes": 1007881,
+      "height": 3264,
+      "mean_luma": 57.45460542679899,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_65/low1.jpg",
+      "sha256": "6fc0d1bddc4eb508323c7697a0e0261e54bc90aaf74be4a0a00ee7fe2b82a7db",
+      "width": 4896
+    },
+    {
+      "bytes": 1060554,
+      "height": 3264,
+      "mean_luma": 88.68857535007568,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_65/low2.jpg",
+      "sha256": "0d99e84d5fe7b598d82fe02cd69bd17cc59d9b0e119ce57b0223f8e5b2bf0af0",
+      "width": 4896
+    },
+    {
+      "bytes": 987385,
+      "height": 3264,
+      "mean_luma": 127.91306362987392,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_65/low3.jpg",
+      "sha256": "31e50d440392ca5edc9e63b54bbc783f6a850124495f47daaef7a236612a8fce",
+      "width": 4896
+    },
+    {
+      "bytes": 2211679,
+      "height": 2592,
+      "mean_luma": 98.93722150868693,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_66/label.jpg",
+      "sha256": "5a6abf0391a960998635f7ad7d4e931f9cef94665be07c9ab91d32637233b137",
+      "width": 3872
+    },
+    {
+      "bytes": 1568308,
+      "height": 2592,
+      "mean_luma": 58.55242225197444,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_66/low1.jpg",
+      "sha256": "2b96eac4142708b41cb96fefe70ba5a1a0bcc2bbc93488669ac46f35d142103f",
+      "width": 3872
+    },
+    {
+      "bytes": 868624,
+      "height": 2592,
+      "mean_luma": 16.59003577389265,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_66/low2.jpg",
+      "sha256": "99b6ef100f86dc08ad851f2376fb11249375e3858277e0795708692f05ca1c2c",
+      "width": 3872
+    },
+    {
+      "bytes": 1112699,
+      "height": 2592,
+      "mean_luma": 27.112331777549006,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_66/low3.jpg",
+      "sha256": "38ac43e9993c3f17ad5382d046d8a1ab311a0f3a6524ff30f90c1ad1df16eb9f",
+      "width": 3872
+    },
+    {
+      "bytes": 1065869,
+      "height": 2592,
+      "mean_luma": 122.84169115338595,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_67/label.jpg",
+      "sha256": "2cc5becf69286bfcd5a09453955b146b774b6c548ef2e7e6e94626443ae95e1e",
+      "width": 3872
+    },
+    {
+      "bytes": 742806,
+      "height": 2592,
+      "mean_luma": 78.47221023532357,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_67/low1.jpg",
+      "sha256": "61c7e4e261446766327be04c749593ef5b226b8b0aaf57cc52f9327a5922886b",
+      "width": 3872
+    },
+    {
+      "bytes": 387424,
+      "height": 2592,
+      "mean_luma": 14.61519606339994,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_67/low2.jpg",
+      "sha256": "c101ac443f9db8e53c83777f1176e9008b30de8ec801c69ec959286e4615e178",
+      "width": 3872
+    },
+    {
+      "bytes": 457715,
+      "height": 2592,
+      "mean_luma": 22.67036364355758,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_67/low3.jpg",
+      "sha256": "4319b71659f4aa7fd9cbf4347bfb07c18129ee14ad8ad61998377ad61fc4806e",
+      "width": 3872
+    },
+    {
+      "bytes": 552058,
+      "height": 2592,
+      "mean_luma": 35.2803256539312,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_67/low4.jpg",
+      "sha256": "c131aa8ab520576d6c6272ef9633aa16de72bd1d1190e93bd1ff14e871864308",
+      "width": 3872
+    },
+    {
+      "bytes": 1192233,
+      "height": 3073,
+      "mean_luma": 128.75844806580935,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_68/label.jpg",
+      "sha256": "d23dc67513c871f2d7aff31bedc8b974ff9a1833e1efb0a61924a2482faee738",
+      "width": 4204
+    },
+    {
+      "bytes": 348237,
+      "height": 3073,
+      "mean_luma": 20.57793004494503,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_68/low1.jpg",
+      "sha256": "04a6276ed084f5772ca2496ae0d5e3f573380da20ffaa81911069af75c6b5de8",
+      "width": 4204
+    },
+    {
+      "bytes": 491348,
+      "height": 3073,
+      "mean_luma": 59.21281784055475,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_68/low2.jpg",
+      "sha256": "f365309813a18cf24b7026f615939f0df494c3eec6de342cd664d6126965619e",
+      "width": 4204
+    },
+    {
+      "bytes": 746859,
+      "height": 3073,
+      "mean_luma": 108.32333346364378,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_68/low3.jpg",
+      "sha256": "4f03b70f7edcce5c70c06c64d4ee1c081a75d9e7c5a56cfa425b285b8bfeb972",
+      "width": 4204
+    },
+    {
+      "bytes": 987459,
+      "height": 3073,
+      "mean_luma": 161.59009868196128,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_68/low4.jpg",
+      "sha256": "b87e9276e411c7047b1e7791ccc5af7aa9f1e33da6aaa433f099ded8aa539c43",
+      "width": 4204
+    },
+    {
+      "bytes": 995650,
+      "height": 3073,
+      "mean_luma": 206.9430956664395,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_68/low5.jpg",
+      "sha256": "93263b3043cc7c0134b9723feef4bdedff57226aa4048859cb418997cbeca86e",
+      "width": 4204
+    },
+    {
+      "bytes": 1076962,
+      "height": 2592,
+      "mean_luma": 119.68689550998464,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_69/label.jpg",
+      "sha256": "fa3247a45bebd4fa008a10b389d194951161af0c9509db4b10ffb903eb38cb14",
+      "width": 3872
+    },
+    {
+      "bytes": 783213,
+      "height": 2592,
+      "mean_luma": 81.22655226369997,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_69/low1.jpg",
+      "sha256": "7d2fab9a16cb469d51c4840b8fd1a61003d5697f8c07381c842e3465b53f7e1c",
+      "width": 3872
+    },
+    {
+      "bytes": 509037,
+      "height": 2592,
+      "mean_luma": 27.77161545790528,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_69/low2.jpg",
+      "sha256": "1f0d7d9f521c12133b13bd9e6597c9a85a3f74af80891ab3f25a0049bee6f0aa",
+      "width": 3872
+    },
+    {
+      "bytes": 504140,
+      "height": 2592,
+      "mean_luma": 27.374529624488254,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_69/low3.jpg",
+      "sha256": "404077bbfe5e32a56c692d37b1e4eccc4000c8d480d7796c2b73ebff8e77265d",
+      "width": 3872
+    },
+    {
+      "bytes": 591557,
+      "height": 2592,
+      "mean_luma": 39.27143521740846,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_69/low4.jpg",
+      "sha256": "32c0410daad84337a0267ee753ea5c4b2dfba7be240eac74d0a62666efc85081",
+      "width": 3872
+    },
+    {
+      "bytes": 3040333,
+      "height": 3998,
+      "mean_luma": 146.97626844368173,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_7/label.jpg",
+      "sha256": "91628f229793cf62a0a774e29489563e7081e6ef58bdbed7b006ad72ea89c797",
+      "width": 5999
+    },
+    {
+      "bytes": 835152,
+      "height": 3998,
+      "mean_luma": 22.49492648744776,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_7/low1.jpg",
+      "sha256": "923af9798842a86f761fc22b1ff339dcc6a777096689a59e9f72c707ed2d1632",
+      "width": 5999
+    },
+    {
+      "bytes": 1227018,
+      "height": 3998,
+      "mean_luma": 40.243445026538936,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_7/low2.jpg",
+      "sha256": "8c357c911d6579cd7b2dd3e19206fa54e98df66f2ad60ad6f7ea281299207191",
+      "width": 5999
+    },
+    {
+      "bytes": 1942815,
+      "height": 3998,
+      "mean_luma": 79.01023020144011,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_7/low3.jpg",
+      "sha256": "c16b911c3456469c8dce08aea47bef2137ffb6ba017e9ad568ad7ffc220419ce",
+      "width": 5999
+    },
+    {
+      "bytes": 3101941,
+      "height": 3623,
+      "mean_luma": 117.3018131787009,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_75/label.jpg",
+      "sha256": "a1b4ff3afafdcb0741dd445978b81ce4dd20a3e0e0bd258daa4e7c4ad4c98168",
+      "width": 6000
+    },
+    {
+      "bytes": 1531808,
+      "height": 3623,
+      "mean_luma": 45.35207550437022,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_75/low1.jpg",
+      "sha256": "3fec5acf412d71acbfe13b8c3244ecbe9fe2686ccbe6321d81f864ca03c8f634",
+      "width": 6000
+    },
+    {
+      "bytes": 1065772,
+      "height": 3623,
+      "mean_luma": 28.231129668543563,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_75/low2.jpg",
+      "sha256": "3f2f0865c6ad553e257c392d5034a013be97a1ed42687dae2f392c8d353e3bd4",
+      "width": 6000
+    },
+    {
+      "bytes": 1284719,
+      "height": 3623,
+      "mean_luma": 35.735497531631246,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_75/low3.jpg",
+      "sha256": "256852308d7c5d17b4e07fd48bd0afc94de97fa359afcfbc7e3f651eafa31e86",
+      "width": 6000
+    },
+    {
+      "bytes": 2122594,
+      "height": 3623,
+      "mean_luma": 67.21921530952248,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_75/low4.jpg",
+      "sha256": "c0a025441e52f3c6cb406a24eb4aa451d7657a2f9735cbd6511a480725ca1c14",
+      "width": 6000
+    },
+    {
+      "bytes": 2061186,
+      "height": 3648,
+      "mean_luma": 143.40551125218016,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_76/label.jpg",
+      "sha256": "3d3749ba0b3209fced76731eaefd3419779bd371daf83d0606cf802623307038",
+      "width": 5472
+    },
+    {
+      "bytes": 1627160,
+      "height": 3648,
+      "mean_luma": 109.55271753013348,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_76/low1.jpg",
+      "sha256": "376869d865a5d749de6a42cb3dcec2de34f382d26853d6e3d2d64f4944b42355",
+      "width": 5472
+    },
+    {
+      "bytes": 1574674,
+      "height": 3648,
+      "mean_luma": 89.19417962118351,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_76/low2.jpg",
+      "sha256": "6de78eb9b6521481739f60f8bf3248c6713fa02c82d6ba7057aebe847eb66bb0",
+      "width": 5472
+    },
+    {
+      "bytes": 1597145,
+      "height": 3648,
+      "mean_luma": 132.00138634378487,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_76/low3.jpg",
+      "sha256": "084292cc2377114a1612a1611268d45c0b8f00441030e1fb16d937aa55bd6a35",
+      "width": 5472
+    },
+    {
+      "bytes": 1208300,
+      "height": 3648,
+      "mean_luma": 41.479860730445104,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_76/low4.jpg",
+      "sha256": "2c5417f619029d8eb610b43a6c6e2386cf5167a45840f8a520c7295c527be47b",
+      "width": 5472
+    },
+    {
+      "bytes": 1836785,
+      "height": 3450,
+      "mean_luma": 138.60444018214585,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_77/label.jpg",
+      "sha256": "f3c74a27f8376796d00b53572333dae4d250751f19bb29c159c6aba2a987e4cf",
+      "width": 5436
+    },
+    {
+      "bytes": 508681,
+      "height": 3450,
+      "mean_luma": 11.844255351473269,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_77/low1.jpg",
+      "sha256": "f14d0c7b261dce701dced3cfae7cbd7b6ca8d3b832895417c6174aa2d963a631",
+      "width": 5436
+    },
+    {
+      "bytes": 578854,
+      "height": 3450,
+      "mean_luma": 15.832018622313933,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_77/low2.jpg",
+      "sha256": "d992e16b280a1a2aa74d50fe4793ed6bb9a21d0414bb333aa312a9d0668f2d65",
+      "width": 5436
+    },
+    {
+      "bytes": 666338,
+      "height": 3450,
+      "mean_luma": 20.74508310270766,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_77/low3.jpg",
+      "sha256": "d1f54ae3547f617378905c6cf3a284db3f40fc027f168501ae6e95862d4560d2",
+      "width": 5436
+    },
+    {
+      "bytes": 1175737,
+      "height": 3450,
+      "mean_luma": 54.67506437055166,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_77/low4.jpg",
+      "sha256": "950f56adb30533bbcad04a228396cc9b13a702be6e54e04e330186472568c3ce",
+      "width": 5436
+    },
+    {
+      "bytes": 2284988,
+      "height": 3648,
+      "mean_luma": 127.13870897223184,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_78/label.jpg",
+      "sha256": "129697ac9fbcca5dc83b88d3b9fb1a8ebe6e85ff32baa49fa04a999071c4f223",
+      "width": 5472
+    },
+    {
+      "bytes": 695212,
+      "height": 3648,
+      "mean_luma": 40.132945319252876,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_78/low1.jpg",
+      "sha256": "510ccdf3a91282368fec1e93352f71338b1a3a5e87a08cb04da92af950ea1eee",
+      "width": 5472
+    },
+    {
+      "bytes": 643001,
+      "height": 3648,
+      "mean_luma": 29.50968170173154,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_78/low2.jpg",
+      "sha256": "98da46993ca3c058355ffec70119bcab8fbabbeb5c1b7c1cf5c968c36d4d5f08",
+      "width": 5472
+    },
+    {
+      "bytes": 782285,
+      "height": 3648,
+      "mean_luma": 50.71940154659968,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_78/low3.jpg",
+      "sha256": "a67a57b66015a1d7f678dbe8c7a97fe6cf7e6262b387bf8b8d3e41226ee2aa90",
+      "width": 5472
+    },
+    {
+      "bytes": 1101436,
+      "height": 3648,
+      "mean_luma": 75.8149062422552,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_78/low4.jpg",
+      "sha256": "57e748d22a80b44bd052604fc79a7fd8279821a7b4c6c1358a7ffaf5c5ad462b",
+      "width": 5472
+    },
+    {
+      "bytes": 2166979,
+      "height": 3648,
+      "mean_luma": 134.9110599124951,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_79/label.jpg",
+      "sha256": "e4b0a469c25ca8499ed03833e0c201b43710b45588a574ed735cd6e096ad420d",
+      "width": 5472
+    },
+    {
+      "bytes": 1340815,
+      "height": 3648,
+      "mean_luma": 50.122044271684956,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_79/low1.jpg",
+      "sha256": "2b99d62918e72f3d7d019236b887070bf20d450198907610c4fa6a33f5b55ac5",
+      "width": 5472
+    },
+    {
+      "bytes": 1158991,
+      "height": 3648,
+      "mean_luma": 36.734020526037256,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_79/low2.jpg",
+      "sha256": "4c1690aa07315b924a973ee240259a0491cf8bbb79989258aeac3e22fa8cd657",
+      "width": 5472
+    },
+    {
+      "bytes": 1531296,
+      "height": 3648,
+      "mean_luma": 68.21094418040086,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_79/low3.jpg",
+      "sha256": "635e7a962c3a47e155a12d647c62920d4a6cea6078bb37e54ae387fabe8354e1",
+      "width": 5472
+    },
+    {
+      "bytes": 1698431,
+      "height": 3648,
+      "mean_luma": 111.64981218110178,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_79/low4.jpg",
+      "sha256": "6792a88b9f48208b920b9fdfab7a488be57be61badd84f2715f0ad7d212a92f6",
+      "width": 5472
+    },
+    {
+      "bytes": 2883614,
+      "height": 3999,
+      "mean_luma": 131.32775829636688,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_8/label.jpg",
+      "sha256": "3e25a5ae267ee78a38c5a8efbef155e76502d8932b2dfd2fb799665a8ddbb1af",
+      "width": 5999
+    },
+    {
+      "bytes": 767181,
+      "height": 3999,
+      "mean_luma": 24.58524253194487,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_8/low1.jpg",
+      "sha256": "8c142920c11ca75695390c7c4369616a14b201fd8b7f7f1752685015161789b6",
+      "width": 5999
+    },
+    {
+      "bytes": 1090092,
+      "height": 3999,
+      "mean_luma": 42.1900358835083,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_8/low2.jpg",
+      "sha256": "5e8525c72ced1422ada7e759d184aaf8d2e362d19fe4e3e901aba531afe8cbe9",
+      "width": 5999
+    },
+    {
+      "bytes": 1632391,
+      "height": 3999,
+      "mean_luma": 76.68474731944362,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_8/low3.jpg",
+      "sha256": "06071f8ba443a4f4d887d477b52376abe335086d1c873cd6b88c776a66205bf7",
+      "width": 5999
+    },
+    {
+      "bytes": 1545572,
+      "height": 3991,
+      "mean_luma": 129.17616399964518,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_9/label.jpg",
+      "sha256": "6883c295ed909afe5dbadc9a335a0d2c5d1ea05a007515704c4bf169e86da6ef",
+      "width": 5991
+    },
+    {
+      "bytes": 572493,
+      "height": 3991,
+      "mean_luma": 23.08692591892934,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_9/low1.jpg",
+      "sha256": "112cc04393e50ba8631495cb537ec6e16267d7138ae7f93e4dd6ddf3e7c7eb98",
+      "width": 5991
+    },
+    {
+      "bytes": 711135,
+      "height": 3991,
+      "mean_luma": 41.46448534784972,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_9/low2.jpg",
+      "sha256": "a42dae1433c4b490c0412e435f3cc13a65946e34479bd2793b2b8910296a24f8",
+      "width": 5991
+    },
+    {
+      "bytes": 994776,
+      "height": 3991,
+      "mean_luma": 83.19257962149939,
+      "mode": "RGB",
+      "path": "data/real_lowlight_validation/sice_hf_1a65a70a/test/samples/sample_9/low3.jpg",
+      "sha256": "a845025339b2d585501fac6e2a20332f90b76ae2b3c21fe2b84c68320eded661",
+      "width": 5991
+    }
+  ],
+  "sources": {
+    "lolv2": {
+      "archive": "data/real_lowlight_validation/sources/LOL-v2.verified.zip",
+      "archive_bytes": 1046491030,
+      "archive_sha256": "9820d8b112438d94d1f5d4d25817eee618a8cf4bc63a65cd6b19f5a98c3faefa",
+      "held_out_pairs": 100,
+      "license_note": "The authors distribute the dataset publicly but their project repository does not expose an explicit dataset license. Internal research use only; cite the source papers.",
+      "official_url": "https://drive.google.com/file/d/1dzuLCk9_gE2bFF222n3-7GVUlSVHpMYC/view",
+      "reference_duplication": {
+        "clean_proxy_records_deduplicated_by_exact_reference_sha256": true,
+        "duplicate_normal_reference_group_sha256": "167ba1c6cc99c7037389969176ac0f73a5931ccf8cf4affbdf35405bd06b7ac7",
+        "duplicate_normal_reference_groups": 43,
+        "held_out_pairs": 100,
+        "low_input_records_retained": 100,
+        "normal_reference_files": 100,
+        "repeated_normal_reference_files": 57,
+        "unique_normal_reference_images": 43
+      }
+    },
+    "sice": {
+      "held_out_images": 223,
+      "held_out_sources": 47,
+      "license_note": "The mirror declares Apache-2.0; the original authors' GitHub repository does not expose a license file. Internal research use only.",
+      "mirror_repository": "okhater/SICE",
+      "mirror_revision": "1a65a70ad5ae9feef5f8402dfa42347652ce1f2c",
+      "original_repository": "csjcai/SICE",
+      "snapshot_root": "data/real_lowlight_validation/sice_hf_1a65a70a"
+    }
+  },
+  "status": "frozen_before_qwen_real_domain_inference",
+  "subset_counts": {
+    "lolv2_extreme_stress_proxy": 143,
+    "sice_balanced_proxy": 90
+  },
+  "subset_level_counts": {
+    "lolv2_extreme_stress_proxy": {
+      "L1": 43,
+      "L3": 2,
+      "L4": 29,
+      "L5": 69
+    },
+    "sice_balanced_proxy": {
+      "L1": 18,
+      "L2": 18,
+      "L3": 18,
+      "L4": 18,
+      "L5": 18
+    }
+  }
+}
