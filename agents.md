@@ -951,3 +951,101 @@ extremely dark or nearly uniform crops are under-restored, including
 `div2k_0452_L5` validation at `3.01 dB`, and some individual L1 crops show
 tonal/texture changes despite the strong mean identity score. Preserve these
 outliers in the later fair comparison.
+
+GPU COMMAND RELIABILITY, SESSION RETENTION, AND ACCELERATOR UTILIZATION RULE — 2026-08-19
+
+These rules apply to every current and fresh agent. They supplement the
+existing GPU execution and repository rules above. Their purpose is to prevent
+copy/paste launch failures, preserve terminal evidence after a job exits, and
+minimize end-to-end experiment wall-clock time without silently changing the
+scientific experiment.
+
+COMMAND CONSTRUCTION AND PREFLIGHT
+
+- Before giving the user any GPU command, verify the exact workspace, launcher,
+  config, interpreter, and executable paths that the command will use. Run
+  Python compilation, launcher shell syntax, config parsing, and the relevant
+  CPU preflight first. Never assume that a utility on the coding-agent PATH is
+  also on the GPU-shell PATH.
+- Resolve `tmux` in the shared workspace before launch. The current verified
+  fallback is `.tools/tmux-env/bin/tmux`; check that it is executable and run
+  `<path>/tmux -V`. Do not give bare `tmux` when its presence in the user's GPU
+  shell has not been demonstrated.
+- Prefer a checked-in launcher over a long inline training command. Commands
+  shown to the user must be short, literal, and safe to paste one line at a
+  time. Use `cd` and short shell variables on separate lines when necessary.
+  Do not allow a long absolute path or command to be visually wrapped into
+  executable newlines, and do not rely on fragile backslash continuations.
+- Give only one launch action at a time, followed by separate attach and log
+  inspection commands. State exactly which lines should be pasted together and
+  which should be run only after the launch succeeds.
+- Before retrying a command after any shell error, inspect the shared log,
+  output directory, checkpoint directory, and terminal markers to determine
+  whether the job never started, is still running, completed, or failed. Never
+  launch a duplicate process based only on a missing tmux session.
+
+TMUX LIFETIME AND PERSISTENT EVIDENCE
+
+- A tmux session must remain inspectable after its training command returns.
+  Do not make the training command the session's only process unless tmux
+  `remain-on-exit` is enabled. Prefer creating a named session with a persistent
+  shell and then sending the checked launcher to that shell. This lets the user
+  attach after success or failure and inspect the terminal history.
+- Every GPU launcher must persist unbuffered stdout and stderr to a unique log
+  under this workspace, while preserving the real pipeline exit status with
+  `set -o pipefail`. The log must contain a UTC launch marker, exact workspace,
+  config, Git revision, visible device set, environment check, terminal result
+  marker, and UTC completion marker with the numeric exit status. A failure
+  path must write its completion marker too.
+- Always provide the exact workspace-local tmux attach command and the exact
+  persistent-log command. Explain that a missing session does not imply lost
+  logs and that a nonzero gate exit can be an intentional automatic failure
+  rather than a crash.
+- After the user launches a job, do not claim that it is running until a live
+  process, advancing shared log, advancing step artifact, or checkpoint has
+  been verified. After it exits, inspect the terminal marker, complete log,
+  machine-readable summary, per-step artifact count, checkpoint hashes, and
+  failure records before reporting or proposing another run.
+
+GPU COUNT AND WALL-CLOCK MINIMIZATION
+
+- The default objective is to minimize total end-to-end wall-clock time while
+  preserving the predeclared samples, optimizer steps, global/effective batch,
+  learning-rate semantics, seed policy, precision, checkpoint selection, and
+  evaluation protocol. Do not default to one GPU merely because single-GPU
+  code is easier.
+- Whenever using more GPUs is expected or measured to reduce end-to-end
+  training or evaluation time safely, use the larger GPU count. Choose the
+  highest available GPU count with a demonstrated positive wall-clock benefit.
+  For this workspace, substantial pilot, full-corpus, multi-task, and final
+  training jobs should default to all eight H200 GPUs once distributed
+  correctness and effective-batch equivalence have been validated.
+- A bounded correctness or resume smoke may use fewer GPUs only when the job is
+  too small for data/model parallelism to improve end-to-end time, when
+  distributed overhead would dominate, or when distributed semantics are the
+  very thing still awaiting validation. The agent must state this reason with
+  evidence; `small smoke` alone is not a blanket excuse to use one GPU.
+- If a substantial launcher supports only one GPU, do not start the long run
+  unchanged. First implement and test the least invasive correct distributed
+  path, or run a bounded scaling study and report a concrete blocker. Ease of
+  implementation is not sufficient justification for leaving seven H200s idle
+  during a long job.
+- Before a substantial run, benchmark representative bounded workloads on the
+  relevant GPU counts, normally 1, 2, 4, and 8 when feasible. Record total
+  startup and preprocessing time, steady-state samples/second or optimizer
+  steps/second, wall-clock per step, per-GPU utilization and memory, data-loader
+  throughput, communication overhead, global/effective batch, gradient
+  accumulation, precision, seed, optimizer/scheduler, and samples/steps seen.
+  Select the fastest scientifically equivalent configuration, not simply the
+  configuration with the highest nominal GPU count.
+- Monitor all selected GPUs during the actual run and persist utilization and
+  memory evidence in the workspace. If utilization is low, investigate input
+  loading, preprocessing, batch sizing, gradient accumulation, checkpoint
+  frequency, attention kernels, and communication before accepting a long
+  runtime. Never claim `full utilization`, `maximum efficiency`, or `minimal
+  training time` without recorded measurements.
+- Scaling must not silently change the experiment. If distributed execution
+  changes effective batch size, optimizer-step meaning, learning rate,
+  ordering, numerical determinism, or number of samples seen, either preserve
+  equivalence or declare and justify the change before launch. Keep a fair
+  comparison against the fixed single-GPU or prior baseline.
