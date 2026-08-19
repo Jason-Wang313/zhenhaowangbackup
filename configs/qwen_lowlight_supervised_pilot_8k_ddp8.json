@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_advisor_route_supervised_vlm_lowlight_8k_ddp8_pilot_only",
+  "scope": "synthetic_lowlight_source_disjoint_supervised_vlm_pilot",
+  "scaling_waiver": {
+    "formal_1_2_4_8_scaling_gate_skipped_by_user": true,
+    "user_instruction": "skip scaling, prepare 8k",
+    "user_instruction_sha256": "9e19be42fc58f99f30ed8c6f31f3996a03a0b91a36ef4fa60149a40b4f8e59d1",
+    "selected_world_size": 8,
+    "operational_config": "configs/qwen_lowlight_supervised_overfit40_ddp8.json",
+    "operational_config_sha256": "a19ead5a89975292ebc83604b42989d37553d90db707838b1db6ca8f6f5bec2b",
+    "operational_evidence": "checkpoints/qwen_lowlight_supervised_overfit40_ddp8/training_summary.json",
+    "operational_evidence_sha256": "edfb655d613deae3af8bd2ab5047201060c9eaa363485f4f280c32fef9387c94",
+    "operational_final_visual_checkpoint": "checkpoints/qwen_lowlight_supervised_overfit40_ddp8/checkpoints/step_000200/visual.safetensors",
+    "operational_final_visual_checkpoint_sha256": "ad42468115b42bc1bf076cdff4821a5ca82dd3a20f77bc3d09cbbb2d54b80e6f",
+    "observed_ddp8_global_samples_per_second": 15.195928848911935,
+    "comparison_caveat": "The earlier single-GPU and DDP8 schedules were not a formal equivalent scaling study."
+  },
+  "model": {
+    "inventory_config": "configs/qwen_lowlight_smoke25.json",
+    "inventory_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "architecture": "Qwen2_5_VLForConditionalGeneration",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "trainable_module": "model.visual",
+    "frozen_modules": [
+      "model.language_model",
+      "lm_head"
+    ],
+    "expected_parameter_groups": {
+      "visual.patch_embed": 1505280,
+      "visual.blocks": 630470400,
+      "visual.merger": 44574464,
+      "language_model": 7070619136,
+      "lm_head": 544997376
+    },
+    "expected_trainable_parameters": 676550144,
+    "expected_frozen_parameters": 7615616512,
+    "expected_total_parameters": 8292166656
+  },
+  "processor": {
+    "use_fast": false,
+    "padding_side": "right",
+    "min_pixels": 100352,
+    "max_pixels": 100352,
+    "minimum_visual_tokens": 100,
+    "maximum_visual_tokens": 156
+  },
+  "prompt": {
+    "system_prompt_sha256": "12f91f47e46321afbdd5eaf8d0260c44c5a16d98c4a8ec36ae7571e9d870cfb7",
+    "degradation_question_sha256": "40c6bfc2891e0b57eee42bddc43d10874d1b766452d0f9f45bb3d74a6b800f20",
+    "target_schema": "project_clean_l1_active_lowlight_l2_l5_v1"
+  },
+  "data": {
+    "manifest": "manifests/low_light_pilot_10000.csv",
+    "manifest_sha256": "e1ea9132bc0d5e55b30998c51c8e37a0363f29b2a23e7851ee804f3100d4a784",
+    "splits": {
+      "train": {
+        "records": 8000,
+        "sources": 1600,
+        "records_per_level": 1600,
+        "bundle_sha256": "dff705df26a863994cdc42105f9e4a9b2074556173fa72ce8c47266688a495f0"
+      },
+      "validation": {
+        "records": 1000,
+        "sources": 200,
+        "records_per_level": 200,
+        "bundle_sha256": "440066c2e6db631028d44f7856b4d053d5be3450548ea4a8e403bfcc5eb0ed86"
+      },
+      "test": {
+        "records": 1000,
+        "sources": 200,
+        "records_per_level": 200,
+        "bundle_sha256": "1e66ab2825b5f60b50c27cd673d8d716e5f1b2f4fa375a661fd22010bb4b4e73"
+      }
+    },
+    "source_disjoint": true,
+    "test_never_used_for_training_or_selection": true
+  },
+  "training": {
+    "seed": 2026081905,
+    "micro_batch_size_per_rank": 5,
+    "gradient_accumulation_steps": 1,
+    "global_batch_size": 40,
+    "source_groups_per_global_step": 8,
+    "fixed_source_shard_per_rank": true,
+    "shuffle_each_rank_source_shard_each_epoch": true,
+    "steps_per_epoch": 200,
+    "epochs": 5,
+    "total_steps": 1000,
+    "total_sample_presentations": 40000,
+    "learning_rate": 0.00002,
+    "minimum_learning_rate": 0.000002,
+    "learning_rate_schedule": "linear_warmup_cosine_decay",
+    "warmup_steps": 50,
+    "weight_decay": 0.0,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "fused_adamw": true,
+    "checkpoint_steps": [
+      50,
+      200,
+      400,
+      600,
+      800,
+      1000
+    ],
+    "validation_loss_steps": [
+      0,
+      200,
+      400,
+      600,
+      800,
+      1000
+    ],
+    "checkpoint_selection_metric": "minimum_validation_teacher_forced_loss",
+    "checkpoint_selection_tiebreaker": "earlier_step"
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "keep_source_levels_in_one_microbatch": true,
+    "broadcast_buffers": false,
+    "ddp_init_sync": false,
+    "gradient_as_bucket_view": true,
+    "find_unused_parameters": false,
+    "timeout_minutes": 30
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 64,
+    "evaluate_validation_once_after_selection": true,
+    "evaluate_test_once_after_selection": true
+  },
+  "gate": {
+    "maximum_best_to_initial_validation_loss_ratio": 0.75,
+    "minimum_valid_structured_output_rate": 0.99,
+    "minimum_degradation_type_accuracy": 0.95,
+    "minimum_degradation_type_macro_f1": 0.9,
+    "minimum_severity_accuracy": 0.8,
+    "minimum_severity_macro_f1": 0.75,
+    "maximum_severity_mean_absolute_error": 0.3,
+    "minimum_per_level_accuracy": 0.65,
+    "maximum_failure_examples": 50,
+    "require_gradient_for_every_trainable_parameter": true,
+    "require_no_frozen_gradients": true,
+    "require_no_frozen_updates": true,
+    "require_all_checkpoint_freeze_audits": true,
+    "require_validation_and_test_thresholds": true
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "required_visible_device_count": 8,
+    "minimum_gpu_memory_gib": 130,
+    "deterministic_algorithms": true,
+    "sdpa_backend": "math",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8",
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1"
+  },
+  "telemetry": {
+    "csv": "logs/qwen_lowlight_supervised_pilot_8k_ddp8_gpu.csv",
+    "sample_interval_seconds": 2,
+    "monitor_all_selected_gpus": true
+  }
+}
