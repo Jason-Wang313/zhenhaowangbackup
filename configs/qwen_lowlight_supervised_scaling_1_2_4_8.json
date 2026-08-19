@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_qwen_lowlight_supervised_1_2_4_8_scaling_gate_only",
+  "scope": "bounded_distributed_throughput_and_equivalence_readiness_gate",
+  "base_overfit_config": "configs/qwen_lowlight_supervised_overfit40_ddp8.json",
+  "base_overfit_config_sha256": "a19ead5a89975292ebc83604b42989d37553d90db707838b1db6ca8f6f5bec2b",
+  "selection_bundle_sha256": "4317f00856ec590361c44660445208251f9db8e3e28c699fe9487daff1537e69",
+  "world_sizes": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "data": {
+    "source_count": 8,
+    "sample_count": 40,
+    "micro_batch_size_per_rank": 5,
+    "global_batch_size": 40,
+    "expected_gradient_accumulation_steps": {
+      "1": 8,
+      "2": 4,
+      "4": 2,
+      "8": 1
+    }
+  },
+  "training": {
+    "seed": 2026081904,
+    "warmup_optimizer_steps": 3,
+    "measured_optimizer_steps": 10,
+    "learning_rate": 0.00002,
+    "weight_decay": 0.0,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "fused_adamw": true,
+    "precision": "bfloat16",
+    "attention_backend": "math_sdpa"
+  },
+  "distributed": {
+    "backend": "nccl",
+    "broadcast_buffers": false,
+    "ddp_init_sync": false,
+    "gradient_as_bucket_view": true,
+    "find_unused_parameters": false,
+    "timeout_minutes": 30
+  },
+  "selection": {
+    "projection_optimizer_steps": 1000,
+    "minimum_best_multi_gpu_speedup_over_one_gpu": 1.05,
+    "maximum_relative_measured_loss_deviation_from_one_gpu": 0.05,
+    "primary_criterion": "minimum_projected_training_wall_seconds",
+    "tiebreaker": "higher_measured_global_samples_per_second"
+  },
+  "runtime": {
+    "offline": true,
+    "minimum_gpu_memory_gib": 130,
+    "deterministic_algorithms": true,
+    "required_cublas_workspace_config": ":4096:8",
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1",
+    "output_dir": "checkpoints/qwen_lowlight_supervised_scaling_1_2_4_8"
+  },
+  "telemetry": {
+    "csv": "logs/qwen_lowlight_supervised_scaling_1_2_4_8_gpu.csv",
+    "events": "logs/qwen_lowlight_supervised_scaling_1_2_4_8_events.log",
+    "sample_interval_seconds": 2,
+    "monitor_all_physical_gpus": true
+  }
+}
