@@ -1014,30 +1014,37 @@ GPU COUNT AND WALL-CLOCK MINIMIZATION
   learning-rate semantics, seed policy, precision, checkpoint selection, and
   evaluation protocol. Do not default to one GPU merely because single-GPU
   code is easier.
-- Whenever using more GPUs is expected or measured to reduce end-to-end
-  training or evaluation time safely, use the larger GPU count. Choose the
-  highest available GPU count with a demonstrated positive wall-clock benefit.
-  For this workspace, substantial pilot, full-corpus, multi-task, and final
-  training jobs should default to all eight H200 GPUs once distributed
-  correctness and effective-batch equivalence have been validated.
-- A bounded correctness or resume smoke may use fewer GPUs only when the job is
-  too small for data/model parallelism to improve end-to-end time, when
-  distributed overhead would dominate, or when distributed semantics are the
-  very thing still awaiting validation. The agent must state this reason with
-  evidence; `small smoke` alone is not a blanket excuse to use one GPU.
-- If a substantial launcher supports only one GPU, do not start the long run
-  unchanged. First implement and test the least invasive correct distributed
-  path, or run a bounded scaling study and report a concrete blocker. Ease of
-  implementation is not sufficient justification for leaving seven H200s idle
-  during a long job.
-- Before a substantial run, benchmark representative bounded workloads on the
-  relevant GPU counts, normally 1, 2, 4, and 8 when feasible. Record total
-  startup and preprocessing time, steady-state samples/second or optimizer
-  steps/second, wall-clock per step, per-GPU utilization and memory, data-loader
-  throughput, communication overhead, global/effective batch, gradient
-  accumulation, precision, seed, optimizer/scheduler, and samples/steps seen.
-  Select the fastest scientifically equivalent configuration, not simply the
-  configuration with the highest nominal GPU count.
+- Choose the GPU count adaptively using prior operational evidence, the job's
+  size, expected distributed overhead, implementation correctness, and sound
+  engineering judgment. Use all eight H200s concurrently for substantial jobs
+  when they are reasonably expected to shorten wall-clock time. Use fewer GPUs
+  for genuinely small jobs when startup, preprocessing, or communication would
+  probably dominate. Do not turn either choice into a rigid universal rule.
+- Existing trustworthy operational evidence may justify the decision even when
+  it did not come from a perfectly controlled scaling experiment. In this
+  workspace, the passing eight-GPU Qwen DDP run achieved about `15.20`
+  samples/second versus about `1.055` samples/second in the earlier single-GPU
+  run, a greater-than-tenfold observed speedup. Although those schedules were
+  not a formal apples-to-apples scaling study, this is sufficient evidence to
+  prefer eight GPUs for the current substantial Qwen pilot.
+- Do not require a dedicated 1/2/4/8 scaling gate before every substantial run.
+  Ordinary run evidence is normally sufficient: record the selected GPU count,
+  end-to-end or steady-state throughput, wall time, per-GPU utilization and
+  memory, global/effective batch, gradient accumulation, precision, and samples
+  or steps seen. A short initial observation of the real run may also confirm
+  that the chosen devices are active and that performance is reasonable.
+- Run a formal controlled multi-GPU timing study only when the fastest useful
+  GPU count is genuinely uncertain, observed scaling is unexpectedly poor, a
+  large amount of compute is at stake without relevant prior evidence, or
+  distributed execution may change scientific semantics. Select the fastest
+  scientifically equivalent configuration when such a study is actually
+  needed; do not create a ceremonial benchmark gate merely to authorize an
+  otherwise well-supported run.
+- If a substantial launcher supports only one GPU while additional GPUs are
+  likely to provide a meaningful speedup, first make a reasonable effort to use
+  a correct distributed path. This requirement is practical rather than
+  pedantic: it must not block useful work for an exhaustive benchmark when
+  existing evidence already supports the multi-GPU choice.
 - Monitor all selected GPUs during the actual run and persist utilization and
   memory evidence in the workspace. If utilization is low, investigate input
   loading, preprocessing, batch sizing, gradient accumulation, checkpoint
