@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_advisor_route_supervised_vlm_overfit40_ddp8_retry_gate_only",
+  "scope": "synthetic_lowlight_code_gradient_and_memorization_smoke_ddp8_retry",
+  "model": {
+    "inventory_config": "configs/qwen_lowlight_smoke25.json",
+    "inventory_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "architecture": "Qwen2_5_VLForConditionalGeneration",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "trainable_module": "model.visual",
+    "frozen_modules": [
+      "model.language_model",
+      "lm_head"
+    ],
+    "expected_parameter_groups": {
+      "visual.patch_embed": 1505280,
+      "visual.blocks": 630470400,
+      "visual.merger": 44574464,
+      "language_model": 7070619136,
+      "lm_head": 544997376
+    },
+    "expected_trainable_parameters": 676550144,
+    "expected_frozen_parameters": 7615616512,
+    "expected_total_parameters": 8292166656
+  },
+  "processor": {
+    "use_fast": false,
+    "padding_side": "right",
+    "min_pixels": 100352,
+    "max_pixels": 100352,
+    "minimum_visual_tokens": 100,
+    "maximum_visual_tokens": 156
+  },
+  "prompt": {
+    "system_prompt_sha256": "12f91f47e46321afbdd5eaf8d0260c44c5a16d98c4a8ec36ae7571e9d870cfb7",
+    "degradation_question_sha256": "40c6bfc2891e0b57eee42bddc43d10874d1b766452d0f9f45bb3d74a6b800f20",
+    "target_schema": "project_clean_l1_active_lowlight_l2_l5_v1"
+  },
+  "data": {
+    "manifest": "manifests/low_light_pilot_10000.csv",
+    "manifest_sha256": "e1ea9132bc0d5e55b30998c51c8e37a0363f29b2a23e7851ee804f3100d4a784",
+    "split": "train",
+    "selection_seed": 2026081901,
+    "source_count": 8,
+    "sample_count": 40,
+    "probe_source_count": 8,
+    "expected_per_level": 8
+  },
+  "training": {
+    "seed": 2026081903,
+    "micro_batch_size_per_rank": 5,
+    "gradient_accumulation_steps": 1,
+    "global_batch_size": 40,
+    "samples_per_optimizer_step": 40,
+    "total_steps": 200,
+    "total_sample_presentations": 8000,
+    "learning_rate": 0.00002,
+    "minimum_learning_rate": 0.000002,
+    "learning_rate_schedule": "linear_warmup_cosine_decay",
+    "warmup_steps": 5,
+    "weight_decay": 0.0,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "fused_adamw": true,
+    "checkpoint_steps": [
+      2,
+      200
+    ]
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "full_selected_batch_per_optimizer_step": true,
+    "keep_source_levels_in_one_microbatch": true,
+    "broadcast_buffers": false,
+    "ddp_init_sync": false,
+    "gradient_as_bucket_view": true,
+    "find_unused_parameters": false,
+    "timeout_minutes": 30
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 64
+  },
+  "gate": {
+    "required_resume_step": 2,
+    "maximum_final_probe_loss": 0.05,
+    "maximum_final_to_initial_probe_loss_ratio": 0.25,
+    "minimum_valid_structured_output_rate": 1.0,
+    "minimum_degradation_type_accuracy": 1.0,
+    "minimum_severity_accuracy": 1.0,
+    "minimum_per_level_accuracy": 1.0,
+    "require_gradient_for_every_trainable_parameter": true,
+    "require_no_frozen_gradients": true,
+    "require_no_frozen_updates": true
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "required_visible_device_count": 8,
+    "minimum_gpu_memory_gib": 130,
+    "deterministic_algorithms": true,
+    "sdpa_backend": "math",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_supervised_overfit40_ddp8",
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1"
+  }
+}
