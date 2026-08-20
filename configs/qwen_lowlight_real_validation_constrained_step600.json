@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_post_failure_constrained_scoring_diagnostic_only",
+  "scope": "post_failure_frozen_step600_canonical_scoring_diagnostic",
+  "interpretation": "not_an_independent_validation_gate_and_not_a_retroactive_pass",
+  "official_foundir_used": false,
+  "original_failed_predictions_consulted_during_method_selection": true,
+  "labels_changed_after_failure": false,
+  "thresholds_changed_after_failure": false,
+  "model_weights_changed_after_failure": false,
+  "parent_failure": {
+    "config": "configs/qwen_lowlight_real_validation_step600.json",
+    "config_sha256": "748091129e4f6c59f9f9eb391749b139d3bcce3a4c306331e74fb4da1c528dbb",
+    "result": "checkpoints/qwen_lowlight_real_validation_step600/result_summary.json",
+    "result_sha256": "85542baf277c72a442e12d6da4f04e02051e45f7d586020472253437b6ebceda",
+    "git_revision": "ce1c5beb92ded4cff3e2a91e69b260d9128c69a2",
+    "expected_status": "failed",
+    "expected_automatic_gate_pass": false,
+    "expected_records": 233,
+    "expected_batch_files": 47
+  },
+  "model": {
+    "selected_checkpoint_step": 600,
+    "selected_visual_sha256": "b0e65a8597077973a2a103dc3369e0cb1ea703de95e2e4841d359c3d34eff77f",
+    "all_parameters_frozen": true,
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa"
+  },
+  "data": {
+    "reuse_parent_manifest_and_proxy_labels_exactly": true,
+    "manifest_sha256": "52f6fc9c5cdc0347559b37a30f7f5a607ac9a3d5576c6b9e8dc22424c478106b",
+    "metadata_sha256": "3b9be6683208580f51ddb93779436270b28e97ab4b27a2df720bfc6238cdd1fb",
+    "annotation_kind": "reference_based_proxy_not_human_ground_truth",
+    "model_predictions_consulted_during_original_record_selection": false,
+    "records": 233,
+    "subsets": [
+      "sice_balanced_proxy",
+      "lolv2_extreme_stress_proxy"
+    ]
+  },
+  "scoring": {
+    "method": "mean_teacher_forced_target_token_negative_log_likelihood",
+    "candidate_project_levels": [1, 2, 3, 4, 5],
+    "candidate_targets": "the_five_existing_canonical_JSON_strings",
+    "causal_shift": true,
+    "score_only_unmasked_assistant_target_tokens": true,
+    "length_normalization": "mean_over_scored_target_tokens",
+    "selection": "minimum_mean_negative_log_likelihood",
+    "tie_break": "lower_project_level",
+    "batch_size": 5,
+    "free_form_generation_used": false,
+    "prompt_changed": false,
+    "guaranteed_canonical_structured_output": true
+  },
+  "diagnostic_evaluation": {
+    "reuse_original_predeclared_thresholds_exactly": true,
+    "both_parent_subsets_must_clear_original_thresholds": true,
+    "passing_does_not_erase_or_replace_parent_failure": true,
+    "passing_requires_fresh_independent_real_holdout_before_diffusion_claims": true
+  },
+  "runtime": {
+    "seed": 2026082001,
+    "offline": true,
+    "device": "cuda",
+    "required_visible_device_count": 1,
+    "minimum_gpu_memory_gib": 70,
+    "deterministic_algorithms": true,
+    "sdpa_backend": "math",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_real_validation_constrained_step600",
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1"
+  },
+  "telemetry": {
+    "csv": "logs/qwen_lowlight_real_validation_constrained_step600_gpu.csv",
+    "sample_interval_seconds": 2,
+    "monitor_all_selected_gpus": true
+  }
+}
