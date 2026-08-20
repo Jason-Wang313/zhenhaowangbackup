@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_qwen_real_lowlight_adaptation_gate_only",
+  "scope": "source_disjoint_LOLv2_train_real_adaptation_with_synthetic_replay",
+  "official_foundir_used": false,
+  "previously_evaluated_real_records_used_for_training": false,
+  "holdout_predictions_consulted_before_freeze": false,
+  "preserved_failures": {
+    "original_free_generation_result": "checkpoints/qwen_lowlight_real_validation_step600/result_summary.json",
+    "original_free_generation_result_sha256": "85542baf277c72a442e12d6da4f04e02051e45f7d586020472253437b6ebceda",
+    "post_failure_constrained_result": "checkpoints/qwen_lowlight_real_validation_constrained_step600/result_summary.json",
+    "post_failure_constrained_result_sha256": "8cb62790a423438d2d62e096d0985075a3c4c2e179e950d2beb5a0e61ab44552",
+    "both_status_failed": true,
+    "neither_is_retroactively_reclassified": true
+  },
+  "model": {
+    "inventory_config": "configs/qwen_lowlight_smoke25.json",
+    "inventory_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "architecture": "Qwen2_5_VLForConditionalGeneration",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "trainable_module": "model.visual",
+    "frozen_modules": [
+      "model.language_model",
+      "lm_head"
+    ],
+    "expected_parameter_groups": {
+      "visual.patch_embed": 1505280,
+      "visual.blocks": 630470400,
+      "visual.merger": 44574464,
+      "language_model": 7070619136,
+      "lm_head": 544997376
+    },
+    "expected_trainable_parameters": 676550144,
+    "expected_frozen_parameters": 7615616512,
+    "expected_total_parameters": 8292166656,
+    "initialization": {
+      "selected_checkpoint_step": 600,
+      "visual_checkpoint": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8/checkpoints/step_000600/visual.safetensors",
+      "visual_sha256": "b0e65a8597077973a2a103dc3369e0cb1ea703de95e2e4841d359c3d34eff77f",
+      "checkpoint_metadata": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8/checkpoints/step_000600/metadata.json",
+      "checkpoint_metadata_sha256": "62b2b84e5bc42e63451d378a7546834be3a22420b1677b16c1ec98c242fcff16",
+      "pilot_summary": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8/training_summary.json",
+      "pilot_summary_sha256": "1eec630a055f1aee74a7419e3427eb16f6a1de0cac59f9eb01468284dacf2404",
+      "optimizer_reinitialized": true
+    }
+  },
+  "processor": {
+    "use_fast": false,
+    "padding_side": "right",
+    "min_pixels": 100352,
+    "max_pixels": 100352,
+    "minimum_visual_tokens": 100,
+    "maximum_visual_tokens": 156
+  },
+  "prompt": {
+    "system_prompt_sha256": "12f91f47e46321afbdd5eaf8d0260c44c5a16d98c4a8ec36ae7571e9d870cfb7",
+    "degradation_question_sha256": "40c6bfc2891e0b57eee42bddc43d10874d1b766452d0f9f45bb3d74a6b800f20",
+    "target_schema": "project_clean_l1_active_lowlight_l2_l5_v1"
+  },
+  "data": {
+    "real": {
+      "manifest": "manifests/qwen_lowlight_real_adaptation.csv",
+      "manifest_sha256": "91f95644f852f628891513f116c0a3607b8de980bbe5252c360ff41d9bcc9ab7",
+      "metadata": "manifests/qwen_lowlight_real_adaptation.json",
+      "metadata_sha256": "2b9f35ffdc2543a4a99bf95fbb4eb61938a022c54cba4569a14863c5b536f06f",
+      "record_bundle_sha256": "b7c1ac55d3976cdc67b3a611c29d7851f21d42fdeaedf503172535568dc2ccc7",
+      "annotation_kind": "reference_based_proxy_not_human_ground_truth",
+      "model_predictions_consulted_during_split": false,
+      "source_disjoint_by_perceptual_scene_component": true,
+      "test_never_used_for_training_or_checkpoint_selection": true,
+      "splits": {
+        "train": {
+          "records": 673,
+          "sources": 190,
+          "records_per_level": {
+            "1": 190,
+            "2": 14,
+            "3": 18,
+            "4": 52,
+            "5": 399
+          },
+          "bundle_sha256": "536bc752be3d5ef11eb0da94042c38b052fd287648bfbb2309e59f6f863ef798"
+        },
+        "validation": {
+          "records": 143,
+          "sources": 41,
+          "records_per_level": {
+            "1": 41,
+            "2": 3,
+            "3": 3,
+            "4": 11,
+            "5": 85
+          },
+          "bundle_sha256": "90c80963d521cc1fcdbace5f7ea3310d67df0700dcdf55fb792b32361e004ff6"
+        },
+        "test": {
+          "records": 145,
+          "sources": 41,
+          "records_per_level": {
+            "1": 41,
+            "2": 3,
+            "3": 4,
+            "4": 11,
+            "5": 86
+          },
+          "bundle_sha256": "feb25bf6f2f7f292aff0c4488946013348e7527beec8a72893515c1b61ac5e09"
+        }
+      }
+    },
+    "synthetic_replay": {
+      "manifest": "manifests/low_light_pilot_10000.csv",
+      "manifest_sha256": "e1ea9132bc0d5e55b30998c51c8e37a0363f29b2a23e7851ee804f3100d4a784",
+      "training_split": "train",
+      "training_records": 8000,
+      "training_sources": 1600,
+      "training_records_per_level": 1600,
+      "training_bundle_sha256": "dff705df26a863994cdc42105f9e4a9b2074556173fa72ce8c47266688a495f0",
+      "validation_split": "validation",
+      "validation_selection_seed": 2026082002,
+      "validation_source_count": 40,
+      "validation_records": 200,
+      "validation_records_per_level": 40,
+      "validation_bundle_sha256": "1981939ac92de5412df990f39f9d7c2ee8776ec537e76dec059a81378407cfc3"
+    }
+  },
+  "training": {
+    "seed": 2026082003,
+    "micro_batch_size_per_rank": 5,
+    "global_microbatches_per_step": 8,
+    "real_microbatches_per_step": 4,
+    "synthetic_microbatches_per_step": 4,
+    "global_batch_size": 40,
+    "gradient_accumulation_steps_selected_at_runtime": true,
+    "training_schedule_world_size_invariant": true,
+    "schedule_sha256": "8ae8e4e06a306c3828423374e39cecac4e3be2cf90b2b08564005b928a62c71f",
+    "total_steps": 200,
+    "total_sample_presentations": 8000,
+    "real_sample_presentations": 4000,
+    "synthetic_sample_presentations": 4000,
+    "learning_rate": 0.000002,
+    "minimum_learning_rate": 0.0000002,
+    "learning_rate_schedule": "linear_warmup_cosine_decay",
+    "warmup_steps": 10,
+    "weight_decay": 0.0,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "fused_adamw": true,
+    "checkpoint_steps": [
+      25,
+      50,
+      100,
+      150,
+      200
+    ],
+    "validation_loss_steps": [
+      0,
+      25,
+      50,
+      100,
+      150,
+      200
+    ],
+    "checkpoint_selection_metric": "minimum_real_validation_macro_level_teacher_forced_loss",
+    "checkpoint_selection_tiebreaker": "earlier_step"
+  },
+  "distributed": {
+    "backend": "nccl",
+    "allowed_world_sizes": [
+      2,
+      8
+    ],
+    "broadcast_buffers": false,
+    "init_sync": false,
+    "gradient_as_bucket_view": true,
+    "find_unused_parameters": false,
+    "timeout_minutes": 30,
+    "gradient_accumulation_by_world_size": {
+      "2": 4,
+      "8": 1
+    }
+  },
+  "generation": {
+    "do_sample": false,
+    "batch_size": 5,
+    "max_new_tokens": 64,
+    "evaluate_real_validation_after_selection": true,
+    "evaluate_real_test_once_after_selection": true,
+    "evaluate_synthetic_replay_after_selection": true
+  },
+  "gate": {
+    "thresholds_frozen_before_model_inference": true,
+    "rationale": "The fresh LOL-v2 Train holdout is source-disjoint but uses reference-based proxy labels. The gate therefore combines exact, ordinal, per-level, and agreement metrics while separately requiring synthetic replay retention.",
+    "maximum_selected_to_initial_real_loss_ratio": 0.9,
+    "real_validation": {
+      "required_levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "minimum_valid_structured_output_rate": 0.99,
+      "minimum_degradation_type_accuracy": 0.9,
+      "minimum_degradation_type_macro_f1": 0.85,
+      "minimum_severity_accuracy": 0.65,
+      "minimum_severity_macro_f1": 0.45,
+      "maximum_severity_mean_absolute_error": 0.6,
+      "minimum_within_one_level_accuracy": 0.9,
+      "minimum_per_level_accuracy": 0.25,
+      "minimum_quadratic_weighted_kappa": 0.7
+    },
+    "real_test": {
+      "required_levels": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "minimum_valid_structured_output_rate": 0.99,
+      "minimum_degradation_type_accuracy": 0.9,
+      "minimum_degradation_type_macro_f1": 0.85,
+      "minimum_severity_accuracy": 0.65,
+      "minimum_severity_macro_f1": 0.45,
+      "maximum_severity_mean_absolute_error": 0.6,
+      "minimum_within_one_level_accuracy": 0.9,
+      "minimum_per_level_accuracy": 0.25,
+      "minimum_quadratic_weighted_kappa": 0.7
+    },
+    "synthetic_replay": {
+      "minimum_valid_structured_output_rate": 0.99,
+      "minimum_degradation_type_accuracy": 0.95,
+      "minimum_degradation_type_macro_f1": 0.9,
+      "minimum_severity_accuracy": 0.85,
+      "minimum_severity_macro_f1": 0.8,
+      "maximum_severity_mean_absolute_error": 0.25,
+      "minimum_per_level_accuracy": 0.65
+    },
+    "maximum_failure_examples": 50,
+    "require_gradient_for_every_trainable_parameter": true,
+    "require_no_frozen_gradients": true,
+    "require_no_frozen_updates": true,
+    "require_all_checkpoint_freeze_audits": true,
+    "require_real_validation_and_test_thresholds": true,
+    "require_synthetic_replay_thresholds": true
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "allowed_visible_device_counts": [
+      2,
+      8
+    ],
+    "minimum_gpu_memory_gib": 75,
+    "deterministic_algorithms": true,
+    "sdpa_backend": "math",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_real_adaptation_step600",
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1"
+  },
+  "telemetry": {
+    "csv": "logs/qwen_lowlight_real_adaptation_step600_gpu.csv",
+    "sample_interval_seconds": 2,
+    "monitor_all_selected_gpus": true
+  }
+}

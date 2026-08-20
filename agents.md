@@ -971,3 +971,69 @@ GPU COUNT AND WALL-CLOCK MINIMIZATION
   ordering, numerical determinism, or number of samples seen, either preserve
   equivalence or declare and justify the change before launch. Keep a fair
   comparison against the fixed single-GPU or prior baseline.
+
+QWEN REAL LOWLIGHT ADAPTATION GATE — CPU-VERIFIED READINESS 2026-08-20
+
+The frozen synthetic-pilot step-600 VLM failed both its original real-domain
+free-generation gate and the post-failure constrained-scoring diagnostic. The
+failures are legitimate status-2 results, not crashes, and remain immutable:
+
+- original result SHA-256:
+  `85542baf277c72a442e12d6da4f04e02051e45f7d586020472253437b6ebceda`;
+- constrained result SHA-256:
+  `8cb62790a423438d2d62e096d0985075a3c4c2e179e950d2beb5a0e61ab44552`;
+- neither result may be relabeled as a pass.
+
+The next authorized gate is a bounded source-disjoint real adaptation using
+only the official LOL-v2 Real-captured Train split plus frozen synthetic
+replay. It is CPU-ready but has not yet produced a GPU result.
+
+- config: `configs/qwen_lowlight_real_adaptation_step600.json`
+- config SHA-256:
+  `0a817d70d88f172d6d16d37853ce9c3cd77308446b3eed3d5e5cdab0c3b3b541`
+- real manifest SHA-256:
+  `91f95644f852f628891513f116c0a3607b8de980bbe5252c360ff41d9bcc9ab7`
+- real metadata SHA-256:
+  `2b9f35ffdc2543a4a99bf95fbb4eb61938a022c54cba4569a14863c5b536f06f`
+- proxy-label disclosure: `reference_based_proxy_not_human_ground_truth`
+- source-disjoint splits: train 673 records / 190 scenes, validation 143 / 41,
+  and untouched fresh test 145 / 41
+- initialize all visual weights from frozen synthetic step 600, visual SHA-256
+  `b0e65a8597077973a2a103dc3369e0cb1ea703de95e2e4841d359c3d34eff77f`
+- keep the language decoder and LM head frozen; reinitialize the optimizer
+- train 200 optimizer steps at global batch 40; every step contains 20
+  L1–L5-balanced real presentations and 20 L1–L5-balanced synthetic-replay
+  presentations
+- schedule SHA-256:
+  `8ae8e4e06a306c3828423374e39cecac4e3be2cf90b2b08564005b928a62c71f`
+- checkpoint selection uses only real-validation macro-per-level
+  teacher-forced loss; evaluate the frozen fresh real test exactly once after
+  selection
+- retain a 40-source / 200-record balanced synthetic validation replay with
+  bundle SHA-256
+  `1981939ac92de5412df990f39f9d7c2ee8776ec537e76dec059a81378407cfc3`
+- FoundIR is not used.
+
+The same exact global schedule supports either two or eight GPUs. Two GPUs use
+microbatch 5 per rank and four gradient-accumulation steps; eight GPUs use
+microbatch 5 per rank and one accumulation step. The checked launcher requires
+the explicit literal device set `0,1` or `0,1,2,3,4,5,6,7`, accepts H100 or
+H200 devices with at least 75 GiB each, monitors every selected GPU, locks
+against duplicates, writes persistent logs and terminal markers, and retains
+the tmux pane after exit. Use the available two H100s promptly for this small
+gate when waiting for eight H200s would increase end-to-end wall-clock time;
+use eight H200s if they are available before launch. This is an adaptive
+engineering choice, not a mandatory scaling benchmark.
+
+Readiness evidence is recorded in
+`reports/qwen_lowlight_real_adaptation_readiness_2026-08-20.md`. Thirty focused
+tests, Python compilation, shell syntax, contract validation, the CPU preflight
+with large base-model hashes skipped, and the CPU preflight with all hashes
+enabled passed. Both CPU preflights deliberately used `--no-write-artifact`;
+the GPU launcher must create the immutable full-preflight artifact with CUDA
+visible before training.
+
+Do not start diffusion or FoundIR from readiness alone. If the adaptation gate
+passes, stop and obtain user review before beginning Lowlight diffusion
+conditioning. If it exits status 2, preserve and diagnose the failure; do not
+lower thresholds, tune on the fresh real test, or relabel proxy metrics.
