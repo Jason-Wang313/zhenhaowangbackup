@@ -1,0 +1,42 @@
+{
+  "audit_date_utc": "2026-08-21",
+  "foundir_repository_revision": "6d19958499622d90ca71fe971d83b1e428c17cd0",
+  "inference_performed": false,
+  "official_foundir_test_used": false,
+  "released_teachers": {
+    "generalist": {
+      "bytes": 580829530,
+      "checkpoint_step": 1300000,
+      "ema_parameters_in_wrapper": 72550376,
+      "ema_tensors_in_wrapper": 582,
+      "online_model_parameters": 36275187,
+      "online_model_tensors": 290,
+      "path": "third_party/foundir/premodel/model-2000.pt",
+      "sha256": "2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9"
+    },
+    "lowlight_specialist": {
+      "bytes": 6294432,
+      "checkpoint_epoch": 413,
+      "checkpoint_iteration": 60000,
+      "model_parameters": 1512718,
+      "model_tensors": 591,
+      "path": "third_party/foundir/specialist_model/ckpt/lowlight.pth",
+      "sha256": "f834248e145d020d5a02f257b7ceb383b579add2522938b3e1e0bd460abe6"
+    }
+  },
+  "training_metadata": {
+    "complete": {
+      "lowlight_containing_pairs": 378440,
+      "pairs": 1010064,
+      "path": "third_party/foundir/MillionIRData_train_meta_info.txt",
+      "sha256": "fcc5668470fda3f49750019d9a0ac4d009bbecaa45d928f24d1c615ff8f54ad5"
+    },
+    "single_degradation": {
+      "isolated_lowlight_pairs": 39962,
+      "pairs": 472046,
+      "path": "third_party/foundir/MillionIRData_single_train_meta_info.txt",
+      "sha256": "5a204d5d2c4a641e91737ccebf1731dea7c73f14d650f1c11eba28fd6335b99d"
+    }
+  },
+  "usage_policy": "non_foundir_development_baselines_and_training_only_distillation_until_final_frozen_test"
+}

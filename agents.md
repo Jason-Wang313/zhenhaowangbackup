@@ -1102,3 +1102,31 @@ exposure stacks, 67 exact-unique images, and 151 comparisons separated by at
 least one EV. It was selected and hashed before model inference, contains no
 FoundIR image, and is explicitly a reusable development suite rather than an
 absolute-label holdout.
+
+PAIRED-REAL GATE-A EXECUTION UPDATE — 2026-08-21
+
+- The reusable non-FoundIR paired-real suite is frozen at
+  `manifests/lowlight_real_paired_development_v1.csv`: 174 records, 82 scene
+  components, 102 LOL-v2 real-adaptation validation records, and 72 SICE
+  reusable validation records. It excludes L1, consumed-test records, and
+  exact FoundIR overlap. Project levels are proxy metadata only.
+- The target-fitted global photometric oracle completed without model
+  inference. Scene-balanced PSNR is `8.4356 -> 24.1209 dB` and SSIM is
+  `0.2475 -> 0.6571`; the PSNR gain is `+15.6853 dB` with 95% scene-bootstrap
+  CI `+14.7717` to `+16.6036`. The oracle accesses each development target and
+  is never an inference method. It makes the bounded learned photometric head
+  the first model component to implement.
+- The released FoundIR generalist checkpoint is present at step 1,300,000 with
+  SHA-256
+  `2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9`.
+  The Lowlight specialist SHA-256 is
+  `f834248e145d020d5a02f257b7ceb383b579add2522938b3e1e0bd460abe6`.
+  No teacher inference has run.
+- The next GPU gate is the two-H100 FLUX.2 VAE ceiling at
+  `configs/lowlight_vae_ceiling_v1.json`. It uses literal
+  `CUDA_VISIBLE_DEVICES=0,1`, 130 exact-unique paired-development targets,
+  direct 512-pixel crops, full-resolution 1024-pixel overlapping tiles, and
+  PSNR/SSIM/LPIPS/high-frequency/seam diagnostics. It does not use FoundIR.
+- The VAE result must decide latent-only versus pixel-frequency bypass before
+  the restoration bridge is implemented. Do not start official FoundIR test
+  inference from VAE readiness or from the photometric oracle.

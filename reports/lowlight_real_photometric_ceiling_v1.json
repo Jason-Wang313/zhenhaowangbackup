@@ -1,0 +1,350 @@
+{
+  "alignment": {
+    "diagnostic_only_no_metric_warping": true,
+    "flag_maximum_shift_pixels": 8.0,
+    "flag_minimum_shifted_gradient_correlation": 0.2,
+    "flagged_by_dataset": {
+      "sice_reusable_validation": 7
+    },
+    "flagged_records": 7,
+    "maximum_dimension": 512
+  },
+  "code": {
+    "evaluator_sha256": "c74f32008a2338f806af1c8a3c85ca038d4ca9a7cd14eb56b9a6ac790b6a090d",
+    "git_head": "1cdce7df86f876369acbc488ffd54b042292ef16",
+    "paired_development_module_sha256": "ce615d8d91e0be54b29fb19dbeb9bdde20b424c0ca170cf424e1e852fbdbde75"
+  },
+  "config": "configs/lowlight_real_photometric_ceiling_v1.json",
+  "config_sha256": "256ac8ad204bc31339c7fc9e8f5b53efaa1efafea66e6dc9d3e451a25daaffd1",
+  "gamma_selection_counts": {
+    "0.1": 1,
+    "0.12": 1,
+    "0.14": 1,
+    "0.17": 5,
+    "0.2": 9,
+    "0.24": 10,
+    "0.28": 10,
+    "0.33": 25,
+    "0.39": 13,
+    "0.46": 21,
+    "0.54": 21,
+    "0.63": 11,
+    "0.74": 13,
+    "0.87": 10,
+    "1.0": 4,
+    "1.15": 7,
+    "1.32": 5,
+    "1.52": 5,
+    "1.75": 2
+  },
+  "input_manifest": "manifests/lowlight_real_paired_development_v1.csv",
+  "input_manifest_sha256": "fee42cbf440a62c494bccc49e6f25b871ce8ea0044bcd825472e538dc3f5300d",
+  "metrics": {
+    "data_range": 1.0,
+    "prediction_quantization": "round_to_uint8_before_metrics",
+    "psnr_exact_match_cap_db": 100.0,
+    "ssim_implementation": "skimage.metrics.structural_similarity_rgb_channel_axis"
+  },
+  "official_foundir_images_opened": false,
+  "official_foundir_inference_performed": false,
+  "oracle": {
+    "gamma_candidates": [
+      0.1,
+      0.12,
+      0.14,
+      0.17,
+      0.2,
+      0.24,
+      0.28,
+      0.33,
+      0.39,
+      0.46,
+      0.54,
+      0.63,
+      0.74,
+      0.87,
+      1.0,
+      1.15,
+      1.32,
+      1.52,
+      1.75
+    ],
+    "maximum_fit_pixels": 32768,
+    "ridge": 1e-06,
+    "target_access": "per_image_gt_oracle_diagnostic_only_never_inference"
+  },
+  "oracle_must_never_be_used_as_inference": true,
+  "oracle_uses_each_development_target": true,
+  "output_csv": "reports/lowlight_real_photometric_ceiling_v1.csv",
+  "output_csv_sha256": "5a6b711a1e087ad0c734f63caed267c590b3eb691d5a066dd1671844c78bedad",
+  "schema_version": 1,
+  "status": "completed_oracle_diagnostic_not_deployable_model",
+  "summary": {
+    "bootstrap": {
+      "confidence": 0.95,
+      "resamples": 5000,
+      "seed": 2026082121,
+      "unit": "scene_cluster_stratified_by_dataset"
+    },
+    "confidence_intervals": {
+      "record_weighted": {
+        "input_psnr": {
+          "estimate": 8.412585158621726,
+          "lower": 7.913544224455734,
+          "upper": 8.954777258886331
+        },
+        "input_ssim": {
+          "estimate": 0.2317367175898939,
+          "lower": 0.20935888265897232,
+          "upper": 0.25537975972991894
+        },
+        "oracle_psnr": {
+          "estimate": 23.8674889482127,
+          "lower": 22.985924543707746,
+          "upper": 24.75289921673768
+        },
+        "oracle_ssim": {
+          "estimate": 0.624745763648877,
+          "lower": 0.5843298061396512,
+          "upper": 0.6633346096310745
+        },
+        "psnr_gain": {
+          "estimate": 15.45490378959097,
+          "lower": 14.233133306969943,
+          "upper": 16.636790380790817
+        },
+        "ssim_gain": {
+          "estimate": 0.393009046058983,
+          "lower": 0.3485304060975402,
+          "upper": 0.4329391118111112
+        }
+      },
+      "scene_balanced": {
+        "input_psnr": {
+          "estimate": 8.435587713137338,
+          "lower": 8.099272141478542,
+          "upper": 8.79868807602394
+        },
+        "input_ssim": {
+          "estimate": 0.24751317996894975,
+          "lower": 0.2247339195591267,
+          "upper": 0.27050384569499003
+        },
+        "oracle_psnr": {
+          "estimate": 24.12085055848161,
+          "lower": 23.30607871382621,
+          "upper": 24.976979997692258
+        },
+        "oracle_ssim": {
+          "estimate": 0.6570971064389056,
+          "lower": 0.6272880146926411,
+          "upper": 0.6851988504383534
+        },
+        "psnr_gain": {
+          "estimate": 15.685262845344266,
+          "lower": 14.77167003329377,
+          "upper": 16.603584481186434
+        },
+        "ssim_gain": {
+          "estimate": 0.409583926469956,
+          "lower": 0.38152330650106214,
+          "upper": 0.4355186305823035
+        }
+      }
+    },
+    "datasets": {
+      "lolv2_real_train_validation": {
+        "confidence_intervals": {
+          "record_weighted": {
+            "input_psnr": {
+              "estimate": 7.752456155360763,
+              "lower": 6.95183430890007,
+              "upper": 8.654278397337126
+            },
+            "input_ssim": {
+              "estimate": 0.14848080181301127,
+              "lower": 0.12147283738988021,
+              "upper": 0.1845867137019806
+            },
+            "oracle_psnr": {
+              "estimate": 24.207481972416158,
+              "lower": 22.95992631937817,
+              "upper": 25.45425188109503
+            },
+            "oracle_ssim": {
+              "estimate": 0.5537006094062593,
+              "lower": 0.49420024816220237,
+              "upper": 0.6114753680085105
+            },
+            "psnr_gain": {
+              "estimate": 16.455025817055393,
+              "lower": 14.516118798947133,
+              "upper": 18.379019764605655
+            },
+            "ssim_gain": {
+              "estimate": 0.40521980759324805,
+              "lower": 0.3327958618358384,
+              "upper": 0.4747042115745206
+            }
+          },
+          "scene_balanced": {
+            "input_psnr": {
+              "estimate": 7.617482613958225,
+              "lower": 7.063185129969169,
+              "upper": 8.211950660705105
+            },
+            "input_ssim": {
+              "estimate": 0.14186510704612554,
+              "lower": 0.12074810553588883,
+              "upper": 0.16674973252360822
+            },
+            "oracle_psnr": {
+              "estimate": 24.772930759460916,
+              "lower": 23.60459623637662,
+              "upper": 25.922401992617516
+            },
+            "oracle_ssim": {
+              "estimate": 0.5832321453538348,
+              "lower": 0.5349577331196571,
+              "upper": 0.6289455833359353
+            },
+            "psnr_gain": {
+              "estimate": 17.155448145502696,
+              "lower": 15.627755978206249,
+              "upper": 18.59410813903671
+            },
+            "ssim_gain": {
+              "estimate": 0.4413670383077093,
+              "lower": 0.392657077683317,
+              "upper": 0.4843000015993308
+            }
+          }
+        },
+        "record_weighted": {
+          "input_psnr": 7.752456155360763,
+          "input_ssim": 0.14848080181301127,
+          "oracle_psnr": 24.207481972416158,
+          "oracle_ssim": 0.5537006094062593,
+          "psnr_gain": 16.455025817055393,
+          "ssim_gain": 0.40521980759324805
+        },
+        "records": 102,
+        "scene_balanced": {
+          "input_psnr": 7.617482613958225,
+          "input_ssim": 0.14186510704612554,
+          "oracle_psnr": 24.772930759460916,
+          "oracle_ssim": 0.5832321453538348,
+          "psnr_gain": 17.155448145502696,
+          "ssim_gain": 0.4413670383077093
+        },
+        "scenes": 41
+      },
+      "sice_reusable_validation": {
+        "confidence_intervals": {
+          "record_weighted": {
+            "input_psnr": {
+              "estimate": 9.347767913241421,
+              "lower": 8.945749816802538,
+              "upper": 9.748155997370098
+            },
+            "input_ssim": {
+              "estimate": 0.349682598273811,
+              "lower": 0.31406393451414477,
+              "upper": 0.3846446809438771
+            },
+            "oracle_psnr": {
+              "estimate": 23.38583216392446,
+              "lower": 22.23815283770148,
+              "upper": 24.6120115144339
+            },
+            "oracle_ssim": {
+              "estimate": 0.7253930654925853,
+              "lower": 0.6904819128101125,
+              "upper": 0.7582945822143915
+            },
+            "psnr_gain": {
+              "estimate": 14.038064250683036,
+              "lower": 12.955299207490018,
+              "upper": 15.209885625885807
+            },
+            "ssim_gain": {
+              "estimate": 0.37571046721877427,
+              "lower": 0.34972431602918874,
+              "upper": 0.40154125247727757
+            }
+          },
+          "scene_balanced": {
+            "input_psnr": {
+              "estimate": 9.253692812316453,
+              "lower": 8.863000063959046,
+              "upper": 9.647684510740596
+            },
+            "input_ssim": {
+              "estimate": 0.3531612528917739,
+              "lower": 0.31290598838851286,
+              "upper": 0.39383492285615174
+            },
+            "oracle_psnr": {
+              "estimate": 23.468770357502294,
+              "lower": 22.265650785206006,
+              "upper": 24.714054148486674
+            },
+            "oracle_ssim": {
+              "estimate": 0.7309620675239764,
+              "lower": 0.6980703387521617,
+              "upper": 0.762905265383066
+            },
+            "psnr_gain": {
+              "estimate": 14.215077545185839,
+              "lower": 13.16674636509371,
+              "upper": 15.319056635450314
+            },
+            "ssim_gain": {
+              "estimate": 0.37780081463220255,
+              "lower": 0.34827015074757,
+              "upper": 0.40563450302625753
+            }
+          }
+        },
+        "record_weighted": {
+          "input_psnr": 9.347767913241421,
+          "input_ssim": 0.349682598273811,
+          "oracle_psnr": 23.38583216392446,
+          "oracle_ssim": 0.7253930654925853,
+          "psnr_gain": 14.038064250683036,
+          "ssim_gain": 0.37571046721877427
+        },
+        "records": 72,
+        "scene_balanced": {
+          "input_psnr": 9.253692812316453,
+          "input_ssim": 0.3531612528917739,
+          "oracle_psnr": 23.468770357502294,
+          "oracle_ssim": 0.7309620675239764,
+          "psnr_gain": 14.215077545185839,
+          "ssim_gain": 0.37780081463220255
+        },
+        "scenes": 41
+      }
+    },
+    "point_estimates": {
+      "record_weighted": {
+        "input_psnr": 8.412585158621726,
+        "input_ssim": 0.2317367175898939,
+        "oracle_psnr": 23.8674889482127,
+        "oracle_ssim": 0.624745763648877,
+        "psnr_gain": 15.45490378959097,
+        "ssim_gain": 0.393009046058983
+      },
+      "scene_balanced": {
+        "input_psnr": 8.435587713137338,
+        "input_ssim": 0.24751317996894975,
+        "oracle_psnr": 24.12085055848161,
+        "oracle_ssim": 0.6570971064389056,
+        "psnr_gain": 15.685262845344266,
+        "ssim_gain": 0.409583926469956
+      }
+    },
+    "records": 174,
+    "scenes": 82
+  }
+}

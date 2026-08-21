@@ -1,0 +1,49 @@
+{
+  "alignment": {
+    "flag_maximum_shift_pixels": 8.0,
+    "flag_minimum_shifted_gradient_correlation": 0.2,
+    "maximum_dimension": 512
+  },
+  "bootstrap": {
+    "confidence": 0.95,
+    "resamples": 5000,
+    "seed": 2026082121
+  },
+  "input_manifest": "manifests/lowlight_real_paired_development_v1.csv",
+  "input_manifest_sha256": "fee42cbf440a62c494bccc49e6f25b871ce8ea0044bcd825472e538dc3f5300d",
+  "metrics": {
+    "data_range": 1.0,
+    "prediction_quantization": "round_to_uint8_before_metrics",
+    "psnr_exact_match_cap_db": 100.0,
+    "ssim_implementation": "skimage.metrics.structural_similarity_rgb_channel_axis"
+  },
+  "oracle": {
+    "gamma_candidates": [
+      0.1,
+      0.12,
+      0.14,
+      0.17,
+      0.2,
+      0.24,
+      0.28,
+      0.33,
+      0.39,
+      0.46,
+      0.54,
+      0.63,
+      0.74,
+      0.87,
+      1.0,
+      1.15,
+      1.32,
+      1.52,
+      1.75
+    ],
+    "maximum_fit_pixels": 32768,
+    "ridge": 1e-06,
+    "target_access": "per_image_gt_oracle_diagnostic_only_never_inference"
+  },
+  "output_csv": "reports/lowlight_real_photometric_ceiling_v1.csv",
+  "output_json": "reports/lowlight_real_photometric_ceiling_v1.json",
+  "schema_version": 1
+}

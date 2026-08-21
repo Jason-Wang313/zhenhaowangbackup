@@ -124,6 +124,82 @@ soups, and a fixed perceptual-versus-fidelity blend may be evaluated on real
 development data. They are retained only if both PSNR and LPIPS improve across
 held-out datasets. No test-set-driven candidate selection is allowed.
 
+## Additional improvements from the third first-principles pass
+
+This pass asks a stricter question: how can each new component be made to earn
+its place while preserving a strong fallback? The answer is to develop the
+system as an information-preserving proposal ladder rather than a monolithic
+generator.
+
+### Proposal-lattice ceiling and non-regressing residuals
+
+On paired development data, produce aligned candidates from the raw input, the
+oracle/learned photometric transform, the released FoundIR teachers, and the
+FLUX bridge. Measure both the best single candidate and an oracle convex blend.
+This separates three failure modes:
+
+- all proposals are weak, so better data or restoration capacity is needed;
+- a good proposal exists but selection is weak, so uncertainty/gating is the
+  bottleneck;
+- a convex blend is much better than every proposal, so frequency- or
+  region-selective fusion has measurable value.
+
+The deployable FLUX system will be residual and zero-initialized around its
+photometric/input fidelity path. Its learned blend masks are bounded and
+regularized toward the conservative proposal, so a new branch starts as an
+identity rather than destroying information. Released FoundIR models remain
+development baselines and training-only teachers; the final deployed output
+remains FLUX/Z-Image-based.
+
+### Teacher consensus as uncertainty, not blind imitation
+
+The public FoundIR generalist and Lowlight specialist encode useful training
+distribution knowledge, but either can be wrong. Generalist, specialist, and
+paired-GT agreement will define confidence-weighted distillation targets on
+allowed training data. Agreement receives stronger distillation; disagreement
+is treated as uncertainty and is resolved by paired supervision rather than
+averaged blindly. Teacher disagreement also supplies hard examples for the
+residual bridge.
+
+### Learn the target rendering distribution
+
+Low-light restoration is not only inverse exposure estimation. Paired targets
+also define a dataset-specific choice of brightness, white balance, contrast,
+and tone. These low-frequency target statistics will be learned from allowed
+training pairs, including official FoundIR training pairs once authorized.
+The photometric head will predict a distribution over plausible renders and
+the fidelity branch will choose its conditional mean for PSNR, while retaining
+a bounded perceptual residual for LPIPS. No statistic is fitted on FoundIR
+test targets.
+
+### Counterfactual conditioning that cannot be ignored
+
+For the same clean scene rendered at multiple known degradations, swap the
+oracle condition while holding pixels fixed and require predictable monotone
+changes in exposure/noise correction. Add condition dropout and shuffled
+condition negatives. This makes the conditioning interface answerable by
+intervention: correct metadata must reduce paired loss, and wrong metadata
+must not produce the same result. Qwen is upgraded only after this oracle
+counterfactual test passes.
+
+### Robust-risk selection instead of average-score chasing
+
+Every checkpoint is scored by dataset, camera/scene cluster, darkness/noise
+regime, and resolution. Selection minimizes a predeclared combination of mean
+risk and worst-dataset risk with scene-bootstrap uncertainty. A change that
+raises the mean by exploiting one dataset while materially harming another is
+rejected. Alignment/occlusion confidence controls pixel losses so the model is
+not trained to reproduce registration errors.
+
+### Input-only adaptation stays low dimensional
+
+If test-time adaptation is retained, it may update only bounded exposure,
+white-balance, monotone-tone, and illumination-field controls using the frozen
+camera-forward consistency objective. It may not update the generative model
+or use benchmark targets. The complete rule, iteration count, and rejection
+threshold must first improve every held-out development dataset and then be
+frozen.
+
 ## Executable strategy
 
 ### Gate A: representation and simple-restoration ceilings
@@ -312,6 +388,28 @@ The next executable actions are to validate the frozen ordinal manifest, run
 existing frozen Qwen checkpoints through canonical soft scoring on two H100s,
 and implement Gate A's VAE/global-photometric ceiling diagnostic on paired
 non-FoundIR real development data.
+
+### Execution update after the third pass
+
+Gate A is now active. A reusable paired-real suite contains 174 records across
+82 scene components: 102 LOL-v2 real-adaptation validation records and 72 SICE
+reusable validation records. It contains no consumed real-test record and has
+zero exact FoundIR overlap.
+
+The first completed ceiling is decisive. The strict scene-balanced input score
+is 8.4356 dB PSNR and 0.2475 SSIM. A target-fitted global gamma plus color
+matrix reaches 24.1209 dB and 0.6571, a paired gain of 15.6853 dB with a 95%
+scene-bootstrap interval of 14.7717 to 16.6036 dB. This is an oracle diagnostic,
+not an inference method, but it moves the learned photometric head ahead of
+additional DiT capacity in the implementation order.
+
+The two-H100 VAE ceiling is CPU-preflight ready. It measures 130 exact-unique
+targets with a direct center crop and full-resolution overlapping tiles,
+including PSNR, SSIM, resized LPIPS, high-frequency retention, and seam error.
+Its predeclared decision either clears latent-only restoration or requires the
+pixel-frequency bypass per dataset. The public FoundIR generalist and Lowlight
+specialist checkpoint identities are also frozen; teacher inference has not
+yet run.
 
 ## External dependency
 

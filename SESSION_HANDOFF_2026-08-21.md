@@ -530,3 +530,62 @@ literal device set `CUDA_VISIBLE_DEVICES=0,1`. Six focused tests and the full
 manifest regeneration, full visual-checkpoint hashing, and `git diff --check`
 passed. No Qwen inference has yet run on these stacks. Commit and push the
 readiness milestone before giving the GPU launch command.
+
+## Continuation update — third-pass design and Gate A execution
+
+The first-principles strategy received another challenge pass. New frozen
+ideas are a non-regressing proposal lattice, teacher-disagreement uncertainty,
+target-render-distribution modeling, counterfactual conditioning losses,
+worst-dataset robust selection, and bounded low-dimensional input-only
+adaptation. The authoritative strategy is still
+`reports/foundir_lowlight_sota_strategy_2026-08-21.md`.
+
+The released FoundIR assets were identity-audited without inference:
+
+- generalist: 580,829,530 bytes, stored step 1,300,000, SHA-256
+  `2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9`;
+- Lowlight specialist: 6,294,432 bytes, iteration 60,000 / epoch 413,
+  SHA-256
+  `f834248e145d020d5a02f257b7ceb383b579add2522938b3e1e0bd460abe6`;
+- machine audit: `manifests/foundir_released_teacher_audit.json`.
+
+The reusable paired-real development suite is complete:
+
+- CSV SHA-256:
+  `fee42cbf440a62c494bccc49e6f25b871ce8ea0044bcd825472e538dc3f5300d`;
+- 174 pairs / 82 scene components;
+- LOL-v2 real-adaptation validation: 102 records / 41 components;
+- SICE reusable validation: 72 records / 41 components;
+- no L1 records, no consumed real-test records, and zero exact FoundIR overlap;
+- levels are retained only as proxy metadata.
+
+The CPU global-photometric ceiling completed. The target-fitted gamma plus 3
+by 3 color matrix changed scene-balanced PSNR `8.4356 -> 24.1209 dB` and SSIM
+`0.2475 -> 0.6571`. PSNR gain is `+15.6853 dB`, 95% scene-bootstrap CI
+`+14.7717` to `+16.6036`. Seven SICE records exceeded the 8-pixel alignment
+diagnostic; none were warped or excluded. This is a GT-accessing oracle only,
+never a deployable inference method. Exact result:
+`reports/lowlight_real_photometric_ceiling_result_2026-08-21.md`.
+
+The immediate GPU gate is now the FLUX.2 VAE representation ceiling:
+
+- config: `configs/lowlight_vae_ceiling_v1.json`;
+- config SHA-256:
+  `04d8c261633635dc57a7c79d0b109035e03801059fb2a18cf5899088d8db96a3`;
+- 130 exact-unique targets, two H100/H200 GPUs, literal device set `0,1`;
+- direct center-crop and full-resolution tiled VAE round trips;
+- PSNR, SSIM, resized LPIPS, high-frequency retention, and seam metrics;
+- immutable per-target resume sidecars and fail-closed result verification;
+- no FoundIR access.
+
+After all source/config/test/report changes are committed and pushed, the one
+launch action is:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 bash smoke/launch_lowlight_vae_ceiling_tmux.sh
+```
+
+Inspect the result before preparing teacher inference or implementing the
+pixel bypass. Do not run FoundIR. The separate Qwen exposure-ordering
+diagnostic remains ready and unrun, but representation Gate A has priority
+because it now directly determines the restoration architecture.
