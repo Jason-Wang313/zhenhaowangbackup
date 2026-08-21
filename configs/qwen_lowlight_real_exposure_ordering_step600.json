@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "approved_objective_relative_exposure_development_diagnostic",
+  "scope": "frozen_synthetic_step600_same_scene_real_exposure_ordering",
+  "interpretation": "relative_exposure_sensitivity_only_not_absolute_real_l1_l5_accuracy_or_restoration_gain",
+  "official_foundir_used": false,
+  "model_predictions_consulted_during_data_selection": false,
+  "model": {
+    "base_contract": "configs/qwen_lowlight_real_validation_step600.json",
+    "base_contract_sha256": "748091129e4f6c59f9f9eb391749b139d3bcce3a4c306331e74fb4da1c528dbb",
+    "selected_checkpoint_step": 600,
+    "selected_visual_checkpoint": "checkpoints/qwen_lowlight_supervised_pilot_8k_ddp8/checkpoints/step_000600/visual.safetensors",
+    "selected_visual_sha256": "b0e65a8597077973a2a103dc3369e0cb1ea703de95e2e4841d359c3d34eff77f",
+    "all_parameters_frozen": true,
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa"
+  },
+  "data": {
+    "manifest": "manifests/qwen_lowlight_real_exposure_ordering.csv",
+    "manifest_sha256": "5d34d1a08ff1213fbe89e89f19ebbe8a6efbaebf1d5661261f085a05a38e9287",
+    "metadata": "manifests/qwen_lowlight_real_exposure_ordering.json",
+    "metadata_sha256": "4effeb267f9d39969612c68b59821dacd8a02029db62c86e99a8993b1addfaac",
+    "annotation_kind": "same_scene_relative_exposure_order_derived_before_model_inference",
+    "absolute_project_l1_l5_labels_available": false,
+    "stacks": 15,
+    "images": 67,
+    "primary_pairs_minimum_ev_1": 151,
+    "reusable_development_suite": true
+  },
+  "scoring": {
+    "method": "mean_teacher_forced_target_token_negative_log_likelihood",
+    "candidate_project_levels": [1, 2, 3, 4, 5],
+    "soft_signal": "expected_level_from_softmax_negative_mean_nll",
+    "temperature": 1.0,
+    "batch_size_per_rank": 4,
+    "free_form_generation_used": false,
+    "minimum_ev_gaps": [0.5, 1.0, 2.0]
+  },
+  "gates": {
+    "primary_pair_gap_ev": 1.0,
+    "minimum_primary_continuous_concordance": 0.75,
+    "minimum_primary_hard_non_inversion_rate": 0.8,
+    "minimum_median_stack_spearman": 0.6,
+    "minimum_positive_stack_spearman_fraction": 0.8,
+    "minimum_pooled_expected_level_span": 1.0,
+    "passing_proves_only_relative_exposure_sensitivity": true,
+    "downstream_causal_restoration_gate_still_required": true
+  },
+  "runtime": {
+    "seed": 2026082104,
+    "offline": true,
+    "device": "cuda",
+    "required_visible_device_set": "0,1",
+    "required_world_size": 2,
+    "minimum_gpu_memory_gib": 70,
+    "deterministic_algorithms": true,
+    "sdpa_backend": "math",
+    "required_cublas_workspace_config": ":4096:8",
+    "output_dir": "checkpoints/qwen_lowlight_real_exposure_ordering_step600",
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1"
+  },
+  "telemetry": {
+    "csv": "logs/qwen_lowlight_real_exposure_ordering_step600_gpu.csv",
+    "sample_interval_seconds": 2,
+    "monitor_all_selected_gpus": true
+  }
+}

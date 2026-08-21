@@ -1055,3 +1055,50 @@ Do not start diffusion or FoundIR from readiness alone. If the adaptation gate
 passes, stop and obtain user review before beginning Lowlight diffusion
 conditioning. If it exits status 2, preserve and diagnose the failure; do not
 lower thresholds, tune on the fresh real test, or relabel proxy metrics.
+
+REAL-SEVERITY AND FOUNDIR OBJECTIVE CORRECTION — 2026-08-21
+
+This section is a later authoritative correction to the real-domain validation
+procedure. It does not change the controlled synthetic L1--L5 schema or the
+advisor's VLM-guided architecture.
+
+- FoundIR-Lowlight has paired LQ/GT restoration targets and is evaluated by
+  restored-image PSNR and LPIPS. It has no official project L1--L5 labels.
+- Do not ask humans to assign precise absolute L1--L5 levels to unrelated real
+  photographs. Without same-scene exposure anchors, those levels are not
+  objectively identifiable and cannot support a credible quantitative gate.
+- The screened Retinex-Net singleton images remain an unlabeled qualitative
+  robustness pool. The proposed 190-component absolute L1--L5 annotation is
+  stopped and must not be revived as a prerequisite.
+- Objective real severity development uses same-scene exposure ordering:
+  darker exposure implies non-decreasing predicted low-light severity. Use
+  soft canonical-target scores, pairwise concordance, rank correlation,
+  adjacent inversions, EV consistency where available, and prediction span so
+  a constant output cannot pass.
+- Relative exposure ordering establishes only ordinal sensitivity. The
+  decisive VLM evidence is causal improvement of paired real restoration under
+  baseline, oracle, predicted, and shuffled conditions. If oracle conditioning
+  cannot beat baseline, redesign the restoration-conditioning interface before
+  further Qwen adaptation.
+- Reusable real paired development suites and leave-one-dataset-out validation
+  replace the repeated search for newly named "fresh tests." Official FoundIR
+  remains protected until the complete system and inference protocol are
+  frozen.
+- The current first-principles SOTA strategy is recorded in
+  `reports/foundir_lowlight_sota_strategy_2026-08-21.md`. It prioritizes the
+  official FoundIR training distribution and released teachers, realistic
+  camera formation, a fidelity-first degraded-to-clean FLUX/Z-Image bridge,
+  VAE/high-frequency ceiling tests, causal condition ablations, and native
+  full-resolution deployment.
+- Official FoundIR metadata contains 39,962 isolated-Lowlight training pairs
+  and 378,440 pairs in categories containing Lowlight. Training-set access and
+  teacher distillation are major unexploited levers. Never use FoundIR test
+  pairs for training, calibration, or iterative selection.
+
+The frozen same-scene development manifest is
+`manifests/qwen_lowlight_real_exposure_ordering.csv`, with its contract in
+`manifests/qwen_lowlight_real_exposure_ordering.json`. It contains 15 MEF
+exposure stacks, 67 exact-unique images, and 151 comparisons separated by at
+least one EV. It was selected and hashed before model inference, contains no
+FoundIR image, and is explicitly a reusable development suite rather than an
+absolute-label holdout.

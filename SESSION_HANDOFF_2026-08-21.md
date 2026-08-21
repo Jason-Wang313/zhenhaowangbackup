@@ -479,3 +479,54 @@ evaluation thresholds, then predeclare the corrective adaptation. Any GPU
 training launcher must support the user's current two H100s with the literal
 device set `0,1`. Do not run the corrective model, consumed test, diffusion,
 or FoundIR before the new holdout is frozen.
+
+## Continuation correction — objective exposure ordering and SOTA execution
+
+The `immediate next task` above is superseded. User inspection exposed that
+unrelated photographs cannot receive defensible absolute project L1--L5 labels
+without same-scene exposure anchors. Stop the 190-component human severity
+annotation. The images remain an unlabeled qualitative robustness pool.
+
+FoundIR-Lowlight is a paired restoration benchmark evaluated by PSNR and
+LPIPS; it is not five-level labeled. The project synthetic L1--L5 convention
+must not be mistaken for an official benchmark target. Real VLM severity
+development now uses objective same-scene exposure ordering, while paired real
+restoration improvement is the decisive downstream evidence.
+
+The first-principles strategy is frozen in
+`reports/foundir_lowlight_sota_strategy_2026-08-21.md`. Key additions are:
+
+- official FoundIR training-set acquisition and released-model distillation;
+- VAE reconstruction and global-photometric ceiling measurements;
+- a deterministic degraded-to-clean FLUX/Z-Image bridge rather than pure-noise
+  regeneration;
+- a high-frequency fidelity bypass and differentiable camera-forward
+  consistency;
+- baseline/oracle/predicted/shuffled causal conditioning;
+- physically realistic RAW/camera synthesis and aligned real pairs;
+- native-resolution global-plus-tiled inference and conservative ensembles;
+- leave-one-dataset-out paired real development, followed by one frozen
+  all-50-pair FoundIR run.
+
+The objective ordinal suite has been built without model inference:
+
+- CSV: `manifests/qwen_lowlight_real_exposure_ordering.csv`
+- metadata: `manifests/qwen_lowlight_real_exposure_ordering.json`
+- 15 author-provided MEF exposure stacks;
+- 67 exact-unique images;
+- 210 total pairwise comparisons and 151 pairs separated by at least one EV;
+- one component containing `test_out`, `zero`, and `test_0.2` was conservatively
+  excluded;
+- zero FoundIR use and zero protected overlap inherited from the screened
+  source pool;
+- labels are explicitly relative exposure order, not absolute L1--L5 ground
+  truth.
+
+The two-H100 frozen-step-600 diagnostic is CPU-ready at
+`configs/qwen_lowlight_real_exposure_ordering_step600.json`. Its launcher is
+`smoke/launch_qwen_lowlight_real_exposure_ordering_tmux.sh` and requires the
+literal device set `CUDA_VISIBLE_DEVICES=0,1`. Six focused tests and the full
+100-test CPU suite passed; compilation, shell syntax, workspace-local tmux,
+manifest regeneration, full visual-checkpoint hashing, and `git diff --check`
+passed. No Qwen inference has yet run on these stacks. Commit and push the
+readiness milestone before giving the GPU launch command.

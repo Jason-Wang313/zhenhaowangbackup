@@ -1,0 +1,69 @@
+{
+  "absolute_project_l1_l5_labels_available": false,
+  "annotation_kind": "same_scene_relative_exposure_order_derived_before_model_inference",
+  "counts": {
+    "images": 67,
+    "images_per_stack": {
+      "official_test_scene_12a1e99b250af6c5": 4,
+      "official_test_scene_28368effc96e9c72": 4,
+      "official_test_scene_34d897b2d3af62f8": 2,
+      "official_test_scene_40921799f422ed90": 11,
+      "official_test_scene_42261fe2f0e4c587": 2,
+      "official_test_scene_56d6a3f2e6b6d8b8": 4,
+      "official_test_scene_712afdcbc719e6ed": 2,
+      "official_test_scene_775b5c850e506adf": 2,
+      "official_test_scene_8bff6588c5fc5868": 14,
+      "official_test_scene_8ef566db5535dc97": 2,
+      "official_test_scene_9b20cb529d3069ac": 7,
+      "official_test_scene_bb3d445ba1b9dfef": 2,
+      "official_test_scene_c091eb8c47feb501": 2,
+      "official_test_scene_c156f3322e509936": 6,
+      "official_test_scene_dfebc9dbbf98b7b1": 3
+    },
+    "pairwise_comparisons": {
+      "minimum_ev_0": 210,
+      "minimum_ev_0.5": 194,
+      "minimum_ev_1": 151,
+      "minimum_ev_2": 81
+    },
+    "stacks": 15
+  },
+  "evaluation_contract": {
+    "interpretation": "Passing establishes relative exposure sensitivity only. It does not establish absolute real-image L1-L5 accuracy or downstream restoration gain.",
+    "minimum_median_stack_spearman": 0.6,
+    "minimum_pooled_expected_level_span": 1.0,
+    "minimum_positive_stack_spearman_fraction": 0.8,
+    "minimum_primary_continuous_concordance": 0.75,
+    "minimum_primary_hard_non_inversion_rate": 0.8,
+    "primary_pair_gap_ev": 1.0,
+    "primary_soft_signal": "expected_L1_L5_level_from_five_canonical_teacher_forced_target_NLLs"
+  },
+  "human_annotation_required": false,
+  "model_inference_performed_during_selection": false,
+  "official_foundir_used": false,
+  "output_csv": "manifests/qwen_lowlight_real_exposure_ordering.csv",
+  "output_csv_sha256": "5d34d1a08ff1213fbe89e89f19ebbe8a6efbaebf1d5661261f085a05a38e9287",
+  "purpose": "objective_real_domain_ordinal_development_not_absolute_severity_ground_truth",
+  "reuse_policy": "reusable_development_suite_for_causal_diagnosis_not_a_pristine_final_test",
+  "schema_version": 1,
+  "selection": {
+    "exact_duplicate_policy": "prefer_MEF_then_lexicographic_path",
+    "excluded_components": {
+      "official_test_scene_3c7dcd9ac2bac291": "contains_fused_or_generated_outputs"
+    },
+    "minimum_exact_unique_images_per_stack": 2,
+    "ordering": "ascending_within_stack_mean_luma_dark_to_bright",
+    "reasoning": "MEF contains author-provided same-scene exposure sequences; unrelated singleton images cannot support objective severity comparisons.",
+    "required_subset": "MEF"
+  },
+  "source": {
+    "archive_sha256": "0033eb74d4c964755f02d4b46e6db3eb457637c116415571fa2d0212577b3f29",
+    "candidate_csv": "manifests/qwen_lowlight_corrective_holdout_candidates.csv",
+    "candidate_csv_sha256": "81b3b6080f92124813f207a3d950b9dc922a006a7582c3276142f7c24611b265",
+    "candidate_json": "manifests/qwen_lowlight_corrective_holdout_candidates.json",
+    "candidate_json_sha256": "c95b5069ad7756265ed0a3c71411a6cabbc0e877e8a2460122f8e93b293a0537",
+    "identity": "official_Retinex-Net_Testing_Images_archive",
+    "protected_exact_or_phash_leq4_overlaps": 0
+  },
+  "status": "frozen_real_exposure_ordering_development_suite"
+}
