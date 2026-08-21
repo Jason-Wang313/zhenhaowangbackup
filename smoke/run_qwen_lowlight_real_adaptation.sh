@@ -6,6 +6,7 @@ PYTHON="$ROOT/.venv/flux2-smoke/bin/python"
 CONFIG="$ROOT/configs/qwen_lowlight_real_adaptation_step600.json"
 PREFLIGHT="$ROOT/smoke/qwen_lowlight_real_adaptation_preflight.py"
 TRAINER="$ROOT/smoke/train_qwen_lowlight_real_adaptation_ddp.py"
+RESULT_STATUS="$ROOT/smoke/qwen_real_adaptation_result_status.py"
 DEVICE_SET="${CUDA_VISIBLE_DEVICES:-}"
 LOG="$ROOT/logs/qwen_lowlight_real_adaptation_step600.log"
 EVENTS="$ROOT/logs/qwen_lowlight_real_adaptation_step600_events.log"
@@ -51,6 +52,7 @@ REQUIRED_TRACKED_FILES=(
   smoke/train_qwen_lowlight_supervised_ddp.py
   smoke/qwen_lowlight_real_adaptation_preflight.py
   smoke/train_qwen_lowlight_real_adaptation_ddp.py
+  smoke/qwen_real_adaptation_result_status.py
   smoke/run_qwen_lowlight_real_adaptation.sh
   smoke/launch_qwen_lowlight_real_adaptation_tmux.sh
   smoke/run_real_adapt.sh
@@ -61,14 +63,14 @@ validate_static_contract() {
     echo "ERROR: validated workspace Python is unavailable: $PYTHON" >&2
     return 1
   fi
-  if [[ ! -f "$CONFIG" || ! -f "$PREFLIGHT" || ! -f "$TRAINER" ]]; then
+  if [[ ! -f "$CONFIG" || ! -f "$PREFLIGHT" || ! -f "$TRAINER" || ! -f "$RESULT_STATUS" ]]; then
     echo "ERROR: checked real-adaptation files are missing" >&2
     return 1
   fi
   bash -n "$ROOT/smoke/run_qwen_lowlight_real_adaptation.sh"
   bash -n "$ROOT/smoke/launch_qwen_lowlight_real_adaptation_tmux.sh"
   bash -n "$ROOT/smoke/run_real_adapt.sh"
-  "$PYTHON" -m py_compile "$PREFLIGHT" "$TRAINER"
+  "$PYTHON" -m py_compile "$PREFLIGHT" "$TRAINER" "$RESULT_STATUS"
   "$PYTHON" "$PREFLIGHT" \
     --config "$CONFIG" \
     --contract-only \
@@ -204,6 +206,21 @@ run_adaptation() {
     return "$preflight_status"
   fi
 
+  if [[ -f "$OUTPUT/training_summary.json" ]]; then
+    set +e
+    "$PYTHON" "$RESULT_STATUS" \
+      --output-dir "$OUTPUT" \
+      --config-sha256 "$config_sha256"
+    existing_status="$?"
+    set -e
+    if [[ "$existing_status" -eq 0 || "$existing_status" -eq 2 ]]; then
+      emit_event "QWEN_REAL_ADAPTATION_TRAINING_SKIPPED_EXISTING_VERIFIED_RESULT status=$existing_status"
+      return "$existing_status"
+    fi
+    echo "ERROR: existing adaptation summary is inconsistent" >&2
+    return 1
+  fi
+
   emit_event "QWEN_REAL_ADAPTATION_TRAINING_BEGIN"
   set +e
   CUDA_VISIBLE_DEVICES="$DEVICE_SET" "$PYTHON" -m torch.distributed.run \
@@ -212,7 +229,28 @@ run_adaptation() {
   training_status="$?"
   set -e
   emit_event "QWEN_REAL_ADAPTATION_TRAINING_END status=$training_status"
-  return "$training_status"
+  set +e
+  "$PYTHON" "$RESULT_STATUS" \
+    --output-dir "$OUTPUT" \
+    --config-sha256 "$config_sha256"
+  result_status="$?"
+  set -e
+  case "$result_status" in
+    0)
+      if [[ "$training_status" -eq 0 ]]; then
+        return 0
+      fi
+      echo "ERROR: verified pass conflicts with launcher status $training_status" >&2
+      return 1
+      ;;
+    2)
+      return 2
+      ;;
+    *)
+      echo "ERROR: adaptation summary missing or inconsistent after launcher status $training_status" >&2
+      return 1
+      ;;
+  esac
 }
 
 export CUBLAS_WORKSPACE_CONFIG=:4096:8
