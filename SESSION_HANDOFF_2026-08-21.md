@@ -431,3 +431,51 @@ Use these exact distinctions:
 
 Never call this a crash, a pass, an official FoundIR result, or evidence that
 the complete All-in-One system is ready.
+
+## Continuation update — checkpoint diagnostics and holdout screening
+
+This update supersedes the stale `Exact next task` sequence above where work
+has already completed. Commit `48057642a6b6d4d21c90b1945fcfd0903bc83b27`
+was pushed to `origin/main`. It fixes torchrun status normalization, adds the
+validation-only five-checkpoint diagnostic, provides two/eight-GPU launchers,
+and records the failed-gate follow-up. Thirteen focused CPU tests passed.
+
+The diagnostic ran to terminal status 0 on two H100s and independently
+verified five checkpoints and 40 evaluation artifacts without FoundIR or the
+consumed test. No checkpoint passed all safeguards. All checkpoints passed
+real validation but failed the same synthetic structured-output, type
+accuracy, and severity-MAE safeguards. The diagnostic root summary SHA-256 is
+`aff8f2bb0388e57d23092c1b7a4ad92b533afe6f0043c6672090410a90b25af7`.
+Earlier-checkpoint selection therefore cannot rescue the completed run.
+
+Official LOL-v1 was acquired but all 500 scenes exactly overlap protected
+LOL-v2/adaptation or prior-evaluation data and are rejected. Preserve both the
+valid archive and the corrupt first download; deletion still requires the
+two-round confirmation procedure.
+
+The authors' separate official `Testing Images` archive has now been extracted
+and screened without model inference:
+
+- archive SHA-256:
+  `0033eb74d4c964755f02d4b46e6db3eb457637c116415571fa2d0212577b3f29`;
+- 335 image paths, 260 exact-unique images, and 190 internal scene/exposure
+  components;
+- zero exact or pHash-distance-at-most-4 overlaps with all 13,793 protected
+  paths;
+- minimum candidate/protected pHash distance: 10;
+- candidate-manifest SHA-256:
+  `c95b5069ad7756265ed0a3c71411a6cabbc0e877e8a2460122f8e93b293a0537`;
+- status: screened but unlabeled; no holdout inference is authorized.
+
+The immediate next task is external human annotation. Use the frozen rubric at
+`reports/qwen_lowlight_corrective_holdout_annotation_rubric_2026-08-21.md`,
+the blank 190-component CSV at
+`manifests/qwen_lowlight_corrective_holdout_annotation.csv`, and the local
+visual index under
+`data/real_lowlight_corrective_holdout/human_annotation_package_20260821/`.
+Two raters work independently and a third adjudicates. After labels return,
+implement and run the fail-closed finalizer, freeze the new holdout and
+evaluation thresholds, then predeclare the corrective adaptation. Any GPU
+training launcher must support the user's current two H100s with the literal
+device set `0,1`. Do not run the corrective model, consumed test, diffusion,
+or FoundIR before the new holdout is frozen.
