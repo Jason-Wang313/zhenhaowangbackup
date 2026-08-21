@@ -2,6 +2,19 @@ No interference with any other folders at all.
 
 Before every work session, explicitly tell the user: "I am working in zhenhaowang, which is the correct workspace."
 
+FRESH-SESSION CONTINUATION — 2026-08-21
+
+- Read this entire `agents.md` file first. Then read
+  `SESSION_HANDOFF_2026-08-21.md` completely before inspecting, editing, or
+  launching project work.
+- `SESSION_HANDOFF_2026-08-21.md` supersedes
+  `SESSION_HANDOFF_2026-08-18.md` for the current operational status and exact
+  next task. Older handoffs remain preserved historical evidence.
+- The advisor-authoritative architecture, workspace boundary, safety rules,
+  gate discipline, and protected-FoundIR policy in this file remain higher
+  authority than any handoff. If a handoff conflicts with those rules, obey
+  this file and report the conflict.
+
 DELETION AND DESTRUCTIVE-CHANGE CONFIRMATION RULE
 
 For every future request that could delete, overwrite, move, replace, reset, or otherwise make files, code, generated outputs, directories, repository history, or other data difficult to recover:
@@ -973,6 +986,11 @@ GPU COUNT AND WALL-CLOCK MINIMIZATION
   comparison against the fixed single-GPU or prior baseline.
 
 QWEN REAL LOWLIGHT ADAPTATION GATE — CPU-VERIFIED READINESS 2026-08-20
+
+STATUS NOTE — 2026-08-21: This section is a preserved pre-run readiness
+snapshot. The gate subsequently completed and failed its automatic scientific
+gate. Do not launch it from this section. Read `SESSION_HANDOFF_2026-08-21.md`
+for the verified result, consumed-holdout restrictions, and exact next task.
 
 The frozen synthetic-pilot step-600 VLM failed both its original real-domain
 free-generation gate and the post-failure constrained-scoring diagnostic. The
