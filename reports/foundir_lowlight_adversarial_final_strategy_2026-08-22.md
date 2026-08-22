@@ -4,37 +4,38 @@ Date: 2026-08-22 UTC
 
 ## Status and outcome
 
-This document is the frozen plan after 27 autonomous adversarial-review rounds.
+This document is the frozen plan after 28 autonomous adversarial-review rounds.
 No experiment described here may start until the applicable stage contract and
 the first-stage items in the pre-experiment checklist are complete. Later-stage
 contracts are frozen before their own execution as specified in attack 27;
 they are not guessed before their prerequisites exist. Freezing the plan does
 not claim that its external dependencies or scientific gates have passed.
 
-The strongest defensible route is not a monolithic stack of every promising
-idea. It is a non-regressing proposal ladder. The smallest advisor-compliant
-candidate system is:
+The 28 attacks are a risk catalog, not 28 execution tasks. The executable plan
+is the seven-gate critical path below. The strongest defensible route is not a
+monolithic stack of every promising idea. It is a non-regressing proposal
+ladder whose smallest advisor-compliant deployed system is:
 
 ```text
-degraded RGB
-  -> best retained conservative photometric/pixel/teacher proposal
-  -> frozen, real-validated Qwen structured condition
-  -> degraded-anchored FLUX.2 residual bridge
-  -> zero-initialized bounded residual fusion
-  -> native-resolution global-plus-overlapping-tile inference
+degraded RGB -> one selected conservative pixel/teacher base proposal ---+
+degraded RGB -> measured statistics + frozen real-validated Qwen condition +
+degraded RGB -------------------------------------------------------------+
+                                                                          v
+                                      degraded-anchored FLUX.2 bounded delta
+                                                                          v
+                                       base + delta -> native-resolution output
 ```
 
-A pixel-frequency bypass, released-teacher use, stronger spatial VLM
-conditioning, camera-forward consistency, and inference ensembles are
-optional proposals. The basic causally validated VLM condition and genuine
-FLUX residual contribution are mandatory for the advisor-directed deliverable.
-The photometric, pixel, and teacher candidates compete to supply the base; they
-are not all mandatory at deployment.
-Each is added alone and kept only after a predeclared paired-real ablation
-improves the constrained PSNR/LPIPS objective without a meaningful
-worst-dataset regression. A PSNR gain with LPIPS equivalence, or an LPIPS gain
-with PSNR equivalence, can pass; requiring both point estimates to move on
-every small ablation would discard useful components.
+The released FoundIR proposals are mandatory to measure because their weights
+are already present and benchmark-relevant; they are not mandatory at deployed
+inference. A learned photometric head, learned proposal fusion, new camera
+simulator, pixel-frequency bypass, stronger spatial VLM conditioning,
+camera-forward consistency, quantization-aware training, and inference
+ensembles are conditional research proposals, not default steps. The basic
+causally validated VLM condition and genuine FLUX residual contribution remain
+mandatory for the advisor-directed deliverable. A conditional proposal is not
+implemented unless a cheaper diagnostic identifies its exact bottleneck and
+predicts enough headroom to cross the existing promotion margin.
 
 This plan addresses the known avoidable weaknesses found in these reviews. It
 does not claim literal perfection and cannot eliminate the
@@ -64,14 +65,15 @@ Attacks:
 
 Decisions:
 
-- Freeze the official evaluator revision, every plausible `pyiqa`/LPIPS
-  implementation, LPIPS backbone and weights hash, RGB range, image decoder,
-  resize behavior, and aggregation before the protected run. Because the
+- Freeze the official evaluator revision and a finite two-path LPIPS check: one
+  pinned compatible `pyiqa` release through the FoundIR script plus direct
+  `lpips==0.1.4` AlexNet. Freeze backbone/weights hashes, RGB range, image
+  decoder, resize behavior, and aggregation before the protected run. Because the
   released FoundIR environment pins `lpips==0.1.4` but not `pyiqa`, one locally
   chosen `pyiqa` version is not treated as the Huawei contract evaluator.
   Cross-check PSNR with two independent implementations and require the final
-  candidate to satisfy the LPIPS target under every plausible reproduced
-  implementation, unless Huawei supplies the exact evaluator.
+  candidate to satisfy the LPIPS target under both frozen paths, unless Huawei
+  supplies the exact evaluator, which then becomes authoritative.
 - Select checkpoints on paired real development by PSNR/LPIPS Pareto dominance,
   worst-dataset risk, per-scene paired deltas, and scene bootstrap intervals.
 - Use deterministic or very low-variance transport. Stochastic candidates and
@@ -119,8 +121,9 @@ Decisions:
 - Maintain two data branches:
   - Plan A: authorized official FoundIR training pairs, beginning with 39,962
     isolated-Lowlight pairs, plus released teachers and independent real pairs.
-  - Plan B: independent paired real data, camera-fitted synthetic data, and
-    confidence-weighted released-teacher proposals, with no official test use.
+  - Plan B: independent paired real data, existing controlled synthetic replay,
+    and confidence-weighted released-teacher proposals, with no official test
+    use. A new camera simulator is conditional on a measured coverage gap.
 
 ## Autonomous attack 3: architecture
 
@@ -162,7 +165,8 @@ Decisions:
 - Camera consistency is auxiliary only. Paired reconstruction and identity
   constraints prevent the cycle from defining the solution by itself.
 - Qwen is mandatory for the advisor-directed deliverable, but it enters FLUX
-  only after no/oracle/measured/predicted/shuffled causal ablations on the
+  only after oracle-plus-measured/measured-only/measured-plus-Qwen/
+  measured-plus-shuffled-Qwen causal ablations on the
   compact control show incremental downstream value. Until then, only the
   non-diffusion control/interface diagnostic is authorized.
 
@@ -282,11 +286,13 @@ following hold:
 - the final output is genuinely changed and improved by the trained FLUX path,
   rather than merely relabeling the public teacher as a FLUX result.
 
-If any condition fails, teachers remain training-only distillation targets and
-the deployable base proposal is the learned photometric/pixel path.
+If any condition fails, teacher-at-inference is removed. Training-only
+distillation is also conditional on its own cheap admission gate; otherwise the
+deployable base is the compact pixel path or another retained proposal.
 
 FoundIR is not the only reference proposal. The paper's stronger isolated
-Lowlight rows make AutoDIR and InstructIR mandatory comparison candidates:
+Lowlight rows make AutoDIR and InstructIR mandatory table references, not
+mandatory executions:
 
 - InstructIR has an MIT-licensed public repository and may be audited and used
   as a reference/teacher, never the final advisor-directed backbone.
@@ -296,8 +302,9 @@ Lowlight rows make AutoDIR and InstructIR mandatory comparison candidates:
   result remains the minimum competitive reference even if clearance is not
   obtained.
 - Any newer method, including one-step degradation-aware diffusion with a
-  high-fidelity decoder, is added only after identical-protocol and license
-  verification. Its useful design principles are already covered by the
+  high-fidelity decoder, is added to the dated table audit after
+  identical-protocol verification. Code execution still requires attack 28's
+  admission rule. Its useful design principles are already covered by the
   one/few-step residual endpoint, degradation-aware adapters, and gated
   high-frequency decoder/bypass in this plan.
 
@@ -345,8 +352,8 @@ levels and a fixed budget:
 - deployment retention requires a positive scene-bootstrap paired interval,
   improvement on at least three independent development families, and no
   material PSNR or LPIPS regression in any family;
-- each proposal receives one diagnostic and at most two corrective training
-  runs before it is killed or fundamentally redesigned;
+- the mandatory Qwen/interface gets at most two corrections, the FLUX endpoint
+  gets one, and an optional proposal gets one pilot with no automatic rescue;
 - no failed branch is rescued by acquiring a new test set; the same reusable
   leave-one-dataset-out suites diagnose every correction;
 - only one architecture branch is changed per comparison.
@@ -428,16 +435,16 @@ no information. The VLM route is made harder to ignore and easier to falsify:
   clipping, color shift, and illumination maps, not only L1--L5;
 - measured-statistics condition is a cheap non-VLM control;
 - Qwen supplies soft canonical posteriors, uncertainty, structured tokens, and
-  semantic-preservation features through multi-block FiLM/spatial injection;
+  semantic-preservation features through a compact global FiLM adapter;
 - condition dropout, swaps, and monotone counterfactuals force sensitivity;
-- the no/oracle/measured-only/Qwen-only/measured-plus-Qwen/shuffled-Qwen matrix
-  uses identical restoration weights wherever the intervention semantics
-  permit and paired scene-bootstrap deltas.
+- the four-way oracle-plus-measured/measured-only/measured-plus-Qwen/
+  measured-plus-shuffled-Qwen matrix uses identical restoration weights and
+  paired scene-bootstrap deltas.
 
 If oracle does not help, the injection is redesigned. If measured-only matches
 measured-plus-Qwen, Qwen has not earned benchmark-critical complexity. If
-measured-plus-Qwen does not beat shuffled-Qwen and measured-only after at most
-two genuine redesigns,
+measured-plus-Qwen does not beat measured-plus-shuffled-Qwen and measured-only
+after at most two genuine redesigns,
 the branch may continue only as a restoration research baseline. It is not the
 advisor-directed VLM-guided deliverable, no VLM-guided Lowlight gain is
 claimed, and the protected FoundIR run remains blocked pending advisor/user
@@ -489,8 +496,8 @@ not to select the most favorable package version:
   channel permutation, resize, and a licensed non-protected known pair;
 - compute PSNR independently with the contract wrapper and a literal NumPy
   reference, requiring numerical agreement after the exact save/reload path;
-- evaluate development outputs with all plausible LPIPS implementations and
-  recorded weight hashes; use the worst compliant LPIPS for promotion;
+- evaluate development outputs with the two frozen LPIPS paths and recorded
+  weight hashes; use the worse value for promotion;
 - obtain Huawei's evaluator/container before the final run if possible. If it
   remains unavailable, report implementation sensitivity and preserve margin
   under every reproduced variant rather than claiming exact evaluator parity.
@@ -524,14 +531,18 @@ uncertainty is disclosed rather than converted into a false clean split.
 
 Two corrections per branch do not control the combined multiplicity from many
 branches, losses, endpoints, gates, seeds, and optional modules. The experiment
-process therefore becomes a predeclared nested selection protocol:
+process therefore becomes a predeclared, cost-aware selection protocol:
 
 - assign every run a ledger entry before launch: hypothesis, changed factor,
   data folds, seed set, metrics, gate, compute, and correction count;
-- choose hyperparameters only in scene/sequence-grouped inner folds; measure a
-  proposal once on each omitted outer dataset family;
-- never promote a module from a pooled score that includes the fold used to
-  choose it;
+- for cheap cached proposals and photometric diagnostics, choose settings only
+  in scene/sequence-grouped inner folds and measure once on each omitted outer
+  family;
+- for expensive Qwen/FLUX branches, use one-seed bounded pilots with frozen
+  source-disjoint train/validation strata from all three families and select by
+  worst-family behavior. Do not pay for full three-fold training of branches
+  that will be killed at pilot scale;
+- never promote a module from a pooled mean that hides a failing family;
 - reserve a provenance-independent sentinel or Huawei/advisor hidden set for
   one final confirmation after the architecture is locked;
 - track the total number of compared proposals and report all attempts, not
@@ -550,8 +561,8 @@ high-variance diffusion finalist. Seed policy is frozen before results:
 
 - exploratory controls use one predeclared seed and may not be rescued by
   changing it;
-- every architecture finalist is trained with at least three predeclared seeds
-  at the same data/compute budget;
+- only the single architecture selected for deployment is trained with three
+  predeclared seeds at the same data/compute budget;
 - never select the best training seed. Report mean, standard deviation,
   scene-bootstrap uncertainty, and the worst seed/family result;
 - either ensemble a predeclared fixed set only if the full set passes the cost
@@ -595,12 +606,11 @@ scale:
   SNR/noise proxies, saturation/clipping, local illumination, and confidence;
 - Qwen outputs soft global type/severity posteriors, exposure-order uncertainty,
   scene semantics, and features that protect salient content;
-- the causal matrix becomes no condition, oracle, measured-only,
-  Qwen-only, measured-plus-Qwen, and shuffled-Qwen, using the same restoration
-  weights wherever intervention semantics permit;
+- the necessary causal matrix is oracle-plus-measured, measured-only,
+  measured-plus-Qwen, and measured-plus-shuffled-Qwen, using the same
+  restoration weights;
 - the advisor-directed claim requires measured-plus-Qwen to beat measured-only
-  and shuffled-Qwen on omitted paired data. A gain over no-condition alone is
-  insufficient if measured statistics explain it;
+  and measured-plus-shuffled-Qwen on omitted paired data;
 - spatial Qwen injection is optional and must show information beyond the
   compact CNN rather than merely adding parameters.
 
@@ -743,6 +753,72 @@ large run is equally dangerous. Contracts are therefore stage-gated:
 No stage starts merely because an earlier contract exists. This resolves the
 dependency loop without permitting results-driven rewrites.
 
+## Autonomous attack 28: scientific safeguards can become useless complexity
+
+A plan can fail without a bad model: it can spend months implementing elegant
+controls that never affect the deployed decision. Every retained operation
+must answer one of four necessary questions:
+
+1. Are the metric, data, and benchmark claim valid?
+2. What is the cheapest proposal that already works on real paired data?
+3. Does Qwen add causal information, and does FLUX add genuine restoration
+   value beyond that proposal?
+4. Does the single frozen system survive seed, full-resolution, and protected
+   evaluation?
+
+If an operation cannot change a go/kill/design decision for one of those
+questions, it is removed. The resulting feasibility rules are:
+
+- use exactly one bounded third real family: sequence-subsampled SDSD after a
+  short terms audit, or one disclosed fallback if SDSD cannot be used; do not
+  acquire several alternatives in parallel;
+- run full nested leave-one-family-out analysis only for cheap cached proposals
+  and photometric ceilings. Expensive Qwen/FLUX candidates use bounded
+  cross-family pilots on all frozen strata; only the single winner receives a
+  full-scale run;
+- evaluate only the already-present FoundIR generalist and documented cascade
+  as mandatory teacher proposals. InstructIR is optional under a fixed small
+  setup budget of one environment smoke and one cached inference pass, with no
+  training or rescue work. AutoDIR remains a table reference and is not
+  executed while its license is absent;
+- use two predeclared LPIPS paths, not an open-ended version sweep: the pinned
+  FoundIR/`pyiqa` path and direct `lpips==0.1.4` AlexNet cross-check. If Huawei
+  supplies its evaluator, that evaluator becomes authoritative;
+- Plan B starts immediately if official training authorization is absent when
+  scaling begins. The project does not wait for the 4.85 TB archive;
+- optional modules require a named measured failure, a cheap counterfactual or
+  oracle showing at least the applicable architecture-promotion margin, and a
+  fixed implementation/pilot budget. Otherwise they are killed before coding;
+- the default optional-module count is zero. At most one is added to the first
+  full-scale winner. A second requires a new independent bottleneck that
+  remains after the first and user review of its cost;
+- only the one selected architecture receives three-seed replication. Pilot
+  branches use one predeclared seed and are never rescued by seed search;
+- CPU audits, cache hashing, and canaries are combined into the gate they
+  protect; they are not separate ceremonial milestones.
+- literature, license, and teacher-provenance audits are time-bounded to the
+  available release documentation and local metadata. `Unverifiable` is a
+  valid disclosed outcome; only missing legal permission for actual use is a
+  blocker.
+
+Concrete conditional admissions:
+
+| Module | Implement only when |
+|---|---|
+| Learned photometric head | The identifiable tone/WB/illumination ceiling is strong and input-only prediction transfers in the cheap grouped diagnostic |
+| Learned proposal fusion | An out-of-fold oracle convex blend beats the best single proposal by an architecture-level margin on every family |
+| New camera simulator | Plan B has a measured coverage gap and a small simulator stream improves an omitted real family without identity loss |
+| Frequency bypass | Bypass-off restoration, not merely the VAE round trip, shows a frequency bottleneck and a fixed bounded bypass has a positive ceiling |
+| Spatial Qwen or camera cycle | The basic causal interface passes information tests but localization or forward inconsistency remains the attributed bottleneck |
+| Quantization-aware training | Float-to-saved-uint8 conversion alone causes a material measured regression |
+| Ensemble | Fixed constituent averaging improves every family enough to justify its runtime; no per-image selection is used |
+
+The practical consequence is that the likely execution builds only a compact
+pixel control, one causally conditioned FLUX bridge, and the native-resolution
+wrapper. Teachers, photometric controls, and oracles are mostly cached
+diagnostics. The larger architecture appears only if measured evidence makes
+it necessary.
+
 ## Plan A and Plan B data details
 
 **Plan A -- official training access:** acquire only author-authorized training
@@ -755,85 +831,82 @@ compound categories only after the isolated gate and project scope permit it.
 No official test image, public restored output, or test-derived statistic enters
 the split, simulator, checkpoint selection, or target-render model.
 
-**Plan B -- archive unavailable:** use LOL-v2, SICE, sequence-grouped SDSD/
-processed-SMID after terms review, camera-fitted synthetic pairs, the existing
-controlled AgenticIR replay, and licensed public teachers. Fit simulator and
-target-render distributions only inside each training fold. Plan B can produce
-a strong frozen candidate but cannot remove uncertainty about the official
+**Plan B -- archive unavailable:** use LOL-v2, SICE, one sequence-grouped third
+family after terms review, the existing controlled AgenticIR replay, and the
+released FoundIR teachers. Do not make a new camera simulator a prerequisite.
+Add one only if the mandatory-path error attribution demonstrates a coverage
+gap and its bounded pilot improves omitted real data. Plan B can produce a
+strong frozen candidate but cannot remove uncertainty about the official
 training distribution; this limitation is carried into the final report.
 
-## Frozen execution sequence after plan approval
+## Frozen seven-gate execution sequence after plan approval
 
-The sequence is deliberately short and diagnostic-first:
+Each gate ends with a pass/kill decision and user review. No gate exists only
+to produce paperwork.
 
-1. **Protocol freeze:** pin the metric variants and hashes; create identity,
-   quantization, range, RGB-order, resize, save/reload, and known-pair canaries;
-   cross-check PSNR independently; obtain the Huawei evaluator if available;
-   freeze the current `21.90 dB` table reference and dated newer-method audit.
-2. **Development and provenance freeze:** retain LOL-v2/SICE, acquire and
-   freeze SDSD indoor/outdoor sequence-grouped subsets or the disclosed
-   fallback, complete license/overlap/alignment and teacher-training-provenance
-   audits, define nested grouped folds, and reserve an independent sentinel if
-   available. Freeze the experiment ledger and total proposal/correction budget.
-3. **Proposal lattice, no training:** cache input, FoundIR generalist,
-   generalist-to-specialist, licensed reference, current FLUX, photometric
-   controls, and target-accessing oracle blend ceilings on development data.
-4. **Minimal controls and oracle interface:** measure the nested exposure,
-   monotone-tone/WB, spatial-illumination, and full-matrix oracles; train only
-   the identifiable bounded photometric head and compact pixel residual
-   control; then prove that continuous oracle degradation conditions can
-   improve the control. Each gets one diagnostic plus at most two corrections.
-5. **Credible VLM gate:** run the frozen same-scene exposure-ordering
-   diagnostic; if correction is required, adapt Qwen with ordinal/continuous
-   real losses and synthetic structured replay. On the compact control run the
-   identical no/oracle/measured-only/Qwen-only/measured-plus-Qwen/shuffled-Qwen
-   causal matrix. Freeze Qwen only after measured-plus-Qwen beats measured-only
-   and shuffled-Qwen with a real paired benefit.
-6. **FLUX endpoint bake-off:** using the frozen validated VLM, on identical data/compute compare pure-noise
-   reference flow, deterministic LQ-to-GT latent flow, and low-noise
-   degraded-anchored residual flow. Promote one only if it beats the compact
-   pixel control and previous proposal.
-7. **Scale the winner:** use Plan A official isolated-Lowlight pairs if
-   authorized; otherwise Plan B real pairs, camera-fitted synthesis, licensed
-   teachers, and target-render modeling. Cache VAE latents and teacher outputs;
-   use two-H100/eight-H200 equivalent distributed schedules.
-8. **Optional modules one at a time:** frequency bypass,
-   teacher-at-inference, camera consistency, stronger spatial VLM injection,
-   then fixed ensembles. Kill any module that misses its isolated gate; the
-   already validated basic VLM condition remains frozen as the control.
-9. **Finalist replication:** run at least three predeclared training seeds,
-   propagate seed and scene uncertainty, and declare the deployable seed or
-   fixed ensemble without best-seed selection.
-10. **Native-resolution and quantization freeze:** global view plus
-   overlap/halo tiles, exact dimensions and uint8 sRGB save/reload behavior,
-   matched whole-versus-tiled canaries, strict PSNR/LPIPS/seam/color/detail
-   gates, runtime, and peak-memory limits.
-11. **Independent confirmation:** frozen Huawei/advisor hidden data or a
-   provenance-independent sentinel if
-   available. No response-driven correction supports the same unbiased claim.
-   If it is used for correction, it is permanently reclassified as development
-   data and a new hidden set is required.
-12. **One protected evaluation:** hash everything and run all 50
-    FoundIR-Lowlight pairs once.
+1. **Protocol and development freeze:** pin the finite two-path LPIPS contract,
+   independent PSNR reference, exact uint8 save/reload behavior, and canaries.
+   Freeze LOL-v2, SICE, and one bounded sequence-grouped third family with
+   overlap/alignment/provenance audits. Audit the FoundIR teacher cascade,
+   freeze the experiment ledger, and date the `21.90 dB` literature target.
+2. **Cache the cheap proposal/ceiling lattice:** evaluate raw input, current
+   historical baseline, FoundIR generalist, documented cascade, fixed
+   photometric controls, the four nested photometric oracles, and oracle blends.
+   Select one provisional conservative base; the compact control in Gate 3 may
+   replace it. Train a photometric head or fusion only if its cheap admission
+   ceiling passes; otherwise neither is built.
+3. **Compact control and credible VLM gate:** train the compact deterministic
+   pixel-residual control. Run the cheap same-scene Qwen exposure diagnostic
+   and the four necessary causal variants on bounded paired-real pilots.
+   Correct the basic Qwen/interface at most twice. Freeze Qwen only if
+   measured-plus-Qwen adds paired-real value over measured-only and
+   measured-plus-shuffled-Qwen; otherwise stop the advisor-directed
+   route for review before any FLUX scaling.
+4. **One bounded FLUX decision:** with the frozen VLM and identical pilot
+   data/compute, compare pure-noise reference flow, deterministic LQ-to-GT
+   latent flow, and degraded-anchored low-noise residual flow. Allow at most one
+   endpoint/interface correction. Select one endpoint only if FLUX genuinely
+   beats the better of the compact control and best base; otherwise stop instead
+   of wrapping a weaker model around it.
+5. **Scale exactly one winner:** use Plan A only if authorization already
+   exists; otherwise execute Plan B immediately. Freeze sample presentations
+   after one scaling probe, cache reusable latents/teacher outputs, and run one
+   full-scale architecture. Add zero optional modules by default and at most
+   one only under attack 28's admission rule.
+6. **Replicate and freeze deployment:** train two additional predeclared seeds
+   for the one selected architecture, never selecting the best seed. Freeze the
+   deployable seed or predeclared fixed ensemble, native-resolution global plus
+   halo-tile path, exact dimensions/uint8 RGB output, seam/color/detail/runtime/
+   memory gates, complete dependency hashes, and precise claim language. Run
+   one independent hidden/sentinel confirmation if it is available; it is not
+   a blocker when no such set exists and its absence is disclosed.
+7. **One protected evaluation:** run the frozen complete system on all 50
+   FoundIR-Lowlight pairs once. Preserve and report the result whether it wins
+   or fails; never correct from individual protected images.
 
-Only steps 1--3 may be prepared in parallel. Later training stages remain
-serial because each one depends on the previous ceiling and changing multiple
-branches would destroy attribution.
+Gates 1 and the non-inference parts of Gate 2 may be prepared together. All
+training gates are serial because each kills or selects the next branch.
 
 ## Compute and experiment budget
 
 - Teacher outputs and VAE latents are immutable, hash-addressed caches so they
   are never recomputed for each branch.
-- Every restoration-training path begins with a 16-pair identity/overfit gate, then a
-  bounded multi-dataset pilot, then at most one full-scale run.
-- A proposal gets at most two scientifically motivated corrections. Changing
-  only a seed does not count as a correction and is not used to hunt a pass.
-- Every launch is registered before execution in the experiment ledger. Inner
-  folds select settings; outer omitted families estimate transfer. The ledger
+- A new training implementation gets one 16-pair code/identity smoke. Branches
+  sharing the verified code path reuse that evidence instead of repeating a
+  ceremonial overfit. All candidate branches stop at bounded cross-family
+  pilots; only one architecture gets a full-scale run.
+- The mandatory Qwen/interface gate gets at most two genuine corrections and
+  the FLUX endpoint gate at most one. An optional module gets one pilot and no
+  rescue unless the user explicitly approves a newly demonstrated bottleneck.
+  Changing only a seed never counts as a correction and is not used to hunt a
+  pass.
+- Every launch is registered before execution in the experiment ledger. Cheap
+  diagnostics use inner/outer folds; expensive pilots use the frozen
+  source-disjoint cross-family strata and worst-family selection. The ledger
   records failed and killed proposals so the overall search multiplicity is
   visible.
-- Finalists use at least three fixed seeds. Compute budgets include all
-  finalist seeds and no best-seed checkpoint is deployed.
+- Only the selected architecture uses three fixed seeds: the primary full run
+  plus two replications. No best-seed checkpoint is deployed.
 - FLUX training must support two H100s and eight H200s with identical effective
   batch, sample count, optimizer-step semantics, and learning-rate policy.
 - Mixed precision, activation checkpointing, latent/proposal caching, fused
@@ -843,10 +916,8 @@ branches would destroy attribution.
   module whose gain is negligible relative to its latency is removed even if
   its mean metric moves slightly.
 - Exact full-run steps are not guessed before Plan A/Plan B data and throughput
-  exist. They are frozen in sample presentations after a winning-branch scaling
-  probe. Only the winner receives increasing-budget runs; stop scaling after
-  two consecutive doublings each improve worst-family PSNR by less than
-  `0.10 dB` without a compensating LPIPS gain.
+  exist. One short scaling probe freezes sample presentations and the full-run
+  budget; there is no open-ended sequence of budget doublings.
 
 ## Error budget and quantitative gates
 
@@ -855,12 +926,12 @@ of PSNR decibels:
 
 | Risk | Existing evidence | Gate before protected test |
 |---|---|---|
-| Metric mismatch | Official script/environment found; `pyiqa` remains unpinned | Independent PSNR agreement and conservative LPIPS compliance across every plausible reproduced evaluator, or exact Huawei evaluator acquisition |
+| Metric mismatch | Official script/environment found; `pyiqa` remains unpinned | Independent PSNR agreement and LPIPS compliance under both frozen paths, or the exact authoritative Huawei evaluator |
 | Representation | VAE `38.4488 dB`, LPIPS `0.005159` | Target round trip retains large headroom; bypass is deployed only if it beats bypass-off on every development family |
 | Global rendering | Full-matrix oracle gain `+15.6853 dB`, but parameters are non-identifiable | Nested exposure/tone-WB/illumination ceilings isolate an identifiable target; input-only learned head must transfer across omitted families and beat fixed-transform control |
 | Spatial restoration | Not yet measured on paired real suite | Winning bridge must beat the best conservative proposal under the constrained PSNR/LPIPS gate on every development family |
 | Teacher value | FoundIR checkpoints hash-audited; AutoDIR/InstructIR table evidence audited; training overlap not yet resolved | Provenance status disclosed; inference anchoring or distillation only if proposal/complementarity transfers on a provenance-independent outer family |
-| VLM value | Previous narrow condition near-null | Frozen ordinal thresholds pass (`0.75` concordance, `0.80` non-inversion, `0.60` median stack Spearman, `0.80` positive-stack fraction, `1.0` span); oracle beats no-condition by at least `0.50 dB`; measured-plus-Qwen beats measured-only and shuffled-Qwen by at least `0.20 dB` per omitted dataset with no LPIPS regression and recovers at least half of the incremental oracle-over-measured gain |
+| VLM value | Previous narrow condition near-null | Frozen ordinal thresholds pass (`0.75` concordance, `0.80` non-inversion, `0.60` median stack Spearman, `0.80` positive-stack fraction, `1.0` span); oracle-plus-measured beats measured-only by at least `0.50 dB`; measured-plus-Qwen beats measured-only and measured-plus-shuffled-Qwen by at least `0.20 dB` per family with no LPIPS regression and recovers at least half of the incremental oracle gain |
 | Optimization variance | No finalist replication yet | At least three predeclared seeds; promotion survives combined scene/seed uncertainty and worst seed/family is inside non-regression margins |
 | Full resolution and output | VAE seam ratio `1.027740` only | Matched tiled inference loses no more than `0.10 dB` PSNR and `0.002` LPIPS versus feasible whole-image reference, passes frozen seam/color gates, and exact saved uint8 RGB outputs preserve the development gain |
 | Domain robustness | Only LOL-v2 and SICE paired suite today | Freeze at least three independent families; all retained components improve the mean and do not materially regress the worst omitted family |
@@ -884,24 +955,23 @@ from deterministic canary variance and are never changed after results appear.
 ## Proposal ladder and stop rules
 
 1. `P0`: degraded input and fixed training-set photometric controls.
-2. `P1`: released FoundIR generalist, documented
-   generalist-to-specialist cascade, and licensed stronger reference proposals.
-3. `P2`: bounded learned photometric/illumination head.
+2. `P1`: released FoundIR generalist and documented
+   generalist-to-specialist cascade. Other licensed references are conditional.
+3. `P2`: conditional bounded learned photometric/illumination head.
 4. `P3`: compact deterministic pixel-residual control.
 5. `P4`: causally validated and frozen Qwen condition on `P3`.
 6. `P5`: FLUX residual refinement under the three endpoint constructions,
    zero-initialized around the best conservative proposal.
-7. `P6`: optional confidence-gated frequency bypass and stronger spatial VLM injection.
-8. `P7`: optional frozen ensemble or low-dimensional input-only refinement.
+7. `P6`: at most one optional module admitted by attack 28; the default is no
+   `P6`.
 
 Stop rules:
 
 - If the identifiable nested photometric ceiling is weak, do not train a
   flexible photometric predictor merely because the full matrix oracle is
-  strong. If `P2` has a strong identifiable ceiling but does not transfer,
-  replace the shallow statistics
-  predictor with a spatial photometric encoder and acquire more camera-diverse
-  pairs; do not add DiT capacity to hide the failure.
+  strong. If `P2` has a strong identifiable ceiling but its cheap input-only
+  predictor does not transfer, kill `P2` for this execution; do not acquire a
+  new dataset or add DiT capacity merely to rescue it.
 - If neither released teacher route beats the photometric control nor
   complements it in an oracle blend, skip teacher-at-inference. Distillation
   still requires its own omitted-dataset gain and is skipped if that also fails.
@@ -913,7 +983,7 @@ Stop rules:
   advisor-directed deliverable and protected test; do not hide the failure
   behind FLUX capacity or a new severity set.
 - If `P5` cannot beat the best conservative `P1--P4` proposal, perform at most
-  two endpoint/interface corrections. A non-improving FLUX wrapper is not a
+  one endpoint/interface correction. A non-improving FLUX wrapper is not a
   credible final system.
 - If frequency bypass, camera consistency, stronger VLM injection, or an
   ensemble misses its isolated gate, remove that optional extension.
@@ -930,7 +1000,7 @@ suites and newly authorized non-benchmark data; any later FoundIR run is
 explicitly a benchmark iteration, and a fresh unbiased claim requires a new
 hidden advisor set.
 
-## First post-freeze experiment: proposal-lattice diagnostic
+## First model-inference milestone: proposal-lattice diagnostic
 
 No part of this experiment starts until its contracts are frozen. The first
 post-plan milestone measures the existing proposal lattice on
@@ -939,8 +1009,8 @@ reusable non-FoundIR pairs before training the full architecture. It compares:
 - the raw input;
 - the released FoundIR generalist;
 - the documented generalist-to-Lowlight-specialist cascade;
-- InstructIR and AutoDIR proposals if checkpoint identity and license/author
-  authorization permit their use;
+- InstructIR only if its licensed checkpoint is runnable inside the frozen
+  small setup budget; AutoDIR is not executed without license clearance;
 - the current synthetic-trained FLUX baseline as historical evidence;
 - a transform whose parameters are the training-scene mean;
 - bounded input-only predictors for luminance quantiles, monotone tone knots,
@@ -949,10 +1019,10 @@ reusable non-FoundIR pairs before training the full architecture. It compares:
 - exposure-only, monotone-tone/WB, spatial-illumination, and unconstrained
   full-matrix per-image GT-fitted oracles, only as ordered upper bounds.
 
-Evaluation uses nested leave-one-dataset-out transfer and grouped
+These cheap diagnostics use nested leave-one-dataset-out transfer and grouped
 within-training-family inner folds. Parameter/summary error is supporting
 evidence, but the decision is made on exact saved-uint8 restored-image PSNR,
-the conservative LPIPS implementation set, and supporting SSIM because oracle
+the worse of the two frozen LPIPS paths, and supporting SSIM because oracle
 matrix parameters are non-identifiable. The predictor sees only the degraded
 input at inference.
 
@@ -974,8 +1044,8 @@ stage; none may be retrofitted after seeing that stage's protected result:
 - verify `21.90 dB` as the current table target, audit later identical-protocol
   results, and freeze the competitive target separately from the contractual
   floor;
-- freeze all plausible official metric reproductions, exact uint8 save/reload
-  semantics, independent PSNR cross-checks, worst-variant LPIPS rule, and
+- freeze the two-path LPIPS reproduction, exact uint8 save/reload semantics,
+  independent PSNR cross-checks, worse-of-two LPIPS rule, and
   canaries; record whether the exact Huawei evaluator was obtained;
 - verify teacher licenses, documented cascade semantics, training provenance,
   overlap status, and inference cost;
@@ -985,7 +1055,7 @@ stage; none may be retrofitted after seeing that stage's protected result:
 - freeze the experiment ledger, total compared-proposal disclosure, finalist
   seed set, and combined scene/seed uncertainty method;
 - freeze proposal-lattice inputs, hashes, metrics, blend ceilings, and gates;
-- freeze Plan A and Plan B budget policies and the maximum two-correction rule;
+- freeze Plan A and Plan B budget policies and Gate 3/Gate 4 correction caps;
   freeze exact sample presentations for a branch before that branch trains and
   freeze the exact full-run budget only after the declared scaling probe;
 - freeze the FLUX endpoint comparison and the compact pixel-residual control;
@@ -993,10 +1063,12 @@ stage; none may be retrofitted after seeing that stage's protected result:
 - freeze the measured-statistics/CNN versus Qwen information split;
 - freeze native-resolution whole-versus-tiled, exact-dimension, quantization,
   seam/color, runtime, memory, and identity safeguards;
-- freeze simulator content-matched validation, identifiable-parameter wording,
-  and omitted-real downstream gate;
-- freeze input-only OOD fallback calibration and composite-system dependency/
-  license disclosure;
+- if a simulator is admitted under attack 28, freeze its content-matched
+  validation, identifiable-parameter wording, and omitted-real downstream gate
+  before implementation;
+- if learned fusion/OOD fallback is admitted, freeze its input-only calibration
+  before implementation; always freeze composite-system dependency/license
+  disclosure before deployment;
 - review the final dependency graph so no optional module silently becomes a
   prerequisite for diagnosing an earlier one.
 
