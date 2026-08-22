@@ -283,3 +283,33 @@ LOL-v2/SDSD/SICE, so a structured monotone, uncertainty-shrunk,
 correct-versus-shuffled residual decoder is justified as scientific interface
 correction 1 of 2. Full interpretation is in
 `reports/foundir_lowlight_gate3_causal_result_2026-08-22.md`.
+
+## Continuation update — structured Qwen correction 1 frozen
+
+The cheap attribution was converted into the first of at most two scientific
+Qwen/interface corrections. It freezes the compact restorer and completed
+measured adapter, reuses the previous measured/oracle outputs byte-for-byte,
+and trains only a 12-parameter structured monotone tone calibration. The input
+is limited to the five Qwen posteriors, expected severity, entropy, and margin;
+the unstable generic 32-D visual projection is excluded. Uncertainty and
+distance from training support can only shrink the correction. Correct and
+within-family group-shuffled conditions are trained together with a shuffled
+tether and correct-versus-shuffled/measured ranking losses.
+
+The frozen contract is
+`configs/foundir_lowlight_gate3_correction1_v1.json`, SHA-256
+`24023ae3fcdc9be8d784656967b5cc5c138dccd42019a948699d44237d6325df`.
+Fourteen focused tests and the 674-record CPU contract pass. No Qwen inference
+is needed because the complete cache is reused. No protected FoundIR pixel was
+accessed. Full rationale is in
+`reports/foundir_lowlight_gate3_correction1_contract_2026-08-22.md`.
+
+After the implementation commit is pushed, launch on the four-H100 host:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang && CUDA_VISIBLE_DEVICES=0,1,2,3 bash smoke/launch_foundir_lowlight_gate3_correction1.sh
+```
+
+Expected wall time is approximately 10--20 minutes. If correction 1 fails,
+run residual attribution before deciding whether correction 2 is scientifically
+justified. Gate 4 remains blocked until the frozen causal threshold passes.
