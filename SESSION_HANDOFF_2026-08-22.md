@@ -271,3 +271,15 @@ already-frozen `lpips` package. The metric-only recovery selects the same
 files, skips Qwen/training/inference, and runs only distributed metrics. This
 also consumes no scientific correction. Relaunch the same launcher after the
 metric-resume commit is pushed.
+
+The metric-only recovery completed at `2026-08-22T13:41:27Z`. The causal gate
+failed: oracle conditioning gained +2.1001/+1.9823/+0.7193 dB on
+LOL-v2/SDSD/SICE, proving interface capacity, but Qwen gained only
+`+0.0751/-0.5719/+0.1241` dB over measured-only and did not beat shuffled Qwen.
+Qwen LPIPS also regressed by 0.00780 on LOL-v2 and 0.00812 on SDSD. Gate 4
+remains blocked. Cheap attribution shows expected Qwen severity still
+correlates with oracle log-gain by 0.303/0.789/0.761 on outer
+LOL-v2/SDSD/SICE, so a structured monotone, uncertainty-shrunk,
+correct-versus-shuffled residual decoder is justified as scientific interface
+correction 1 of 2. Full interpretation is in
+`reports/foundir_lowlight_gate3_causal_result_2026-08-22.md`.
