@@ -24,6 +24,8 @@ fi
   "$ROOT/smoke/export_foundir_lowlight_gate3_causal_qwen.py" --config "$CONFIG" --contract-only
 "$ROOT/.conda/gpu-train-stable/bin/python" \
   "$ROOT/smoke/run_foundir_lowlight_gate3_causal_adapter.py" --config "$CONFIG" --contract-only
+"$ROOT/.venv/foundir-metrics/bin/python" -c \
+  'import importlib.metadata as m, lpips, pyiqa; assert m.version("lpips") == "0.1.4"; assert m.version("pyiqa") == "0.1.16"'
 bash -n "$RUNNER" "$0"
 
 required=(

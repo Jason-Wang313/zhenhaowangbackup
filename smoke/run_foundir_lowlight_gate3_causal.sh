@@ -3,7 +3,8 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 QWEN_PY="$ROOT/.venv/flux2-smoke/bin/python"
-METRIC_PY="$ROOT/.conda/gpu-train-stable/bin/python"
+ADAPTER_PY="$ROOT/.conda/gpu-train-stable/bin/python"
+METRIC_PY="$ROOT/.venv/foundir-metrics/bin/python"
 CONFIG="$ROOT/configs/foundir_lowlight_gate3_causal_v1.json"
 CONFIG_SHA256="d70ef493834c0da6e4c2f519d96e5cfd300f23c0eaed20994979f29aa1b7a111"
 LOG="$ROOT/logs/foundir_lowlight_gate3_causal_v1.log"
@@ -15,10 +16,11 @@ if [[ "${CUDA_VISIBLE_DEVICES:-}" != "0,1,2,3" ]]; then
   echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1,2,3" >&2
   exit 1
 fi
-if [[ ! -x "$QWEN_PY" || ! -x "$METRIC_PY" ]]; then
+if [[ ! -x "$QWEN_PY" || ! -x "$ADAPTER_PY" || ! -x "$METRIC_PY" ]]; then
   echo "ERROR: frozen workspace Python environments are unavailable" >&2
   exit 1
 fi
+"$METRIC_PY" -c 'import importlib.metadata as m, lpips, pyiqa; assert m.version("lpips") == "0.1.4"; assert m.version("pyiqa") == "0.1.16"'
 if [[ "$(sha256sum "$CONFIG" | awk '{print $1}')" != "$CONFIG_SHA256" ]]; then
   echo "ERROR: frozen Gate 3 causal config changed" >&2
   exit 1
@@ -82,13 +84,43 @@ monitor_pid="$!"
 begin="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "FOUNDIR_GATE3_CAUSAL_BEGIN utc=$begin git_revision=$(git -C "$ROOT" rev-parse HEAD)" | tee -a "$EVENTS"
 
-"$QWEN_PY" -m torch.distributed.run --standalone --nproc_per_node=4 \
-  "$ROOT/smoke/export_foundir_lowlight_gate3_causal_qwen.py" --config "$CONFIG"
+qwen_complete="$($ADAPTER_PY - "$ROOT/checkpoints/foundir_lowlight_gate3_causal_v1/qwen_features.json" "$CONFIG_SHA256" <<'PY'
+import json, pathlib, sys
+path = pathlib.Path(sys.argv[1])
+if not path.is_file():
+    print("false")
+else:
+    payload = json.loads(path.read_text())
+    print("true" if payload.get("status") == "frozen_qwen_causal_features_complete" and payload.get("config_sha256") == sys.argv[2] and len(payload.get("records", [])) == 674 else "false")
+PY
+)"
+if [[ "$qwen_complete" == "true" ]]; then
+  echo "FOUNDIR_GATE3_CAUSAL_QWEN_REUSED records=674"
+else
+  "$QWEN_PY" -m torch.distributed.run --standalone --nproc_per_node=4 \
+    "$ROOT/smoke/export_foundir_lowlight_gate3_causal_qwen.py" --config "$CONFIG"
+fi
 echo "FOUNDIR_GATE3_CAUSAL_QWEN_END utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)" | tee -a "$EVENTS"
 
-"$METRIC_PY" "$ROOT/smoke/run_foundir_lowlight_gate3_causal_adapter.py" --config "$CONFIG" --prepare-features
-"$METRIC_PY" -m torch.distributed.run --standalone --nproc_per_node=4 \
-  "$ROOT/smoke/run_foundir_lowlight_gate3_causal_adapter.py" --config "$CONFIG"
+adapter_complete="$($ADAPTER_PY - "$ROOT/checkpoints/foundir_lowlight_gate3_causal_v1/adapter_step_000400.pt" "$ROOT/manifests/foundir_lowlight_gate3_causal_predictions_v1.csv" "$CONFIG_SHA256" <<'PY'
+import csv, pathlib, sys, torch
+checkpoint, manifest = pathlib.Path(sys.argv[1]), pathlib.Path(sys.argv[2])
+complete = False
+if checkpoint.is_file() and manifest.is_file():
+    state = torch.load(checkpoint, map_location="cpu", weights_only=False)
+    with manifest.open(newline="") as handle:
+        rows = list(csv.DictReader(handle))
+    complete = state.get("config_sha256") == sys.argv[3] and len(rows) == 980 and len({(row["variant"], row["record_id"]) for row in rows}) == 980 and all((pathlib.Path.cwd() / row["output_path"]).is_file() for row in rows)
+print("true" if complete else "false")
+PY
+)"
+if [[ "$adapter_complete" == "true" ]]; then
+  echo "FOUNDIR_GATE3_CAUSAL_ADAPTER_REUSED outputs=980"
+else
+  "$ADAPTER_PY" "$ROOT/smoke/run_foundir_lowlight_gate3_causal_adapter.py" --config "$CONFIG" --prepare-features
+  "$ADAPTER_PY" -m torch.distributed.run --standalone --nproc_per_node=4 \
+    "$ROOT/smoke/run_foundir_lowlight_gate3_causal_adapter.py" --config "$CONFIG"
+fi
 echo "FOUNDIR_GATE3_CAUSAL_ADAPTER_END utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)" | tee -a "$EVENTS"
 
 "$METRIC_PY" -m torch.distributed.run --standalone --nproc_per_node=4 \

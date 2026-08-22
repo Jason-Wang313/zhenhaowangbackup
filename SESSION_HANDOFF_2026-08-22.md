@@ -260,3 +260,14 @@ tests now pass. The corrected contract SHA-256 is
 the corrected frozen image-feature SHA-256 is
 `d0eb331fb57536f3bdd38b4ec5990faa41d807d28c6469490d37f49909f9684e`.
 Relaunch with the same launcher after the recovery commit is pushed.
+
+The corrected causal run then completed all scientific work: Qwen features
+for 674 records, the step-400 adapter checkpoint, and 980 native-resolution
+outer outputs. Metrics failed before evaluating the first record because the
+causal runner selected the training environment, which does not contain the
+already-frozen `lpips` package. The metric-only recovery selects the same
+`.venv/foundir-metrics` environment used by Gates 2--3, preflights exact
+`lpips==0.1.4` and `pyiqa==0.1.16`, validates all cached identities and 980
+files, skips Qwen/training/inference, and runs only distributed metrics. This
+also consumes no scientific correction. Relaunch the same launcher after the
+metric-resume commit is pushed.
