@@ -4,14 +4,18 @@ Date: 2026-08-22 UTC
 
 ## Status and outcome
 
-This document is the frozen plan after 28 autonomous adversarial-review rounds.
+This document is the frozen plan after 29 autonomous adversarial-review rounds.
 No experiment described here may start until the applicable stage contract and
 the first-stage items in the pre-experiment checklist are complete. Later-stage
 contracts are frozen before their own execution as specified in attack 27;
 they are not guessed before their prerequisites exist. Freezing the plan does
-not claim that its external dependencies or scientific gates have passed.
+not claim that its external dependencies or scientific gates have passed. This
+is planning closure: further progress comes from executing the seven gates, not
+another speculative strategy round. New empirical evidence follows the frozen
+branches and stop rules; it does not authorize new disposable tests or an
+unbounded module search.
 
-The 28 attacks are a risk catalog, not 28 execution tasks. The executable plan
+The 29 attacks are a risk catalog, not 29 execution tasks. The executable plan
 is the seven-gate critical path below. The strongest defensible route is not a
 monolithic stack of every promising idea. It is a non-regressing proposal
 ladder whose smallest advisor-compliant deployed system is:
@@ -763,8 +767,8 @@ must answer one of four necessary questions:
 2. What is the cheapest proposal that already works on real paired data?
 3. Does Qwen add causal information, and does FLUX add genuine restoration
    value beyond that proposal?
-4. Does the single frozen system survive seed, full-resolution, and protected
-   evaluation?
+4. Does the frozen primary system survive seed, full-resolution, and protected
+   evaluation relative to its minimal predeclared controls?
 
 If an operation cannot change a go/kill/design decision for one of those
 questions, it is removed. The resulting feasibility rules are:
@@ -789,9 +793,8 @@ questions, it is removed. The resulting feasibility rules are:
 - optional modules require a named measured failure, a cheap counterfactual or
   oracle showing at least the applicable architecture-promotion margin, and a
   fixed implementation/pilot budget. Otherwise they are killed before coding;
-- the default optional-module count is zero. At most one is added to the first
-  full-scale winner. A second requires a new independent bottleneck that
-  remains after the first and user review of its cost;
+- the default optional-module count is zero. Attack 29 defines a bounded
+  evidence-driven budget instead of an arbitrary one-module cap;
 - only the one selected architecture receives three-seed replication. Pilot
   branches use one predeclared seed and are never rescued by seed search;
 - CPU audits, cache hashing, and canaries are combined into the gate they
@@ -818,6 +821,50 @@ pixel control, one causally conditioned FLUX bridge, and the native-resolution
 wrapper. Teachers, photometric controls, and oracles are mostly cached
 diagnostics. The larger architecture appears only if measured evidence makes
 it necessary.
+
+## Autonomous attack 29: aggressive pruning can discard complementary gains
+
+The previous one-optional-module cap was operationally simple but not derived
+from the image-formation problem. Two independent bottlenecks can coexist—for
+example, global target rendering and high-frequency recovery—and two proven
+corrections may be better than either alone. Conversely, restoring every
+removed idea would recreate the unbounded loop. The final rule constrains
+experiments and interactions rather than pretending only one useful idea can
+exist:
+
+- after Gate 4, rank optional work only from measured residual bottlenecks and
+  cheap ceilings, not intuition;
+- freeze a total budget of at most three one-seed bounded optional pilots before
+  any optional result is observed. Each proposal gets one pilot and no
+  correction; unused budget expires;
+- retain at most two non-redundant optional changes in the architecture/data
+  recipe. Each must pass alone, and the pair must pass one joint ablation
+  against the mandatory winner. If their effects are redundant or antagonistic,
+  keep only the stronger gain-per-runtime proposal;
+- the optional pair cannot trigger another dataset acquisition, a larger model,
+  a new loss search, or extra protected-test access;
+- a fixed seed ensemble is evaluated only after the three mandatory finalist
+  seeds already exist. It consumes no extra training branch, must pass the
+  frozen runtime and every-family gate, and never selects per image;
+- the exact pilot GPU-hour ceiling is frozen from Gate 4 throughput before
+  optional launches. It cannot be enlarged because an attractive idea fails.
+
+Priority follows current evidence, not novelty:
+
+1. Input-predictable bounded photometric correction and teacher/proposal
+   complementarity, because the real photometric oracle has large headroom and
+   the FoundIR teachers are already available.
+2. Camera-fitted simulation only if Plan B exposes a real coverage gap.
+3. Frequency bypass only if the trained restorer, not merely the VAE, shows
+   recoverable high-frequency loss.
+4. Spatial Qwen or camera consistency only after the basic causal VLM path
+   passes and localization/forward inconsistency is the remaining bottleneck.
+5. QAT only for measured uint8 loss and an ensemble only for stable free gain
+   from the already-required seed replicas.
+
+Thus the removed ideas remain available where they can be valuable, but none
+becomes work merely because it sounds sophisticated. This maximizes option
+value under a finite experiment budget.
 
 ## Plan A and Plan B data details
 
@@ -853,8 +900,10 @@ to produce paperwork.
    historical baseline, FoundIR generalist, documented cascade, fixed
    photometric controls, the four nested photometric oracles, and oracle blends.
    Select one provisional conservative base; the compact control in Gate 3 may
-   replace it. Train a photometric head or fusion only if its cheap admission
-   ceiling passes; otherwise neither is built.
+   replace it. Run only the cheap input-predictability diagnostic for a possible
+   photometric head and record the fusion ceiling. Do not build a deployable
+   photometric head or learned fusion before Gate 5's optional budget and the
+   compact/FLUX proposals exist.
 3. **Compact control and credible VLM gate:** train the compact deterministic
    pixel-residual control. Run the cheap same-scene Qwen exposure diagnostic
    and the four necessary causal variants on bounded paired-real pilots.
@@ -868,21 +917,28 @@ to produce paperwork.
    endpoint/interface correction. Select one endpoint only if FLUX genuinely
    beats the better of the compact control and best base; otherwise stop instead
    of wrapping a weaker model around it.
-5. **Scale exactly one winner:** use Plan A only if authorization already
-   exists; otherwise execute Plan B immediately. Freeze sample presentations
-   after one scaling probe, cache reusable latents/teacher outputs, and run one
-   full-scale architecture. Add zero optional modules by default and at most
-   one only under attack 28's admission rule.
+5. **Bound optional work, then scale exactly one winner:** use Plan A only if
+   authorization already exists; otherwise execute Plan B immediately. From
+   Gate 4 residuals, freeze and run at most three optional pilots under attacks
+   28--29; retain no more than two individually and jointly passing changes.
+   Freeze sample presentations after one scaling probe, cache reusable latents/
+   teacher outputs, and run one final full-scale architecture.
 6. **Replicate and freeze deployment:** train two additional predeclared seeds
    for the one selected architecture, never selecting the best seed. Freeze the
    deployable seed or predeclared fixed ensemble, native-resolution global plus
    halo-tile path, exact dimensions/uint8 RGB output, seam/color/detail/runtime/
    memory gates, complete dependency hashes, and precise claim language. Run
-   one independent hidden/sentinel confirmation if it is available; it is not
-   a blocker when no such set exists and its absence is disclosed.
-7. **One protected evaluation:** run the frozen complete system on all 50
-   FoundIR-Lowlight pairs once. Preserve and report the result whether it wins
-   or fails; never correct from individual protected images.
+   an ensemble of the already-required seeds only if its predeclared average
+   passes every development family and runtime gate. Run one independent
+   hidden/sentinel confirmation if available; it is not a blocker when no such
+   set exists and its absence is disclosed.
+7. **One protected evaluation event:** run the predeclared primary system and
+   minimal frozen controls—the selected conservative base, compact pixel
+   control, final FLUX with measured-only condition, and primary final FLUX with
+   measured-plus-Qwen—on all 50 FoundIR-Lowlight pairs in one locked event.
+   The primary is selected before this event; never choose among systems or
+   correct from individual protected images afterward. Preserve and report all
+   results whether they win or fail.
 
 Gates 1 and the non-inference parts of Gate 2 may be prepared together. All
 training gates are serial because each kills or selects the next branch.
@@ -896,8 +952,9 @@ training gates are serial because each kills or selects the next branch.
   ceremonial overfit. All candidate branches stop at bounded cross-family
   pilots; only one architecture gets a full-scale run.
 - The mandatory Qwen/interface gate gets at most two genuine corrections and
-  the FLUX endpoint gate at most one. An optional module gets one pilot and no
-  rescue unless the user explicitly approves a newly demonstrated bottleneck.
+  the FLUX endpoint gate at most one. Optional work is capped at three total
+  one-seed pilots, one attempt each, with at most two jointly validated changes
+  retained.
   Changing only a seed never counts as a correction and is not used to hunt a
   pass.
 - Every launch is registered before execution in the experiment ledger. Cheap
@@ -962,8 +1019,8 @@ from deterministic canary variance and are never changed after results appear.
 5. `P4`: causally validated and frozen Qwen condition on `P3`.
 6. `P5`: FLUX residual refinement under the three endpoint constructions,
    zero-initialized around the best conservative proposal.
-7. `P6`: at most one optional module admitted by attack 28; the default is no
-   `P6`.
+7. `P6`: zero by default, or at most two non-redundant changes admitted and
+   jointly validated under attacks 28--29.
 
 Stop rules:
 
@@ -990,9 +1047,10 @@ Stop rules:
 - If official training access remains unavailable, execute Plan B; do not wait
   indefinitely and do not compensate by tuning on FoundIR test.
 - If native-resolution behavior fails, fix it before any benchmark inference.
-- Once code, checkpoint, evaluator, and inference are frozen, run all 50
-  FoundIR-Lowlight pairs once. Any later use is disclosed as benchmark
-  iteration and cannot support a fresh unbiased claim.
+- Once code, checkpoints, evaluator, primary, controls, and inference are
+  frozen, run every predeclared system on all 50 FoundIR-Lowlight pairs in one
+  locked event. Any later use is disclosed as benchmark iteration and cannot
+  support a fresh unbiased claim.
 
 If the protected run misses the target, preserve and report it. Do not tune on
 its individual images. Continued work returns to the reusable development
@@ -1058,6 +1116,9 @@ stage; none may be retrofitted after seeing that stage's protected result:
 - freeze Plan A and Plan B budget policies and Gate 3/Gate 4 correction caps;
   freeze exact sample presentations for a branch before that branch trains and
   freeze the exact full-run budget only after the declared scaling probe;
+- after Gate 4 and before any optional pilot, freeze the three-pilot/GPU-hour
+  budget, candidate ranking, individual gates, two-change retention cap, and
+  joint-ablation rule;
 - freeze the FLUX endpoint comparison and the compact pixel-residual control;
 - freeze the VLM causal matrix and its rule for removal/redesign;
 - freeze the measured-statistics/CNN versus Qwen information split;
