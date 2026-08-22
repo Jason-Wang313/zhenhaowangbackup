@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "contract_id": "foundir_lowlight_gate2_proposal_lattice_v1",
+  "frozen_at_utc": "2026-08-22",
+  "development_contract": "configs/foundir_lowlight_development_contract_v1.json",
+  "metric_contract": "configs/foundir_lowlight_metric_contract_v2b.json",
+  "teacher_contract": "configs/foundir_lowlight_teacher_contract_v1.json",
+  "protected_foundir_access": false,
+  "candidates": [
+    {"id": "P0_RAW", "kind": "deployable", "target_access": false},
+    {"id": "P0_FIXED_TRAIN_MEAN_EXPOSURE", "kind": "deployable_fixed_control", "target_access": false},
+    {"id": "P0_HISTORICAL_FLUX", "kind": "historical_evidence", "target_access": false, "checkpoint": "checkpoints/lowlight_baseline_full/step_004000.safetensors", "checkpoint_sha256": "fa51deac872e3df57f147631361841039c386ef43f58a17a56fb68b9924e8f22"},
+    {"id": "P1_FOUNDIR_GENERALIST", "kind": "conditional_teacher_proposal", "target_access": false},
+    {"id": "P1_FOUNDIR_CASCADE", "kind": "conditional_teacher_proposal", "target_access": false},
+    {"id": "D_INPUT_ONLY_BOUNDED_PHOTOMETRIC", "kind": "diagnostic_not_deployable_head", "target_access": false},
+    {"id": "O1_EXPOSURE", "kind": "per_image_oracle_ceiling", "target_access": true},
+    {"id": "O2_MONOTONE_TONE_WB", "kind": "per_image_oracle_ceiling", "target_access": true},
+    {"id": "O3_TONE_WB_SMOOTH_ILLUMINATION", "kind": "per_image_oracle_ceiling", "target_access": true},
+    {"id": "O4_GAMMA_FULL_MATRIX", "kind": "per_image_oracle_ceiling", "target_access": true},
+    {"id": "B_CONVEX_ORACLE", "kind": "proposal_fusion_ceiling", "target_access": true},
+    {"id": "B_FREQUENCY_ORACLE", "kind": "proposal_fusion_ceiling", "target_access": true}
+  ],
+  "excluded_references": {
+    "AutoDIR": "no_repository_license_clearance; table_reference_only",
+    "InstructIR": "no_local_audited_checkpoint; optional setup budget is not spent before mandatory released proposals"
+  },
+  "selection": {
+    "settings": "scene_or_sequence_grouped_inner_training_folds_only",
+    "outer_evaluation": "one_frozen_evaluation_on_each_of_lolv2_sice_sdsd",
+    "saved_output": "exact_uint8_rgb_png_reload_before_metrics",
+    "psnr": "minimum_of_two_frozen_paths",
+    "lpips": "maximum_of_two_frozen_paths",
+    "supporting_metric": "ssim",
+    "aggregate": "scene_or_sequence_balanced_per_family_equal_family_mean_and_worst_family"
+  },
+  "promotion": {
+    "ordinary": {"minimum_psnr_gain_db_each_family": 0.20, "maximum_lpips_regression_each_family": 0.005},
+    "perceptual_only": {"minimum_lpips_gain_each_family": 0.010, "maximum_psnr_regression_db_each_family": 0.05},
+    "larger_architecture": {"minimum_psnr_gain_db_each_family": 0.50},
+    "bootstrap": "positive_95pct_scene_or_sequence_cluster_interval_and_no_family_outside_equivalence_margins"
+  },
+  "photometric_head_admission": "only_if_an_identifiable_nested_oracle_is_strong_and_the_bounded_input_only_predictor_transfers_to_every_outer_family",
+  "teacher_admission": "only_if_generalist_or_cascade_beats_the_fixed_control_or_has_material_oracle_blend_complementarity_on_every_outer_family; deployment_still_requires_teacher_contract_conditions",
+  "outputs": {
+    "directory": "checkpoints/foundir_lowlight_gate2_proposal_lattice_v1",
+    "result": "reports/foundir_lowlight_gate2_proposal_lattice_result_v1.json"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "ledger_id": "foundir_lowlight_gates_1_to_7_v1",
+  "frozen_at_utc": "2026-08-22",
+  "append_only_policy": "never_remove_or_relabel_failed_killed_or_completed_entries; corrections_create_new_entries",
+  "protected_test_policy": "gate_7_only_after_explicit_user_authorization",
+  "seed_policy": {
+    "exploratory_seed": 2026082201,
+    "finalist_seeds": [2026082201, 2026082202, 2026082203],
+    "deploy_predeclared_seed": 2026082201,
+    "best_seed_selection_forbidden": true
+  },
+  "correction_caps": {"qwen_interface": 2, "flux_endpoint_interface": 1, "optional_pilot": 0},
+  "optional_budget": {"freeze_after_gate_4_throughput": true, "maximum_one_seed_pilots": 3, "maximum_retained_changes": 2, "joint_ablation_required": true},
+  "entries": [
+    {"id": "G1_PROTOCOL_FREEZE", "gate": 1, "kind": "contract", "status": "completed_pass", "changed_factor": "none", "protected_test_access": false},
+    {"id": "G2_PROPOSAL_LATTICE_V1", "gate": 2, "kind": "diagnostic", "status": "declared_not_launched", "changed_factor": "proposal", "seed": 2026082201, "contract": "configs/foundir_lowlight_proposal_lattice_v1.json", "correction_index": 0, "protected_test_access": false},
+    {"id": "G3_COMPACT_CONTROL_V1", "gate": 3, "kind": "bounded_training", "status": "blocked_by_gate_2", "changed_factor": "compact_residual_control", "seed": 2026082201, "correction_index": 0, "protected_test_access": false},
+    {"id": "G3_QWEN_CAUSAL_V1", "gate": 3, "kind": "bounded_training", "status": "blocked_by_gate_2", "changed_factor": "qwen_condition", "seed": 2026082201, "correction_index": 0, "protected_test_access": false},
+    {"id": "G4_FLUX_ENDPOINTS_V1", "gate": 4, "kind": "bounded_training", "status": "blocked_by_gate_3", "changed_factor": "flux_endpoint", "seed": 2026082201, "correction_index": 0, "protected_test_access": false},
+    {"id": "G5_FINAL_SCALE_PRIMARY", "gate": 5, "kind": "full_training", "status": "blocked_by_gate_4", "changed_factor": "selected_architecture", "seed": 2026082201, "protected_test_access": false},
+    {"id": "G6_FINAL_REPLICATION_2", "gate": 6, "kind": "replication", "status": "blocked_by_gate_5", "changed_factor": "seed_only", "seed": 2026082202, "protected_test_access": false},
+    {"id": "G6_FINAL_REPLICATION_3", "gate": 6, "kind": "replication", "status": "blocked_by_gate_5", "changed_factor": "seed_only", "seed": 2026082203, "protected_test_access": false},
+    {"id": "G7_PROTECTED_EVENT", "gate": 7, "kind": "protected_evaluation", "status": "blocked_pending_user_authorization", "changed_factor": "none", "protected_test_access": false}
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "contract_id": "foundir_lowlight_development_v1",
+  "frozen_at_utc": "2026-08-22",
+  "scope": "non_foundir_paired_real_development_only",
+  "protected_test": {
+    "dataset": "FoundIR",
+    "category": "14Lowlight",
+    "ids": "1101-1150",
+    "policy": "manifest_ids_and_hashes_may_be_used_only_for_exclusion; no pixel access or inference in gates_1_through_6",
+    "accessed_during_freeze": false
+  },
+  "parents": {
+    "paired_real_csv": {
+      "path": "manifests/lowlight_real_paired_development_v1.csv",
+      "sha256": "fee42cbf440a62c494bccc49e6f25b871ce8ea0044bcd825472e538dc3f5300d"
+    },
+    "sdsd_csv": {
+      "path": "manifests/sdsd_lowlight_development_v1.csv",
+      "sha256": "ae1814e8dbf2c2265b00d61c0d835030594a07f2043530772cf157565b003700"
+    },
+    "sdsd_metadata": {
+      "path": "manifests/sdsd_lowlight_development_v1.json",
+      "sha256": "58e9d10e73629ce2983bacfd41466243b5268dd94a815eeafdac2ceb988e6cce"
+    },
+    "metric_contract": {
+      "path": "configs/foundir_lowlight_metric_contract_v2b.json",
+      "sha256": "7b9d39cdc667c31c13cec9b55c0a6a9f0109dac4c1b56b71c3ace156e0656619"
+    },
+    "metric_result": {
+      "path": "reports/foundir_lowlight_metric_contract_result_v2b.json",
+      "sha256": "4ae256502f6e28e055c575a0b4462738148c78b1e72c91cd7deefb9bb9fdb28d"
+    }
+  },
+  "families": {
+    "lolv2": {
+      "parent_dataset": "lolv2_real_train_validation",
+      "records": 102,
+      "groups": 41,
+      "roles": {"outer_development": 102},
+      "group_key": "scene_id",
+      "rationale": "retain the entire existing reusable LOL-v2 suite as the strongest untouched cross-family outer set"
+    },
+    "sice": {
+      "parent_dataset": "sice_reusable_validation",
+      "records": 72,
+      "groups": 41,
+      "roles": {"training": 54, "outer_development": 18},
+      "group_key": "scene_id",
+      "outer_scene_selection": "the exact ten scene IDs listed below; selected before proposal results using SHA256(foundir-g1-sice-outer-v1:<scene_id>) lowest-first",
+      "outer_scene_ids": [
+        "sice_reusable_validation:sice_sample_11",
+        "sice_reusable_validation:sice_sample_17",
+        "sice_reusable_validation:sice_sample_28",
+        "sice_reusable_validation:sice_sample_37",
+        "sice_reusable_validation:sice_sample_57",
+        "sice_reusable_validation:sice_sample_58",
+        "sice_reusable_validation:sice_sample_6",
+        "sice_reusable_validation:sice_sample_66",
+        "sice_reusable_validation:sice_sample_78",
+        "sice_reusable_validation:sice_sample_79"
+      ],
+      "rationale": "source-scene-disjoint train/outer reuse without acquiring or consuming another disposable test set"
+    },
+    "sdsd": {
+      "parent_dataset": "sdsd",
+      "records": 500,
+      "groups": 150,
+      "roles": {"training": 375, "outer_development": 125},
+      "group_key": "sequence_id",
+      "subsets": ["indoor", "outdoor"],
+      "rationale": "official pre-frozen sequence-grouped roles from the selective SDSD contract"
+    }
+  },
+  "expected_combined": {
+    "records": 674,
+    "groups": 232,
+    "training_records": 429,
+    "outer_development_records": 245,
+    "outer_development_by_family": {"lolv2": 102, "sice": 18, "sdsd": 125}
+  },
+  "fold_policy": {
+    "cheap_diagnostics": "fit or select settings only on training roles with scene_or_sequence_grouped inner folds; evaluate each frozen setting once on all three outer families",
+    "expensive_pilots": "train on the 429 frozen training records with family/group-balanced sampling; promote only from the three frozen outer strata",
+    "outer_reuse": "outer strata are reusable development, not fresh tests; record every proposal and never relabel them as unbiased benchmarks",
+    "family_aggregation": "scene_or_sequence_balanced within family, then equal-family mean plus worst-family reporting",
+    "bootstrap": {"confidence": 0.95, "resamples": 5000, "seed": 2026082201, "unit": "scene_or_sequence_within_family"}
+  },
+  "leakage_rules": {
+    "no_group_crosses_training_and_outer": true,
+    "no_target_or_input_sha256_crosses_training_and_outer": true,
+    "no_record_selection_after_candidate_metrics": true,
+    "proxy_l1_l5_labels_are_not_absolute_ground_truth": true,
+    "sdsd_has_no_absolute_l1_l5_labels": true,
+    "teacher_overlap_status_must_be_carried_into_every_teacher_result": true,
+    "protected_foundir_pixels_forbidden": true
+  },
+  "alignment_policy": {
+    "audit_only": true,
+    "warp_pairs": false,
+    "exclude_pairs": false,
+    "strict_pixel_loss_may_use_frozen_alignment_confidence_masks": true,
+    "all_saved_output_metrics_use_original_unwarped_targets": true
+  },
+  "redistribution": {
+    "sdsd": "internal_research_only_do_not_redistribute_or_package",
+    "other_families": "preserve_parent_terms_and_do_not_package_dataset_bytes"
+  },
+  "output_manifest": "manifests/foundir_lowlight_development_contract_v1.csv"
+}

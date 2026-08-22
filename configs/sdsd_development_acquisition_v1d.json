@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "supersedes": "configs/sdsd_development_acquisition_v1c.json",
+  "supersession_reason": "the official Google Drive objects became quota-blocked; a public Hugging Face LFS mirror is commit-pinned and byte-identical to three independently acquired official Google Drive ranges",
+  "dataset": "SDSD",
+  "purpose": "internal research development only; do not redistribute or package",
+  "official_repository": {
+    "path": "downloads/sdsd_official_repo",
+    "revision": "07330bb0ac124d2d56f6e92908d650dde3f7f7c2",
+    "readme": "downloads/sdsd_official_repo/README.md",
+    "license_status": "no dataset redistribution license exposed in repository; author download links permit experiments"
+  },
+  "transport_mirror": {
+    "provider": "huggingface_datasets",
+    "repository": "Guanyanan/SDSD",
+    "revision": "fb6d4310fa07eb0c135dba01be6ca086ecd31009",
+    "license_status": "no dataset card or license metadata exposed; transport mirror does not alter the internal-research-only policy",
+    "identity_evidence": {
+      "method": "exact range-byte equality against previously acquired official Google Drive bytes",
+      "comparisons": [
+        {
+          "file": "indoor_np.z02",
+          "start": 0,
+          "length": 65536,
+          "sha256": "1d4c66ae5d2f909010b7e66bdcc07ed05711e352789199fbc574c355633b785c"
+        },
+        {
+          "file": "indoor_np.z01",
+          "start": 41943040,
+          "length": 65536,
+          "sha256": "e83eafed6a694ecfe4e33f8cdc3b2f2e3c7e29bfcdfd6549c077689d518ab27e"
+        },
+        {
+          "file": "indoor_np.z01",
+          "start": 184549376,
+          "length": 65536,
+          "sha256": "95d0e08b3a35a0eecb69957bfa37824a2d80f8e206e7348bfed6ca8e4b356c93"
+        }
+      ]
+    }
+  },
+  "archive_directory": "data/sdsd_official_archives",
+  "extraction_directory": "data/sdsd_official_selective_v1",
+  "max_parallel_downloads": 32,
+  "files": [
+    {
+      "name": "indoor_np.z01",
+      "google_drive_id": "13ueV_fAPWAnY0AJ2gaKvIDBU2ggIISYJ",
+      "expected_size": 4698669056,
+      "huggingface_path": "indoor/indoor_np/indoor_np.z01",
+      "huggingface_lfs_sha256": "bbe28d5b43dbcb3fda737f28df952187ac2360e5b1cf889da49490fcd28e240f"
+    },
+    {
+      "name": "indoor_np.z02",
+      "google_drive_id": "1uOez3vXhdO8NZChM8-TIwRbiu6Srdy5o",
+      "expected_size": 4698669056,
+      "huggingface_path": "indoor/indoor_np/indoor_np.z02",
+      "huggingface_lfs_sha256": "bb0a69a19a3b158db4cfb742a2314a66845df26921471c4530dbb49eabcafc50"
+    },
+    {
+      "name": "indoor_np.zip",
+      "google_drive_id": "1hnZcLrSnSzpl063oRnwWoAe6x-XQCOJA",
+      "expected_size": 3390764288,
+      "huggingface_path": "indoor/indoor_np/indoor_np.zip",
+      "huggingface_lfs_sha256": "7532cddf247711e69d6ab1113369cd03f302e79e45fde65e3774679b882e98da"
+    },
+    {
+      "name": "outdoor_np.z01",
+      "google_drive_id": "1nuTSwzjor5AuoLN0c5PRjyTnsjuxQQJJ",
+      "expected_size": 4698669056,
+      "huggingface_path": "outdoor/outdoor_np/outdoor_np.z01",
+      "huggingface_lfs_sha256": "e63a242d2043671a63ed29fbdacf8f513ec659233e9c3656eaff5250136986ef"
+    },
+    {
+      "name": "outdoor_np.z02",
+      "google_drive_id": "1QnA7SC-YRDUeA9T7q2l1JNsrVgET1yvb",
+      "expected_size": 4698669056,
+      "huggingface_path": "outdoor/outdoor_np/outdoor_np.z02",
+      "huggingface_lfs_sha256": "4c498e65accdefa23e3e4c51a13828ebfd01904864785fd5abd8d7b20cd12fb6"
+    },
+    {
+      "name": "outdoor_np.z03",
+      "google_drive_id": "1QJ2Pg0Pzwd7ljtSNBCWP3gJobuDesPxL",
+      "expected_size": 4698669056,
+      "huggingface_path": "outdoor/outdoor_np/outdoor_np.z03",
+      "huggingface_lfs_sha256": "a3da4dd50f7cefa7f9a71a8da5d9f06a50e28e5c055347fa7d61f0bb73cb7b7f"
+    },
+    {
+      "name": "outdoor_np.z04",
+      "google_drive_id": "1YuvX4uW1Wwll29jR84VhjNVdMXsvXxB0",
+      "expected_size": 4698669056,
+      "huggingface_path": "outdoor/outdoor_np/outdoor_np.z04",
+      "huggingface_lfs_sha256": "fd60c6142389027efed1ff88df79f0405e35d86a4a40488baf7a97d4997135b8"
+    },
+    {
+      "name": "outdoor_np.z05",
+      "google_drive_id": "1myeefsHrSk0CtJnFxANTpHU2gpyWhVec",
+      "expected_size": 4698669056,
+      "huggingface_path": "outdoor/outdoor_np/outdoor_np.z05",
+      "huggingface_lfs_sha256": "af52a63230b8ef30b7f5d9998354389cc43c516ee0eaf32c4d6b0888312a3173"
+    },
+    {
+      "name": "outdoor_np.zip",
+      "google_drive_id": "1fL2glzC6m8ClJT5xFhGVmO87_CX0dCBl",
+      "expected_size": 3786577151,
+      "huggingface_path": "outdoor/outdoor_np/outdoor_np.zip",
+      "huggingface_lfs_sha256": "790f27f201ea0565939d1bcca6d5b8d7cdbc52bd0c2285fb469cc7ce609c88e7"
+    }
+  ],
+  "bounded_pair_policy": {
+    "grouping_unit": "video sequence",
+    "official_indoor_outer_sequences": ["pair13", "pair15", "pair21", "pair23", "pair31", "pair33", "pair50", "pair52", "pair58", "pair60", "pair68", "pair70"],
+    "official_outdoor_outer_sequences": ["pair1", "pair5", "pair14", "pair36", "pair46", "pair48", "pair49", "pair60", "pair62", "pair63", "pair66", "pair75", "pair76"],
+    "outer_frame_indices_zero_based": [0, 7, 14, 21, 29],
+    "training_frames_per_sequence": 3,
+    "training_frame_selection": "three deterministic evenly spaced indices over each sequence, including endpoints",
+    "expected_outer_pairs": 125,
+    "expected_training_sequences": 125,
+    "expected_training_pairs": 375,
+    "expected_total_pairs": 500,
+    "proxy_levels_are_labels": false
+  },
+  "protected_overlap_policy": "screen candidate hashes against the existing protected manifest index without opening protected FoundIR pixels",
+  "download_result": "reports/sdsd_development_download_result_v1d.json"
+}

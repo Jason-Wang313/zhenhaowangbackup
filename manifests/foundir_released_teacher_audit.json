@@ -21,7 +21,7 @@
       "model_parameters": 1512718,
       "model_tensors": 591,
       "path": "third_party/foundir/specialist_model/ckpt/lowlight.pth",
-      "sha256": "f834248e145d020d5a02f257b7ceb383b579add2522938b3e1e0bd460abe6"
+      "sha256": "f834248e145d020d5a02f257b7ceb383b579add2522932938b3e1e0bd460abe6"
     }
   },
   "training_metadata": {

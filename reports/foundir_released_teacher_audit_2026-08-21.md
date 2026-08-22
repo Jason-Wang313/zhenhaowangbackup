@@ -10,7 +10,11 @@ opened. This audit covers checkpoint and metadata identity only.
 | Teacher | Bytes | SHA-256 | Stored training state | Tensor audit |
 |---|---:|---|---|---|
 | Generalist | 580,829,530 | `2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9` | step 1,300,000 | online model: 290 tensors / 36,275,187 parameters; EMA wrapper present |
-| Lowlight specialist | 6,294,432 | `f834248e145d020d5a02f257b7ceb383b579add2522938b3e1e0bd460abe6` | iteration 60,000, epoch 413 | 591 tensors / 1,512,718 parameters |
+| Lowlight specialist | 6,294,432 | `f834248e145d020d5a02f257b7ceb383b579add2522932938b3e1e0bd460abe6` | iteration 60,000, epoch 413 | 591 tensors / 1,512,718 parameters |
+
+The originally transcribed specialist digest omitted three hexadecimal
+characters. The 64-character value above was recomputed from the immutable
+6,294,432-byte checkpoint during Gate 1.
 
 The checked FoundIR source revision is
 `6d19958499622d90ca71fe971d83b1e428c17cd0`.

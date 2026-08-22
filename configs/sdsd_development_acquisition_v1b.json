@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "supersedes": "configs/sdsd_development_acquisition_v1.json",
+  "supersession_reason": "the gdown console script is installed in the workspace-local stable environment rather than the flux2 alias environment",
+  "dataset": "SDSD",
+  "purpose": "internal research development only; do not redistribute or package",
+  "official_repository": {
+    "path": "downloads/sdsd_official_repo",
+    "revision": "07330bb0ac124d2d56f6e92908d650dde3f7f7c2",
+    "readme": "downloads/sdsd_official_repo/README.md",
+    "license_status": "no dataset redistribution license exposed in repository; author download links permit experiments"
+  },
+  "archive_directory": "data/sdsd_official_archives",
+  "extraction_directory": "data/sdsd_official_512x960",
+  "gdown_executable": ".conda/gpu-train-stable/bin/gdown",
+  "max_parallel_downloads": 3,
+  "files": [
+    {"name": "indoor_np.z01", "google_drive_id": "13ueV_fAPWAnY0AJ2gaKvIDBU2ggIISYJ", "expected_size": 4698669056},
+    {"name": "indoor_np.z02", "google_drive_id": "1uOez3vXhdO8NZChM8-TIwRbiu6Srdy5o", "expected_size": 4698669056},
+    {"name": "indoor_np.zip", "google_drive_id": "1hnZcLrSnSzpl063oRnwWoAe6x-XQCOJA", "expected_size": 3390764288},
+    {"name": "outdoor_np.z01", "google_drive_id": "1nuTSwzjor5AuoLN0c5PRjyTnsjuxQQJJ", "expected_size": 4698669056},
+    {"name": "outdoor_np.z02", "google_drive_id": "1QnA7SC-YRDUeA9T7q2l1JNsrVgET1yvb", "expected_size": 4698669056},
+    {"name": "outdoor_np.z03", "google_drive_id": "1QJ2Pg0Pzwd7ljtSNBCWP3gJobuDesPxL", "expected_size": 4698669056},
+    {"name": "outdoor_np.z04", "google_drive_id": "1YuvX4uW1Wwll29jR84VhjNVdMXsvXxB0", "expected_size": 4698669056},
+    {"name": "outdoor_np.z05", "google_drive_id": "1myeefsHrSk0CtJnFxANTpHU2gpyWhVec", "expected_size": 4698669056},
+    {"name": "outdoor_np.zip", "google_drive_id": "1fL2glzC6m8ClJT5xFhGVmO87_CX0dCBl", "expected_size": 3786577151}
+  ],
+  "bounded_pair_policy": {
+    "grouping_unit": "video sequence",
+    "official_indoor_outer_sequences": ["pair13", "pair15", "pair21", "pair23", "pair31", "pair33", "pair50", "pair52", "pair58", "pair60", "pair68", "pair70"],
+    "official_outdoor_outer_sequences": ["pair1", "pair5", "pair14", "pair36", "pair46", "pair48", "pair49", "pair60", "pair62", "pair63", "pair66", "pair75", "pair76"],
+    "outer_frame_indices_zero_based": [0, 7, 14, 21, 29],
+    "training_frames_per_sequence": 3,
+    "training_frame_selection": "three deterministic evenly spaced indices over each sequence, including endpoints",
+    "expected_outer_pairs": 125,
+    "expected_training_sequences": 125,
+    "expected_training_pairs": 375,
+    "expected_total_pairs": 500,
+    "proxy_levels_are_labels": false
+  },
+  "protected_overlap_policy": "screen candidate hashes against the existing protected manifest index without opening protected FoundIR pixels",
+  "download_result": "reports/sdsd_development_download_result_v1b.json"
+}

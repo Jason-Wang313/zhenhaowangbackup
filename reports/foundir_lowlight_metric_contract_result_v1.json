@@ -1,0 +1,81 @@
+{
+  "automatic_gate_pass": false,
+  "canaries": {
+    "channel_swap": {
+      "direct_lpips": 0.03254212066531181,
+      "literal_psnr_db": 9.567482696856981,
+      "lpips_absolute_difference": 0.0,
+      "pass": true,
+      "prediction_png_sha256": "ea50867f8316f4a163130a6ba8958b839b74896aa74d7ac86a42e6e3eb225981",
+      "psnr_absolute_difference_db": 7.022280748003595e-07,
+      "pyiqa_lpips": 0.03254212066531181,
+      "pyiqa_psnr_db": 9.567481994628906,
+      "reference_png_sha256": "f7c7dbc0f9d1ec63a3f8c1b1ab0b7677dc303bb105d7b1dcdd89808d73e68a0c",
+      "save_reload_exact": true,
+      "worse_lpips": 0.03254212066531181
+    },
+    "clipping": {
+      "direct_lpips": 0.002137908712029457,
+      "literal_psnr_db": 28.86522810876558,
+      "lpips_absolute_difference": 0.0,
+      "pass": true,
+      "prediction_png_sha256": "ba0f81f59cdce9586bc2bd49877f02ec288d85d61058339d18f22e6c6962bc18",
+      "psnr_absolute_difference_db": 3.3788086870600864e-05,
+      "pyiqa_lpips": 0.002137908712029457,
+      "pyiqa_psnr_db": 28.86519432067871,
+      "reference_png_sha256": "f7c7dbc0f9d1ec63a3f8c1b1ab0b7677dc303bb105d7b1dcdd89808d73e68a0c",
+      "save_reload_exact": true,
+      "worse_lpips": 0.002137908712029457
+    },
+    "identity": {
+      "direct_lpips": 0.0,
+      "literal_psnr_db": 100.0,
+      "lpips_absolute_difference": 0.0,
+      "pass": true,
+      "prediction_png_sha256": "f7c7dbc0f9d1ec63a3f8c1b1ab0b7677dc303bb105d7b1dcdd89808d73e68a0c",
+      "psnr_absolute_difference_db": 0.0,
+      "pyiqa_lpips": 0.0,
+      "pyiqa_psnr_db": null,
+      "reference_png_sha256": "f7c7dbc0f9d1ec63a3f8c1b1ab0b7677dc303bb105d7b1dcdd89808d73e68a0c",
+      "save_reload_exact": true,
+      "worse_lpips": 0.0
+    },
+    "local_patch": {
+      "direct_lpips": 8.012625039555132e-05,
+      "literal_psnr_db": 50.84864008792323,
+      "lpips_absolute_difference": 0.0,
+      "pass": false,
+      "prediction_png_sha256": "42215762196ceda8c1ed1e4036fab2eed249aba36c82ec31e3c2b18c3cdbd872",
+      "psnr_absolute_difference_db": 0.005279187044322953,
+      "pyiqa_lpips": 8.012625039555132e-05,
+      "pyiqa_psnr_db": 50.843360900878906,
+      "reference_png_sha256": "f7c7dbc0f9d1ec63a3f8c1b1ab0b7677dc303bb105d7b1dcdd89808d73e68a0c",
+      "save_reload_exact": true,
+      "worse_lpips": 8.012625039555132e-05
+    },
+    "one_code": {
+      "direct_lpips": 3.3781648589581437e-09,
+      "literal_psnr_db": 89.02561563555346,
+      "lpips_absolute_difference": 0.0,
+      "pass": false,
+      "prediction_png_sha256": "3e79915730a6dc9c4337fbfa15252d3239eb6e9dc68b7999152740ae10b028a2",
+      "psnr_absolute_difference_db": 9.53773111406909,
+      "pyiqa_lpips": 3.3781648589581437e-09,
+      "pyiqa_psnr_db": 79.48788452148438,
+      "reference_png_sha256": "f7c7dbc0f9d1ec63a3f8c1b1ab0b7677dc303bb105d7b1dcdd89808d73e68a0c",
+      "save_reload_exact": true,
+      "worse_lpips": 3.3781648589581437e-09
+    }
+  },
+  "config_sha256": "af6e299a461cef3b4add1637bbaefbcb838b766c1cea3ee4e5f2d77f83fe3fef",
+  "evaluator_sha256": "79d694c05fc7fddfa877e8d89468e4ea9367bdaa4daec8617497893379e5f87b",
+  "identities": {
+    "alexnet_sha256": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
+    "lpips_v0_1_alex_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+    "official_environment_sha256": "fd4ba0d46d8d2bc01848dcf836d245c43e09bbe80299f156c675a0132c018c63",
+    "official_evaluator_sha256": "bf5bbff7c73b3a8a9623180764ff6ded6cdf4e03960d12825a5b68eaacaf9b32"
+  },
+  "protected_foundir_pixels_used": false,
+  "schema_version": 1,
+  "status": "failed"
+}

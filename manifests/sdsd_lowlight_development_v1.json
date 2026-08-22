@@ -1,0 +1,30 @@
+{
+  "alignment_policy": "audit_only_no_warp_no_exclusion",
+  "annotation_kind": "paired_real_restoration_no_absolute_l1_l5_labels",
+  "automatic_gate_pass": true,
+  "builder_sha256": "51b4650c148f823a113be5c743d5dd20b63856b78523b0778a9b0a2a4007f43f",
+  "config_sha256": "7191a42c86a56cdd8ba93e29dac55a816a7e5392813e234147116dbed9f9a041",
+  "counts": {
+    "indoor:outer_development": 60,
+    "indoor:training": 174,
+    "outdoor:outer_development": 65,
+    "outdoor:training": 201
+  },
+  "dataset": "SDSD",
+  "foundir_test_access": false,
+  "manifest_csv": "manifests/sdsd_lowlight_development_v1.csv",
+  "manifest_csv_sha256": "ae1814e8dbf2c2265b00d61c0d835030594a07f2043530772cf157565b003700",
+  "official_repository_revision": "07330bb0ac124d2d56f6e92908d650dde3f7f7c2",
+  "pairs": 500,
+  "protected_overlap": {
+    "exact_file_sha256_matches": 0,
+    "perceptual_comparison": "not_run_no_persisted_protected_phash_index; candidate hashes frozen for future authorized comparison",
+    "protected_manifest_only_used": true,
+    "protected_pixels_opened": false
+  },
+  "redistribution_authorized": false,
+  "schema_version": 1,
+  "sequence_groups": 150,
+  "status": "pass",
+  "use_policy": "internal research development only; do not redistribute or package"
+}

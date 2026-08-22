@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "contract_id": "foundir_released_teacher_v1",
+  "frozen_at_utc": "2026-08-22",
+  "repository": {
+    "path": "third_party/foundir",
+    "revision": "6d19958499622d90ca71fe971d83b1e428c17cd0",
+    "license_path": "third_party/foundir/LICENSE",
+    "license_sha256": "965f6731a70d0b093cf6396a3266cae9acbaf7b6a56a744b010fbf9fdb8f2843",
+    "license_spdx": "MIT",
+    "checkpoint_specific_terms": "not_separately_stated",
+    "redistribution_decision": "do_not_redistribute_or_package_checkpoints_without_explicit_clearance"
+  },
+  "checkpoints": {
+    "generalist": {
+      "path": "third_party/foundir/premodel/model-2000.pt",
+      "sha256": "2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9",
+      "bytes": 580829530,
+      "parameters": 36275187,
+      "training_step": 1300000,
+      "official_release": true
+    },
+    "lowlight_specialist": {
+      "path": "third_party/foundir/specialist_model/ckpt/lowlight.pth",
+      "sha256": "f834248e145d020d5a02f257b7ceb383b579add2522932938b3e1e0bd460abe6",
+      "bytes": 6294432,
+      "parameters": 1512718,
+      "training_iteration": 60000,
+      "official_release": true
+    }
+  },
+  "cascade": {
+    "semantics": "raw_lq_to_generalist_then_generalist_rgb_output_to_lowlight_specialist",
+    "raw_lq_direct_to_specialist_is_not_the_documented_route": true,
+    "generalist_native_tiling": {"crop_size": 1024, "stride": 512},
+    "specialist_padding_multiple": 128,
+    "specialist_whole_image_default_max_size_argument_is_unused_by_released_script": true,
+    "readme_sha256": "324070e32e144e784d00840b9af57ed926c628c5e06e0849774ccdd46d8107bb",
+    "generalist_test_code_sha256": "496a1f40fd0ac0f35ea8af758db8016794cf1bf89f9faa17fe7cf6962907dcb6",
+    "specialist_inference_code_sha256": "7e54ec014690855c3d45e40f4ea338af0c3ca2ff88675587155b1bf6979558ef"
+  },
+  "training_provenance": {
+    "isolated_lowlight_metadata_pairs": 39962,
+    "lowlight_containing_metadata_pairs": 378440,
+    "official_training_pixels_available": false,
+    "development_overlap": {
+      "lolv2": "unverifiable",
+      "sice": "unverifiable",
+      "sdsd": "unverifiable"
+    },
+    "interpretation": "teacher scores are proposal-quality evidence only, not independent generalization evidence; no teacher-dependent finalist may claim provenance-independent transfer without a verified-disjoint outer family"
+  },
+  "allowed_use": {
+    "gates_1_through_6": "internal non_foundir development inference and separately gated training-only distillation",
+    "deployment": "conditional on checkpoint redistribution clearance, runtime budget, every-family value, and FLUX incremental value",
+    "protected_foundir": "only in the single authorized gate_7 event"
+  },
+  "cost_status": {
+    "runtime_measured": false,
+    "peak_memory_measured": false,
+    "measurement_stage": "gate_2_proposal_lattice",
+    "fail_closed_rule": "teacher_at_inference_is_not_deployable_until_runtime_memory_and_license_conditions_pass"
+  },
+  "official_test_accessed_during_audit": false
+}

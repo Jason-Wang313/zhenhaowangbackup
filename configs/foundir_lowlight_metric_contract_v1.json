@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "environment": {
+    "python_prefix": ".venv/foundir-metrics",
+    "python_version": "3.12",
+    "packages": {
+      "pyiqa": "0.1.16",
+      "lpips": "0.1.4",
+      "torch": "2.7.0+cu128",
+      "torchvision": "0.22.0+cu128",
+      "numpy": "1.26.4",
+      "pillow": "11.1.0"
+    }
+  },
+  "official_reference": {
+    "evaluator": "third_party/foundir/cal_metrics.py",
+    "evaluator_sha256": "bf5bbff7c73b3a8a9623180764ff6ded6cdf4e03960d12825a5b68eaacaf9b32",
+    "environment": "third_party/foundir/environment.yaml",
+    "environment_sha256": "fd4ba0d46d8d2bc01848dcf836d245c43e09bbe80299f156c675a0132c018c63",
+    "exact_huawei_evaluator_available": false
+  },
+  "weights": {
+    "alexnet": {
+      "path": "models/torch/hub/checkpoints/alexnet-owt-7be5be79.pth",
+      "sha256": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02"
+    },
+    "lpips_v0_1_alex": {
+      "pyiqa_path": "models/torch/hub/pyiqa/LPIPS_v0.1_alex-df73285e.pth",
+      "direct_path": ".venv/foundir-metrics/lib/python3.12/site-packages/lpips/weights/v0.1/alex.pth",
+      "sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0"
+    }
+  },
+  "metric_semantics": {
+    "input": "saved uint8 RGB PNG decoded with Pillow and scaled to [0,1]",
+    "aggregation": "arithmetic mean over exactly one metric value per image",
+    "psnr": "RGB, data_range=1, no crop, independently cross-checked against literal float64 MSE",
+    "lpips_primary": "pyiqa.create_metric('lpips') with AlexNet v0.1",
+    "lpips_crosscheck": "lpips.LPIPS(net='alex', version='0.1') with inputs scaled to [-1,1]",
+    "selection_rule": "use the worse (larger) of the two frozen LPIPS paths"
+  },
+  "canaries": {
+    "seed": 20260822,
+    "height": 64,
+    "width": 64,
+    "psnr_absolute_tolerance_db": 0.0005,
+    "lpips_path_absolute_tolerance": 1e-8,
+    "identity_absolute_tolerance": 1e-12
+  },
+  "protected_data": {
+    "foundir_pixels_allowed": false,
+    "canaries_are_generated_in_memory": true
+  },
+  "output": "reports/foundir_lowlight_metric_contract_result_v1.json"
+}
