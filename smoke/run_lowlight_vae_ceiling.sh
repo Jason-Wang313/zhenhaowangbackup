@@ -12,6 +12,7 @@ SUMMARY="$OUTPUT/result_summary.json"
 LOG="$ROOT/logs/lowlight_vae_ceiling_v2.log"
 EVENTS="$ROOT/logs/lowlight_vae_ceiling_v2_events.log"
 GPU_LOG="$ROOT/logs/lowlight_vae_ceiling_v2_gpu.csv"
+PREFLIGHT_LOG="$ROOT/logs/lowlight_vae_ceiling_v2_preflight.log"
 LOCK="$ROOT/logs/lowlight_vae_ceiling_v2.lock"
 DEVICE_SET="${CUDA_VISIBLE_DEVICES:-}"
 WORLD_SIZE=2
@@ -30,8 +31,10 @@ REQUIRED_TRACKED_FILES=(
   smoke/lowlight_vae_ceiling_status.py
   smoke/run_lowlight_vae_ceiling.sh
   smoke/launch_lowlight_vae_ceiling_tmux.sh
+  smoke/tmux_launcher_lib.sh
   tests/test_paired_development.py
   tests/test_representation_ceiling.py
+  tests/test_tmux_launcher.py
   tests/test_vae_ceiling_status.py
 )
 
@@ -55,9 +58,11 @@ static_check() {
   fi
   bash -n "$ROOT/smoke/run_lowlight_vae_ceiling.sh"
   bash -n "$ROOT/smoke/launch_lowlight_vae_ceiling_tmux.sh"
+  bash -n "$ROOT/smoke/tmux_launcher_lib.sh"
   "$PYTHON" -m py_compile "$DRIVER" "$STATUS_HELPER" \
     "$ROOT/lowlight_restoration/representation_ceiling.py"
-  "$PYTHON" -m unittest tests.test_representation_ceiling tests.test_vae_ceiling_status
+  "$PYTHON" -m unittest tests.test_representation_ceiling \
+    tests.test_tmux_launcher tests.test_vae_ceiling_status
   "$PYTHON" "$DRIVER" --config "$CONFIG" --contract-only
   for relative_path in "${REQUIRED_TRACKED_FILES[@]}"; do
     if ! git -C "$ROOT" ls-files --error-unmatch "$relative_path" >/dev/null 2>&1; then
@@ -71,66 +76,106 @@ static_check() {
   fi
 }
 
-if [[ "${1:-}" == "--check" ]]; then
-  if [[ "$#" -ne 1 ]]; then
-    echo "ERROR: --check takes no additional arguments" >&2
-    exit 1
+gpu_check() {
+  if ! command -v nvidia-smi >/dev/null 2>&1; then
+    echo "ERROR: nvidia-smi is unavailable on this instance" >&2
+    return 1
   fi
-  static_check
+  mapfile -t gpu_inventory < <(
+    nvidia-smi --id="$DEVICE_SET" --query-gpu=index,name,memory.used,memory.total \
+      --format=csv,noheader,nounits
+  )
+  if [[ "${#gpu_inventory[@]}" -ne "$WORLD_SIZE" ]]; then
+    echo "ERROR: expected two selected GPUs, found ${#gpu_inventory[@]}" >&2
+    return 1
+  fi
+  IFS=',' read -r -a expected_indices <<<"$DEVICE_SET"
+  for position in "${!gpu_inventory[@]}"; do
+    row="${gpu_inventory[$position]}"
+    if [[ "$row" =~ ^[[:space:]]*([0-9]+),[[:space:]]*NVIDIA[[:space:]]+H(100|200)[^,]*,[[:space:]]*([0-9]+),[[:space:]]*([0-9]+) ]]; then
+      gpu_index="${BASH_REMATCH[1]}"
+      gpu_memory_used_mib="${BASH_REMATCH[3]}"
+      gpu_memory_total_mib="${BASH_REMATCH[4]}"
+    else
+      echo "ERROR: selected GPU must be an H100/H200 with parseable memory: $row" >&2
+      return 1
+    fi
+    if [[ "$gpu_index" != "${expected_indices[$position]}" || "$gpu_memory_total_mib" -lt 76800 ]]; then
+      echo "ERROR: selected GPU identity or total memory differs: $row" >&2
+      return 1
+    fi
+    if [[ "$gpu_memory_used_mib" -gt 4096 ]]; then
+      echo "ERROR: selected GPU is already in use (${gpu_memory_used_mib} MiB): $row" >&2
+      return 1
+    fi
+  done
+  echo "LOWLIGHT_VAE_CEILING_GPU_CHECK_PASS devices=$DEVICE_SET"
+}
+
+export_runtime_environment() {
+  export AE_MODEL_PATH="$ROOT/models/flux2-klein-base-4b/ae.safetensors"
+  export CUBLAS_WORKSPACE_CONFIG=:4096:8
+  export HF_HUB_OFFLINE=1
+  export TRANSFORMERS_OFFLINE=1
+  export TORCH_HOME="$ROOT/models/torch"
+  export PYTHONUNBUFFERED=1
+  export OMP_NUM_THREADS=8
+  export OPENBLAS_NUM_THREADS=1
+  export MKL_NUM_THREADS=1
+  export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+  export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+}
+
+acquire_lock() {
+  mkdir -p "$ROOT/logs"
+  exec 9>>"$LOCK"
+  if ! flock -n 9; then
+    echo "ERROR: VAE-ceiling diagnostic or preflight is already active" >&2
+    return 1
+  fi
+}
+
+mode="run"
+if [[ "$#" -eq 1 && ( "$1" == "--check" || "$1" == "--preflight" ) ]]; then
+  mode="${1#--}"
+elif [[ "$#" -ne 0 ]]; then
+  echo "ERROR: expected no argument, --check, or --preflight" >&2
+  exit 1
+fi
+
+static_check
+if [[ "$mode" == "check" ]]; then
   echo "LOWLIGHT_VAE_CEILING_RUNNER_CHECK_PASS"
   echo "Selected devices: CUDA_VISIBLE_DEVICES=$DEVICE_SET"
   echo "Persistent log: $LOG"
   echo "Immutable output: $OUTPUT"
   exit 0
 fi
-if [[ "$#" -ne 0 ]]; then
-  echo "ERROR: unexpected VAE-ceiling runner argument: $1" >&2
-  exit 1
-fi
 
-static_check
-mkdir -p "$ROOT/logs"
-exec 9>>"$LOCK"
-if ! flock -n 9; then
-  echo "ERROR: VAE-ceiling diagnostic is already active" >&2
-  exit 1
-fi
+acquire_lock
+gpu_check
+export_runtime_environment
 
-mapfile -t gpu_inventory < <(
-  nvidia-smi --id="$DEVICE_SET" --query-gpu=index,name,memory.total \
-    --format=csv,noheader,nounits
-)
-if [[ "${#gpu_inventory[@]}" -ne "$WORLD_SIZE" ]]; then
-  echo "ERROR: expected two selected GPUs, found ${#gpu_inventory[@]}" >&2
-  exit 1
-fi
-IFS=',' read -r -a expected_indices <<<"$DEVICE_SET"
-for position in "${!gpu_inventory[@]}"; do
-  row="${gpu_inventory[$position]}"
-  if [[ "$row" =~ ^[[:space:]]*([0-9]+),[[:space:]]*NVIDIA[[:space:]]+H(100|200)[^,]*,[[:space:]]*([0-9]+) ]]; then
-    gpu_index="${BASH_REMATCH[1]}"
-    gpu_memory_mib="${BASH_REMATCH[3]}"
-  else
-    echo "ERROR: selected GPU must be an H100/H200 with parseable memory: $row" >&2
+if [[ "$mode" == "preflight" ]]; then
+  preflight_utc="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  echo "LOWLIGHT_VAE_CEILING_PREFLIGHT_BEGIN utc=$preflight_utc" | tee -a "$PREFLIGHT_LOG"
+  set +e
+  (
+    cd "$ROOT"
+    CUDA_VISIBLE_DEVICES="$DEVICE_SET" "$PYTHON" -m torch.distributed.run \
+      --standalone --nproc-per-node="$WORLD_SIZE" --max-restarts=0 \
+      "$DRIVER" --config "$CONFIG" --runtime-canary
+  ) 2>&1 | tee -a "$PREFLIGHT_LOG"
+  preflight_status="${PIPESTATUS[0]}"
+  set -e
+  if [[ "$preflight_status" -ne 0 ]]; then
+    echo "LOWLIGHT_VAE_CEILING_PREFLIGHT_FAILED status=$preflight_status" \
+      | tee -a "$PREFLIGHT_LOG"
     exit 1
   fi
-  if [[ "$gpu_index" != "${expected_indices[$position]}" || "$gpu_memory_mib" -lt 76800 ]]; then
-    echo "ERROR: selected GPU identity or memory differs: $row" >&2
-    exit 1
-  fi
-done
-
-export AE_MODEL_PATH="$ROOT/models/flux2-klein-base-4b/ae.safetensors"
-export CUBLAS_WORKSPACE_CONFIG=:4096:8
-export HF_HUB_OFFLINE=1
-export TRANSFORMERS_OFFLINE=1
-export TORCH_HOME="$ROOT/models/torch"
-export PYTHONUNBUFFERED=1
-export OMP_NUM_THREADS=8
-export OPENBLAS_NUM_THREADS=1
-export MKL_NUM_THREADS=1
-export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
-export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+  echo "LOWLIGHT_VAE_CEILING_PREFLIGHT_PASS" | tee -a "$PREFLIGHT_LOG"
+  exit 0
+fi
 
 monitor_pid=""
 stop_monitor() {

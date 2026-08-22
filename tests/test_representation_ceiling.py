@@ -12,10 +12,27 @@ from lowlight_restoration.representation_ceiling import (
     seam_error_ratio,
     tile_origins,
 )
-from smoke.evaluate_lowlight_vae_ceiling_ddp import AutoencoderTileProcessor, lpips_value
+from smoke.evaluate_lowlight_vae_ceiling_ddp import (
+    AutoencoderTileProcessor,
+    lpips_value,
+    select_runtime_canary_targets,
+)
 
 
 class RepresentationCeilingTests(unittest.TestCase):
+    def test_runtime_canary_selects_largest_tiled_targets_deterministically(
+        self,
+    ) -> None:
+        targets = [
+            {"target_sha256": "c", "width": "1024", "height": "1024"},
+            {"target_sha256": "b", "width": "4000", "height": "3000"},
+            {"target_sha256": "a", "width": "6000", "height": "4000"},
+        ]
+        selected = select_runtime_canary_targets(
+            targets, count=2, tile_size=1024, overlap=128
+        )
+        self.assertEqual([target["target_sha256"] for target in selected], ["a", "b"])
+
     def test_lpips_value_clamps_float_roundoff_to_documented_range(self) -> None:
         class RangeCheckingMetric:
             def __call__(
@@ -69,7 +86,9 @@ class RepresentationCeilingTests(unittest.TestCase):
         crop = centered_crop(image, 5)
         np.testing.assert_array_equal(crop, image[2:7, 3:8])
 
-    def test_autoencoder_processor_preserves_shape_after_alignment_padding(self) -> None:
+    def test_autoencoder_processor_preserves_shape_after_alignment_padding(
+        self,
+    ) -> None:
         class IdentityAutoencoder:
             @staticmethod
             def encode(tensor: torch.Tensor) -> torch.Tensor:

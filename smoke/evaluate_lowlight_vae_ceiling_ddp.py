@@ -34,6 +34,7 @@ from lowlight_restoration.representation_ceiling import (  # noqa: E402
     high_frequency_diagnostic,
     reconstruct_tiled,
     seam_error_ratio,
+    tile_origins,
 )
 
 
@@ -150,9 +151,13 @@ def contract_check(
     weights = workspace_path(
         str(model["autoencoder_weights"]), label="autoencoder weights"
     )
-    if not weights.is_file() or weights.stat().st_size != int(model["autoencoder_bytes"]):
+    if not weights.is_file() or weights.stat().st_size != int(
+        model["autoencoder_bytes"]
+    ):
         raise RuntimeError("FLUX.2 autoencoder size changed")
-    if not skip_autoencoder_hash and sha256(weights) != str(model["autoencoder_sha256"]):
+    if not skip_autoencoder_hash and sha256(weights) != str(
+        model["autoencoder_sha256"]
+    ):
         raise RuntimeError("FLUX.2 autoencoder hash changed")
     flux_revision = subprocess.run(
         ["git", "-C", str(ROOT / "third_party/flux2"), "rev-parse", "HEAD"],
@@ -177,9 +182,10 @@ def load_rgb(path: Path) -> np.ndarray:
 
 
 def quantize(image: np.ndarray) -> np.ndarray:
-    return np.rint(np.clip(image, 0.0, 1.0) * 255.0).astype(np.uint8).astype(
-        np.float32
-    ) / 255.0
+    return (
+        np.rint(np.clip(image, 0.0, 1.0) * 255.0).astype(np.uint8).astype(np.float32)
+        / 255.0
+    )
 
 
 class AutoencoderTileProcessor:
@@ -229,12 +235,16 @@ def lpips_value(metric, reference: np.ndarray, prediction: np.ndarray, device) -
     # computing LPIPS, so enforce the documented [0, 1] boundary here.
     reference = np.clip(reference, 0.0, 1.0)
     prediction = np.clip(prediction, 0.0, 1.0)
-    reference_tensor = torch.from_numpy(
-        np.ascontiguousarray(reference.transpose(2, 0, 1))
-    ).unsqueeze(0).to(device=device, dtype=torch.float32)
-    prediction_tensor = torch.from_numpy(
-        np.ascontiguousarray(prediction.transpose(2, 0, 1))
-    ).unsqueeze(0).to(device=device, dtype=torch.float32)
+    reference_tensor = (
+        torch.from_numpy(np.ascontiguousarray(reference.transpose(2, 0, 1)))
+        .unsqueeze(0)
+        .to(device=device, dtype=torch.float32)
+    )
+    prediction_tensor = (
+        torch.from_numpy(np.ascontiguousarray(prediction.transpose(2, 0, 1)))
+        .unsqueeze(0)
+        .to(device=device, dtype=torch.float32)
+    )
     with torch.inference_mode():
         value = metric(prediction_tensor, reference_tensor)
     return float(value.item())
@@ -272,7 +282,7 @@ def evaluate_target(
     autoencoder,
     lpips_metric,
     device,
-    sidecar_path: Path,
+    sidecar_path: Path | None,
 ) -> dict[str, object]:
     import torch
 
@@ -306,9 +316,7 @@ def evaluate_target(
         resize_for_lpips(reconstruction, lpips_maximum),
         device,
     )
-    crop_lpips = lpips_value(
-        lpips_metric, crop_reference, crop_reconstruction, device
-    )
+    crop_lpips = lpips_value(lpips_metric, crop_reference, crop_reconstruction, device)
     frequency = high_frequency_diagnostic(
         reference,
         reconstruction,
@@ -357,8 +365,9 @@ def evaluate_target(
     for key, value in result.items():
         if isinstance(value, float) and not math.isfinite(value):
             raise RuntimeError(f"non-finite VAE metric {key}: {target_path}")
-    content = (json.dumps(result, indent=2, sort_keys=True) + "\n").encode()
-    write_once_or_verify(sidecar_path, content)
+    if sidecar_path is not None:
+        content = (json.dumps(result, indent=2, sort_keys=True) + "\n").encode()
+        write_once_or_verify(sidecar_path, content)
     return result
 
 
@@ -366,8 +375,7 @@ def unique_targets(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     targets: dict[str, dict[str, str]] = {}
     for row in rows:
         candidate = {
-            key: row[key]
-            for key in ("target_sha256", "target_path", "width", "height")
+            key: row[key] for key in ("target_sha256", "target_path", "width", "height")
         }
         existing = targets.get(row["target_sha256"])
         if existing is not None and (
@@ -378,6 +386,29 @@ def unique_targets(rows: list[dict[str, str]]) -> list[dict[str, str]]:
         if existing is None or candidate["target_path"] < existing["target_path"]:
             targets[row["target_sha256"]] = candidate
     return [targets[key] for key in sorted(targets)]
+
+
+def select_runtime_canary_targets(
+    targets: list[dict[str, str]],
+    *,
+    count: int,
+    tile_size: int,
+    overlap: int,
+) -> list[dict[str, str]]:
+    """Choose the most expensive distinct targets for an end-to-end canary."""
+
+    if count <= 0 or len(targets) < count:
+        raise ValueError("runtime canary target count is invalid")
+
+    def ranking(target: Mapping[str, str]) -> tuple[int, int, str]:
+        height = int(target["height"])
+        width = int(target["width"])
+        tile_count = len(tile_origins(height, tile_size, overlap)) * len(
+            tile_origins(width, tile_size, overlap)
+        )
+        return (-tile_count, -(height * width), target["target_sha256"])
+
+    return sorted(targets, key=ranking)[:count]
 
 
 def decision_from_summary(
@@ -552,8 +583,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
     parser.add_argument("--contract-only", action="store_true")
+    parser.add_argument("--runtime-canary", action="store_true")
     parser.add_argument("--skip-autoencoder-hash", action="store_true")
     args = parser.parse_args()
+    if args.contract_only and args.runtime_canary:
+        parser.error("--contract-only and --runtime-canary are mutually exclusive")
     config_path = args.config.resolve()
     try:
         config_path.relative_to(ROOT)
@@ -576,68 +610,70 @@ def main() -> None:
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required for the VAE ceiling")
     distributed.init_process_group(backend="nccl")
-    rank = distributed.get_rank()
-    world_size = distributed.get_world_size()
-    local_rank = int(os.environ["LOCAL_RANK"])
-    runtime = config["runtime"]
-    model = config["model"]
-    output = config["output"]
-    assert isinstance(runtime, dict) and isinstance(model, dict) and isinstance(output, dict)
-    if world_size != int(runtime["world_size"]):
-        raise RuntimeError(f"VAE ceiling requires world size 2, got {world_size}")
-    torch.cuda.set_device(local_rank)
-    device = torch.device("cuda", local_rank)
-    properties = torch.cuda.get_device_properties(device)
-    if properties.total_memory < int(runtime["minimum_gpu_memory_mib"]) * 1024**2:
-        raise RuntimeError("selected GPU has insufficient memory")
-    if not any(name in properties.name for name in runtime["allowed_gpu_families"]):
-        raise RuntimeError(f"unsupported GPU for frozen diagnostic: {properties.name}")
-    torch.manual_seed(2026082122)
-    torch.cuda.manual_seed_all(2026082122)
-    torch.backends.cudnn.benchmark = False
-    torch.use_deterministic_algorithms(True)
-
-    config_sha256 = sha256(config_path)
-    identities = {
-        "config_sha256": config_sha256,
-        "evaluator_sha256": sha256(Path(__file__).resolve()),
-        "representation_module_sha256": sha256(
-            ROOT / "lowlight_restoration/representation_ceiling.py"
-        ),
-        "paired_development_module_sha256": sha256(
-            ROOT / "lowlight_restoration/paired_development.py"
-        ),
-        "autoencoder_sha256": str(model["autoencoder_sha256"]),
-    }
-    output_dir = workspace_path(str(output["directory"]), label="output directory")
-    sidecar_dir = output_dir / "per_target"
-    sidecar_dir.mkdir(parents=True, exist_ok=True)
-    targets = unique_targets(rows)
-    assigned = targets[rank::world_size]
-    pending = []
-    for target in assigned:
-        sidecar = sidecar_dir / f"{target['target_sha256']}.json"
-        if sidecar.exists():
-            validate_sidecar(
-                sidecar,
-                target_sha256=target["target_sha256"],
-                identities=identities,
+    try:
+        rank = distributed.get_rank()
+        world_size = distributed.get_world_size()
+        local_rank = int(os.environ["LOCAL_RANK"])
+        runtime = config["runtime"]
+        model = config["model"]
+        output = config["output"]
+        metrics = config["metrics"]
+        tiling = config["tiling"]
+        assert isinstance(runtime, dict)
+        assert isinstance(model, dict)
+        assert isinstance(output, dict)
+        assert isinstance(metrics, dict)
+        assert isinstance(tiling, dict)
+        if world_size != int(runtime["world_size"]):
+            raise RuntimeError(f"VAE ceiling requires world size 2, got {world_size}")
+        torch.cuda.set_device(local_rank)
+        device = torch.device("cuda", local_rank)
+        properties = torch.cuda.get_device_properties(device)
+        if properties.total_memory < int(runtime["minimum_gpu_memory_mib"]) * 1024**2:
+            raise RuntimeError("selected GPU has insufficient memory")
+        if not any(name in properties.name for name in runtime["allowed_gpu_families"]):
+            raise RuntimeError(
+                f"unsupported GPU for frozen diagnostic: {properties.name}"
             )
-        else:
-            pending.append(target)
+        torch.manual_seed(2026082122)
+        torch.cuda.manual_seed_all(2026082122)
+        torch.backends.cudnn.benchmark = False
+        torch.use_deterministic_algorithms(True)
 
-    if pending:
-        os.environ["AE_MODEL_PATH"] = str(
-            workspace_path(str(model["autoencoder_weights"]), label="autoencoder")
-        )
-        from flux2.util import load_ae
+        identities = {
+            "config_sha256": sha256(config_path),
+            "evaluator_sha256": sha256(Path(__file__).resolve()),
+            "representation_module_sha256": sha256(
+                ROOT / "lowlight_restoration/representation_ceiling.py"
+            ),
+            "paired_development_module_sha256": sha256(
+                ROOT / "lowlight_restoration/paired_development.py"
+            ),
+            "autoencoder_sha256": str(model["autoencoder_sha256"]),
+        }
+        targets = unique_targets(rows)
+        if args.runtime_canary:
+            canaries = select_runtime_canary_targets(
+                targets,
+                count=world_size,
+                tile_size=int(tiling["tile_size"]),
+                overlap=int(tiling["overlap"]),
+            )
+            target = canaries[rank]
+            os.environ["AE_MODEL_PATH"] = str(
+                workspace_path(str(model["autoencoder_weights"]), label="autoencoder")
+            )
+            from flux2.util import load_ae
 
-        autoencoder = load_ae(str(model["name"]), device=device)
-        autoencoder.eval().requires_grad_(False)
-        lpips_metric = LearnedPerceptualImagePatchSimilarity(
-            net_type=str(config["metrics"]["lpips_backbone"]), normalize=True
-        ).to(device).eval()
-        for position, target in enumerate(pending, start=1):
+            autoencoder = load_ae(str(model["name"]), device=device)
+            autoencoder.eval().requires_grad_(False)
+            lpips_metric = (
+                LearnedPerceptualImagePatchSimilarity(
+                    net_type=str(metrics["lpips_backbone"]), normalize=True
+                )
+                .to(device)
+                .eval()
+            )
             result = evaluate_target(
                 target,
                 config=config,
@@ -645,42 +681,112 @@ def main() -> None:
                 autoencoder=autoencoder,
                 lpips_metric=lpips_metric,
                 device=device,
-                sidecar_path=sidecar_dir / f"{target['target_sha256']}.json",
+                sidecar_path=None,
             )
+            canary_record = {
+                "rank": rank,
+                "target_sha256": target["target_sha256"],
+                "tile_count": result["tile_count"],
+                "full_psnr": result["full_psnr"],
+                "full_lpips_resized": result["full_lpips_resized"],
+                "peak_cuda_allocated_bytes": result["peak_cuda_allocated_bytes"],
+            }
+            gathered: list[dict[str, object] | None] = [None] * world_size
+            distributed.all_gather_object(gathered, canary_record)
+            if rank == 0:
+                completed = [item for item in gathered if item is not None]
+                if (
+                    len(completed) != world_size
+                    or len({str(item["target_sha256"]) for item in completed})
+                    != world_size
+                ):
+                    raise RuntimeError("distributed runtime canary was incomplete")
+                print(
+                    "LOWLIGHT_VAE_CEILING_RUNTIME_CANARY_PASS "
+                    f"targets={len(completed)} "
+                    f"maximum_tiles={max(int(item['tile_count']) for item in completed)}",
+                    flush=True,
+                )
+            distributed.barrier()
+            return
+
+        output_dir = workspace_path(str(output["directory"]), label="output directory")
+        sidecar_dir = output_dir / "per_target"
+        sidecar_dir.mkdir(parents=True, exist_ok=True)
+        assigned = targets[rank::world_size]
+        pending = []
+        for target in assigned:
+            sidecar = sidecar_dir / f"{target['target_sha256']}.json"
+            if sidecar.exists():
+                validate_sidecar(
+                    sidecar,
+                    target_sha256=target["target_sha256"],
+                    identities=identities,
+                )
+            else:
+                pending.append(target)
+
+        if pending:
+            os.environ["AE_MODEL_PATH"] = str(
+                workspace_path(str(model["autoencoder_weights"]), label="autoencoder")
+            )
+            from flux2.util import load_ae
+
+            autoencoder = load_ae(str(model["name"]), device=device)
+            autoencoder.eval().requires_grad_(False)
+            lpips_metric = (
+                LearnedPerceptualImagePatchSimilarity(
+                    net_type=str(metrics["lpips_backbone"]), normalize=True
+                )
+                .to(device)
+                .eval()
+            )
+            for position, target in enumerate(pending, start=1):
+                result = evaluate_target(
+                    target,
+                    config=config,
+                    identities=identities,
+                    autoencoder=autoencoder,
+                    lpips_metric=lpips_metric,
+                    device=device,
+                    sidecar_path=sidecar_dir / f"{target['target_sha256']}.json",
+                )
+                print(
+                    f"VAE_CEILING rank={rank} target={position}/{len(pending)} "
+                    f"sha={target['target_sha256'][:12]} psnr={result['full_psnr']:.4f} "
+                    f"lpips={result['full_lpips_resized']:.6f} tiles={result['tile_count']}",
+                    flush=True,
+                )
+        device_record = {
+            "rank": rank,
+            "name": properties.name,
+            "total_memory_bytes": properties.total_memory,
+            "assigned_targets": len(assigned),
+        }
+        inventory: list[dict[str, object] | None] = [None] * world_size
+        distributed.all_gather_object(inventory, device_record)
+        distributed.barrier()
+        if rank == 0:
+            payload = build_summary(
+                config_path=config_path,
+                config=config,
+                rows=rows,
+                identities=identities,
+                output_dir=output_dir,
+                device_inventory=[item for item in inventory if item is not None],
+            )
+            scene = payload["summary"]["point_estimates"]["scene_balanced"]
             print(
-                f"VAE_CEILING rank={rank} target={position}/{len(pending)} "
-                f"sha={target['target_sha256'][:12]} psnr={result['full_psnr']:.4f} "
-                f"lpips={result['full_lpips_resized']:.6f} tiles={result['tile_count']}",
+                "LOWLIGHT_VAE_CEILING_PASS "
+                f"status={payload['status']} full_psnr={scene['full_psnr']:.4f} "
+                f"full_lpips={scene['full_lpips_resized']:.6f} "
+                f"hf_corr={scene['high_frequency_correlation']:.6f}",
                 flush=True,
             )
-    device_record = {
-        "rank": rank,
-        "name": properties.name,
-        "total_memory_bytes": properties.total_memory,
-        "assigned_targets": len(assigned),
-    }
-    inventory: list[dict[str, object] | None] = [None] * world_size
-    distributed.all_gather_object(inventory, device_record)
-    distributed.barrier()
-    if rank == 0:
-        payload = build_summary(
-            config_path=config_path,
-            config=config,
-            rows=rows,
-            identities=identities,
-            output_dir=output_dir,
-            device_inventory=[item for item in inventory if item is not None],
-        )
-        scene = payload["summary"]["point_estimates"]["scene_balanced"]
-        print(
-            "LOWLIGHT_VAE_CEILING_PASS "
-            f"status={payload['status']} full_psnr={scene['full_psnr']:.4f} "
-            f"full_lpips={scene['full_lpips_resized']:.6f} "
-            f"hf_corr={scene['high_frequency_correlation']:.6f}",
-            flush=True,
-        )
-    distributed.barrier()
-    distributed.destroy_process_group()
+        distributed.barrier()
+    finally:
+        if distributed.is_initialized():
+            distributed.destroy_process_group()
 
 
 if __name__ == "__main__":

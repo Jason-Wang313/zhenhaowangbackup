@@ -2,22 +2,25 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-TMUX="$ROOT/.tools/tmux-env/bin/tmux"
+TMUX_HELPERS="$ROOT/smoke/tmux_launcher_lib.sh"
 RUNNER="$ROOT/smoke/run_qwen_lowlight_real_validation.sh"
 SESSION="qwen_vlm_real_step600"
+TMUX_SERVER_LABEL="zhenhaowang_jobs"
 LOG="$ROOT/logs/qwen_lowlight_real_validation_step600.log"
 GPU_LOG="$ROOT/logs/qwen_lowlight_real_validation_step600_gpu.csv"
 OUTPUT="$ROOT/checkpoints/qwen_lowlight_real_validation_step600"
 
-if [[ ! -x "$TMUX" ]]; then
-  echo "ERROR: workspace-local tmux is unavailable: $TMUX" >&2
+if [[ ! -f "$TMUX_HELPERS" ]]; then
+  echo "ERROR: tmux launcher helpers are unavailable: $TMUX_HELPERS" >&2
   exit 1
 fi
 if [[ ! -f "$RUNNER" ]]; then
   echo "ERROR: checked-in real-validation runner is unavailable: $RUNNER" >&2
   exit 1
 fi
-"$TMUX" -V
+source "$TMUX_HELPERS"
+TMUX_BIN_PATH="$(select_tmux_binary)"
+tmux_job_server -V
 bash "$RUNNER" --check
 
 if [[ "${1:-}" == "--check" ]]; then
@@ -36,21 +39,23 @@ if [[ "$#" -ne 0 ]]; then
   exit 1
 fi
 
-if "$TMUX" has-session -t "$SESSION" 2>/dev/null; then
+if tmux_job_server has-session -t "$SESSION" 2>/dev/null; then
   echo "QWEN_REAL_VALIDATION_TMUX_SESSION_ALREADY_EXISTS session=$SESSION"
   echo "Attaching without launching a duplicate process."
-  exec "$TMUX" attach -t "$SESSION"
+  tmux_attach_or_report "$SESSION"
+  exit 0
 fi
 
-"$TMUX" new-session -d -s "$SESSION" -c "$ROOT"
-"$TMUX" set-window-option -t "$SESSION:0" remain-on-exit on
+tmux_job_server new-session -d -s "$SESSION" -c "$ROOT"
+tmux_job_server set-window-option -t "$SESSION:0" remain-on-exit on
 launch_command="CUDA_VISIBLE_DEVICES=0 bash smoke/run_qwen_lowlight_real_validation.sh"
-"$TMUX" send-keys -t "$SESSION:0.0" -l "$launch_command"
-"$TMUX" send-keys -t "$SESSION:0.0" Enter
+tmux_job_server send-keys -t "$SESSION:0.0" -l "$launch_command"
+tmux_job_server send-keys -t "$SESSION:0.0" Enter
 
 echo "QWEN_REAL_VALIDATION_TMUX_LAUNCHED session=$SESSION"
-echo "The launcher is attaching now; detach safely with Ctrl-b then d."
-echo "Reattach: $TMUX attach -t $SESSION"
+printf 'Reattach from a separate terminal: '
+tmux_attach_hint "$SESSION"
+printf '\n'
 echo "Persistent log: tail -n 100 -f $LOG"
 echo "GPU telemetry: tail -n 20 -f $GPU_LOG"
-exec "$TMUX" attach -t "$SESSION"
+tmux_attach_or_report "$SESSION"
