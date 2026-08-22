@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 import re
 import subprocess
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -24,27 +25,39 @@ class TmuxLauncherTests(unittest.TestCase):
 
     def test_helpers_preserve_outer_tmux_connection_variable(self) -> None:
         sentinel = "/tmp/existing-server,123,0"
-        script = f"""
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            fake_tmux = Path(temporary_directory) / "tmux"
+            fake_tmux.write_text(
+                "#!/usr/bin/env bash\n"
+                "set -euo pipefail\n"
+                'test -z "${TMUX+x}"\n'
+                'test -z "${TMUX_PANE+x}"\n'
+                'test "${TMUX_TMPDIR:-}" = /tmp\n'
+                "printf 'tmux 9.9\\n'\n"
+            )
+            fake_tmux.chmod(0o755)
+            script = f"""
 set -euo pipefail
 source {HELPERS}
-TMUX_BIN_PATH="$(select_tmux_binary)"
+TMUX_BIN_PATH="$FAKE_TMUX"
 TMUX_SERVER_LABEL=zhenhaowang_test_only
 tmux_job_server -V
 test "$TMUX" = "$EXPECTED_TMUX"
 test -f "$TMUX_BIN_PATH"
 test -x "$TMUX_BIN_PATH"
 """
-        environment = os.environ.copy()
-        environment["TMUX"] = sentinel
-        environment["EXPECTED_TMUX"] = sentinel
-        completed = subprocess.run(
-            ["bash", "-c", script],
-            cwd=ROOT,
-            env=environment,
-            capture_output=True,
-            text=True,
-            check=False,
-        )
+            environment = os.environ.copy()
+            environment["FAKE_TMUX"] = str(fake_tmux)
+            environment["TMUX"] = sentinel
+            environment["EXPECTED_TMUX"] = sentinel
+            completed = subprocess.run(
+                ["bash", "-c", script],
+                cwd=ROOT,
+                env=environment,
+                capture_output=True,
+                text=True,
+                check=False,
+            )
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertRegex(completed.stdout, r"tmux \d+\.\d+")
 
