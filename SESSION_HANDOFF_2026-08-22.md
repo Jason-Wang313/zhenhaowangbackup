@@ -32,8 +32,8 @@ Gate 1 — protocol and development freeze: **passed**.
 
 Gate 2 — proposal/ceiling lattice: **passed after cache-preserving recovery**.
 
-Gate 3 — compact control and credible VLM gate: **authorized; exact compact
-control contract and combined four-H100 execution bundle pending**.
+Gate 3 — compact control and credible VLM gate: **contract frozen and
+four-H100 bundle implemented; awaiting the GPU-host launch**.
 
 Verified at start:
 
@@ -189,14 +189,14 @@ admitted at Gate 2. Full interpretation is frozen in
 
 ## Exact next actions
 
-1. Freeze, test, commit, and push Gate 2 evidence and the Gate 3 compact-control
-   contract before any new training.
-2. Implement the mandatory compact raw-to-restored deterministic residual
-   control and combined Gate 3 bundle. Use all four H100s efficiently by
-   running compact-control training and the already-frozen two-GPU Qwen
-   exposure diagnostic concurrently only when their scientific schedules are
-   independent and storage capacity permits.
-3. Run the frozen ordinal and downstream causal matrix. Stop for review before
+1. Launch the checked four-H100 bundle once with `bash
+   smoke/launch_foundir_lowlight_gate3_bundle.sh`. It runs the compact control
+   on GPUs 2--3 and the unchanged Qwen exposure-order diagnostic on GPUs 0--1.
+2. Monitor `logs/foundir_lowlight_gate3_bundle_v1.log` to a terminal marker and
+   preserve both scientific outcomes. Partial compact checkpoints are resumed,
+   not overwritten.
+3. If the ordinal diagnostic passes, implement and run the already-frozen
+   downstream causal matrix. Stop for review before
    Gate 4 if Qwen misses the two-correction causal gate.
 
 ## Gate progression
@@ -205,7 +205,7 @@ admitted at Gate 2. Full interpretation is frozen in
 |---|---|---|
 | 1. Protocol/development freeze | passed | `reports/foundir_lowlight_gate1_result_v1.json` |
 | 2. Proposal/ceiling lattice | passed; cascade is provisional base, photometric predictor killed | `reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json` |
-| 3. Compact control/causal Qwen | authorized; contract pending | pending |
+| 3. Compact control/causal Qwen | contract/initial bundle frozen; GPU launch pending | `configs/foundir_lowlight_gate3_v1.json` |
 | 4. FLUX endpoint decision | pending | pending |
 | 5. Optional budget/full-scale winner | pending | pending |
 | 6. Replication/deployment freeze | pending | pending |

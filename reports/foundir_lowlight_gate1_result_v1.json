@@ -1,12 +1,12 @@
 {
   "decision": "protocol_development_teacher_and_experiment_contracts_frozen",
   "declared_gate2_candidate_count": 12,
-  "declared_ledger_entry_count": 16,
+  "declared_ledger_entry_count": 17,
   "gate": 1,
   "identities": {
     "combined_manifest_sha256": "01ea1bcc2c4a9166188c5852b20a45b7ce828b47c043b4ca1abbdc3aa994b200",
     "development_contract_sha256": "33963c5467285151e0cb2a5b9bc977762062173f36a31e92ccc8329882bb6e69",
-    "experiment_ledger_sha256": "a230180b4195c3c75a1a9d3a28c2c150933d59dab1111f3a8a00e7a989b1dfa0",
+    "experiment_ledger_sha256": "314580c09c6c8aa73b5b4e989fa138f8c6bb359f7c6008b6821fa2cae307655d",
     "proposal_contract_sha256": "6d1fca9f956dfedc1ee8546e33c97e0a25775a486b4afb8b5235e396e60e2095",
     "teacher_contract_sha256": "d559fe04d000b316d413a991bb39e07596e217c8b7f655e7b84b76110c837418"
   },
