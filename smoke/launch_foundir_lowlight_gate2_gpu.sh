@@ -2,8 +2,8 @@
 set -euo pipefail
 
 ROOT="/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang"
-ATTEMPTS="$ROOT/logs/foundir_lowlight_gate2_gpu_v1_attempts.tsv"
-RESULT="$ROOT/reports/foundir_lowlight_gate2_proposal_lattice_result_v1.json"
+ATTEMPTS="$ROOT/logs/foundir_lowlight_gate2_gpu_v1b_attempts.tsv"
+RESULT="$ROOT/reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json"
 cd "$ROOT"
 
 if [[ ! "${CUDA_VISIBLE_DEVICES:-}" =~ ^[0-9]+(,[0-9]+)?$ ]]; then
@@ -43,7 +43,7 @@ fi
 export PYTHONPATH="$ROOT/.tools/foundir-runtime${PYTHONPATH:+:$PYTHONPATH}"
 
 mkdir -p "$ROOT/logs"
-log="$(mktemp "$ROOT/logs/foundir_lowlight_gate2_gpu_v1_XXXXXX.log")"
+log="$(mktemp "$ROOT/logs/foundir_lowlight_gate2_gpu_v1b_XXXXXX.log")"
 teacher_device="${devices[0]}"
 flux_device="${devices[1]:-${devices[0]}}"
 

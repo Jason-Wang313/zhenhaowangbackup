@@ -2,15 +2,15 @@
 set -euo pipefail
 
 ROOT="/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang"
-ATTEMPTS="$ROOT/logs/foundir_lowlight_gate2_gpu_v1_attempts.tsv"
-RESULT="$ROOT/reports/foundir_lowlight_gate2_proposal_lattice_result_v1.json"
+ATTEMPTS="$ROOT/logs/foundir_lowlight_gate2_gpu_v1b_attempts.tsv"
+RESULT="$ROOT/reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json"
 cd "$ROOT"
 
 if [[ -f "$RESULT" ]]; then
   "$ROOT/.venv/flux2-smoke/bin/python" - <<'PY'
 import json
 from pathlib import Path
-result = json.loads(Path("reports/foundir_lowlight_gate2_proposal_lattice_result_v1.json").read_text())
+result = json.loads(Path("reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json").read_text())
 assert result["status"] == "pass_gate2_complete"
 print("FOUNDIR_LOWLIGHT_GATE2_COMPLETE", result["decision"]["provisional_conservative_base"])
 PY

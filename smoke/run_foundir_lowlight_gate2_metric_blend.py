@@ -23,7 +23,7 @@ from skimage.metrics import structural_similarity
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CONFIG = ROOT / "configs/foundir_lowlight_gate2_metric_blend_v1.json"
+DEFAULT_CONFIG = ROOT / "configs/foundir_lowlight_gate2_metric_blend_v1b.json"
 BLENDS = ("B_CONVEX_ORACLE", "B_FREQUENCY_ORACLE")
 
 
@@ -134,8 +134,8 @@ def load_development(config: Mapping[str, object]) -> tuple[list[dict[str, str]]
 
 def load_candidate_manifests(config: Mapping[str, object]) -> dict[str, dict[str, dict[str, str]]]:
     sources = config["input_manifests"]
-    teacher_result = json.loads(workspace_path("reports/foundir_lowlight_gate2_teacher_result_v1.json").read_text())
-    historical_result = json.loads(workspace_path("reports/foundir_lowlight_gate2_historical_flux_result_v1.json").read_text())
+    teacher_result = json.loads(workspace_path(sources["generalist"]["identity_from"]).read_text())
+    historical_result = json.loads(workspace_path(sources["historical_flux"]["identity_from"]).read_text())
     expected = {
         "historical_flux": historical_result["manifest_sha256"],
         "generalist": teacher_result["stages"]["generalist"]["manifest_sha256"],

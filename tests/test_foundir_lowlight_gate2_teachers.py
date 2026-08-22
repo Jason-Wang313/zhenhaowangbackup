@@ -10,10 +10,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class Gate2TeacherTests(unittest.TestCase):
     def test_contract_is_non_foundir_and_hash_validated(self):
-        config = read_config(ROOT / "configs/foundir_lowlight_gate2_teacher_v1.json")
+        config = read_config(ROOT / "configs/foundir_lowlight_gate2_teacher_v1b.json")
         self.assertFalse(config["protected_foundir_pixels_allowed"])
         self.assertTrue(config["specialist"]["raw_input_direct_route_forbidden"])
         self.assertEqual(config["generalist"]["sampling_steps"], 4)
+        self.assertEqual(config["generalist"]["large_image_policy"]["tile_size"], 1024)
+        self.assertEqual(config["specialist"]["large_image_policy"]["tile_size"], 512)
 
     def test_output_stem_is_stable_and_path_safe(self):
         row = {"record_id": "family:scene/input", "family": "sdsd"}

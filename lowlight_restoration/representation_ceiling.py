@@ -68,6 +68,40 @@ def reconstruct_tiled(
     }
 
 
+def reconstruct_tiled_average(
+    image: np.ndarray,
+    process_tile: Callable[[np.ndarray], np.ndarray],
+    *,
+    tile_size: int,
+    overlap: int,
+) -> tuple[np.ndarray, dict[str, object]]:
+    """Apply a tile transform and uniformly average overlapping predictions."""
+
+    if image.ndim != 3 or image.shape[2] != 3 or not np.isfinite(image).all():
+        raise ValueError("tiled reconstruction requires a finite RGB array")
+    height, width = image.shape[:2]
+    y_origins = tile_origins(height, tile_size, overlap)
+    x_origins = tile_origins(width, tile_size, overlap)
+    accumulation = np.zeros((height, width, 3), dtype=np.float32)
+    normalization = np.zeros((height, width), dtype=np.float32)
+    for y in y_origins:
+        for x in x_origins:
+            tile = image[y : min(y + tile_size, height), x : min(x + tile_size, width)]
+            output = np.asarray(process_tile(tile), dtype=np.float32)
+            if output.shape != tile.shape or not np.isfinite(output).all():
+                raise RuntimeError("tile processor returned an invalid RGB array")
+            accumulation[y : y + tile.shape[0], x : x + tile.shape[1]] += output
+            normalization[y : y + tile.shape[0], x : x + tile.shape[1]] += 1.0
+    if np.any(normalization <= 0.0):
+        raise RuntimeError("tile blending left uncovered pixels")
+    return accumulation / normalization[..., None], {
+        "tile_count": len(y_origins) * len(x_origins),
+        "tile_y_origins": list(y_origins),
+        "tile_x_origins": list(x_origins),
+        "merge": "uniform_overlap_average",
+    }
+
+
 def centered_crop(image: np.ndarray, maximum_size: int) -> np.ndarray:
     if (
         image.ndim != 3

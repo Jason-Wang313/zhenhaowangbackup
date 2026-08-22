@@ -8,6 +8,7 @@ import csv
 import hashlib
 import io
 import json
+import math
 import os
 import sys
 import time
@@ -27,7 +28,7 @@ sys.path.insert(0, str(ROOT / "third_party/flux2/src"))
 from lowlight_restoration.lora import inject_lora, load_lora_checkpoint
 
 
-DEFAULT_CONFIG = ROOT / "configs/foundir_lowlight_gate2_historical_flux_v1.json"
+DEFAULT_CONFIG = ROOT / "configs/foundir_lowlight_gate2_historical_flux_v1b.json"
 
 
 def sha256(path: Path) -> str:
@@ -63,6 +64,38 @@ def load_rgb(row: Mapping[str, str]) -> np.ndarray:
         if row["stored_color_order"] == "BGR": image = image[..., ::-1]
         return np.ascontiguousarray(image)
     with Image.open(path) as opened: return np.asarray(opened.convert("RGB"), dtype=np.uint8)
+
+
+def resize_to_pixel_budget(image: np.ndarray, maximum_pixels: int) -> tuple[np.ndarray, dict[str, object]]:
+    if image.dtype != np.uint8 or image.ndim != 3 or image.shape[2] != 3 or maximum_pixels <= 0:
+        raise ValueError("invalid bounded-resize input")
+    height, width = image.shape[:2]
+    if height * width <= maximum_pixels:
+        return image, {"resized": False, "native_width": width, "native_height": height, "inference_width": width, "inference_height": height}
+    scale = math.sqrt(maximum_pixels / float(height * width))
+    inference_width = max(1, int(math.floor(width * scale)))
+    inference_height = max(1, int(math.floor(height * scale)))
+    while inference_width * inference_height > maximum_pixels:
+        if inference_width >= inference_height: inference_width -= 1
+        else: inference_height -= 1
+    resized = Image.fromarray(image, mode="RGB").resize((inference_width, inference_height), Image.Resampling.LANCZOS)
+    return np.asarray(resized, dtype=np.uint8), {
+        "resized": True, "native_width": width, "native_height": height,
+        "inference_width": inference_width, "inference_height": inference_height,
+    }
+
+
+def restore_native_dimensions(image: np.ndarray, metadata: Mapping[str, object]) -> np.ndarray:
+    expected = (int(metadata["native_height"]), int(metadata["native_width"]), 3)
+    if not bool(metadata["resized"]):
+        if image.shape != expected: raise RuntimeError("non-resized FLUX output changed dimensions")
+        return image
+    restored = Image.fromarray(image, mode="RGB").resize(
+        (int(metadata["native_width"]), int(metadata["native_height"])), Image.Resampling.LANCZOS
+    )
+    output = np.asarray(restored, dtype=np.uint8)
+    if output.shape != expected: raise RuntimeError("bounded FLUX resize failed to restore native dimensions")
+    return output
 
 
 def pad_tensor(tensor: torch.Tensor, multiple: int) -> tuple[torch.Tensor, int, int]:
@@ -111,8 +144,6 @@ def main() -> None:
     with workspace_path(config["development_manifest"]).open(newline="") as handle:
         rows = [row for row in csv.DictReader(handle) if row["role"] == config["role"]]
     if len(rows) != 245: raise RuntimeError("outer development count changed")
-    if max(int(row["width"]) * int(row["height"]) for row in rows) > int(config["inference"]["native_whole_image_max_pixels"]):
-        raise RuntimeError("frozen outer record exceeds the predeclared whole-image budget")
 
     from flux2.sampling import batched_prc_img, denoise_cfg, get_schedule, scatter_ids
     from flux2.util import load_ae, load_flow_model
@@ -130,9 +161,12 @@ def main() -> None:
     output_root = workspace_path(config["runtime"]["output_directory"])
     results = []; total_seconds = 0.0; peak = 0
     for index, row in enumerate(rows):
-        source = load_rgb(row)
+        native_source = load_rgb(row)
+        source, resize_metadata = resize_to_pixel_budget(
+            native_source, int(config["inference"]["native_whole_image_max_pixels"])
+        )
         degraded = torch.from_numpy(source.transpose(2, 0, 1).copy()).unsqueeze(0).to(device=device, dtype=torch.float32).div(127.5).sub(1.0)
-        degraded, height, width = pad_tensor(degraded, int(config["inference"]["padding_multiple"]))
+        degraded, inference_height, inference_width = pad_tensor(degraded, int(config["inference"]["padding_multiple"]))
         torch.cuda.reset_peak_memory_stats(device); torch.cuda.synchronize(device); started = time.perf_counter()
         with torch.inference_mode():
             reference_latent = autoencoder.encode(degraded).to(torch.bfloat16)
@@ -145,14 +179,15 @@ def main() -> None:
             with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
                 tokens = denoise_cfg(flow_model, image_tokens, image_ids, context, context_ids, timesteps=schedule, guidance=float(config["inference"]["guidance"]), img_cond_seq=reference_tokens, img_cond_seq_ids=reference_ids)
             latent = torch.cat(scatter_ids(tokens, image_ids)).squeeze(2)
-            restored = autoencoder.decode(latent).float().clamp(-1, 1)[0, :, :height, :width]
+            restored = autoencoder.decode(latent).float().clamp(-1, 1)[0, :, :inference_height, :inference_width]
         torch.cuda.synchronize(device); elapsed = time.perf_counter() - started
         total_seconds += elapsed; peak = max(peak, int(torch.cuda.max_memory_allocated(device)))
-        image = restored.add(1).mul(127.5).round().byte().permute(1, 2, 0).cpu().numpy()
+        inference_image = restored.add(1).mul(127.5).round().byte().permute(1, 2, 0).cpu().numpy()
+        image = restore_native_dimensions(inference_image, resize_metadata)
         stem = f"{index:04d}_{row['family']}_{hashlib.sha256(row['record_id'].encode()).hexdigest()[:16]}.png"
         path = output_root / stem; digest = save_once(path, image)
-        results.append({"candidate_id": "P0_HISTORICAL_FLUX", "family": row["family"], "group_id": row["group_id"], "record_id": row["record_id"], "target_path": row["target_path"], "output_path": str(path.relative_to(ROOT)), "output_sha256": digest, "width": width, "height": height, "seconds": elapsed})
-        print(f"HISTORICAL_FLUX_PROGRESS records={index + 1}/{len(rows)} seconds={elapsed:.4f}", flush=True)
+        results.append({"candidate_id": "P0_HISTORICAL_FLUX", "family": row["family"], "group_id": row["group_id"], "record_id": row["record_id"], "target_path": row["target_path"], "output_path": str(path.relative_to(ROOT)), "output_sha256": digest, "width": resize_metadata["native_width"], "height": resize_metadata["native_height"], "inference_width": resize_metadata["inference_width"], "inference_height": resize_metadata["inference_height"], "resized": resize_metadata["resized"], "seconds": elapsed})
+        print(f"HISTORICAL_FLUX_PROGRESS records={index + 1}/{len(rows)} resized={resize_metadata['resized']} inference={resize_metadata['inference_width']}x{resize_metadata['inference_height']} seconds={elapsed:.4f}", flush=True)
     fields = list(results[0]); buffer = io.StringIO(newline=""); writer = csv.DictWriter(buffer, fieldnames=fields, lineterminator="\n"); writer.writeheader(); writer.writerows(results)
     manifest_content = buffer.getvalue().encode(); manifest_path = workspace_path(config["outputs"]["manifest"]); write_once(manifest_path, manifest_content)
     payload = {"schema_version": 1, "status": "pass_historical_evidence_cached", "protected_foundir_pixels_used": False, "config": str(config_path.relative_to(ROOT)), "config_sha256": sha256(config_path), "runner_sha256": sha256(Path(__file__)), "manifest": str(manifest_path.relative_to(ROOT)), "manifest_sha256": hashlib.sha256(manifest_content).hexdigest(), "records": len(results), "runtime": {"total_seconds": total_seconds, "mean_seconds": total_seconds / len(results), "peak_memory_bytes": peak}, "interpretation": config["interpretation"]}

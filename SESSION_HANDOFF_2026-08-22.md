@@ -31,7 +31,8 @@ workspace and advisor authority remain `agents.md`.
 Gate 1 — protocol and development freeze: **passed**.
 
 Gate 2 — proposal/ceiling lattice: **in progress; CPU photometric lattice
-passed and the one-shot GPU remainder is being frozen**.
+passed, the dimension-invalid GPU v1 contract was killed before inference,
+and the dimension-safe v1b GPU remainder is frozen**.
 
 Verified at start:
 
@@ -99,7 +100,8 @@ illumination reached `25.8192 / 22.8886 dB`. The bottleneck is inference-time
 identifiability and target-render transfer, not the existence of a useful
 photometric correction.
 
-The remaining Gate 2 bundle is frozen to run on exactly one visible H100/H200:
+The remaining Gate 2 bundle is frozen to run one single-device process on each
+of two visible H100/H200 GPUs:
 official FoundIR generalist, documented generalist-to-Lowlight-specialist
 cascade, historical FLUX, both metric paths, and the convex/frequency fusion
 ceilings. It does not access protected FoundIR pixels.
@@ -110,16 +112,25 @@ architecture-9.0 CUDA extensions. Gate 2 exposes GPUs 0 and 1 but preserves
 the frozen one-device semantics inside each model process: the teacher pass
 runs on GPU 0 while historical FLUX runs concurrently on GPU 1, then metrics
 run on GPU 0 after both proposal caches pass. GPUs 2 and 3 remain available.
-The frozen Python runner SHA-256 values
-are `db1218d442949f2ceb20657ebe8bc9e34bb63fff1f1b73b04379214349bf1038`
-(teachers), `ee57ab3717e5c889f4cc3377e12ae1bc0546137b96aa06df82c5b10a0e47467e`
+The frozen v1b Python runner SHA-256 values
+are `6c0a608c97459a29694b2a4483748959b3e0bccebbdb1a23a00a730fe355212e`
+(teachers), `67ed3d8365a811df9c08a61df8090cf60550923546e0d2e87531d02121f43233`
 (historical FLUX), and
-`da384a37dc7a36b895a55d0c60d2c042b594704b89a69bc543bb4c524d57c043`
+`fc9a13208d74bb9a8b0f0d8d19646687216ac19d6fe12e0cff7612a5ef7a0c11`
 (metrics/blends).
 The two-GPU launcher, concurrent bundle, and durable logging wrapper hashes are
-`649a49759875163e999c3c6bdb606859dbbec56c31248aacdeee5779664f4076`,
+`2235fbfc2dd12c2c4afe99589c22eb1e67b699e85ce62b5c752ec0276f9fca95`,
 `733b67c73d4f95595ebb3289a1dda63e7c19f077f9199fd30a9cb89548436a1b`,
-and `0f88c11e4addc3649e5271c4c2e3e3a460e1c72fd9df5775e4d3919c4d9f177c`.
+and `3cf889c3b3d1b918d203621d62a9dfc226f8b6c15c36428fead74ee9b8a09e3d`.
+
+A pre-launch dimension audit found that all 18 outer SICE records are 8.30 to
+24.00 megapixels, contradicting v1's assertion that none exceeded 1.048576
+megapixels. No GPU attempt had started. The v1 entry is therefore preserved as
+`killed_pre_inference_dimension_contract_mismatch`; v1b applies the released
+FoundIR 1024/512 overlap policy to the generalist, bounded 512-pixel specialist
+tiling, and a disclosed Lanczos downsample/restore policy only to the historical
+synthetic FLUX baseline. Every saved proposal still has exact native dimensions.
+Nineteen focused CPU tests cover the dimension-safe policies and prior gates.
 
 ## Exact next actions
 
@@ -139,7 +150,7 @@ and `0f88c11e4addc3649e5271c4c2e3e3a460e1c72fd9df5775e4d3919c4d9f177c`.
 | Gate | Status | Result identity |
 |---|---|---|
 | 1. Protocol/development freeze | passed | `reports/foundir_lowlight_gate1_result_v1.json` |
-| 2. Proposal/ceiling lattice | in progress; CPU stage passed | `reports/foundir_lowlight_gate2_photometric_result_v1.json` |
+| 2. Proposal/ceiling lattice | in progress; CPU passed, GPU v1b pending | `reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json` |
 | 3. Compact control/causal Qwen | pending | pending |
 | 4. FLUX endpoint decision | pending | pending |
 | 5. Optional budget/full-scale winner | pending | pending |

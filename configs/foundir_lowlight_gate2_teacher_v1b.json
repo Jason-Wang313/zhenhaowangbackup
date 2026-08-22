@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "contract_id": "foundir_lowlight_gate2_released_teachers_v1b",
+  "frozen_at_utc": "2026-08-22",
+  "supersedes": {"path": "configs/foundir_lowlight_gate2_teacher_v1.json", "sha256": "081a60312e36918a0d486c7d9915cf98643b05a84c6c715ebae88e4166baad51", "reason": "pre_inference_dimension_audit_found_18_sice_outer_records_above_whole_image_budget"},
+  "gate1_commit": "fb5c44af412593e9bdd9b2c21a033cfb639cc496",
+  "development_manifest": "manifests/foundir_lowlight_development_contract_v1.csv",
+  "development_manifest_sha256": "01ea1bcc2c4a9166188c5852b20a45b7ce828b47c043b4ca1abbdc3aa994b200",
+  "role": "outer_development",
+  "record_order": "exact filtered manifest order",
+  "runtime": {
+    "python": ".conda/gpu-train-stable/bin/python",
+    "extra_packages": ".tools/foundir-runtime",
+    "device_count": 1,
+    "seed": 10,
+    "deterministic_algorithms": false,
+    "determinism_reason": "released CUDA operators are retained; fixed seed, order, checkpoint, tiling order, and one-device execution are frozen",
+    "output_directory": "checkpoints/foundir_lowlight_gate2_teachers_v1b"
+  },
+  "generalist": {
+    "repository": "third_party/foundir",
+    "checkpoint": "third_party/foundir/premodel/model-2000.pt",
+    "checkpoint_sha256": "2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9",
+    "state": "ema_model",
+    "sampling_steps": 4,
+    "ddim_eta": 0.0,
+    "sum_scale": 0.01,
+    "delta_end": 0.0014,
+    "padding_multiple": 8,
+    "large_image_policy": {"tile_size": 1024, "overlap": 512, "activation_max_pixels": 1048576, "merge": "uniform_overlap_average_matching_released_im2overlap_policy"}
+  },
+  "specialist": {
+    "repository": "third_party/foundir/specialist_model",
+    "checkpoint": "third_party/foundir/specialist_model/ckpt/lowlight.pth",
+    "checkpoint_sha256": "f834248e145d020d5a02f257b7ceb383b579add2522932938b3e1e0bd460abe6",
+    "input": "saved_reloaded_generalist_uint8_rgb",
+    "raw_input_direct_route_forbidden": true,
+    "padding_multiple": 128,
+    "padding_mode": "reflect",
+    "large_image_policy": {"tile_size": 512, "overlap": 0, "activation_max_pixels": 262144, "merge": "uniform_overlap_average"}
+  },
+  "outputs": {
+    "generalist_manifest": "manifests/foundir_lowlight_gate2_generalist_v1b.csv",
+    "cascade_manifest": "manifests/foundir_lowlight_gate2_cascade_v1b.csv",
+    "result": "reports/foundir_lowlight_gate2_teacher_result_v1b.json"
+  },
+  "license_and_overlap": "configs/foundir_lowlight_teacher_contract_v1.json",
+  "protected_foundir_pixels_allowed": false
+}

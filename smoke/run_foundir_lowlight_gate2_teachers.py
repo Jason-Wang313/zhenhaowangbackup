@@ -19,9 +19,11 @@ from typing import Mapping
 import numpy as np
 from PIL import Image
 
+from lowlight_restoration.representation_ceiling import reconstruct_tiled_average
+
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CONFIG = ROOT / "configs/foundir_lowlight_gate2_teacher_v1.json"
+DEFAULT_CONFIG = ROOT / "configs/foundir_lowlight_gate2_teacher_v1b.json"
 
 
 def sha256(path: Path) -> str:
@@ -56,6 +58,10 @@ def load_rgb(row: Mapping[str, str], key: str) -> np.ndarray:
 def quantize(tensor) -> np.ndarray:
     array = tensor.detach().float().clamp(0, 1).mul(255).round().byte()
     return np.ascontiguousarray(array.permute(1, 2, 0).cpu().numpy())
+
+
+def quantize_array(image: np.ndarray) -> np.ndarray:
+    return np.ascontiguousarray(np.rint(np.clip(image, 0.0, 255.0)).astype(np.uint8))
 
 
 def png_bytes(image: np.ndarray) -> bytes:
@@ -149,21 +155,34 @@ def run_generalist(config: dict, rows: list[dict[str, str]], device) -> tuple[li
     peak = 0
     for index, row in enumerate(rows):
         source = load_rgb(row, "input_path")
-        tensor = torch.from_numpy(source.transpose(2, 0, 1).copy()).unsqueeze(0).to(device=device, dtype=torch.float32) / 255.0
-        tensor, height, width = pad_tensor(tensor, int(config["generalist"]["padding_multiple"]))
+        height, width = source.shape[:2]
+        policy = config["generalist"]["large_image_policy"]
+
+        def process_tile(tile: np.ndarray) -> np.ndarray:
+            tensor = torch.from_numpy(tile.transpose(2, 0, 1).copy()).unsqueeze(0).to(device=device, dtype=torch.float32) / 255.0
+            tensor, tile_height, tile_width = pad_tensor(tensor, int(config["generalist"]["padding_multiple"]))
+            with torch.inference_mode():
+                sequence = model.sample(tensor, batch_size=1, last=True, task=row["input_path"])
+                prediction = sequence[-1][0, :, :tile_height, :tile_width]
+            return quantize(prediction).astype(np.float32)
+
         torch.cuda.reset_peak_memory_stats(device); torch.cuda.synchronize(device)
         started = time.perf_counter()
-        with torch.inference_mode():
-            sequence = model.sample(tensor, batch_size=1, last=True, task=row["input_path"])
-            prediction = sequence[-1][0, :, :height, :width]
+        if height * width > int(policy["activation_max_pixels"]):
+            reconstructed, tile_metadata = reconstruct_tiled_average(
+                source, process_tile, tile_size=int(policy["tile_size"]), overlap=int(policy["overlap"])
+            )
+            image = quantize_array(reconstructed)
+        else:
+            image = quantize_array(process_tile(source))
+            tile_metadata = {"tile_count": 1}
         torch.cuda.synchronize(device)
         elapsed = time.perf_counter() - started
         total_seconds += elapsed; peak = max(peak, int(torch.cuda.max_memory_allocated(device)))
-        image = quantize(prediction)
         path = output_root / output_stem(index, row)
         digest = save_once(path, image)
-        results.append({"candidate_id": "P1_FOUNDIR_GENERALIST", "family": row["family"], "group_id": row["group_id"], "record_id": row["record_id"], "target_path": row["target_path"], "output_path": str(path.relative_to(ROOT)), "output_sha256": digest, "width": width, "height": height, "seconds": elapsed})
-        print(f"FOUNDIR_GENERALIST_PROGRESS records={index + 1}/{len(rows)} seconds={elapsed:.4f}", flush=True)
+        results.append({"candidate_id": "P1_FOUNDIR_GENERALIST", "family": row["family"], "group_id": row["group_id"], "record_id": row["record_id"], "target_path": row["target_path"], "output_path": str(path.relative_to(ROOT)), "output_sha256": digest, "width": width, "height": height, "tile_count": tile_metadata["tile_count"], "seconds": elapsed})
+        print(f"FOUNDIR_GENERALIST_PROGRESS records={index + 1}/{len(rows)} tiles={tile_metadata['tile_count']} seconds={elapsed:.4f}", flush=True)
     del model; torch.cuda.empty_cache()
     return results, {"total_seconds": total_seconds, "mean_seconds": total_seconds / len(rows), "peak_memory_bytes": peak}
 
@@ -197,20 +216,33 @@ def run_specialist(config: dict, rows: list[dict[str, str]], device) -> tuple[li
             raise RuntimeError(f"missing generalist proposal: {input_path}")
         with Image.open(input_path) as opened:
             source = np.asarray(opened.convert("RGB"), dtype=np.uint8)
-        tensor = torch.from_numpy(source.transpose(2, 0, 1).copy()).unsqueeze(0).to(device=device, dtype=torch.float32) / 255.0
-        tensor, height, width = pad_tensor(tensor, int(config["specialist"]["padding_multiple"]))
+        height, width = source.shape[:2]
+        policy = config["specialist"]["large_image_policy"]
+
+        def process_tile(tile: np.ndarray) -> np.ndarray:
+            tensor = torch.from_numpy(tile.transpose(2, 0, 1).copy()).unsqueeze(0).to(device=device, dtype=torch.float32) / 255.0
+            tensor, tile_height, tile_width = pad_tensor(tensor, int(config["specialist"]["padding_multiple"]))
+            with torch.inference_mode():
+                prediction = model.restoration_network(tensor)[:, :, :tile_height, :tile_width]
+            return quantize(prediction[0]).astype(np.float32)
+
         torch.cuda.reset_peak_memory_stats(device); torch.cuda.synchronize(device)
         started = time.perf_counter()
-        with torch.inference_mode():
-            prediction = model.restoration_network(tensor)[:, :, :height, :width]
+        if height * width > int(policy["activation_max_pixels"]):
+            reconstructed, tile_metadata = reconstruct_tiled_average(
+                source, process_tile, tile_size=int(policy["tile_size"]), overlap=int(policy["overlap"])
+            )
+            image = quantize_array(reconstructed)
+        else:
+            image = quantize_array(process_tile(source))
+            tile_metadata = {"tile_count": 1}
         torch.cuda.synchronize(device)
         elapsed = time.perf_counter() - started
         total_seconds += elapsed; peak = max(peak, int(torch.cuda.max_memory_allocated(device)))
-        image = quantize(prediction[0])
         path = output_root / output_stem(index, row)
         digest = save_once(path, image)
-        results.append({"candidate_id": "P1_FOUNDIR_CASCADE", "family": row["family"], "group_id": row["group_id"], "record_id": row["record_id"], "target_path": row["target_path"], "input_proposal_path": str(input_path.relative_to(ROOT)), "output_path": str(path.relative_to(ROOT)), "output_sha256": digest, "width": width, "height": height, "seconds": elapsed})
-        print(f"FOUNDIR_SPECIALIST_PROGRESS records={index + 1}/{len(rows)} seconds={elapsed:.4f}", flush=True)
+        results.append({"candidate_id": "P1_FOUNDIR_CASCADE", "family": row["family"], "group_id": row["group_id"], "record_id": row["record_id"], "target_path": row["target_path"], "input_proposal_path": str(input_path.relative_to(ROOT)), "output_path": str(path.relative_to(ROOT)), "output_sha256": digest, "width": width, "height": height, "tile_count": tile_metadata["tile_count"], "seconds": elapsed})
+        print(f"FOUNDIR_SPECIALIST_PROGRESS records={index + 1}/{len(rows)} tiles={tile_metadata['tile_count']} seconds={elapsed:.4f}", flush=True)
     del model; torch.cuda.empty_cache()
     return results, {"total_seconds": total_seconds, "mean_seconds": total_seconds / len(rows), "peak_memory_bytes": peak}
 

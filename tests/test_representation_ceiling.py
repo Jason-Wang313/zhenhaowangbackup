@@ -9,6 +9,7 @@ from lowlight_restoration.representation_ceiling import (
     centered_crop,
     high_frequency_diagnostic,
     reconstruct_tiled,
+    reconstruct_tiled_average,
     seam_error_ratio,
     tile_origins,
 )
@@ -72,6 +73,14 @@ class RepresentationCeilingTests(unittest.TestCase):
         np.testing.assert_allclose(output, image, atol=1e-6)
         self.assertEqual(metadata["tile_count"], 12)
         self.assertAlmostEqual(seam_error_ratio(image, output, metadata), 1.0)
+
+    def test_uniform_average_tiling_preserves_constant_transform(self) -> None:
+        image = np.arange(17 * 19 * 3, dtype=np.float32).reshape(17, 19, 3)
+        output, metadata = reconstruct_tiled_average(
+            image, lambda tile: tile + 3.0, tile_size=8, overlap=4
+        )
+        np.testing.assert_allclose(output, image + 3.0, rtol=0.0, atol=1e-5)
+        self.assertEqual(metadata["merge"], "uniform_overlap_average")
 
     def test_frequency_diagnostic_detects_blur(self) -> None:
         image = np.zeros((32, 32, 3), dtype=np.float32)
