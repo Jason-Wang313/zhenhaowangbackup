@@ -8,12 +8,13 @@ SESSION="lowlight_vae_ceiling_v2"
 TMUX_SERVER_LABEL="zhenhaowang_jobs"
 LOG="$ROOT/logs/lowlight_vae_ceiling_v2.log"
 OUTPUT="$ROOT/checkpoints/lowlight_vae_ceiling_v2"
-DEVICE_SET="${CUDA_VISIBLE_DEVICES:-}"
+DEVICE_SET="${CUDA_VISIBLE_DEVICES:-0,1}"
 
 if [[ "$DEVICE_SET" != "0,1" ]]; then
   echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1" >&2
   exit 1
 fi
+export CUDA_VISIBLE_DEVICES="$DEVICE_SET"
 if [[ ! -f "$TMUX_HELPERS" || ! -f "$RUNNER" ]]; then
   echo "ERROR: tmux helpers or VAE-ceiling runner are unavailable" >&2
   exit 1

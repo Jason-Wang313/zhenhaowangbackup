@@ -51,6 +51,8 @@ test -x "$TMUX_BIN_PATH"
     def test_vae_launcher_has_current_pane_fallback_without_nested_tmux(self) -> None:
         launcher = ROOT / "smoke/launch_lowlight_vae_ceiling_tmux.sh"
         text = launcher.read_text()
+        self.assertIn('DEVICE_SET="${CUDA_VISIBLE_DEVICES:-0,1}"', text)
+        self.assertIn('export CUDA_VISIBLE_DEVICES="$DEVICE_SET"', text)
         self.assertIn('elif [[ -n "${TMUX:-}" ]]', text)
         self.assertIn('launch_mode="current_tmux_pane"', text)
         self.assertIn("LOWLIGHT_VAE_CEILING_CURRENT_TMUX_FALLBACK", text)
