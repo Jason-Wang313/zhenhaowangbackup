@@ -313,3 +313,39 @@ cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang && CUDA_VISIBLE_DEVICE
 Expected wall time is approximately 10--20 minutes. If correction 1 fails,
 run residual attribution before deciding whether correction 2 is scientifically
 justified. Gate 4 remains blocked until the frozen causal threshold passes.
+
+## Continuation update — correction 1 failed; correction 2 not justified
+
+Correction 1 completed at `2026-08-22T14:26:14Z` without an infrastructure
+failure. It used all four H100s, produced the 12-parameter checkpoint, 490 new
+Qwen/shuffled outputs, a 980-row mixed manifest with byte-identical frozen
+measured/oracle arms, and all frozen metrics. The scientific causal gate
+failed. Qwen PSNR gain over measured was only
+`+0.00883/-0.00213/+0.02845 dB` on LOL-v2/SDSD/SICE and gain over shuffled was
+`-0.00130/-0.00561/+0.00691 dB`. LPIPS stayed approximately neutral, but the
+correction recovered only `0.42%/-0.11%/3.96%` of oracle headroom.
+
+The learned slopes collapsed toward zero, and correct Qwen beat shuffled on
+only 45.1%/48.8%/38.9% of records. A training-only five-fold grouped sweep of
+posterior temperatures `0.05--2.0` found no value that improved oracle-tone
+prediction on both SDSD and SICE; the best aggregate improvement was only
+`+0.585%` and regressed SDSD. Tone direction is also family-dependent.
+Correction 2 is therefore not scientifically justified from the existing
+cached signal. Spending it on temperature, another decoder, the unstable 32-D
+visual projection, or spatial injection would be an unbounded module search.
+
+Gate 4 remains blocked. The exact next action requires a user/advisor decision:
+either acquire objective real-world degradation/formation supervision that
+changes the Qwen information, or formally decouple the restoration-SOTA path
+from the advisor-directed causal-Qwen claim. Do not start FLUX or access
+protected FoundIR pixels under the current frozen strategy.
+
+Full result and attribution:
+`reports/foundir_lowlight_gate3_correction1_result_2026-08-22.md`.
+
+Evidence SHA-256 values:
+
+- checkpoint: `6f23fb7cc0a5e6e0e1abe20d69c4080babb44bd7f27f74f2af9b25b4f6db20c2`;
+- prediction manifest: `649eeee3dea3988610c70e1c8647000b080962f4ac651b7f0e77588a4b2a9856`;
+- metric rows: `a02520808a50b40607b9c4c764acf8b8b6cc1128c29b5242359f369da20de50d`;
+- result JSON: `90bf88f1bea05887b415810c920747abbaac713152503a5690894e8487269e68`.
