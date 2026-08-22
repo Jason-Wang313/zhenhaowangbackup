@@ -106,14 +106,20 @@ ceilings. It does not access protected FoundIR pixels.
 
 The currently available GPU host was reported as four NVIDIA H100 80 GB GPUs,
 55 CPU cores, and 900 GB RAM/shared memory. This is compatible with the
-architecture-9.0 CUDA extensions. Gate 2 deliberately selects one physical GPU
-with `CUDA_VISIBLE_DEVICES=0`; the process therefore sees exactly one device
-while the other three remain available. The frozen GPU runner SHA-256 values
+architecture-9.0 CUDA extensions. Gate 2 exposes GPUs 0 and 1 but preserves
+the frozen one-device semantics inside each model process: the teacher pass
+runs on GPU 0 while historical FLUX runs concurrently on GPU 1, then metrics
+run on GPU 0 after both proposal caches pass. GPUs 2 and 3 remain available.
+The frozen Python runner SHA-256 values
 are `db1218d442949f2ceb20657ebe8bc9e34bb63fff1f1b73b04379214349bf1038`
 (teachers), `ee57ab3717e5c889f4cc3377e12ae1bc0546137b96aa06df82c5b10a0e47467e`
 (historical FLUX), and
 `da384a37dc7a36b895a55d0c60d2c042b594704b89a69bc543bb4c524d57c043`
 (metrics/blends).
+The two-GPU launcher, concurrent bundle, and durable logging wrapper hashes are
+`649a49759875163e999c3c6bdb606859dbbec56c31248aacdeee5779664f4076`,
+`733b67c73d4f95595ebb3289a1dda63e7c19f077f9199fd30a9cb89548436a1b`,
+and `0f88c11e4addc3649e5271c4c2e3e3a460e1c72fd9df5775e4d3919c4d9f177c`.
 
 ## Exact next actions
 
@@ -121,10 +127,10 @@ are `db1218d442949f2ceb20657ebe8bc9e34bb63fff1f1b73b04379214349bf1038`
    workspace-local WaveMamba CUDA dependencies are compiled for architecture
    9.0 and the generalist checkpoint passed strict CPU loading; the launcher
    performs the remaining GPU imports before starting inference.
-2. Launch `smoke/launch_foundir_lowlight_gate2_gpu.sh` once on one visible
-   H100/H200. The launcher performs three environment/GPU preflights before
-   detaching and uses append-only attempt logs, so a failed attempt does not
-   overwrite evidence.
+2. Launch `smoke/launch_foundir_lowlight_gate2_gpu.sh` once with two visible
+   H100/H200 GPUs. The launcher performs three environment/GPU preflights
+   before detaching and uses append-only attempt logs plus durable terminal
+   markers, so a failed attempt does not overwrite evidence.
 3. On Gate 2 completion, apply the frozen promotion/kill decision and proceed
    to Gate 3 only if allowed by the strategy stop rules.
 

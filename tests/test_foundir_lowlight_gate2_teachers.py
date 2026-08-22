@@ -22,6 +22,18 @@ class Gate2TeacherTests(unittest.TestCase):
         self.assertNotIn("/", first)
         self.assertTrue(first.startswith("0007_sdsd_"))
 
+    def test_launcher_supports_parallel_single_gpu_processes_with_durable_status(self):
+        launcher = (ROOT / "smoke/launch_foundir_lowlight_gate2_gpu.sh").read_text()
+        bundle = (ROOT / "smoke/run_foundir_lowlight_gate2_gpu_bundle.sh").read_text()
+        logged = (ROOT / "smoke/run_foundir_lowlight_gate2_gpu_logged.sh").read_text()
+        self.assertIn("one or two GPU indices", launcher)
+        self.assertIn('CUDA_VISIBLE_DEVICES="$teacher_device"', bundle)
+        self.assertIn('CUDA_VISIBLE_DEVICES="$flux_device"', bundle)
+        self.assertIn("FOUNDIR_LOWLIGHT_GATE2_PARALLEL_PROPOSALS_START", bundle)
+        self.assertIn("FOUNDIR_LOWLIGHT_GATE2_TERMINAL_PASS", logged)
+        self.assertIn("FOUNDIR_LOWLIGHT_GATE2_TERMINAL_FAIL", logged)
+        self.assertIn("FOUNDIR_LOWLIGHT_GATE2_RUN_END", logged)
+
 
 if __name__ == "__main__":
     unittest.main()
