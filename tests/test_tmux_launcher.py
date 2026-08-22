@@ -59,6 +59,12 @@ test -x "$TMUX_BIN_PATH"
         self.assertIn(
             'exec env CUDA_VISIBLE_DEVICES="$DEVICE_SET" bash "$RUNNER"', text
         )
+        self.assertIn('launch_mode="detached_nohup"', text)
+        self.assertIn("LOWLIGHT_VAE_CEILING_DETACHED_NOHUP_FALLBACK", text)
+        self.assertIn(
+            'nohup env CUDA_VISIBLE_DEVICES="$DEVICE_SET" bash "$RUNNER"', text
+        )
+        self.assertIn('kill -0 "$job_pid"', text)
 
 
 if __name__ == "__main__":

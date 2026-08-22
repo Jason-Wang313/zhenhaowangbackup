@@ -28,8 +28,9 @@ elif [[ -n "${TMUX:-}" ]]; then
   TMUX_BIN_PATH=""
   echo "LOWLIGHT_VAE_CEILING_CURRENT_TMUX_FALLBACK"
 else
-  echo "ERROR: no tmux binary is available and this shell is not inside tmux" >&2
-  exit 1
+  launch_mode="detached_nohup"
+  TMUX_BIN_PATH=""
+  echo "LOWLIGHT_VAE_CEILING_DETACHED_NOHUP_FALLBACK"
 fi
 bash "$RUNNER" --check
 
@@ -51,6 +52,22 @@ if [[ "$launch_mode" == "current_tmux_pane" ]]; then
   echo "The full diagnostic is starting in this existing tmux pane."
   echo "Detach safely with Ctrl-b then d; do not press Ctrl-c."
   exec env CUDA_VISIBLE_DEVICES="$DEVICE_SET" bash "$RUNNER"
+fi
+if [[ "$launch_mode" == "detached_nohup" ]]; then
+  bash "$RUNNER" --preflight
+  nohup env CUDA_VISIBLE_DEVICES="$DEVICE_SET" bash "$RUNNER" \
+    </dev/null >/dev/null 2>&1 &
+  job_pid="$!"
+  sleep 2
+  if ! kill -0 "$job_pid" 2>/dev/null; then
+    echo "ERROR: detached VAE-ceiling process exited during launch" >&2
+    echo "Inspect: tail -n 100 $LOG" >&2
+    exit 1
+  fi
+  echo "LOWLIGHT_VAE_CEILING_DETACHED_LAUNCHED pid=$job_pid"
+  echo "Persistent log: tail -n 100 -f $LOG"
+  echo "Immutable output: $OUTPUT"
+  exit 0
 fi
 if tmux_job_server has-session -t "$SESSION" 2>/dev/null; then
   echo "LOWLIGHT_VAE_CEILING_SESSION_EXISTS session=$SESSION"
