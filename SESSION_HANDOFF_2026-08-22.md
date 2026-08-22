@@ -30,11 +30,10 @@ workspace and advisor authority remain `agents.md`.
 
 Gate 1 — protocol and development freeze: **passed**.
 
-Gate 2 — proposal/ceiling lattice: **in progress; CPU photometric lattice
-passed, the dimension-invalid GPU v1 contract was killed before inference,
-and the first dimension-safe v1b GPU attempt preserved its completed caches
-but failed before specialist inference because its preflight was not fail
-closed**.
+Gate 2 — proposal/ceiling lattice: **passed after cache-preserving recovery**.
+
+Gate 3 — compact control and credible VLM gate: **authorized; exact compact
+control contract and combined four-H100 execution bundle pending**.
 
 Verified at start:
 
@@ -169,24 +168,44 @@ all 245 generalist outputs, runs only the missing cascade, consumes the
 completed historical result, and then runs metrics. It never reruns the
 generalist or historical FLUX.
 
+The corrected resume passed at `2026-08-22T11:35:49Z`. The complete result is
+`reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json`, SHA-256
+`18ed75980d574d223162478a23ef1c41c0dbc52762ffae8e4b10edc3dc13f711`.
+It contains 2,940 metric rows for 245 records x 12 candidates. Independent
+rehashing verified all 245 generalist, cascade, and historical outputs and
+their native dimensions. The maximum literal/`pyiqa` PSNR disagreement was
+`0.00015742 dB`; the two LPIPS paths were identical in the frozen environment.
+
+The provisional conservative base is `P1_FOUNDIR_CASCADE`: equal-family PSNR
+`14.7152 dB`, worst-family PSNR `11.5087 dB`, equal-family LPIPS `0.3410`, and
+worst-family LPIPS `0.4646`. It improves over raw input on every family but
+does not pass the stricter teacher-value comparison against fixed exposure on
+SDSD and SICE, so teacher-at-inference remains conditional rather than
+promoted. The input-only photometric predictor is killed. Target-accessing
+convex/frequency fusion has more than `+0.5 dB` PSNR headroom on every family
+but fails the all-family LPIPS non-regression rule, so learned fusion is not
+admitted at Gate 2. Full interpretation is frozen in
+`reports/foundir_lowlight_gate2_result_2026-08-22.md`.
+
 ## Exact next actions
 
-1. Commit and push the fail-closed dependency correction, resume scripts, and
-   completed generalist manifest.
-2. Launch `CUDA_VISIBLE_DEVICES=0,1 bash
-   smoke/launch_foundir_lowlight_gate2_gpu_resume.sh` once. It uses GPU 0 for
-   the missing specialist and metrics and preserves the historical FLUX work
-   already completed on GPU 1.
-3. On Gate 2 completion, apply the frozen promotion/kill decision and proceed
-   to Gate 3 only if allowed by the strategy stop rules.
+1. Freeze, test, commit, and push Gate 2 evidence and the Gate 3 compact-control
+   contract before any new training.
+2. Implement the mandatory compact raw-to-restored deterministic residual
+   control and combined Gate 3 bundle. Use all four H100s efficiently by
+   running compact-control training and the already-frozen two-GPU Qwen
+   exposure diagnostic concurrently only when their scientific schedules are
+   independent and storage capacity permits.
+3. Run the frozen ordinal and downstream causal matrix. Stop for review before
+   Gate 4 if Qwen misses the two-correction causal gate.
 
 ## Gate progression
 
 | Gate | Status | Result identity |
 |---|---|---|
 | 1. Protocol/development freeze | passed | `reports/foundir_lowlight_gate1_result_v1.json` |
-| 2. Proposal/ceiling lattice | in progress; first GPU attempt cached generalist/historical, specialist resume prepared | `reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json` |
-| 3. Compact control/causal Qwen | pending | pending |
+| 2. Proposal/ceiling lattice | passed; cascade is provisional base, photometric predictor killed | `reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json` |
+| 3. Compact control/causal Qwen | authorized; contract pending | pending |
 | 4. FLUX endpoint decision | pending | pending |
 | 5. Optional budget/full-scale winner | pending | pending |
 | 6. Replication/deployment freeze | pending | pending |

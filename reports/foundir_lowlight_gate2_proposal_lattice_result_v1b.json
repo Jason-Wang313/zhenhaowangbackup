@@ -1,0 +1,816 @@
+{
+  "aggregate": {
+    "B_CONVEX_ORACLE": {
+      "equal_family_lpips": 0.32219269735900596,
+      "equal_family_psnr": 17.517337611462384,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.35076652786994095,
+            "lower": 0.28614792737495437,
+            "upper": 0.4246100110354488
+          },
+          "psnr_conservative": {
+            "estimate": 15.31971483877468,
+            "lower": 13.991988422973721,
+            "upper": 16.737619080936934
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.5921267117944983,
+            "lower": 0.5393106911265539,
+            "upper": 0.64304047293048
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.18649964350461962,
+            "lower": 0.15796220039874315,
+            "upper": 0.21620558325052258
+          },
+          "psnr_conservative": {
+            "estimate": 23.795252983093263,
+            "lower": 21.70747565441132,
+            "upper": 25.89661063861847
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.7777640910379877,
+            "lower": 0.7458831677364385,
+            "upper": 0.8065672401570347
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.42931192070245744,
+            "lower": 0.35238917540758846,
+            "upper": 0.5107391629181802
+          },
+          "psnr_conservative": {
+            "estimate": 13.43704501251921,
+            "lower": 11.268520680472701,
+            "upper": 15.626556019927822
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.5256027002697651,
+            "lower": 0.42076395111462495,
+            "upper": 0.623634726715869
+          }
+        }
+      },
+      "worst_family_lpips": 0.42931192070245744,
+      "worst_family_psnr": 13.43704501251921
+    },
+    "B_FREQUENCY_ORACLE": {
+      "equal_family_lpips": 0.34065418655792506,
+      "equal_family_psnr": 16.915002771324556,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.32510678749639677,
+            "lower": 0.28279395870254326,
+            "upper": 0.37004283135356625
+          },
+          "psnr_conservative": {
+            "estimate": 15.48352013830119,
+            "lower": 14.02267907676129,
+            "upper": 16.89311830405899
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.6369065568591878,
+            "lower": 0.5909038965130526,
+            "upper": 0.6815512245558326
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.20482214653491976,
+            "lower": 0.1840179015368223,
+            "upper": 0.22580094684064386
+          },
+          "psnr_conservative": {
+            "estimate": 22.245094596862792,
+            "lower": 20.414541785049437,
+            "upper": 24.083178784370418
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.7945348012341986,
+            "lower": 0.7678686739409382,
+            "upper": 0.8204153089047089
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.4920336256424586,
+            "lower": 0.41057586899648113,
+            "upper": 0.5802210824191568
+          },
+          "psnr_conservative": {
+            "estimate": 13.016393578809694,
+            "lower": 11.047638173103332,
+            "upper": 14.889286967397979
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.5297757685571054,
+            "lower": 0.430630838174293,
+            "upper": 0.6226561569630175
+          }
+        }
+      },
+      "worst_family_lpips": 0.4920336256424586,
+      "worst_family_psnr": 13.016393578809694
+    },
+    "D_INPUT_ONLY_BOUNDED_PHOTOMETRIC": {
+      "equal_family_lpips": 0.9286341789890017,
+      "equal_family_psnr": 7.6556886250372385,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.9646307395881476,
+            "lower": 0.9329003035738789,
+            "upper": 0.9918379639339192
+          },
+          "psnr_conservative": {
+            "estimate": 6.493395354276046,
+            "lower": 5.9863336793597774,
+            "upper": 7.020017442133161
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.017920852598092243,
+            "lower": 0.008703759264355926,
+            "upper": 0.030636708727868264
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.8349734399318695,
+            "lower": 0.7728783788859844,
+            "upper": 0.8852558101654052
+          },
+          "psnr_conservative": {
+            "estimate": 10.879750252250304,
+            "lower": 9.315535815887051,
+            "upper": 12.555270068830781
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.06377699743011471,
+            "lower": 0.02014235857560265,
+            "upper": 0.12475839957081854
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.9862983574469883,
+            "lower": 0.9419298670937617,
+            "upper": 1.0274825768421092
+          },
+          "psnr_conservative": {
+            "estimate": 5.593920268585365,
+            "lower": 5.1748384710817925,
+            "upper": 6.116165539862371
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.040841918784301025,
+            "lower": 0.013690594404008487,
+            "upper": 0.08078787228532966
+          }
+        }
+      },
+      "worst_family_lpips": 0.9862983574469883,
+      "worst_family_psnr": 5.593920268585365
+    },
+    "O1_EXPOSURE": {
+      "equal_family_lpips": 0.41873702042159583,
+      "equal_family_psnr": 17.16502296882791,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.5781201427536352,
+            "lower": 0.4900301641078274,
+            "upper": 0.6768631892451857
+          },
+          "psnr_conservative": {
+            "estimate": 15.866649182102433,
+            "lower": 14.764412624067262,
+            "upper": 16.978858588361078
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.3732022687263505,
+            "lower": 0.32662651493415107,
+            "upper": 0.41900002126605934
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.22972291976213455,
+            "lower": 0.19342554528862238,
+            "upper": 0.26541221152246
+          },
+          "psnr_conservative": {
+            "estimate": 23.25139334106445,
+            "lower": 21.304049479866023,
+            "upper": 25.146897410774226
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.7378452824842793,
+            "lower": 0.7072890656754044,
+            "upper": 0.7692096831672646
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.4483679987490177,
+            "lower": 0.36389932805672287,
+            "upper": 0.5385022324323653
+          },
+          "psnr_conservative": {
+            "estimate": 12.377026383316835,
+            "lower": 10.470373836984646,
+            "upper": 14.425390663219131
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.47051636471711145,
+            "lower": 0.3646046256262,
+            "upper": 0.579071969342246
+          }
+        }
+      },
+      "worst_family_lpips": 0.5781201427536352,
+      "worst_family_psnr": 12.377026383316835
+    },
+    "O2_MONOTONE_TONE_WB": {
+      "equal_family_lpips": 0.32559865308557306,
+      "equal_family_psnr": 25.740838291660737,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.43061428493522674,
+            "lower": 0.35894743385183886,
+            "upper": 0.5091909195053087
+          },
+          "psnr_conservative": {
+            "estimate": 24.214516090599083,
+            "lower": 23.074105395284956,
+            "upper": 25.348580254501854
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.5499510380187879,
+            "lower": 0.5047473553643774,
+            "upper": 0.5923732619999837
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.19110490185022352,
+            "lower": 0.15807522746175529,
+            "upper": 0.22486626405268906
+          },
+          "psnr_conservative": {
+            "estimate": 30.165301513671874,
+            "lower": 29.209096830368043,
+            "upper": 31.08574151000977
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.788254432983611,
+            "lower": 0.7663454530441927,
+            "upper": 0.8104804629149064
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.35507677247126895,
+            "lower": 0.28123961384097734,
+            "upper": 0.431174919642508
+          },
+          "psnr_conservative": {
+            "estimate": 22.842697270711263,
+            "lower": 20.5635133711497,
+            "upper": 25.277689040501908
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.699470581309487,
+            "lower": 0.6315369246982377,
+            "upper": 0.767836390176216
+          }
+        }
+      },
+      "worst_family_lpips": 0.43061428493522674,
+      "worst_family_psnr": 22.842697270711263
+    },
+    "O3_TONE_WB_SMOOTH_ILLUMINATION": {
+      "equal_family_lpips": 0.32486393209967074,
+      "equal_family_psnr": 25.81919521723742,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.4289098191859242,
+            "lower": 0.3588052544303662,
+            "upper": 0.5060133126011588
+          },
+          "psnr_conservative": {
+            "estimate": 24.35491916942264,
+            "lower": 23.235072980054444,
+            "upper": 25.47394365004407
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.5527758516232079,
+            "lower": 0.509201598581486,
+            "upper": 0.5943223462916775
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.1907540881037712,
+            "lower": 0.15917262123227122,
+            "upper": 0.22608422664850944
+          },
+          "psnr_conservative": {
+            "estimate": 30.214051605224608,
+            "lower": 29.281589281463624,
+            "upper": 31.143543123245237
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.789151933575335,
+            "lower": 0.7672353217655685,
+            "upper": 0.8111573867896732
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.3549278890093167,
+            "lower": 0.28136764265596864,
+            "upper": 0.431781526406606
+          },
+          "psnr_conservative": {
+            "estimate": 22.88861487706502,
+            "lower": 20.588804392814637,
+            "upper": 25.2517387843132
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.6995342934593006,
+            "lower": 0.6253965489716617,
+            "upper": 0.7682017273984735
+          }
+        }
+      },
+      "worst_family_lpips": 0.4289098191859242,
+      "worst_family_psnr": 22.88861487706502
+    },
+    "O4_GAMMA_FULL_MATRIX": {
+      "equal_family_lpips": 0.34975532509577495,
+      "equal_family_psnr": 25.295235796053742,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.46177375658429315,
+            "lower": 0.38874598816145345,
+            "upper": 0.5415372567359492
+          },
+          "psnr_conservative": {
+            "estimate": 24.772909729876723,
+            "lower": 23.614085900160493,
+            "upper": 25.927553480552046
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.5832321495912579,
+            "lower": 0.5352878328491816,
+            "upper": 0.6290895839891196
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.2240037732720375,
+            "lower": 0.17977267996519805,
+            "upper": 0.2701995433568954
+          },
+          "psnr_conservative": {
+            "estimate": 28.99089468383789,
+            "lower": 27.778537311172485,
+            "upper": 30.200844250488277
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.7633761958386899,
+            "lower": 0.728146569762843,
+            "upper": 0.7961915265957643
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.363488445430994,
+            "lower": 0.2905855898559093,
+            "upper": 0.4395323621854186
+          },
+          "psnr_conservative": {
+            "estimate": 22.121902974446613,
+            "lower": 19.832921800613406,
+            "upper": 24.414930387338
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.6848018923792892,
+            "lower": 0.6137837112294962,
+            "upper": 0.7513173627336303
+          }
+        }
+      },
+      "worst_family_lpips": 0.46177375658429315,
+      "worst_family_psnr": 22.121902974446613
+    },
+    "P0_FIXED_TRAIN_MEAN_EXPOSURE": {
+      "equal_family_lpips": 0.4326907814281811,
+      "equal_family_psnr": 13.62461826190576,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.5863970555278551,
+            "lower": 0.5099771412110018,
+            "upper": 0.666066293996671
+          },
+          "psnr_conservative": {
+            "estimate": 9.431252310405858,
+            "lower": 8.756286219819645,
+            "upper": 10.125297852605748
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.2722909343175467,
+            "lower": 0.23123663613174372,
+            "upper": 0.3169788532206837
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.2521589999198913,
+            "lower": 0.22086756355762477,
+            "upper": 0.28325714517831796
+          },
+          "psnr_conservative": {
+            "estimate": 18.95900732658909,
+            "lower": 16.98252036308085,
+            "upper": 21.01756473111676
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.6712551139918694,
+            "lower": 0.6364825830150251,
+            "upper": 0.7061933556227042
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.45951628883679707,
+            "lower": 0.37928544152528043,
+            "upper": 0.5437994894757863
+          },
+          "psnr_conservative": {
+            "estimate": 12.48359514872233,
+            "lower": 10.420289126634598,
+            "upper": 14.55406172037124
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.47944318861154755,
+            "lower": 0.36902071731884467,
+            "upper": 0.5926530173426791
+          }
+        }
+      },
+      "worst_family_lpips": 0.5863970555278551,
+      "worst_family_psnr": 9.431252310405858
+    },
+    "P0_HISTORICAL_FLUX": {
+      "equal_family_lpips": 0.4693602394116764,
+      "equal_family_psnr": 14.079526419476599,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.5404599051831699,
+            "lower": 0.46291479214541315,
+            "upper": 0.6256300466316865
+          },
+          "psnr_conservative": {
+            "estimate": 12.665456071643522,
+            "lower": 11.477543993244394,
+            "upper": 13.807973493270888
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.38512187200897585,
+            "lower": 0.33509105633289726,
+            "upper": 0.43461372621828964
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.2558537212014198,
+            "lower": 0.22124147895425555,
+            "upper": 0.29110484909564255
+          },
+          "psnr_conservative": {
+            "estimate": 19.278306586895237,
+            "lower": 17.324039837388053,
+            "upper": 21.164645789909354
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.675720347352269,
+            "lower": 0.6317601581678367,
+            "upper": 0.7149759381617546
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.6117670918504396,
+            "lower": 0.5316387416919072,
+            "upper": 0.697909513103465
+          },
+          "psnr_conservative": {
+            "estimate": 10.294816599891035,
+            "lower": 9.095775162319653,
+            "upper": 11.522084651331417
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.3901550039588845,
+            "lower": 0.2896895961736867,
+            "upper": 0.4859678463837194
+          }
+        }
+      },
+      "worst_family_lpips": 0.6117670918504396,
+      "worst_family_psnr": 10.294816599891035
+    },
+    "P0_RAW": {
+      "equal_family_lpips": 0.5236259087555362,
+      "equal_family_psnr": 10.490213344666033,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.6865470793344833,
+            "lower": 0.6327503238154552,
+            "upper": 0.7452919038131608
+          },
+          "psnr_conservative": {
+            "estimate": 7.617482028918261,
+            "lower": 7.049804537719893,
+            "upper": 8.211417376802382
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.1418651074611455,
+            "lower": 0.12002904290333621,
+            "upper": 0.16607145737205165
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.3492283197641373,
+            "lower": 0.297252199229598,
+            "upper": 0.39935425011813647
+          },
+          "psnr_conservative": {
+            "estimate": 14.555656292389859,
+            "lower": 12.495386072940597,
+            "upper": 16.929505695143025
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.4550985580205266,
+            "lower": 0.39252412439309836,
+            "upper": 0.5236789437412751
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.5351023271679878,
+            "lower": 0.45226863108575344,
+            "upper": 0.6271967273578049
+          },
+          "psnr_conservative": {
+            "estimate": 9.297501712689979,
+            "lower": 8.273045411837725,
+            "upper": 10.239596762547517
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.34718035708240175,
+            "lower": 0.2592326243708143,
+            "upper": 0.42392403073739326
+          }
+        }
+      },
+      "worst_family_lpips": 0.6865470793344833,
+      "worst_family_psnr": 7.617482028918261
+    },
+    "P1_FOUNDIR_CASCADE": {
+      "equal_family_lpips": 0.3410269371974251,
+      "equal_family_psnr": 14.71521595885911,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.32885219463937926,
+            "lower": 0.2712340099371442,
+            "upper": 0.3939769098816416
+          },
+          "psnr_conservative": {
+            "estimate": 14.60979020335928,
+            "lower": 13.322692350415666,
+            "upper": 15.976765939773081
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.6084961873809944,
+            "lower": 0.5589237161785866,
+            "upper": 0.6596532817114549
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.2296650967001915,
+            "lower": 0.2017382265537977,
+            "upper": 0.25934730979055165
+          },
+          "psnr_conservative": {
+            "estimate": 18.027133529663086,
+            "lower": 16.66403517589569,
+            "upper": 19.426497966766355
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.6732344291898036,
+            "lower": 0.6107654271050996,
+            "upper": 0.7283850233016924
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.46456352025270464,
+            "lower": 0.3962090348824859,
+            "upper": 0.5394770191982388
+          },
+          "psnr_conservative": {
+            "estimate": 11.508724143554968,
+            "lower": 10.23940002769272,
+            "upper": 12.793622263669967
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.49651433765653047,
+            "lower": 0.41225339588064985,
+            "upper": 0.5763477528401595
+          }
+        }
+      },
+      "worst_family_lpips": 0.46456352025270464,
+      "worst_family_psnr": 11.508724143554968
+    },
+    "P1_FOUNDIR_GENERALIST": {
+      "equal_family_lpips": 0.3916542377096943,
+      "equal_family_psnr": 12.230652137534477,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.37601170925970834,
+            "lower": 0.32040713890807204,
+            "upper": 0.4371296554418771
+          },
+          "psnr_conservative": {
+            "estimate": 11.010564290317223,
+            "lower": 10.276069222475478,
+            "upper": 11.753837303954995
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.47215458699684365,
+            "lower": 0.4272040502291848,
+            "upper": 0.5167720586125689
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.270548458814621,
+            "lower": 0.23771403203904629,
+            "upper": 0.3049080550253391
+          },
+          "psnr_conservative": {
+            "estimate": 16.21325024880938,
+            "lower": 14.721120186441356,
+            "upper": 17.838551815505543
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.6006455006129352,
+            "lower": 0.5411509714908105,
+            "upper": 0.6586489885396375
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.5284025450547536,
+            "lower": 0.4579184939463933,
+            "upper": 0.605536090619862
+          },
+          "psnr_conservative": {
+            "estimate": 9.468141873476828,
+            "lower": 8.51679768561815,
+            "upper": 10.341205501159926
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.366422497436656,
+            "lower": 0.28838777921737474,
+            "upper": 0.44021930434925566
+          }
+        }
+      },
+      "worst_family_lpips": 0.5284025450547536,
+      "worst_family_psnr": 9.468141873476828
+    }
+  },
+  "candidate_count": 12,
+  "config": "configs/foundir_lowlight_gate2_metric_blend_v1b.json",
+  "config_sha256": "8f6a232d9b79f0eea315701ac99f0d9c9a2928405aa51da3ed8a19495d6d058f",
+  "decision": {
+    "fusion_ceiling_psnr_gap_over_provisional_by_family": {
+      "B_CONVEX_ORACLE": {
+        "lolv2": 0.7099246354153994,
+        "sdsd": 5.768119453430177,
+        "sice": 1.9283208689642422
+      },
+      "B_FREQUENCY_ORACLE": {
+        "lolv2": 0.8737299349419096,
+        "sdsd": 4.217961067199706,
+        "sice": 1.5076694352547264
+      }
+    },
+    "input_only_photometric_head": "killed_no_cross_family_transfer",
+    "provisional_conservative_base": "P1_FOUNDIR_CASCADE",
+    "teacher_at_inference_deployment": "still_conditional_on_license_provenance_runtime_and_future_flux_increment",
+    "teacher_proposal_value_gate": {
+      "P1_FOUNDIR_CASCADE": false,
+      "P1_FOUNDIR_GENERALIST": false
+    }
+  },
+  "metric_rows": 2940,
+  "protected_foundir_pixels_used": false,
+  "records": 245,
+  "rows": "reports/foundir_lowlight_gate2_metric_rows_v1b.csv",
+  "rows_sha256": "42ecead00754f8aa0db9601abcecff824e8290703808c90e440e8da430dc6ccd",
+  "runner_sha256": "fc9a13208d74bb9a8b0f0d8d19646687216ac19d6fe12e0cff7612a5ef7a0c11",
+  "schema_version": 1,
+  "status": "pass_gate2_complete"
+}

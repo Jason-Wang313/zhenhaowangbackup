@@ -44,6 +44,6 @@ clearance.
 - Development contract SHA-256: `33963c5467285151e0cb2a5b9bc977762062173f36a31e92ccc8329882bb6e69`
 - Teacher contract SHA-256: `d559fe04d000b316d413a991bb39e07596e217c8b7f655e7b84b76110c837418`
 - Proposal contract SHA-256: `6d1fca9f956dfedc1ee8546e33c97e0a25775a486b4afb8b5235e396e60e2095`
-- Experiment ledger SHA-256: `1fb2dd08f64bb9de2d4276c9a84bb66a9be8e5981645db2b50cffe5ea76f9f57`
+- Experiment ledger SHA-256: `a230180b4195c3c75a1a9d3a28c2c150933d59dab1111f3a8a00e7a989b1dfa0`
 
 The machine-readable result is `reports/foundir_lowlight_gate1_result_v1.json`.

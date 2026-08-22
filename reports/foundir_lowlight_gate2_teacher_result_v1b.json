@@ -1,0 +1,33 @@
+{
+  "config": "configs/foundir_lowlight_gate2_teacher_v1b.json",
+  "config_sha256": "d7456216f1896d91e8755a1a85b2e499768bbaaea202c21fea36827e679f50b1",
+  "execution_mode": "specialist-resume",
+  "protected_foundir_pixels_used": false,
+  "records": 245,
+  "runner_sha256": "754e324c34b10176bee2a4259e84e2604356ceca829edcedfeebc919b1158ae8",
+  "schema_version": 1,
+  "stages": {
+    "cascade": {
+      "manifest": "manifests/foundir_lowlight_gate2_cascade_v1b.csv",
+      "manifest_sha256": "2d271161839fc56b7d5a87f85a624efcb0e4542d65d48d9b7b9ae80006c64434",
+      "runtime": {
+        "mean_seconds": 0.3569395538248426,
+        "peak_memory_bytes": 648053248,
+        "total_seconds": 87.45019068708643
+      },
+      "status": "pass"
+    },
+    "generalist": {
+      "manifest": "manifests/foundir_lowlight_gate2_generalist_v1b.csv",
+      "manifest_sha256": "71c6fdb8199f3b7b952fbade457b4bb05bc496bbe9e307413caddba0f2ad81b7",
+      "runtime": {
+        "mean_seconds": 3.3425559359963755,
+        "peak_memory_bytes": null,
+        "peak_memory_recovery": "unavailable_after_original_process_exit",
+        "total_seconds": 818.926204319112
+      },
+      "status": "pass_recovered_after_bundle_failure"
+    }
+  },
+  "status": "pass"
+}
