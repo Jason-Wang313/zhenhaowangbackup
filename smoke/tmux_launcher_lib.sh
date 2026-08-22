@@ -18,7 +18,9 @@ select_tmux_binary() {
     printf '%s\n' "$candidate"
     return 0
   fi
-  echo "ERROR: no executable system tmux binary is available" >&2
+  if [[ "${1:-}" != "--quiet" ]]; then
+    echo "ERROR: no executable system tmux binary is available" >&2
+  fi
   return 1
 }
 

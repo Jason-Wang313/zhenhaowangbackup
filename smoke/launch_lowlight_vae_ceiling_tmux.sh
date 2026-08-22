@@ -19,8 +19,17 @@ if [[ ! -f "$TMUX_HELPERS" || ! -f "$RUNNER" ]]; then
   exit 1
 fi
 source "$TMUX_HELPERS"
-TMUX_BIN_PATH="$(select_tmux_binary)"
-tmux_job_server -V
+launch_mode="isolated_server"
+if TMUX_BIN_PATH="$(select_tmux_binary --quiet)"; then
+  tmux_job_server -V
+elif [[ -n "${TMUX:-}" ]]; then
+  launch_mode="current_tmux_pane"
+  TMUX_BIN_PATH=""
+  echo "LOWLIGHT_VAE_CEILING_CURRENT_TMUX_FALLBACK"
+else
+  echo "ERROR: no tmux binary is available and this shell is not inside tmux" >&2
+  exit 1
+fi
 bash "$RUNNER" --check
 
 if [[ "${1:-}" == "--check" ]]; then
@@ -34,6 +43,13 @@ fi
 if [[ "$#" -ne 0 ]]; then
   echo "ERROR: unexpected VAE-ceiling launcher argument: $1" >&2
   exit 1
+fi
+if [[ "$launch_mode" == "current_tmux_pane" ]]; then
+  bash "$RUNNER" --preflight
+  echo "LOWLIGHT_VAE_CEILING_CURRENT_PANE_LAUNCH"
+  echo "The full diagnostic is starting in this existing tmux pane."
+  echo "Detach safely with Ctrl-b then d; do not press Ctrl-c."
+  exec env CUDA_VISIBLE_DEVICES="$DEVICE_SET" bash "$RUNNER"
 fi
 if tmux_job_server has-session -t "$SESSION" 2>/dev/null; then
   echo "LOWLIGHT_VAE_CEILING_SESSION_EXISTS session=$SESSION"
