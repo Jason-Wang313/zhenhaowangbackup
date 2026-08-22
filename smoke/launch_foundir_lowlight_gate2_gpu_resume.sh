@@ -54,7 +54,6 @@ set -euo pipefail
 echo "FOUNDIR_LOWLIGHT_GATE2_RESUME_PREFLIGHT_START utc=$(date -u +%Y-%m-%dT%H:%M:%SZ) device=$teacher_device"
 CUDA_VISIBLE_DEVICES="$teacher_device" "$ROOT/.conda/gpu-train-stable/bin/python" - <<'PY'
 import importlib
-import sys
 from pathlib import Path
 
 import huggingface_hub
@@ -70,8 +69,8 @@ assert tokenizers.__version__ == "0.21.0", tokenizers.__version__
 assert huggingface_hub.__version__ == "0.27.1", huggingface_hub.__version__
 importlib.import_module("causal_conv1d")
 importlib.import_module("mamba_ssm")
-sys.path.insert(0, str(root / "third_party/foundir/specialist_model"))
-from basicsr.archs.wavemamba_arch import WaveMamba
+from smoke.run_foundir_lowlight_gate2_teachers import import_specialist_architecture
+WaveMamba = import_specialist_architecture(root / "third_party/foundir/specialist_model")
 print("GATE2_SPECIALIST_RESUME_GPU_PREFLIGHT_PASS", torch.cuda.get_device_name(0), WaveMamba.__name__)
 PY
 CUDA_VISIBLE_DEVICES="$teacher_device" "$ROOT/.venv/foundir-metrics/bin/python" - <<'PY'

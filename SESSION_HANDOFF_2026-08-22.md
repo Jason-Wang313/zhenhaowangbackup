@@ -149,11 +149,25 @@ different-user GPU-instance issue.
 
 The correction isolates the official FoundIR versions in workspace-local
 dependency directories, asserts exact versions, makes both preflights fail
-closed, and adds a cache-preserving resume. The resume rehashes all 245
-generalist outputs, runs only the missing cascade, waits for the already
-running historical FLUX result if necessary, and then runs metrics. It never
-reruns the generalist or historical FLUX. The historical branch from the first
-attempt is still advancing independently and will retain its immutable result.
+closed, and adds a cache-preserving resume. The historical branch from the
+first attempt completed all 245 records and passed at `2026-08-22T08:47:07Z`;
+its result is `reports/foundir_lowlight_gate2_historical_flux_result_v1b.json`.
+The result SHA-256 is
+`361cb232c2bddf1ce28fd4496cf49f29597e3656cbd73c427b83e09cd5f1c7d2`;
+the manifest SHA-256 is
+`10f7cd537723dc39e8d002a8d3a7bbff0171ab794a4f7a814436b613aee7f1a7`.
+
+Resume preflight 1 then correctly failed before detaching because BasicSR's
+top-level package eagerly imported its training-only losses and therefore
+requested `pyiqa`, which specialist inference does not use. The exact log is
+`logs/foundir_lowlight_gate2_gpu_resume_v1b_3s0vYe.log`. The corrected loader
+now imports only the released WaveMamba architecture and registry, bypassing
+BasicSR data/loss/model/train packages. This is supported by the first GPU
+trace: every architecture module, including WaveMamba and its CUDA imports,
+had loaded before the later losses import failed. The resume still rehashes
+all 245 generalist outputs, runs only the missing cascade, consumes the
+completed historical result, and then runs metrics. It never reruns the
+generalist or historical FLUX.
 
 ## Exact next actions
 

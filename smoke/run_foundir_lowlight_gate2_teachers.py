@@ -6,12 +6,14 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import importlib
 import io
 import json
 import math
 import random
 import sys
 import time
+import types
 from collections import defaultdict
 from pathlib import Path
 from typing import Mapping
@@ -214,13 +216,35 @@ def build_specialist(config: Mapping[str, object], device):
         )
 
     repository = workspace_path(config["specialist"]["repository"])
-    sys.path.insert(0, str(repository))
-    from basicsr.archs.wavemamba_arch import WaveMamba
+    WaveMamba = import_specialist_architecture(repository)
 
     model = WaveMamba(in_chn=3, wf=32, n_l_blocks=[1, 2, 4], n_h_blocks=[1, 1, 2], ffn_scale=2.0).to(device)
     checkpoint = torch.load(workspace_path(config["specialist"]["checkpoint"]), map_location="cpu", weights_only=False)
     model.load_state_dict(checkpoint["params"], strict=True)
     return model.eval().requires_grad_(False)
+
+
+def import_specialist_architecture(repository: Path):
+    """Load WaveMamba without BasicSR's unrelated training-time imports."""
+    basicsr = repository / "basicsr"
+    package_paths = {
+        "basicsr": basicsr,
+        "basicsr.archs": basicsr / "archs",
+        "basicsr.utils": basicsr / "utils",
+    }
+    for name, path in package_paths.items():
+        existing = sys.modules.get(name)
+        if existing is not None:
+            existing_paths = {str(Path(item).resolve()) for item in getattr(existing, "__path__", [])}
+            if str(path.resolve()) not in existing_paths:
+                raise RuntimeError(f"unexpected preloaded {name} package")
+            continue
+        package = types.ModuleType(name)
+        package.__package__ = name
+        package.__path__ = [str(path)]
+        sys.modules[name] = package
+    module = importlib.import_module("basicsr.archs.wavemamba_arch")
+    return module.WaveMamba
 
 
 def run_specialist(config: dict, rows: list[dict[str, str]], device) -> tuple[list[dict], dict]:

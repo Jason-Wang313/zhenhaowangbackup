@@ -1,0 +1,17 @@
+{
+  "config": "configs/foundir_lowlight_gate2_historical_flux_v1b.json",
+  "config_sha256": "e8730c61a6c9116dd7ba63860daf954edefcf306fad36f2b3ed1af938ba42e11",
+  "interpretation": "historical synthetic-trained evidence only; large SICE inputs use a frozen bounded resize policy; cannot be promoted as the new real-data architecture",
+  "manifest": "manifests/foundir_lowlight_gate2_historical_flux_v1b.csv",
+  "manifest_sha256": "10f7cd537723dc39e8d002a8d3a7bbff0171ab794a4f7a814436b613aee7f1a7",
+  "protected_foundir_pixels_used": false,
+  "records": 245,
+  "runner_sha256": "67ed3d8365a811df9c08a61df8090cf60550923546e0d2e87531d02121f43233",
+  "runtime": {
+    "mean_seconds": 10.59688272276057,
+    "peak_memory_bytes": 12885828608,
+    "total_seconds": 2596.2362670763396
+  },
+  "schema_version": 1,
+  "status": "pass_historical_evidence_cached"
+}

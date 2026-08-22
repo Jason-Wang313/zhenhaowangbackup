@@ -71,6 +71,13 @@ class Gate2TeacherTests(unittest.TestCase):
         self.assertIn("RESUME_TERMINAL_PASS", logged)
         self.assertIn("RESUME_TERMINAL_FAIL", logged)
 
+    def test_specialist_import_bypasses_training_only_basicsr_packages(self):
+        runner = (ROOT / "smoke/run_foundir_lowlight_gate2_teachers.py").read_text()
+        self.assertIn('types.ModuleType(name)', runner)
+        self.assertIn('importlib.import_module("basicsr.archs.wavemamba_arch")', runner)
+        self.assertNotIn("from basicsr.archs.wavemamba_arch import WaveMamba", runner)
+        self.assertNotIn("basicsr.losses", runner)
+
 
 if __name__ == "__main__":
     unittest.main()
