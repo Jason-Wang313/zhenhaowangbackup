@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 import unittest
 
 import numpy as np
@@ -15,6 +17,20 @@ from lowlight_restoration.causal_condition import (
 
 
 class Gate3CausalTests(unittest.TestCase):
+    def test_gpu_execution_fields_are_complete(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        config = json.loads((root / "configs/foundir_lowlight_gate3_causal_v1.json").read_text())
+        runtime = config["runtime"]
+        for key in (
+            "seed", "visible_devices", "world_size", "qwen_python",
+            "adapter_metric_python", "minimum_gpu_memory_mib",
+        ):
+            self.assertIn(key, runtime)
+        self.assertEqual(runtime["world_size"], 4)
+        self.assertEqual(runtime["visible_devices"], "0,1,2,3")
+        self.assertEqual(config["training"]["global_batch_size"], runtime["world_size"] * config["training"]["batch_size_per_rank"])
+        self.assertEqual(config["training"]["sample_presentations"], config["training"]["optimizer_steps"] * config["training"]["global_batch_size"])
+
     def test_feature_dimensions_are_stable(self) -> None:
         source = np.arange(32 * 40 * 3, dtype=np.uint16).reshape(32, 40, 3).astype(np.uint8)
         target = np.flip(source, axis=1).copy()

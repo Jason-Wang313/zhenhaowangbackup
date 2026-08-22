@@ -249,3 +249,14 @@ wall time is approximately 20--35 minutes. Do not start Gate 4 unless
 family-level causal and LPIPS check. A failure uses correction index 0 and is
 reviewed before deciding whether either of the two allowed interface
 corrections is scientifically justified.
+
+The first causal GPU launch at `2026-08-22T13:03:39Z` failed before Qwen model
+load because the causal runtime section omitted the export seed. No
+development inference or scientific training began. The recovery adds only
+the missing frozen seed plus a fail-closed CPU test for every execution field;
+it does not consume either scientific Qwen/interface correction. Nine focused
+tests now pass. The corrected contract SHA-256 is
+`d70ef493834c0da6e4c2f519d96e5cfd300f23c0eaed20994979f29aa1b7a111` and
+the corrected frozen image-feature SHA-256 is
+`d0eb331fb57536f3bdd38b4ec5990faa41d807d28c6469490d37f49909f9684e`.
+Relaunch with the same launcher after the recovery commit is pushed.

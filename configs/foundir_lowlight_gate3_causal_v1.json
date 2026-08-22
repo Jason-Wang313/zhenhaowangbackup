@@ -94,6 +94,7 @@
     "failure_action": "stop_before_gate4_for_user_advisor_review"
   },
   "runtime": {
+    "seed": 2026082207,
     "visible_devices": "0,1,2,3",
     "world_size": 4,
     "supported_gpu_models": ["NVIDIA H100", "NVIDIA H200"],
@@ -126,12 +127,12 @@
     },
     "test": {
       "path": "tests/test_foundir_lowlight_gate3_causal.py",
-      "sha256": "0f14c211c85bbe8bc0d6ad2e33f5d8e0c4e33b36ac2ced282b4fb170da9d2801"
+      "sha256": "15ddc57df3ae791eb86125e188fe39f1ce2dda357141bf152cd2e6097c6a9a23"
     }
   },
   "outputs": {
     "qwen_features": "checkpoints/foundir_lowlight_gate3_causal_v1/qwen_features.json",
-    "image_features": "checkpoints/foundir_lowlight_gate3_causal_v1/image_features_frozen_v2.json",
+    "image_features": "checkpoints/foundir_lowlight_gate3_causal_v1/image_features_frozen_v3.json",
     "adapter_checkpoint": "checkpoints/foundir_lowlight_gate3_causal_v1/adapter_step_000400.pt",
     "prediction_root": "checkpoints/foundir_lowlight_gate3_causal_v1/outer_outputs",
     "prediction_manifest": "manifests/foundir_lowlight_gate3_causal_predictions_v1.csv",
