@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "contract_id": "foundir_lowlight_gate2_photometric_v1",
+  "frozen_at_utc": "2026-08-22",
+  "gate1_commit": "fb5c44af412593e9bdd9b2c21a033cfb639cc496",
+  "development_manifest": "manifests/foundir_lowlight_development_contract_v1.csv",
+  "development_manifest_sha256": "01ea1bcc2c4a9166188c5852b20a45b7ce828b47c043b4ca1abbdc3aa994b200",
+  "proposal_contract": "configs/foundir_lowlight_proposal_lattice_v1.json",
+  "proposal_contract_sha256": "6d1fca9f956dfedc1ee8546e33c97e0a25775a486b4afb8b5235e396e60e2095",
+  "roles": {"fit": "training", "evaluate": "outer_development"},
+  "output": {
+    "directory": "checkpoints/foundir_lowlight_gate2_photometric_v1",
+    "manifest": "manifests/foundir_lowlight_gate2_photometric_v1.csv",
+    "result": "reports/foundir_lowlight_gate2_photometric_result_v1.json"
+  },
+  "fixed_control": {
+    "fit": "equal-family mean of group-mean log O1 exposure over training roles",
+    "minimum_exposure": 0.25,
+    "maximum_exposure": 16.0
+  },
+  "input_predictor": {
+    "luma_quantiles": [0.01, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.99],
+    "rgb_feature_quantiles": [0.1, 0.5, 0.9],
+    "ridge_alphas": [0.1, 1.0, 10.0, 100.0],
+    "inner_folds": 5,
+    "fold_hash_prefix": "foundir-gate2-photometric-fold-v1:",
+    "selection": "highest worst-family group-balanced rendered uint8 PSNR; tie selects smaller alpha",
+    "target": "target luma quantiles plus log R/G and B/G global chromaticity",
+    "inference": "input pixels and measured input summaries only"
+  },
+  "oracles": {
+    "O1_EXPOSURE": {"minimum": 0.25, "maximum": 16.0, "fit": "clipped analytic least-squares scalar"},
+    "O2_MONOTONE_TONE_WB": {"fit": "per-channel weighted isotonic 256-bin uint8 lookup; retain O1 if lower MSE"},
+    "O3_TONE_WB_SMOOTH_ILLUMINATION": {"base": "O2", "grid": [8, 8], "gaussian_sigma_grid_cells": 1.0, "log_gain_bound": 1.3862943611198906, "strength_candidates": [0.0, 0.25, 0.5, 0.75, 1.0]},
+    "O4_GAMMA_FULL_MATRIX": {"gamma_candidates": [0.1, 0.12, 0.14, 0.17, 0.2, 0.24, 0.28, 0.33, 0.39, 0.46, 0.54, 0.63, 0.74, 0.87, 1.0, 1.15, 1.32, 1.52, 1.75], "maximum_fit_pixels": 32768, "ridge": 0.000001}
+  },
+  "saved_output": {"format": "PNG", "mode": "RGB", "dtype": "uint8", "overwrite": false, "reload_before_metrics": true},
+  "metrics": {"photometric_stage": ["literal_rgb_psnr", "rgb_ssim"], "lpips": "added by the frozen two-path lattice evaluator after GPU proposals are cached"},
+  "protected_foundir_pixels_allowed": false
+}

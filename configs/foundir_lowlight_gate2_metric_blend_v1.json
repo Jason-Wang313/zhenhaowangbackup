@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "contract_id": "foundir_lowlight_gate2_metric_blend_v1",
+  "frozen_at_utc": "2026-08-22",
+  "gate1_commit": "fb5c44af412593e9bdd9b2c21a033cfb639cc496",
+  "development_manifest": "manifests/foundir_lowlight_development_contract_v1.csv",
+  "development_manifest_sha256": "01ea1bcc2c4a9166188c5852b20a45b7ce828b47c043b4ca1abbdc3aa994b200",
+  "metric_contract": "configs/foundir_lowlight_metric_contract_v2b.json",
+  "metric_contract_sha256": "7b9d39cdc667c31c13cec9b55c0a6a9f0109dac4c1b56b71c3ace156e0656619",
+  "input_manifests": {
+    "photometric": {"path": "manifests/foundir_lowlight_gate2_photometric_v1.csv", "sha256": "1176ad4c481b0a1a0dc5fd1974bda0b9dcd25abfb39be89cd322c211b63c2680"},
+    "historical_flux": {"path": "manifests/foundir_lowlight_gate2_historical_flux_v1.csv", "identity_from": "reports/foundir_lowlight_gate2_historical_flux_result_v1.json"},
+    "generalist": {"path": "manifests/foundir_lowlight_gate2_generalist_v1.csv", "identity_from": "reports/foundir_lowlight_gate2_teacher_result_v1.json"},
+    "cascade": {"path": "manifests/foundir_lowlight_gate2_cascade_v1.csv", "identity_from": "reports/foundir_lowlight_gate2_teacher_result_v1.json"}
+  },
+  "deployable_proposals": ["P0_RAW", "P0_FIXED_TRAIN_MEAN_EXPOSURE", "D_INPUT_ONLY_BOUNDED_PHOTOMETRIC", "P0_HISTORICAL_FLUX", "P1_FOUNDIR_GENERALIST", "P1_FOUNDIR_CASCADE"],
+  "oracle_proposals": ["O1_EXPOSURE", "O2_MONOTONE_TONE_WB", "O3_TONE_WB_SMOOTH_ILLUMINATION", "O4_GAMMA_FULL_MATRIX"],
+  "convex_blend": {"candidate_pairs": "all unordered deployable proposal pairs", "alpha_candidates": [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], "selection": "lowest per-image target RGB MSE after uint8 quantization"},
+  "frequency_blend": {
+    "directed_pairs": [
+      ["P1_FOUNDIR_GENERALIST", "P1_FOUNDIR_CASCADE"], ["P1_FOUNDIR_GENERALIST", "P0_RAW"], ["P1_FOUNDIR_GENERALIST", "P0_HISTORICAL_FLUX"],
+      ["P1_FOUNDIR_CASCADE", "P1_FOUNDIR_GENERALIST"], ["P1_FOUNDIR_CASCADE", "P0_RAW"], ["P1_FOUNDIR_CASCADE", "P0_HISTORICAL_FLUX"],
+      ["P0_HISTORICAL_FLUX", "P1_FOUNDIR_GENERALIST"], ["P0_HISTORICAL_FLUX", "P1_FOUNDIR_CASCADE"], ["P0_HISTORICAL_FLUX", "P0_RAW"],
+      ["P0_FIXED_TRAIN_MEAN_EXPOSURE", "P1_FOUNDIR_GENERALIST"], ["P0_FIXED_TRAIN_MEAN_EXPOSURE", "P1_FOUNDIR_CASCADE"], ["P0_FIXED_TRAIN_MEAN_EXPOSURE", "P0_RAW"]
+    ],
+    "formula": "gaussian(low,sigma)+alpha*(high-gaussian(high,sigma))",
+    "sigma_candidates": [1.0, 2.0, 4.0],
+    "alpha_candidates": [0.25, 0.5, 0.75, 1.0],
+    "selection": "lowest per-image target RGB MSE after uint8 quantization"
+  },
+  "aggregation": {"unit": "scene_or_sequence", "family_weighting": "equal", "bootstrap_resamples": 5000, "bootstrap_seed": 2026082202, "confidence": 0.95},
+  "promotion": {"psnr_gain_each_family": 0.2, "lpips_max_regression_each_family": 0.005, "perceptual_lpips_gain_each_family": 0.01, "perceptual_psnr_max_regression_each_family": 0.05},
+  "runtime": {"python": ".venv/foundir-metrics/bin/python", "device_count": 1, "device": "cuda:0"},
+  "outputs": {
+    "blend_directory": "checkpoints/foundir_lowlight_gate2_blends_v1",
+    "canonical_target_directory": "checkpoints/foundir_lowlight_gate2_targets_v1",
+    "rows": "reports/foundir_lowlight_gate2_metric_rows_v1.csv",
+    "result": "reports/foundir_lowlight_gate2_proposal_lattice_result_v1.json"
+  },
+  "protected_foundir_pixels_allowed": false
+}

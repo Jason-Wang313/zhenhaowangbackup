@@ -1,0 +1,225 @@
+{
+  "aggregate": {
+    "D_INPUT_ONLY_BOUNDED_PHOTOMETRIC": {
+      "equal_family_psnr": 7.655689355079129,
+      "equal_family_ssim": 0.04084658960416932,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "psnr": 6.493395874340622,
+          "records": 102,
+          "ssim": 0.017920852598092243
+        },
+        "sdsd": {
+          "groups": 25,
+          "psnr": 10.879751467066239,
+          "records": 125,
+          "ssim": 0.06377699743011471
+        },
+        "sice": {
+          "groups": 10,
+          "psnr": 5.593920723830529,
+          "records": 18,
+          "ssim": 0.040841918784301025
+        }
+      },
+      "worst_family_psnr": 5.593920723830529
+    },
+    "O1_EXPOSURE": {
+      "equal_family_psnr": 17.165030037994057,
+      "equal_family_ssim": 0.5271879719759137,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "psnr": 15.866652238275206,
+          "records": 102,
+          "ssim": 0.3732022687263505
+        },
+        "sdsd": {
+          "groups": 25,
+          "psnr": 23.25141037536956,
+          "records": 125,
+          "ssim": 0.7378452824842793
+        },
+        "sice": {
+          "groups": 10,
+          "psnr": 12.377027500337405,
+          "records": 18,
+          "ssim": 0.47051636471711145
+        }
+      },
+      "worst_family_psnr": 12.377027500337405
+    },
+    "O2_MONOTONE_TONE_WB": {
+      "equal_family_psnr": 25.7408662052721,
+      "equal_family_ssim": 0.6792253507706286,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "psnr": 24.214535212487284,
+          "records": 102,
+          "ssim": 0.5499510380187879
+        },
+        "sdsd": {
+          "groups": 25,
+          "psnr": 30.165353839570297,
+          "records": 125,
+          "ssim": 0.788254432983611
+        },
+        "sice": {
+          "groups": 10,
+          "psnr": 22.842709563758717,
+          "records": 18,
+          "ssim": 0.699470581309487
+        }
+      },
+      "worst_family_psnr": 22.842709563758717
+    },
+    "O3_TONE_WB_SMOOTH_ILLUMINATION": {
+      "equal_family_psnr": 25.819223507883823,
+      "equal_family_ssim": 0.6804873595526145,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "psnr": 24.354938490675984,
+          "records": 102,
+          "ssim": 0.5527758516232079
+        },
+        "sdsd": {
+          "groups": 25,
+          "psnr": 30.214104644347785,
+          "records": 125,
+          "ssim": 0.789151933575335
+        },
+        "sice": {
+          "groups": 10,
+          "psnr": 22.888627388627707,
+          "records": 18,
+          "ssim": 0.6995342934593006
+        }
+      },
+      "worst_family_psnr": 22.888627388627707
+    },
+    "O4_GAMMA_FULL_MATRIX": {
+      "equal_family_psnr": 25.295260683084525,
+      "equal_family_ssim": 0.6771367459364123,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "psnr": 24.772930956277207,
+          "records": 102,
+          "ssim": 0.5832321495912579
+        },
+        "sdsd": {
+          "groups": 25,
+          "psnr": 28.990937881720903,
+          "records": 125,
+          "ssim": 0.7633761958386899
+        },
+        "sice": {
+          "groups": 10,
+          "psnr": 22.121913211255468,
+          "records": 18,
+          "ssim": 0.6848018923792892
+        }
+      },
+      "worst_family_psnr": 22.121913211255468
+    },
+    "P0_FIXED_TRAIN_MEAN_EXPOSURE": {
+      "equal_family_psnr": 13.624621254938901,
+      "equal_family_ssim": 0.4743297456403212,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "psnr": 9.431253133873149,
+          "records": 102,
+          "ssim": 0.2722909343175467
+        },
+        "sdsd": {
+          "groups": 25,
+          "psnr": 18.959014082659614,
+          "records": 125,
+          "ssim": 0.6712551139918694
+        },
+        "sice": {
+          "groups": 10,
+          "psnr": 12.48359654828394,
+          "records": 18,
+          "ssim": 0.47944318861154755
+        }
+      },
+      "worst_family_psnr": 9.431253133873149
+    },
+    "P0_RAW": {
+      "equal_family_psnr": 10.490215713059216,
+      "equal_family_ssim": 0.3147146741880246,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "psnr": 7.617482831261589,
+          "records": 102,
+          "ssim": 0.1418651074611455
+        },
+        "sdsd": {
+          "groups": 25,
+          "psnr": 14.555661757971874,
+          "records": 125,
+          "ssim": 0.4550985580205266
+        },
+        "sice": {
+          "groups": 10,
+          "psnr": 9.29750254994419,
+          "records": 18,
+          "ssim": 0.34718035708240175
+        }
+      },
+      "worst_family_psnr": 7.617482831261589
+    }
+  },
+  "candidate_outputs": 1715,
+  "config": "configs/foundir_lowlight_gate2_photometric_v1.json",
+  "config_sha256": "a1fed1aadfaf69db7a02b72bf9523cd85ada7f2b65a54f989a562ece2f38fdc2",
+  "fixed_exposure": 2.4059987407304897,
+  "input_predictor": {
+    "cross_validation": {
+      "0.1": {
+        "family_psnr": {
+          "sdsd": 9.673744944529137,
+          "sice": 5.714716266542714
+        },
+        "worst_family_group_balanced_psnr": 5.714716266542714
+      },
+      "1.0": {
+        "family_psnr": {
+          "sdsd": 9.63368695285005,
+          "sice": 5.463007813925864
+        },
+        "worst_family_group_balanced_psnr": 5.463007813925864
+      },
+      "10.0": {
+        "family_psnr": {
+          "sdsd": 9.656279053069506,
+          "sice": 5.4626071728188865
+        },
+        "worst_family_group_balanced_psnr": 5.4626071728188865
+      },
+      "100.0": {
+        "family_psnr": {
+          "sdsd": 9.6931666307618,
+          "sice": 5.46285549474337
+        },
+        "worst_family_group_balanced_psnr": 5.46285549474337
+      }
+    },
+    "selected_alpha": 0.1
+  },
+  "manifest": "manifests/foundir_lowlight_gate2_photometric_v1.csv",
+  "manifest_sha256": "1176ad4c481b0a1a0dc5fd1974bda0b9dcd25abfb39be89cd322c211b63c2680",
+  "oracle_outputs_are_not_deployable": true,
+  "outer_records": 245,
+  "protected_foundir_pixels_used": false,
+  "runner_sha256": "788c6ada67f8f3dac990582548bb33a4f9ba465fb9a7e9d851e71381385a1685",
+  "schema_version": 1,
+  "status": "pass_photometric_lattice_complete_lpips_and_gpu_proposals_pending",
+  "training_records": 429
+}

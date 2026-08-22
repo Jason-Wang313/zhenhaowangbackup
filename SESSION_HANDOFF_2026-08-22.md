@@ -20,8 +20,8 @@ workspace and advisor authority remain `agents.md`.
 ## Current repository identity
 
 - Branch: `main`.
-- Starting HEAD and `origin/main`:
-  `94932f480ccedd3a992d881c3a93beb6dcce9114`.
+- Gate 1 HEAD and `origin/main`:
+  `fb5c44af412593e9bdd9b2c21a033cfb639cc496`.
 - Strategy status: frozen after 29 adversarial rounds.
 - Active side-goal thread:
   `01a021ed-dd9c-7ef2-9659-d6dc7ac51376`.
@@ -30,8 +30,8 @@ workspace and advisor authority remain `agents.md`.
 
 Gate 1 — protocol and development freeze: **passed**.
 
-Gate 2 — proposal/ceiling lattice: **ready after the isolated Gate 1 commit is
-pushed**.
+Gate 2 — proposal/ceiling lattice: **in progress; CPU photometric lattice
+passed and the one-shot GPU remainder is being frozen**.
 
 Verified at start:
 
@@ -78,21 +78,62 @@ redistribution terms are not separately stated, and runtime/value await Gate 2.
 The existing official manifest may be used only as a hash/ID exclusion index.
 No protected image pixels or public restored outputs may be opened.
 
+## Gate 2 live evidence
+
+The CPU photometric stage completed on 429 frozen training records and all 245
+outer-development records. It cached seven proposals / 1,715 exact PNG outputs.
+
+- config: `configs/foundir_lowlight_gate2_photometric_v1.json`, SHA-256
+  `a1fed1aadfaf69db7a02b72bf9523cd85ada7f2b65a54f989a562ece2f38fdc2`;
+- manifest: `manifests/foundir_lowlight_gate2_photometric_v1.csv`, SHA-256
+  `1176ad4c481b0a1a0dc5fd1974bda0b9dcd25abfb39be89cd322c211b63c2680`;
+- result: `reports/foundir_lowlight_gate2_photometric_result_v1.json`, SHA-256
+  `a097d0267256fcbc2a4363457dd98a84d9b90befa21b83dfc3c1857fcb296909`.
+
+The bounded input-only photometric predictor failed transfer: equal-family
+PSNR `7.6557 dB`, including `5.5939 dB` on SICE, versus the raw-input
+equal-family `10.4902 dB`. It is killed without a correction. This is not a
+lack-of-headroom result: target-accessing O2 monotone tone/WB reached
+`25.7409 dB` equal-family / `22.8427 dB` worst-family, and O3 smooth
+illumination reached `25.8192 / 22.8886 dB`. The bottleneck is inference-time
+identifiability and target-render transfer, not the existence of a useful
+photometric correction.
+
+The remaining Gate 2 bundle is frozen to run on exactly one visible H100/H200:
+official FoundIR generalist, documented generalist-to-Lowlight-specialist
+cascade, historical FLUX, both metric paths, and the convex/frequency fusion
+ceilings. It does not access protected FoundIR pixels.
+
+The currently available GPU host was reported as four NVIDIA H100 80 GB GPUs,
+55 CPU cores, and 900 GB RAM/shared memory. This is compatible with the
+architecture-9.0 CUDA extensions. Gate 2 deliberately selects one physical GPU
+with `CUDA_VISIBLE_DEVICES=0`; the process therefore sees exactly one device
+while the other three remain available. The frozen GPU runner SHA-256 values
+are `db1218d442949f2ceb20657ebe8bc9e34bb63fff1f1b73b04379214349bf1038`
+(teachers), `ee57ab3717e5c889f4cc3377e12ae1bc0546137b96aa06df82c5b10a0e47467e`
+(historical FLUX), and
+`da384a37dc7a36b895a55d0c60d2c042b594704b89a69bc543bb4c524d57c043`
+(metrics/blends).
+
 ## Exact next actions
 
-1. Rerun the Gate 1 freezer after the ledger completion transition, then run
-   focused tests, compilation, JSON validation, and `git diff --check`.
-2. Commit and push only the isolated Gate 1 files while preserving the
-   user-modified 2026-08-18 handoff and unrelated untracked files.
-3. Launch Gate 2 from the frozen proposal-lattice contract. No teacher
-   inference starts before the Gate 1 push is verified.
+1. Commit and push the Gate 2 partial checkpoint before GPU inference. The
+   workspace-local WaveMamba CUDA dependencies are compiled for architecture
+   9.0 and the generalist checkpoint passed strict CPU loading; the launcher
+   performs the remaining GPU imports before starting inference.
+2. Launch `smoke/launch_foundir_lowlight_gate2_gpu.sh` once on one visible
+   H100/H200. The launcher performs three environment/GPU preflights before
+   detaching and uses append-only attempt logs, so a failed attempt does not
+   overwrite evidence.
+3. On Gate 2 completion, apply the frozen promotion/kill decision and proceed
+   to Gate 3 only if allowed by the strategy stop rules.
 
 ## Gate progression
 
 | Gate | Status | Result identity |
 |---|---|---|
 | 1. Protocol/development freeze | passed | `reports/foundir_lowlight_gate1_result_v1.json` |
-| 2. Proposal/ceiling lattice | ready after Gate 1 push | `configs/foundir_lowlight_proposal_lattice_v1.json` |
+| 2. Proposal/ceiling lattice | in progress; CPU stage passed | `reports/foundir_lowlight_gate2_photometric_result_v1.json` |
 | 3. Compact control/causal Qwen | pending | pending |
 | 4. FLUX endpoint decision | pending | pending |
 | 5. Optional budget/full-scale winner | pending | pending |

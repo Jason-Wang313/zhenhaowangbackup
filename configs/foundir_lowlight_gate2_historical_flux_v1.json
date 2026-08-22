@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "contract_id": "foundir_lowlight_gate2_historical_flux_v1",
+  "frozen_at_utc": "2026-08-22",
+  "gate1_commit": "fb5c44af412593e9bdd9b2c21a033cfb639cc496",
+  "development_manifest": "manifests/foundir_lowlight_development_contract_v1.csv",
+  "development_manifest_sha256": "01ea1bcc2c4a9166188c5852b20a45b7ce828b47c043b4ca1abbdc3aa994b200",
+  "role": "outer_development",
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "lora_checkpoint": "checkpoints/lowlight_baseline_full/step_004000.safetensors",
+    "lora_checkpoint_sha256": "fa51deac872e3df57f147631361841039c386ef43f58a17a56fb68b9924e8f22",
+    "prompt_context": "checkpoints/lowlight_baseline_full/prompt_context.safetensors",
+    "prompt_context_sha256": "35c478104b2d0fcdca16470e0a85deb5fd3030f9f9d6d50501e459647cbcb1bb",
+    "parent_config": "configs/lowlight_flux2_full.json",
+    "parent_config_sha256": "c71235efe88e8f3bc98ca863350af372a78aa35f1a2cc065a1867c5bb6bfde18"
+  },
+  "lora": {
+    "rank": 8,
+    "alpha": 8.0,
+    "dropout": 0.0,
+    "target_patterns": ["double_blocks.*.img_attn.qkv", "double_blocks.*.img_attn.proj", "single_blocks.*.linear1", "single_blocks.*.linear2"],
+    "expected_module_count": 50
+  },
+  "inference": {
+    "seed": 2026081503,
+    "seed_rule": "seed_plus_filtered_manifest_index",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "reference_time_coordinate": 10,
+    "padding_multiple": 16,
+    "native_whole_image_max_pixels": 1048576,
+    "larger_image_policy": "fail_closed_not_needed_for_frozen_outer_suite"
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "device_count": 1,
+    "offline": true,
+    "output_directory": "checkpoints/foundir_lowlight_gate2_historical_flux_v1"
+  },
+  "outputs": {
+    "manifest": "manifests/foundir_lowlight_gate2_historical_flux_v1.csv",
+    "result": "reports/foundir_lowlight_gate2_historical_flux_result_v1.json"
+  },
+  "interpretation": "historical synthetic-trained evidence only; cannot be promoted as the new real-data architecture",
+  "protected_foundir_pixels_allowed": false
+}
