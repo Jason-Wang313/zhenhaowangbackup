@@ -15,6 +15,9 @@ if [[ "${#devices[@]}" -eq 2 && "${devices[0]}" == "${devices[1]}" ]]; then
 fi
 
 export PYTHONPATH="$ROOT/.tools/foundir-runtime${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONPATH="$ROOT/.tools/foundir-transformers-4.47.1-v2:$PYTHONPATH"
+export PYTHONPATH="$ROOT/.tools/foundir-huggingface-hub-0.27.1:$PYTHONPATH"
+export PYTHONPATH="$ROOT/.tools/foundir-tokenizers-0.21.0:$PYTHONPATH"
 
 teacher_device="${devices[0]}"
 flux_device="${devices[1]:-${devices[0]}}"

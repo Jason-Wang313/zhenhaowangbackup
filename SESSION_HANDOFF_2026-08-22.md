@@ -32,7 +32,9 @@ Gate 1 — protocol and development freeze: **passed**.
 
 Gate 2 — proposal/ceiling lattice: **in progress; CPU photometric lattice
 passed, the dimension-invalid GPU v1 contract was killed before inference,
-and the dimension-safe v1b GPU remainder is frozen**.
+and the first dimension-safe v1b GPU attempt preserved its completed caches
+but failed before specialist inference because its preflight was not fail
+closed**.
 
 Verified at start:
 
@@ -132,16 +134,35 @@ tiling, and a disclosed Lanczos downsample/restore policy only to the historical
 synthetic FLUX baseline. Every saved proposal still has exact native dimensions.
 Nineteen focused CPU tests cover the dimension-safe policies and prior gates.
 
+The first v1b GPU attempt started at `2026-08-22T07:57:30Z`; its durable log is
+`logs/foundir_lowlight_gate2_gpu_v1b_aZ2F9Z.log`. The generalist completed all
+245 records and its fully rehashed manifest is
+`manifests/foundir_lowlight_gate2_generalist_v1b.csv`, SHA-256
+`71c6fdb8199f3b7b952fbade457b4bb05bc496bbe9e307413caddba0f2ad81b7`.
+The specialist failed before producing any output because the mutable training
+environment contained `transformers==5.14.1`, while the released FoundIR
+environment freezes `transformers==4.47.1` and `tokenizers==0.21.0`. The same
+error occurred during preflight, but the original multi-command preflight
+block returned the final echo's status and incorrectly printed PASS. This is
+an execution-contract defect, not a scientific model failure and not a
+different-user GPU-instance issue.
+
+The correction isolates the official FoundIR versions in workspace-local
+dependency directories, asserts exact versions, makes both preflights fail
+closed, and adds a cache-preserving resume. The resume rehashes all 245
+generalist outputs, runs only the missing cascade, waits for the already
+running historical FLUX result if necessary, and then runs metrics. It never
+reruns the generalist or historical FLUX. The historical branch from the first
+attempt is still advancing independently and will retain its immutable result.
+
 ## Exact next actions
 
-1. Commit and push the Gate 2 partial checkpoint before GPU inference. The
-   workspace-local WaveMamba CUDA dependencies are compiled for architecture
-   9.0 and the generalist checkpoint passed strict CPU loading; the launcher
-   performs the remaining GPU imports before starting inference.
-2. Launch `smoke/launch_foundir_lowlight_gate2_gpu.sh` once with two visible
-   H100/H200 GPUs. The launcher performs three environment/GPU preflights
-   before detaching and uses append-only attempt logs plus durable terminal
-   markers, so a failed attempt does not overwrite evidence.
+1. Commit and push the fail-closed dependency correction, resume scripts, and
+   completed generalist manifest.
+2. Launch `CUDA_VISIBLE_DEVICES=0,1 bash
+   smoke/launch_foundir_lowlight_gate2_gpu_resume.sh` once. It uses GPU 0 for
+   the missing specialist and metrics and preserves the historical FLUX work
+   already completed on GPU 1.
 3. On Gate 2 completion, apply the frozen promotion/kill decision and proceed
    to Gate 3 only if allowed by the strategy stop rules.
 
@@ -150,7 +171,7 @@ Nineteen focused CPU tests cover the dimension-safe policies and prior gates.
 | Gate | Status | Result identity |
 |---|---|---|
 | 1. Protocol/development freeze | passed | `reports/foundir_lowlight_gate1_result_v1.json` |
-| 2. Proposal/ceiling lattice | in progress; CPU passed, GPU v1b pending | `reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json` |
+| 2. Proposal/ceiling lattice | in progress; first GPU attempt cached generalist/historical, specialist resume prepared | `reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json` |
 | 3. Compact control/causal Qwen | pending | pending |
 | 4. FLUX endpoint decision | pending | pending |
 | 5. Optional budget/full-scale winner | pending | pending |

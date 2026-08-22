@@ -41,6 +41,9 @@ if [[ -f "$ATTEMPTS" ]]; then
 fi
 
 export PYTHONPATH="$ROOT/.tools/foundir-runtime${PYTHONPATH:+:$PYTHONPATH}"
+export PYTHONPATH="$ROOT/.tools/foundir-transformers-4.47.1-v2:$PYTHONPATH"
+export PYTHONPATH="$ROOT/.tools/foundir-huggingface-hub-0.27.1:$PYTHONPATH"
+export PYTHONPATH="$ROOT/.tools/foundir-tokenizers-0.21.0:$PYTHONPATH"
 
 mkdir -p "$ROOT/logs"
 log="$(mktemp "$ROOT/logs/foundir_lowlight_gate2_gpu_v1b_XXXXXX.log")"
@@ -48,14 +51,21 @@ teacher_device="${devices[0]}"
 flux_device="${devices[1]:-${devices[0]}}"
 
 set +e
-{
+(
+set -euo pipefail
 echo "FOUNDIR_LOWLIGHT_GATE2_PREFLIGHT_START utc=$(date -u +%Y-%m-%dT%H:%M:%SZ) devices=$CUDA_VISIBLE_DEVICES"
 CUDA_VISIBLE_DEVICES="$teacher_device" "$ROOT/.conda/gpu-train-stable/bin/python" - <<'PY'
 import importlib
 import torch
+import huggingface_hub
+import tokenizers
+import transformers
 assert torch.cuda.is_available() and torch.cuda.device_count() == 1
 major, minor = torch.cuda.get_device_capability(0)
 assert (major, minor) == (9, 0), (major, minor)
+assert transformers.__version__ == "4.47.1", transformers.__version__
+assert tokenizers.__version__ == "0.21.0", tokenizers.__version__
+assert huggingface_hub.__version__ == "0.27.1", huggingface_hub.__version__
 importlib.import_module("ema_pytorch")
 importlib.import_module("causal_conv1d")
 importlib.import_module("mamba_ssm")
@@ -76,7 +86,7 @@ assert torch.cuda.is_available() and torch.cuda.device_count() == 1
 print("GATE2_METRIC_GPU_PREFLIGHT_PASS", torch.cuda.get_device_name(0))
 PY
 echo "FOUNDIR_LOWLIGHT_GATE2_PREFLIGHT_PASS utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-} 2>&1 | tee -a "$log"
+) 2>&1 | tee -a "$log"
 preflight_status=${PIPESTATUS[0]}
 set -e
 if [[ "$preflight_status" -ne 0 ]]; then

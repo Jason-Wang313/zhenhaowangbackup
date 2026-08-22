@@ -2,7 +2,11 @@ import json
 import unittest
 from pathlib import Path
 
-from smoke.run_foundir_lowlight_gate2_teachers import output_stem, read_config
+from smoke.run_foundir_lowlight_gate2_teachers import (
+    SPECIALIST_DEPENDENCY_DIRECTORIES,
+    output_stem,
+    read_config,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,6 +39,37 @@ class Gate2TeacherTests(unittest.TestCase):
         self.assertIn("FOUNDIR_LOWLIGHT_GATE2_TERMINAL_PASS", logged)
         self.assertIn("FOUNDIR_LOWLIGHT_GATE2_TERMINAL_FAIL", logged)
         self.assertIn("FOUNDIR_LOWLIGHT_GATE2_RUN_END", logged)
+
+    def test_preflight_is_fail_closed_and_uses_official_foundir_versions(self):
+        launcher = (ROOT / "smoke/launch_foundir_lowlight_gate2_gpu.sh").read_text()
+        self.assertIn("(\nset -euo pipefail\n", launcher)
+        self.assertIn('transformers.__version__ == "4.47.1"', launcher)
+        self.assertIn('tokenizers.__version__ == "0.21.0"', launcher)
+        self.assertNotIn("{\necho \"FOUNDIR_LOWLIGHT_GATE2_PREFLIGHT_START", launcher)
+
+    def test_specialist_dependency_directories_are_workspace_local(self):
+        expected = {
+            ".tools/foundir-tokenizers-0.21.0",
+            ".tools/foundir-huggingface-hub-0.27.1",
+            ".tools/foundir-transformers-4.47.1-v2",
+        }
+        actual = set()
+        for path in SPECIALIST_DEPENDENCY_DIRECTORIES:
+            path.resolve().relative_to(ROOT)
+            actual.add(str(path.relative_to(ROOT)))
+        self.assertEqual(actual, expected)
+
+    def test_resume_runs_only_missing_specialist_then_metrics(self):
+        launcher = (ROOT / "smoke/launch_foundir_lowlight_gate2_gpu_resume.sh").read_text()
+        runner = (ROOT / "smoke/run_foundir_lowlight_gate2_gpu_resume.sh").read_text()
+        logged = (ROOT / "smoke/run_foundir_lowlight_gate2_gpu_resume_logged.sh").read_text()
+        self.assertIn("--stage specialist-resume", runner)
+        self.assertNotIn("run_foundir_lowlight_gate2_historical_flux", runner)
+        self.assertIn("WAITING_FOR_HISTORICAL", runner)
+        self.assertIn("run_foundir_lowlight_gate2_metric_blend", runner)
+        self.assertIn("set -euo pipefail", launcher)
+        self.assertIn("RESUME_TERMINAL_PASS", logged)
+        self.assertIn("RESUME_TERMINAL_FAIL", logged)
 
 
 if __name__ == "__main__":

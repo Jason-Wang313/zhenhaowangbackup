@@ -24,6 +24,11 @@ from lowlight_restoration.representation_ceiling import reconstruct_tiled_averag
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "configs/foundir_lowlight_gate2_teacher_v1b.json"
+SPECIALIST_DEPENDENCY_DIRECTORIES = (
+    ROOT / ".tools/foundir-tokenizers-0.21.0",
+    ROOT / ".tools/foundir-huggingface-hub-0.27.1",
+    ROOT / ".tools/foundir-transformers-4.47.1-v2",
+)
 
 
 def sha256(path: Path) -> str:
@@ -189,6 +194,24 @@ def run_generalist(config: dict, rows: list[dict[str, str]], device) -> tuple[li
 
 def build_specialist(config: Mapping[str, object], device):
     import torch
+    import huggingface_hub
+    import tokenizers
+    import transformers
+
+    expected_versions = {
+        "transformers": "4.47.1",
+        "tokenizers": "0.21.0",
+        "huggingface_hub": "0.27.1",
+    }
+    actual_versions = {
+        "transformers": transformers.__version__,
+        "tokenizers": tokenizers.__version__,
+        "huggingface_hub": huggingface_hub.__version__,
+    }
+    if actual_versions != expected_versions:
+        raise RuntimeError(
+            f"FoundIR specialist dependency versions changed: {actual_versions}"
+        )
 
     repository = workspace_path(config["specialist"]["repository"])
     sys.path.insert(0, str(repository))
@@ -260,15 +283,61 @@ def write_manifest(path: Path, rows: list[dict]) -> str:
     return hashlib.sha256(content).hexdigest()
 
 
+def recover_generalist_stage(config: dict, rows: list[dict[str, str]]) -> dict:
+    """Verify and identify the completed generalist cache from a failed bundle."""
+    manifest_path = workspace_path(config["outputs"]["generalist_manifest"])
+    if not manifest_path.is_file():
+        raise RuntimeError("specialist resume requires the completed generalist manifest")
+    with manifest_path.open(newline="") as handle:
+        cached = list(csv.DictReader(handle))
+    if len(cached) != len(rows):
+        raise RuntimeError("cached generalist manifest record count changed")
+    total_seconds = 0.0
+    for index, (entry, row) in enumerate(zip(cached, rows, strict=True)):
+        expected_path = (
+            workspace_path(config["runtime"]["output_directory"])
+            / "P1_FOUNDIR_GENERALIST"
+            / output_stem(index, row)
+        )
+        if entry["candidate_id"] != "P1_FOUNDIR_GENERALIST":
+            raise RuntimeError("cached generalist candidate identity changed")
+        for key in ("family", "group_id", "record_id", "target_path"):
+            if entry[key] != row[key]:
+                raise RuntimeError(f"cached generalist {key} changed at record {index}")
+        if workspace_path(entry["output_path"]) != expected_path:
+            raise RuntimeError(f"cached generalist output path changed at record {index}")
+        if sha256(expected_path) != entry["output_sha256"]:
+            raise RuntimeError(f"cached generalist output hash changed at record {index}")
+        with Image.open(expected_path) as opened:
+            if opened.size != (int(entry["width"]), int(entry["height"])):
+                raise RuntimeError(f"cached generalist dimensions changed at record {index}")
+        total_seconds += float(entry["seconds"])
+    return {
+        "status": "pass_recovered_after_bundle_failure",
+        "manifest": config["outputs"]["generalist_manifest"],
+        "manifest_sha256": sha256(manifest_path),
+        "runtime": {
+            "total_seconds": total_seconds,
+            "mean_seconds": total_seconds / len(cached),
+            "peak_memory_bytes": None,
+            "peak_memory_recovery": "unavailable_after_original_process_exit",
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=DEFAULT_CONFIG)
-    parser.add_argument("--stage", choices=("both",), default="both")
+    parser.add_argument("--stage", choices=("both", "specialist-resume"), default="both")
     args = parser.parse_args()
     config_path = args.config.resolve()
     config = read_config(config_path)
     extra = workspace_path(config["runtime"]["extra_packages"])
     sys.path.insert(0, str(extra))
+    for dependency in reversed(SPECIALIST_DEPENDENCY_DIRECTORIES):
+        if not dependency.is_dir():
+            raise RuntimeError(f"missing FoundIR specialist dependency: {dependency}")
+        sys.path.insert(0, str(dependency))
     import torch
     if not torch.cuda.is_available() or torch.cuda.device_count() != int(config["runtime"]["device_count"]):
         raise SystemExit(f"TEACHER_REQUIRES_EXACTLY_ONE_VISIBLE_GPU actual={torch.cuda.device_count()}")
@@ -276,14 +345,17 @@ def main() -> None:
     rows = outer_rows(config)
     result_path = workspace_path(config["outputs"]["result"])
     payload = {"schema_version": 1, "status": "in_progress", "protected_foundir_pixels_used": False, "config": str(config_path.relative_to(ROOT)), "config_sha256": sha256(config_path), "runner_sha256": sha256(Path(__file__)), "records": len(rows), "stages": {}}
-    if args.stage in ("generalist", "both"):
+    if args.stage == "both":
         generalist_rows, runtime = run_generalist(config, rows, device)
         digest = write_manifest(workspace_path(config["outputs"]["generalist_manifest"]), generalist_rows)
         payload["stages"]["generalist"] = {"status": "pass", "manifest": config["outputs"]["generalist_manifest"], "manifest_sha256": digest, "runtime": runtime}
-    if args.stage in ("specialist", "both"):
+    else:
+        payload["stages"]["generalist"] = recover_generalist_stage(config, rows)
+    if args.stage in ("specialist-resume", "both"):
         specialist_rows, runtime = run_specialist(config, rows, device)
         digest = write_manifest(workspace_path(config["outputs"]["cascade_manifest"]), specialist_rows)
         payload["stages"]["cascade"] = {"status": "pass", "manifest": config["outputs"]["cascade_manifest"], "manifest_sha256": digest, "runtime": runtime}
+    payload["execution_mode"] = args.stage
     payload["status"] = "pass" if set(payload["stages"]) == {"generalist", "cascade"} else "partial_pass"
     content = (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode()
     if result_path.exists():
