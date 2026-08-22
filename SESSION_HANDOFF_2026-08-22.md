@@ -32,8 +32,9 @@ Gate 1 — protocol and development freeze: **passed**.
 
 Gate 2 — proposal/ceiling lattice: **passed after cache-preserving recovery**.
 
-Gate 3 — compact control and credible VLM gate: **contract frozen and
-four-H100 bundle implemented; awaiting the GPU-host launch**.
+Gate 3 — compact control and credible VLM gate: **initial four-H100 bundle
+complete; Qwen ordinal passed, compact output was not admitted because of an
+SDSD LPIPS regression, and the frozen downstream causal matrix is pending**.
 
 Verified at start:
 
@@ -189,14 +190,12 @@ admitted at Gate 2. Full interpretation is frozen in
 
 ## Exact next actions
 
-1. Launch the checked four-H100 bundle once with `bash
-   smoke/launch_foundir_lowlight_gate3_bundle.sh`. It runs the compact control
-   on GPUs 2--3 and the unchanged Qwen exposure-order diagnostic on GPUs 0--1.
-2. Monitor `logs/foundir_lowlight_gate3_bundle_v1.log` to a terminal marker and
-   preserve both scientific outcomes. Partial compact checkpoints are resumed,
-   not overwritten.
-3. If the ordinal diagnostic passes, implement and run the already-frozen
-   downstream causal matrix. Stop for review before
+1. Preserve, audit, commit, and push the initial Gate 3 evidence.
+2. Implement and run the already-frozen measured-only,
+   oracle-plus-measured, measured-plus-Qwen, and
+   measured-plus-shuffled-Qwen causal matrix with identical restoration
+   weights. Reuse the complete compact checkpoint as the fixed base.
+3. Stop for review before
    Gate 4 if Qwen misses the two-correction causal gate.
 
 ## Gate progression
@@ -205,7 +204,7 @@ admitted at Gate 2. Full interpretation is frozen in
 |---|---|---|
 | 1. Protocol/development freeze | passed | `reports/foundir_lowlight_gate1_result_v1.json` |
 | 2. Proposal/ceiling lattice | passed; cascade is provisional base, photometric predictor killed | `reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json` |
-| 3. Compact control/causal Qwen | contract/initial bundle frozen; GPU launch pending | `configs/foundir_lowlight_gate3_v1.json` |
+| 3. Compact control/causal Qwen | Qwen ordinal passed; compact not admitted; causal matrix pending | `reports/foundir_lowlight_gate3_compact_result_v1.json` |
 | 4. FLUX endpoint decision | pending | pending |
 | 5. Optional budget/full-scale winner | pending | pending |
 | 6. Replication/deployment freeze | pending | pending |

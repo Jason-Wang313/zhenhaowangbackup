@@ -1,0 +1,861 @@
+{
+  "absolute_real_l1_l5_accuracy_claimed": false,
+  "artifact_sha256": {
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0000.json": "2111cfe4d9faf2667d0d01ae22fbf30007b3f403f1bde1a27926f44347057598",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0001.json": "dd5980a54104a6564d4b0a6ac1265aca57a96f6ff9e4aebab47e451bb06ec29a",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0002.json": "841259a68a888a67e17282d30e2fbbb02789cd07c394fefce7c3797d9984a1c3",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0003.json": "42f57c0d65962cafdc2056801dcb09f7e2eaaee1f12536f10be8c190bb7ad2b4",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0004.json": "9a07da0db1b31846183f6d3a86aff4ce1223fbfeb093a8f3d4bf0002cfb6fa95",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0005.json": "9429e726e45bb2d1c1ebae0fe943cf35b6e77258c2824838e2474a81604c5214",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0006.json": "7a5fd77211c4dd2aa08d66fc3b5aa70b71c8a42e8048da99e5ef281d96b1acbc",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0007.json": "e51d4080e734a833b3abf4c30ae058d94501a1b6da051ad3d202c7072d0cbfc7",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_00/batch_0008.json": "06ffb8c23c26894ed9b0f1a251276fa0989c1db857ad73abb1b76ae9ebfb95a7",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0000.json": "8e7aba85904ad3791b9256db1b4f2a6e801c3483ff5b74f661bb749a6a43eb76",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0001.json": "05084886829eeae70a46b44d16cfc8e4a4c2fdde7080a33793e25290e4d8e009",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0002.json": "371a8065436cc6501dac35727cc4678a9d3b40ec938be1f3394a1d3e4efb20a3",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0003.json": "b3695e5bb1a06a8d6f43d41c59d4e2adaae4b2b9269965c31124f0f2a223176c",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0004.json": "d056677446b36c150d08c330b1fb9d4f999e23787ae4db542ecdfdb1816b9977",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0005.json": "d52c98487d7ecddc99c899e68dc696c774fdfad090f902af45af010fc554038a",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0006.json": "b9535a2c387e75a4f4f4a208dca3fb3bebafe01fb3986318fe8298f2b2f83195",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0007.json": "e7b8b12a374d90dbd1e1aa914f561bbc175124557be2ff076cdc6954d48fd433",
+    "checkpoints/qwen_lowlight_real_exposure_ordering_step600/score_batches/rank_01/batch_0008.json": "1c9608c064f8d41bfa3264c6b3364ac34e7532080ca32b4d863532df8a20e2a7"
+  },
+  "automatic_gate_pass": true,
+  "config_sha256": "817436c9011834852e9482c14fe9c008f1998a87e6f4811fd3b3b871929f1eba",
+  "distributed_environment": [
+    {
+      "cuda": "12.8",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "gpu_total_memory_bytes": 85029158912,
+      "local_rank": 0,
+      "maximum_allocated_bytes": 18349525504,
+      "python": "3.12.13",
+      "pytorch": "2.7.0+cu128",
+      "rank": 0
+    },
+    {
+      "cuda": "12.8",
+      "gpu_name": "NVIDIA H100 80GB HBM3",
+      "gpu_total_memory_bytes": 85029158912,
+      "local_rank": 1,
+      "maximum_allocated_bytes": 18294612992,
+      "python": "3.12.13",
+      "pytorch": "2.7.0+cu128",
+      "rank": 1
+    }
+  ],
+  "downstream_restoration_gain_claimed": false,
+  "gate_checks": {
+    "median_stack_spearman": true,
+    "pooled_expected_level_span": true,
+    "positive_stack_spearman_fraction": true,
+    "primary_continuous_concordance": true,
+    "primary_hard_non_inversion": true
+  },
+  "gates": {
+    "downstream_causal_restoration_gate_still_required": true,
+    "minimum_median_stack_spearman": 0.6,
+    "minimum_pooled_expected_level_span": 1.0,
+    "minimum_positive_stack_spearman_fraction": 0.8,
+    "minimum_primary_continuous_concordance": 0.75,
+    "minimum_primary_hard_non_inversion_rate": 0.8,
+    "passing_proves_only_relative_exposure_sensitivity": true,
+    "primary_pair_gap_ev": 1.0
+  },
+  "git_revision": "298e1e33ebd5699864b99851868e1eac438e5fe4",
+  "interpretation": "relative_exposure_sensitivity_only_not_absolute_real_l1_l5_accuracy_or_restoration_gain",
+  "manifest_sha256": "5d34d1a08ff1213fbe89e89f19ebbe8a6efbaebf1d5661261f085a05a38e9287",
+  "metadata_sha256": "4effeb267f9d39969612c68b59821dacd8a02029db62c86e99a8993b1addfaac",
+  "metrics": {
+    "expected_level_by_sha256": {
+      "02bba6cbd0a8e37936ae203ae66589f85b6b71cb9b20ec88222cf7d82e1fe525": 2.632833745607755,
+      "03c73bafdb8fae3ca5715aeaeb8fe4f6f7c58cfd0c5ef97c9d752b736e50190e": 2.6636373986881328,
+      "04d5b410945466210984ea9db3e180b3864c1cefa768283970f45010e912f1bc": 2.4460015913827102,
+      "086351f640befb2622199cefcfc5d7b81a9aa887bf823c8621beb0123a6982e7": 2.4373378520210274,
+      "118ecfb0bb36d52a18ab5a92faae656a5819d0671ceeac67688b5d188e56b944": 2.7890640374252182,
+      "19bc08b3abffedef125d09b06ba3cbc74dec1f0207d83605469ba46fce761dee": 2.549873527130053,
+      "1e43a4a890785e0d52f02b36661142b512ef806f8d05da64d52c1d93cbab5741": 2.5288092005856004,
+      "215931a77a5567be651593a8ec8e4fe07f02ee8095e6627b4d61810f71c874e0": 2.6825160483230484,
+      "2433375768a4f6f551e9b92c9f6d313564c0da4797e7f4a15c70547604acf565": 2.9367398244267457,
+      "2afd5dd99fb25a92391edae11ec8fc21cc36651a78ab6bfb27b69e9bdb125740": 3.421902406897029,
+      "2b06680c644d54bb4808910dc2043ee13befa8564811cdaca0a71a215166a581": 2.566309072789861,
+      "3156efd974d5d87771dab85c4945c8bb49d25dee9d06b59281c276e617a3ce53": 2.5232295909881644,
+      "366eb83f24ebd20a041a53861647535036ec211e27687e26b7bbd2e659f7f5ce": 3.3767322608308903,
+      "37094f4247a7e5cac3af1876137f42c88263ace0d075d99daec7b1e796e33ad0": 2.8949161163920434,
+      "39995aac91e1ae5fbe4c70fedb078fb207170ff6dc7ba7b21ffdcb9c27d6dd13": 2.715407911272355,
+      "3e674361fbb7a51d626962c19732f311f7b1bb7a168cb6e4315e5cd32b0c9d8b": 2.81878363166826,
+      "44388ed0852d255ef3cc97a218490c7a5fcf96ab6e5bee339d15a7e6d1aa987b": 2.36033909473929,
+      "4538a8cb1d4e65e03ca074c0fe1e64184305bc071bf5e9e5f4389f2e33520357": 3.162001603057197,
+      "47baef88a18a6c6da956dc6f8b3af838d433e4ae6728dc9f048c01ec6cbf87ed": 2.515277462893608,
+      "4a4d65df3be7f61fdd97e052bef71308f6b16597bd7c10d997721e0b3adaf8e1": 3.258638917288289,
+      "4aa141f37b53ce0c6698d13480fa5c0ff50a4eb941dc3033c227279e428eb24f": 2.7562565474222236,
+      "4eb19807955b9d59bce98a53e6686d740b18c102691d919a1ddac9fa5ff9ed5b": 2.502882690830341,
+      "4f26850b1aee4fe40ab0f060fc24568f54e637d9b5158b74c4a99a865c991e35": 2.6265171304855297,
+      "530a91ac82e4406acc23913088efb0ab0d056e686345088e41f60e4fc6176f60": 2.8521369355475406,
+      "537c0f394f405db1ff92ab06f8fccc12883f33cb72737043d5f0a993b5281512": 2.5406317181809657,
+      "5611824f386938edfebc29775f162f72b34f74dbb993a6cbfdd5c415019df3bf": 2.5483828721691477,
+      "57e2611e6aa653a43d6d4172bc98ae35d0e0567ce9bc3ce58a440526429a7ef8": 2.5535738915850406,
+      "588c3ba5fbfc78b2b98c52e41bdb37947ce721a6b52f842c2e2e9ccf755495e9": 3.430924330536811,
+      "5c7ed4b5bba42b52c93eeaaf462b1531717d1abd43938445a1e6bea9c19c1ae3": 2.6774464526411297,
+      "5fc9ade7715c0110ec5b4d18777ce2718c2f70946fa23833222b98b425b2ca7c": 2.918565167055622,
+      "60283d2c24b15a64365e90c93a5f67456d40f4c56f0ae7298dd975cd2ef5a7b4": 2.5299298409534976,
+      "603eefbe755351b80a66712a9e9f35c1e5dd3833c54e305c1e4037fe1de2c721": 2.923283347517476,
+      "65bef59ae2cffaac5a0401780c884fc1f0cb87c3fb6ba7057213bbb03b775f9d": 2.9808335433983775,
+      "712ae06bb73f640faf0dfdf86a683432b1e6ea22ef7333b7baa1642f2dad86ce": 2.499754807993165,
+      "7bf853317bf65f28f5284cf54a4edd0145fc4eecb241b65e6179ce1c82069edd": 2.5207972828059195,
+      "7eecaa109275746ead9519c1d8f9c182e6cf99ed2cd547dc49695f6fea9422cf": 2.552388324316051,
+      "8552526586a4fd363eed3cc061bb12d9c4cad60e7b1dc7503b715dbc5971cf26": 2.7122184999811396,
+      "8582dc34b2035c4daafc5784a9f7191a6aff3161a7fd54b4d493c45145d6a8e6": 2.870052001048529,
+      "85be5f8d42ba03630daa0be07b146b316d3080b90aa93f345bad7dac72414cb2": 2.9909395400606713,
+      "8ea6d71412881fbe6c75550a708c1d07c516204d05e2a3157e6b91f28a5c2252": 2.476884566125809,
+      "8f111d6b0be71e51004b4ba00099dea1cba2e7e923275ec6e21b897e6258eb1f": 2.8041347547723072,
+      "99c20a9254ec1d22ca2fc1248521f15bf60b02b6687c6b3abdfcb13b22c83f9b": 2.6050100847195945,
+      "9dffdc3c954812b4c0cb0db9e5e05b598b80d83d7c8be3c5c2bd16cbbde4d4d2": 2.8657239876597194,
+      "9f28e13be46d9fe2c3f83f9c7c55159533d077106fc3547e8dc70aa97c80d0d8": 2.5232579796761585,
+      "a2761bd0c53867d00aaf0cf79fe42b933115e1e9ccdd57dd47b2befd006cdde5": 2.9736528412154497,
+      "a2951744a9a0303fef6d81ab2bb330af2fa72e8a2fc7e8f4ed60a6839ecc28be": 2.79299723414395,
+      "a4ae1e38755ef51c2b927506ffff6727a14c6ba32b8f7e5de4bd7fa659ba0feb": 2.741846713182851,
+      "a7cc30e825b8ca2d023e97248b5829b0c64bd31176ee25d94554b5e6d125f074": 2.630796336884076,
+      "a864869b4f73e3db8b9cdcf0d83ed7293b989ff0e0e968e0e9ffd3256f45b796": 2.3758623105784458,
+      "af534fd50bad21eceef720d312f93a509007b2c855e1ea82ad511330f6471762": 3.249904871323732,
+      "b5e14f87eb67aa62c826ab2a7e2938dc07da910f260af238cb80e9c767a76a50": 2.4188427316045407,
+      "b80c09050d1651d9d2841153f20a60eb5aaa7321199171fc89d1b51c499c8a8f": 2.7165495413249374,
+      "bbe648a7926d9f868be15c8e8ee1be73adcc090f1a96707a3c1464c91057ccdf": 2.528533224601742,
+      "beebcf277852314db4fc129cb1cbbddabf3be0d85a3d3e6d7d1cdd1bc0fc1438": 3.2287106070700866,
+      "c7dfe713aa5072929ec80557725f9b39900c138c3a94a01e4200cbc260637632": 2.7087993216859556,
+      "cb418ed6e87612a5a9e0d909aa8414d3529c2f8b60ed4e19b6a9d49b1a416e37": 2.447127036738467,
+      "d88b70e166093ff0e29360ab8af38466156f8357e208698f4f61cec125cb107d": 2.6319501022083727,
+      "da5c06116a82ebaf6d510adf1cd027fc8ac05728f89579b37ce4eab1fdd2acb0": 3.2963656408789617,
+      "dcbd662730ba1a9fff29513268f9d41daef00d459dabf1881fda7eec0d9fd1c3": 2.9219141148976724,
+      "e6eaa4a1f2677060f78635b0a5335157af62d0b4348bf12668fdd6ea675e27cf": 2.520210653223622,
+      "ea5caa963638250cff228684ab7ec2cd180ec3e0802d67fbc78054b029c373e9": 2.4732353697567926,
+      "eb4b8809ab8286e433b4946f81fefbd3c5d251ed1684ab90bf845a8a635c4d5d": 3.0396851893580923,
+      "f228cef592283a6270529b1c1321ea4ed8d5e9ee123330caf1bbc6b96177063d": 2.850711883527744,
+      "f6d0099af02e056acd1456732d32a0fb3cce2ef7b2866c0fcc9da396daeb4e77": 2.4856463585750013,
+      "fa507a5ee35506f3cd216458fd4ce82c682c0e9ce103ff834d453063d4112ec7": 2.5015026732656196,
+      "fc6e89517f392e3329187aa1b31ae91259db71b35a168864b04b8bf47a234d8a": 3.1005831518347504,
+      "ffa411998a04085b21f57c835396e8aa1a42113b6597225fe32392cdf02f6c33": 2.9443286371367057
+    },
+    "hard_level_by_sha256": {
+      "02bba6cbd0a8e37936ae203ae66589f85b6b71cb9b20ec88222cf7d82e1fe525": 2,
+      "03c73bafdb8fae3ca5715aeaeb8fe4f6f7c58cfd0c5ef97c9d752b736e50190e": 2,
+      "04d5b410945466210984ea9db3e180b3864c1cefa768283970f45010e912f1bc": 1,
+      "086351f640befb2622199cefcfc5d7b81a9aa887bf823c8621beb0123a6982e7": 1,
+      "118ecfb0bb36d52a18ab5a92faae656a5819d0671ceeac67688b5d188e56b944": 2,
+      "19bc08b3abffedef125d09b06ba3cbc74dec1f0207d83605469ba46fce761dee": 1,
+      "1e43a4a890785e0d52f02b36661142b512ef806f8d05da64d52c1d93cbab5741": 1,
+      "215931a77a5567be651593a8ec8e4fe07f02ee8095e6627b4d61810f71c874e0": 2,
+      "2433375768a4f6f551e9b92c9f6d313564c0da4797e7f4a15c70547604acf565": 3,
+      "2afd5dd99fb25a92391edae11ec8fc21cc36651a78ab6bfb27b69e9bdb125740": 5,
+      "2b06680c644d54bb4808910dc2043ee13befa8564811cdaca0a71a215166a581": 1,
+      "3156efd974d5d87771dab85c4945c8bb49d25dee9d06b59281c276e617a3ce53": 1,
+      "366eb83f24ebd20a041a53861647535036ec211e27687e26b7bbd2e659f7f5ce": 4,
+      "37094f4247a7e5cac3af1876137f42c88263ace0d075d99daec7b1e796e33ad0": 2,
+      "39995aac91e1ae5fbe4c70fedb078fb207170ff6dc7ba7b21ffdcb9c27d6dd13": 2,
+      "3e674361fbb7a51d626962c19732f311f7b1bb7a168cb6e4315e5cd32b0c9d8b": 2,
+      "44388ed0852d255ef3cc97a218490c7a5fcf96ab6e5bee339d15a7e6d1aa987b": 1,
+      "4538a8cb1d4e65e03ca074c0fe1e64184305bc071bf5e9e5f4389f2e33520357": 4,
+      "47baef88a18a6c6da956dc6f8b3af838d433e4ae6728dc9f048c01ec6cbf87ed": 1,
+      "4a4d65df3be7f61fdd97e052bef71308f6b16597bd7c10d997721e0b3adaf8e1": 4,
+      "4aa141f37b53ce0c6698d13480fa5c0ff50a4eb941dc3033c227279e428eb24f": 2,
+      "4eb19807955b9d59bce98a53e6686d740b18c102691d919a1ddac9fa5ff9ed5b": 1,
+      "4f26850b1aee4fe40ab0f060fc24568f54e637d9b5158b74c4a99a865c991e35": 2,
+      "530a91ac82e4406acc23913088efb0ab0d056e686345088e41f60e4fc6176f60": 2,
+      "537c0f394f405db1ff92ab06f8fccc12883f33cb72737043d5f0a993b5281512": 1,
+      "5611824f386938edfebc29775f162f72b34f74dbb993a6cbfdd5c415019df3bf": 1,
+      "57e2611e6aa653a43d6d4172bc98ae35d0e0567ce9bc3ce58a440526429a7ef8": 2,
+      "588c3ba5fbfc78b2b98c52e41bdb37947ce721a6b52f842c2e2e9ccf755495e9": 4,
+      "5c7ed4b5bba42b52c93eeaaf462b1531717d1abd43938445a1e6bea9c19c1ae3": 2,
+      "5fc9ade7715c0110ec5b4d18777ce2718c2f70946fa23833222b98b425b2ca7c": 2,
+      "60283d2c24b15a64365e90c93a5f67456d40f4c56f0ae7298dd975cd2ef5a7b4": 1,
+      "603eefbe755351b80a66712a9e9f35c1e5dd3833c54e305c1e4037fe1de2c721": 3,
+      "65bef59ae2cffaac5a0401780c884fc1f0cb87c3fb6ba7057213bbb03b775f9d": 3,
+      "712ae06bb73f640faf0dfdf86a683432b1e6ea22ef7333b7baa1642f2dad86ce": 1,
+      "7bf853317bf65f28f5284cf54a4edd0145fc4eecb241b65e6179ce1c82069edd": 1,
+      "7eecaa109275746ead9519c1d8f9c182e6cf99ed2cd547dc49695f6fea9422cf": 1,
+      "8552526586a4fd363eed3cc061bb12d9c4cad60e7b1dc7503b715dbc5971cf26": 2,
+      "8582dc34b2035c4daafc5784a9f7191a6aff3161a7fd54b4d493c45145d6a8e6": 2,
+      "85be5f8d42ba03630daa0be07b146b316d3080b90aa93f345bad7dac72414cb2": 3,
+      "8ea6d71412881fbe6c75550a708c1d07c516204d05e2a3157e6b91f28a5c2252": 1,
+      "8f111d6b0be71e51004b4ba00099dea1cba2e7e923275ec6e21b897e6258eb1f": 2,
+      "99c20a9254ec1d22ca2fc1248521f15bf60b02b6687c6b3abdfcb13b22c83f9b": 2,
+      "9dffdc3c954812b4c0cb0db9e5e05b598b80d83d7c8be3c5c2bd16cbbde4d4d2": 2,
+      "9f28e13be46d9fe2c3f83f9c7c55159533d077106fc3547e8dc70aa97c80d0d8": 1,
+      "a2761bd0c53867d00aaf0cf79fe42b933115e1e9ccdd57dd47b2befd006cdde5": 2,
+      "a2951744a9a0303fef6d81ab2bb330af2fa72e8a2fc7e8f4ed60a6839ecc28be": 2,
+      "a4ae1e38755ef51c2b927506ffff6727a14c6ba32b8f7e5de4bd7fa659ba0feb": 2,
+      "a7cc30e825b8ca2d023e97248b5829b0c64bd31176ee25d94554b5e6d125f074": 2,
+      "a864869b4f73e3db8b9cdcf0d83ed7293b989ff0e0e968e0e9ffd3256f45b796": 1,
+      "af534fd50bad21eceef720d312f93a509007b2c855e1ea82ad511330f6471762": 4,
+      "b5e14f87eb67aa62c826ab2a7e2938dc07da910f260af238cb80e9c767a76a50": 1,
+      "b80c09050d1651d9d2841153f20a60eb5aaa7321199171fc89d1b51c499c8a8f": 2,
+      "bbe648a7926d9f868be15c8e8ee1be73adcc090f1a96707a3c1464c91057ccdf": 1,
+      "beebcf277852314db4fc129cb1cbbddabf3be0d85a3d3e6d7d1cdd1bc0fc1438": 4,
+      "c7dfe713aa5072929ec80557725f9b39900c138c3a94a01e4200cbc260637632": 2,
+      "cb418ed6e87612a5a9e0d909aa8414d3529c2f8b60ed4e19b6a9d49b1a416e37": 1,
+      "d88b70e166093ff0e29360ab8af38466156f8357e208698f4f61cec125cb107d": 2,
+      "da5c06116a82ebaf6d510adf1cd027fc8ac05728f89579b37ce4eab1fdd2acb0": 4,
+      "dcbd662730ba1a9fff29513268f9d41daef00d459dabf1881fda7eec0d9fd1c3": 2,
+      "e6eaa4a1f2677060f78635b0a5335157af62d0b4348bf12668fdd6ea675e27cf": 1,
+      "ea5caa963638250cff228684ab7ec2cd180ec3e0802d67fbc78054b029c373e9": 1,
+      "eb4b8809ab8286e433b4946f81fefbd3c5d251ed1684ab90bf845a8a635c4d5d": 3,
+      "f228cef592283a6270529b1c1321ea4ed8d5e9ee123330caf1bbc6b96177063d": 2,
+      "f6d0099af02e056acd1456732d32a0fb3cce2ef7b2866c0fcc9da396daeb4e77": 1,
+      "fa507a5ee35506f3cd216458fd4ce82c682c0e9ce103ff834d453063d4112ec7": 1,
+      "fc6e89517f392e3329187aa1b31ae91259db71b35a168864b04b8bf47a234d8a": 3,
+      "ffa411998a04085b21f57c835396e8aa1a42113b6597225fe32392cdf02f6c33": 3
+    },
+    "images": 67,
+    "mean_prediction_entropy": 1.552789864632618,
+    "mean_stack_spearman": 0.9652913752913753,
+    "median_stack_spearman": 1.0,
+    "pairwise": {
+      "minimum_ev_0.5": {
+        "continuous_concordance_with_half_credit_for_ties": 0.9742268041237113,
+        "hard_level_non_inversion_rate": 1.0,
+        "inversions": 5,
+        "pairs": 194,
+        "strict_correct": 189,
+        "ties": 0
+      },
+      "minimum_ev_1": {
+        "continuous_concordance_with_half_credit_for_ties": 0.9801324503311258,
+        "hard_level_non_inversion_rate": 1.0,
+        "inversions": 3,
+        "pairs": 151,
+        "strict_correct": 148,
+        "ties": 0
+      },
+      "minimum_ev_2": {
+        "continuous_concordance_with_half_credit_for_ties": 1.0,
+        "hard_level_non_inversion_rate": 1.0,
+        "inversions": 0,
+        "pairs": 81,
+        "strict_correct": 81,
+        "ties": 0
+      }
+    },
+    "per_stack": {
+      "official_test_scene_12a1e99b250af6c5": {
+        "adjacent_inversions": 1,
+        "adjacent_pairs": 3,
+        "expected_level_span": 0.14718738703275358,
+        "images": 4,
+        "spearman_expected_severity_vs_darkness_ev": 0.8
+      },
+      "official_test_scene_28368effc96e9c72": {
+        "adjacent_inversions": 1,
+        "adjacent_pairs": 3,
+        "expected_level_span": 0.5069907851156783,
+        "images": 4,
+        "spearman_expected_severity_vs_darkness_ev": 0.8
+      },
+      "official_test_scene_34d897b2d3af62f8": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 1,
+        "expected_level_span": 0.18616735311505384,
+        "images": 2,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_40921799f422ed90": {
+        "adjacent_inversions": 1,
+        "adjacent_pairs": 10,
+        "expected_level_span": 0.7296942181001103,
+        "images": 11,
+        "spearman_expected_severity_vs_darkness_ev": 0.990909090909091
+      },
+      "official_test_scene_42261fe2f0e4c587": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 1,
+        "expected_level_span": 2.838868799415195e-05,
+        "images": 2,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_56d6a3f2e6b6d8b8": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 3,
+        "expected_level_span": 0.7298297167026884,
+        "images": 4,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_712afdcbc719e6ed": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 1,
+        "expected_level_span": 0.07126472616002122,
+        "images": 2,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_775b5c850e506adf": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 1,
+        "expected_level_span": 0.37382731740193487,
+        "images": 2,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_8bff6588c5fc5868": {
+        "adjacent_inversions": 1,
+        "adjacent_pairs": 13,
+        "expected_level_span": 0.9849227391541007,
+        "images": 14,
+        "spearman_expected_severity_vs_darkness_ev": 0.9956043956043956
+      },
+      "official_test_scene_8ef566db5535dc97": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 1,
+        "expected_level_span": 0.3221769535837584,
+        "images": 2,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_9b20cb529d3069ac": {
+        "adjacent_inversions": 1,
+        "adjacent_pairs": 6,
+        "expected_level_span": 0.35431641291284777,
+        "images": 7,
+        "spearman_expected_severity_vs_darkness_ev": 0.8928571428571429
+      },
+      "official_test_scene_bb3d445ba1b9dfef": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 1,
+        "expected_level_span": 0.17866903693707803,
+        "images": 2,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_c091eb8c47feb501": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 1,
+        "expected_level_span": 0.004005452146903288,
+        "images": 2,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_c156f3322e509936": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 5,
+        "expected_level_span": 0.5188879065521728,
+        "images": 6,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      },
+      "official_test_scene_dfebc9dbbf98b7b1": {
+        "adjacent_inversions": 0,
+        "adjacent_pairs": 2,
+        "expected_level_span": 0.20591663085561462,
+        "images": 3,
+        "spearman_expected_severity_vs_darkness_ev": 1.0
+      }
+    },
+    "pooled_expected_level_span": 1.070585235797521,
+    "positive_stack_spearman_fraction": 1.0,
+    "probabilities_by_sha256": {
+      "02bba6cbd0a8e37936ae203ae66589f85b6b71cb9b20ec88222cf7d82e1fe525": {
+        "1": 0.2401555265903525,
+        "2": 0.28543250859248664,
+        "3": 0.20202928512672652,
+        "4": 0.14618805199992255,
+        "5": 0.12619462769051182
+      },
+      "03c73bafdb8fae3ca5715aeaeb8fe4f6f7c58cfd0c5ef97c9d752b736e50190e": {
+        "1": 0.20689280795629889,
+        "2": 0.32070690711496586,
+        "3": 0.20032359369994956,
+        "4": 0.14602346074187497,
+        "5": 0.12605323048691075
+      },
+      "04d5b410945466210984ea9db3e180b3864c1cefa768283970f45010e912f1bc": {
+        "1": 0.3215528613802719,
+        "2": 0.2658135714076574,
+        "3": 0.17099182262751095,
+        "4": 0.12836260361820837,
+        "5": 0.11327914096635147
+      },
+      "086351f640befb2622199cefcfc5d7b81a9aa887bf823c8621beb0123a6982e7": {
+        "1": 0.33711973400692347,
+        "2": 0.24756693893367532,
+        "3": 0.17140438843674974,
+        "4": 0.1286736182767536,
+        "5": 0.1152353203458979
+      },
+      "118ecfb0bb36d52a18ab5a92faae656a5819d0671ceeac67688b5d188e56b944": {
+        "1": 0.16421048546587366,
+        "2": 0.3178496937758373,
+        "3": 0.22006547833327358,
+        "4": 0.16041398271722807,
+        "5": 0.13746035970778736
+      },
+      "19bc08b3abffedef125d09b06ba3cbc74dec1f0207d83605469ba46fce761dee": {
+        "1": 0.2924391650265378,
+        "2": 0.2590720194375179,
+        "3": 0.18069429982455965,
+        "4": 0.14176515480212257,
+        "5": 0.12602936090926206
+      },
+      "1e43a4a890785e0d52f02b36661142b512ef806f8d05da64d52c1d93cbab5741": {
+        "1": 0.3311231557077681,
+        "2": 0.21822207558168596,
+        "3": 0.17373431411049045,
+        "4": 0.14456332161728808,
+        "5": 0.13235713298276736
+      },
+      "215931a77a5567be651593a8ec8e4fe07f02ee8095e6627b4d61810f71c874e0": {
+        "1": 0.1978648615535708,
+        "2": 0.319658010217737,
+        "3": 0.21021497097443625,
+        "4": 0.14662053286058513,
+        "5": 0.12564162439367083
+      },
+      "2433375768a4f6f551e9b92c9f6d313564c0da4797e7f4a15c70547604acf565": {
+        "1": 0.12998969089004492,
+        "2": 0.26782654029132746,
+        "3": 0.27582036910520175,
+        "4": 0.1881810529286889,
+        "5": 0.138182346784737
+      },
+      "2afd5dd99fb25a92391edae11ec8fc21cc36651a78ab6bfb27b69e9bdb125740": {
+        "1": 0.1264160569963617,
+        "2": 0.16478955091249506,
+        "3": 0.1840079550150785,
+        "4": 0.21004880234988196,
+        "5": 0.31473763472618277
+      },
+      "2b06680c644d54bb4808910dc2043ee13befa8564811cdaca0a71a215166a581": {
+        "1": 0.29086443968235737,
+        "2": 0.25146561520953953,
+        "3": 0.18601335510700756,
+        "4": 0.14380961263807598,
+        "5": 0.12784697736301961
+      },
+      "3156efd974d5d87771dab85c4945c8bb49d25dee9d06b59281c276e617a3ce53": {
+        "1": 0.3066482734675539,
+        "2": 0.24970706706717072,
+        "3": 0.1806841822286571,
+        "4": 0.13968774948279356,
+        "5": 0.1232727277538247
+      },
+      "366eb83f24ebd20a041a53861647535036ec211e27687e26b7bbd2e659f7f5ce": {
+        "1": 0.11435712650773631,
+        "2": 0.1622182109991685,
+        "3": 0.19352797540731217,
+        "4": 0.2921286493260347,
+        "5": 0.23776803775974828
+      },
+      "37094f4247a7e5cac3af1876137f42c88263ace0d075d99daec7b1e796e33ad0": {
+        "1": 0.14005925357701032,
+        "2": 0.2796447575790518,
+        "3": 0.2636696657598672,
+        "4": 0.1785732650430259,
+        "5": 0.1380530580410448
+      },
+      "39995aac91e1ae5fbe4c70fedb078fb207170ff6dc7ba7b21ffdcb9c27d6dd13": {
+        "1": 0.21409994559382392,
+        "2": 0.28097361945351385,
+        "3": 0.214046584273965,
+        "4": 0.15717827944387847,
+        "5": 0.13370157123481882
+      },
+      "3e674361fbb7a51d626962c19732f311f7b1bb7a168cb6e4315e5cd32b0c9d8b": {
+        "1": 0.1485491107879427,
+        "2": 0.3179373638022493,
+        "3": 0.23518610246686533,
+        "4": 0.16283562883949085,
+        "5": 0.13549179410345188
+      },
+      "44388ed0852d255ef3cc97a218490c7a5fcf96ab6e5bee339d15a7e6d1aa987b": {
+        "1": 0.36928386148800396,
+        "2": 0.24463072786576662,
+        "3": 0.1539324402388008,
+        "4": 0.1207683952337933,
+        "5": 0.1113845751736354
+      },
+      "4538a8cb1d4e65e03ca074c0fe1e64184305bc071bf5e9e5f4389f2e33520357": {
+        "1": 0.11750386424659014,
+        "2": 0.1734711591886277,
+        "3": 0.281829494799747,
+        "4": 0.28391047279106496,
+        "5": 0.14328500897397012
+      },
+      "47baef88a18a6c6da956dc6f8b3af838d433e4ae6728dc9f048c01ec6cbf87ed": {
+        "1": 0.2993832504187142,
+        "2": 0.2632014559475117,
+        "3": 0.1808939215099791,
+        "4": 0.1357973245690418,
+        "5": 0.12072404755475322
+      },
+      "4a4d65df3be7f61fdd97e052bef71308f6b16597bd7c10d997721e0b3adaf8e1": {
+        "1": 0.12368596303974205,
+        "2": 0.16075950586006638,
+        "3": 0.22054185375332452,
+        "4": 0.32325500546589475,
+        "5": 0.17175767188097227
+      },
+      "4aa141f37b53ce0c6698d13480fa5c0ff50a4eb941dc3033c227279e428eb24f": {
+        "1": 0.19902030346174382,
+        "2": 0.27813606710674726,
+        "3": 0.22472235456514558,
+        "4": 0.16380932828026784,
+        "5": 0.13431194658609547
+      },
+      "4eb19807955b9d59bce98a53e6686d740b18c102691d919a1ddac9fa5ff9ed5b": {
+        "1": 0.34229806615045943,
+        "2": 0.2153233130844948,
+        "3": 0.17017601012331657,
+        "4": 0.14160308506770372,
+        "5": 0.13059952557402546
+      },
+      "4f26850b1aee4fe40ab0f060fc24568f54e637d9b5158b74c4a99a865c991e35": {
+        "1": 0.24805352501926614,
+        "2": 0.27744570412391595,
+        "3": 0.20075643786377684,
+        "4": 0.14741878133810463,
+        "5": 0.1263255516549365
+      },
+      "530a91ac82e4406acc23913088efb0ab0d056e686345088e41f60e4fc6176f60": {
+        "1": 0.1518850041735107,
+        "2": 0.29248939319089096,
+        "3": 0.2433749547424364,
+        "4": 0.17610495870087117,
+        "5": 0.13614568919229078
+      },
+      "537c0f394f405db1ff92ab06f8fccc12883f33cb72737043d5f0a993b5281512": {
+        "1": 0.30912542545161775,
+        "2": 0.2425132235100891,
+        "3": 0.17677288490937565,
+        "4": 0.14178113966354441,
+        "5": 0.12980732646537305
+      },
+      "5611824f386938edfebc29775f162f72b34f74dbb993a6cbfdd5c415019df3bf": {
+        "1": 0.314157341782416,
+        "2": 0.23220144080258315,
+        "3": 0.175595959856911,
+        "4": 0.14719151857961668,
+        "5": 0.13085373897847313
+      },
+      "57e2611e6aa653a43d6d4172bc98ae35d0e0567ce9bc3ce58a440526429a7ef8": {
+        "1": 0.2634376439687596,
+        "2": 0.29617675947256206,
+        "3": 0.18364637210747323,
+        "4": 0.13685250990728873,
+        "5": 0.11988671454391642
+      },
+      "588c3ba5fbfc78b2b98c52e41bdb37947ce721a6b52f842c2e2e9ccf755495e9": {
+        "1": 0.11064262238523749,
+        "2": 0.15708211903526864,
+        "3": 0.18196861192791863,
+        "4": 0.29132159896059595,
+        "5": 0.2589850476909793
+      },
+      "5c7ed4b5bba42b52c93eeaaf462b1531717d1abd43938445a1e6bea9c19c1ae3": {
+        "1": 0.22343726190909158,
+        "2": 0.28737967488119365,
+        "3": 0.2064207274025849,
+        "4": 0.15382402027375272,
+        "5": 0.12893831553337706
+      },
+      "5fc9ade7715c0110ec5b4d18777ce2718c2f70946fa23833222b98b425b2ca7c": {
+        "1": 0.12883042721865193,
+        "2": 0.2836804885243113,
+        "3": 0.2635691008991868,
+        "4": 0.18793345669846265,
+        "5": 0.1359865266593873
+      },
+      "60283d2c24b15a64365e90c93a5f67456d40f4c56f0ae7298dd975cd2ef5a7b4": {
+        "1": 0.2974828306007739,
+        "2": 0.2559742077160454,
+        "3": 0.1865863527643639,
+        "4": 0.1390435079665427,
+        "5": 0.12091310095227405
+      },
+      "603eefbe755351b80a66712a9e9f35c1e5dd3833c54e305c1e4037fe1de2c721": {
+        "1": 0.12808186700814356,
+        "2": 0.2640066198288183,
+        "3": 0.29479055870303755,
+        "4": 0.1827882075574198,
+        "5": 0.1303327469025808
+      },
+      "65bef59ae2cffaac5a0401780c884fc1f0cb87c3fb6ba7057213bbb03b775f9d": {
+        "1": 0.12616195592067161,
+        "2": 0.2509451855766779,
+        "3": 0.2802061224876298,
+        "4": 0.20127083121364278,
+        "5": 0.14141590480137792
+      },
+      "712ae06bb73f640faf0dfdf86a683432b1e6ea22ef7333b7baa1642f2dad86ce": {
+        "1": 0.3237800873736201,
+        "2": 0.23766319818387682,
+        "3": 0.17710284692948663,
+        "4": 0.13792955410175095,
+        "5": 0.12352431341126548
+      },
+      "7bf853317bf65f28f5284cf54a4edd0145fc4eecb241b65e6179ce1c82069edd": {
+        "1": 0.3205489456607394,
+        "2": 0.23635836067940855,
+        "3": 0.17228575205323032,
+        "4": 0.1433603484064368,
+        "5": 0.12744659320018498
+      },
+      "7eecaa109275746ead9519c1d8f9c182e6cf99ed2cd547dc49695f6fea9422cf": {
+        "1": 0.29920680476615713,
+        "2": 0.2515190341420313,
+        "3": 0.17672075353257855,
+        "4": 0.14278584712806927,
+        "5": 0.12976756043116372
+      },
+      "8552526586a4fd363eed3cc061bb12d9c4cad60e7b1dc7503b715dbc5971cf26": {
+        "1": 0.1987160632898959,
+        "2": 0.304930926971309,
+        "3": 0.2126788113464734,
+        "4": 0.15276684325240247,
+        "5": 0.13090735513991913
+      },
+      "8582dc34b2035c4daafc5784a9f7191a6aff3161a7fd54b4d493c45145d6a8e6": {
+        "1": 0.13664584360761453,
+        "2": 0.29740899614120847,
+        "3": 0.2586304274181076,
+        "4": 0.17387678126117256,
+        "5": 0.1334379515718969
+      },
+      "85be5f8d42ba03630daa0be07b146b316d3080b90aa93f345bad7dac72414cb2": {
+        "1": 0.12855284540777692,
+        "2": 0.2199497752986364,
+        "3": 0.31304203526028845,
+        "4": 0.20891568189173476,
+        "5": 0.12953966214156346
+      },
+      "8ea6d71412881fbe6c75550a708c1d07c516204d05e2a3157e6b91f28a5c2252": {
+        "1": 0.34937798732929953,
+        "2": 0.21717708107238112,
+        "3": 0.16666675636550893,
+        "4": 0.14073872860883152,
+        "5": 0.12603944662397884
+      },
+      "8f111d6b0be71e51004b4ba00099dea1cba2e7e923275ec6e21b897e6258eb1f": {
+        "1": 0.15496395131990823,
+        "2": 0.3117965847760981,
+        "3": 0.23928147559463622,
+        "4": 0.16205673443049337,
+        "5": 0.13190125387886412
+      },
+      "99c20a9254ec1d22ca2fc1248521f15bf60b02b6687c6b3abdfcb13b22c83f9b": {
+        "1": 0.24574814892884186,
+        "2": 0.3004295188469331,
+        "3": 0.1849173583471044,
+        "4": 0.14087404633003,
+        "5": 0.12803092754709064
+      },
+      "9dffdc3c954812b4c0cb0db9e5e05b598b80d83d7c8be3c5c2bd16cbbde4d4d2": {
+        "1": 0.13252559688253646,
+        "2": 0.2978762840041276,
+        "3": 0.27072090418729394,
+        "4": 0.1691029644231638,
+        "5": 0.1297742505028782
+      },
+      "9f28e13be46d9fe2c3f83f9c7c55159533d077106fc3547e8dc70aa97c80d0d8": {
+        "1": 0.2917707958989796,
+        "2": 0.2700739854028198,
+        "3": 0.18156714426618498,
+        "4": 0.13630259198709338,
+        "5": 0.1202854824449222
+      },
+      "a2761bd0c53867d00aaf0cf79fe42b933115e1e9ccdd57dd47b2befd006cdde5": {
+        "1": 0.11552812454588343,
+        "2": 0.2825839442443209,
+        "3": 0.2625503249246979,
+        "4": 0.1913821780186583,
+        "5": 0.14795542826643954
+      },
+      "a2951744a9a0303fef6d81ab2bb330af2fa72e8a2fc7e8f4ed60a6839ecc28be": {
+        "1": 0.15480918596710577,
+        "2": 0.3218079312598164,
+        "3": 0.2311504320687228,
+        "4": 0.16004136407073194,
+        "5": 0.13219108663362308
+      },
+      "a4ae1e38755ef51c2b927506ffff6727a14c6ba32b8f7e5de4bd7fa659ba0feb": {
+        "1": 0.17910113069719727,
+        "2": 0.31494548644869136,
+        "3": 0.221285418150033,
+        "4": 0.15434146838222,
+        "5": 0.13032649632185836
+      },
+      "a7cc30e825b8ca2d023e97248b5829b0c64bd31176ee25d94554b5e6d125f074": {
+        "1": 0.24253604456973615,
+        "2": 0.27964245734644233,
+        "3": 0.20685765086503974,
+        "4": 0.14641681106757284,
+        "5": 0.12454703615120892
+      },
+      "a864869b4f73e3db8b9cdcf0d83ed7293b989ff0e0e968e0e9ffd3256f45b796": {
+        "1": 0.3817840090905243,
+        "2": 0.21801336551173217,
+        "3": 0.15775004847852336,
+        "4": 0.1274614595672135,
+        "5": 0.11499111735200664
+      },
+      "af534fd50bad21eceef720d312f93a509007b2c855e1ea82ad511330f6471762": {
+        "1": 0.1045943351022679,
+        "2": 0.20145940500211995,
+        "3": 0.23337493525075773,
+        "4": 0.2605897027593209,
+        "5": 0.1999816218855335
+      },
+      "b5e14f87eb67aa62c826ab2a7e2938dc07da910f260af238cb80e9c767a76a50": {
+        "1": 0.3607861065271961,
+        "2": 0.22836606855564243,
+        "3": 0.16163554601097843,
+        "4": 0.12964354459779062,
+        "5": 0.11956873430839236
+      },
+      "b80c09050d1651d9d2841153f20a60eb5aaa7321199171fc89d1b51c499c8a8f": {
+        "1": 0.17285773339316574,
+        "2": 0.3337329260427004,
+        "3": 0.22109079279861482,
+        "4": 0.14863916137706898,
+        "5": 0.12367938638845012
+      },
+      "bbe648a7926d9f868be15c8e8ee1be73adcc090f1a96707a3c1464c91057ccdf": {
+        "1": 0.287240251759267,
+        "2": 0.2752181909762028,
+        "3": 0.18098895150656205,
+        "4": 0.13487329241945786,
+        "5": 0.12167931333851034
+      },
+      "beebcf277852314db4fc129cb1cbbddabf3be0d85a3d3e6d7d1cdd1bc0fc1438": {
+        "1": 0.12211057153634822,
+        "2": 0.1601925301093438,
+        "3": 0.24359125845457558,
+        "4": 0.3150869995473382,
+        "5": 0.1590186403523942
+      },
+      "c7dfe713aa5072929ec80557725f9b39900c138c3a94a01e4200cbc260637632": {
+        "1": 0.21281457605507226,
+        "2": 0.28521823799465007,
+        "3": 0.21410775962092243,
+        "4": 0.1560721408679601,
+        "5": 0.13178728546139512
+      },
+      "cb418ed6e87612a5a9e0d909aa8414d3529c2f8b60ed4e19b6a9d49b1a416e37": {
+        "1": 0.3226297010667028,
+        "2": 0.26289610174762207,
+        "3": 0.17288746675851396,
+        "4": 0.12789092023482782,
+        "5": 0.11369581019233334
+      },
+      "d88b70e166093ff0e29360ab8af38466156f8357e208698f4f61cec125cb107d": {
+        "1": 0.24412465216293006,
+        "2": 0.2811425716824398,
+        "3": 0.20046062489563451,
+        "4": 0.14720232430131833,
+        "5": 0.12706982695767727
+      },
+      "da5c06116a82ebaf6d510adf1cd027fc8ac05728f89579b37ce4eab1fdd2acb0": {
+        "1": 0.12468070261162333,
+        "2": 0.15969001275167238,
+        "3": 0.2035442114251712,
+        "4": 0.3187530875691849,
+        "5": 0.1933319856423481
+      },
+      "dcbd662730ba1a9fff29513268f9d41daef00d459dabf1881fda7eec0d9fd1c3": {
+        "1": 0.1296286784255144,
+        "2": 0.28702361559959294,
+        "3": 0.2589457951072853,
+        "4": 0.18060873438692068,
+        "5": 0.1437931764806867
+      },
+      "e6eaa4a1f2677060f78635b0a5335157af62d0b4348bf12668fdd6ea675e27cf": {
+        "1": 0.3017275968355081,
+        "2": 0.2576423597816864,
+        "3": 0.18102270111688717,
+        "4": 0.13790647785551186,
+        "5": 0.12170086441040644
+      },
+      "ea5caa963638250cff228684ab7ec2cd180ec3e0802d67fbc78054b029c373e9": {
+        "1": 0.349145929252062,
+        "2": 0.21662952324966045,
+        "3": 0.16995454629038503,
+        "4": 0.14038325090520792,
+        "5": 0.12388675030268458
+      },
+      "eb4b8809ab8286e433b4946f81fefbd3c5d251ed1684ab90bf845a8a635c4d5d": {
+        "1": 0.11550310531525129,
+        "2": 0.22151178760209816,
+        "3": 0.30612736862647405,
+        "4": 0.22151228932166006,
+        "5": 0.13534544913451643
+      },
+      "f228cef592283a6270529b1c1321ea4ed8d5e9ee123330caf1bbc6b96177063d": {
+        "1": 0.14190533162032665,
+        "2": 0.30042204179944665,
+        "3": 0.2555508326865913,
+        "4": 0.16929899921942698,
+        "5": 0.13282279467420843
+      },
+      "f6d0099af02e056acd1456732d32a0fb3cce2ef7b2866c0fcc9da396daeb4e77": {
+        "1": 0.3191165985470634,
+        "2": 0.2487824304819641,
+        "3": 0.17869605172387978,
+        "4": 0.13414785234309357,
+        "5": 0.11925706690399918
+      },
+      "fa507a5ee35506f3cd216458fd4ce82c682c0e9ce103ff834d453063d4112ec7": {
+        "1": 0.294265002813163,
+        "2": 0.279661860775466,
+        "3": 0.17468655948890685,
+        "4": 0.13307861417751624,
+        "5": 0.11830796274494784
+      },
+      "fc6e89517f392e3329187aa1b31ae91259db71b35a168864b04b8bf47a234d8a": {
+        "1": 0.11262692877617819,
+        "2": 0.23442193369000042,
+        "3": 0.2598402208992986,
+        "4": 0.22596289019193863,
+        "5": 0.16714802644258417
+      },
+      "ffa411998a04085b21f57c835396e8aa1a42113b6597225fe32392cdf02f6c33": {
+        "1": 0.11954138260958302,
+        "2": 0.276900219392581,
+        "3": 0.2789438091585854,
+        "4": 0.18891755593004814,
+        "5": 0.13569703290920235
+      }
+    },
+    "stacks": 15,
+    "temperature": 1.0
+  },
+  "model": {
+    "all_parameters_frozen": true,
+    "model_revision": "cc594898137f460bfe9f0759e9844b3ce807cfb5",
+    "parameter_groups": {
+      "language_model": 7070619136,
+      "lm_head": 544997376,
+      "visual.blocks": 630470400,
+      "visual.merger": 44574464,
+      "visual.patch_embed": 1505280
+    },
+    "selected_checkpoint_step": 600,
+    "selected_visual_sha256": "b0e65a8597077973a2a103dc3369e0cb1ea703de95e2e4841d359c3d34eff77f"
+  },
+  "official_foundir_used": false,
+  "relative_exposure_evidence_only": true,
+  "reusable_development_suite": true,
+  "schema_version": 1,
+  "scope": "frozen_synthetic_step600_same_scene_real_exposure_ordering",
+  "scoring": {
+    "batch_size_per_rank": 4,
+    "candidate_project_levels": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "free_form_generation_used": false,
+    "method": "mean_teacher_forced_target_token_negative_log_likelihood",
+    "minimum_ev_gaps": [
+      0.5,
+      1.0,
+      2.0
+    ],
+    "soft_signal": "expected_level_from_softmax_negative_mean_nll",
+    "temperature": 1.0
+  },
+  "selected_checkpoint_step": 600,
+  "selected_visual_sha256": "b0e65a8597077973a2a103dc3369e0cb1ea703de95e2e4841d359c3d34eff77f",
+  "status": "passed"
+}

@@ -1,0 +1,140 @@
+{
+  "aggregate": {
+    "O_GATE3_COMPACT_CASCADE_CONVEX": {
+      "equal_family_lpips": 0.3260674209047485,
+      "equal_family_psnr": 19.909809781148628,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.4052688484139628
+          },
+          "psnr_conservative": {
+            "estimate": 18.11012401507674
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.5942369440178856
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.21385725957155227
+          },
+          "psnr_conservative": {
+            "estimate": 24.902105621337892
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.7718173146325286
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.3590761547287305
+          },
+          "psnr_conservative": {
+            "estimate": 16.71719970703125
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.6416607611449022
+          }
+        }
+      },
+      "worst_family_lpips": 0.4052688484139628,
+      "worst_family_psnr": 16.71719970703125
+    },
+    "P3_COMPACT_RESIDUAL_V1": {
+      "equal_family_lpips": 0.37542502803596883,
+      "equal_family_psnr": 17.473253247118304,
+      "families": {
+        "lolv2": {
+          "groups": 41,
+          "lpips_conservative": {
+            "estimate": 0.4873980217971314
+          },
+          "psnr_conservative": {
+            "estimate": 16.265524606312795
+          },
+          "records": 102,
+          "ssim": {
+            "estimate": 0.5244046994518963
+          }
+        },
+        "sdsd": {
+          "groups": 25,
+          "lpips_conservative": {
+            "estimate": 0.27873734092712404
+          },
+          "psnr_conservative": {
+            "estimate": 19.47423196884339
+          },
+          "records": 125,
+          "ssim": {
+            "estimate": 0.6592967486911931
+          }
+        },
+        "sice": {
+          "groups": 10,
+          "lpips_conservative": {
+            "estimate": 0.3601397213836511
+          },
+          "psnr_conservative": {
+            "estimate": 16.68000316619873
+          },
+          "records": 18,
+          "ssim": {
+            "estimate": 0.6412532206051301
+          }
+        }
+      },
+      "worst_family_lpips": 0.4873980217971314,
+      "worst_family_psnr": 16.265524606312795
+    }
+  },
+  "config": "configs/foundir_lowlight_gate3_v1.json",
+  "config_sha256": "818bd402ad5aec6b12e826cc30c99b49bead9c30a2a85a7ff63c4eb744434ca3",
+  "decision": {
+    "compact_admitted_as_gate4_control": false,
+    "compact_beats_fixed_every_family": false,
+    "compact_complements_cascade_every_family": false,
+    "family_checks": {
+      "lolv2": {
+        "compact_lpips_change_over_cascade": 0.15854582715775212,
+        "compact_lpips_change_over_fixed": -0.09899903373072377,
+        "compact_psnr_gain_over_cascade": 1.6557344029535148,
+        "compact_psnr_gain_over_fixed": 6.834272295906937,
+        "oracle_blend_psnr_gain_over_better_single": 1.8445994087639441
+      },
+      "sdsd": {
+        "compact_lpips_change_over_cascade": 0.04907224422693254,
+        "compact_lpips_change_over_fixed": 0.02657834100723272,
+        "compact_psnr_gain_over_cascade": 1.447098439180305,
+        "compact_psnr_gain_over_fixed": 0.5152246422542994,
+        "oracle_blend_psnr_gain_over_better_single": 5.427873652494501
+      },
+      "sice": {
+        "compact_lpips_change_over_cascade": -0.10442379886905356,
+        "compact_lpips_change_over_fixed": -0.09937656745314599,
+        "compact_psnr_gain_over_cascade": 5.171279022643763,
+        "compact_psnr_gain_over_fixed": 4.196408017476401,
+        "oracle_blend_psnr_gain_over_better_single": 0.03719654083251811
+      }
+    },
+    "qwen_ordinal_and_causal_gate_still_required": true
+  },
+  "metric_rows": "reports/foundir_lowlight_gate3_compact_metric_rows_v1.csv",
+  "metric_rows_count": 490,
+  "metric_rows_sha256": "a979a3f1f1c07b4fdd6cbe74659c968bef134866999ae2708b679573e3731c38",
+  "oracle_blend_manifest": "manifests/foundir_lowlight_gate3_compact_cascade_oracle_v1.csv",
+  "oracle_blend_manifest_sha256": "266d076ae7e88a12bbf627915a72875b4e387f53b9b0722e48f6e68280dac35a",
+  "protected_foundir_pixels_used": false,
+  "records": 245,
+  "runner_sha256": "43714dcccac977f4d37daad35d3e0226f9199541dfae0308543ac7d97099030f",
+  "schema_version": 1,
+  "status": "pass_gate3_compact_evaluation_complete",
+  "training_result_sha256": "d437dce2a77f55a6868cd5ef3b966862e64290a1182e065a69275a6ca4906cf7"
+}
