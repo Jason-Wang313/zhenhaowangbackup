@@ -209,3 +209,43 @@ admitted at Gate 2. Full interpretation is frozen in
 | 5. Optional budget/full-scale winner | pending | pending |
 | 6. Replication/deployment freeze | pending | pending |
 | 7. Protected FoundIR event | blocked pending user authorization | none |
+
+## Continuation update — Gate 3 causal matrix frozen for launch
+
+The initial Gate 3 bundle and evidence were committed and pushed at
+`d937d443b9d448ca56a3359c71010faa5d8c73fb`. The next mandatory experiment is
+now implemented and CPU-validated under
+`configs/foundir_lowlight_gate3_causal_v1.json`.
+
+It keeps the step-1200 compact restorer frozen and trains only one
+zero-initialized global-tone condition adapter. One checkpoint is evaluated as
+measured-only, oracle-plus-measured, measured-plus-Qwen, and
+measured-plus-shuffled-Qwen. Qwen exports five-level soft canonical
+posteriors, uncertainty, and a fixed projection of pooled frozen visual tokens
+for all 674 development inputs. The fixed within-family shuffled arm crosses
+scene/sequence groups. No protected FoundIR pixels are used.
+
+CPU evidence:
+
+- eight focused causal/compact tests pass;
+- causal contract covers 429 training and 245 outer records;
+- deterministic measured/oracle features cover all 674 records;
+- frozen image-feature SHA-256:
+  `8bb8059a077f8b7eb6e243a03696c030eaf7d88d878000cc0027fbf9f7580db4`;
+- causal contract SHA-256:
+  `ca30e194aca381bf58ffefc4e488e53f4313e76231eeca32732ade37cb84b539`.
+
+After the causal implementation commit is pushed, launch from the workspace
+on four H100/H200 GPUs with the following one-line command:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang && CUDA_VISIBLE_DEVICES=0,1,2,3 bash smoke/launch_foundir_lowlight_gate3_causal.sh
+```
+
+The durable log is `logs/foundir_lowlight_gate3_causal_v1.log`. The bundle uses
+all four GPUs for Qwen export, adapter training/inference, and metrics. Expected
+wall time is approximately 20--35 minutes. Do not start Gate 4 unless
+`reports/foundir_lowlight_gate3_causal_result_v1.json` passes every frozen
+family-level causal and LPIPS check. A failure uses correction index 0 and is
+reviewed before deciding whether either of the two allowed interface
+corrections is scientifically justified.
