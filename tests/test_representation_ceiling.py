@@ -12,10 +12,31 @@ from lowlight_restoration.representation_ceiling import (
     seam_error_ratio,
     tile_origins,
 )
-from smoke.evaluate_lowlight_vae_ceiling_ddp import AutoencoderTileProcessor
+from smoke.evaluate_lowlight_vae_ceiling_ddp import AutoencoderTileProcessor, lpips_value
 
 
 class RepresentationCeilingTests(unittest.TestCase):
+    def test_lpips_value_clamps_float_roundoff_to_documented_range(self) -> None:
+        class RangeCheckingMetric:
+            def __call__(
+                self, prediction: torch.Tensor, reference: torch.Tensor
+            ) -> torch.Tensor:
+                self.assert_in_range(prediction)
+                self.assert_in_range(reference)
+                return torch.tensor(0.25)
+
+            @staticmethod
+            def assert_in_range(tensor: torch.Tensor) -> None:
+                if tensor.min() < 0 or tensor.max() > 1:
+                    raise ValueError("outside [0, 1]")
+
+        reference = np.array([[[-1e-7, 0.5, 1.0 + 1e-7]]], dtype=np.float32)
+        prediction = np.array([[[0.0, 0.5, 1.0 + 2e-7]]], dtype=np.float32)
+        value = lpips_value(
+            RangeCheckingMetric(), reference, prediction, torch.device("cpu")
+        )
+        self.assertEqual(value, 0.25)
+
     def test_tile_origins_cover_irregular_dimension(self) -> None:
         self.assertEqual(tile_origins(17, 8, 2), (0, 6, 9))
         self.assertEqual(tile_origins(7, 8, 2), (0,))

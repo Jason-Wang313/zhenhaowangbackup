@@ -4,9 +4,9 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TMUX="$ROOT/.tools/tmux-env/bin/tmux"
 RUNNER="$ROOT/smoke/run_lowlight_vae_ceiling.sh"
-SESSION="lowlight_vae_ceiling_v1"
-LOG="$ROOT/logs/lowlight_vae_ceiling_v1.log"
-OUTPUT="$ROOT/checkpoints/lowlight_vae_ceiling_v1"
+SESSION="lowlight_vae_ceiling_v2"
+LOG="$ROOT/logs/lowlight_vae_ceiling_v2.log"
+OUTPUT="$ROOT/checkpoints/lowlight_vae_ceiling_v2"
 DEVICE_SET="${CUDA_VISIBLE_DEVICES:-}"
 
 if [[ "$DEVICE_SET" != "0,1" ]]; then

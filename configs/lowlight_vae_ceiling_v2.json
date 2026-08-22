@@ -1,0 +1,60 @@
+{
+  "decision": {
+    "maximum_full_lpips_resized": 0.03,
+    "maximum_seam_error_ratio": 1.15,
+    "minimum_center_crop_psnr_db": 35.0,
+    "minimum_full_psnr_db": 35.0,
+    "minimum_high_frequency_correlation": 0.9,
+    "policy": "all_scene_balanced_dataset_metrics_must_pass_or_pixel_frequency_bypass_is_required"
+  },
+  "input": {
+    "expected_records": 174,
+    "expected_scenes": 82,
+    "expected_unique_targets": 130,
+    "manifest": "manifests/lowlight_real_paired_development_v1.csv",
+    "manifest_sha256": "fee42cbf440a62c494bccc49e6f25b871ce8ea0044bcd825472e538dc3f5300d",
+    "target_deduplication": "exact_sha256"
+  },
+  "metrics": {
+    "center_crop_size": 512,
+    "high_frequency_gaussian_sigma": 1.2,
+    "lpips_backbone": "alex",
+    "lpips_resize_maximum_dimension": 1024,
+    "prediction_quantization": "round_to_uint8_before_metrics",
+    "psnr_data_range": 1.0,
+    "ssim_implementation": "skimage.metrics.structural_similarity_rgb_channel_axis"
+  },
+  "model": {
+    "autoencoder_bytes": 336211292,
+    "autoencoder_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "flux2_revision": "50fe5162777813d869182b139e83b10743caef15",
+    "name": "flux.2-klein-base-4b",
+    "precision": "float32_encode_decode"
+  },
+  "output": {
+    "directory": "checkpoints/lowlight_vae_ceiling_v2",
+    "rows_csv": "checkpoints/lowlight_vae_ceiling_v2/result_rows.csv",
+    "summary_json": "checkpoints/lowlight_vae_ceiling_v2/result_summary.json"
+  },
+  "reporting": {
+    "bootstrap_confidence": 0.95,
+    "bootstrap_resamples": 5000,
+    "bootstrap_seed": 2026082122
+  },
+  "runtime": {
+    "allowed_gpu_families": [
+      "H100",
+      "H200"
+    ],
+    "minimum_gpu_memory_mib": 76800,
+    "world_size": 2
+  },
+  "schema_version": 1,
+  "tiling": {
+    "alignment_multiple": 16,
+    "overlap": 128,
+    "seam_band_width": 2,
+    "tile_size": 1024
+  }
+}

@@ -3,23 +3,23 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 PYTHON="$ROOT/.venv/flux2-smoke/bin/python"
-CONFIG="$ROOT/configs/lowlight_vae_ceiling_v1.json"
-CONFIG_SHA256="04d8c261633635dc57a7c79d0b109035e03801059fb2a18cf5899088d8db96a3"
+CONFIG="$ROOT/configs/lowlight_vae_ceiling_v2.json"
+CONFIG_SHA256="bd8e62409eb556cc667fb0856c0631f21259c7d05b36238c8e7ecfe4dd9d003c"
 DRIVER="$ROOT/smoke/evaluate_lowlight_vae_ceiling_ddp.py"
 STATUS_HELPER="$ROOT/smoke/lowlight_vae_ceiling_status.py"
-OUTPUT="$ROOT/checkpoints/lowlight_vae_ceiling_v1"
+OUTPUT="$ROOT/checkpoints/lowlight_vae_ceiling_v2"
 SUMMARY="$OUTPUT/result_summary.json"
-LOG="$ROOT/logs/lowlight_vae_ceiling_v1.log"
-EVENTS="$ROOT/logs/lowlight_vae_ceiling_v1_events.log"
-GPU_LOG="$ROOT/logs/lowlight_vae_ceiling_v1_gpu.csv"
-LOCK="$ROOT/logs/lowlight_vae_ceiling_v1.lock"
+LOG="$ROOT/logs/lowlight_vae_ceiling_v2.log"
+EVENTS="$ROOT/logs/lowlight_vae_ceiling_v2_events.log"
+GPU_LOG="$ROOT/logs/lowlight_vae_ceiling_v2_gpu.csv"
+LOCK="$ROOT/logs/lowlight_vae_ceiling_v2.lock"
 DEVICE_SET="${CUDA_VISIBLE_DEVICES:-}"
 WORLD_SIZE=2
 
 REQUIRED_TRACKED_FILES=(
   agents.md
   SESSION_HANDOFF_2026-08-21.md
-  configs/lowlight_vae_ceiling_v1.json
+  configs/lowlight_vae_ceiling_v2.json
   lowlight_restoration/paired_development.py
   lowlight_restoration/representation_ceiling.py
   manifests/lowlight_real_paired_development_v1.csv

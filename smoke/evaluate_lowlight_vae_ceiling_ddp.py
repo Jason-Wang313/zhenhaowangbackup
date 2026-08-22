@@ -37,7 +37,7 @@ from lowlight_restoration.representation_ceiling import (  # noqa: E402
 )
 
 
-DEFAULT_CONFIG = ROOT / "configs/lowlight_vae_ceiling_v1.json"
+DEFAULT_CONFIG = ROOT / "configs/lowlight_vae_ceiling_v2.json"
 REQUIRED_MANIFEST_FIELDS = {
     "development_id",
     "dataset",
@@ -224,6 +224,11 @@ def resize_for_lpips(image: np.ndarray, maximum_dimension: int) -> np.ndarray:
 def lpips_value(metric, reference: np.ndarray, prediction: np.ndarray, device) -> float:
     import torch
 
+    # OpenCV resizing and float32 VAE decode can overshoot the nominal image
+    # range by a few ULPs.  TorchMetrics validates the range strictly before
+    # computing LPIPS, so enforce the documented [0, 1] boundary here.
+    reference = np.clip(reference, 0.0, 1.0)
+    prediction = np.clip(prediction, 0.0, 1.0)
     reference_tensor = torch.from_numpy(
         np.ascontiguousarray(reference.transpose(2, 0, 1))
     ).unsqueeze(0).to(device=device, dtype=torch.float32)
