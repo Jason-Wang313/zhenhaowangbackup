@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "status": "advisor_approved_qwen_multidegradation_contract_frozen",
+  "scope": "qwen_degradation_understanding_only",
+  "degradations": ["blur", "noise", "rain", "haze", "low_light"],
+  "label_policy": {
+    "clean": {"degradations": [], "levels": {}},
+    "active_levels": [2, 3, 4, 5],
+    "maximum_simultaneous_degradations": 3,
+    "predict_every_present_type": true,
+    "independent_level_per_active_type": true
+  },
+  "data": {
+    "generator_basis": "AgenticIR revision 9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+    "clean_source_manifest": "manifests/low_light_source_pool_2000.json",
+    "pilot_records": 12000,
+    "split_records": {"train": 9600, "validation": 1200, "test": 1200},
+    "composition_per_split": {
+      "train": {"clean": 960, "single": 2880, "double": 2880, "triple": 2880},
+      "validation": {"clean": 120, "single": 360, "double": 360, "triple": 360},
+      "test": {"clean": 120, "single": 360, "double": 360, "triple": 360}
+    },
+    "source_split": {
+      "mio100": {"train": 80, "validation": 10, "test": 10},
+      "div2k": {"train": 640, "validation": 80, "test": 80},
+      "lsdir": {"train": 880, "validation": 110, "test": 110}
+    },
+    "crop_size": 448,
+    "haze_depth_policy": "only MiO100 sources with verified predict_depth.mat",
+    "fixed_test_use": "evaluation_once_after_checkpoint_selection"
+  },
+  "curriculum": [
+    "clean_plus_single",
+    "retain_clean_single_plus_double",
+    "retain_clean_single_double_plus_triple"
+  ],
+  "training": {
+    "base_model": "models/qwen2.5-vl-7b-instruct",
+    "method": "LoRA",
+    "loss": "assistant_answer_tokens_only_cross_entropy",
+    "frozen": ["tokenizer", "language_decoder", "lm_head"],
+    "ablation": ["visual_merger_frozen", "visual_merger_trainable"],
+    "checkpoint_selection_data": "synthetic_validation_only"
+  },
+  "synthetic_metrics": [
+    "valid_structured_output_rate",
+    "per_type_precision_recall_f1",
+    "type_micro_f1",
+    "type_macro_f1",
+    "degradation_set_exact_match_rate",
+    "combined_label_exact_match_rate",
+    "severity_typed_accuracy",
+    "severity_typed_mae_with_missing_penalty",
+    "composition_stratified_metrics"
+  ],
+  "real_evaluation": {
+    "kind": "manual_qualitative_sanity_only",
+    "adjacent_l3_l4_ambiguity": "acceptable",
+    "failures": ["obvious_type_omission", "obvious_false_positive", "severity_contradiction"]
+  },
+  "forbidden": [
+    "FoundIR official test access",
+    "FoundIR training use without verified authorization",
+    "using AgenticIR synthetic pairs to train FLUX",
+    "treating the historical Lowlight-only CNN adapter null result as this experiment"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "contract": "configs/qwen_multidegradation_contract_v1.json",
+  "manifest": "manifests/qwen_multidegradation_pilot_v1.jsonl",
+  "manifest_sha256": "0d5fa12abc387ad857c85ad574dcf8ecf7dc158c443d470c096610de04255599",
+  "schema_version": 1,
+  "seed": 2026082401,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "status": "frozen_manifest_only_images_not_implied_generated",
+  "validation": {
+    "combination_and_severity_balanced": true,
+    "haze_depth_policy": "verified_mio100_depth_only",
+    "records": 12000,
+    "source_disjoint": true,
+    "split_composition_counts": {
+      "test": {
+        "0": 120,
+        "1": 360,
+        "2": 360,
+        "3": 360
+      },
+      "train": {
+        "0": 960,
+        "1": 2880,
+        "2": 2880,
+        "3": 2880
+      },
+      "validation": {
+        "0": 120,
+        "1": 360,
+        "2": 360,
+        "3": 360
+      }
+    },
+    "unique_record_ids": 12000,
+    "unique_sources_used": 1982
+  }
+}

@@ -68,6 +68,16 @@ def pack_image(latents: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
 
 
 class LoRATests(unittest.TestCase):
+    def test_lora_preserves_base_linear_dtype(self) -> None:
+        model = TinyModel().to(dtype=torch.bfloat16)
+        inject_lora(model, ["block.qkv"], rank=2, alpha=2)
+        module = model.block.qkv
+        self.assertIsInstance(module, LoRALinear)
+        self.assertEqual(module.lora_A.weight.dtype, torch.bfloat16)
+        self.assertEqual(module.lora_B.weight.dtype, torch.bfloat16)
+        output = model(torch.ones(2, 3, 4, dtype=torch.bfloat16))
+        self.assertEqual(output.dtype, torch.bfloat16)
+
     def test_zero_initialization_preserves_baseline_and_gradients_are_scoped(self) -> None:
         torch.manual_seed(7)
         model = TinyModel()

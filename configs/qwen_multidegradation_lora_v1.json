@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "status": "approved_qwen_multidegradation_lora_frozen_merger_ablation",
+  "contract": {
+    "path": "configs/qwen_multidegradation_contract_v1.json",
+    "sha256": "b2a28d44bb599a7044463438f03944503cbc3def0c7c5532af952a6b3d65df49"
+  },
+  "model": {
+    "inventory_config": "configs/qwen_lowlight_smoke25.json",
+    "inventory_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "local_path": "models/qwen2.5-vl-7b-instruct",
+    "architecture": "Qwen2_5_VLForConditionalGeneration",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "expected_visual_depth": 32,
+    "expected_lora_modules": 160,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.0,
+    "variants": ["merger_frozen", "merger_trainable"],
+    "frozen_modules": ["model.language_model", "lm_head", "model.visual.patch_embed"]
+  },
+  "processor": {
+    "use_fast": false,
+    "padding_side": "right",
+    "min_pixels": 200704,
+    "max_pixels": 200704
+  },
+  "prompt": {
+    "system_prompt_sha256": "5bafc319a0b99371dfdf02e898b313bddd66625d50a26983159ae0aee5efa764",
+    "degradation_question_sha256": "f5e3d4274519b6872d8667f9f3589e1280141c0f30be14e398207d7eaf9fc736",
+    "target_schema": "clean_l1_multilabel_independent_active_l2_l5_v1"
+  },
+  "data": {
+    "manifest": "manifests/qwen_multidegradation_pilot_v1.jsonl",
+    "manifest_sha256": "0d5fa12abc387ad857c85ad574dcf8ecf7dc158c443d470c096610de04255599",
+    "training_split": "train",
+    "validation_split": "validation",
+    "fixed_test_split": "test",
+    "expected_split_records": {"train": 9600, "validation": 1200, "test": 1200},
+    "curriculum": [
+      {"name": "A_clean_single", "maximum_composition_size": 1, "records": 3840},
+      {"name": "B_retain_plus_double", "maximum_composition_size": 2, "records": 6720},
+      {"name": "C_retain_plus_triple", "maximum_composition_size": 3, "records": 9600}
+    ]
+  },
+  "training": {
+    "seed": 2026082402,
+    "micro_batch_size_per_rank": 8,
+    "gradient_accumulation_steps": 1,
+    "global_batch_size": 32,
+    "epochs_per_curriculum_stage": 1,
+    "total_optimizer_steps": 630,
+    "lora_learning_rate": 0.0001,
+    "merger_learning_rate": 0.00001,
+    "minimum_learning_rate_ratio": 0.1,
+    "warmup_steps": 20,
+    "weight_decay": 0.01,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "fused_adamw": true
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 4,
+    "timeout_minutes": 30,
+    "find_unused_parameters": false
+  },
+  "generation": {
+    "do_sample": false,
+    "batch_size_per_rank": 4,
+    "max_new_tokens": 96
+  },
+  "gate": {
+    "minimum_valid_structured_output_rate": 0.99,
+    "minimum_type_macro_f1": 0.9,
+    "minimum_type_micro_f1": 0.92,
+    "minimum_degradation_set_exact_match_rate": 0.8,
+    "minimum_combined_label_exact_match_rate": 0.65,
+    "minimum_severity_typed_accuracy": 0.75,
+    "maximum_severity_typed_mae_with_missing_penalty": 0.5,
+    "minimum_triple_degradation_set_exact_match_rate": 0.65,
+    "require_all_trainable_parameters_receive_gradient": true,
+    "require_no_frozen_gradients": true
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "required_visible_devices": "0,1,2,3",
+    "minimum_gpu_memory_gib": 75,
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "4.56.1",
+    "output_root": "checkpoints/qwen_multidegradation_lora_v1"
+  }
+}

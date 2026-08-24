@@ -1,0 +1,72 @@
+import tempfile
+import unittest
+from pathlib import Path
+
+import torch
+from torch import nn
+
+from smoke.train_qwen_multidegradation_lora_ddp import (
+    create_optimizer,
+    gate_checks,
+    learning_rate_scale,
+    stage_records,
+)
+from smoke.qwen_multidegradation_lora_preflight import ROOT, load_config
+from lowlight_restoration.multidegradation_data import read_jsonl
+
+
+class TinyScope(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.lora_A = nn.Parameter(torch.ones(2))
+        self.model = nn.Module()
+        self.model.visual = nn.Module()
+        self.model.visual.merger = nn.Linear(2, 2)
+        self.frozen = nn.Parameter(torch.ones(2), requires_grad=False)
+
+
+class QwenMultiDegradationTrainerTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.config, _ = load_config(ROOT / "configs/qwen_multidegradation_lora_v1.json")
+        cls.records = read_jsonl(ROOT / "manifests/qwen_multidegradation_pilot_v1.jsonl")
+
+    def test_learning_rate_schedule(self):
+        self.assertAlmostEqual(learning_rate_scale(1, 100, 10, 0.1), 0.1)
+        self.assertAlmostEqual(learning_rate_scale(10, 100, 10, 0.1), 1.0)
+        self.assertAlmostEqual(learning_rate_scale(100, 100, 10, 0.1), 0.1)
+
+    def test_progressive_stages_retain_prior_compositions(self):
+        stages = self.config["data"]["curriculum"]
+        prior = set()
+        for stage in stages:
+            selected = stage_records(self.records, stage, self.config["training"]["seed"])
+            current = {record["record_id"] for record in selected}
+            self.assertTrue(prior.issubset(current))
+            self.assertEqual(len(selected), stage["records"])
+            prior = current
+
+    def test_optimizer_uses_separate_merger_rate(self):
+        model = TinyScope()
+        optimizer = create_optimizer(model, self.config)
+        rates = {group["kind"]: group["lr"] for group in optimizer.param_groups}
+        self.assertEqual(rates["lora"], self.config["training"]["lora_learning_rate"])
+        self.assertEqual(rates["merger"], self.config["training"]["merger_learning_rate"])
+
+    def test_gate_checks_include_triples_and_gradients(self):
+        metrics = {
+            "valid_structured_output_rate": 1.0,
+            "type_macro_f1": 1.0,
+            "type_micro_f1": 1.0,
+            "degradation_set_exact_match_rate": 1.0,
+            "combined_label_exact_match_rate": 1.0,
+            "severity_typed_accuracy": 1.0,
+            "severity_typed_mae_with_missing_penalty": 0.0,
+            "by_composition_size": {"3": {"degradation_set_exact_match_rate": 1.0}},
+        }
+        self.assertTrue(all(gate_checks(metrics, self.config, True).values()))
+        self.assertFalse(gate_checks(metrics, self.config, False)["gradient_scope"])
+
+
+if __name__ == "__main__":
+    unittest.main()
