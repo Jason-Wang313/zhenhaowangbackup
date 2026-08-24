@@ -13,6 +13,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
 )
 from smoke.qwen_multidegradation_lora_preflight import ROOT, load_config
 from lowlight_restoration.multidegradation_data import read_jsonl
+from smoke.train_qwen_multidegradation_overfit_ddp import select_overfit_records
 
 
 class TinyScope(nn.Module):
@@ -66,6 +67,22 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         }
         self.assertTrue(all(gate_checks(metrics, self.config, True).values()))
         self.assertFalse(gate_checks(metrics, self.config, False)["gradient_scope"])
+
+    def test_overfit_selection_covers_all_types_levels_and_compositions(self):
+        selected = select_overfit_records(
+            self.records, seed=self.config["overfit"]["selection_seed"]
+        )
+        self.assertEqual(len(selected), 32)
+        self.assertEqual(
+            {size: sum(record["composition_size"] == size for record in selected) for size in range(4)},
+            {0: 8, 1: 8, 2: 8, 3: 8},
+        )
+        covered = {
+            (name, level)
+            for record in selected
+            for name, level in record["levels"].items()
+        }
+        self.assertEqual(len(covered), 20)
 
 
 if __name__ == "__main__":

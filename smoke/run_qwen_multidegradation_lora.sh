@@ -6,8 +6,29 @@ PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 CONFIG="$ROOT/configs/qwen_multidegradation_lora_v1.json"
 LOG="$ROOT/logs/qwen_multidegradation_lora_v1.log"
 GPU_LOG="$ROOT/logs/qwen_multidegradation_lora_v1_gpu.csv"
+LOCK="$ROOT/logs/qwen_multidegradation_lora_v1.lock"
 
 cd "$ROOT" || exit 1
+mkdir -p "$ROOT/logs"
+exec > >(tee -a "$LOG") 2>&1
+echo "QWEN_MULTIDEGRADATION_RUN_START_UTC $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+telemetry_pid=
+finish_run() {
+  status=$?
+  if [[ -n "$telemetry_pid" ]]; then
+    kill "$telemetry_pid" 2>/dev/null || true
+    wait "$telemetry_pid" 2>/dev/null || true
+  fi
+  echo "QWEN_MULTIDEGRADATION_RUN_END_UTC $(date -u +%Y-%m-%dT%H:%M:%SZ) status=$status"
+}
+trap finish_run EXIT
+
+exec 9>>"$LOCK"
+if ! flock -n 9; then
+  echo "ERROR: another Qwen multi-degradation pipeline holds $LOCK" >&2
+  exit 1
+fi
 if [[ "${CUDA_VISIBLE_DEVICES:-}" != "0,1,2,3" ]]; then
   echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1,2,3" >&2
   exit 1
@@ -24,9 +45,6 @@ export PYTHONUNBUFFERED=1
 export OMP_NUM_THREADS=4
 export MKL_NUM_THREADS=4
 
-mkdir -p "$ROOT/logs"
-exec > >(tee -a "$LOG") 2>&1
-echo "QWEN_MULTIDEGRADATION_RUN_START_UTC $(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "QWEN_MULTIDEGRADATION_WORKSPACE $ROOT"
 echo "QWEN_MULTIDEGRADATION_GIT_REVISION $(git rev-parse HEAD)"
 echo "QWEN_MULTIDEGRADATION_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES"
@@ -40,11 +58,19 @@ fi
 
 nvidia-smi --query-gpu=timestamp,index,name,utilization.gpu,memory.used,memory.total,power.draw --format=csv -l 5 > "$GPU_LOG" 2>&1 &
 telemetry_pid=$!
-cleanup_telemetry() {
-  kill "$telemetry_pid" 2>/dev/null || true
-  wait "$telemetry_pid" 2>/dev/null || true
-}
-trap cleanup_telemetry EXIT
+
+"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node=4 \
+  smoke/train_qwen_multidegradation_overfit_ddp.py --config "$CONFIG"
+overfit_status=$?
+overfit_result="$ROOT/checkpoints/qwen_multidegradation_lora_overfit_v1/result.json"
+if [[ $overfit_status -ne 0 ]]; then
+  if [[ -f "$overfit_result" ]]; then
+    echo "QWEN_MULTIDEGRADATION_OVERFIT_SCIENTIFIC_FAILURE outer_status=$overfit_status"
+    exit 2
+  fi
+  echo "QWEN_MULTIDEGRADATION_OVERFIT_CRASH outer_status=$overfit_status" >&2
+  exit 1
+fi
 
 run_variant() {
   local variant=$1
@@ -93,6 +119,19 @@ if [[ $test_status -ne 0 ]]; then
   exit 1
 fi
 
+"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node=4 \
+  smoke/evaluate_qwen_multidegradation_real_sanity_ddp.py --config "$CONFIG"
+real_status=$?
+if [[ $real_status -ne 0 ]]; then
+  echo "QWEN_MULTIDEGRADATION_REAL_SANITY_INFERENCE_CRASH status=$real_status" >&2
+  exit 1
+fi
+"$PYTHON" smoke/render_qwen_multidegradation_real_sanity.py
+render_status=$?
+if [[ $render_status -ne 0 ]]; then
+  echo "QWEN_MULTIDEGRADATION_REAL_SANITY_RENDER_CRASH status=$render_status" >&2
+  exit 1
+fi
+
 echo "QWEN_MULTIDEGRADATION_RUN_PASS selected_variant=$selected_variant"
-echo "QWEN_MULTIDEGRADATION_RUN_END_UTC $(date -u +%Y-%m-%dT%H:%M:%SZ) status=0"
 exit 0

@@ -34,6 +34,14 @@
   "data": {
     "manifest": "manifests/qwen_multidegradation_pilot_v1.jsonl",
     "manifest_sha256": "0d5fa12abc387ad857c85ad574dcf8ecf7dc158c443d470c096610de04255599",
+    "generation_result": "reports/qwen_multidegradation_generation_result_v1.json",
+    "generation_result_sha256": "73653c445e2253e472838d8dd912777891a5f7809d0a45724c41ca0a9037a90c",
+    "real_sanity_manifest": "manifests/qwen_multidegradation_real_sanity_v3.json",
+    "real_sanity_manifest_sha256": "59f5302aa3b58ba185c1d0fd0deaf82dbf7c0dc2c7b9345ca388854e666b6fad",
+    "sidd_official_verification": {
+      "path": "manifests/qwen_multidegradation_sidd_official_verification_v3.json",
+      "sha256": "d19ab870183f55ce72ddebbac63b5d920e15cf3b169ee1528de0a0ec96a717de"
+    },
     "training_split": "train",
     "validation_split": "validation",
     "fixed_test_split": "test",
@@ -62,6 +70,21 @@
     "max_grad_norm": 1.0,
     "gradient_checkpointing": true,
     "fused_adamw": true
+  },
+  "overfit": {
+    "variant": "merger_trainable",
+    "selection_seed": 2026082403,
+    "records": 32,
+    "records_per_composition_size": 8,
+    "total_optimizer_steps": 200,
+    "lora_learning_rate": 0.0002,
+    "merger_learning_rate": 0.00002,
+    "maximum_final_to_initial_loss_ratio": 0.25,
+    "minimum_valid_structured_output_rate": 1.0,
+    "minimum_degradation_set_exact_match_rate": 0.95,
+    "minimum_combined_label_exact_match_rate": 0.9,
+    "minimum_severity_typed_accuracy": 0.9,
+    "require_all_twenty_type_level_pairs": true
   },
   "distributed": {
     "backend": "nccl",

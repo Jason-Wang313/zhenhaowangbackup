@@ -1,0 +1,69 @@
+{
+  "foundir_used": false,
+  "real_sanity_manifest": "manifests/qwen_multidegradation_real_sanity_v3.json",
+  "real_sanity_manifest_sha256": "59f5302aa3b58ba185c1d0fd0deaf82dbf7c0dc2c7b9345ca388854e666b6fad",
+  "records": [
+    {
+      "exact_match": true,
+      "local_path": "data/qwen_multidegradation_real_sanity_v2_candidates/noise/sidd_0013.png",
+      "local_sha256": "f87995f3d613e6b9cd6bb0486546169ca0d74a9a6c686bba0ca3ba5a0a8c9049",
+      "official_archive_content_length": 6410447301,
+      "official_archive_sha256": "not_computed_selective_member_verification",
+      "official_archive_url": "http://130.63.97.225/share/SIDD_Full/0013_001_S6_03200_01250_3200_L/0013_NOISY_SRGB.zip",
+      "official_member": "0013_NOISY_SRGB/0013_NOISY_SRGB_010.PNG",
+      "official_member_bytes": 42722503,
+      "official_member_sha256": "f87995f3d613e6b9cd6bb0486546169ca0d74a9a6c686bba0ca3ba5a0a8c9049",
+      "record_id": "real_v2_noise_00"
+    },
+    {
+      "exact_match": true,
+      "local_path": "data/qwen_multidegradation_real_sanity_v2_candidates/noise/sidd_0070.png",
+      "local_sha256": "c5514c91c6a2bba2208b196f0d1822efe07395703dec2ccb5abed28021e22119",
+      "official_archive_content_length": 3590103671,
+      "official_archive_sha256": "not_computed_selective_member_verification",
+      "official_archive_url": "http://130.63.97.225/share/SIDD_Full/0070_003_IP_02000_04000_3200_N/0070_NOISY_SRGB.zip",
+      "official_member": "0070_NOISY_SRGB/0070_NOISY_SRGB_010.PNG",
+      "official_member_bytes": 23914849,
+      "official_member_sha256": "c5514c91c6a2bba2208b196f0d1822efe07395703dec2ccb5abed28021e22119",
+      "record_id": "real_v2_noise_01"
+    },
+    {
+      "exact_match": true,
+      "local_path": "data/qwen_multidegradation_real_sanity_v2_candidates/noise_official/sidd_0076.png",
+      "local_sha256": "5b315de8334a891520b000ea56035496f391be6b79abf6e732b97d31cccd8de4",
+      "official_archive_content_length": 5009193155,
+      "official_archive_sha256": "not_computed_selective_member_verification",
+      "official_archive_url": "http://130.63.97.225/share/SIDD_Full/0076_004_N6_03200_00320_3200_L/0076_NOISY_SRGB.zip",
+      "official_member": "0076_NOISY_SRGB/0076_NOISY_SRGB_010.PNG",
+      "official_member_bytes": 33385492,
+      "official_member_sha256": "5b315de8334a891520b000ea56035496f391be6b79abf6e732b97d31cccd8de4",
+      "record_id": "real_v2_noise_02"
+    },
+    {
+      "exact_match": true,
+      "local_path": "data/qwen_multidegradation_real_sanity_v2_candidates/noise/sidd_0104.png",
+      "local_sha256": "39aac076cc951e12def5014f6e1095f11e96b08d30838b7040ba232a1434121d",
+      "official_archive_content_length": 3582885190,
+      "official_archive_sha256": "not_computed_selective_member_verification",
+      "official_archive_url": "http://130.63.97.225/share/SIDD_Full/0104_005_S6_03200_01600_4400_L/0104_NOISY_SRGB.zip",
+      "official_member": "0104_NOISY_SRGB/0104_NOISY_SRGB_010.PNG",
+      "official_member_bytes": 42809891,
+      "official_member_sha256": "39aac076cc951e12def5014f6e1095f11e96b08d30838b7040ba232a1434121d",
+      "record_id": "real_v2_noise_03"
+    },
+    {
+      "exact_match": true,
+      "local_path": "data/qwen_multidegradation_real_sanity_v2_candidates/noise/sidd_0127.png",
+      "local_sha256": "6305ed611e74c1edaa21331e620ae51e08f4dacebec6e5c9a1a5dc48f553d468",
+      "official_archive_content_length": 5994201168,
+      "official_archive_sha256": "not_computed_selective_member_verification",
+      "official_archive_url": "http://130.63.97.225/share/SIDD_Full/0127_006_S6_01600_00800_4400_L/0127_NOISY_SRGB.zip",
+      "official_member": "0127_NOISY_SRGB/0127_NOISY_SRGB_010.PNG",
+      "official_member_bytes": 39656604,
+      "official_member_sha256": "6305ed611e74c1edaa21331e620ae51e08f4dacebec6e5c9a1a5dc48f553d468",
+      "record_id": "real_v2_noise_04"
+    }
+  ],
+  "schema_version": 1,
+  "status": "all_five_exact_official_member_matches"
+}

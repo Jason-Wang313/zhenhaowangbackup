@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import concurrent.futures
 import hashlib
 import json
 import os
@@ -46,7 +47,7 @@ def load_config(path: Path) -> tuple[dict[str, object], str]:
 def validate_contract(config: dict[str, object]) -> None:
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
-        "distributed", "generation", "gate", "runtime",
+        "overfit", "distributed", "generation", "gate", "runtime",
     ):
         if not isinstance(config.get(section), dict):
             raise ValueError(f"missing config section: {section}")
@@ -56,15 +57,73 @@ def validate_contract(config: dict[str, object]) -> None:
     prompt = config["prompt"]
     data = config["data"]
     training = config["training"]
+    overfit = config["overfit"]
     distributed = config["distributed"]
     runtime = config["runtime"]
-    assert all(isinstance(item, dict) for item in (contract, model, processor, prompt, data, training, distributed, runtime))
+    assert all(isinstance(item, dict) for item in (contract, model, processor, prompt, data, training, overfit, distributed, runtime))
     if sha256(workspace_path(contract["path"])) != contract["sha256"]:
         raise RuntimeError("frozen advisor contract changed")
     if sha256(workspace_path(model["inventory_config"])) != model["inventory_config_sha256"]:
         raise RuntimeError("Qwen inventory changed")
     if sha256(workspace_path(data["manifest"])) != data["manifest_sha256"]:
         raise RuntimeError("pilot manifest changed")
+    generation_result_path = workspace_path(data["generation_result"])
+    if sha256(generation_result_path) != data["generation_result_sha256"]:
+        raise RuntimeError("pilot generation result changed")
+    generation_result = json.loads(generation_result_path.read_text())
+    if (
+        generation_result.get("status") != "pass"
+        or generation_result.get("manifest_sha256") != data["manifest_sha256"]
+        or generation_result.get("completed_records") != 12000
+    ):
+        raise RuntimeError("pilot generation result is incomplete")
+    real_manifest_path = workspace_path(data["real_sanity_manifest"])
+    if sha256(real_manifest_path) != data["real_sanity_manifest_sha256"]:
+        raise RuntimeError("frozen real-sanity manifest changed")
+    real_manifest = json.loads(real_manifest_path.read_text())
+    if (
+        real_manifest.get("status")
+        != "frozen_before_qwen_inference_official_sidd_bytes"
+        or real_manifest.get("foundir_used") is not False
+        or real_manifest.get("validation", {}).get("qwen_inference_before_freeze") is not False
+        or real_manifest.get("validation", {}).get("records") != 25
+    ):
+        raise RuntimeError("real-sanity v3 is not a frozen pre-inference non-FoundIR pool")
+    verification_config = data.get("sidd_official_verification")
+    if not isinstance(verification_config, dict):
+        raise ValueError("missing official SIDD verification contract")
+    verification_path = workspace_path(verification_config["path"])
+    if sha256(verification_path) != verification_config.get("sha256"):
+        raise RuntimeError("official SIDD verification manifest changed")
+    verification = json.loads(verification_path.read_text())
+    noise_records = {
+        str(record["record_id"]): record
+        for record in real_manifest["records"]
+        if record["expected_primary_type"] == "noise"
+    }
+    verified = verification.get("records")
+    if (
+        verification.get("status") != "all_five_exact_official_member_matches"
+        or verification.get("foundir_used") is not False
+        or verification.get("real_sanity_manifest") != data["real_sanity_manifest"]
+        or verification.get("real_sanity_manifest_sha256")
+        != data["real_sanity_manifest_sha256"]
+        or not isinstance(verified, list)
+        or len(verified) != 5
+        or len(noise_records) != 5
+    ):
+        raise RuntimeError("official SIDD verification is incomplete")
+    for result in verified:
+        record = noise_records.get(str(result.get("record_id")))
+        if (
+            record is None
+            or result.get("exact_match") is not True
+            or result.get("local_path") != record["path"]
+            or result.get("local_sha256") != record["sha256"]
+            or result.get("official_member_sha256") != record["sha256"]
+            or result.get("official_archive_url") != record["source_url"]
+        ):
+            raise RuntimeError("an official SIDD member does not bind to real-sanity v3")
     expected_prompt = {
         "system_prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
         "degradation_question_sha256": hashlib.sha256(DEGRADATION_QUESTION.encode()).hexdigest(),
@@ -91,6 +150,16 @@ def validate_contract(config: dict[str, object]) -> None:
         raise ValueError("curriculum step count changed")
     if runtime.get("required_visible_devices") != "0,1,2,3":
         raise ValueError("visible-device contract changed")
+    if overfit.get("variant") != "merger_trainable":
+        raise ValueError("overfit must exercise the larger approved trainable scope")
+    if int(overfit.get("records", 0)) != global_batch or int(
+        overfit.get("records_per_composition_size", 0)
+    ) * 4 != global_batch:
+        raise ValueError("overfit batch must cover eight clean/single/double/triple records")
+    if int(overfit.get("total_optimizer_steps", 0)) < 100:
+        raise ValueError("overfit gate is too short to demonstrate memorization")
+    if overfit.get("require_all_twenty_type_level_pairs") is not True:
+        raise ValueError("overfit type-level coverage requirement was disabled")
 
 
 def validate_model_inventory(config: dict[str, object], *, full_hashes: bool) -> dict[str, object]:
@@ -123,7 +192,9 @@ def validate_model_inventory(config: dict[str, object], *, full_hashes: bool) ->
     return {"repository": inventory_model["repository"], "revision": inventory_model["revision"], "full_hashes": full_hashes}
 
 
-def validate_data(config: dict[str, object], processor: object) -> dict[str, object]:
+def validate_data(
+    config: dict[str, object], processor: object, *, full_hashes: bool
+) -> dict[str, object]:
     data = config["data"]
     assert isinstance(data, dict)
     records = read_jsonl(workspace_path(data["manifest"]))
@@ -138,6 +209,30 @@ def validate_data(config: dict[str, object], processor: object) -> dict[str, obj
         output = workspace_path(record["output_path"])
         if not output.is_file():
             raise FileNotFoundError(f"pilot image not generated: {output}")
+    if full_hashes:
+        def verify_generated(record: dict[str, object]) -> None:
+            evidence_path = (
+                ROOT
+                / "data/qwen_multidegradation_pilot_v1/.generation"
+                / str(record["split"])
+                / f"{record['record_id']}.json"
+            )
+            if not evidence_path.is_file():
+                raise FileNotFoundError(f"generation evidence missing: {evidence_path}")
+            evidence = json.loads(evidence_path.read_text())
+            record_hash = hashlib.sha256(
+                json.dumps(record, separators=(",", ":"), sort_keys=True).encode()
+            ).hexdigest()
+            output = workspace_path(record["output_path"])
+            if (
+                evidence.get("record_id") != record["record_id"]
+                or evidence.get("manifest_record_sha256") != record_hash
+                or sha256(output) != evidence.get("output_sha256")
+            ):
+                raise RuntimeError(f"generated image evidence changed: {record['record_id']}")
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
+            list(executor.map(verify_generated, records))
     representatives = [
         next(record for record in records if record["split"] == "train" and record["composition_size"] == size)
         for size in range(4)
@@ -156,6 +251,26 @@ def validate_data(config: dict[str, object], processor: object) -> dict[str, obj
         "unique_sources_used": len(source_roles),
         "representative_target_token_counts": counts,
         "pixel_values_shape": list(batch["pixel_values"].shape),
+        "all_generated_image_hashes_verified": full_hashes,
+    }
+
+
+def validate_real_sanity_files(config: dict[str, object]) -> dict[str, object]:
+    data = config["data"]
+    assert isinstance(data, dict)
+    manifest = json.loads(workspace_path(data["real_sanity_manifest"]).read_text())
+    records = manifest["records"]
+    if len(records) != 25:
+        raise RuntimeError("real-sanity record count changed")
+    for record in records:
+        path = workspace_path(record["path"])
+        if sha256(path) != record["sha256"]:
+            raise RuntimeError(f"real-sanity image hash changed: {path}")
+    return {
+        "records": len(records),
+        "type_counts": dict(Counter(record["expected_primary_type"] for record in records)),
+        "all_image_hashes_verified": True,
+        "all_sidd_noise_bytes_officially_verified": True,
     }
 
 
@@ -181,7 +296,8 @@ def run_preflight(config_path: Path, *, full_hashes: bool) -> dict[str, object]:
         "status": "pass",
         "config_sha256": config_sha,
         "model": validate_model_inventory(config, full_hashes=full_hashes),
-        "data": validate_data(config, processor),
+        "data": validate_data(config, processor, full_hashes=full_hashes),
+        "real_sanity": validate_real_sanity_files(config),
     }
     print("QWEN_MULTIDEGRADATION_LORA_PREFLIGHT_PASS " + json.dumps(result, sort_keys=True), flush=True)
     return result

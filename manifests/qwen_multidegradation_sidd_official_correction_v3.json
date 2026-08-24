@@ -1,0 +1,18 @@
+{
+  "decoded_rgb_pixel_exact_match_with_mirror": true,
+  "foundir_used": false,
+  "mirror_path": "data/qwen_multidegradation_real_sanity_v2_candidates/noise/sidd_0076.png",
+  "mirror_sha256": "d693c9a37b69327ea27e360eb8f8e7a38cbf81216e5f3790d5c9fa61794ac307",
+  "official_archive_content_length": 5009193155,
+  "official_archive_url": "http://130.63.97.225/share/SIDD_Full/0076_004_N6_03200_00320_3200_L/0076_NOISY_SRGB.zip",
+  "official_member": "0076_NOISY_SRGB/0076_NOISY_SRGB_010.PNG",
+  "official_member_bytes": 33385492,
+  "official_path": "data/qwen_multidegradation_real_sanity_v2_candidates/noise_official/sidd_0076.png",
+  "official_sha256": "5b315de8334a891520b000ea56035496f391be6b79abf6e732b97d31cccd8de4",
+  "qwen_inference_before_freeze": false,
+  "schema_version": 1,
+  "source_real_sanity_manifest": "manifests/qwen_multidegradation_real_sanity_v2.json",
+  "source_real_sanity_manifest_sha256": "0ebe4d22311a66084e3f9db33f89459553c6c9296634dbf7b3f70d2d61779b28",
+  "status": "official_member_frozen_before_qwen_inference",
+  "supersedes_mirror_record_id": "real_v2_noise_02"
+}

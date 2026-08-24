@@ -14,17 +14,18 @@ bash -n "$RUNNER"
 mkdir -p "$ROOT/logs"
 
 system_tmux=$(command -v tmux 2>/dev/null || true)
-if [[ -n "$system_tmux" && -x "$system_tmux" ]]; then
+if [[ -n "$system_tmux" && -x "$system_tmux" ]] && "$system_tmux" -V >/dev/null 2>&1; then
   session=qwen_multidegradation_lora_v1
   if "$system_tmux" has-session -t "$session" 2>/dev/null; then
     echo "QWEN_MULTIDEGRADATION_TMUX_ALREADY_EXISTS session=$session"
+    echo "Attach: $system_tmux attach -t $session"
   else
     "$system_tmux" new-session -d -s "$session" "bash"
     "$system_tmux" set-option -t "$session" remain-on-exit on
     "$system_tmux" send-keys -t "$session" "cd '$ROOT' && CUDA_VISIBLE_DEVICES=0,1,2,3 bash '$RUNNER'" Enter
+    echo "QWEN_MULTIDEGRADATION_TMUX_STARTED session=$session"
+    echo "Attach: $system_tmux attach -t $session"
   fi
-  echo "QWEN_MULTIDEGRADATION_TMUX_STARTED session=$session"
-  echo "Attach: $system_tmux attach -t $session"
 else
   nohup env CUDA_VISIBLE_DEVICES=0,1,2,3 bash "$RUNNER" >> "$LOG" 2>&1 </dev/null &
   pid=$!

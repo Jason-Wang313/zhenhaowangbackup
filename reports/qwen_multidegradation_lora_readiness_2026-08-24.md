@@ -27,7 +27,7 @@ existing records.
 ## Frozen training and evaluation
 
 The configuration SHA-256 is
-`f0e0eb66910571ad6585259fae7f9063fc362989e3911f96bfe1152a508a4d20`.
+`cc6168aee35b5771dd164ddd4fe369dd9fb5a5444c5199dfdf20d8b92173f6a5`.
 Qwen2.5-VL-7B remains offline and frozen except for rank-16 LoRA on all 160
 visual attention/MLP linear modules. The ablation compares the same LoRA with
 the 44,574,464-parameter visual merger frozen versus trainable. The tokenizer,
@@ -46,11 +46,33 @@ two variants are trained sequentially so each uses all four GPUs. Validation
 selects the winner; only that checkpoint is then evaluated once on the fixed
 synthetic test.
 
+Before full training, a separate 200-step GPU overfit gate uses one immutable
+32-record batch: eight clean, eight single, eight double, and eight triple
+records, collectively covering every one of the 20 type/level pairs. It starts
+from the untouched base model, exercises visual LoRA plus the trainable merger,
+and must demonstrate loss reduction, structured generation, type-set
+memorization, independent-severity memorization, and exact gradient scope. Its
+weights are gate-only and never initialize either full variant.
+
 The full model identity/hash preflight passed, including all five 16 GB Qwen
-shards. A meta-device architecture audit matched exactly 160 LoRA modules and
+shards and every one of the 12,000 generated image/evidence hashes. A
+meta-device architecture audit matched exactly 160 LoRA modules and
 11,151,360 adapter parameters; the trainable-merger variant has 55,725,824
-trainable parameters total. Twenty-nine focused contract/data/LoRA/trainer
+trainable parameters total. Thirty-three focused contract/data/LoRA/trainer
 tests, Python compilation, shell syntax, and `git diff --check` passed.
+
+The predeclared real-domain sanity pool contains five visually screened images
+for each of blur, noise, rain, haze, and low light. It is qualitative only: no
+absolute real L2--L5 truth is invented, and no FoundIR data is used. A source
+audit found that one public SIDD-Small mirror PNG had different container bytes
+from its official SIDD Full member even though the decoded RGB pixels were
+exactly identical. The mirror is preserved as mismatch evidence; real-sanity
+v3 instead freezes the official member. All five SIDD noise files now match
+their official archive members byte-for-byte. The frozen real-sanity v3
+manifest SHA-256 is
+`59f5302aa3b58ba185c1d0fd0deaf82dbf7c0dc2c7b9345ca388854e666b6fad`;
+the five-way official verification SHA-256 is
+`d19ab870183f55ce72ddebbac63b5d920e15cf3b169ee1528de0a0ec96a717de`.
 
 This coding terminal has no visible CUDA device, so no GPU result or final
 checkpoint is claimed yet. The single external launch action is:
