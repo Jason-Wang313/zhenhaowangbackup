@@ -159,6 +159,16 @@ def load_model(
         alpha=float(model_config["lora_alpha"]),
         dropout=float(model_config["lora_dropout"]),
         merger_trainable=variant == "merger_trainable",
+        language_rank=(
+            int(model_config["language_lora_rank"])
+            if "language_lora_rank" in model_config
+            else None
+        ),
+        language_alpha=(
+            float(model_config["language_lora_alpha"])
+            if "language_lora_alpha" in model_config
+            else None
+        ),
     )
     if scope["matched_lora_module_count"] != model_config["expected_lora_modules"]:
         raise RuntimeError(f"loaded Qwen LoRA module count changed: {scope}")
@@ -284,17 +294,28 @@ def create_optimizer(
     training = config["training"]
     assert isinstance(training, Mapping)
     lora = []
+    language_lora = []
     merger = []
     for name, parameter in model.named_parameters():
         if not parameter.requires_grad:
             continue
         if name.startswith("model.visual.merger."):
             merger.append(parameter)
+        elif name.startswith("model.language_model."):
+            language_lora.append(parameter)
         else:
             lora.append(parameter)
     groups = [{"params": lora, "lr": float(training["lora_learning_rate"]), "kind": "lora"}]
     if merger:
         groups.append({"params": merger, "lr": float(training["merger_learning_rate"]), "kind": "merger"})
+    if language_lora:
+        groups.append(
+            {
+                "params": language_lora,
+                "lr": float(training["language_lora_learning_rate"]),
+                "kind": "language_lora",
+            }
+        )
     optimizer = torch.optim.AdamW(
         groups,
         betas=(float(training["adam_beta1"]), float(training["adam_beta2"])),
@@ -591,11 +612,12 @@ def train_variant(
                     float(training["minimum_learning_rate_ratio"]),
                 )
                 for group in optimizer.param_groups:
-                    base = float(
-                        training["merger_learning_rate"]
-                        if group["kind"] == "merger"
-                        else training["lora_learning_rate"]
-                    )
+                    rate_key = {
+                        "lora": "lora_learning_rate",
+                        "merger": "merger_learning_rate",
+                        "language_lora": "language_lora_learning_rate",
+                    }[group["kind"]]
+                    base = float(training[rate_key])
                     group["lr"] = base * scale
                 optimizer.step()
                 dist.all_reduce(loss_value, op=dist.ReduceOp.SUM)
@@ -813,10 +835,22 @@ def main() -> int:
                 adapter = workspace_path(initialization["adapter"])
                 if sha256(adapter) != initialization["adapter_sha256"]:
                     raise RuntimeError("initialization adapter hash changed")
-                load_qwen_adapter(model, adapter)
+                missing_prefixes = initialization.get(
+                    "allow_missing_adapter_prefixes", []
+                )
+                if not isinstance(missing_prefixes, list) or not all(
+                    isinstance(prefix, str) and prefix for prefix in missing_prefixes
+                ):
+                    raise ValueError("initialization missing-prefix contract is invalid")
+                load_qwen_adapter(
+                    model,
+                    adapter,
+                    allow_missing_prefixes=tuple(missing_prefixes),
+                )
                 initialization_evidence = {
                     "adapter": initialization["adapter"],
                     "adapter_sha256": initialization["adapter_sha256"],
+                    "allow_missing_adapter_prefixes": missing_prefixes,
                     "validation_result": initialization["validation_result"],
                     "validation_result_sha256": initialization[
                         "validation_result_sha256"

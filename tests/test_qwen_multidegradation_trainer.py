@@ -29,6 +29,13 @@ class TinyScope(nn.Module):
         self.frozen = nn.Parameter(torch.ones(2), requires_grad=False)
 
 
+class TinyCrossmodalScope(TinyScope):
+    def __init__(self):
+        super().__init__()
+        self.model.language_model = nn.Module()
+        self.model.language_model.lora_A = nn.Parameter(torch.ones(2))
+
+
 class QwenMultiDegradationTrainerTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -115,6 +122,19 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         rates = {group["kind"]: group["lr"] for group in optimizer.param_groups}
         self.assertEqual(rates["lora"], self.config["training"]["lora_learning_rate"])
         self.assertEqual(rates["merger"], self.config["training"]["merger_learning_rate"])
+
+    def test_crossmodal_optimizer_uses_separate_decoder_rate(self):
+        config, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_lora_correction3_v1.json"
+        )
+        optimizer = create_optimizer(TinyCrossmodalScope(), config)
+        rates = {group["kind"]: group["lr"] for group in optimizer.param_groups}
+        self.assertEqual(
+            rates["language_lora"],
+            config["training"]["language_lora_learning_rate"],
+        )
+        self.assertEqual(rates["lora"], config["training"]["lora_learning_rate"])
+        self.assertEqual(rates["merger"], config["training"]["merger_learning_rate"])
 
     def test_gate_checks_include_triples_and_gradients(self):
         metrics = {

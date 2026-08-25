@@ -32,6 +32,7 @@ APPROVED_STATUSES = {
     "approved_qwen_multidegradation_lora_frozen_merger_ablation",
     "approved_qwen_multidegradation_lora_validation_correction",
     "approved_qwen_multidegradation_lora_semantic_loss_correction",
+    "approved_qwen_multidegradation_lora_crossmodal_decoder_correction",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -97,6 +98,10 @@ def validate_contract(config: dict[str, object]) -> None:
     correction = status != "approved_qwen_multidegradation_lora_frozen_merger_ablation"
     semantic_correction = (
         status == "approved_qwen_multidegradation_lora_semantic_loss_correction"
+    )
+    decoder_correction = (
+        status
+        == "approved_qwen_multidegradation_lora_crossmodal_decoder_correction"
     )
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
@@ -190,8 +195,22 @@ def validate_contract(config: dict[str, object]) -> None:
     ]
     if model.get("variants") != expected_variants:
         raise ValueError("merger variants differ from the experiment phase")
-    if int(model.get("expected_visual_depth", 0)) != 32 or int(model.get("expected_lora_modules", 0)) != 160:
+    expected_modules = 272 if decoder_correction else 160
+    if (
+        int(model.get("expected_visual_depth", 0)) != 32
+        or int(model.get("expected_lora_modules", 0)) != expected_modules
+    ):
         raise ValueError("Qwen visual-LoRA scope changed")
+    if decoder_correction:
+        if (
+            int(model.get("expected_visual_lora_modules", 0)) != 160
+            or int(model.get("expected_language_lora_modules", 0)) != 112
+            or int(model.get("language_lora_rank", 0)) != 8
+            or float(model.get("language_lora_alpha", 0.0)) != 16.0
+        ):
+            raise ValueError("cross-modal decoder LoRA scope changed")
+    elif "language_lora_rank" in model or "language_lora_alpha" in model:
+        raise ValueError("visual-only phase unexpectedly enables decoder LoRA")
     supported_worlds = distributed.get("supported_world_sizes")
     if supported_worlds != [2, 4]:
         raise ValueError("this contract must support two and four H100s")
@@ -221,7 +240,7 @@ def validate_contract(config: dict[str, object]) -> None:
     if steps != training.get("total_optimizer_steps"):
         raise ValueError("curriculum step count changed")
     if correction:
-        expected_epochs = 1 if semantic_correction else 2
+        expected_epochs = 1 if (semantic_correction or decoder_correction) else 2
         if len(stages) != 1 or int(stages[0].get("epochs", 0)) != expected_epochs:
             raise ValueError(
                 f"correction must use {expected_epochs} full-mixture consolidation epoch(s)"
@@ -231,7 +250,7 @@ def validate_contract(config: dict[str, object]) -> None:
         ):
             raise ValueError("correction must retain the complete training mixture")
         semantic_loss = training.get("semantic_token_loss")
-        if semantic_correction:
+        if semantic_correction or decoder_correction:
             if (
                 not isinstance(semantic_loss, dict)
                 or semantic_loss.get("enabled") is not True
@@ -249,15 +268,25 @@ def validate_contract(config: dict[str, object]) -> None:
             raise RuntimeError("correction base config changed")
         base_config = json.loads(base_config_path.read_text())
         expected_base_status = (
-            "approved_qwen_multidegradation_lora_validation_correction"
-            if semantic_correction
-            else "approved_qwen_multidegradation_lora_frozen_merger_ablation"
+            "approved_qwen_multidegradation_lora_semantic_loss_correction"
+            if decoder_correction
+            else (
+                "approved_qwen_multidegradation_lora_validation_correction"
+                if semantic_correction
+                else "approved_qwen_multidegradation_lora_frozen_merger_ablation"
+            )
         )
         if base_config.get("status") != expected_base_status:
             raise RuntimeError("correction base phase is inconsistent")
         adapter_path = workspace_path(initialization.get("adapter"))
         if sha256(adapter_path) != initialization.get("adapter_sha256"):
             raise RuntimeError("correction initialization adapter changed")
+        missing_prefixes = initialization.get("allow_missing_adapter_prefixes", [])
+        expected_missing_prefixes = (
+            ["model.language_model."] if decoder_correction else []
+        )
+        if missing_prefixes != expected_missing_prefixes:
+            raise ValueError("correction adapter missing-prefix contract changed")
         result_path = workspace_path(initialization.get("validation_result"))
         if sha256(result_path) != initialization.get("validation_result_sha256"):
             raise RuntimeError("correction source validation result changed")
@@ -284,11 +313,22 @@ def validate_contract(config: dict[str, object]) -> None:
         ):
             raise RuntimeError("correction source did not pass the overfit gate")
         forbidden_fixed_tests = [initialization.get("base_fixed_test_result")]
-        source_initialization = base_config.get("initialization")
-        if isinstance(source_initialization, dict):
+        source_config = base_config
+        for _ in range(4):
+            source_initialization = source_config.get("initialization")
+            if not isinstance(source_initialization, dict):
+                break
             forbidden_fixed_tests.append(
                 source_initialization.get("base_fixed_test_result")
             )
+            parent_value = source_initialization.get("base_config")
+            parent_sha = source_initialization.get("base_config_sha256")
+            if parent_value is None:
+                break
+            parent_path = workspace_path(parent_value)
+            if sha256(parent_path) != parent_sha:
+                raise RuntimeError("correction ancestry config changed")
+            source_config = json.loads(parent_path.read_text())
         for fixed_test_path in forbidden_fixed_tests:
             if fixed_test_path is not None and workspace_path(fixed_test_path).exists():
                 raise RuntimeError("a fixed test was accessed before correction selection")
@@ -353,6 +393,16 @@ def validate_meta_architecture(config: dict[str, object]) -> dict[str, object]:
         alpha=float(model_config["lora_alpha"]),
         dropout=float(model_config["lora_dropout"]),
         merger_trainable=True,
+        language_rank=(
+            int(model_config["language_lora_rank"])
+            if "language_lora_rank" in model_config
+            else None
+        ),
+        language_alpha=(
+            float(model_config["language_lora_alpha"])
+            if "language_lora_alpha" in model_config
+            else None
+        ),
     )
     expected = {
         "matched_lora_module_count": int(model_config["expected_lora_modules"]),
@@ -363,15 +413,29 @@ def validate_meta_architecture(config: dict[str, object]) -> dict[str, object]:
             model_config["expected_trainable_parameters_with_merger"]
         ),
     }
+    if "expected_language_lora_trainable_parameters" in model_config:
+        expected["language_lora_trainable_parameters"] = int(
+            model_config["expected_language_lora_trainable_parameters"]
+        )
     actual = {key: int(scope[key]) for key in expected}
-    lora_parameters = actual["trainable_parameters"] - actual["merger_trainable_parameters"]
-    if actual != expected or lora_parameters != int(
+    all_lora_parameters = (
+        actual["trainable_parameters"] - actual["merger_trainable_parameters"]
+    )
+    language_lora_parameters = int(
+        scope.get("language_lora_trainable_parameters", 0)
+    )
+    visual_lora_parameters = all_lora_parameters - language_lora_parameters
+    if actual != expected or visual_lora_parameters != int(
         model_config["expected_lora_trainable_parameters"]
     ):
         raise RuntimeError(
             f"installed Transformers Qwen architecture changed: actual={actual} expected={expected}"
         )
-    return {**actual, "lora_trainable_parameters": lora_parameters}
+    return {
+        **actual,
+        "lora_trainable_parameters": all_lora_parameters,
+        "visual_lora_trainable_parameters": visual_lora_parameters,
+    }
 
 
 def validate_data(

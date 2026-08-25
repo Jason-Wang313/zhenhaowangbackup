@@ -68,3 +68,15 @@ CPU evidence before launch: actual correction-2 preflight passed, 42 relevant
 tests passed, and the original, correction-1, and correction-2 fixed-test
 artifacts were all absent.  Frozen config SHA-256:
 `50f0d4720664df496eb9fb2a9eabcfd922699b8dc63ada1d678ed4ab3602843f`.
+
+## Correction-2 outcome
+
+Correction 2 completed all 300 steps and stopped before fixed-test access.
+It improved macro-F1 from 0.9285 to 0.9314, set exact from 0.7842 to
+0.7958, combined exact from 0.6258 to 0.6333, typed severity accuracy from
+0.7074 to 0.7130, typed severity MAE from 0.5398 to 0.5296, and triple set
+exact from 0.5500 to 0.5750. Valid structure remained passing at 0.9942.
+
+The direction was correct but five gates remained below threshold. Repeating
+visual-only tuning is therefore rejected as the next strategy: two distinct
+retained-mixture corrections produced the same conservative plateau.

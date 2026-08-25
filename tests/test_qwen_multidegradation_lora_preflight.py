@@ -106,6 +106,25 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
             ).exists()
         )
 
+    def test_crossmodal_decoder_correction_is_hash_pinned_and_test_blind(self):
+        path = ROOT / "configs/qwen_multidegradation_lora_correction3_v1.json"
+        correction, correction_sha = load_config(path)
+        validate_contract(correction)
+        self.assertEqual(len(correction_sha), 64)
+        self.assertEqual(correction["model"]["expected_lora_modules"], 272)
+        self.assertEqual(correction["model"]["expected_language_lora_modules"], 112)
+        self.assertEqual(
+            correction["initialization"]["allow_missing_adapter_prefixes"],
+            ["model.language_model."],
+        )
+        self.assertEqual(correction["training"]["total_optimizer_steps"], 300)
+        self.assertFalse(
+            (
+                ROOT
+                / correction["initialization"]["base_fixed_test_result"]
+            ).exists()
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
