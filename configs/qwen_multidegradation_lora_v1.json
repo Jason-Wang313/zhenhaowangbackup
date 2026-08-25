@@ -55,7 +55,7 @@
   "training": {
     "seed": 2026082402,
     "micro_batch_size_per_rank": 8,
-    "gradient_accumulation_steps": 1,
+    "gradient_accumulation_steps_by_world_size": {"2": 2, "4": 1},
     "global_batch_size": 32,
     "epochs_per_curriculum_stage": 1,
     "total_optimizer_steps": 630,
@@ -88,7 +88,7 @@
   },
   "distributed": {
     "backend": "nccl",
-    "required_world_size": 4,
+    "supported_world_sizes": [2, 4],
     "timeout_minutes": 30,
     "find_unused_parameters": false
   },
@@ -112,7 +112,7 @@
   "runtime": {
     "offline": true,
     "device": "cuda",
-    "required_visible_devices": "0,1,2,3",
+    "supported_visible_devices": {"0,1": 2, "0,1,2,3": 4},
     "minimum_gpu_memory_gib": 75,
     "required_python": "3.12.13",
     "required_pytorch": "2.7.0+cu128",

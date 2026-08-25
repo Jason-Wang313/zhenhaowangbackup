@@ -6,10 +6,15 @@ LOG="$ROOT/logs/qwen_multidegradation_lora_v1_launcher.log"
 RUNNER="$ROOT/smoke/run_qwen_multidegradation_lora.sh"
 
 cd "$ROOT"
-if [[ "${CUDA_VISIBLE_DEVICES:-}" != "0,1,2,3" ]]; then
-  echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1,2,3" >&2
-  exit 1
-fi
+visible=${CUDA_VISIBLE_DEVICES:-}
+case "$visible" in
+  0,1) nproc=2 ;;
+  0,1,2,3) nproc=4 ;;
+  *)
+    echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1 or 0,1,2,3" >&2
+    exit 1
+    ;;
+esac
 bash -n "$RUNNER"
 mkdir -p "$ROOT/logs"
 
@@ -22,14 +27,15 @@ if [[ -n "$system_tmux" && -x "$system_tmux" ]] && "$system_tmux" -V >/dev/null 
   else
     "$system_tmux" new-session -d -s "$session" "bash"
     "$system_tmux" set-option -t "$session" remain-on-exit on
-    "$system_tmux" send-keys -t "$session" "cd '$ROOT' && CUDA_VISIBLE_DEVICES=0,1,2,3 bash '$RUNNER'" Enter
+    "$system_tmux" send-keys -t "$session" "cd '$ROOT' && CUDA_VISIBLE_DEVICES='$visible' bash '$RUNNER'" Enter
     echo "QWEN_MULTIDEGRADATION_TMUX_STARTED session=$session"
     echo "Attach: $system_tmux attach -t $session"
   fi
 else
-  nohup env CUDA_VISIBLE_DEVICES=0,1,2,3 bash "$RUNNER" >> "$LOG" 2>&1 </dev/null &
+  nohup env CUDA_VISIBLE_DEVICES="$visible" bash "$RUNNER" >> "$LOG" 2>&1 </dev/null &
   pid=$!
   echo "$pid" > "$ROOT/logs/qwen_multidegradation_lora_v1.pid"
   echo "QWEN_MULTIDEGRADATION_DETACHED_NOHUP_STARTED pid=$pid"
 fi
+echo "QWEN_MULTIDEGRADATION_LAUNCH_WORLD_SIZE $nproc"
 echo "Monitor: tail -f $ROOT/logs/qwen_multidegradation_lora_v1.log"

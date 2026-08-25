@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Train/evaluate the four-GPU Qwen multi-degradation LoRA ablation."""
+"""Train/evaluate the two/four-GPU Qwen multi-degradation LoRA ablation."""
 
 from __future__ import annotations
 
@@ -46,6 +46,7 @@ from lowlight_restoration.qwen_multidegradation import (
     prompt_text,
 )
 from smoke.qwen_multidegradation_lora_preflight import (
+    accumulation_steps_for_world,
     load_config,
     run_preflight,
     validate_contract,
@@ -69,11 +70,11 @@ def setup_distributed(config: Mapping[str, object]) -> tuple[int, int, int, torc
     world = int(os.environ["WORLD_SIZE"])
     local_rank = int(os.environ["LOCAL_RANK"])
     local_world = int(os.environ["LOCAL_WORLD_SIZE"])
-    expected = int(distributed["required_world_size"])
-    if world != expected or local_world != expected:
-        raise SystemExit(f"QWEN_MULTIDEGRADATION_WORLD_SIZE_MUST_EQUAL_{expected}")
-    if not torch.cuda.is_available() or torch.cuda.device_count() != expected:
-        raise SystemExit(f"QWEN_MULTIDEGRADATION_REQUIRES_{expected}_VISIBLE_GPUS")
+    supported = [int(value) for value in distributed["supported_world_sizes"]]
+    if world not in supported or local_world != world:
+        raise SystemExit(f"QWEN_MULTIDEGRADATION_WORLD_SIZE_MUST_BE_ONE_OF_{supported}")
+    if not torch.cuda.is_available() or torch.cuda.device_count() != world:
+        raise SystemExit(f"QWEN_MULTIDEGRADATION_REQUIRES_{world}_VISIBLE_GPUS")
     torch.cuda.set_device(local_rank)
     device = torch.device(f"cuda:{local_rank}")
     dist.init_process_group(
@@ -185,8 +186,17 @@ def validate_runtime(config: Mapping[str, object], local_rank: int) -> dict[str,
     }
     if actual != expected:
         raise SystemExit(f"RUNTIME_VERSION_MISMATCH_{actual}")
+    world = dist.get_world_size()
+    accumulation = accumulation_steps_for_world(dict(config), world)
+    training = config["training"]
+    assert isinstance(training, Mapping)
     return {
         "rank": dist.get_rank(),
+        "world_size": world,
+        "gradient_accumulation_steps": accumulation,
+        "effective_global_batch_size": (
+            world * int(training["micro_batch_size_per_rank"]) * accumulation
+        ),
         "gpu": torch.cuda.get_device_name(local_rank),
         "gpu_memory_gib": memory,
         "versions": actual,
@@ -251,11 +261,18 @@ def publish_stage_checkpoint(
     config_sha: str,
     variant: str,
     global_step: int,
+    world_size: int,
+    accumulation_steps: int,
 ) -> dict[str, object]:
     final = checkpoint_directory(output, stage_name)
     if final.is_dir():
         metadata = json.loads((final / "metadata.json").read_text())
-        if metadata.get("config_sha256") != config_sha or metadata.get("variant") != variant:
+        if (
+            metadata.get("config_sha256") != config_sha
+            or metadata.get("variant") != variant
+            or metadata.get("world_size") != world_size
+            or metadata.get("gradient_accumulation_steps") != accumulation_steps
+        ):
             raise RuntimeError(f"checkpoint contract mismatch: {final}")
         return metadata
     final.parent.mkdir(parents=True, exist_ok=True)
@@ -264,7 +281,14 @@ def publish_stage_checkpoint(
         adapter_meta = save_qwen_adapter(
             model,
             temporary / "adapter.safetensors",
-            {"config_sha256": config_sha, "variant": variant, "stage": stage_name, "global_step": global_step},
+            {
+                "config_sha256": config_sha,
+                "variant": variant,
+                "stage": stage_name,
+                "global_step": global_step,
+                "world_size": world_size,
+                "gradient_accumulation_steps": accumulation_steps,
+            },
         )
         torch.save(optimizer.state_dict(), temporary / "optimizer.pt")
         metadata = {
@@ -273,6 +297,8 @@ def publish_stage_checkpoint(
             "variant": variant,
             "stage": stage_name,
             "global_step": global_step,
+            "world_size": world_size,
+            "gradient_accumulation_steps": accumulation_steps,
             "adapter_sha256": adapter_meta["adapter_sha256"],
             "optimizer_sha256": sha256(temporary / "optimizer.pt"),
         }
@@ -294,6 +320,8 @@ def resume_stage(
     stages: Sequence[Mapping[str, object]],
     config_sha: str,
     variant: str,
+    world_size: int,
+    accumulation_steps: int,
 ) -> tuple[int, int]:
     completed = 0
     global_step = 0
@@ -302,7 +330,12 @@ def resume_stage(
         if not directory.is_dir():
             break
         metadata = json.loads((directory / "metadata.json").read_text())
-        if metadata.get("config_sha256") != config_sha or metadata.get("variant") != variant:
+        if (
+            metadata.get("config_sha256") != config_sha
+            or metadata.get("variant") != variant
+            or metadata.get("world_size") != world_size
+            or metadata.get("gradient_accumulation_steps") != accumulation_steps
+        ):
             raise RuntimeError(f"resume checkpoint differs: {directory}")
         if sha256(directory / "adapter.safetensors") != metadata["adapter_sha256"]:
             raise RuntimeError(f"resume adapter hash failed: {directory}")
@@ -334,6 +367,21 @@ def stage_records(
     if len(selected) != int(stage["records"]):
         raise RuntimeError(f"stage record count changed: {stage['name']}")
     return selected
+
+
+def rank_microbatch(
+    global_records: Sequence[Mapping[str, object]],
+    *,
+    rank: int,
+    world: int,
+    micro: int,
+    accumulation_index: int,
+) -> list[Mapping[str, object]]:
+    start = (accumulation_index * world + rank) * micro
+    batch = list(global_records[start : start + micro])
+    if len(batch) != micro:
+        raise RuntimeError("rank-local accumulated microbatch has wrong cardinality")
+    return batch
 
 
 def train_variant(
@@ -368,6 +416,9 @@ def train_variant(
         find_unused_parameters=bool(distributed["find_unused_parameters"]),
     )
     optimizer = create_optimizer(model, config)
+    micro = int(training["micro_batch_size_per_rank"])
+    global_batch = int(training["global_batch_size"])
+    accumulation = accumulation_steps_for_world(dict(config), world)
     completed_stages, global_step = resume_stage(
         model,
         optimizer,
@@ -375,9 +426,9 @@ def train_variant(
         stages=stages,
         config_sha=config_sha,
         variant=variant,
+        world_size=world,
+        accumulation_steps=accumulation,
     )
-    micro = int(training["micro_batch_size_per_rank"])
-    global_batch = int(training["global_batch_size"])
     total_steps = int(training["total_optimizer_steps"])
     trainable_names = {name for name, parameter in model.named_parameters() if parameter.requires_grad}
     gradient_seen: set[str] = set()
@@ -393,18 +444,31 @@ def train_variant(
         stage_started = time.monotonic()
         for stage_step in range(stage_steps):
             global_records = selected[stage_step * global_batch : (stage_step + 1) * global_batch]
-            local_records = global_records[rank * micro : (rank + 1) * micro]
-            if len(local_records) != micro:
-                raise RuntimeError("rank-local microbatch has wrong cardinality")
-            images = open_images(local_records)
-            labels = [label_for(record) for record in local_records]
-            batch, _ = prepare_supervised_batch(processor, labels, images)
             optimizer.zero_grad(set_to_none=True)
-            output_value = ddp(**move_batch(batch, device), use_cache=False)
-            loss = output_value.loss
-            if not torch.isfinite(loss):
-                raise RuntimeError(f"non-finite Qwen loss at step {global_step + 1}")
-            loss.backward()
+            loss_value = torch.zeros((), dtype=torch.float32, device=device)
+            for accumulation_index in range(accumulation):
+                local_records = rank_microbatch(
+                    global_records,
+                    rank=rank,
+                    world=world,
+                    micro=micro,
+                    accumulation_index=accumulation_index,
+                )
+                images = open_images(local_records)
+                labels = [label_for(record) for record in local_records]
+                batch, _ = prepare_supervised_batch(processor, labels, images)
+                synchronization = (
+                    ddp.no_sync()
+                    if accumulation_index + 1 < accumulation
+                    else contextlib.nullcontext()
+                )
+                with synchronization:
+                    output_value = ddp(**move_batch(batch, device), use_cache=False)
+                    loss = output_value.loss
+                    if not torch.isfinite(loss):
+                        raise RuntimeError(f"non-finite Qwen loss at step {global_step + 1}")
+                    (loss / accumulation).backward()
+                loss_value += loss.detach().float() / accumulation
             for name, parameter in model.named_parameters():
                 if parameter.requires_grad and parameter.grad is not None:
                     gradient_seen.add(name)
@@ -425,7 +489,6 @@ def train_variant(
                 base = float(training["merger_learning_rate"] if group["kind"] == "merger" else training["lora_learning_rate"])
                 group["lr"] = base * scale
             optimizer.step()
-            loss_value = loss.detach().float()
             dist.all_reduce(loss_value, op=dist.ReduceOp.SUM)
             loss_value /= world
             if rank == 0 and (global_step <= 5 or global_step % 10 == 0 or stage_step + 1 == stage_steps):
@@ -448,6 +511,8 @@ def train_variant(
                 config_sha=config_sha,
                 variant=variant,
                 global_step=global_step,
+                world_size=world,
+                accumulation_steps=accumulation,
             )
             print(
                 f"QWEN_MULTIDEGRADATION_STAGE_PASS variant={variant} stage={stage['name']} "

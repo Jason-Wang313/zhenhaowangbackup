@@ -29,10 +29,14 @@ if ! flock -n 9; then
   echo "ERROR: another Qwen multi-degradation pipeline holds $LOCK" >&2
   exit 1
 fi
-if [[ "${CUDA_VISIBLE_DEVICES:-}" != "0,1,2,3" ]]; then
-  echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1,2,3" >&2
-  exit 1
-fi
+case "${CUDA_VISIBLE_DEVICES:-}" in
+  0,1) NPROC=2 ;;
+  0,1,2,3) NPROC=4 ;;
+  *)
+    echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1 or 0,1,2,3" >&2
+    exit 1
+    ;;
+esac
 if [[ ! -x "$PYTHON" ]]; then
   echo "ERROR: missing workspace interpreter: $PYTHON" >&2
   exit 1
@@ -48,6 +52,7 @@ export MKL_NUM_THREADS=4
 echo "QWEN_MULTIDEGRADATION_WORKSPACE $ROOT"
 echo "QWEN_MULTIDEGRADATION_GIT_REVISION $(git rev-parse HEAD)"
 echo "QWEN_MULTIDEGRADATION_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES"
+echo "QWEN_MULTIDEGRADATION_WORLD_SIZE $NPROC"
 
 "$PYTHON" smoke/qwen_multidegradation_lora_preflight.py --config "$CONFIG" --full-hashes
 preflight_status=$?
@@ -59,7 +64,7 @@ fi
 nvidia-smi --query-gpu=timestamp,index,name,utilization.gpu,memory.used,memory.total,power.draw --format=csv -l 5 > "$GPU_LOG" 2>&1 &
 telemetry_pid=$!
 
-"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node=4 \
+"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node="$NPROC" \
   smoke/train_qwen_multidegradation_overfit_ddp.py --config "$CONFIG"
 overfit_status=$?
 overfit_result="$ROOT/checkpoints/qwen_multidegradation_lora_overfit_v1/result.json"
@@ -74,7 +79,7 @@ fi
 
 run_variant() {
   local variant=$1
-  "$PYTHON" -m torch.distributed.run --standalone --nproc_per_node=4 \
+  "$PYTHON" -m torch.distributed.run --standalone --nproc_per_node="$NPROC" \
     smoke/train_qwen_multidegradation_lora_ddp.py \
     --config "$CONFIG" --variant "$variant"
   local outer_status=$?
@@ -105,7 +110,7 @@ import json
 print(json.load(open('checkpoints/qwen_multidegradation_lora_v1/checkpoint_selection.json'))['selected_variant'])
 PY
 )
-"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node=4 \
+"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node="$NPROC" \
   smoke/train_qwen_multidegradation_lora_ddp.py \
   --config "$CONFIG" --variant "$selected_variant" --test-only
 test_status=$?
@@ -119,7 +124,7 @@ if [[ $test_status -ne 0 ]]; then
   exit 1
 fi
 
-"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node=4 \
+"$PYTHON" -m torch.distributed.run --standalone --nproc_per_node="$NPROC" \
   smoke/evaluate_qwen_multidegradation_real_sanity_ddp.py --config "$CONFIG"
 real_status=$?
 if [[ $real_status -ne 0 ]]; then

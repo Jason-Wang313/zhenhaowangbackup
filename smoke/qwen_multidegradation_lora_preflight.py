@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed CPU preflight for the four-H100 Qwen LoRA ablation."""
+"""Fail-closed CPU preflight for the two/four-H100 Qwen LoRA ablation."""
 
 from __future__ import annotations
 
@@ -42,6 +42,18 @@ def load_config(path: Path) -> tuple[dict[str, object], str]:
     ):
         raise ValueError("Qwen multi-degradation LoRA config is not approved")
     return config, hashlib.sha256(raw).hexdigest()
+
+
+def accumulation_steps_for_world(config: dict[str, object], world: int) -> int:
+    training = config["training"]
+    assert isinstance(training, dict)
+    mapping = training.get("gradient_accumulation_steps_by_world_size")
+    if not isinstance(mapping, dict) or str(world) not in mapping:
+        raise ValueError(f"no accumulation contract for world size {world}")
+    steps = int(mapping[str(world)])
+    if steps <= 0:
+        raise ValueError("gradient accumulation must be positive")
+    return steps
 
 
 def validate_contract(config: dict[str, object]) -> None:
@@ -135,20 +147,22 @@ def validate_contract(config: dict[str, object]) -> None:
         raise ValueError("merger ablation variants changed")
     if int(model.get("expected_visual_depth", 0)) != 32 or int(model.get("expected_lora_modules", 0)) != 160:
         raise ValueError("Qwen visual-LoRA scope changed")
-    if int(distributed.get("required_world_size", 0)) != 4:
-        raise ValueError("this contract requires four GPUs")
+    supported_worlds = distributed.get("supported_world_sizes")
+    if supported_worlds != [2, 4]:
+        raise ValueError("this contract must support two and four H100s")
     micro = int(training.get("micro_batch_size_per_rank", 0))
-    accumulation = int(training.get("gradient_accumulation_steps", 0))
     global_batch = int(training.get("global_batch_size", 0))
-    if micro * accumulation * 4 != global_batch:
-        raise ValueError("global batch does not match DDP semantics")
+    for world in supported_worlds:
+        accumulation = accumulation_steps_for_world(config, world)
+        if micro * accumulation * world != global_batch:
+            raise ValueError(f"global batch does not match DDP semantics for world {world}")
     stages = data.get("curriculum")
     if not isinstance(stages, list) or [stage.get("maximum_composition_size") for stage in stages] != [1, 2, 3]:
         raise ValueError("curriculum is not progressive clean/single/double/triple")
     steps = sum(int(stage["records"]) // global_batch for stage in stages)
     if steps != training.get("total_optimizer_steps"):
         raise ValueError("curriculum step count changed")
-    if runtime.get("required_visible_devices") != "0,1,2,3":
+    if runtime.get("supported_visible_devices") != {"0,1": 2, "0,1,2,3": 4}:
         raise ValueError("visible-device contract changed")
     if overfit.get("variant") != "merger_trainable":
         raise ValueError("overfit must exercise the larger approved trainable scope")

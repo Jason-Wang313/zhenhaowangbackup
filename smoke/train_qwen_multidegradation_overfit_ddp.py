@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Bounded four-GPU memorization gate before the full Qwen LoRA ablation."""
+"""Bounded two/four-GPU memorization gate before the full Qwen LoRA ablation."""
 
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
 import sys
@@ -27,6 +28,7 @@ from lowlight_restoration.multidegradation_data import (
 from lowlight_restoration.qwen_lora import save_qwen_adapter
 from lowlight_restoration.qwen_multidegradation import evaluate_outputs
 from smoke.qwen_multidegradation_lora_preflight import (
+    accumulation_steps_for_world,
     load_config,
     run_preflight,
     validate_contract,
@@ -41,6 +43,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     load_model,
     move_batch,
     open_images,
+    rank_microbatch,
     seed_everything,
     setup_distributed,
     validate_runtime,
@@ -92,13 +95,35 @@ def select_overfit_records(
     return selected
 
 
-def probe_loss(model: torch.nn.Module, processor: object, local_records: Sequence[Mapping[str, object]], device: torch.device) -> float:
+def probe_loss(
+    model: torch.nn.Module,
+    processor: object,
+    records: Sequence[Mapping[str, object]],
+    device: torch.device,
+    *,
+    rank: int,
+    world: int,
+    micro: int,
+    accumulation: int,
+) -> float:
     model.eval()
-    images = open_images(local_records)
-    labels = [label_for(record) for record in local_records]
-    batch, _ = prepare_supervised_batch(processor, labels, images)
-    with torch.no_grad():
-        loss = model(**move_batch(batch, device), use_cache=False).loss.detach().float()
+    loss = torch.zeros((), dtype=torch.float32, device=device)
+    for accumulation_index in range(accumulation):
+        local_records = rank_microbatch(
+            records,
+            rank=rank,
+            world=world,
+            micro=micro,
+            accumulation_index=accumulation_index,
+        )
+        images = open_images(local_records)
+        labels = [label_for(record) for record in local_records]
+        batch, _ = prepare_supervised_batch(processor, labels, images)
+        with torch.no_grad():
+            loss += (
+                model(**move_batch(batch, device), use_cache=False).loss.detach().float()
+                / accumulation
+            )
     dist.all_reduce(loss, op=dist.ReduceOp.SUM)
     loss /= dist.get_world_size()
     model.train()
@@ -159,8 +184,17 @@ def main() -> int:
                 else overfit["lora_learning_rate"]
             )
         micro = int(training["micro_batch_size_per_rank"])
-        initial_local = selected[rank * micro : (rank + 1) * micro]
-        initial_loss = probe_loss(model, processor, initial_local, device)
+        accumulation = accumulation_steps_for_world(config, world)
+        initial_loss = probe_loss(
+            model,
+            processor,
+            selected,
+            device,
+            rank=rank,
+            world=world,
+            micro=micro,
+            accumulation=accumulation,
+        )
         trainable = {name for name, parameter in model.named_parameters() if parameter.requires_grad}
         gradient_seen: set[str] = set()
         frozen_gradients: set[str] = set()
@@ -170,15 +204,30 @@ def main() -> int:
         for step in range(1, steps + 1):
             shift = (step * micro) % len(selected)
             ordered = selected[shift:] + selected[:shift]
-            local_records = ordered[rank * micro : (rank + 1) * micro]
-            images = open_images(local_records)
-            labels = [label_for(record) for record in local_records]
-            batch, _ = prepare_supervised_batch(processor, labels, images)
             optimizer.zero_grad(set_to_none=True)
-            loss = ddp(**move_batch(batch, device), use_cache=False).loss
-            if not torch.isfinite(loss):
-                raise RuntimeError(f"non-finite overfit loss at step {step}")
-            loss.backward()
+            reduced = torch.zeros((), dtype=torch.float32, device=device)
+            for accumulation_index in range(accumulation):
+                local_records = rank_microbatch(
+                    ordered,
+                    rank=rank,
+                    world=world,
+                    micro=micro,
+                    accumulation_index=accumulation_index,
+                )
+                images = open_images(local_records)
+                labels = [label_for(record) for record in local_records]
+                batch, _ = prepare_supervised_batch(processor, labels, images)
+                synchronization = (
+                    ddp.no_sync()
+                    if accumulation_index + 1 < accumulation
+                    else contextlib.nullcontext()
+                )
+                with synchronization:
+                    loss = ddp(**move_batch(batch, device), use_cache=False).loss
+                    if not torch.isfinite(loss):
+                        raise RuntimeError(f"non-finite overfit loss at step {step}")
+                    (loss / accumulation).backward()
+                reduced += loss.detach().float() / accumulation
             for name, parameter in model.named_parameters():
                 if parameter.requires_grad and parameter.grad is not None:
                     gradient_seen.add(name)
@@ -189,14 +238,22 @@ def main() -> int:
                 float(training["max_grad_norm"]),
             )
             optimizer.step()
-            reduced = loss.detach().float()
             dist.all_reduce(reduced, op=dist.ReduceOp.SUM)
             reduced /= world
             if rank == 0 and (step <= 5 or step % 10 == 0 or step == steps):
                 row = {"step": step, "loss": float(reduced.item()), "grad_norm": float(norm.detach().float().item())}
                 losses.append(row)
                 print("QWEN_MULTIDEGRADATION_OVERFIT_TRAIN " + json.dumps(row, sort_keys=True), flush=True)
-        final_loss = probe_loss(model, processor, initial_local, device)
+        final_loss = probe_loss(
+            model,
+            processor,
+            selected,
+            device,
+            rank=rank,
+            world=world,
+            micro=micro,
+            accumulation=accumulation,
+        )
         raw = generate_outputs(model, processor, selected, config, rank=rank, world=world, device=device)
         rows, metrics = evaluate_outputs([label_for(record) for record in selected], raw)
         for row, record in zip(rows, selected, strict=True):

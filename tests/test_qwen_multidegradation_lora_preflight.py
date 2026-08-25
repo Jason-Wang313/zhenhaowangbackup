@@ -5,6 +5,7 @@ from pathlib import Path
 
 from smoke.qwen_multidegradation_lora_preflight import (
     ROOT,
+    accumulation_steps_for_world,
     load_config,
     validate_contract,
     validate_model_inventory,
@@ -24,7 +25,7 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
 
     def test_rejects_device_or_curriculum_drift(self):
         changed = deepcopy(self.config)
-        changed["runtime"]["required_visible_devices"] = "0,1"
+        changed["runtime"]["supported_visible_devices"] = {"0,1": 2}
         with self.assertRaises(ValueError):
             validate_contract(changed)
         changed = deepcopy(self.config)
@@ -32,6 +33,15 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_contract(changed)
 
+    def test_two_and_four_gpu_contract_preserve_global_batch(self):
+        training = self.config["training"]
+        for world, expected_accumulation in ((2, 2), (4, 1)):
+            accumulation = accumulation_steps_for_world(self.config, world)
+            self.assertEqual(accumulation, expected_accumulation)
+            self.assertEqual(
+                training["micro_batch_size_per_rank"] * world * accumulation,
+                training["global_batch_size"],
+            )
     def test_config_is_machine_serializable(self):
         json.dumps(self.config, sort_keys=True)
         self.assertEqual(len(self.sha), 64)

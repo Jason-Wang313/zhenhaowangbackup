@@ -1,7 +1,7 @@
 # Qwen multi-degradation LoRA readiness — 2026-08-24
 
 The advisor-approved Qwen stage is CPU-complete and ready for one autonomous
-four-H100 run. No FoundIR training or test data was accessed.
+two- or four-H100 run. No FoundIR training or test data was accessed.
 
 ## Frozen data
 
@@ -27,7 +27,7 @@ existing records.
 ## Frozen training and evaluation
 
 The configuration SHA-256 is
-`cc6168aee35b5771dd164ddd4fe369dd9fb5a5444c5199dfdf20d8b92173f6a5`.
+`ee78840607fe17438063be5d3368a8b6397153d51a4587c3ce13bf2bca21ace3`.
 Qwen2.5-VL-7B remains offline and frozen except for rank-16 LoRA on all 160
 visual attention/MLP linear modules. The ablation compares the same LoRA with
 the 44,574,464-parameter visual merger frozen versus trainable. The tokenizer,
@@ -40,9 +40,11 @@ The progressive schedule is one retained-data epoch at each stage:
 2. 6,720 retained clean/single + double records;
 3. 9,600 retained clean/single/double + triple records.
 
-This is 630 optimizer steps at global batch 32. Four H100s each process eight
-images per step, minimizing synchronization and accumulation overhead. The
-two variants are trained sequentially so each uses all four GPUs. Validation
+This is 630 optimizer steps at effective global batch 32. Two H100s each
+process eight images for two accumulated microsteps; four H100s each process
+eight images for one microstep. Thus either topology sees the same 32 records
+per optimizer update without increasing per-GPU activation memory. The two
+variants are trained sequentially so each uses every visible GPU. Validation
 selects the winner; only that checkpoint is then evaluated once on the fixed
 synthetic test.
 
@@ -58,7 +60,7 @@ The full model identity/hash preflight passed, including all five 16 GB Qwen
 shards and every one of the 12,000 generated image/evidence hashes. A
 meta-device architecture audit matched exactly 160 LoRA modules and
 11,151,360 adapter parameters; the trainable-merger variant has 55,725,824
-trainable parameters total. Thirty-three focused contract/data/LoRA/trainer
+trainable parameters total. Thirty-five focused contract/data/LoRA/trainer
 tests, Python compilation, shell syntax, and `git diff --check` passed.
 
 The predeclared real-domain sanity pool contains five visually screened images
@@ -78,9 +80,9 @@ This coding terminal has no visible CUDA device, so no GPU result or final
 checkpoint is claimed yet. The single external launch action is:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3 bash smoke/launch_qwen_multidegradation_lora.sh
+CUDA_VISIBLE_DEVICES=0,1 bash smoke/launch_qwen_multidegradation_lora.sh
 ```
 
 The launcher uses system tmux if executable and otherwise a detached nohup
-fallback. It records persistent training and four-GPU telemetry logs. Training
+fallback. It records persistent training and GPU telemetry logs. Training
 resumes from immutable curriculum-stage checkpoints after interruption.

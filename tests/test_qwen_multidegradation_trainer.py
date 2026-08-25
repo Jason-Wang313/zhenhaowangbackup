@@ -9,6 +9,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     create_optimizer,
     gate_checks,
     learning_rate_scale,
+    rank_microbatch,
     stage_records,
 )
 from smoke.qwen_multidegradation_lora_preflight import ROOT, load_config
@@ -83,6 +84,23 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
             for name, level in record["levels"].items()
         }
         self.assertEqual(len(covered), 20)
+
+    def test_two_and_four_gpu_microbatches_cover_the_same_global_batch(self):
+        records = [{"index": index} for index in range(32)]
+        for world, accumulation in ((2, 2), (4, 1)):
+            selected = [
+                record["index"]
+                for accumulation_index in range(accumulation)
+                for rank in range(world)
+                for record in rank_microbatch(
+                    records,
+                    rank=rank,
+                    world=world,
+                    micro=8,
+                    accumulation_index=accumulation_index,
+                )
+            ]
+            self.assertEqual(selected, list(range(32)))
 
 
 if __name__ == "__main__":
