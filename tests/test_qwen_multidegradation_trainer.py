@@ -91,6 +91,25 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         self.assertEqual(len({record["record_id"] for record in selected}), 9600)
         self.assertEqual(correction["training"]["total_optimizer_steps"], 300)
 
+    def test_fixed_slot_correction_replays_complete_mixture_twice(self):
+        correction, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_lora_correction4_v1.json"
+        )
+        stage = correction["data"]["curriculum"][0]
+        first = stage_records(
+            self.records, stage, correction["training"]["seed"], epoch=0
+        )
+        second = stage_records(
+            self.records, stage, correction["training"]["seed"], epoch=1
+        )
+        self.assertEqual(len(first), len(second), 9600)
+        self.assertEqual(
+            {record["record_id"] for record in first},
+            {record["record_id"] for record in second},
+        )
+        self.assertNotEqual(first[:32], second[:32])
+        self.assertEqual(correction["training"]["total_optimizer_steps"], 600)
+
     def test_semantic_loss_only_upweights_frozen_target_ids(self):
         labels = torch.tensor([[-100, 1, 2, 3]])
         logits = torch.zeros((1, 4, 5), dtype=torch.float32)

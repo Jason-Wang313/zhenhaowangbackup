@@ -24,6 +24,8 @@ DEGRADATIONS = ("blur", "noise", "rain", "haze", "low_light")
 DEGRADATION_SET = frozenset(DEGRADATIONS)
 ACTIVE_LEVELS = frozenset({2, 3, 4, 5})
 LEVEL_WORDS = {2: "mild", 3: "moderate", 4: "strong", 5: "extreme"}
+VARIABLE_ACTIVE_SCHEMA = "clean_l1_multilabel_independent_active_l2_l5_v1"
+FIXED_FIVE_SLOT_SCHEMA = "fixed_five_slot_l1_absent_l2_l5_v1"
 
 SYSTEM_PROMPT = (
     "You are a degradation-assessment model for image restoration. Analyze "
@@ -39,6 +41,14 @@ DEGRADATION_QUESTION = (
     "levels object. List degradations in this exact canonical order: blur, "
     "noise, rain, haze, low_light. Return exactly the keys degradations and "
     "levels."
+)
+
+FIXED_FIVE_SLOT_QUESTION = (
+    "For each degradation blur, noise, rain, haze, and low_light, assign its "
+    "project level independently. Use L1 when that degradation is absent, L2 "
+    "mild, L3 moderate, L4 strong, or L5 extreme. Return exactly one compact "
+    "JSON object with these five keys in this exact order: blur, noise, rain, "
+    "haze, low_light. Use integer values 1 through 5 and no additional keys."
 )
 
 
@@ -112,6 +122,17 @@ def canonical_target(
     return json.dumps(payload, separators=(",", ":"), ensure_ascii=True)
 
 
+def canonical_fixed_five_slot_target(label: DegradationLabel) -> str:
+    """Serialize one fixed-length independent L1--L5 decision per type."""
+
+    label = make_label(label.degradations, label.level_map)
+    payload = {
+        name: label.level_map.get(name, 1)
+        for name in DEGRADATIONS
+    }
+    return json.dumps(payload, separators=(",", ":"), ensure_ascii=True)
+
+
 def parse_target(raw_output: str) -> DegradationLabel:
     """Strictly parse the frozen schema; reject aliases and extra prose."""
 
@@ -141,6 +162,45 @@ def parse_target(raw_output: str) -> DegradationLabel:
     return label
 
 
+def parse_fixed_five_slot_target(raw_output: str) -> DegradationLabel:
+    """Strictly parse the fixed five-slot L1-absent schema."""
+
+    if not isinstance(raw_output, str) or not raw_output.strip():
+        raise ValueError("empty structured output")
+    if raw_output != raw_output.strip():
+        raise ValueError("leading or trailing whitespace is not canonical")
+    try:
+        payload = json.loads(raw_output)
+    except json.JSONDecodeError as exc:
+        raise ValueError("output is not exactly one JSON value") from exc
+    if not isinstance(payload, dict) or list(payload) != list(DEGRADATIONS):
+        raise ValueError("fixed-slot keys or key order differ from the contract")
+    for name, level in payload.items():
+        if isinstance(level, bool) or not isinstance(level, int) or level not in range(1, 6):
+            raise ValueError(f"fixed-slot {name} level must be L1 through L5")
+    active = [name for name in DEGRADATIONS if payload[name] > 1]
+    label = make_label(active, {name: payload[name] for name in active})
+    if canonical_fixed_five_slot_target(label) != raw_output:
+        raise ValueError("fixed-slot JSON serialization is not canonical")
+    return label
+
+
+def parse_output(raw_output: str, target_schema: str) -> DegradationLabel:
+    if target_schema == VARIABLE_ACTIVE_SCHEMA:
+        return parse_target(raw_output)
+    if target_schema == FIXED_FIVE_SLOT_SCHEMA:
+        return parse_fixed_five_slot_target(raw_output)
+    raise ValueError(f"unknown Qwen target schema: {target_schema}")
+
+
+def training_target(label: DegradationLabel, target_schema: str) -> str:
+    if target_schema == VARIABLE_ACTIVE_SCHEMA:
+        return canonical_target(label)
+    if target_schema == FIXED_FIVE_SLOT_SCHEMA:
+        return canonical_fixed_five_slot_target(label)
+    raise ValueError(f"unknown Qwen target schema: {target_schema}")
+
+
 def canonical_restoration_text(label: DegradationLabel) -> str:
     """Deterministically translate Qwen JSON to the later FLUX text condition."""
 
@@ -154,31 +214,47 @@ def canonical_restoration_text(label: DegradationLabel) -> str:
     return "Restore the image by correcting " + ", ".join(descriptions) + "."
 
 
-def prompt_messages() -> list[dict[str, object]]:
+def prompt_messages(
+    target_schema: str = VARIABLE_ACTIVE_SCHEMA,
+) -> list[dict[str, object]]:
+    question = (
+        DEGRADATION_QUESTION
+        if target_schema == VARIABLE_ACTIVE_SCHEMA
+        else FIXED_FIVE_SLOT_QUESTION
+        if target_schema == FIXED_FIVE_SLOT_SCHEMA
+        else None
+    )
+    if question is None:
+        raise ValueError(f"unknown Qwen target schema: {target_schema}")
     return [
         {"role": "system", "content": [{"type": "text", "text": SYSTEM_PROMPT}]},
         {
             "role": "user",
             "content": [
                 {"type": "image"},
-                {"type": "text", "text": DEGRADATION_QUESTION},
+                {"type": "text", "text": question},
             ],
         },
     ]
 
 
-def prompt_text(processor: "Qwen2_5_VLProcessor") -> str:
+def prompt_text(
+    processor: "Qwen2_5_VLProcessor",
+    target_schema: str = VARIABLE_ACTIVE_SCHEMA,
+) -> str:
     return processor.apply_chat_template(
-        prompt_messages(), tokenize=False, add_generation_prompt=True
+        prompt_messages(target_schema), tokenize=False, add_generation_prompt=True
     )
 
 
 def supervised_text(
-    processor: "Qwen2_5_VLProcessor", label: DegradationLabel
+    processor: "Qwen2_5_VLProcessor",
+    label: DegradationLabel,
+    target_schema: str = VARIABLE_ACTIVE_SCHEMA,
 ) -> str:
-    messages = prompt_messages()
+    messages = prompt_messages(target_schema)
     messages.append(
-        {"role": "assistant", "content": canonical_target(label)}
+        {"role": "assistant", "content": training_target(label, target_schema)}
     )
     return processor.apply_chat_template(
         messages, tokenize=False, add_generation_prompt=False
@@ -202,6 +278,7 @@ def prepare_supervised_batch(
     processor: "Qwen2_5_VLProcessor",
     labels: Sequence[DegradationLabel],
     images: Sequence[Image.Image],
+    target_schema: str = VARIABLE_ACTIVE_SCHEMA,
 ) -> tuple[dict[str, torch.Tensor], list[int]]:
     """Build a batch whose loss covers assistant answer tokens only."""
 
@@ -209,9 +286,9 @@ def prepare_supervised_batch(
         raise ValueError("labels and images must have the same nonzero length")
     if processor.tokenizer.padding_side != "right":
         raise ValueError("supervised batching requires right padding")
-    prefix = prompt_text(processor)
+    prefix = prompt_text(processor, target_schema)
     encoded = processor(
-        text=[supervised_text(processor, label) for label in labels],
+        text=[supervised_text(processor, label, target_schema) for label in labels],
         images=list(images),
         padding=True,
         return_tensors="pt",
@@ -243,7 +320,10 @@ def _safe_div(numerator: int, denominator: int) -> float:
 
 
 def evaluate_outputs(
-    truths: Sequence[DegradationLabel], raw_outputs: Sequence[str]
+    truths: Sequence[DegradationLabel],
+    raw_outputs: Sequence[str],
+    *,
+    target_schema: str = VARIABLE_ACTIVE_SCHEMA,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
     """Evaluate strict structure, multi-label types, and independent severity."""
 
@@ -267,7 +347,7 @@ def evaluate_outputs(
         predicted: DegradationLabel | None = None
         error: str | None = None
         try:
-            predicted = parse_target(raw)
+            predicted = parse_output(raw, target_schema)
         except ValueError as exc:
             error = str(exc)
         true_set = set(truth.degradations)

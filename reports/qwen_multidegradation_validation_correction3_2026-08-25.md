@@ -40,3 +40,12 @@ CPU evidence before launch: full hash/meta-architecture preflight passed, 46
 relevant tests passed, and all four possible fixed-test artifacts were absent.
 Frozen config SHA-256:
 `cbb483bbbc5c8d6d5ae57088ca61ee298dd836ca0a0b9c2504e8892bc4a2b066`.
+
+## Correction-3 outcome
+
+Correction 3 completed all 300 steps and stopped before fixed-test access.
+Overlap-only severity accuracy improved from 0.7926 to 0.7970, but set exact
+fell from 0.7958 to 0.7900 and macro-F1 fell from 0.9314 to 0.9282. Triple
+set exact rose only from 0.5750 to 0.5806. Attention-only decoder LoRA does
+not remove the variable-length output bottleneck and will not be continued on
+that schema.

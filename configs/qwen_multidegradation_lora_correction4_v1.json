@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "status": "approved_qwen_multidegradation_lora_fixed_slot_schema_correction",
+  "contract": {
+    "path": "configs/qwen_multidegradation_contract_v1.json",
+    "sha256": "b2a28d44bb599a7044463438f03944503cbc3def0c7c5532af952a6b3d65df49"
+  },
+  "initialization": {
+    "base_config": "configs/qwen_multidegradation_lora_correction2_v1.json",
+    "base_config_sha256": "50f0d4720664df496eb9fb2a9eabcfd922699b8dc63ada1d678ed4ab3602843f",
+    "adapter": "checkpoints/qwen_multidegradation_lora_correction2_v1/merger_trainable/checkpoints/E_semantic_decision_consolidation/adapter.safetensors",
+    "adapter_sha256": "8b493b357a517e649192ad2a90ae3d2c3a46e675dec41b7e327f3b18cef115c2",
+    "allow_missing_adapter_prefixes": ["model.language_model."],
+    "validation_result": "checkpoints/qwen_multidegradation_lora_correction2_v1/merger_trainable/validation_result.json",
+    "validation_result_sha256": "a5a5825963fc8b00c86427bf77e7765939698dc1a112aafad62a12e390a3c6e1",
+    "overfit_result": "checkpoints/qwen_multidegradation_lora_overfit_v1/result.json",
+    "overfit_result_sha256": "781451398ec3394f2ad38a9a81c40c94fd95806d9f262e5d326c4c0d31c7ac87",
+    "base_fixed_test_result": "checkpoints/qwen_multidegradation_lora_correction2_v1/merger_trainable/fixed_test_result.json"
+  },
+  "model": {
+    "inventory_config": "configs/qwen_lowlight_smoke25.json",
+    "inventory_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "local_path": "models/qwen2.5-vl-7b-instruct",
+    "architecture": "Qwen2_5_VLForConditionalGeneration",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "expected_visual_depth": 32,
+    "expected_lora_modules": 272,
+    "expected_visual_lora_modules": 160,
+    "expected_language_lora_modules": 112,
+    "expected_lora_trainable_parameters": 11151360,
+    "expected_language_lora_trainable_parameters": 5046272,
+    "expected_merger_trainable_parameters": 44574464,
+    "expected_trainable_parameters_with_merger": 60772096,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "language_lora_rank": 8,
+    "language_lora_alpha": 16,
+    "lora_dropout": 0.0,
+    "variants": ["merger_trainable"],
+    "frozen_modules": ["model.language_model.base_weights", "lm_head", "model.visual.patch_embed"]
+  },
+  "processor": {
+    "use_fast": false,
+    "padding_side": "right",
+    "min_pixels": 200704,
+    "max_pixels": 200704
+  },
+  "prompt": {
+    "system_prompt_sha256": "5bafc319a0b99371dfdf02e898b313bddd66625d50a26983159ae0aee5efa764",
+    "degradation_question_sha256": "a660434a73b987cb76ba7b0fb4951d84a7172e3f30522a10adb3809c1e1b4982",
+    "target_schema": "fixed_five_slot_l1_absent_l2_l5_v1"
+  },
+  "data": {
+    "manifest": "manifests/qwen_multidegradation_pilot_v1.jsonl",
+    "manifest_sha256": "0d5fa12abc387ad857c85ad574dcf8ecf7dc158c443d470c096610de04255599",
+    "generation_result": "reports/qwen_multidegradation_generation_result_v1.json",
+    "generation_result_sha256": "73653c445e2253e472838d8dd912777891a5f7809d0a45724c41ca0a9037a90c",
+    "real_sanity_manifest": "manifests/qwen_multidegradation_real_sanity_v3.json",
+    "real_sanity_manifest_sha256": "59f5302aa3b58ba185c1d0fd0deaf82dbf7c0dc2c7b9345ca388854e666b6fad",
+    "sidd_official_verification": {
+      "path": "manifests/qwen_multidegradation_sidd_official_verification_v3.json",
+      "sha256": "d19ab870183f55ce72ddebbac63b5d920e15cf3b169ee1528de0a0ec96a717de"
+    },
+    "training_split": "train",
+    "validation_split": "validation",
+    "fixed_test_split": "test",
+    "expected_split_records": {"train": 9600, "validation": 1200, "test": 1200},
+    "curriculum": [
+      {
+        "name": "G_fixed_slot_independent_decisions",
+        "maximum_composition_size": 3,
+        "records": 9600,
+        "epochs": 2
+      }
+    ]
+  },
+  "training": {
+    "seed": 2026082504,
+    "micro_batch_size_per_rank": 8,
+    "gradient_accumulation_steps_by_world_size": {"2": 2, "4": 1},
+    "global_batch_size": 32,
+    "epochs_per_curriculum_stage": 1,
+    "total_optimizer_steps": 600,
+    "lora_learning_rate": 0.000005,
+    "merger_learning_rate": 0.0000005,
+    "language_lora_learning_rate": 0.00003,
+    "minimum_learning_rate_ratio": 0.16666666666666666,
+    "warmup_steps": 20,
+    "weight_decay": 0.01,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "fused_adamw": true,
+    "semantic_token_loss": {
+      "enabled": true,
+      "semantic_weight": 8.0,
+      "semantic_token_ids": [16, 17, 18, 19, 20]
+    }
+  },
+  "overfit": {
+    "variant": "merger_trainable",
+    "selection_seed": 2026082403,
+    "records": 32,
+    "records_per_composition_size": 8,
+    "total_optimizer_steps": 200,
+    "lora_learning_rate": 0.0002,
+    "merger_learning_rate": 0.00002,
+    "maximum_final_to_initial_loss_ratio": 0.25,
+    "minimum_valid_structured_output_rate": 1.0,
+    "minimum_degradation_set_exact_match_rate": 0.95,
+    "minimum_combined_label_exact_match_rate": 0.9,
+    "minimum_severity_typed_accuracy": 0.9,
+    "require_all_twenty_type_level_pairs": true
+  },
+  "distributed": {
+    "backend": "nccl",
+    "supported_world_sizes": [2, 4],
+    "timeout_minutes": 30,
+    "find_unused_parameters": false
+  },
+  "generation": {
+    "do_sample": false,
+    "batch_size_per_rank": 4,
+    "max_new_tokens": 64
+  },
+  "gate": {
+    "minimum_valid_structured_output_rate": 0.99,
+    "minimum_type_macro_f1": 0.9,
+    "minimum_type_micro_f1": 0.92,
+    "minimum_degradation_set_exact_match_rate": 0.8,
+    "minimum_combined_label_exact_match_rate": 0.65,
+    "minimum_severity_typed_accuracy": 0.75,
+    "maximum_severity_typed_mae_with_missing_penalty": 0.5,
+    "minimum_triple_degradation_set_exact_match_rate": 0.65,
+    "require_all_trainable_parameters_receive_gradient": true,
+    "require_no_frozen_gradients": true
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "supported_visible_devices": {"0,1": 2, "0,1,2,3": 4},
+    "minimum_gpu_memory_gib": 75,
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "5.14.1",
+    "output_root": "checkpoints/qwen_multidegradation_lora_correction4_v1"
+  }
+}

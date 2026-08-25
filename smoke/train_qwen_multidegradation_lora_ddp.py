@@ -570,7 +570,14 @@ def train_variant(
                     )
                     images = open_images(local_records)
                     labels = [label_for(record) for record in local_records]
-                    batch, _ = prepare_supervised_batch(processor, labels, images)
+                    prompt_config = config["prompt"]
+                    assert isinstance(prompt_config, Mapping)
+                    batch, _ = prepare_supervised_batch(
+                        processor,
+                        labels,
+                        images,
+                        str(prompt_config["target_schema"]),
+                    )
                     synchronization = (
                         ddp.no_sync()
                         if accumulation_index + 1 < accumulation
@@ -700,7 +707,10 @@ def generate_outputs(
     model.eval()
     model.gradient_checkpointing_disable()
     model.config.use_cache = True
-    prompt = prompt_text(processor)
+    prompt_config = config["prompt"]
+    assert isinstance(prompt_config, Mapping)
+    target_schema = str(prompt_config["target_schema"])
+    prompt = prompt_text(processor, target_schema)
     indexed = [(index, record) for index, record in enumerate(records) if index % world == rank]
     local: list[tuple[int, str]] = []
     batch_size = int(generation["batch_size_per_rank"])
@@ -774,7 +784,13 @@ def evaluate_split(
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
     records = [record for record in all_records if record["split"] == split]
     raw = generate_outputs(model, processor, records, config, rank=rank, world=world, device=device)
-    rows, metrics = evaluate_outputs([label_for(record) for record in records], raw)
+    prompt_config = config["prompt"]
+    assert isinstance(prompt_config, Mapping)
+    rows, metrics = evaluate_outputs(
+        [label_for(record) for record in records],
+        raw,
+        target_schema=str(prompt_config["target_schema"]),
+    )
     for row, record in zip(rows, records, strict=True):
         row["record_id"] = record["record_id"]
         row["source_id"] = record["source_id"]

@@ -22,7 +22,10 @@ from lowlight_restoration.multidegradation_data import read_jsonl, sha256
 from lowlight_restoration.qwen_lora import configure_qwen_visual_lora
 from lowlight_restoration.qwen_multidegradation import (
     DEGRADATION_QUESTION,
+    FIXED_FIVE_SLOT_QUESTION,
+    FIXED_FIVE_SLOT_SCHEMA,
     SYSTEM_PROMPT,
+    VARIABLE_ACTIVE_SCHEMA,
     make_label,
     prepare_supervised_batch,
 )
@@ -33,12 +36,14 @@ APPROVED_STATUSES = {
     "approved_qwen_multidegradation_lora_validation_correction",
     "approved_qwen_multidegradation_lora_semantic_loss_correction",
     "approved_qwen_multidegradation_lora_crossmodal_decoder_correction",
+    "approved_qwen_multidegradation_lora_fixed_slot_schema_correction",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
     17, 18, 19, 20, 71, 1335, 2198, 3417, 8899, 9832, 10303, 28503,
     28663, 29093, 33542, 36799, 52218, 68882,
 ]
+FIXED_SLOT_SEMANTIC_TOKEN_IDS = [16, 17, 18, 19, 20]
 
 
 def workspace_path(value: object) -> Path:
@@ -102,6 +107,10 @@ def validate_contract(config: dict[str, object]) -> None:
     decoder_correction = (
         status
         == "approved_qwen_multidegradation_lora_crossmodal_decoder_correction"
+    )
+    fixed_slot_correction = (
+        status
+        == "approved_qwen_multidegradation_lora_fixed_slot_schema_correction"
     )
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
@@ -182,26 +191,34 @@ def validate_contract(config: dict[str, object]) -> None:
             or result.get("official_archive_url") != record["source_url"]
         ):
             raise RuntimeError("an official SIDD member does not bind to real-sanity v3")
+    expected_schema = (
+        FIXED_FIVE_SLOT_SCHEMA if fixed_slot_correction else VARIABLE_ACTIVE_SCHEMA
+    )
+    expected_question = (
+        FIXED_FIVE_SLOT_QUESTION if fixed_slot_correction else DEGRADATION_QUESTION
+    )
     expected_prompt = {
         "system_prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
-        "degradation_question_sha256": hashlib.sha256(DEGRADATION_QUESTION.encode()).hexdigest(),
+        "degradation_question_sha256": hashlib.sha256(expected_question.encode()).hexdigest(),
     }
     for key, expected in expected_prompt.items():
         if prompt.get(key) != expected:
             raise RuntimeError(f"frozen prompt changed: {key}")
+    if prompt.get("target_schema") != expected_schema:
+        raise RuntimeError("Qwen target schema differs from the experiment phase")
     expected_variants = ["merger_trainable"] if correction else [
         "merger_frozen",
         "merger_trainable",
     ]
     if model.get("variants") != expected_variants:
         raise ValueError("merger variants differ from the experiment phase")
-    expected_modules = 272 if decoder_correction else 160
+    expected_modules = 272 if (decoder_correction or fixed_slot_correction) else 160
     if (
         int(model.get("expected_visual_depth", 0)) != 32
         or int(model.get("expected_lora_modules", 0)) != expected_modules
     ):
         raise ValueError("Qwen visual-LoRA scope changed")
-    if decoder_correction:
+    if decoder_correction or fixed_slot_correction:
         if (
             int(model.get("expected_visual_lora_modules", 0)) != 160
             or int(model.get("expected_language_lora_modules", 0)) != 112
@@ -240,7 +257,13 @@ def validate_contract(config: dict[str, object]) -> None:
     if steps != training.get("total_optimizer_steps"):
         raise ValueError("curriculum step count changed")
     if correction:
-        expected_epochs = 1 if (semantic_correction or decoder_correction) else 2
+        expected_epochs = (
+            2
+            if fixed_slot_correction
+            else 1
+            if (semantic_correction or decoder_correction)
+            else 2
+        )
         if len(stages) != 1 or int(stages[0].get("epochs", 0)) != expected_epochs:
             raise ValueError(
                 f"correction must use {expected_epochs} full-mixture consolidation epoch(s)"
@@ -250,12 +273,19 @@ def validate_contract(config: dict[str, object]) -> None:
         ):
             raise ValueError("correction must retain the complete training mixture")
         semantic_loss = training.get("semantic_token_loss")
-        if semantic_correction or decoder_correction:
+        if semantic_correction or decoder_correction or fixed_slot_correction:
+            expected_semantic_ids = (
+                FIXED_SLOT_SEMANTIC_TOKEN_IDS
+                if fixed_slot_correction
+                else SEMANTIC_TARGET_TOKEN_IDS
+            )
+            expected_semantic_weight = 8.0 if fixed_slot_correction else 4.0
             if (
                 not isinstance(semantic_loss, dict)
                 or semantic_loss.get("enabled") is not True
-                or semantic_loss.get("semantic_token_ids") != SEMANTIC_TARGET_TOKEN_IDS
-                or float(semantic_loss.get("semantic_weight", 0.0)) != 4.0
+                or semantic_loss.get("semantic_token_ids") != expected_semantic_ids
+                or float(semantic_loss.get("semantic_weight", 0.0))
+                != expected_semantic_weight
             ):
                 raise ValueError("semantic correction loss contract changed")
         elif semantic_loss is not None:
@@ -269,7 +299,7 @@ def validate_contract(config: dict[str, object]) -> None:
         base_config = json.loads(base_config_path.read_text())
         expected_base_status = (
             "approved_qwen_multidegradation_lora_semantic_loss_correction"
-            if decoder_correction
+            if (decoder_correction or fixed_slot_correction)
             else (
                 "approved_qwen_multidegradation_lora_validation_correction"
                 if semantic_correction
@@ -283,7 +313,9 @@ def validate_contract(config: dict[str, object]) -> None:
             raise RuntimeError("correction initialization adapter changed")
         missing_prefixes = initialization.get("allow_missing_adapter_prefixes", [])
         expected_missing_prefixes = (
-            ["model.language_model."] if decoder_correction else []
+            ["model.language_model."]
+            if (decoder_correction or fixed_slot_correction)
+            else []
         )
         if missing_prefixes != expected_missing_prefixes:
             raise ValueError("correction adapter missing-prefix contract changed")
@@ -489,7 +521,11 @@ def validate_data(
         with Image.open(workspace_path(record["output_path"])) as handle:
             images.append(handle.convert("RGB"))
         labels.append(make_label(record["degradations"], record["levels"]))
-    batch, counts = prepare_supervised_batch(processor, labels, images)
+    prompt = config["prompt"]
+    assert isinstance(prompt, dict)
+    batch, counts = prepare_supervised_batch(
+        processor, labels, images, str(prompt["target_schema"])
+    )
     if len(counts) != 4 or any(count <= 0 for count in counts):
         raise RuntimeError("assistant-token supervision is empty")
     return {

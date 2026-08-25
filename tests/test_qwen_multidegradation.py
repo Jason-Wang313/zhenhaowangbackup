@@ -3,16 +3,45 @@ import unittest
 
 from lowlight_restoration.qwen_multidegradation import (
     DEGRADATIONS,
+    FIXED_FIVE_SLOT_SCHEMA,
     DegradationLabel,
+    canonical_fixed_five_slot_target,
     canonical_restoration_text,
     canonical_target,
     evaluate_outputs,
     make_label,
+    parse_fixed_five_slot_target,
     parse_target,
 )
 
 
 class QwenMultiDegradationSchemaTests(unittest.TestCase):
+    def test_fixed_five_slot_schema_is_independent_and_canonical(self):
+        label = make_label(
+            ["blur", "haze", "low_light"],
+            {"blur": 2, "haze": 4, "low_light": 5},
+        )
+        target = canonical_fixed_five_slot_target(label)
+        self.assertEqual(
+            target,
+            '{"blur":2,"noise":1,"rain":1,"haze":4,"low_light":5}',
+        )
+        self.assertEqual(parse_fixed_five_slot_target(target), label)
+        self.assertEqual(
+            canonical_fixed_five_slot_target(make_label([], {})),
+            '{"blur":1,"noise":1,"rain":1,"haze":1,"low_light":1}',
+        )
+
+    def test_fixed_five_slot_schema_rejects_drift_and_four_active_types(self):
+        rejected = [
+            '{"noise":1,"blur":1,"rain":1,"haze":1,"low_light":1}',
+            '{"blur":0,"noise":1,"rain":1,"haze":1,"low_light":1}',
+            '{"blur":true,"noise":1,"rain":1,"haze":1,"low_light":1}',
+            '{"blur":2,"noise":2,"rain":2,"haze":2,"low_light":1}',
+        ]
+        for raw in rejected:
+            with self.subTest(raw=raw), self.assertRaises(ValueError):
+                parse_fixed_five_slot_target(raw)
     def test_clean_is_only_l1_representation(self):
         clean = make_label([], {})
         self.assertEqual(canonical_target(clean), '{"degradations":[],"levels":{}}')
@@ -96,6 +125,16 @@ class QwenMultiDegradationMetricTests(unittest.TestCase):
         self.assertEqual(metrics["active_severity_support"], 6)
         for size in range(4):
             self.assertEqual(metrics["by_composition_size"][str(size)]["samples"], 1)
+
+    def test_fixed_five_slot_outputs_use_the_same_frozen_metrics(self):
+        outputs = [canonical_fixed_five_slot_target(label) for label in self.truths]
+        rows, metrics = evaluate_outputs(
+            self.truths,
+            outputs,
+            target_schema=FIXED_FIVE_SLOT_SCHEMA,
+        )
+        self.assertTrue(all(row["combined_label_exact"] for row in rows))
+        self.assertEqual(metrics["combined_label_exact_match_rate"], 1.0)
 
     def test_type_and_severity_failures_are_not_hidden(self):
         outputs = [

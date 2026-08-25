@@ -16,7 +16,7 @@ sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.multidegradation_data import sha256
 from lowlight_restoration.qwen_lora import load_qwen_adapter
-from lowlight_restoration.qwen_multidegradation import canonical_target, parse_target
+from lowlight_restoration.qwen_multidegradation import canonical_target, parse_output
 from smoke.qwen_multidegradation_lora_preflight import (
     load_config,
     run_preflight,
@@ -93,11 +93,14 @@ def main() -> int:
         )
         rows: list[dict[str, object]] = []
         valid = primary_present = 0
+        prompt = config["prompt"]
+        assert isinstance(prompt, dict)
+        target_schema = str(prompt["target_schema"])
         for record, raw in zip(records, raw_outputs, strict=True):
             predicted = None
             error = None
             try:
-                label = parse_target(raw)
+                label = parse_output(raw, target_schema)
                 predicted = canonical_target(label)
                 valid += 1
                 primary_present += int(record["expected_primary_type"] in label.degradations)
