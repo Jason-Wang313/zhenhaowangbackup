@@ -10,7 +10,9 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     gate_checks,
     learning_rate_scale,
     rank_microbatch,
+    semantic_assistant_token_loss,
     stage_records,
+    training_loss,
 )
 from smoke.qwen_multidegradation_lora_preflight import ROOT, load_config
 from lowlight_restoration.multidegradation_data import read_jsonl
@@ -69,6 +71,43 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
             [record["record_id"] for record in second[:32]],
         )
         self.assertEqual(correction["training"]["total_optimizer_steps"], 600)
+
+    def test_semantic_correction_replays_one_complete_mixture(self):
+        correction, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_lora_correction2_v1.json"
+        )
+        stage = correction["data"]["curriculum"][0]
+        selected = stage_records(
+            self.records, stage, correction["training"]["seed"], epoch=0
+        )
+        self.assertEqual(len(selected), 9600)
+        self.assertEqual(len({record["record_id"] for record in selected}), 9600)
+        self.assertEqual(correction["training"]["total_optimizer_steps"], 300)
+
+    def test_semantic_loss_only_upweights_frozen_target_ids(self):
+        labels = torch.tensor([[-100, 1, 2, 3]])
+        logits = torch.zeros((1, 4, 5), dtype=torch.float32)
+        logits[0, 0, 1] = 2.0
+        logits[0, 1, 2] = 1.0
+        logits[0, 2, 3] = 3.0
+        loss = semantic_assistant_token_loss(
+            logits,
+            labels,
+            semantic_token_ids=[2],
+            semantic_weight=4.0,
+        )
+        token_losses = torch.nn.functional.cross_entropy(
+            logits[:, :-1].reshape(-1, 5), labels[:, 1:].reshape(-1), reduction="none"
+        )
+        expected = (token_losses[0] + 4 * token_losses[1] + token_losses[2]) / 6
+        self.assertAlmostEqual(loss.item(), expected.item(), places=6)
+
+    def test_baseline_training_loss_is_unchanged(self):
+        class Output:
+            loss = torch.tensor(1.25)
+
+        labels = torch.tensor([[-100, 1]])
+        self.assertIs(training_loss(Output(), labels, self.config["training"]), Output.loss)
 
     def test_optimizer_uses_separate_merger_rate(self):
         model = TinyScope()

@@ -20,6 +20,7 @@ from typing import Any, Mapping, Sequence
 import numpy as np
 import torch
 import torch.distributed as dist
+import torch.nn.functional as F
 from PIL import Image
 from torch.nn.parallel import DistributedDataParallel
 
@@ -195,6 +196,86 @@ def learning_rate_scale(step: int, total: int, warmup: int, minimum: float) -> f
         return step / warmup if warmup else 1.0
     progress = (step - warmup) / (total - warmup)
     return minimum + (1 - minimum) * 0.5 * (1 + math.cos(math.pi * progress))
+
+
+def semantic_assistant_token_loss(
+    logits: torch.Tensor,
+    labels: torch.Tensor,
+    *,
+    semantic_token_ids: Sequence[int],
+    semantic_weight: float,
+) -> torch.Tensor:
+    """Causal assistant-token CE with extra weight on label decisions.
+
+    Prompt and padding positions remain excluded through the existing ``-100``
+    label mask.  The correction only changes the relative weight of frozen,
+    explicitly listed target-token IDs; JSON syntax remains supervised.
+    """
+
+    if logits.ndim != 3 or labels.ndim != 2 or logits.shape[:2] != labels.shape:
+        raise ValueError("semantic-loss logits and labels have incompatible shapes")
+    if logits.shape[1] < 2 or logits.shape[2] <= 1:
+        raise ValueError("semantic-loss logits have invalid dimensions")
+    if not semantic_token_ids or len(set(semantic_token_ids)) != len(semantic_token_ids):
+        raise ValueError("semantic token IDs must be nonempty and unique")
+    if any(isinstance(token, bool) or not isinstance(token, int) or token < 0 for token in semantic_token_ids):
+        raise ValueError("semantic token IDs must be nonnegative integers")
+    if not math.isfinite(semantic_weight) or semantic_weight <= 1.0:
+        raise ValueError("semantic token weight must be finite and greater than one")
+
+    shifted_logits = logits[:, :-1, :]
+    shifted_labels = labels[:, 1:].contiguous()
+    valid = shifted_labels.ne(-100)
+    if not torch.any(valid):
+        raise ValueError("semantic loss has no supervised assistant tokens")
+    active_labels = shifted_labels[valid]
+    token_loss = F.cross_entropy(
+        shifted_logits[valid].float().contiguous(),
+        active_labels,
+        reduction="none",
+    )
+    weights = torch.ones_like(token_loss)
+    semantic = torch.zeros_like(active_labels, dtype=torch.bool)
+    for token_id in semantic_token_ids:
+        semantic.logical_or_(active_labels.eq(token_id))
+    weights = torch.where(
+        semantic,
+        torch.full_like(weights, float(semantic_weight)),
+        weights,
+    )
+    loss = (token_loss * weights).sum() / weights.sum()
+    if not torch.isfinite(loss):
+        raise RuntimeError("semantic assistant-token loss is non-finite")
+    return loss
+
+
+def training_loss(
+    output_value: object,
+    labels: torch.Tensor,
+    training: Mapping[str, object],
+) -> torch.Tensor:
+    """Select the frozen baseline CE or the bounded semantic correction CE."""
+
+    semantic = training.get("semantic_token_loss")
+    if semantic is None:
+        loss = getattr(output_value, "loss", None)
+        if not isinstance(loss, torch.Tensor):
+            raise RuntimeError("Qwen output omitted its language-model loss")
+        return loss
+    if not isinstance(semantic, Mapping) or semantic.get("enabled") is not True:
+        raise ValueError("semantic-token loss contract is malformed")
+    logits = getattr(output_value, "logits", None)
+    if not isinstance(logits, torch.Tensor):
+        raise RuntimeError("Qwen output omitted logits for semantic-token loss")
+    token_ids = semantic.get("semantic_token_ids")
+    if not isinstance(token_ids, list):
+        raise ValueError("semantic-token loss IDs must be a list")
+    return semantic_assistant_token_loss(
+        logits,
+        labels,
+        semantic_token_ids=token_ids,
+        semantic_weight=float(semantic["semantic_weight"]),
+    )
 
 
 def create_optimizer(
@@ -475,8 +556,14 @@ def train_variant(
                         else contextlib.nullcontext()
                     )
                     with synchronization:
-                        output_value = ddp(**move_batch(batch, device), use_cache=False)
-                        loss = output_value.loss
+                        device_batch = move_batch(batch, device)
+                        forward_batch = (
+                            {key: value for key, value in device_batch.items() if key != "labels"}
+                            if training.get("semantic_token_loss") is not None
+                            else device_batch
+                        )
+                        output_value = ddp(**forward_batch, use_cache=False)
+                        loss = training_loss(output_value, device_batch["labels"], training)
                         if not torch.isfinite(loss):
                             raise RuntimeError(
                                 f"non-finite Qwen loss at step {global_step + 1}"

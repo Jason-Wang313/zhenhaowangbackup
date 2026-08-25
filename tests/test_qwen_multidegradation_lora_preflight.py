@@ -79,6 +79,33 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
             ).exists()
         )
 
+    def test_semantic_loss_correction_is_hash_pinned_and_test_blind(self):
+        path = ROOT / "configs/qwen_multidegradation_lora_correction2_v1.json"
+        correction, correction_sha = load_config(path)
+        validate_contract(correction)
+        self.assertEqual(len(correction_sha), 64)
+        self.assertEqual(
+            correction["data"]["curriculum"],
+            [
+                {
+                    "name": "E_semantic_decision_consolidation",
+                    "maximum_composition_size": 3,
+                    "records": 9600,
+                    "epochs": 1,
+                }
+            ],
+        )
+        self.assertEqual(
+            correction["training"]["semantic_token_loss"]["semantic_weight"],
+            4.0,
+        )
+        self.assertFalse(
+            (
+                ROOT
+                / correction["initialization"]["base_fixed_test_result"]
+            ).exists()
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

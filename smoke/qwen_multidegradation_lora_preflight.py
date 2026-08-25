@@ -31,7 +31,13 @@ from lowlight_restoration.qwen_multidegradation import (
 APPROVED_STATUSES = {
     "approved_qwen_multidegradation_lora_frozen_merger_ablation",
     "approved_qwen_multidegradation_lora_validation_correction",
+    "approved_qwen_multidegradation_lora_semantic_loss_correction",
 }
+
+SEMANTIC_TARGET_TOKEN_IDS = [
+    17, 18, 19, 20, 71, 1335, 2198, 3417, 8899, 9832, 10303, 28503,
+    28663, 29093, 33542, 36799, 52218, 68882,
+]
 
 
 def workspace_path(value: object) -> Path:
@@ -87,9 +93,10 @@ def validate_software_runtime(config: dict[str, object]) -> dict[str, str]:
 
 
 def validate_contract(config: dict[str, object]) -> None:
-    correction = (
-        config.get("status")
-        == "approved_qwen_multidegradation_lora_validation_correction"
+    status = config.get("status")
+    correction = status != "approved_qwen_multidegradation_lora_frozen_merger_ablation"
+    semantic_correction = (
+        status == "approved_qwen_multidegradation_lora_semantic_loss_correction"
     )
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
@@ -214,12 +221,26 @@ def validate_contract(config: dict[str, object]) -> None:
     if steps != training.get("total_optimizer_steps"):
         raise ValueError("curriculum step count changed")
     if correction:
-        if len(stages) != 1 or int(stages[0].get("epochs", 0)) != 2:
-            raise ValueError("correction must use two full-mixture consolidation epochs")
+        expected_epochs = 1 if semantic_correction else 2
+        if len(stages) != 1 or int(stages[0].get("epochs", 0)) != expected_epochs:
+            raise ValueError(
+                f"correction must use {expected_epochs} full-mixture consolidation epoch(s)"
+            )
         if int(stages[0].get("records", 0)) != int(
             data["expected_split_records"]["train"]
         ):
             raise ValueError("correction must retain the complete training mixture")
+        semantic_loss = training.get("semantic_token_loss")
+        if semantic_correction:
+            if (
+                not isinstance(semantic_loss, dict)
+                or semantic_loss.get("enabled") is not True
+                or semantic_loss.get("semantic_token_ids") != SEMANTIC_TARGET_TOKEN_IDS
+                or float(semantic_loss.get("semantic_weight", 0.0)) != 4.0
+            ):
+                raise ValueError("semantic correction loss contract changed")
+        elif semantic_loss is not None:
+            raise ValueError("baseline correction unexpectedly enables semantic loss")
         initialization = config.get("initialization")
         if not isinstance(initialization, dict):
             raise ValueError("correction initialization is missing")
@@ -227,10 +248,13 @@ def validate_contract(config: dict[str, object]) -> None:
         if sha256(base_config_path) != initialization.get("base_config_sha256"):
             raise RuntimeError("correction base config changed")
         base_config = json.loads(base_config_path.read_text())
-        if base_config.get("status") != (
-            "approved_qwen_multidegradation_lora_frozen_merger_ablation"
-        ):
-            raise RuntimeError("correction base is not the completed ablation")
+        expected_base_status = (
+            "approved_qwen_multidegradation_lora_validation_correction"
+            if semantic_correction
+            else "approved_qwen_multidegradation_lora_frozen_merger_ablation"
+        )
+        if base_config.get("status") != expected_base_status:
+            raise RuntimeError("correction base phase is inconsistent")
         adapter_path = workspace_path(initialization.get("adapter"))
         if sha256(adapter_path) != initialization.get("adapter_sha256"):
             raise RuntimeError("correction initialization adapter changed")
@@ -259,9 +283,15 @@ def validate_contract(config: dict[str, object]) -> None:
             or overfit_metrics.get("severity_typed_accuracy") != 1.0
         ):
             raise RuntimeError("correction source did not pass the overfit gate")
-        fixed_test_path = initialization.get("base_fixed_test_result")
-        if fixed_test_path is not None and workspace_path(fixed_test_path).exists():
-            raise RuntimeError("base fixed test was accessed before correction selection")
+        forbidden_fixed_tests = [initialization.get("base_fixed_test_result")]
+        source_initialization = base_config.get("initialization")
+        if isinstance(source_initialization, dict):
+            forbidden_fixed_tests.append(
+                source_initialization.get("base_fixed_test_result")
+            )
+        for fixed_test_path in forbidden_fixed_tests:
+            if fixed_test_path is not None and workspace_path(fixed_test_path).exists():
+                raise RuntimeError("a fixed test was accessed before correction selection")
     if runtime.get("supported_visible_devices") != {"0,1": 2, "0,1,2,3": 4}:
         raise ValueError("visible-device contract changed")
     if overfit.get("variant") != "merger_trainable":
