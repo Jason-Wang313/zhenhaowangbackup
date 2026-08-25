@@ -9,7 +9,6 @@ import hashlib
 import json
 import math
 import os
-import platform
 import random
 import sys
 import tempfile
@@ -50,6 +49,7 @@ from smoke.qwen_multidegradation_lora_preflight import (
     load_config,
     run_preflight,
     validate_contract,
+    validate_software_runtime,
     workspace_path,
 )
 
@@ -172,20 +172,7 @@ def validate_runtime(config: Mapping[str, object], local_rank: int) -> dict[str,
     memory = properties.total_memory / 1024**3
     if memory < float(runtime["minimum_gpu_memory_gib"]):
         raise SystemExit(f"GPU_{local_rank}_MEMORY_TOO_SMALL_{memory:.2f}_GIB")
-    import transformers
-
-    actual = {
-        "python": platform.python_version(),
-        "pytorch": torch.__version__,
-        "transformers": transformers.__version__,
-    }
-    expected = {
-        "python": runtime["required_python"],
-        "pytorch": runtime["required_pytorch"],
-        "transformers": runtime["required_transformers"],
-    }
-    if actual != expected:
-        raise SystemExit(f"RUNTIME_VERSION_MISMATCH_{actual}")
+    actual = validate_software_runtime(dict(config))
     world = dist.get_world_size()
     accumulation = accumulation_steps_for_world(dict(config), world)
     training = config["training"]

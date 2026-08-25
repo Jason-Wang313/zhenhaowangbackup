@@ -27,7 +27,7 @@ existing records.
 ## Frozen training and evaluation
 
 The configuration SHA-256 is
-`ee78840607fe17438063be5d3368a8b6397153d51a4587c3ce13bf2bca21ace3`.
+`b9b576ddf7723bf0c74027d35ce2489c9a6806f7baf1a5df06f244df4124f922`.
 Qwen2.5-VL-7B remains offline and frozen except for rank-16 LoRA on all 160
 visual attention/MLP linear modules. The ablation compares the same LoRA with
 the 44,574,464-parameter visual merger frozen versus trainable. The tokenizer,
@@ -60,8 +60,12 @@ The full model identity/hash preflight passed, including all five 16 GB Qwen
 shards and every one of the 12,000 generated image/evidence hashes. A
 meta-device architecture audit matched exactly 160 LoRA modules and
 11,151,360 adapter parameters; the trainable-merger variant has 55,725,824
-trainable parameters total. Thirty-five focused contract/data/LoRA/trainer
+trainable parameters total. Thirty-six focused contract/data/LoRA/trainer
 tests, Python compilation, shell syntax, and `git diff --check` passed.
+The shared environment now resolves Transformers 5.14.1. Its processor target
+token counts, Qwen module hierarchy, all 160 LoRA targets, merger scope, and
+trainable parameter count were revalidated before freezing that exact runtime
+version; software versions are checked at the start of preflight.
 
 The predeclared real-domain sanity pool contains five visually screened images
 for each of blur, noise, rain, haze, and low light. It is qualitative only: no

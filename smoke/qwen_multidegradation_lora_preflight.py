@@ -8,6 +8,7 @@ import concurrent.futures
 import hashlib
 import json
 import os
+import platform
 import sys
 from collections import Counter
 from pathlib import Path
@@ -18,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.multidegradation_data import read_jsonl, sha256
+from lowlight_restoration.qwen_lora import configure_qwen_visual_lora
 from lowlight_restoration.qwen_multidegradation import (
     DEGRADATION_QUESTION,
     SYSTEM_PROMPT,
@@ -54,6 +56,27 @@ def accumulation_steps_for_world(config: dict[str, object], world: int) -> int:
     if steps <= 0:
         raise ValueError("gradient accumulation must be positive")
     return steps
+
+
+def validate_software_runtime(config: dict[str, object]) -> dict[str, str]:
+    import torch
+    import transformers
+
+    runtime = config["runtime"]
+    assert isinstance(runtime, dict)
+    actual = {
+        "python": platform.python_version(),
+        "pytorch": torch.__version__,
+        "transformers": transformers.__version__,
+    }
+    expected = {
+        "python": str(runtime["required_python"]),
+        "pytorch": str(runtime["required_pytorch"]),
+        "transformers": str(runtime["required_transformers"]),
+    }
+    if actual != expected:
+        raise RuntimeError(f"software runtime mismatch: actual={actual} expected={expected}")
+    return actual
 
 
 def validate_contract(config: dict[str, object]) -> None:
@@ -206,6 +229,44 @@ def validate_model_inventory(config: dict[str, object], *, full_hashes: bool) ->
     return {"repository": inventory_model["repository"], "revision": inventory_model["revision"], "full_hashes": full_hashes}
 
 
+def validate_meta_architecture(config: dict[str, object]) -> dict[str, object]:
+    import torch
+    from transformers import AutoConfig, Qwen2_5_VLForConditionalGeneration
+
+    model_config = config["model"]
+    assert isinstance(model_config, dict)
+    architecture_config = AutoConfig.from_pretrained(
+        workspace_path(model_config["local_path"]), local_files_only=True
+    )
+    with torch.device("meta"):
+        model = Qwen2_5_VLForConditionalGeneration(architecture_config)
+    scope = configure_qwen_visual_lora(
+        model,
+        rank=int(model_config["lora_rank"]),
+        alpha=float(model_config["lora_alpha"]),
+        dropout=float(model_config["lora_dropout"]),
+        merger_trainable=True,
+    )
+    expected = {
+        "matched_lora_module_count": int(model_config["expected_lora_modules"]),
+        "merger_trainable_parameters": int(
+            model_config["expected_merger_trainable_parameters"]
+        ),
+        "trainable_parameters": int(
+            model_config["expected_trainable_parameters_with_merger"]
+        ),
+    }
+    actual = {key: int(scope[key]) for key in expected}
+    lora_parameters = actual["trainable_parameters"] - actual["merger_trainable_parameters"]
+    if actual != expected or lora_parameters != int(
+        model_config["expected_lora_trainable_parameters"]
+    ):
+        raise RuntimeError(
+            f"installed Transformers Qwen architecture changed: actual={actual} expected={expected}"
+        )
+    return {**actual, "lora_trainable_parameters": lora_parameters}
+
+
 def validate_data(
     config: dict[str, object], processor: object, *, full_hashes: bool
 ) -> dict[str, object]:
@@ -291,6 +352,7 @@ def validate_real_sanity_files(config: dict[str, object]) -> dict[str, object]:
 def run_preflight(config_path: Path, *, full_hashes: bool) -> dict[str, object]:
     config, config_sha = load_config(config_path)
     validate_contract(config)
+    software = validate_software_runtime(config)
     os.environ.update(HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1")
     from transformers import AutoProcessor
 
@@ -309,7 +371,11 @@ def run_preflight(config_path: Path, *, full_hashes: bool) -> dict[str, object]:
         "schema_version": 1,
         "status": "pass",
         "config_sha256": config_sha,
+        "software": software,
         "model": validate_model_inventory(config, full_hashes=full_hashes),
+        "meta_architecture": (
+            validate_meta_architecture(config) if full_hashes else {"performed": False}
+        ),
         "data": validate_data(config, processor, full_hashes=full_hashes),
         "real_sanity": validate_real_sanity_files(config),
     }

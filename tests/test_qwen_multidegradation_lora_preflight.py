@@ -9,6 +9,8 @@ from smoke.qwen_multidegradation_lora_preflight import (
     load_config,
     validate_contract,
     validate_model_inventory,
+    validate_meta_architecture,
+    validate_software_runtime,
 )
 
 
@@ -20,6 +22,7 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
 
     def test_static_contract_and_inventory(self):
         validate_contract(self.config)
+        self.assertEqual(validate_software_runtime(self.config)["transformers"], "5.14.1")
         result = validate_model_inventory(self.config, full_hashes=False)
         self.assertEqual(result["revision"], "cc594898137f460bfe9f0759e9844b3ce807cfb5")
 
@@ -42,6 +45,12 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
                 training["micro_batch_size_per_rank"] * world * accumulation,
                 training["global_batch_size"],
             )
+
+    def test_installed_qwen_meta_architecture_matches_frozen_scope(self):
+        result = validate_meta_architecture(self.config)
+        self.assertEqual(result["matched_lora_module_count"], 160)
+        self.assertEqual(result["lora_trainable_parameters"], 11151360)
+        self.assertEqual(result["merger_trainable_parameters"], 44574464)
     def test_config_is_machine_serializable(self):
         json.dumps(self.config, sort_keys=True)
         self.assertEqual(len(self.sha), 64)

@@ -14,6 +14,9 @@
     "attention_implementation": "sdpa",
     "expected_visual_depth": 32,
     "expected_lora_modules": 160,
+    "expected_lora_trainable_parameters": 11151360,
+    "expected_merger_trainable_parameters": 44574464,
+    "expected_trainable_parameters_with_merger": 55725824,
     "lora_rank": 16,
     "lora_alpha": 32,
     "lora_dropout": 0.0,
@@ -116,7 +119,7 @@
     "minimum_gpu_memory_gib": 75,
     "required_python": "3.12.13",
     "required_pytorch": "2.7.0+cu128",
-    "required_transformers": "4.56.1",
+    "required_transformers": "5.14.1",
     "output_root": "checkpoints/qwen_multidegradation_lora_v1"
   }
 }
