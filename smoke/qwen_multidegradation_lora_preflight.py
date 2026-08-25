@@ -28,6 +28,12 @@ from lowlight_restoration.qwen_multidegradation import (
 )
 
 
+APPROVED_STATUSES = {
+    "approved_qwen_multidegradation_lora_frozen_merger_ablation",
+    "approved_qwen_multidegradation_lora_validation_correction",
+}
+
+
 def workspace_path(value: object) -> Path:
     if not isinstance(value, str) or not value or Path(value).is_absolute():
         raise ValueError(f"expected workspace-relative path: {value!r}")
@@ -39,8 +45,9 @@ def workspace_path(value: object) -> Path:
 def load_config(path: Path) -> tuple[dict[str, object], str]:
     raw = path.read_bytes()
     config = json.loads(raw)
-    if config.get("schema_version") != 1 or config.get("status") != (
-        "approved_qwen_multidegradation_lora_frozen_merger_ablation"
+    if (
+        config.get("schema_version") != 1
+        or config.get("status") not in APPROVED_STATUSES
     ):
         raise ValueError("Qwen multi-degradation LoRA config is not approved")
     return config, hashlib.sha256(raw).hexdigest()
@@ -80,6 +87,10 @@ def validate_software_runtime(config: dict[str, object]) -> dict[str, str]:
 
 
 def validate_contract(config: dict[str, object]) -> None:
+    correction = (
+        config.get("status")
+        == "approved_qwen_multidegradation_lora_validation_correction"
+    )
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
         "overfit", "distributed", "generation", "gate", "runtime",
@@ -166,8 +177,12 @@ def validate_contract(config: dict[str, object]) -> None:
     for key, expected in expected_prompt.items():
         if prompt.get(key) != expected:
             raise RuntimeError(f"frozen prompt changed: {key}")
-    if model.get("variants") != ["merger_frozen", "merger_trainable"]:
-        raise ValueError("merger ablation variants changed")
+    expected_variants = ["merger_trainable"] if correction else [
+        "merger_frozen",
+        "merger_trainable",
+    ]
+    if model.get("variants") != expected_variants:
+        raise ValueError("merger variants differ from the experiment phase")
     if int(model.get("expected_visual_depth", 0)) != 32 or int(model.get("expected_lora_modules", 0)) != 160:
         raise ValueError("Qwen visual-LoRA scope changed")
     supported_worlds = distributed.get("supported_world_sizes")
@@ -180,11 +195,73 @@ def validate_contract(config: dict[str, object]) -> None:
         if micro * accumulation * world != global_batch:
             raise ValueError(f"global batch does not match DDP semantics for world {world}")
     stages = data.get("curriculum")
-    if not isinstance(stages, list) or [stage.get("maximum_composition_size") for stage in stages] != [1, 2, 3]:
-        raise ValueError("curriculum is not progressive clean/single/double/triple")
-    steps = sum(int(stage["records"]) // global_batch for stage in stages)
+    expected_maxima = [3] if correction else [1, 2, 3]
+    if (
+        not isinstance(stages, list)
+        or [stage.get("maximum_composition_size") for stage in stages]
+        != expected_maxima
+    ):
+        raise ValueError("curriculum differs from the approved experiment phase")
+    default_epochs = int(training.get("epochs_per_curriculum_stage", 0))
+    if default_epochs <= 0:
+        raise ValueError("curriculum epochs must be positive")
+    steps = sum(
+        int(stage["records"])
+        // global_batch
+        * int(stage.get("epochs", default_epochs))
+        for stage in stages
+    )
     if steps != training.get("total_optimizer_steps"):
         raise ValueError("curriculum step count changed")
+    if correction:
+        if len(stages) != 1 or int(stages[0].get("epochs", 0)) != 2:
+            raise ValueError("correction must use two full-mixture consolidation epochs")
+        if int(stages[0].get("records", 0)) != int(
+            data["expected_split_records"]["train"]
+        ):
+            raise ValueError("correction must retain the complete training mixture")
+        initialization = config.get("initialization")
+        if not isinstance(initialization, dict):
+            raise ValueError("correction initialization is missing")
+        base_config_path = workspace_path(initialization.get("base_config"))
+        if sha256(base_config_path) != initialization.get("base_config_sha256"):
+            raise RuntimeError("correction base config changed")
+        base_config = json.loads(base_config_path.read_text())
+        if base_config.get("status") != (
+            "approved_qwen_multidegradation_lora_frozen_merger_ablation"
+        ):
+            raise RuntimeError("correction base is not the completed ablation")
+        adapter_path = workspace_path(initialization.get("adapter"))
+        if sha256(adapter_path) != initialization.get("adapter_sha256"):
+            raise RuntimeError("correction initialization adapter changed")
+        result_path = workspace_path(initialization.get("validation_result"))
+        if sha256(result_path) != initialization.get("validation_result_sha256"):
+            raise RuntimeError("correction source validation result changed")
+        result = json.loads(result_path.read_text())
+        if (
+            result.get("variant") != "merger_trainable"
+            or result.get("split") != "validation"
+            or result.get("config_sha256")
+            != initialization.get("base_config_sha256")
+            or result.get("adapter") != initialization.get("adapter")
+            or result.get("adapter_sha256") != initialization.get("adapter_sha256")
+        ):
+            raise RuntimeError("correction initialization evidence is inconsistent")
+        overfit_path = workspace_path(initialization.get("overfit_result"))
+        if sha256(overfit_path) != initialization.get("overfit_result_sha256"):
+            raise RuntimeError("correction source overfit result changed")
+        overfit_result = json.loads(overfit_path.read_text())
+        overfit_metrics = overfit_result.get("metrics", {})
+        if (
+            overfit_result.get("status") != "passed"
+            or overfit_metrics.get("degradation_set_exact_match_rate") != 1.0
+            or overfit_metrics.get("combined_label_exact_match_rate") != 1.0
+            or overfit_metrics.get("severity_typed_accuracy") != 1.0
+        ):
+            raise RuntimeError("correction source did not pass the overfit gate")
+        fixed_test_path = initialization.get("base_fixed_test_result")
+        if fixed_test_path is not None and workspace_path(fixed_test_path).exists():
+            raise RuntimeError("base fixed test was accessed before correction selection")
     if runtime.get("supported_visible_devices") != {"0,1": 2, "0,1,2,3": 4}:
         raise ValueError("visible-device contract changed")
     if overfit.get("variant") != "merger_trainable":

@@ -55,6 +55,30 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
         json.dumps(self.config, sort_keys=True)
         self.assertEqual(len(self.sha), 64)
 
+    def test_validation_correction_is_hash_pinned_and_test_blind(self):
+        path = ROOT / "configs/qwen_multidegradation_lora_correction1_v1.json"
+        correction, correction_sha = load_config(path)
+        validate_contract(correction)
+        self.assertEqual(len(correction_sha), 64)
+        self.assertEqual(correction["model"]["variants"], ["merger_trainable"])
+        self.assertEqual(
+            correction["data"]["curriculum"],
+            [
+                {
+                    "name": "D_full_mixture_consolidation",
+                    "maximum_composition_size": 3,
+                    "records": 9600,
+                    "epochs": 2,
+                }
+            ],
+        )
+        self.assertFalse(
+            (
+                ROOT
+                / correction["initialization"]["base_fixed_test_result"]
+            ).exists()
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

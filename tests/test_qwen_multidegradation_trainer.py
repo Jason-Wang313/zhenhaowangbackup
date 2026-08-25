@@ -48,6 +48,28 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
             self.assertEqual(len(selected), stage["records"])
             prior = current
 
+    def test_correction_replays_the_complete_mixture_twice(self):
+        correction, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_lora_correction1_v1.json"
+        )
+        stage = correction["data"]["curriculum"][0]
+        first = stage_records(
+            self.records, stage, correction["training"]["seed"], epoch=0
+        )
+        second = stage_records(
+            self.records, stage, correction["training"]["seed"], epoch=1
+        )
+        self.assertEqual(len(first), 9600)
+        self.assertEqual(
+            {record["record_id"] for record in first},
+            {record["record_id"] for record in second},
+        )
+        self.assertNotEqual(
+            [record["record_id"] for record in first[:32]],
+            [record["record_id"] for record in second[:32]],
+        )
+        self.assertEqual(correction["training"]["total_optimizer_steps"], 600)
+
     def test_optimizer_uses_separate_merger_rate(self):
         model = TinyScope()
         optimizer = create_optimizer(model, self.config)

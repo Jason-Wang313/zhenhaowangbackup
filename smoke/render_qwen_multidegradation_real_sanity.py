@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.multidegradation_data import write_new_or_verify
+from smoke.qwen_multidegradation_lora_preflight import load_config, workspace_path
 
 
 def font(size: int) -> ImageFont.FreeTypeFont | ImageFont.ImageFont:
@@ -58,19 +59,25 @@ def render_sheet(records: list[dict[str, object]], expected: str) -> Image.Image
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input-only", action="store_true")
-    args = parser.parse_args()
-    manifest = json.loads(
-        (ROOT / "manifests/qwen_multidegradation_real_sanity_v3.json").read_text()
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=ROOT / "configs/qwen_multidegradation_lora_v1.json",
     )
+    args = parser.parse_args()
+    config, _ = load_config(args.config)
+    data = config["data"]
+    runtime = config["runtime"]
+    assert isinstance(data, dict) and isinstance(runtime, dict)
+    manifest = json.loads(workspace_path(data["real_sanity_manifest"]).read_text())
     if args.input_only:
         records = manifest["records"]
         output_root = ROOT / "reports/qwen_multidegradation_real_sanity_inputs_v3"
     else:
-        result = json.loads(
-            (ROOT / "checkpoints/qwen_multidegradation_lora_v1/real_sanity/predictions.json").read_text()
-        )
+        experiment_root = workspace_path(runtime["output_root"])
+        result = json.loads((experiment_root / "real_sanity/predictions.json").read_text())
         records = result["records"]
-        output_root = ROOT / "checkpoints/qwen_multidegradation_lora_v1/real_sanity/contact_sheets"
+        output_root = experiment_root / "real_sanity/contact_sheets"
     for expected in ("blur", "noise", "rain", "haze", "low_light"):
         subset = [record for record in records if record["expected_primary_type"] == expected]
         if len(subset) != 5:

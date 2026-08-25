@@ -342,7 +342,11 @@ def resume_stage(
 
 
 def stage_records(
-    records: Sequence[Mapping[str, object]], stage: Mapping[str, object], seed: int
+    records: Sequence[Mapping[str, object]],
+    stage: Mapping[str, object],
+    seed: int,
+    *,
+    epoch: int = 0,
 ) -> list[Mapping[str, object]]:
     selected = [
         record
@@ -350,7 +354,13 @@ def stage_records(
         if record["split"] == "train"
         and int(record["composition_size"]) <= int(stage["maximum_composition_size"])
     ]
-    selected.sort(key=lambda record: stable_digest(seed, stage["name"], record["record_id"]))
+    selected.sort(
+        key=lambda record: (
+            stable_digest(seed, stage["name"], record["record_id"])
+            if epoch == 0
+            else stable_digest(seed, stage["name"], epoch, record["record_id"])
+        )
+    )
     if len(selected) != int(stage["records"]):
         raise RuntimeError(f"stage record count changed: {stage['name']}")
     return selected
@@ -426,69 +436,103 @@ def train_variant(
     for stage_index, stage in enumerate(stages):
         if stage_index < completed_stages:
             continue
-        selected = stage_records(records, stage, int(training["seed"]))
-        stage_steps = len(selected) // global_batch
+        epochs = int(
+            stage.get(
+                "epochs", int(training["epochs_per_curriculum_stage"])
+            )
+        )
+        if epochs <= 0:
+            raise RuntimeError(f"stage epochs must be positive: {stage['name']}")
+        records_per_epoch = int(stage["records"])
+        steps_per_epoch = records_per_epoch // global_batch
+        stage_steps = steps_per_epoch * epochs
         stage_started = time.monotonic()
-        for stage_step in range(stage_steps):
-            global_records = selected[stage_step * global_batch : (stage_step + 1) * global_batch]
-            optimizer.zero_grad(set_to_none=True)
-            loss_value = torch.zeros((), dtype=torch.float32, device=device)
-            for accumulation_index in range(accumulation):
-                local_records = rank_microbatch(
-                    global_records,
-                    rank=rank,
-                    world=world,
-                    micro=micro,
-                    accumulation_index=accumulation_index,
-                )
-                images = open_images(local_records)
-                labels = [label_for(record) for record in local_records]
-                batch, _ = prepare_supervised_batch(processor, labels, images)
-                synchronization = (
-                    ddp.no_sync()
-                    if accumulation_index + 1 < accumulation
-                    else contextlib.nullcontext()
-                )
-                with synchronization:
-                    output_value = ddp(**move_batch(batch, device), use_cache=False)
-                    loss = output_value.loss
-                    if not torch.isfinite(loss):
-                        raise RuntimeError(f"non-finite Qwen loss at step {global_step + 1}")
-                    (loss / accumulation).backward()
-                loss_value += loss.detach().float() / accumulation
-            for name, parameter in model.named_parameters():
-                if parameter.requires_grad and parameter.grad is not None:
-                    gradient_seen.add(name)
-                elif not parameter.requires_grad and parameter.grad is not None:
-                    frozen_gradient_names.add(name)
-            grad_norm = torch.nn.utils.clip_grad_norm_(
-                [parameter for parameter in model.parameters() if parameter.requires_grad],
-                float(training["max_grad_norm"]),
+        for epoch in range(epochs):
+            selected = stage_records(
+                records, stage, int(training["seed"]), epoch=epoch
             )
-            global_step += 1
-            scale = learning_rate_scale(
-                global_step,
-                total_steps,
-                int(training["warmup_steps"]),
-                float(training["minimum_learning_rate_ratio"]),
-            )
-            for group in optimizer.param_groups:
-                base = float(training["merger_learning_rate"] if group["kind"] == "merger" else training["lora_learning_rate"])
-                group["lr"] = base * scale
-            optimizer.step()
-            dist.all_reduce(loss_value, op=dist.ReduceOp.SUM)
-            loss_value /= world
-            if rank == 0 and (global_step <= 5 or global_step % 10 == 0 or stage_step + 1 == stage_steps):
-                row = {
-                    "global_step": global_step,
-                    "stage": stage["name"],
-                    "stage_step": stage_step + 1,
-                    "loss": float(loss_value.item()),
-                    "grad_norm": float(grad_norm.detach().float().item()),
-                    "lora_learning_rate": float(optimizer.param_groups[0]["lr"]),
-                }
-                metrics.append(row)
-                print("QWEN_MULTIDEGRADATION_TRAIN " + json.dumps(row, sort_keys=True), flush=True)
+            for epoch_step in range(steps_per_epoch):
+                stage_step = epoch * steps_per_epoch + epoch_step
+                global_records = selected[
+                    epoch_step * global_batch : (epoch_step + 1) * global_batch
+                ]
+                optimizer.zero_grad(set_to_none=True)
+                loss_value = torch.zeros((), dtype=torch.float32, device=device)
+                for accumulation_index in range(accumulation):
+                    local_records = rank_microbatch(
+                        global_records,
+                        rank=rank,
+                        world=world,
+                        micro=micro,
+                        accumulation_index=accumulation_index,
+                    )
+                    images = open_images(local_records)
+                    labels = [label_for(record) for record in local_records]
+                    batch, _ = prepare_supervised_batch(processor, labels, images)
+                    synchronization = (
+                        ddp.no_sync()
+                        if accumulation_index + 1 < accumulation
+                        else contextlib.nullcontext()
+                    )
+                    with synchronization:
+                        output_value = ddp(**move_batch(batch, device), use_cache=False)
+                        loss = output_value.loss
+                        if not torch.isfinite(loss):
+                            raise RuntimeError(
+                                f"non-finite Qwen loss at step {global_step + 1}"
+                            )
+                        (loss / accumulation).backward()
+                    loss_value += loss.detach().float() / accumulation
+                for name, parameter in model.named_parameters():
+                    if parameter.requires_grad and parameter.grad is not None:
+                        gradient_seen.add(name)
+                    elif not parameter.requires_grad and parameter.grad is not None:
+                        frozen_gradient_names.add(name)
+                grad_norm = torch.nn.utils.clip_grad_norm_(
+                    [
+                        parameter
+                        for parameter in model.parameters()
+                        if parameter.requires_grad
+                    ],
+                    float(training["max_grad_norm"]),
+                )
+                global_step += 1
+                scale = learning_rate_scale(
+                    global_step,
+                    total_steps,
+                    int(training["warmup_steps"]),
+                    float(training["minimum_learning_rate_ratio"]),
+                )
+                for group in optimizer.param_groups:
+                    base = float(
+                        training["merger_learning_rate"]
+                        if group["kind"] == "merger"
+                        else training["lora_learning_rate"]
+                    )
+                    group["lr"] = base * scale
+                optimizer.step()
+                dist.all_reduce(loss_value, op=dist.ReduceOp.SUM)
+                loss_value /= world
+                if rank == 0 and (
+                    global_step <= 5
+                    or global_step % 10 == 0
+                    or stage_step + 1 == stage_steps
+                ):
+                    row = {
+                        "global_step": global_step,
+                        "stage": stage["name"],
+                        "stage_epoch": epoch + 1,
+                        "stage_step": stage_step + 1,
+                        "loss": float(loss_value.item()),
+                        "grad_norm": float(grad_norm.detach().float().item()),
+                        "lora_learning_rate": float(optimizer.param_groups[0]["lr"]),
+                    }
+                    metrics.append(row)
+                    print(
+                        "QWEN_MULTIDEGRADATION_TRAIN "
+                        + json.dumps(row, sort_keys=True),
+                        flush=True,
+                    )
         if rank == 0:
             publish_stage_checkpoint(
                 model,
@@ -676,6 +720,28 @@ def main() -> int:
             split = "test"
         else:
             output.mkdir(parents=True, exist_ok=True)
+            initialization_evidence = None
+            initialization = config.get("initialization")
+            if isinstance(initialization, Mapping):
+                adapter = workspace_path(initialization["adapter"])
+                if sha256(adapter) != initialization["adapter_sha256"]:
+                    raise RuntimeError("initialization adapter hash changed")
+                load_qwen_adapter(model, adapter)
+                initialization_evidence = {
+                    "adapter": initialization["adapter"],
+                    "adapter_sha256": initialization["adapter_sha256"],
+                    "validation_result": initialization["validation_result"],
+                    "validation_result_sha256": initialization[
+                        "validation_result_sha256"
+                    ],
+                    "optimizer": "fresh",
+                }
+                if rank == 0:
+                    print(
+                        "QWEN_MULTIDEGRADATION_INITIALIZATION_PASS "
+                        + json.dumps(initialization_evidence, sort_keys=True),
+                        flush=True,
+                    )
             training_result = train_variant(
                 model,
                 processor,
@@ -690,6 +756,8 @@ def main() -> int:
                 local_rank=local_rank,
                 device=device,
             )
+            if initialization_evidence is not None:
+                training_result["initialization"] = initialization_evidence
             split = "validation"
         rows, metrics = evaluate_split(
             model,

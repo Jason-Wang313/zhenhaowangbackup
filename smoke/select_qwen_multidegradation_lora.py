@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -68,8 +69,14 @@ def select(config_path: Path) -> dict[str, object]:
 
 
 def main() -> int:
-    config = ROOT / "configs/qwen_multidegradation_lora_v1.json"
-    return 0 if select(config)["selected_variant"] else 2
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=ROOT / "configs/qwen_multidegradation_lora_v1.json",
+    )
+    args = parser.parse_args()
+    return 0 if select(args.config)["selected_variant"] else 2
 
 
 if __name__ == "__main__":
