@@ -39,9 +39,16 @@ from lowlight_restoration.qwen_lora import (
     save_qwen_adapter,
 )
 from lowlight_restoration.qwen_multidegradation import (
+    DEGRADATIONS,
+    FIXED_FIVE_SLOT_SCHEMA,
+    PER_TYPE_DIALOGUE_SCHEMA,
+    VARIABLE_ACTIVE_SCHEMA,
     DegradationLabel,
+    aggregate_per_type_responses,
     evaluate_outputs,
     make_label,
+    per_type_prompt_text,
+    prepare_per_type_supervised_batch,
     prepare_supervised_batch,
     prompt_text,
 )
@@ -449,6 +456,8 @@ def stage_records(
     seed: int,
     *,
     epoch: int = 0,
+    target_schema: str = VARIABLE_ACTIVE_SCHEMA,
+    global_batch_size: int | None = None,
 ) -> list[Mapping[str, object]]:
     selected = [
         record
@@ -463,6 +472,39 @@ def stage_records(
             else stable_digest(seed, stage["name"], epoch, record["record_id"])
         )
     )
+    if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+        source_records = int(stage.get("source_records", 0))
+        if len(selected) != source_records:
+            raise RuntimeError(f"stage source record count changed: {stage['name']}")
+        if global_batch_size is None or global_batch_size <= 0:
+            raise ValueError("per-type dialogue stages require a global batch size")
+        if global_batch_size % len(DEGRADATIONS):
+            raise ValueError("per-type global batch must be divisible by five")
+        images_per_batch = global_batch_size // len(DEGRADATIONS)
+        if len(selected) % images_per_batch:
+            raise ValueError("source records do not fill complete type-balanced batches")
+        dialogues: list[Mapping[str, object]] = []
+        for offset in range(0, len(selected), images_per_batch):
+            chunk = selected[offset : offset + images_per_batch]
+            units = [
+                {**record, "query_degradation": degradation}
+                for record in chunk
+                for degradation in DEGRADATIONS
+            ]
+            units.sort(
+                key=lambda record: stable_digest(
+                    seed,
+                    stage["name"],
+                    epoch,
+                    "dialogue",
+                    record["record_id"],
+                    record["query_degradation"],
+                )
+            )
+            dialogues.extend(units)
+        if len(dialogues) != int(stage["records"]):
+            raise RuntimeError(f"stage dialogue record count changed: {stage['name']}")
+        return dialogues
     if len(selected) != int(stage["records"]):
         raise RuntimeError(f"stage record count changed: {stage['name']}")
     return selected
@@ -533,7 +575,11 @@ def train_variant(
     gradient_seen: set[str] = set()
     frozen_gradient_names: set[str] = set()
     metrics: list[dict[str, object]] = []
+    epoch_summaries: list[dict[str, object]] = []
     started = time.monotonic()
+    prompt_config = config["prompt"]
+    assert isinstance(prompt_config, Mapping)
+    target_schema = str(prompt_config["target_schema"])
 
     for stage_index, stage in enumerate(stages):
         if stage_index < completed_stages:
@@ -551,8 +597,14 @@ def train_variant(
         stage_started = time.monotonic()
         for epoch in range(epochs):
             selected = stage_records(
-                records, stage, int(training["seed"]), epoch=epoch
+                records,
+                stage,
+                int(training["seed"]),
+                epoch=epoch,
+                target_schema=target_schema,
+                global_batch_size=global_batch,
             )
+            epoch_losses: list[float] = []
             for epoch_step in range(steps_per_epoch):
                 stage_step = epoch * steps_per_epoch + epoch_step
                 global_records = selected[
@@ -570,14 +622,20 @@ def train_variant(
                     )
                     images = open_images(local_records)
                     labels = [label_for(record) for record in local_records]
-                    prompt_config = config["prompt"]
-                    assert isinstance(prompt_config, Mapping)
-                    batch, _ = prepare_supervised_batch(
-                        processor,
-                        labels,
-                        images,
-                        str(prompt_config["target_schema"]),
-                    )
+                    if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+                        batch, _ = prepare_per_type_supervised_batch(
+                            processor,
+                            labels,
+                            images,
+                            [str(record["query_degradation"]) for record in local_records],
+                        )
+                    else:
+                        batch, _ = prepare_supervised_batch(
+                            processor,
+                            labels,
+                            images,
+                            target_schema,
+                        )
                     synchronization = (
                         ddp.no_sync()
                         if accumulation_index + 1 < accumulation
@@ -629,6 +687,7 @@ def train_variant(
                 optimizer.step()
                 dist.all_reduce(loss_value, op=dist.ReduceOp.SUM)
                 loss_value /= world
+                epoch_losses.append(float(loss_value.item()))
                 if rank == 0 and (
                     global_step <= 5
                     or global_step % 10 == 0
@@ -649,6 +708,27 @@ def train_variant(
                         + json.dumps(row, sort_keys=True),
                         flush=True,
                     )
+            window = max(1, len(epoch_losses) // 5)
+            epoch_summary = {
+                "stage": stage["name"],
+                "stage_epoch": epoch + 1,
+                "optimizer_steps": len(epoch_losses),
+                "dialogue_presentations": len(epoch_losses) * global_batch,
+                "mean_loss": sum(epoch_losses) / len(epoch_losses),
+                "first_window_mean_loss": sum(epoch_losses[:window]) / window,
+                "last_window_mean_loss": sum(epoch_losses[-window:]) / window,
+                "loss_still_descending": (
+                    sum(epoch_losses[-window:]) / window
+                    < sum(epoch_losses[:window]) / window
+                ),
+            }
+            epoch_summaries.append(epoch_summary)
+            if rank == 0:
+                print(
+                    "QWEN_MULTIDEGRADATION_EPOCH_SUMMARY "
+                    + json.dumps(epoch_summary, sort_keys=True),
+                    flush=True,
+                )
         if rank == 0:
             publish_stage_checkpoint(
                 model,
@@ -689,7 +769,113 @@ def train_variant(
         "gradient_audit_pass": audit_pass,
         "rank_gradient_audits": audits,
         "training_metrics": metrics,
+        "epoch_summaries": epoch_summaries,
+        "dialogue_presentations": global_step * global_batch,
     }
+
+
+def generate_per_type_outputs(
+    model: torch.nn.Module,
+    processor: Any,
+    records: Sequence[Mapping[str, object]],
+    config: Mapping[str, object],
+    *,
+    rank: int,
+    world: int,
+    device: torch.device,
+) -> tuple[list[str], list[dict[str, dict[str, object]]]]:
+    """Ask Qwen five separate questions and aggregate its decoder answers."""
+
+    generation = config["generation"]
+    assert isinstance(generation, Mapping)
+    model.eval()
+    model.gradient_checkpointing_disable()
+    model.config.use_cache = True
+    indexed = [
+        (record_index, degradation, record)
+        for record_index, record in enumerate(records)
+        for degradation in DEGRADATIONS
+    ]
+    local_indexed = [
+        item for flat_index, item in enumerate(indexed) if flat_index % world == rank
+    ]
+    local: list[tuple[int, str, str]] = []
+    batch_size = int(generation["batch_size_per_rank"])
+    original_padding_side = processor.tokenizer.padding_side
+    processor.tokenizer.padding_side = "left"
+    try:
+        for offset in range(0, len(local_indexed), batch_size):
+            chunk = local_indexed[offset : offset + batch_size]
+            images = open_images([record for _, _, record in chunk])
+            encoded = processor(
+                text=[
+                    per_type_prompt_text(processor, degradation)
+                    for _, degradation, _ in chunk
+                ],
+                images=images,
+                padding=True,
+                return_tensors="pt",
+            )
+            inputs = {
+                key: value.to(device)
+                for key, value in encoded.items()
+                if isinstance(value, torch.Tensor)
+            }
+            input_length = int(inputs["input_ids"].shape[1])
+            with torch.no_grad():
+                generated = model.generate(
+                    **inputs,
+                    do_sample=False,
+                    max_new_tokens=int(generation["max_new_tokens"]),
+                    use_cache=True,
+                )
+            for row, (record_index, degradation, _) in enumerate(chunk):
+                raw = processor.tokenizer.decode(
+                    generated[row, input_length:],
+                    skip_special_tokens=True,
+                    clean_up_tokenization_spaces=False,
+                ).strip()
+                local.append((record_index, degradation, raw))
+            if (offset // batch_size + 1) % 25 == 0 or offset + batch_size >= len(local_indexed):
+                print(
+                    f"QWEN_MULTIDEGRADATION_PER_TYPE_GENERATE rank={rank} "
+                    f"completed={min(offset+batch_size,len(local_indexed))}/{len(local_indexed)}",
+                    flush=True,
+                )
+    finally:
+        processor.tokenizer.padding_side = original_padding_side
+    gathered: list[object | None] = [None] * world
+    dist.all_gather_object(gathered, local)
+    flattened = [
+        item
+        for rank_items in gathered
+        if isinstance(rank_items, list)
+        for item in rank_items
+    ]
+    expected_count = len(records) * len(DEGRADATIONS)
+    identities = [(index, degradation) for index, degradation, _ in flattened]
+    expected_identities = [
+        (index, degradation)
+        for index in range(len(records))
+        for degradation in DEGRADATIONS
+    ]
+    if len(flattened) != expected_count or sorted(identities) != sorted(expected_identities):
+        raise RuntimeError("distributed per-type Qwen generation is incomplete")
+    raw_lookup = {
+        (index, degradation): raw
+        for index, degradation, raw in flattened
+    }
+    aggregated: list[str] = []
+    details: list[dict[str, dict[str, object]]] = []
+    for index in range(len(records)):
+        raw_by_type = {
+            degradation: raw_lookup[(index, degradation)]
+            for degradation in DEGRADATIONS
+        }
+        serialized, record_details = aggregate_per_type_responses(raw_by_type)
+        aggregated.append(serialized if serialized is not None else "INVALID_PER_TYPE_DIALOGUE")
+        details.append(record_details)
+    return aggregated, details
 
 
 def generate_outputs(
@@ -710,6 +896,17 @@ def generate_outputs(
     prompt_config = config["prompt"]
     assert isinstance(prompt_config, Mapping)
     target_schema = str(prompt_config["target_schema"])
+    if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+        aggregated, _ = generate_per_type_outputs(
+            model,
+            processor,
+            records,
+            config,
+            rank=rank,
+            world=world,
+            device=device,
+        )
+        return aggregated
     prompt = prompt_text(processor, target_schema)
     indexed = [(index, record) for index, record in enumerate(records) if index % world == rank]
     local: list[tuple[int, str]] = []
@@ -758,7 +955,7 @@ def gate_checks(metrics: Mapping[str, object], config: Mapping[str, object], gra
     gate = config["gate"]
     assert isinstance(gate, Mapping)
     triple = metrics["by_composition_size"]["3"]
-    return {
+    checks = {
         "valid_structure": float(metrics["valid_structured_output_rate"]) >= float(gate["minimum_valid_structured_output_rate"]),
         "type_macro_f1": float(metrics["type_macro_f1"]) >= float(gate["minimum_type_macro_f1"]),
         "type_micro_f1": float(metrics["type_micro_f1"]) >= float(gate["minimum_type_micro_f1"]),
@@ -769,6 +966,17 @@ def gate_checks(metrics: Mapping[str, object], config: Mapping[str, object], gra
         "triple_set_exact": float(triple["degradation_set_exact_match_rate"]) >= float(gate["minimum_triple_degradation_set_exact_match_rate"]),
         "gradient_scope": gradient_pass,
     }
+    if "minimum_per_type_valid_response_rate" in gate:
+        checks["per_type_valid_response"] = (
+            float(metrics["per_type_valid_response_rate"])
+            >= float(gate["minimum_per_type_valid_response_rate"])
+        )
+    if "minimum_per_type_level_accuracy" in gate:
+        checks["per_type_level_accuracy"] = (
+            float(metrics["per_type_level_accuracy"])
+            >= float(gate["minimum_per_type_level_accuracy"])
+        )
+    return checks
 
 
 def evaluate_split(
@@ -783,17 +991,81 @@ def evaluate_split(
     device: torch.device,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
     records = [record for record in all_records if record["split"] == split]
-    raw = generate_outputs(model, processor, records, config, rank=rank, world=world, device=device)
     prompt_config = config["prompt"]
     assert isinstance(prompt_config, Mapping)
+    target_schema = str(prompt_config["target_schema"])
+    per_type_details: list[dict[str, dict[str, object]]] | None = None
+    if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+        raw, per_type_details = generate_per_type_outputs(
+            model,
+            processor,
+            records,
+            config,
+            rank=rank,
+            world=world,
+            device=device,
+        )
+        evaluation_schema = FIXED_FIVE_SLOT_SCHEMA
+    else:
+        raw = generate_outputs(
+            model, processor, records, config, rank=rank, world=world, device=device
+        )
+        evaluation_schema = target_schema
     rows, metrics = evaluate_outputs(
         [label_for(record) for record in records],
         raw,
-        target_schema=str(prompt_config["target_schema"]),
+        target_schema=evaluation_schema,
     )
     for row, record in zip(rows, records, strict=True):
         row["record_id"] = record["record_id"]
         row["source_id"] = record["source_id"]
+    if per_type_details is not None:
+        total = valid = correct = active_total = active_correct = 0
+        absent_total = absent_correct = 0
+        per_type = {
+            degradation: {"samples": 0, "valid": 0, "correct": 0}
+            for degradation in DEGRADATIONS
+        }
+        for row, record, details in zip(
+            rows, records, per_type_details, strict=True
+        ):
+            truth = label_for(record)
+            row["per_type_responses"] = details
+            for degradation in DEGRADATIONS:
+                true_level = truth.level_map.get(degradation, 1)
+                detail = details[degradation]
+                predicted_level = detail["predicted_level"]
+                is_valid = predicted_level is not None
+                is_correct = predicted_level == true_level
+                total += 1
+                valid += int(is_valid)
+                correct += int(is_correct)
+                active = true_level > 1
+                active_total += int(active)
+                active_correct += int(active and is_correct)
+                absent_total += int(not active)
+                absent_correct += int(not active and is_correct)
+                counts = per_type[degradation]
+                counts["samples"] += 1
+                counts["valid"] += int(is_valid)
+                counts["correct"] += int(is_correct)
+        metrics.update(
+            {
+                "per_type_query_count": total,
+                "per_type_valid_response_rate": valid / total,
+                "per_type_level_accuracy": correct / total,
+                "per_type_active_level_accuracy": active_correct / active_total,
+                "per_type_absent_level_accuracy": absent_correct / absent_total,
+                "per_type_dialogue": {
+                    degradation: {
+                        **counts,
+                        "valid_response_rate": counts["valid"] / counts["samples"],
+                        "level_accuracy": counts["correct"] / counts["samples"],
+                    }
+                    for degradation, counts in per_type.items()
+                },
+            }
+        )
     return rows, metrics
 
 

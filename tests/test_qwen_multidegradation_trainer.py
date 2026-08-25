@@ -14,6 +14,8 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     stage_records,
     training_loss,
 )
+from lowlight_restoration.qwen_multidegradation import DEGRADATIONS
+from smoke.train_qwen_multidegradation_overfit_ddp import expand_per_type_records
 from smoke.qwen_multidegradation_lora_preflight import ROOT, load_config
 from lowlight_restoration.multidegradation_data import read_jsonl
 from smoke.train_qwen_multidegradation_overfit_ddp import select_overfit_records
@@ -109,6 +111,50 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         )
         self.assertNotEqual(first[:32], second[:32])
         self.assertEqual(correction["training"]["total_optimizer_steps"], 600)
+
+    def test_per_type_retraining_covers_every_image_type_and_balances_batches(self):
+        config, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_per_type_rank32_v1.json"
+        )
+        stage = config["data"]["curriculum"][0]
+        dialogues = stage_records(
+            self.records,
+            stage,
+            config["training"]["seed"],
+            target_schema=config["prompt"]["target_schema"],
+            global_batch_size=config["training"]["global_batch_size"],
+        )
+        self.assertEqual(len(dialogues), 48000)
+        self.assertEqual(
+            len(
+                {
+                    (record["record_id"], record["query_degradation"])
+                    for record in dialogues
+                }
+            ),
+            48000,
+        )
+        for offset in range(0, len(dialogues), 100):
+            batch = dialogues[offset : offset + 100]
+            self.assertEqual(
+                {
+                    name: sum(record["query_degradation"] == name for record in batch)
+                    for name in DEGRADATIONS
+                },
+                {name: 20 for name in DEGRADATIONS},
+            )
+
+    def test_per_type_overfit_expansion_asks_all_five_questions(self):
+        selected = select_overfit_records(self.records, seed=2026082506)
+        dialogues = expand_per_type_records(selected, seed=2026082506)
+        self.assertEqual(len(dialogues), 160)
+        self.assertEqual(
+            {
+                name: sum(record["query_degradation"] == name for record in dialogues)
+                for name in DEGRADATIONS
+            },
+            {name: 32 for name in DEGRADATIONS},
+        )
 
     def test_semantic_loss_only_upweights_frozen_target_ids(self):
         labels = torch.tensor([[-100, 1, 2, 3]])

@@ -26,7 +26,13 @@ from lowlight_restoration.multidegradation_data import (
     stable_digest,
 )
 from lowlight_restoration.qwen_lora import save_qwen_adapter
-from lowlight_restoration.qwen_multidegradation import evaluate_outputs
+from lowlight_restoration.qwen_multidegradation import (
+    DEGRADATIONS,
+    FIXED_FIVE_SLOT_SCHEMA,
+    PER_TYPE_DIALOGUE_SCHEMA,
+    evaluate_outputs,
+    prepare_per_type_supervised_batch,
+)
 from smoke.qwen_multidegradation_lora_preflight import (
     accumulation_steps_for_world,
     load_config,
@@ -38,6 +44,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     atomic_json,
     broadcast_rank0,
     create_optimizer,
+    generate_per_type_outputs,
     generate_outputs,
     label_for,
     load_model,
@@ -49,6 +56,35 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     validate_runtime,
 )
 from lowlight_restoration.qwen_multidegradation import prepare_supervised_batch
+
+
+def overfit_accumulation_steps(overfit: Mapping[str, object], world: int) -> int:
+    mapping = overfit.get("gradient_accumulation_steps_by_world_size")
+    if not isinstance(mapping, Mapping) or str(world) not in mapping:
+        raise ValueError(f"no overfit accumulation contract for world size {world}")
+    steps = int(mapping[str(world)])
+    if steps <= 0:
+        raise ValueError("overfit gradient accumulation must be positive")
+    return steps
+
+
+def expand_per_type_records(
+    records: Sequence[Mapping[str, object]], *, seed: int
+) -> list[Mapping[str, object]]:
+    dialogues = [
+        {**record, "query_degradation": degradation}
+        for record in records
+        for degradation in DEGRADATIONS
+    ]
+    dialogues.sort(
+        key=lambda record: stable_digest(
+            seed,
+            "overfit_per_type",
+            record["record_id"],
+            record["query_degradation"],
+        )
+    )
+    return dialogues
 
 
 def select_overfit_records(
@@ -105,6 +141,7 @@ def probe_loss(
     world: int,
     micro: int,
     accumulation: int,
+    target_schema: str,
 ) -> float:
     model.eval()
     loss = torch.zeros((), dtype=torch.float32, device=device)
@@ -118,7 +155,15 @@ def probe_loss(
         )
         images = open_images(local_records)
         labels = [label_for(record) for record in local_records]
-        batch, _ = prepare_supervised_batch(processor, labels, images)
+        if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+            batch, _ = prepare_per_type_supervised_batch(
+                processor,
+                labels,
+                images,
+                [str(record["query_degradation"]) for record in local_records],
+            )
+        else:
+            batch, _ = prepare_supervised_batch(processor, labels, images)
         with torch.no_grad():
             loss += (
                 model(**move_batch(batch, device), use_cache=False).loss.detach().float()
@@ -141,7 +186,15 @@ def main() -> int:
     runtime = config["runtime"]
     data = config["data"]
     assert all(isinstance(item, dict) for item in (training, overfit, runtime, data))
-    output = workspace_path(runtime["output_root"]).with_name("qwen_multidegradation_lora_overfit_v1")
+    output = workspace_path(
+        overfit.get(
+            "output_root",
+            workspace_path(runtime["output_root"])
+            .with_name("qwen_multidegradation_lora_overfit_v1")
+            .relative_to(ROOT)
+            .as_posix(),
+        )
+    )
     result_path = output / "result.json"
     rank = world = local_rank = -1
     ready = False
@@ -161,6 +214,14 @@ def main() -> int:
         seed_everything(int(training["seed"]))
         records = read_jsonl(workspace_path(data["manifest"]))
         selected = select_overfit_records(records, seed=int(overfit["selection_seed"]))
+        prompt = config["prompt"]
+        assert isinstance(prompt, Mapping)
+        target_schema = str(prompt["target_schema"])
+        training_records = (
+            expand_per_type_records(selected, seed=int(overfit["selection_seed"]))
+            if target_schema == PER_TYPE_DIALOGUE_SCHEMA
+            else list(selected)
+        )
         bundle_sha = __import__("hashlib").sha256(
             json.dumps([record["record_id"] for record in selected], separators=(",", ":")).encode()
         ).hexdigest()
@@ -178,22 +239,32 @@ def main() -> int:
         )
         optimizer = create_optimizer(model, config)
         for group in optimizer.param_groups:
-            group["lr"] = float(
-                overfit["merger_learning_rate"]
-                if group["kind"] == "merger"
-                else overfit["lora_learning_rate"]
-            )
-        micro = int(training["micro_batch_size_per_rank"])
-        accumulation = accumulation_steps_for_world(config, world)
+            rate_key = {
+                "lora": "lora_learning_rate",
+                "merger": "merger_learning_rate",
+                "language_lora": "language_lora_learning_rate",
+            }[group["kind"]]
+            group["lr"] = float(overfit.get(rate_key, overfit["lora_learning_rate"]))
+        micro = int(overfit.get("micro_batch_size_per_rank", training["micro_batch_size_per_rank"]))
+        accumulation = (
+            overfit_accumulation_steps(overfit, world)
+            if "gradient_accumulation_steps_by_world_size" in overfit
+            else accumulation_steps_for_world(config, world)
+        )
+        overfit_global_batch = micro * world * accumulation
+        if len(training_records) < overfit_global_batch:
+            raise RuntimeError("overfit dialogue bundle is smaller than its global batch")
+        probe_records = training_records[:overfit_global_batch]
         initial_loss = probe_loss(
             model,
             processor,
-            selected,
+            probe_records,
             device,
             rank=rank,
             world=world,
             micro=micro,
             accumulation=accumulation,
+            target_schema=target_schema,
         )
         trainable = {name for name, parameter in model.named_parameters() if parameter.requires_grad}
         gradient_seen: set[str] = set()
@@ -202,13 +273,14 @@ def main() -> int:
         started = time.monotonic()
         steps = int(overfit["total_optimizer_steps"])
         for step in range(1, steps + 1):
-            shift = (step * micro) % len(selected)
-            ordered = selected[shift:] + selected[:shift]
+            shift = (step * overfit_global_batch) % len(training_records)
+            ordered = training_records[shift:] + training_records[:shift]
+            global_records = ordered[:overfit_global_batch]
             optimizer.zero_grad(set_to_none=True)
             reduced = torch.zeros((), dtype=torch.float32, device=device)
             for accumulation_index in range(accumulation):
                 local_records = rank_microbatch(
-                    ordered,
+                    global_records,
                     rank=rank,
                     world=world,
                     micro=micro,
@@ -216,7 +288,15 @@ def main() -> int:
                 )
                 images = open_images(local_records)
                 labels = [label_for(record) for record in local_records]
-                batch, _ = prepare_supervised_batch(processor, labels, images)
+                if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+                    batch, _ = prepare_per_type_supervised_batch(
+                        processor,
+                        labels,
+                        images,
+                        [str(record["query_degradation"]) for record in local_records],
+                    )
+                else:
+                    batch, _ = prepare_supervised_batch(processor, labels, images)
                 synchronization = (
                     ddp.no_sync()
                     if accumulation_index + 1 < accumulation
@@ -247,17 +327,39 @@ def main() -> int:
         final_loss = probe_loss(
             model,
             processor,
-            selected,
+            probe_records,
             device,
             rank=rank,
             world=world,
             micro=micro,
             accumulation=accumulation,
+            target_schema=target_schema,
         )
-        raw = generate_outputs(model, processor, selected, config, rank=rank, world=world, device=device)
-        rows, metrics = evaluate_outputs([label_for(record) for record in selected], raw)
+        if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+            raw, response_details = generate_per_type_outputs(
+                model,
+                processor,
+                selected,
+                config,
+                rank=rank,
+                world=world,
+                device=device,
+            )
+            evaluation_schema = FIXED_FIVE_SLOT_SCHEMA
+        else:
+            raw = generate_outputs(model, processor, selected, config, rank=rank, world=world, device=device)
+            response_details = None
+            evaluation_schema = target_schema
+        rows, metrics = evaluate_outputs(
+            [label_for(record) for record in selected],
+            raw,
+            target_schema=evaluation_schema,
+        )
         for row, record in zip(rows, selected, strict=True):
             row["record_id"] = record["record_id"]
+        if response_details is not None:
+            for row, details in zip(rows, response_details, strict=True):
+                row["per_type_responses"] = details
         local_audit = not frozen_gradients and gradient_seen == trainable
         audit_tensor = torch.tensor(int(local_audit), dtype=torch.int32, device=device)
         dist.all_reduce(audit_tensor, op=dist.ReduceOp.MIN)
@@ -296,6 +398,8 @@ def main() -> int:
                 "scope": scope,
                 "training_metrics": losses,
                 "elapsed_seconds": time.monotonic() - started,
+                "dialogue_records": len(training_records),
+                "effective_global_batch_size": overfit_global_batch,
                 "adapter_sha256": adapter_summary["adapter_sha256"],
                 "predictions_sha256": sha256(predictions),
                 "runtime": runtime_evidence,

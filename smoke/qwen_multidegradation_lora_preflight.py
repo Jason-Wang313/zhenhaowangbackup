@@ -21,12 +21,18 @@ sys.path.insert(0, str(ROOT))
 from lowlight_restoration.multidegradation_data import read_jsonl, sha256
 from lowlight_restoration.qwen_lora import configure_qwen_visual_lora
 from lowlight_restoration.qwen_multidegradation import (
+    DEGRADATIONS,
     DEGRADATION_QUESTION,
     FIXED_FIVE_SLOT_QUESTION,
     FIXED_FIVE_SLOT_SCHEMA,
+    PER_TYPE_DIALOGUE_SCHEMA,
+    PER_TYPE_QUESTION_TEMPLATE,
+    PER_TYPE_RESPONSE_TEMPLATE,
+    PER_TYPE_SYSTEM_PROMPT,
     SYSTEM_PROMPT,
     VARIABLE_ACTIVE_SCHEMA,
     make_label,
+    prepare_per_type_supervised_batch,
     prepare_supervised_batch,
 )
 
@@ -37,6 +43,7 @@ APPROVED_STATUSES = {
     "approved_qwen_multidegradation_lora_semantic_loss_correction",
     "approved_qwen_multidegradation_lora_crossmodal_decoder_correction",
     "approved_qwen_multidegradation_lora_fixed_slot_schema_correction",
+    "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -111,6 +118,10 @@ def validate_contract(config: dict[str, object]) -> None:
     fixed_slot_correction = (
         status
         == "approved_qwen_multidegradation_lora_fixed_slot_schema_correction"
+    )
+    per_type_dialogue = (
+        status
+        == "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining"
     )
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
@@ -192,15 +203,36 @@ def validate_contract(config: dict[str, object]) -> None:
         ):
             raise RuntimeError("an official SIDD member does not bind to real-sanity v3")
     expected_schema = (
-        FIXED_FIVE_SLOT_SCHEMA if fixed_slot_correction else VARIABLE_ACTIVE_SCHEMA
+        PER_TYPE_DIALOGUE_SCHEMA
+        if per_type_dialogue
+        else FIXED_FIVE_SLOT_SCHEMA
+        if fixed_slot_correction
+        else VARIABLE_ACTIVE_SCHEMA
     )
-    expected_question = (
-        FIXED_FIVE_SLOT_QUESTION if fixed_slot_correction else DEGRADATION_QUESTION
-    )
-    expected_prompt = {
-        "system_prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
-        "degradation_question_sha256": hashlib.sha256(expected_question.encode()).hexdigest(),
-    }
+    if per_type_dialogue:
+        expected_prompt = {
+            "system_prompt_sha256": hashlib.sha256(
+                PER_TYPE_SYSTEM_PROMPT.encode()
+            ).hexdigest(),
+            "degradation_question_template_sha256": hashlib.sha256(
+                PER_TYPE_QUESTION_TEMPLATE.encode()
+            ).hexdigest(),
+            "response_template_sha256": hashlib.sha256(
+                PER_TYPE_RESPONSE_TEMPLATE.encode()
+            ).hexdigest(),
+        }
+        if prompt.get("query_degradations") != list(DEGRADATIONS):
+            raise RuntimeError("per-type query order changed")
+    else:
+        expected_question = (
+            FIXED_FIVE_SLOT_QUESTION
+            if fixed_slot_correction
+            else DEGRADATION_QUESTION
+        )
+        expected_prompt = {
+            "system_prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
+            "degradation_question_sha256": hashlib.sha256(expected_question.encode()).hexdigest(),
+        }
     for key, expected in expected_prompt.items():
         if prompt.get(key) != expected:
             raise RuntimeError(f"frozen prompt changed: {key}")
@@ -212,13 +244,23 @@ def validate_contract(config: dict[str, object]) -> None:
     ]
     if model.get("variants") != expected_variants:
         raise ValueError("merger variants differ from the experiment phase")
-    expected_modules = 272 if (decoder_correction or fixed_slot_correction) else 160
+    expected_modules = 272 if (decoder_correction or fixed_slot_correction or per_type_dialogue) else 160
     if (
         int(model.get("expected_visual_depth", 0)) != 32
         or int(model.get("expected_lora_modules", 0)) != expected_modules
     ):
         raise ValueError("Qwen visual-LoRA scope changed")
-    if decoder_correction or fixed_slot_correction:
+    if per_type_dialogue:
+        if (
+            int(model.get("expected_visual_lora_modules", 0)) != 160
+            or int(model.get("expected_language_lora_modules", 0)) != 112
+            or int(model.get("lora_rank", 0)) != 32
+            or float(model.get("lora_alpha", 0.0)) != 64.0
+            or int(model.get("language_lora_rank", 0)) != 32
+            or float(model.get("language_lora_alpha", 0.0)) != 64.0
+        ):
+            raise ValueError("advisor-directed rank-32 Qwen LoRA scope changed")
+    elif decoder_correction or fixed_slot_correction:
         if (
             int(model.get("expected_visual_lora_modules", 0)) != 160
             or int(model.get("expected_language_lora_modules", 0)) != 112
@@ -238,7 +280,7 @@ def validate_contract(config: dict[str, object]) -> None:
         if micro * accumulation * world != global_batch:
             raise ValueError(f"global batch does not match DDP semantics for world {world}")
     stages = data.get("curriculum")
-    expected_maxima = [3] if correction else [1, 2, 3]
+    expected_maxima = [3, 3, 3] if per_type_dialogue else [3] if correction else [1, 2, 3]
     if (
         not isinstance(stages, list)
         or [stage.get("maximum_composition_size") for stage in stages]
@@ -256,7 +298,35 @@ def validate_contract(config: dict[str, object]) -> None:
     )
     if steps != training.get("total_optimizer_steps"):
         raise ValueError("curriculum step count changed")
-    if correction:
+    if per_type_dialogue:
+        expected_images = int(data["expected_split_records"]["train"])
+        expected_dialogues = expected_images * len(DEGRADATIONS)
+        if len(stages) != 3:
+            raise ValueError("per-type retraining must preserve three full epochs")
+        for stage in stages:
+            if (
+                int(stage.get("epochs", 0)) != 1
+                or int(stage.get("source_records", 0)) != expected_images
+                or int(stage.get("records", 0)) != expected_dialogues
+            ):
+                raise ValueError("per-type stage does not cover every image/type pair")
+        expected_dialogue_splits = {
+            split: int(count) * len(DEGRADATIONS)
+            for split, count in data["expected_split_records"].items()
+        }
+        if data.get("expected_dialogue_split_records") != expected_dialogue_splits:
+            raise ValueError("per-type dialogue split counts changed")
+        if training.get("semantic_token_loss") is not None:
+            raise ValueError("advisor-directed per-type dialogue must use plain assistant CE")
+        if config.get("initialization") is not None:
+            raise ValueError("rank-32 per-type retraining must start from the frozen Qwen base")
+        advisor_image = config.get("advisor_method_image")
+        if not isinstance(advisor_image, dict):
+            raise ValueError("advisor per-type framework image is not bound")
+        advisor_image_path = workspace_path(advisor_image.get("path"))
+        if sha256(advisor_image_path) != advisor_image.get("sha256"):
+            raise RuntimeError("advisor per-type framework image changed")
+    elif correction:
         expected_epochs = (
             2
             if fixed_slot_correction
@@ -368,11 +438,27 @@ def validate_contract(config: dict[str, object]) -> None:
         raise ValueError("visible-device contract changed")
     if overfit.get("variant") != "merger_trainable":
         raise ValueError("overfit must exercise the larger approved trainable scope")
-    if int(overfit.get("records", 0)) != global_batch or int(
+    if per_type_dialogue:
+        overfit_micro = int(overfit.get("micro_batch_size_per_rank", 0))
+        overfit_mapping = overfit.get("gradient_accumulation_steps_by_world_size")
+        if not isinstance(overfit_mapping, dict):
+            raise ValueError("per-type overfit accumulation contract is missing")
+        for world in supported_worlds:
+            if overfit_micro * world * int(overfit_mapping[str(world)]) != int(
+                overfit["global_batch_size"]
+            ):
+                raise ValueError("per-type overfit global batch changed")
+        if (
+            int(overfit.get("records", 0)) != 32
+            or int(overfit.get("records_per_composition_size", 0)) != 8
+        ):
+            raise ValueError("per-type overfit image selection changed")
+    elif int(overfit.get("records", 0)) != global_batch or int(
         overfit.get("records_per_composition_size", 0)
     ) * 4 != global_batch:
         raise ValueError("overfit batch must cover eight clean/single/double/triple records")
-    if int(overfit.get("total_optimizer_steps", 0)) < 100:
+    minimum_overfit_steps = 50 if per_type_dialogue else 100
+    if int(overfit.get("total_optimizer_steps", 0)) < minimum_overfit_steps:
         raise ValueError("overfit gate is too short to demonstrate memorization")
     if overfit.get("require_all_twenty_type_level_pairs") is not True:
         raise ValueError("overfit type-level coverage requirement was disabled")
@@ -523,10 +609,21 @@ def validate_data(
         labels.append(make_label(record["degradations"], record["levels"]))
     prompt = config["prompt"]
     assert isinstance(prompt, dict)
-    batch, counts = prepare_supervised_batch(
-        processor, labels, images, str(prompt["target_schema"])
-    )
-    if len(counts) != 4 or any(count <= 0 for count in counts):
+    target_schema = str(prompt["target_schema"])
+    if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+        expanded_labels = [label for label in labels for _ in DEGRADATIONS]
+        expanded_images = [image.copy() for image in images for _ in DEGRADATIONS]
+        queries = [degradation for _ in labels for degradation in DEGRADATIONS]
+        batch, counts = prepare_per_type_supervised_batch(
+            processor, expanded_labels, expanded_images, queries
+        )
+        expected_count = len(labels) * len(DEGRADATIONS)
+    else:
+        batch, counts = prepare_supervised_batch(
+            processor, labels, images, target_schema
+        )
+        expected_count = len(labels)
+    if len(counts) != expected_count or any(count <= 0 for count in counts):
         raise RuntimeError("assistant-token supervision is empty")
     return {
         "records": len(records),

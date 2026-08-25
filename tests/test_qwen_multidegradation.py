@@ -5,17 +5,47 @@ from lowlight_restoration.qwen_multidegradation import (
     DEGRADATIONS,
     FIXED_FIVE_SLOT_SCHEMA,
     DegradationLabel,
+    aggregate_per_type_responses,
     canonical_fixed_five_slot_target,
     canonical_restoration_text,
     canonical_target,
     evaluate_outputs,
     make_label,
     parse_fixed_five_slot_target,
+    parse_per_type_response,
     parse_target,
+    per_type_question,
+    per_type_response,
 )
 
 
 class QwenMultiDegradationSchemaTests(unittest.TestCase):
+    def test_per_type_dialogue_is_exact_and_head_free_serializable(self):
+        self.assertIn("Considering the noise degradation", per_type_question("noise"))
+        self.assertEqual(per_type_response("noise", 4), "The noise level is L4.")
+        self.assertEqual(parse_per_type_response("The noise level is L4.", "noise"), 4)
+        for raw in ("L4", "The noise level is L4", "The blur level is L4."):
+            with self.subTest(raw=raw), self.assertRaises(ValueError):
+                parse_per_type_response(raw, "noise")
+
+    def test_five_dialogue_answers_aggregate_to_canonical_json(self):
+        raw = {
+            "blur": "The blur level is L1.",
+            "noise": "The noise level is L4.",
+            "rain": "The rain level is L1.",
+            "haze": "The haze level is L2.",
+            "low_light": "The low_light level is L3.",
+        }
+        serialized, details = aggregate_per_type_responses(raw)
+        self.assertEqual(
+            serialized,
+            '{"blur":1,"noise":4,"rain":1,"haze":2,"low_light":3}',
+        )
+        self.assertTrue(all(item["valid_response"] for item in details.values()))
+        malformed = dict(raw)
+        malformed["haze"] = "L2"
+        self.assertIsNone(aggregate_per_type_responses(malformed)[0])
+
     def test_fixed_five_slot_schema_is_independent_and_canonical(self):
         label = make_label(
             ["blur", "haze", "low_light"],

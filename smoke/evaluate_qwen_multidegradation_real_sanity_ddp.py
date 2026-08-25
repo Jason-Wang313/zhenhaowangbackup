@@ -16,7 +16,12 @@ sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.multidegradation_data import sha256
 from lowlight_restoration.qwen_lora import load_qwen_adapter
-from lowlight_restoration.qwen_multidegradation import canonical_target, parse_output
+from lowlight_restoration.qwen_multidegradation import (
+    FIXED_FIVE_SLOT_SCHEMA,
+    PER_TYPE_DIALOGUE_SCHEMA,
+    canonical_target,
+    parse_output,
+)
 from smoke.qwen_multidegradation_lora_preflight import (
     load_config,
     run_preflight,
@@ -27,6 +32,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     atomic_json,
     broadcast_rank0,
     generate_outputs,
+    generate_per_type_outputs,
     load_model,
     seed_everything,
     setup_distributed,
@@ -88,19 +94,33 @@ def main() -> int:
         if sha256(adapter) != selection["selected_adapter_sha256"]:
             raise RuntimeError("selected adapter hash changed before real sanity inference")
         load_qwen_adapter(model, adapter)
-        raw_outputs = generate_outputs(
-            model, processor, records, config, rank=rank, world=world, device=device
-        )
-        rows: list[dict[str, object]] = []
-        valid = primary_present = 0
         prompt = config["prompt"]
         assert isinstance(prompt, dict)
         target_schema = str(prompt["target_schema"])
-        for record, raw in zip(records, raw_outputs, strict=True):
+        if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
+            raw_outputs, per_type_details = generate_per_type_outputs(
+                model,
+                processor,
+                records,
+                config,
+                rank=rank,
+                world=world,
+                device=device,
+            )
+            evaluation_schema = FIXED_FIVE_SLOT_SCHEMA
+        else:
+            raw_outputs = generate_outputs(
+                model, processor, records, config, rank=rank, world=world, device=device
+            )
+            per_type_details = None
+            evaluation_schema = target_schema
+        rows: list[dict[str, object]] = []
+        valid = primary_present = 0
+        for index, (record, raw) in enumerate(zip(records, raw_outputs, strict=True)):
             predicted = None
             error = None
             try:
-                label = parse_output(raw, target_schema)
+                label = parse_output(raw, evaluation_schema)
                 predicted = canonical_target(label)
                 valid += 1
                 primary_present += int(record["expected_primary_type"] in label.degradations)
@@ -122,6 +142,11 @@ def main() -> int:
                         else False
                     ),
                     "parse_error": error,
+                    "per_type_responses": (
+                        per_type_details[index]
+                        if per_type_details is not None
+                        else None
+                    ),
                 }
             )
         if rank == 0:

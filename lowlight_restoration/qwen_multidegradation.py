@@ -26,6 +26,7 @@ ACTIVE_LEVELS = frozenset({2, 3, 4, 5})
 LEVEL_WORDS = {2: "mild", 3: "moderate", 4: "strong", 5: "extreme"}
 VARIABLE_ACTIVE_SCHEMA = "clean_l1_multilabel_independent_active_l2_l5_v1"
 FIXED_FIVE_SLOT_SCHEMA = "fixed_five_slot_l1_absent_l2_l5_v1"
+PER_TYPE_DIALOGUE_SCHEMA = "per_type_dialogue_l1_absent_l2_l5_v1"
 
 SYSTEM_PROMPT = (
     "You are a degradation-assessment model for image restoration. Analyze "
@@ -50,6 +51,21 @@ FIXED_FIVE_SLOT_QUESTION = (
     "JSON object with these five keys in this exact order: blur, noise, rain, "
     "haze, low_light. Use integer values 1 through 5 and no additional keys."
 )
+
+PER_TYPE_SYSTEM_PROMPT = (
+    "You are a degradation-assessment dialogue model for image restoration. "
+    "Judge only the requested visible degradation and answer with exactly the "
+    "required sentence, with no explanation or additional text."
+)
+
+PER_TYPE_QUESTION_TEMPLATE = (
+    "Considering the {degradation} degradation, how would you rate its level "
+    "in this image? Use L1 when {degradation} is absent, L2 mild, L3 moderate, "
+    "L4 strong, or L5 extreme. Answer exactly: The {degradation} level is "
+    "L<level>."
+)
+
+PER_TYPE_RESPONSE_TEMPLATE = "The {degradation} level is L{level}."
 
 
 @dataclass(frozen=True)
@@ -214,6 +230,123 @@ def canonical_restoration_text(label: DegradationLabel) -> str:
     return "Restore the image by correcting " + ", ".join(descriptions) + "."
 
 
+def _validate_query_degradation(degradation: str) -> str:
+    if degradation not in DEGRADATION_SET:
+        raise ValueError(f"unknown query degradation: {degradation}")
+    return degradation
+
+
+def per_type_question(degradation: str) -> str:
+    """Return the advisor-directed question for exactly one degradation."""
+
+    degradation = _validate_query_degradation(degradation)
+    return PER_TYPE_QUESTION_TEMPLATE.format(degradation=degradation)
+
+
+def per_type_response(degradation: str, level: int) -> str:
+    """Return one exact dialogue target without introducing classifier heads."""
+
+    degradation = _validate_query_degradation(degradation)
+    if isinstance(level, bool) or not isinstance(level, int) or level not in range(1, 6):
+        raise ValueError("per-type response level must be L1 through L5")
+    return PER_TYPE_RESPONSE_TEMPLATE.format(degradation=degradation, level=level)
+
+
+def parse_per_type_response(raw_output: str, degradation: str) -> int:
+    """Strictly parse one of the five permitted type-specific responses."""
+
+    degradation = _validate_query_degradation(degradation)
+    if not isinstance(raw_output, str) or raw_output != raw_output.strip():
+        raise ValueError("per-type response has noncanonical whitespace")
+    candidates = {
+        per_type_response(degradation, level): level for level in range(1, 6)
+    }
+    if raw_output not in candidates:
+        raise ValueError("per-type response differs from the required sentence")
+    return candidates[raw_output]
+
+
+def aggregate_per_type_responses(
+    raw_outputs: Mapping[str, str],
+) -> tuple[str | None, dict[str, dict[str, object]]]:
+    """Aggregate five Qwen dialogue answers into the frozen five-slot JSON."""
+
+    if list(raw_outputs) != list(DEGRADATIONS):
+        raise ValueError("per-type responses must contain all five canonical queries")
+    levels: dict[str, int] = {}
+    details: dict[str, dict[str, object]] = {}
+    all_valid = True
+    for degradation in DEGRADATIONS:
+        raw = raw_outputs[degradation]
+        level: int | None = None
+        error: str | None = None
+        try:
+            level = parse_per_type_response(raw, degradation)
+            levels[degradation] = level
+        except ValueError as exc:
+            all_valid = False
+            error = str(exc)
+        details[degradation] = {
+            "raw_output": raw,
+            "predicted_level": level,
+            "valid_response": level is not None,
+            "parse_error": error,
+        }
+    if not all_valid:
+        return None, details
+    active = [name for name in DEGRADATIONS if levels[name] > 1]
+    label = make_label(active, {name: levels[name] for name in active})
+    return canonical_fixed_five_slot_target(label), details
+
+
+def per_type_prompt_messages(degradation: str) -> list[dict[str, object]]:
+    degradation = _validate_query_degradation(degradation)
+    return [
+        {
+            "role": "system",
+            "content": [{"type": "text", "text": PER_TYPE_SYSTEM_PROMPT}],
+        },
+        {
+            "role": "user",
+            "content": [
+                {"type": "image"},
+                {"type": "text", "text": per_type_question(degradation)},
+            ],
+        },
+    ]
+
+
+def per_type_prompt_text(
+    processor: "Qwen2_5_VLProcessor", degradation: str
+) -> str:
+    return processor.apply_chat_template(
+        per_type_prompt_messages(degradation),
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+
+
+def per_type_supervised_text(
+    processor: "Qwen2_5_VLProcessor",
+    label: DegradationLabel,
+    degradation: str,
+) -> str:
+    degradation = _validate_query_degradation(degradation)
+    label = make_label(label.degradations, label.level_map)
+    messages = per_type_prompt_messages(degradation)
+    messages.append(
+        {
+            "role": "assistant",
+            "content": per_type_response(
+                degradation, label.level_map.get(degradation, 1)
+            ),
+        }
+    )
+    return processor.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=False
+    )
+
+
 def prompt_messages(
     target_schema: str = VARIABLE_ACTIVE_SCHEMA,
 ) -> list[dict[str, object]]:
@@ -310,6 +443,61 @@ def prepare_supervised_batch(
         count = int((supervised[row] != -100).sum().item())
         if count <= 0:
             raise RuntimeError("assistant target produced no supervised tokens")
+        counts.append(count)
+    output["labels"] = supervised
+    return output, counts
+
+
+def prepare_per_type_supervised_batch(
+    processor: "Qwen2_5_VLProcessor",
+    labels: Sequence[DegradationLabel],
+    images: Sequence[Image.Image],
+    query_degradations: Sequence[str],
+) -> tuple[dict[str, torch.Tensor], list[int]]:
+    """Build five-query dialogue batches with assistant-only CE supervision."""
+
+    if (
+        not labels
+        or len(labels) != len(images)
+        or len(labels) != len(query_degradations)
+    ):
+        raise ValueError(
+            "labels, images, and query degradations must have the same nonzero length"
+        )
+    if processor.tokenizer.padding_side != "right":
+        raise ValueError("supervised batching requires right padding")
+    queries = [_validate_query_degradation(name) for name in query_degradations]
+    prefixes = [
+        per_type_prompt_text(processor, degradation) for degradation in queries
+    ]
+    encoded = processor(
+        text=[
+            per_type_supervised_text(processor, label, degradation)
+            for label, degradation in zip(labels, queries, strict=True)
+        ],
+        images=list(images),
+        padding=True,
+        return_tensors="pt",
+    )
+    required = {"input_ids", "attention_mask", "pixel_values", "image_grid_thw"}
+    if not required.issubset(encoded):
+        raise RuntimeError(f"processor omitted inputs: {sorted(required - set(encoded))}")
+    output = {
+        key: value for key, value in encoded.items() if isinstance(value, torch.Tensor)
+    }
+    supervised = output["input_ids"].clone()
+    supervised[output["attention_mask"] == 0] = -100
+    counts: list[int] = []
+    for row, (grid, prefix) in enumerate(
+        zip(output["image_grid_thw"], prefixes, strict=True)
+    ):
+        prefix_ids = _expanded_prompt_ids(processor, prefix, grid)
+        if output["input_ids"][row, : len(prefix_ids)].tolist() != prefix_ids:
+            raise RuntimeError("per-type assistant-loss boundary is not an exact prefix")
+        supervised[row, : len(prefix_ids)] = -100
+        count = int((supervised[row] != -100).sum().item())
+        if count <= 0:
+            raise RuntimeError("per-type assistant target produced no supervised tokens")
         counts.append(count)
     output["labels"] = supervised
     return output, counts

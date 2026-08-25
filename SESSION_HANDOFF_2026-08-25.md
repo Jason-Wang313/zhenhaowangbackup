@@ -90,13 +90,36 @@ No Correction-4 `fixed_test_result.json` or `fixed_test_predictions.json`
 exists. Selection, real-sanity inference, and rendering did not run. FoundIR
 was not accessed.
 
-## Next decision
+## Advisor-reviewed next route — ready for GPU launch
 
-Do not launch Correction 4 again and do not start a fifth validation-tuned
-continuation. The repeated plateau is now evidence that schema and loss-level
-patches are not changing the information learned for compound recognition.
-The next step requires a genuinely different, advisor-reviewed scientific
-choice, such as stronger compound-identifiability supervision or a direct
-five-head discriminative readout whose predictions still serialize to the
-approved Qwen JSON/canonical-text interface. The current adapter is negative
-evidence and is not authorized to guide FLUX.
+The prior stop condition has now been resolved by direct advisor review. The
+advisor rejected independent classification heads because they would reduce
+the dialogue VLM to an ordinary classifier. The advisor explicitly approved
+the second dialogue route: ask the same image five separate questions, one for
+each degradation, let the Qwen decoder answer each L1--L5 level, then aggregate
+the answers. The advisor also required Qwen LoRA rank 32, a much larger batch,
+and longer training with evidence of whether loss is still decreasing.
+
+The new advisor framework image is
+`f95684090e025c3de176065a2dfdf043.png`, SHA-256
+`5b50d6e6d28a55949d2dda2217b152cdb8ae25af95db4400e5a23c037c2cfc12`.
+The approved implementation is frozen in
+`configs/qwen_multidegradation_per_type_rank32_v1.json`, SHA-256
+`43af6977452d4d62a5845d18c3d55cbcd30c56d9e9c1e9f8019b76c3983d5f58`.
+
+It starts fresh from the Qwen base, uses rank-32 visual and language-attention
+LoRA plus the trainable visual merger, and has no classification head. Each of
+9,600 training images produces five type-specific dialogues per epoch. Three
+epochs give 144,000 presentations and 1,440 steps. Microbatch is 25 per GPU,
+with fixed global batch 100 on both two and four H100s. The 50-step overfit
+gate uses that same microbatch before full training, so an H100 memory issue or
+dialogue-code defect fails early.
+
+Readiness evidence is in
+`reports/qwen_multidegradation_per_type_rank32_readiness_2026-08-25.md`.
+Full hashes, Python/shell syntax, the rank-32 meta-architecture audit, and 47
+focused tests pass. No new GPU output exists. The fixed synthetic test and
+FoundIR remain unaccessed. After the readiness commit is pushed, the next
+action is one launch of
+`smoke/launch_qwen_multidegradation_per_type_rank32.sh` on either two or four
+H100s, followed by autonomous monitoring.

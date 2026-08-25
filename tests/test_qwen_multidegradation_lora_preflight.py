@@ -146,6 +146,26 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
             ).exists()
         )
 
+    def test_advisor_per_type_rank32_retraining_contract(self):
+        path = ROOT / "configs/qwen_multidegradation_per_type_rank32_v1.json"
+        config, config_sha = load_config(path)
+        validate_contract(config)
+        self.assertEqual(len(config_sha), 64)
+        self.assertEqual(config["model"]["lora_rank"], 32)
+        self.assertEqual(config["model"]["language_lora_rank"], 32)
+        self.assertEqual(config["training"]["micro_batch_size_per_rank"], 25)
+        self.assertEqual(config["training"]["global_batch_size"], 100)
+        self.assertEqual(config["training"]["total_optimizer_steps"], 1440)
+        self.assertEqual(
+            config["data"]["expected_dialogue_split_records"],
+            {"train": 48000, "validation": 6000, "test": 6000},
+        )
+        result = validate_meta_architecture(config)
+        self.assertEqual(result["matched_lora_module_count"], 272)
+        self.assertEqual(result["visual_lora_trainable_parameters"], 22302720)
+        self.assertEqual(result["language_lora_trainable_parameters"], 20185088)
+        self.assertEqual(result["trainable_parameters"], 87062272)
+
 
 if __name__ == "__main__":
     unittest.main()
