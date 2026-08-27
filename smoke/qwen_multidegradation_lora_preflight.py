@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed CPU preflight for the two/four-H100 Qwen LoRA ablation."""
+"""Fail-closed CPU preflight for supported H100 Qwen LoRA experiments."""
 
 from __future__ import annotations
 
@@ -44,6 +44,7 @@ APPROVED_STATUSES = {
     "approved_qwen_multidegradation_lora_crossmodal_decoder_correction",
     "approved_qwen_multidegradation_lora_fixed_slot_schema_correction",
     "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining",
+    "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -120,8 +121,14 @@ def validate_contract(config: dict[str, object]) -> None:
         == "approved_qwen_multidegradation_lora_fixed_slot_schema_correction"
     )
     per_type_dialogue = (
+        status in {
+            "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining",
+            "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation",
+        }
+    )
+    per_type_continuation = (
         status
-        == "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining"
+        == "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation"
     )
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
@@ -271,8 +278,9 @@ def validate_contract(config: dict[str, object]) -> None:
     elif "language_lora_rank" in model or "language_lora_alpha" in model:
         raise ValueError("visual-only phase unexpectedly enables decoder LoRA")
     supported_worlds = distributed.get("supported_world_sizes")
-    if supported_worlds != [2, 4]:
-        raise ValueError("this contract must support two and four H100s")
+    expected_worlds = [2, 8] if per_type_continuation else [2, 4]
+    if supported_worlds != expected_worlds:
+        raise ValueError(f"this contract must support H100 world sizes {expected_worlds}")
     micro = int(training.get("micro_batch_size_per_rank", 0))
     global_batch = int(training.get("global_batch_size", 0))
     for world in supported_worlds:
@@ -280,7 +288,15 @@ def validate_contract(config: dict[str, object]) -> None:
         if micro * accumulation * world != global_batch:
             raise ValueError(f"global batch does not match DDP semantics for world {world}")
     stages = data.get("curriculum")
-    expected_maxima = [3, 3, 3] if per_type_dialogue else [3] if correction else [1, 2, 3]
+    expected_maxima = (
+        [3, 3, 3, 3, 3]
+        if per_type_continuation
+        else [3, 3, 3]
+        if per_type_dialogue
+        else [3]
+        if correction
+        else [1, 2, 3]
+    )
     if (
         not isinstance(stages, list)
         or [stage.get("maximum_composition_size") for stage in stages]
@@ -290,19 +306,34 @@ def validate_contract(config: dict[str, object]) -> None:
     default_epochs = int(training.get("epochs_per_curriculum_stage", 0))
     if default_epochs <= 0:
         raise ValueError("curriculum epochs must be positive")
-    steps = sum(
+    continuation_steps = sum(
         int(stage["records"])
         // global_batch
         * int(stage.get("epochs", default_epochs))
         for stage in stages
     )
-    if steps != training.get("total_optimizer_steps"):
+    initial_steps = int(training.get("initial_optimizer_steps", 0))
+    expected_total_steps = initial_steps + continuation_steps
+    if expected_total_steps != training.get("total_optimizer_steps"):
         raise ValueError("curriculum step count changed")
+    if per_type_continuation:
+        if (
+            initial_steps != 1440
+            or int(training.get("continuation_optimizer_steps", 0))
+            != continuation_steps
+            or int(training.get("warmup_steps", -1)) != 0
+        ):
+            raise ValueError("rank-32 continuation optimizer schedule changed")
+    elif initial_steps != 0:
+        raise ValueError("non-continuation experiment has an optimizer-step offset")
     if per_type_dialogue:
         expected_images = int(data["expected_split_records"]["train"])
         expected_dialogues = expected_images * len(DEGRADATIONS)
-        if len(stages) != 3:
-            raise ValueError("per-type retraining must preserve three full epochs")
+        expected_stage_count = 5 if per_type_continuation else 3
+        if len(stages) != expected_stage_count:
+            raise ValueError(
+                f"per-type phase must preserve {expected_stage_count} full epochs"
+            )
         for stage in stages:
             if (
                 int(stage.get("epochs", 0)) != 1
@@ -318,7 +349,46 @@ def validate_contract(config: dict[str, object]) -> None:
             raise ValueError("per-type dialogue split counts changed")
         if training.get("semantic_token_loss") is not None:
             raise ValueError("advisor-directed per-type dialogue must use plain assistant CE")
-        if config.get("initialization") is not None:
+        if per_type_continuation:
+            validate_per_type_continuation_initialization(config)
+            if (
+                [stage.get("name") for stage in stages]
+                != [
+                    "H4_per_type_dialogue_epoch4",
+                    "H5_per_type_dialogue_epoch5",
+                    "H6_per_type_dialogue_epoch6",
+                    "H7_per_type_dialogue_epoch7",
+                    "H8_per_type_dialogue_epoch8",
+                ]
+                or micro != 25
+                or global_batch != 200
+                or training.get("gradient_accumulation_steps_by_world_size")
+                != {"2": 4, "8": 1}
+                or float(training.get("lora_learning_rate", 0.0)) != 0.000005
+                or float(training.get("merger_learning_rate", 0.0)) != 0.0000005
+                or float(training.get("language_lora_learning_rate", 0.0))
+                != 0.000002
+                or training.get("allow_world_size_change_on_resume") is not True
+            ):
+                raise ValueError("rank-32 continuation training contract changed")
+            if data.get("validation_candidate_stages") != [
+                "H5_per_type_dialogue_epoch5",
+                "H6_per_type_dialogue_epoch6",
+                "H8_per_type_dialogue_epoch8",
+            ]:
+                raise ValueError("continuation validation checkpoint schedule changed")
+            if (
+                float(
+                    config["gate"].get(
+                        "minimum_triple_degradation_set_exact_match_rate", 0.0
+                    )
+                )
+                != 0.8
+                or config.get("selection", {}).get("candidate_epochs")
+                != [5, 6, 8]
+            ):
+                raise ValueError("continuation validation-selection contract changed")
+        elif config.get("initialization") is not None:
             raise ValueError("rank-32 per-type retraining must start from the frozen Qwen base")
         advisor_image = config.get("advisor_method_image")
         if not isinstance(advisor_image, dict):
@@ -434,11 +504,25 @@ def validate_contract(config: dict[str, object]) -> None:
         for fixed_test_path in forbidden_fixed_tests:
             if fixed_test_path is not None and workspace_path(fixed_test_path).exists():
                 raise RuntimeError("a fixed test was accessed before correction selection")
-    if runtime.get("supported_visible_devices") != {"0,1": 2, "0,1,2,3": 4}:
+    expected_devices = (
+        {"0,1": 2, "0,1,2,3,4,5,6,7": 8}
+        if per_type_continuation
+        else {"0,1": 2, "0,1,2,3": 4}
+    )
+    if runtime.get("supported_visible_devices") != expected_devices:
         raise ValueError("visible-device contract changed")
     if overfit.get("variant") != "merger_trainable":
         raise ValueError("overfit must exercise the larger approved trainable scope")
-    if per_type_dialogue:
+    if per_type_continuation:
+        if (
+            overfit.get("reused") is not True
+            or overfit.get("result")
+            != config["initialization"]["overfit_result"]
+            or overfit.get("result_sha256")
+            != config["initialization"]["overfit_result_sha256"]
+        ):
+            raise ValueError("continuation must reuse the hash-bound passing overfit result")
+    elif per_type_dialogue:
         overfit_micro = int(overfit.get("micro_batch_size_per_rank", 0))
         overfit_mapping = overfit.get("gradient_accumulation_steps_by_world_size")
         if not isinstance(overfit_mapping, dict):
@@ -457,11 +541,85 @@ def validate_contract(config: dict[str, object]) -> None:
         overfit.get("records_per_composition_size", 0)
     ) * 4 != global_batch:
         raise ValueError("overfit batch must cover eight clean/single/double/triple records")
-    minimum_overfit_steps = 50 if per_type_dialogue else 100
-    if int(overfit.get("total_optimizer_steps", 0)) < minimum_overfit_steps:
-        raise ValueError("overfit gate is too short to demonstrate memorization")
-    if overfit.get("require_all_twenty_type_level_pairs") is not True:
-        raise ValueError("overfit type-level coverage requirement was disabled")
+    if not per_type_continuation:
+        minimum_overfit_steps = 50 if per_type_dialogue else 100
+        if int(overfit.get("total_optimizer_steps", 0)) < minimum_overfit_steps:
+            raise ValueError("overfit gate is too short to demonstrate memorization")
+        if overfit.get("require_all_twenty_type_level_pairs") is not True:
+            raise ValueError("overfit type-level coverage requirement was disabled")
+
+
+def validate_per_type_continuation_initialization(
+    config: dict[str, object],
+) -> None:
+    """Bind continued training to the untouched epoch-3 adapter and optimizer."""
+
+    initialization = config.get("initialization")
+    if not isinstance(initialization, dict):
+        raise ValueError("rank-32 continuation initialization is missing")
+    required_hashes = (
+        ("base_config", "base_config_sha256"),
+        ("adapter", "adapter_sha256"),
+        ("optimizer", "optimizer_sha256"),
+        ("checkpoint_metadata", "checkpoint_metadata_sha256"),
+        ("validation_result", "validation_result_sha256"),
+        ("overfit_result", "overfit_result_sha256"),
+    )
+    for path_key, hash_key in required_hashes:
+        path = workspace_path(initialization.get(path_key))
+        if sha256(path) != initialization.get(hash_key):
+            raise RuntimeError(f"continuation initialization changed: {path_key}")
+    base_config = json.loads(workspace_path(initialization["base_config"]).read_text())
+    if (
+        base_config.get("status")
+        != "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining"
+        or base_config.get("model") != config.get("model")
+        or base_config.get("prompt") != config.get("prompt")
+    ):
+        raise RuntimeError("continuation architecture differs from the advisor-approved base")
+    metadata = json.loads(
+        workspace_path(initialization["checkpoint_metadata"]).read_text()
+    )
+    if (
+        metadata.get("config_sha256") != initialization["base_config_sha256"]
+        or metadata.get("variant") != "merger_trainable"
+        or metadata.get("stage") != "H3_per_type_dialogue_epoch3"
+        or metadata.get("global_step") != 1440
+        or metadata.get("adapter_sha256") != initialization["adapter_sha256"]
+        or metadata.get("optimizer_sha256") != initialization["optimizer_sha256"]
+    ):
+        raise RuntimeError("epoch-3 continuation metadata is inconsistent")
+    validation = json.loads(
+        workspace_path(initialization["validation_result"]).read_text()
+    )
+    if (
+        validation.get("config_sha256") != initialization["base_config_sha256"]
+        or validation.get("variant") != "merger_trainable"
+        or validation.get("split") != "validation"
+        or validation.get("adapter") != initialization["adapter"]
+        or validation.get("adapter_sha256") != initialization["adapter_sha256"]
+        or float(
+            validation.get("metrics", {})
+            .get("by_composition_size", {})
+            .get("3", {})
+            .get("degradation_set_exact_match_rate", -1.0)
+        )
+        != 0.55
+    ):
+        raise RuntimeError("continuation source validation evidence is inconsistent")
+    overfit = json.loads(workspace_path(initialization["overfit_result"]).read_text())
+    if overfit.get("status") != "passed" or overfit.get("automatic_gate_pass") is not True:
+        raise RuntimeError("continuation source overfit gate did not pass")
+    if (
+        initialization.get("initial_completed_epochs") != 3
+        or initialization.get("initial_optimizer_steps") != 1440
+        or initialization.get("initial_dialogue_presentations") != 144000
+        or initialization.get("optimizer_resume") != "exact_adamw_state"
+        or initialization.get("allow_missing_adapter_prefixes") != []
+    ):
+        raise ValueError("continuation offset contract changed")
+    if workspace_path(initialization["base_fixed_test_result"]).exists():
+        raise RuntimeError("the protected fixed test was accessed before continuation selection")
 
 
 def validate_model_inventory(config: dict[str, object], *, full_hashes: bool) -> dict[str, object]:

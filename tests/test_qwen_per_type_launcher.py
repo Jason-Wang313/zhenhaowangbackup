@@ -36,6 +36,27 @@ class QwenPerTypeLauncherTests(unittest.TestCase):
         self.assertIn("nohup env CUDA_VISIBLE_DEVICES", launcher)
         self.assertIn("qwen_multidegradation_per_type_rank32_v1.log", launcher)
 
+    def test_continuation_launcher_supports_two_and_eight_h100s(self):
+        runner = (
+            ROOT
+            / "smoke/run_qwen_multidegradation_per_type_rank32_continue.sh"
+        ).read_text()
+        launcher = (
+            ROOT
+            / "smoke/launch_qwen_multidegradation_per_type_rank32_continue.sh"
+        ).read_text()
+        for text in (runner, launcher):
+            self.assertIn("0,1)", text)
+            self.assertIn("0,1,2,3,4,5,6,7)", text)
+        self.assertIn("ACCUMULATION=4", runner)
+        self.assertIn("ACCUMULATION=1", runner)
+        self.assertIn("global=200", runner)
+        self.assertIn("H5_per_type_dialogue_epoch5", runner)
+        self.assertIn("H6_per_type_dialogue_epoch6", runner)
+        self.assertIn("--test-only", runner)
+        self.assertIn("remain-on-exit", launcher)
+        self.assertIn("nohup env CUDA_VISIBLE_DEVICES", launcher)
+
 
 if __name__ == "__main__":
     unittest.main()

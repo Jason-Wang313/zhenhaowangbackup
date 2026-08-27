@@ -2,6 +2,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import torch
 from torch import nn
@@ -11,6 +12,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     gate_checks,
     learning_rate_scale,
     rank_microbatch,
+    resume_stage,
     semantic_assistant_token_loss,
     stage_records,
     training_loss,
@@ -144,6 +146,28 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
                     for name in DEGRADATIONS
                 },
                 {name: 20 for name in DEGRADATIONS},
+            )
+
+    def test_continuation_global_batch_200_balances_all_five_questions(self):
+        config, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_per_type_rank32_continue_v2.json"
+        )
+        dialogues = stage_records(
+            self.records,
+            config["data"]["curriculum"][0],
+            config["training"]["seed"],
+            target_schema=config["prompt"]["target_schema"],
+            global_batch_size=config["training"]["global_batch_size"],
+        )
+        self.assertEqual(len(dialogues), 48000)
+        for offset in range(0, len(dialogues), 200):
+            batch = dialogues[offset : offset + 200]
+            self.assertEqual(
+                {
+                    name: sum(record["query_degradation"] == name for record in batch)
+                    for name in DEGRADATIONS
+                },
+                {name: 40 for name in DEGRADATIONS},
             )
 
     def test_per_type_overfit_expansion_asks_all_five_questions(self):
@@ -299,6 +323,107 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
                     accumulation_steps=2,
                     global_batch_size=10,
                 )
+
+    def test_external_continuation_restores_optimizer_and_step_offset(self):
+        config, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_per_type_rank32_continue_v2.json"
+        )
+        model = TinyCrossmodalScope()
+        optimizer = create_optimizer(model, config)
+        model.lora_A.grad = torch.ones_like(model.lora_A)
+        model.model.visual.merger.weight.grad = torch.ones_like(
+            model.model.visual.merger.weight
+        )
+        model.model.visual.merger.bias.grad = torch.ones_like(
+            model.model.visual.merger.bias
+        )
+        model.model.language_model.lora_A.grad = torch.ones_like(
+            model.model.language_model.lora_A
+        )
+        optimizer.step()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            adapter = root / "adapter.safetensors"
+            optimizer_path = root / "optimizer.pt"
+            adapter.write_bytes(b"adapter")
+            torch.save(optimizer.state_dict(), optimizer_path)
+            initialization = {
+                "adapter": str(adapter),
+                "adapter_sha256": __import__("hashlib").sha256(
+                    adapter.read_bytes()
+                ).hexdigest(),
+                "optimizer": str(optimizer_path),
+                "optimizer_sha256": __import__("hashlib").sha256(
+                    optimizer_path.read_bytes()
+                ).hexdigest(),
+                "initial_optimizer_steps": 1440,
+            }
+            resumed_model = TinyCrossmodalScope()
+            resumed_optimizer = create_optimizer(resumed_model, config)
+            with (
+                patch(
+                    "smoke.train_qwen_multidegradation_lora_ddp.workspace_path",
+                    side_effect=lambda value: Path(value),
+                ),
+                patch(
+                    "smoke.train_qwen_multidegradation_lora_ddp.load_qwen_adapter"
+                ) as load_adapter,
+            ):
+                completed, step = resume_stage(
+                    resumed_model,
+                    resumed_optimizer,
+                    output=root / "new-output",
+                    stages=config["data"]["curriculum"],
+                    config_sha="config",
+                    variant="merger_trainable",
+                    world_size=8,
+                    accumulation_steps=1,
+                    global_batch_size=200,
+                    initialization=initialization,
+                    allow_world_size_change=True,
+                )
+            self.assertEqual(completed, 0)
+            self.assertEqual(step, 1440)
+            load_adapter.assert_called_once_with(resumed_model, adapter)
+            self.assertEqual(len(resumed_optimizer.state), len(optimizer.state))
+
+    def test_checkpoint_validation_allows_two_to_eight_gpu_resume_at_same_global_batch(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            stage = {"name": "epoch4", "records": 48000, "epochs": 1}
+            directory = output / "checkpoints/epoch4"
+            directory.mkdir(parents=True)
+            adapter = directory / "adapter.safetensors"
+            optimizer = directory / "optimizer.pt"
+            adapter.write_bytes(b"adapter")
+            optimizer.write_bytes(b"optimizer")
+            metadata = {
+                "config_sha256": "config",
+                "variant": "merger_trainable",
+                "world_size": 2,
+                "gradient_accumulation_steps": 4,
+                "global_batch_size": 200,
+                "global_step": 1680,
+                "adapter_sha256": __import__("hashlib").sha256(
+                    adapter.read_bytes()
+                ).hexdigest(),
+                "optimizer_sha256": __import__("hashlib").sha256(
+                    optimizer.read_bytes()
+                ).hexdigest(),
+            }
+            (directory / "metadata.json").write_text(json.dumps(metadata))
+            evidence = validate_completed_stage_checkpoints(
+                output=output,
+                stages=[stage],
+                config_sha="config",
+                variant="merger_trainable",
+                world_size=8,
+                accumulation_steps=1,
+                global_batch_size=200,
+                initial_global_step=1440,
+                allow_world_size_change=True,
+            )
+            self.assertEqual(evidence[0]["global_step"], 1680)
 
 
 if __name__ == "__main__":

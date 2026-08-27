@@ -166,6 +166,35 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
         self.assertEqual(result["language_lora_trainable_parameters"], 20185088)
         self.assertEqual(result["trainable_parameters"], 87062272)
 
+    def test_advisor_rank32_continuation_preserves_two_and_eight_gpu_semantics(self):
+        path = (
+            ROOT
+            / "configs/qwen_multidegradation_per_type_rank32_continue_v2.json"
+        )
+        config, config_sha = load_config(path)
+        validate_contract(config)
+        self.assertEqual(len(config_sha), 64)
+        self.assertEqual(config["distributed"]["supported_world_sizes"], [2, 8])
+        self.assertEqual(config["training"]["global_batch_size"], 200)
+        for world, accumulation in ((2, 4), (8, 1)):
+            self.assertEqual(accumulation_steps_for_world(config, world), accumulation)
+            self.assertEqual(
+                config["training"]["micro_batch_size_per_rank"]
+                * world
+                * accumulation,
+                200,
+            )
+        self.assertEqual(config["training"]["initial_optimizer_steps"], 1440)
+        self.assertEqual(config["training"]["continuation_optimizer_steps"], 1200)
+        self.assertEqual(config["training"]["total_optimizer_steps"], 2640)
+        self.assertEqual(
+            config["gate"]["minimum_triple_degradation_set_exact_match_rate"],
+            0.8,
+        )
+        self.assertFalse(
+            (ROOT / config["initialization"]["base_fixed_test_result"]).exists()
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

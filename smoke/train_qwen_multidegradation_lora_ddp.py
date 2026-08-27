@@ -359,6 +359,7 @@ def publish_stage_checkpoint(
     global_step: int,
     world_size: int,
     accumulation_steps: int,
+    global_batch_size: int,
 ) -> dict[str, object]:
     final = checkpoint_directory(output, stage_name)
     if final.is_dir():
@@ -368,6 +369,7 @@ def publish_stage_checkpoint(
             or metadata.get("variant") != variant
             or metadata.get("world_size") != world_size
             or metadata.get("gradient_accumulation_steps") != accumulation_steps
+            or metadata.get("global_batch_size") != global_batch_size
         ):
             raise RuntimeError(f"checkpoint contract mismatch: {final}")
         return metadata
@@ -384,6 +386,7 @@ def publish_stage_checkpoint(
                 "global_step": global_step,
                 "world_size": world_size,
                 "gradient_accumulation_steps": accumulation_steps,
+                "global_batch_size": global_batch_size,
             },
         )
         torch.save(optimizer.state_dict(), temporary / "optimizer.pt")
@@ -395,6 +398,7 @@ def publish_stage_checkpoint(
             "global_step": global_step,
             "world_size": world_size,
             "gradient_accumulation_steps": accumulation_steps,
+            "global_batch_size": global_batch_size,
             "adapter_sha256": adapter_meta["adapter_sha256"],
             "optimizer_sha256": sha256(temporary / "optimizer.pt"),
         }
@@ -418,6 +422,9 @@ def resume_stage(
     variant: str,
     world_size: int,
     accumulation_steps: int,
+    global_batch_size: int,
+    initialization: Mapping[str, object] | None = None,
+    allow_world_size_change: bool = False,
 ) -> tuple[int, int]:
     completed = 0
     global_step = 0
@@ -426,11 +433,16 @@ def resume_stage(
         if not directory.is_dir():
             break
         metadata = json.loads((directory / "metadata.json").read_text())
+        distributed_contract_matches = (
+            metadata.get("global_batch_size") == global_batch_size
+            if allow_world_size_change
+            else metadata.get("world_size") == world_size
+            and metadata.get("gradient_accumulation_steps") == accumulation_steps
+        )
         if (
             metadata.get("config_sha256") != config_sha
             or metadata.get("variant") != variant
-            or metadata.get("world_size") != world_size
-            or metadata.get("gradient_accumulation_steps") != accumulation_steps
+            or not distributed_contract_matches
         ):
             raise RuntimeError(f"resume checkpoint differs: {directory}")
         if sha256(directory / "adapter.safetensors") != metadata["adapter_sha256"]:
@@ -447,6 +459,21 @@ def resume_stage(
         load_qwen_adapter(model, directory / "adapter.safetensors")
         optimizer.load_state_dict(torch.load(directory / "optimizer.pt", map_location="cpu", weights_only=False))
         optimizer_to_device(optimizer)
+    elif initialization is not None and initialization.get("optimizer") is not None:
+        adapter = workspace_path(initialization["adapter"])
+        optimizer_path = workspace_path(initialization["optimizer"])
+        if sha256(adapter) != initialization.get("adapter_sha256"):
+            raise RuntimeError("external continuation adapter hash failed")
+        if sha256(optimizer_path) != initialization.get("optimizer_sha256"):
+            raise RuntimeError("external continuation optimizer hash failed")
+        load_qwen_adapter(model, adapter)
+        optimizer.load_state_dict(
+            torch.load(optimizer_path, map_location="cpu", weights_only=False)
+        )
+        optimizer_to_device(optimizer)
+        global_step = int(initialization.get("initial_optimizer_steps", 0))
+        if global_step <= 0:
+            raise RuntimeError("external continuation optimizer-step offset is invalid")
     return completed, global_step
 
 
@@ -459,10 +486,12 @@ def validate_completed_stage_checkpoints(
     world_size: int,
     accumulation_steps: int,
     global_batch_size: int,
+    initial_global_step: int = 0,
+    allow_world_size_change: bool = False,
 ) -> list[dict[str, object]]:
     """Verify a completed run before evaluation-only recovery."""
 
-    expected_global_step = 0
+    expected_global_step = initial_global_step
     evidence: list[dict[str, object]] = []
     for stage in stages:
         expected_global_step += (
@@ -474,11 +503,16 @@ def validate_completed_stage_checkpoints(
         if not directory.is_dir():
             raise RuntimeError(f"validation-only checkpoint is missing: {directory}")
         metadata = json.loads((directory / "metadata.json").read_text())
+        distributed_contract_matches = (
+            metadata.get("global_batch_size") == global_batch_size
+            if allow_world_size_change
+            else metadata.get("world_size") == world_size
+            and metadata.get("gradient_accumulation_steps") == accumulation_steps
+        )
         if (
             metadata.get("config_sha256") != config_sha
             or metadata.get("variant") != variant
-            or metadata.get("world_size") != world_size
-            or metadata.get("gradient_accumulation_steps") != accumulation_steps
+            or not distributed_contract_matches
             or metadata.get("global_step") != expected_global_step
         ):
             raise RuntimeError(f"validation-only checkpoint contract mismatch: {directory}")
@@ -619,6 +653,15 @@ def train_variant(
         variant=variant,
         world_size=world,
         accumulation_steps=accumulation,
+        global_batch_size=global_batch,
+        initialization=(
+            config.get("initialization")
+            if isinstance(config.get("initialization"), Mapping)
+            else None
+        ),
+        allow_world_size_change=bool(
+            training.get("allow_world_size_change_on_resume", False)
+        ),
     )
     total_steps = int(training["total_optimizer_steps"])
     trainable_names = {name for name, parameter in model.named_parameters() if parameter.requires_grad}
@@ -720,9 +763,16 @@ def train_variant(
                     float(training["max_grad_norm"]),
                 )
                 global_step += 1
+                initial_optimizer_steps = int(
+                    training.get("initial_optimizer_steps", 0)
+                )
+                schedule_step = global_step - initial_optimizer_steps
+                schedule_total_steps = int(
+                    training.get("continuation_optimizer_steps", total_steps)
+                )
                 scale = learning_rate_scale(
-                    global_step,
-                    total_steps,
+                    schedule_step,
+                    schedule_total_steps,
                     int(training["warmup_steps"]),
                     float(training["minimum_learning_rate_ratio"]),
                 )
@@ -790,6 +840,7 @@ def train_variant(
                 global_step=global_step,
                 world_size=world,
                 accumulation_steps=accumulation,
+                global_batch_size=global_batch,
             )
             print(
                 f"QWEN_MULTIDEGRADATION_STAGE_PASS variant={variant} stage={stage['name']} "
@@ -820,7 +871,19 @@ def train_variant(
         "rank_gradient_audits": audits,
         "training_metrics": metrics,
         "epoch_summaries": epoch_summaries,
-        "dialogue_presentations": global_step * global_batch,
+        "dialogue_presentations_this_contract": (
+            global_step - int(training.get("initial_optimizer_steps", 0))
+        )
+        * global_batch,
+        "dialogue_presentations_cumulative": int(
+            config.get("initialization", {}).get("initial_dialogue_presentations", 0)
+            if isinstance(config.get("initialization"), Mapping)
+            else 0
+        )
+        + (
+            global_step - int(training.get("initial_optimizer_steps", 0))
+        )
+        * global_batch,
     }
 
 
@@ -1126,6 +1189,7 @@ def main() -> int:
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--test-only", action="store_true")
     mode.add_argument("--validation-only", action="store_true")
+    mode.add_argument("--validation-stage")
     args = parser.parse_args()
     config, config_sha = load_config(args.config)
     validate_contract(config)
@@ -1139,7 +1203,14 @@ def main() -> int:
     try:
         rank, world, local_rank, device = setup_distributed(config)
         ready = True
-        existing_path = output / ("fixed_test_result.json" if args.test_only else "validation_result.json")
+        validation_stage_name = str(args.validation_stage) if args.validation_stage else None
+        existing_path = output / (
+            "fixed_test_result.json"
+            if args.test_only
+            else f"validation_result_{validation_stage_name}.json"
+            if validation_stage_name
+            else "validation_result.json"
+        )
         existing = broadcast_rank0(
             rank,
             lambda: json.loads(existing_path.read_text()) if existing_path.is_file() else None,
@@ -1147,6 +1218,19 @@ def main() -> int:
         if existing is not None:
             if existing.get("config_sha256") != config_sha or existing.get("variant") != args.variant:
                 raise RuntimeError("existing result belongs to another contract")
+            if (
+                "validation_checkpoint_stage" in existing
+                and existing.get("validation_checkpoint_stage")
+                != (
+                    validation_stage_name
+                    or (
+                        str(data["curriculum"][-1]["name"])
+                        if not args.test_only
+                        else None
+                    )
+                )
+            ):
+                raise RuntimeError("existing result belongs to another validation checkpoint")
             return 0 if existing.get("automatic_gate_pass") is True else 2
         preflight = broadcast_rank0(rank, lambda: run_preflight(args.config, full_hashes=False))
         runtime_evidence = validate_runtime(config, local_rank)
@@ -1156,37 +1240,65 @@ def main() -> int:
         model, processor, scope = load_model(config, variant=args.variant, device=device)
         stages = data["curriculum"]
         assert isinstance(stages, list)
-        final_checkpoint = checkpoint_directory(output, str(stages[-1]["name"]))
+        selected_stage = str(stages[-1]["name"])
+        stages_to_verify = stages
+        if validation_stage_name is not None:
+            candidates = data.get("validation_candidate_stages")
+            if (
+                not isinstance(candidates, list)
+                or validation_stage_name not in candidates
+            ):
+                raise ValueError("validation stage is not a frozen candidate")
+            candidate_index = next(
+                index
+                for index, stage in enumerate(stages)
+                if str(stage["name"]) == validation_stage_name
+            )
+            selected_stage = validation_stage_name
+            stages_to_verify = stages[: candidate_index + 1]
+        final_checkpoint = checkpoint_directory(output, selected_stage)
         if args.test_only:
             selection_path = workspace_path(runtime["output_root"]) / "checkpoint_selection.json"
             selection = broadcast_rank0(rank, lambda: json.loads(selection_path.read_text()))
             if selection.get("selected_variant") != args.variant:
                 raise RuntimeError("test-only variant is not the frozen validation winner")
-            if not final_checkpoint.is_dir():
-                raise RuntimeError("selected final adapter does not exist")
-            load_qwen_adapter(model, final_checkpoint / "adapter.safetensors")
+            selected_adapter = workspace_path(selection["selected_adapter"])
+            selected_adapter.relative_to(output.resolve())
+            if sha256(selected_adapter) != selection.get("selected_adapter_sha256"):
+                raise RuntimeError("selected validation adapter changed before fixed test")
+            load_qwen_adapter(model, selected_adapter)
+            final_checkpoint = selected_adapter.parent
+            selected_stage = str(selection.get("selected_stage"))
             training_result = {"gradient_audit_pass": True, "fixed_adapter": True}
             split = "test"
-        elif args.validation_only:
+        elif args.validation_only or validation_stage_name is not None:
             checkpoint_evidence = validate_completed_stage_checkpoints(
                 output=output,
-                stages=stages,
+                stages=stages_to_verify,
                 config_sha=config_sha,
                 variant=args.variant,
                 world_size=world,
                 accumulation_steps=accumulation_steps_for_world(dict(config), world),
                 global_batch_size=int(training["global_batch_size"]),
+                initial_global_step=int(training.get("initial_optimizer_steps", 0)),
+                allow_world_size_change=bool(
+                    training.get("allow_world_size_change_on_resume", False)
+                ),
             )
-            if int(checkpoint_evidence[-1]["global_step"]) != int(
-                training["total_optimizer_steps"]
-            ):
+            expected_checkpoint_step = int(training.get("initial_optimizer_steps", 0)) + sum(
+                int(stage["records"])
+                * int(stage.get("epochs", training["epochs_per_curriculum_stage"]))
+                // int(training["global_batch_size"])
+                for stage in stages_to_verify
+            )
+            if int(checkpoint_evidence[-1]["global_step"]) != expected_checkpoint_step:
                 raise RuntimeError("validation-only final optimizer step changed")
             load_qwen_adapter(model, final_checkpoint / "adapter.safetensors")
             training_result = {
                 "gradient_audit_pass": True,
                 "fixed_adapter": True,
                 "validation_only_recovery": True,
-                "global_step": int(training["total_optimizer_steps"]),
+                "global_step": expected_checkpoint_step,
                 "completed_stage_checkpoints": checkpoint_evidence,
             }
             split = "validation"
@@ -1205,11 +1317,25 @@ def main() -> int:
                     isinstance(prefix, str) and prefix for prefix in missing_prefixes
                 ):
                     raise ValueError("initialization missing-prefix contract is invalid")
-                load_qwen_adapter(
-                    model,
-                    adapter,
-                    allow_missing_prefixes=tuple(missing_prefixes),
-                )
+                optimizer_path_value = initialization.get("optimizer")
+                if optimizer_path_value is None:
+                    load_qwen_adapter(
+                        model,
+                        adapter,
+                        allow_missing_prefixes=tuple(missing_prefixes),
+                    )
+                    optimizer_evidence: object = "fresh"
+                else:
+                    optimizer_path = workspace_path(optimizer_path_value)
+                    if sha256(optimizer_path) != initialization.get("optimizer_sha256"):
+                        raise RuntimeError("initialization optimizer changed")
+                    optimizer_evidence = {
+                        "path": optimizer_path_value,
+                        "sha256": initialization["optimizer_sha256"],
+                        "initial_optimizer_steps": initialization[
+                            "initial_optimizer_steps"
+                        ],
+                    }
                 initialization_evidence = {
                     "adapter": initialization["adapter"],
                     "adapter_sha256": initialization["adapter_sha256"],
@@ -1218,7 +1344,7 @@ def main() -> int:
                     "validation_result_sha256": initialization[
                         "validation_result_sha256"
                     ],
-                    "optimizer": "fresh",
+                    "optimizer": optimizer_evidence,
                 }
                 if rank == 0:
                     print(
@@ -1272,6 +1398,9 @@ def main() -> int:
                 "gate_checks": checks,
                 "adapter": final_checkpoint.relative_to(ROOT).as_posix() + "/adapter.safetensors",
                 "adapter_sha256": sha256(final_checkpoint / "adapter.safetensors"),
+                "validation_checkpoint_stage": (
+                    selected_stage if split == "validation" else None
+                ),
                 "predictions": predictions_path.relative_to(ROOT).as_posix(),
                 "predictions_sha256": sha256(predictions_path),
                 "runtime": runtime_evidence,
