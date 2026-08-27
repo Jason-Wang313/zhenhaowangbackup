@@ -152,3 +152,20 @@ as false positives. It also adds a hash-checked `--validation-only` path. The
 existing runner detects the completed H3 checkpoint plus absent validation
 result and uses evaluation-only recovery, so no retraining occurs. After the
 patch is pushed, relaunch the same two/four-H100 launcher once.
+
+## Per-type rank-32 frozen validation result
+
+Validation-only recovery eventually completed at `2026-08-27T10:00:36Z`.
+The gate failed scientifically and the runner stopped with status 2 before
+selection or protected fixed-test access. Overall per-query five-class
+accuracy was 86.65%, valid-response rate 100%, type micro-F1 93.33%, precision
+97.19%, and recall 89.77%. However, active L2--L5 exact accuracy was 65.51%,
+combined type/level exact was 50.83%, and triple set exact was 55.0%. Thus the
+advisor's stated 80%+ overall accuracy expectation was met, but the project's
+stronger active-severity and compound exact gates were not.
+
+The authoritative report is
+`reports/qwen_multidegradation_per_type_rank32_validation_2026-08-27.md`.
+Do not access the fixed test, weaken the frozen validation gates, or authorize
+this Qwen checkpoint for FLUX until the advisor resolves which success
+definition is authoritative.
