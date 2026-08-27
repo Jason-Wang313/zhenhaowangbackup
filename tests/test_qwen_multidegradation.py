@@ -62,16 +62,19 @@ class QwenMultiDegradationSchemaTests(unittest.TestCase):
             '{"blur":1,"noise":1,"rain":1,"haze":1,"low_light":1}',
         )
 
-    def test_fixed_five_slot_schema_rejects_drift_and_four_active_types(self):
+    def test_fixed_five_slot_schema_rejects_drift_but_accepts_model_overprediction(self):
         rejected = [
             '{"noise":1,"blur":1,"rain":1,"haze":1,"low_light":1}',
             '{"blur":0,"noise":1,"rain":1,"haze":1,"low_light":1}',
             '{"blur":true,"noise":1,"rain":1,"haze":1,"low_light":1}',
-            '{"blur":2,"noise":2,"rain":2,"haze":2,"low_light":1}',
         ]
         for raw in rejected:
             with self.subTest(raw=raw), self.assertRaises(ValueError):
                 parse_fixed_five_slot_target(raw)
+        overprediction = '{"blur":2,"noise":2,"rain":2,"haze":2,"low_light":2}'
+        parsed = parse_fixed_five_slot_target(overprediction)
+        self.assertEqual(parsed.degradations, DEGRADATIONS)
+        self.assertEqual(canonical_fixed_five_slot_target(parsed), overprediction)
     def test_clean_is_only_l1_representation(self):
         clean = make_label([], {})
         self.assertEqual(canonical_target(clean), '{"degradations":[],"levels":{}}')
@@ -165,6 +168,18 @@ class QwenMultiDegradationMetricTests(unittest.TestCase):
         )
         self.assertTrue(all(row["combined_label_exact"] for row in rows))
         self.assertEqual(metrics["combined_label_exact_match_rate"], 1.0)
+
+    def test_fixed_slot_overprediction_is_valid_and_counted_as_false_positive(self):
+        truth = make_label(["blur", "noise", "rain"], {"blur": 2, "noise": 3, "rain": 4})
+        raw = '{"blur":2,"noise":3,"rain":4,"haze":2,"low_light":2}'
+        rows, metrics = evaluate_outputs(
+            [truth], [raw], target_schema=FIXED_FIVE_SLOT_SCHEMA
+        )
+        self.assertTrue(rows[0]["valid_structured_output"])
+        self.assertFalse(rows[0]["degradation_set_exact"])
+        self.assertEqual(metrics["valid_structured_output_rate"], 1.0)
+        self.assertEqual(metrics["per_type"]["haze"]["fp"], 1)
+        self.assertEqual(metrics["per_type"]["low_light"]["fp"], 1)
 
     def test_type_and_severity_failures_are_not_hidden(self):
         outputs = [

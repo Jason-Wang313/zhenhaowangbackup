@@ -10,6 +10,8 @@ LOCK="$ROOT/logs/qwen_multidegradation_per_type_rank32_v1.lock"
 OUTPUT="$ROOT/checkpoints/qwen_multidegradation_per_type_rank32_v1"
 OVERFIT="$ROOT/checkpoints/qwen_multidegradation_per_type_rank32_overfit_v1/result.json"
 VARIANT=merger_trainable
+FINAL_CHECKPOINT="$OUTPUT/$VARIANT/checkpoints/H3_per_type_dialogue_epoch3/adapter.safetensors"
+VALIDATION_RESULT="$OUTPUT/$VARIANT/validation_result.json"
 
 cd "$ROOT" || exit 1
 mkdir -p "$ROOT/logs"
@@ -77,11 +79,15 @@ if [[ $overfit_status -ne 0 ]]; then
 fi
 echo "QWEN_PER_TYPE_RANK32_OVERFIT_GATE_PASS"
 
+validation_mode=()
+if [[ -f "$FINAL_CHECKPOINT" && ! -f "$VALIDATION_RESULT" ]]; then
+  validation_mode=(--validation-only)
+  echo "QWEN_PER_TYPE_RANK32_VALIDATION_ONLY_RECOVERY final_checkpoint=$FINAL_CHECKPOINT"
+fi
 "$PYTHON" -m torch.distributed.run --standalone --nproc_per_node="$NPROC" \
-  smoke/train_qwen_multidegradation_lora_ddp.py --config "$CONFIG" --variant "$VARIANT"
+  smoke/train_qwen_multidegradation_lora_ddp.py --config "$CONFIG" --variant "$VARIANT" "${validation_mode[@]}"
 validation_status=$?
-validation_result="$OUTPUT/$VARIANT/validation_result.json"
-if [[ ! -f "$validation_result" ]]; then
+if [[ ! -f "$VALIDATION_RESULT" ]]; then
   echo "QWEN_PER_TYPE_RANK32_VALIDATION_CRASH outer_status=$validation_status" >&2
   exit 1
 fi

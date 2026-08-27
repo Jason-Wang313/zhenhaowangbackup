@@ -115,6 +115,32 @@ def make_label(
     return DegradationLabel(ordered, tuple(normalized))
 
 
+def make_prediction_label(
+    degradations: Iterable[str], levels: Mapping[str, int]
+) -> DegradationLabel:
+    """Validate a model prediction without imposing the corpus cardinality.
+
+    Ground-truth examples are deliberately limited to clean/single/double/triple
+    compositions by :func:`make_label`.  A model can nevertheless predict four
+    or five active types; those extra types must survive parsing so evaluation
+    counts them as false positives instead of treating valid per-type answers
+    as a malformed record.
+    """
+
+    ordered = _ordered(degradations)
+    if set(levels) != set(ordered):
+        raise ValueError("levels keys must exactly equal active degradations")
+    normalized: list[tuple[str, int]] = []
+    for name in ordered:
+        level = levels[name]
+        if isinstance(level, bool) or not isinstance(level, int):
+            raise ValueError(f"{name} level must be an integer")
+        if level not in ACTIVE_LEVELS:
+            raise ValueError(f"active {name} level must be L2 through L5")
+        normalized.append((name, level))
+    return DegradationLabel(ordered, tuple(normalized))
+
+
 def canonical_target(
     label_or_degradations: DegradationLabel | Iterable[str],
     levels: Mapping[str, int] | None = None,
@@ -138,10 +164,24 @@ def canonical_target(
     return json.dumps(payload, separators=(",", ":"), ensure_ascii=True)
 
 
+def canonical_prediction_target(label: DegradationLabel) -> str:
+    """Serialize a parsed prediction, including possible four/five-type errors."""
+
+    label = make_prediction_label(label.degradations, label.level_map)
+    return json.dumps(
+        {
+            "degradations": list(label.degradations),
+            "levels": label.level_map,
+        },
+        separators=(",", ":"),
+        ensure_ascii=True,
+    )
+
+
 def canonical_fixed_five_slot_target(label: DegradationLabel) -> str:
     """Serialize one fixed-length independent L1--L5 decision per type."""
 
-    label = make_label(label.degradations, label.level_map)
+    label = make_prediction_label(label.degradations, label.level_map)
     payload = {
         name: label.level_map.get(name, 1)
         for name in DEGRADATIONS
@@ -195,7 +235,7 @@ def parse_fixed_five_slot_target(raw_output: str) -> DegradationLabel:
         if isinstance(level, bool) or not isinstance(level, int) or level not in range(1, 6):
             raise ValueError(f"fixed-slot {name} level must be L1 through L5")
     active = [name for name in DEGRADATIONS if payload[name] > 1]
-    label = make_label(active, {name: payload[name] for name in active})
+    label = make_prediction_label(active, {name: payload[name] for name in active})
     if canonical_fixed_five_slot_target(label) != raw_output:
         raise ValueError("fixed-slot JSON serialization is not canonical")
     return label
@@ -220,7 +260,7 @@ def training_target(label: DegradationLabel, target_schema: str) -> str:
 def canonical_restoration_text(label: DegradationLabel) -> str:
     """Deterministically translate Qwen JSON to the later FLUX text condition."""
 
-    label = make_label(label.degradations, label.level_map)
+    label = make_prediction_label(label.degradations, label.level_map)
     if not label.degradations:
         return "Restore conservatively; the image is clean and has no active degradation."
     descriptions = [
@@ -295,7 +335,7 @@ def aggregate_per_type_responses(
     if not all_valid:
         return None, details
     active = [name for name in DEGRADATIONS if levels[name] > 1]
-    label = make_label(active, {name: levels[name] for name in active})
+    label = make_prediction_label(active, {name: levels[name] for name in active})
     return canonical_fixed_five_slot_target(label), details
 
 
@@ -583,7 +623,7 @@ def evaluate_outputs(
             {
                 "target": canonical_target(truth),
                 "raw_output": raw,
-                "predicted": canonical_target(predicted) if predicted else None,
+                "predicted": canonical_prediction_target(predicted) if predicted else None,
                 "valid_structured_output": valid,
                 "degradation_set_exact": set_exact,
                 "combined_label_exact": label_exact,

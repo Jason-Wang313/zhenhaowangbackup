@@ -123,3 +123,32 @@ FoundIR remain unaccessed. After the readiness commit is pushed, the next
 action is one launch of
 `smoke/launch_qwen_multidegradation_per_type_rank32.sh` on either two or four
 H100s, followed by autonomous monitoring.
+
+## Per-type rank-32 GPU training and evaluation-recovery status
+
+The user launched commit `b8c2630872f820cf94d2cde745c83466792357f6` on
+two NVIDIA H100 80 GB GPUs on `2026-08-27`. Full hashes and the overfit gate
+passed. Peak training memory was approximately 55 GB per GPU. The overfit
+decoder achieved 1.0 exact type/level metrics on all 32 selected images,
+including triples.
+
+All 1,440 optimizer steps and 144,000 dialogue presentations completed. The
+three epoch mean losses were `0.0774334`, `0.0405060`, and `0.0297576`; every
+epoch logged `loss_still_descending=true`. The final H3 checkpoint was safely
+published at `2026-08-27T06:15:38Z`.
+
+All 6,000 validation decoder queries then completed, but evaluation crashed
+before metrics were written. The cause was an evaluation-only cardinality
+bug: five individually valid type answers could aggregate to four or five
+active predictions, while `make_label` correctly restricts corpus ground truth
+to at most three. The aggregator incorrectly reused that ground-truth
+validator and raised instead of retaining extra predicted types as false
+positives. Training and checkpoints were not affected; no protected fixed test
+was accessed.
+
+The recovery patch keeps ground-truth/corpus validation at clean through
+triple, permits four/five-type *predictions* only, and counts their extra types
+as false positives. It also adds a hash-checked `--validation-only` path. The
+existing runner detects the completed H3 checkpoint plus absent validation
+result and uses evaluation-only recovery, so no retraining occurs. After the
+patch is pushed, relaunch the same two/four-H100 launcher once.

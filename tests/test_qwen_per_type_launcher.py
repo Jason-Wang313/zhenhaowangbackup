@@ -25,6 +25,8 @@ class QwenPerTypeLauncherTests(unittest.TestCase):
         self.assertLess(selection, fixed_test)
         self.assertIn("VALIDATION_SCIENTIFIC_FAILURE", runner)
         self.assertIn("exit 2", runner)
+        self.assertIn("VALIDATION_ONLY_RECOVERY", runner)
+        self.assertIn("validation_mode=(--validation-only)", runner)
 
     def test_launcher_has_persistent_tmux_or_nohup_evidence(self):
         launcher = (

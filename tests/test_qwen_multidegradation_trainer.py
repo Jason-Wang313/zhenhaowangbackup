@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -13,6 +14,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     semantic_assistant_token_loss,
     stage_records,
     training_loss,
+    validate_completed_stage_checkpoints,
 )
 from lowlight_restoration.qwen_multidegradation import DEGRADATIONS
 from smoke.train_qwen_multidegradation_overfit_ddp import expand_per_type_records
@@ -247,6 +249,56 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
                 )
             ]
             self.assertEqual(selected, list(range(32)))
+
+    def test_validation_only_recovery_verifies_every_checkpoint_hash(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            stages = [
+                {"name": "epoch1", "records": 20, "epochs": 1},
+                {"name": "epoch2", "records": 20, "epochs": 1},
+            ]
+            for index, stage in enumerate(stages, start=1):
+                directory = output / "checkpoints" / stage["name"]
+                directory.mkdir(parents=True)
+                adapter = directory / "adapter.safetensors"
+                optimizer = directory / "optimizer.pt"
+                adapter.write_bytes(f"adapter-{index}".encode())
+                optimizer.write_bytes(f"optimizer-{index}".encode())
+                metadata = {
+                    "config_sha256": "config",
+                    "variant": "merger_trainable",
+                    "world_size": 2,
+                    "gradient_accumulation_steps": 2,
+                    "global_step": index * 2,
+                    "adapter_sha256": __import__("hashlib").sha256(
+                        adapter.read_bytes()
+                    ).hexdigest(),
+                    "optimizer_sha256": __import__("hashlib").sha256(
+                        optimizer.read_bytes()
+                    ).hexdigest(),
+                }
+                (directory / "metadata.json").write_text(json.dumps(metadata))
+            evidence = validate_completed_stage_checkpoints(
+                output=output,
+                stages=stages,
+                config_sha="config",
+                variant="merger_trainable",
+                world_size=2,
+                accumulation_steps=2,
+                global_batch_size=10,
+            )
+            self.assertEqual([item["global_step"] for item in evidence], [2, 4])
+            (output / "checkpoints/epoch2/adapter.safetensors").write_bytes(b"tampered")
+            with self.assertRaises(RuntimeError):
+                validate_completed_stage_checkpoints(
+                    output=output,
+                    stages=stages,
+                    config_sha="config",
+                    variant="merger_trainable",
+                    world_size=2,
+                    accumulation_steps=2,
+                    global_batch_size=10,
+                )
 
 
 if __name__ == "__main__":

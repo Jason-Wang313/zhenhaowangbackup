@@ -450,6 +450,56 @@ def resume_stage(
     return completed, global_step
 
 
+def validate_completed_stage_checkpoints(
+    *,
+    output: Path,
+    stages: Sequence[Mapping[str, object]],
+    config_sha: str,
+    variant: str,
+    world_size: int,
+    accumulation_steps: int,
+    global_batch_size: int,
+) -> list[dict[str, object]]:
+    """Verify a completed run before evaluation-only recovery."""
+
+    expected_global_step = 0
+    evidence: list[dict[str, object]] = []
+    for stage in stages:
+        expected_global_step += (
+            int(stage["records"])
+            * int(stage.get("epochs", 1))
+            // global_batch_size
+        )
+        directory = checkpoint_directory(output, str(stage["name"]))
+        if not directory.is_dir():
+            raise RuntimeError(f"validation-only checkpoint is missing: {directory}")
+        metadata = json.loads((directory / "metadata.json").read_text())
+        if (
+            metadata.get("config_sha256") != config_sha
+            or metadata.get("variant") != variant
+            or metadata.get("world_size") != world_size
+            or metadata.get("gradient_accumulation_steps") != accumulation_steps
+            or metadata.get("global_step") != expected_global_step
+        ):
+            raise RuntimeError(f"validation-only checkpoint contract mismatch: {directory}")
+        adapter_sha = sha256(directory / "adapter.safetensors")
+        optimizer_sha = sha256(directory / "optimizer.pt")
+        if (
+            adapter_sha != metadata.get("adapter_sha256")
+            or optimizer_sha != metadata.get("optimizer_sha256")
+        ):
+            raise RuntimeError(f"validation-only checkpoint hash failed: {directory}")
+        evidence.append(
+            {
+                "stage": stage["name"],
+                "global_step": expected_global_step,
+                "adapter_sha256": adapter_sha,
+                "optimizer_sha256": optimizer_sha,
+            }
+        )
+    return evidence
+
+
 def stage_records(
     records: Sequence[Mapping[str, object]],
     stage: Mapping[str, object],
@@ -1073,7 +1123,9 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--variant", choices=("merger_frozen", "merger_trainable"), required=True)
-    parser.add_argument("--test-only", action="store_true")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--test-only", action="store_true")
+    mode.add_argument("--validation-only", action="store_true")
     args = parser.parse_args()
     config, config_sha = load_config(args.config)
     validate_contract(config)
@@ -1115,6 +1167,29 @@ def main() -> int:
             load_qwen_adapter(model, final_checkpoint / "adapter.safetensors")
             training_result = {"gradient_audit_pass": True, "fixed_adapter": True}
             split = "test"
+        elif args.validation_only:
+            checkpoint_evidence = validate_completed_stage_checkpoints(
+                output=output,
+                stages=stages,
+                config_sha=config_sha,
+                variant=args.variant,
+                world_size=world,
+                accumulation_steps=accumulation_steps_for_world(dict(config), world),
+                global_batch_size=int(training["global_batch_size"]),
+            )
+            if int(checkpoint_evidence[-1]["global_step"]) != int(
+                training["total_optimizer_steps"]
+            ):
+                raise RuntimeError("validation-only final optimizer step changed")
+            load_qwen_adapter(model, final_checkpoint / "adapter.safetensors")
+            training_result = {
+                "gradient_audit_pass": True,
+                "fixed_adapter": True,
+                "validation_only_recovery": True,
+                "global_step": int(training["total_optimizer_steps"]),
+                "completed_stage_checkpoints": checkpoint_evidence,
+            }
+            split = "validation"
         else:
             output.mkdir(parents=True, exist_ok=True)
             initialization_evidence = None

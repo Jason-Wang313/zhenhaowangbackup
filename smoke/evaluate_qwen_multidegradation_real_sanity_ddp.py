@@ -19,7 +19,7 @@ from lowlight_restoration.qwen_lora import load_qwen_adapter
 from lowlight_restoration.qwen_multidegradation import (
     FIXED_FIVE_SLOT_SCHEMA,
     PER_TYPE_DIALOGUE_SCHEMA,
-    canonical_target,
+    canonical_prediction_target,
     parse_output,
 )
 from smoke.qwen_multidegradation_lora_preflight import (
@@ -121,7 +121,7 @@ def main() -> int:
             error = None
             try:
                 label = parse_output(raw, evaluation_schema)
-                predicted = canonical_target(label)
+                predicted = canonical_prediction_target(label)
                 valid += 1
                 primary_present += int(record["expected_primary_type"] in label.degradations)
             except ValueError as exc:
