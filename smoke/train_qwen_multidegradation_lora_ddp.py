@@ -68,6 +68,26 @@ def atomic_json(path: Path, payload: Mapping[str, object]) -> str:
     )
 
 
+def evaluation_artifact_paths(
+    output: Path,
+    *,
+    split: str,
+    validation_stage_name: str | None,
+) -> tuple[Path, Path]:
+    """Return immutable, non-colliding prediction and result paths."""
+    if split == "test":
+        if validation_stage_name is not None:
+            raise ValueError("fixed-test evaluation cannot name a validation stage")
+        return output / "test_predictions.json", output / "fixed_test_result.json"
+    if split != "validation":
+        raise ValueError(f"unsupported evaluation split: {split}")
+    suffix = f"_{validation_stage_name}" if validation_stage_name else ""
+    return (
+        output / f"validation_predictions{suffix}.json",
+        output / f"validation_result{suffix}.json",
+    )
+
+
 def setup_distributed(config: Mapping[str, object]) -> tuple[int, int, int, torch.device]:
     distributed = config["distributed"]
     assert isinstance(distributed, Mapping)
@@ -1204,12 +1224,11 @@ def main() -> int:
         rank, world, local_rank, device = setup_distributed(config)
         ready = True
         validation_stage_name = str(args.validation_stage) if args.validation_stage else None
-        existing_path = output / (
-            "fixed_test_result.json"
-            if args.test_only
-            else f"validation_result_{validation_stage_name}.json"
-            if validation_stage_name
-            else "validation_result.json"
+        requested_split = "test" if args.test_only else "validation"
+        predictions_path, existing_path = evaluation_artifact_paths(
+            output,
+            split=requested_split,
+            validation_stage_name=validation_stage_name,
         )
         existing = broadcast_rank0(
             rank,
@@ -1381,8 +1400,7 @@ def main() -> int:
         )
         checks = gate_checks(metrics, config, bool(training_result["gradient_audit_pass"]))
         automatic_pass = all(checks.values())
-        if rank == 0:
-            predictions_path = output / f"{split}_predictions.json"
+        def publish_evaluation() -> bool:
             atomic_json(
                 predictions_path,
                 {"schema_version": 1, "config_sha256": config_sha, "variant": args.variant, "split": split, "records": rows},
@@ -1413,9 +1431,13 @@ def main() -> int:
                 + json.dumps({"variant": args.variant, "split": split, "metrics": metrics}, sort_keys=True),
                 flush=True,
             )
-        pass_tensor = torch.tensor(int(automatic_pass), dtype=torch.int32, device=device)
-        dist.broadcast(pass_tensor, src=0)
-        return 0 if pass_tensor.item() else 2
+            return automatic_pass
+
+        # Publish on rank zero and broadcast either the result or the exception.
+        # This prevents nonzero ranks from hanging until the NCCL watchdog fires
+        # when immutable artifact publication fails.
+        published_pass = bool(broadcast_rank0(rank, publish_evaluation))
+        return 0 if published_pass else 2
     finally:
         if ready:
             dist.destroy_process_group()

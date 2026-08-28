@@ -3,11 +3,36 @@ from __future__ import annotations
 import unittest
 from pathlib import Path
 
+from smoke.train_qwen_multidegradation_lora_ddp import evaluation_artifact_paths
+
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class QwenPerTypeLauncherTests(unittest.TestCase):
+    def test_candidate_validation_artifacts_do_not_collide(self):
+        output = Path("/tmp/qwen-candidate-artifacts")
+        h5_predictions, h5_result = evaluation_artifact_paths(
+            output,
+            split="validation",
+            validation_stage_name="H5_per_type_dialogue_epoch5",
+        )
+        h6_predictions, h6_result = evaluation_artifact_paths(
+            output,
+            split="validation",
+            validation_stage_name="H6_per_type_dialogue_epoch6",
+        )
+        h8_predictions, h8_result = evaluation_artifact_paths(
+            output,
+            split="validation",
+            validation_stage_name=None,
+        )
+        self.assertEqual(len({h5_predictions, h6_predictions, h8_predictions}), 3)
+        self.assertEqual(len({h5_result, h6_result, h8_result}), 3)
+        self.assertTrue(h5_predictions.name.endswith("H5_per_type_dialogue_epoch5.json"))
+        self.assertTrue(h6_predictions.name.endswith("H6_per_type_dialogue_epoch6.json"))
+        self.assertEqual(h8_predictions.name, "validation_predictions.json")
+
     def test_runner_is_fail_closed_and_test_blind_until_validation_passes(self):
         runner = (
             ROOT / "smoke/run_qwen_multidegradation_per_type_rank32.sh"
