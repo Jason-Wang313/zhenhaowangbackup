@@ -130,6 +130,28 @@ class MultiDegradationVisibilityBuilderTests(unittest.TestCase):
             0.45 <= factors["haze_airlight_contrast_scale"] <= 0.90
         )
 
+    def test_haze_source_pool_accepts_hash_bound_external_depth(self):
+        ordinary = next(
+            source for source in self.assignments["validation"]
+            if source["dataset"] == "lsdir"
+        )
+        depth_path = "data/agenticir/haze/001/predict_depth.mat"
+        from lowlight_restoration.multidegradation_data import sha256
+
+        depth_qualified = {
+            **ordinary,
+            "depth_path": depth_path,
+            "depth_sha256": sha256(ROOT / depth_path),
+        }
+        pool = ordered_source_pool(
+            [ordinary, depth_qualified],
+            seed=3,
+            split="validation",
+            combo=("haze",),
+        )
+        self.assertEqual([source["source_id"] for source in pool], [ordinary["source_id"]])
+        self.assertIn("depth_path", pool[0])
+
     def test_complete_synthetic_manifest_requires_physical_order_and_evidence(self):
         records = build_pilot_records(self.inventory, seed=int(self.config["seed"]))
         policy = self.config["visibility_policy"]

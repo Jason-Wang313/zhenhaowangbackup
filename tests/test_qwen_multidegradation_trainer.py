@@ -1,4 +1,5 @@
 import json
+import itertools
 import tempfile
 import unittest
 from pathlib import Path
@@ -260,6 +261,87 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         expected = (token_losses[0] + 4 * token_losses[1] + token_losses[2]) / 6
         self.assertAlmostEqual(loss.item(), expected.item(), places=6)
 
+    def test_semantic_loss_accepts_per_query_type_weights(self):
+        labels = torch.tensor([[-100, 2], [-100, 2]])
+        logits = torch.zeros((2, 2, 4), dtype=torch.float32)
+        logits[0, 0, 2] = 1.0
+        logits[1, 0, 2] = 3.0
+        loss = semantic_assistant_token_loss(
+            logits,
+            labels,
+            semantic_token_ids=[2],
+            semantic_weight=8.0,
+            example_semantic_weights=[12.0, 8.0],
+        )
+        token_losses = torch.nn.functional.cross_entropy(
+            logits[:, :-1].reshape(-1, 4), labels[:, 1:].reshape(-1), reduction="none"
+        )
+        expected = (12 * token_losses[0] + 8 * token_losses[1]) / 20
+        self.assertAlmostEqual(loss.item(), expected.item(), places=6)
+
+    def test_hard_triple_sampler_preserves_mixture_and_exact_quotas(self):
+        records = []
+        for size in range(4):
+            combos = [()] if size == 0 else list(itertools.combinations(DEGRADATIONS, size))
+            for index, combo in enumerate(combos):
+                records.append(
+                    {
+                        "record_id": f"c{size}_{index}",
+                        "source_id": f"source_c{size}_{index}",
+                        "split": "train",
+                        "composition_size": size,
+                        "degradations": list(combo),
+                    }
+                )
+        triple_quotas = {
+            "+".join(combo): (
+                480
+                if "+".join(combo)
+                in {
+                    "blur+noise+rain",
+                    "blur+noise+low_light",
+                    "noise+rain+low_light",
+                    "noise+haze+low_light",
+                }
+                else 240
+            )
+            for combo in itertools.combinations(DEGRADATIONS, 3)
+        }
+        stage = {
+            "name": "test_hard_triple",
+            "maximum_composition_size": 3,
+            "source_records": 8400,
+            "records": 42000,
+            "source_sampling": {
+                "schema": "hard_triple_mixture_v1",
+                "composition_source_quotas": {
+                    "0": 600,
+                    "1": 2200,
+                    "2": 2240,
+                    "3": 3360,
+                },
+                "triple_combination_source_quotas": triple_quotas,
+            },
+        }
+        dialogues = stage_records(
+            records,
+            stage,
+            2026082839,
+            target_schema="per_type_dialogue_l1_absent_l2_l5_v1",
+            global_batch_size=200,
+        )
+        self.assertEqual(len(dialogues), 42000)
+        source_presentations = {
+            size: sum(int(row["composition_size"]) == size for row in dialogues) // 5
+            for size in range(4)
+        }
+        self.assertEqual(source_presentations, {0: 600, 1: 2200, 2: 2240, 3: 3360})
+        for combo, quota in triple_quotas.items():
+            observed = sum(
+                "+".join(row["degradations"]) == combo for row in dialogues
+            ) // 5
+            self.assertEqual(observed, quota)
+
     def test_baseline_training_loss_is_unchanged(self):
         class Output:
             loss = torch.tensor(1.25)
@@ -300,6 +382,27 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         }
         self.assertTrue(all(gate_checks(metrics, self.config, True).values()))
         self.assertFalse(gate_checks(metrics, self.config, False)["gradient_scope"])
+
+    def test_v2b_validation_and_protected_test_use_frozen_distinct_triple_gates(self):
+        config, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_visibility_v2b_hard_triple.json"
+        )
+        metrics = {
+            "valid_structured_output_rate": 1.0,
+            "type_macro_f1": 1.0,
+            "type_micro_f1": 1.0,
+            "degradation_set_exact_match_rate": 1.0,
+            "combined_label_exact_match_rate": 1.0,
+            "severity_typed_accuracy": 1.0,
+            "severity_typed_mae_with_missing_penalty": 0.0,
+            "per_type_valid_response_rate": 1.0,
+            "per_type_level_accuracy": 1.0,
+            "by_composition_size": {
+                "3": {"degradation_set_exact_match_rate": 0.81}
+            },
+        }
+        self.assertFalse(gate_checks(metrics, config, True, split="validation")["triple_set_exact"])
+        self.assertTrue(gate_checks(metrics, config, True, split="test")["triple_set_exact"])
 
     def test_overfit_selection_covers_all_types_levels_and_compositions(self):
         selected = select_overfit_records(

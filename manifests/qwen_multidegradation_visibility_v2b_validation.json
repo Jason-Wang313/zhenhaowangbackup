@@ -1,0 +1,27 @@
+{
+  "config": "configs/qwen_multidegradation_visibility_v2b_validation.json",
+  "config_sha256": "8fcab8e2d0107730ddfb9ec1886cd9389bd6bf3f23f02014a08a2854f2dd036f",
+  "manifest": "manifests/qwen_multidegradation_visibility_v2b_validation.jsonl",
+  "manifest_sha256": "219c87aa5ce5fdfc63ee6ee31d3a429463fbcb06dd1eaf93ab6534091a422c7f",
+  "model_checkpoint_accessed": false,
+  "old_manifest": "manifests/qwen_multidegradation_pilot_v2.jsonl",
+  "old_manifest_sha256": "0ec9b367d3b795b01f8a2185b0ff6bfda8a8d21b29926929371bac4bf013ce7e",
+  "protected_test_inference_performed": false,
+  "schema_version": 1,
+  "source_manifest": "manifests/qwen_multidegradation_visibility_v2b_sources.json",
+  "source_manifest_sha256": "2c9ba8fced240a78684b17880f1dabc7334b965b2e9986ac8e2c1a7a413595b6",
+  "status": "frozen_validation_manifest_before_model_correction_or_inference",
+  "validation": {
+    "combination_and_l2_l5_exactly_balanced": true,
+    "maximum_screening_attempts": 369,
+    "mean_screening_attempts": 8.939166666666667,
+    "p95_screening_attempts": 40.0,
+    "records": 1200,
+    "source_disjoint_from_old_train_validation_and_protected_test": true,
+    "unique_record_ids": 1200,
+    "unique_sources_used": 199,
+    "visible_active_components": 2160
+  },
+  "visibility_anchor": "reports/qwen_multidegradation_visibility_anchor_luma_normalized_v2.json",
+  "visibility_anchor_sha256": "155ddf13a9f65df9074193728ed69f2de506d32d4d6189d992ab6ccb229941e5"
+}

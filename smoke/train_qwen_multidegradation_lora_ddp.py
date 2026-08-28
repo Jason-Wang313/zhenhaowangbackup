@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import contextlib
 import hashlib
+import itertools
 import json
 import math
 import os
@@ -248,6 +249,7 @@ def semantic_assistant_token_loss(
     *,
     semantic_token_ids: Sequence[int],
     semantic_weight: float,
+    example_semantic_weights: Sequence[float] | None = None,
 ) -> torch.Tensor:
     """Causal assistant-token CE with extra weight on label decisions.
 
@@ -282,11 +284,23 @@ def semantic_assistant_token_loss(
     semantic = torch.zeros_like(active_labels, dtype=torch.bool)
     for token_id in semantic_token_ids:
         semantic.logical_or_(active_labels.eq(token_id))
-    weights = torch.where(
-        semantic,
-        torch.full_like(weights, float(semantic_weight)),
-        weights,
-    )
+    if example_semantic_weights is None:
+        semantic_weights = torch.full_like(weights, float(semantic_weight))
+    else:
+        if len(example_semantic_weights) != labels.shape[0]:
+            raise ValueError("semantic example-weight cardinality changed")
+        per_example = torch.as_tensor(
+            example_semantic_weights,
+            dtype=weights.dtype,
+            device=weights.device,
+        )
+        if (
+            not torch.all(torch.isfinite(per_example))
+            or torch.any(per_example <= 1.0)
+        ):
+            raise ValueError("semantic example weights must be finite and greater than one")
+        semantic_weights = per_example[:, None].expand_as(shifted_labels)[valid]
+    weights = torch.where(semantic, semantic_weights, weights)
     loss = (token_loss * weights).sum() / weights.sum()
     if not torch.isfinite(loss):
         raise RuntimeError("semantic assistant-token loss is non-finite")
@@ -297,6 +311,8 @@ def training_loss(
     output_value: object,
     labels: torch.Tensor,
     training: Mapping[str, object],
+    *,
+    query_degradations: Sequence[str] | None = None,
 ) -> torch.Tensor:
     """Select the frozen baseline CE or the bounded semantic correction CE."""
 
@@ -314,11 +330,23 @@ def training_loss(
     token_ids = semantic.get("semantic_token_ids")
     if not isinstance(token_ids, list):
         raise ValueError("semantic-token loss IDs must be a list")
+    type_weights = semantic.get("semantic_weight_by_degradation")
+    example_weights: list[float] | None = None
+    if type_weights is not None:
+        if (
+            not isinstance(type_weights, Mapping)
+            or set(map(str, type_weights)) != set(DEGRADATIONS)
+            or query_degradations is None
+            or any(name not in DEGRADATIONS for name in query_degradations)
+        ):
+            raise ValueError("per-degradation semantic weights are malformed")
+        example_weights = [float(type_weights[name]) for name in query_degradations]
     return semantic_assistant_token_loss(
         logits,
         labels,
         semantic_token_ids=token_ids,
         semantic_weight=float(semantic["semantic_weight"]),
+        example_semantic_weights=example_weights,
     )
 
 
@@ -579,13 +607,90 @@ def stage_records(
         and int(record["composition_size"]) <= int(stage["maximum_composition_size"])
         and str(record["source_id"]) not in excluded
     ]
-    selected.sort(
-        key=lambda record: (
-            stable_digest(seed, stage["name"], record["record_id"])
-            if epoch == 0
-            else stable_digest(seed, stage["name"], epoch, record["record_id"])
+    sampling = stage.get("source_sampling")
+    if sampling is None:
+        selected.sort(
+            key=lambda record: (
+                stable_digest(seed, stage["name"], record["record_id"])
+                if epoch == 0
+                else stable_digest(seed, stage["name"], epoch, record["record_id"])
+            )
         )
-    )
+    else:
+        if not isinstance(sampling, Mapping) or sampling.get("schema") != "hard_triple_mixture_v1":
+            raise ValueError("hard-triple sampling contract is malformed")
+        composition_quotas = sampling.get("composition_source_quotas")
+        triple_quotas = sampling.get("triple_combination_source_quotas")
+        if not isinstance(composition_quotas, Mapping) or not isinstance(triple_quotas, Mapping):
+            raise ValueError("hard-triple sampling quotas are missing")
+
+        def deterministic_take(
+            candidates: Sequence[Mapping[str, object]],
+            quota: int,
+            salt: str,
+        ) -> list[Mapping[str, object]]:
+            if quota <= 0 or not candidates:
+                raise ValueError(f"invalid hard-triple pool or quota: {salt}")
+            result: list[Mapping[str, object]] = []
+            cycle = 0
+            while len(result) < quota:
+                ordered = sorted(
+                    candidates,
+                    key=lambda record: stable_digest(
+                        seed,
+                        stage["name"],
+                        epoch,
+                        "hard_triple",
+                        salt,
+                        cycle,
+                        record["record_id"],
+                    ),
+                )
+                result.extend(ordered[: quota - len(result)])
+                cycle += 1
+            return result
+
+        sampled: list[Mapping[str, object]] = []
+        for composition_size in range(3):
+            quota = int(composition_quotas.get(str(composition_size), 0))
+            pool = [
+                record
+                for record in selected
+                if int(record["composition_size"]) == composition_size
+            ]
+            sampled.extend(deterministic_take(pool, quota, f"c{composition_size}"))
+        expected_triples = {
+            "+".join(combo)
+            for combo in itertools.combinations(DEGRADATIONS, 3)
+        }
+        if set(map(str, triple_quotas)) != expected_triples:
+            raise ValueError("hard-triple combination coverage changed")
+        triple_total = 0
+        for combo_text in sorted(expected_triples):
+            combo = tuple(combo_text.split("+"))
+            quota = int(triple_quotas[combo_text])
+            pool = [
+                record
+                for record in selected
+                if tuple(record["degradations"]) == combo
+            ]
+            sampled.extend(deterministic_take(pool, quota, combo_text))
+            triple_total += quota
+        if triple_total != int(composition_quotas.get("3", 0)):
+            raise ValueError("hard-triple total differs from composition quota")
+        if len(sampled) != int(stage.get("source_records", 0)):
+            raise RuntimeError("hard-triple sampled source count changed")
+        selected = sorted(
+            sampled,
+            key=lambda record: stable_digest(
+                seed,
+                stage["name"],
+                epoch,
+                "hard_triple_final",
+                record["record_id"],
+                len(str(record)),
+            ),
+        )
     if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
         source_records = int(stage.get("source_records", 0))
         if len(selected) < source_records:
@@ -789,7 +894,16 @@ def train_variant(
                             else device_batch
                         )
                         output_value = ddp(**forward_batch, use_cache=False)
-                        loss = training_loss(output_value, device_batch["labels"], training)
+                        loss = training_loss(
+                            output_value,
+                            device_batch["labels"],
+                            training,
+                            query_degradations=(
+                                [str(record["query_degradation"]) for record in local_records]
+                                if target_schema == PER_TYPE_DIALOGUE_SCHEMA
+                                else None
+                            ),
+                        )
                         if not torch.isfinite(loss):
                             raise RuntimeError(
                                 f"non-finite Qwen loss at step {global_step + 1}"
@@ -1362,10 +1476,26 @@ def generate_outputs(
     return [raw for _, raw in sorted(flattened)]
 
 
-def gate_checks(metrics: Mapping[str, object], config: Mapping[str, object], gradient_pass: bool) -> dict[str, bool]:
+def gate_checks(
+    metrics: Mapping[str, object],
+    config: Mapping[str, object],
+    gradient_pass: bool,
+    *,
+    split: str = "validation",
+) -> dict[str, bool]:
     gate = config["gate"]
     assert isinstance(gate, Mapping)
     triple = metrics["by_composition_size"]["3"]
+    if split not in {"validation", "test"}:
+        raise ValueError(f"unsupported gate split: {split}")
+    triple_threshold = float(
+        gate.get(
+            "minimum_protected_test_triple_degradation_set_exact_match_rate",
+            gate["minimum_triple_degradation_set_exact_match_rate"],
+        )
+        if split == "test"
+        else gate["minimum_triple_degradation_set_exact_match_rate"]
+    )
     checks = {
         "valid_structure": float(metrics["valid_structured_output_rate"]) >= float(gate["minimum_valid_structured_output_rate"]),
         "type_macro_f1": float(metrics["type_macro_f1"]) >= float(gate["minimum_type_macro_f1"]),
@@ -1374,7 +1504,7 @@ def gate_checks(metrics: Mapping[str, object], config: Mapping[str, object], gra
         "combined_label_exact": float(metrics["combined_label_exact_match_rate"]) >= float(gate["minimum_combined_label_exact_match_rate"]),
         "severity_accuracy": float(metrics["severity_typed_accuracy"]) >= float(gate["minimum_severity_typed_accuracy"]),
         "severity_mae": float(metrics["severity_typed_mae_with_missing_penalty"]) <= float(gate["maximum_severity_typed_mae_with_missing_penalty"]),
-        "triple_set_exact": float(triple["degradation_set_exact_match_rate"]) >= float(gate["minimum_triple_degradation_set_exact_match_rate"]),
+        "triple_set_exact": float(triple["degradation_set_exact_match_rate"]) >= triple_threshold,
         "gradient_scope": gradient_pass,
     }
     if "minimum_per_type_valid_response_rate" in gate:
@@ -1403,8 +1533,15 @@ def evaluate_split(
     output: Path,
     config_sha: str,
     adapter_sha: str,
+    evaluation_records: Sequence[Mapping[str, object]] | None = None,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
-    records = [record for record in all_records if record["split"] == split]
+    records = (
+        list(evaluation_records)
+        if evaluation_records is not None
+        else [record for record in all_records if record["split"] == split]
+    )
+    if not records or any(record.get("split") != split for record in records):
+        raise RuntimeError("external evaluation records have the wrong split")
     prompt_config = config["prompt"]
     assert isinstance(prompt_config, Mapping)
     target_schema = str(prompt_config["target_schema"])
@@ -1705,6 +1842,12 @@ def main() -> int:
             if initialization_evidence is not None:
                 training_result["initialization"] = initialization_evidence
             split = "validation"
+        evaluation_records = None
+        if split == "validation" and data.get("validation_manifest") is not None:
+            validation_manifest = workspace_path(data["validation_manifest"])
+            if sha256(validation_manifest) != data.get("validation_manifest_sha256"):
+                raise RuntimeError("frozen external validation manifest changed")
+            evaluation_records = read_jsonl(validation_manifest)
         rows, metrics = evaluate_split(
             model,
             processor,
@@ -1717,8 +1860,14 @@ def main() -> int:
             output=output,
             config_sha=config_sha,
             adapter_sha=sha256(final_checkpoint / "adapter.safetensors"),
+            evaluation_records=evaluation_records,
         )
-        checks = gate_checks(metrics, config, bool(training_result["gradient_audit_pass"]))
+        checks = gate_checks(
+            metrics,
+            config,
+            bool(training_result["gradient_audit_pass"]),
+            split=split,
+        )
         automatic_pass = all(checks.values())
         def publish_evaluation() -> bool:
             atomic_json(

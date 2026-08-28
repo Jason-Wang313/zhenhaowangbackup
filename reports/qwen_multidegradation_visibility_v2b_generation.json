@@ -1,0 +1,29 @@
+{
+  "completed_records": 1200,
+  "config": "configs/qwen_multidegradation_visibility_v2b_validation.json",
+  "config_sha256": "8fcab8e2d0107730ddfb9ec1886cd9389bd6bf3f23f02014a08a2854f2dd036f",
+  "elapsed_seconds": 18.64837903343141,
+  "generated_records": 1200,
+  "manifest": "manifests/qwen_multidegradation_visibility_v2b_validation.jsonl",
+  "manifest_sha256": "219c87aa5ce5fdfc63ee6ee31d3a429463fbcb06dd1eaf93ab6534091a422c7f",
+  "metadata": "manifests/qwen_multidegradation_visibility_v2b_validation.json",
+  "metadata_sha256": "cc85728c88ab7acda22506e9c9b587a704813a463a2054c23fda8a99b5bafa61",
+  "model_checkpoint_accessed": false,
+  "protected_test_inference_performed": false,
+  "reused_records": 0,
+  "schema_version": 1,
+  "status": "pass",
+  "validation": {
+    "combination_and_l2_l5_exactly_balanced": true,
+    "maximum_screening_attempts": 369,
+    "mean_screening_attempts": 8.939166666666667,
+    "p95_screening_attempts": 40.0,
+    "records": 1200,
+    "source_disjoint_from_old_train_validation_and_protected_test": true,
+    "unique_record_ids": 1200,
+    "unique_sources_used": 199,
+    "visible_active_components": 2160
+  },
+  "visibility_hash_verified_records": 1080,
+  "workers": 48
+}

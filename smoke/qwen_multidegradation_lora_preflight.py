@@ -49,6 +49,7 @@ APPROVED_STATUSES = {
     "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining",
     "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation",
     "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated",
+    "approved_qwen_visibility_v2b_hard_triple_continuation",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -129,15 +130,20 @@ def validate_contract(config: dict[str, object]) -> None:
             "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining",
             "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation",
             "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated",
+            "approved_qwen_visibility_v2b_hard_triple_continuation",
         }
     )
     per_type_continuation = (
         status
         == "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation"
     )
-    visibility_v2 = (
-        status == "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated"
+    visibility_v2b = (
+        status == "approved_qwen_visibility_v2b_hard_triple_continuation"
     )
+    visibility_v2 = status in {
+        "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated",
+        "approved_qwen_visibility_v2b_hard_triple_continuation",
+    }
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
         "overfit", "distributed", "generation", "gate", "runtime",
@@ -170,6 +176,36 @@ def validate_contract(config: dict[str, object]) -> None:
         or generation_result.get("completed_records") != 12000
     ):
         raise RuntimeError("pilot generation result is incomplete")
+    if visibility_v2b:
+        for path_key, hash_key in (
+            ("validation_manifest", "validation_manifest_sha256"),
+            ("validation_metadata", "validation_metadata_sha256"),
+            ("validation_generation_result", "validation_generation_result_sha256"),
+        ):
+            path = workspace_path(data.get(path_key))
+            if sha256(path) != data.get(hash_key):
+                raise RuntimeError(f"v2b frozen validation input changed: {path_key}")
+        validation_metadata = json.loads(
+            workspace_path(data["validation_metadata"]).read_text()
+        )
+        validation_generation = json.loads(
+            workspace_path(data["validation_generation_result"]).read_text()
+        )
+        if (
+            validation_metadata.get("status")
+            != "frozen_validation_manifest_before_model_correction_or_inference"
+            or validation_metadata.get("manifest_sha256")
+            != data["validation_manifest_sha256"]
+            or validation_metadata.get("model_checkpoint_accessed") is not False
+            or validation_metadata.get("protected_test_inference_performed") is not False
+            or validation_generation.get("status") != "pass"
+            or validation_generation.get("manifest_sha256")
+            != data["validation_manifest_sha256"]
+            or validation_generation.get("completed_records") != 1200
+            or validation_generation.get("model_checkpoint_accessed") is not False
+            or validation_generation.get("protected_test_inference_performed") is not False
+        ):
+            raise RuntimeError("v2b external validation was not frozen before correction")
     real_manifest_path = workspace_path(data["real_sanity_manifest"])
     if sha256(real_manifest_path) != data["real_sanity_manifest_sha256"]:
         raise RuntimeError("frozen real-sanity manifest changed")
@@ -297,7 +333,9 @@ def validate_contract(config: dict[str, object]) -> None:
             raise ValueError(f"global batch does not match DDP semantics for world {world}")
     stages = data.get("curriculum")
     expected_maxima = (
-        [3, 3, 3, 3, 3]
+        [3, 3, 3]
+        if visibility_v2b
+        else [3, 3, 3, 3, 3]
         if (per_type_continuation or visibility_v2)
         else [3, 3, 3]
         if per_type_dialogue
@@ -332,6 +370,14 @@ def validate_contract(config: dict[str, object]) -> None:
             or int(training.get("warmup_steps", -1)) != 0
         ):
             raise ValueError("rank-32 continuation optimizer schedule changed")
+    elif visibility_v2b:
+        if (
+            initial_steps != 1050
+            or int(training.get("continuation_optimizer_steps", 0))
+            != continuation_steps
+            or int(training.get("warmup_steps", -1)) != 0
+        ):
+            raise ValueError("visibility-v2b continuation optimizer schedule changed")
     elif initial_steps != 0:
         raise ValueError("non-continuation experiment has an optimizer-step offset")
     if per_type_dialogue:
@@ -341,7 +387,9 @@ def validate_contract(config: dict[str, object]) -> None:
             else int(data["expected_split_records"]["train"])
         )
         expected_dialogues = expected_images * len(DEGRADATIONS)
-        expected_stage_count = 5 if (per_type_continuation or visibility_v2) else 3
+        expected_stage_count = (
+            3 if visibility_v2b else 5 if (per_type_continuation or visibility_v2) else 3
+        )
         if len(stages) != expected_stage_count:
             raise ValueError(
                 f"per-type phase must preserve {expected_stage_count} full epochs"
@@ -373,6 +421,19 @@ def validate_contract(config: dict[str, object]) -> None:
                 or float(semantic_loss.get("semantic_weight", 0.0)) != 8.0
             ):
                 raise ValueError("visibility-v2 decision-token loss contract changed")
+            expected_type_weights = (
+                {
+                    "blur": 12.0,
+                    "noise": 8.0,
+                    "rain": 12.0,
+                    "haze": 12.0,
+                    "low_light": 8.0,
+                }
+                if visibility_v2b
+                else None
+            )
+            if semantic_loss.get("semantic_weight_by_degradation") != expected_type_weights:
+                raise ValueError("visibility-v2 per-type decision weights changed")
         elif semantic_loss is not None:
             raise ValueError("advisor-directed per-type dialogue must use plain assistant CE")
         if per_type_continuation:
@@ -415,12 +476,70 @@ def validate_contract(config: dict[str, object]) -> None:
             ):
                 raise ValueError("continuation validation-selection contract changed")
         elif visibility_v2:
-            if config.get("initialization") is not None:
-                raise ValueError("visibility-v2 retraining must start from the Qwen base")
-            expected_names = [
-                f"V2_H{epoch}_per_type_dialogue_epoch{epoch}"
-                for epoch in range(1, 6)
-            ]
+            if visibility_v2b:
+                validate_visibility_v2b_initialization(config)
+                expected_names = [
+                    "V2B_C1_hard_triple_epoch6",
+                    "V2B_C2_hard_triple_epoch7",
+                    "V2B_C3_hard_triple_epoch8",
+                ]
+                expected_sampling = {
+                    "schema": "hard_triple_mixture_v1",
+                    "composition_source_quotas": {
+                        "0": 600,
+                        "1": 2200,
+                        "2": 2240,
+                        "3": 3360,
+                    },
+                    "triple_combination_source_quotas": {
+                        "blur+noise+rain": 480,
+                        "blur+noise+haze": 240,
+                        "blur+noise+low_light": 480,
+                        "blur+rain+haze": 240,
+                        "blur+rain+low_light": 240,
+                        "blur+haze+low_light": 240,
+                        "noise+rain+haze": 240,
+                        "noise+rain+low_light": 480,
+                        "noise+haze+low_light": 480,
+                        "rain+haze+low_light": 240,
+                    },
+                }
+                if (
+                    [stage.get("name") for stage in stages] != expected_names
+                    or any(stage.get("source_sampling") != expected_sampling for stage in stages)
+                    or micro != 25
+                    or global_batch != 200
+                    or training.get("gradient_accumulation_steps_by_world_size")
+                    != {"2": 4, "8": 1}
+                    or float(training.get("lora_learning_rate", 0.0)) != 0.00001
+                    or float(training.get("merger_learning_rate", 0.0)) != 0.000001
+                    or float(training.get("language_lora_learning_rate", 0.0))
+                    != 0.000004
+                    or training.get("allow_world_size_change_on_resume") is not True
+                    or float(
+                        config["gate"].get(
+                            "minimum_triple_degradation_set_exact_match_rate", 0.0
+                        )
+                    )
+                    != 0.83
+                    or float(
+                        config["gate"].get(
+                            "minimum_protected_test_triple_degradation_set_exact_match_rate",
+                            0.0,
+                        )
+                    )
+                    != 0.80
+                    or config.get("selection", {}).get("checkpoint")
+                    != "V2B_C3_hard_triple_epoch8"
+                ):
+                    raise ValueError("visibility-v2b correction contract changed")
+            else:
+                if config.get("initialization") is not None:
+                    raise ValueError("visibility-v2 retraining must start from the Qwen base")
+                expected_names = [
+                    f"V2_H{epoch}_per_type_dialogue_epoch{epoch}"
+                    for epoch in range(1, 6)
+                ]
             partition_config = data.get("calibration_partition")
             decision = config.get("decision_calibration")
             if (
@@ -429,10 +548,12 @@ def validate_contract(config: dict[str, object]) -> None:
                 or global_batch != 200
                 or training.get("gradient_accumulation_steps_by_world_size")
                 != {"2": 4, "8": 1}
-                or float(training.get("lora_learning_rate", 0.0)) != 0.00005
-                or float(training.get("merger_learning_rate", 0.0)) != 0.000005
+                or float(training.get("lora_learning_rate", 0.0))
+                != (0.00001 if visibility_v2b else 0.00005)
+                or float(training.get("merger_learning_rate", 0.0))
+                != (0.000001 if visibility_v2b else 0.000005)
                 or float(training.get("language_lora_learning_rate", 0.0))
-                != 0.00002
+                != (0.000004 if visibility_v2b else 0.00002)
                 or not isinstance(partition_config, dict)
                 or not isinstance(decision, dict)
                 or decision.get("level_token_ids") != FIXED_SLOT_SEMANTIC_TOKEN_IDS
@@ -440,13 +561,13 @@ def validate_contract(config: dict[str, object]) -> None:
                 or decision.get("validation_or_test_used_for_fit") is not False
                 or int(decision.get("candidate_batch_size_per_rank", 0)) <= 0
                 or config.get("selection", {}).get("checkpoint")
-                != "V2_H5_per_type_dialogue_epoch5"
+                != expected_names[-1]
                 or float(
                     config["gate"].get(
                         "minimum_triple_degradation_set_exact_match_rate", 0.0
                     )
                 )
-                != 0.8
+                != (0.83 if visibility_v2b else 0.8)
             ):
                 raise ValueError("visibility-v2 rank-32 training contract changed")
         elif config.get("initialization") is not None:
@@ -683,6 +804,77 @@ def validate_per_type_continuation_initialization(
         raise RuntimeError("the protected fixed test was accessed before continuation selection")
 
 
+def validate_visibility_v2b_initialization(config: dict[str, object]) -> None:
+    """Bind v2b correction to the immutable failed epoch-5 v2 checkpoint."""
+
+    initialization = config.get("initialization")
+    if not isinstance(initialization, dict):
+        raise ValueError("visibility-v2b initialization is missing")
+    required_hashes = (
+        ("base_config", "base_config_sha256"),
+        ("adapter", "adapter_sha256"),
+        ("optimizer", "optimizer_sha256"),
+        ("checkpoint_metadata", "checkpoint_metadata_sha256"),
+        ("validation_result", "validation_result_sha256"),
+        ("overfit_result", "overfit_result_sha256"),
+    )
+    for path_key, hash_key in required_hashes:
+        path = workspace_path(initialization.get(path_key))
+        if sha256(path) != initialization.get(hash_key):
+            raise RuntimeError(f"visibility-v2b initialization changed: {path_key}")
+    base_config = json.loads(workspace_path(initialization["base_config"]).read_text())
+    if (
+        base_config.get("status")
+        != "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated"
+        or base_config.get("model") != config.get("model")
+        or base_config.get("prompt") != config.get("prompt")
+    ):
+        raise RuntimeError("visibility-v2b architecture differs from frozen v2")
+    metadata = json.loads(
+        workspace_path(initialization["checkpoint_metadata"]).read_text()
+    )
+    if (
+        metadata.get("config_sha256") != initialization["base_config_sha256"]
+        or metadata.get("variant") != "merger_trainable"
+        or metadata.get("stage") != "V2_H5_per_type_dialogue_epoch5"
+        or metadata.get("global_step") != 1050
+        or metadata.get("adapter_sha256") != initialization["adapter_sha256"]
+        or metadata.get("optimizer_sha256") != initialization["optimizer_sha256"]
+    ):
+        raise RuntimeError("visibility-v2b epoch-5 metadata is inconsistent")
+    validation = json.loads(
+        workspace_path(initialization["validation_result"]).read_text()
+    )
+    triple_exact = float(
+        validation.get("metrics", {})
+        .get("by_composition_size", {})
+        .get("3", {})
+        .get("degradation_set_exact_match_rate", -1.0)
+    )
+    if (
+        validation.get("status") != "failed"
+        or validation.get("automatic_gate_pass") is not False
+        or validation.get("config_sha256") != initialization["base_config_sha256"]
+        or validation.get("adapter") != initialization["adapter"]
+        or validation.get("adapter_sha256") != initialization["adapter_sha256"]
+        or abs(triple_exact - 0.7694444444444445) > 1e-12
+    ):
+        raise RuntimeError("visibility-v2b source validation evidence is inconsistent")
+    overfit = json.loads(workspace_path(initialization["overfit_result"]).read_text())
+    if overfit.get("status") != "passed" or overfit.get("automatic_gate_pass") is not True:
+        raise RuntimeError("visibility-v2b source overfit gate did not pass")
+    if (
+        initialization.get("initial_completed_epochs") != 5
+        or initialization.get("initial_optimizer_steps") != 1050
+        or initialization.get("initial_dialogue_presentations") != 210000
+        or initialization.get("optimizer_resume") != "exact_adamw_state"
+        or initialization.get("allow_missing_adapter_prefixes") != []
+    ):
+        raise ValueError("visibility-v2b continuation offsets changed")
+    if workspace_path(initialization["base_fixed_test_result"]).exists():
+        raise RuntimeError("the protected fixed test was accessed before v2b validation")
+
+
 def validate_model_inventory(config: dict[str, object], *, full_hashes: bool) -> dict[str, object]:
     model = config["model"]
     assert isinstance(model, dict)
@@ -792,6 +984,31 @@ def validate_data(
         output = workspace_path(record["output_path"])
         if not output.is_file():
             raise FileNotFoundError(f"pilot image not generated: {output}")
+    external_validation: list[dict[str, object]] = []
+    if config.get("status") == "approved_qwen_visibility_v2b_hard_triple_continuation":
+        external_validation = read_jsonl(workspace_path(data["validation_manifest"]))
+        if (
+            len(external_validation) != 1200
+            or any(record.get("split") != "validation" for record in external_validation)
+        ):
+            raise RuntimeError("v2b external validation cardinality changed")
+        old_source_ids = {str(record["source_id"]) for record in records}
+        old_source_paths = {str(record["source_path"]) for record in records}
+        old_source_hashes = {str(record["source_sha256"]) for record in records}
+        fresh_source_ids: set[str] = set()
+        for record in external_validation:
+            if (
+                str(record["source_id"]) in old_source_ids
+                or str(record["source_path"]) in old_source_paths
+                or str(record["source_sha256"]) in old_source_hashes
+            ):
+                raise RuntimeError("v2b validation source overlaps training/protected data")
+            fresh_source_ids.add(str(record["source_id"]))
+            output = workspace_path(record["output_path"])
+            if not output.is_file():
+                raise FileNotFoundError(f"v2b validation image not generated: {output}")
+        if len(fresh_source_ids) < 180:
+            raise RuntimeError("v2b validation does not use the frozen fresh source pool")
     if full_hashes:
         evidence_root = workspace_path(
             data.get(
@@ -821,6 +1038,37 @@ def validate_data(
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
             list(executor.map(verify_generated, records))
+        if external_validation:
+            external_evidence_root = workspace_path(data["validation_generation_evidence_root"])
+
+            def verify_external_generated(record: dict[str, object]) -> None:
+                evidence_path = (
+                    external_evidence_root
+                    / "validation"
+                    / f"{record['record_id']}.json"
+                )
+                if not evidence_path.is_file():
+                    raise FileNotFoundError(
+                        f"v2b generation evidence missing: {evidence_path}"
+                    )
+                evidence = json.loads(evidence_path.read_text())
+                record_hash = hashlib.sha256(
+                    json.dumps(record, separators=(",", ":"), sort_keys=True).encode()
+                ).hexdigest()
+                output = workspace_path(record["output_path"])
+                if (
+                    evidence.get("record_id") != record["record_id"]
+                    or evidence.get("manifest_sha256")
+                    != data["validation_manifest_sha256"]
+                    or evidence.get("manifest_record_sha256") != record_hash
+                    or sha256(output) != evidence.get("output_sha256")
+                ):
+                    raise RuntimeError(
+                        f"v2b generated image evidence changed: {record['record_id']}"
+                    )
+
+            with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
+                list(executor.map(verify_external_generated, external_validation))
     partition_evidence: dict[str, object] | None = None
     partition_config = data.get("calibration_partition")
     if partition_config is not None:
@@ -896,6 +1144,18 @@ def validate_data(
         "representative_target_token_counts": counts,
         "pixel_values_shape": list(batch["pixel_values"].shape),
         "all_generated_image_hashes_verified": full_hashes,
+        "external_validation": (
+            {
+                "records": len(external_validation),
+                "unique_sources": len(
+                    {str(record["source_id"]) for record in external_validation}
+                ),
+                "source_disjoint_from_training_and_protected_test": True,
+                "all_generated_image_hashes_verified": full_hashes,
+            }
+            if external_validation
+            else None
+        ),
         "decision_token_positions_verified": decision_token_positions_verified,
         "training_only_calibration_partition": (
             {

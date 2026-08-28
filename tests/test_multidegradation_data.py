@@ -11,6 +11,7 @@ from lowlight_restoration.multidegradation_data import (
     load_source_inventory,
     validate_pilot_records,
     _apply_lowlight,
+    _operator_parameters,
 )
 
 import numpy as np
@@ -58,6 +59,26 @@ class MultiDegradationDataTests(unittest.TestCase):
             parameters = record["operators"]["haze"]
             self.assertTrue((ROOT / parameters["depth_path"]).is_file())
             self.assertEqual(len(parameters["depth_sha256"]), 64)
+
+    def test_haze_accepts_only_explicit_hash_verified_aligned_depth(self):
+        template = next(record for record in self.inventory if record["dataset"] == "mio100")
+        depth_path = "data/agenticir/haze/001/predict_depth.mat"
+        from lowlight_restoration.multidegradation_data import sha256
+
+        explicit = {
+            **template,
+            "dataset": "lsdir",
+            "depth_path": depth_path,
+            "depth_sha256": sha256(ROOT / depth_path),
+        }
+        parameters = _operator_parameters("haze", 2, seed=7, source=explicit)
+        self.assertEqual(parameters["depth_path"], depth_path)
+        broken = {**explicit, "depth_sha256": "0" * 64}
+        with self.assertRaisesRegex(RuntimeError, "depth SHA-256 changed"):
+            _operator_parameters("haze", 2, seed=7, source=broken)
+        missing = {key: value for key, value in explicit.items() if key != "depth_sha256"}
+        with self.assertRaisesRegex(ValueError, "missing its frozen SHA-256"):
+            _operator_parameters("haze", 2, seed=7, source=missing)
 
     def test_clean_crop_is_literal_and_one_composite_is_deterministic(self):
         clean = next(record for record in self.records if record["composition_size"] == 0)

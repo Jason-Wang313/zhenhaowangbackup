@@ -165,20 +165,33 @@ def _operator_parameters(
             "angle_degrees": float(rng.uniform(-90, 90)),
         }
     if name == "haze":
-        if source["dataset"] != "mio100":
-            raise ValueError("haze requires a MiO100 source with aligned depth")
-        source_stem = Path(str(source["path"])).stem
-        depth = Path("data/agenticir/haze") / source_stem / "predict_depth.mat"
+        explicit_depth = source.get("depth_path")
+        if explicit_depth is not None:
+            depth = Path(str(explicit_depth))
+            declared_depth_sha = source.get("depth_sha256")
+            if not isinstance(declared_depth_sha, str) or len(declared_depth_sha) != 64:
+                raise ValueError("explicit haze depth is missing its frozen SHA-256")
+        else:
+            if source["dataset"] != "mio100":
+                raise ValueError(
+                    "haze requires a source with a frozen aligned depth map"
+                )
+            source_stem = Path(str(source["path"])).stem
+            depth = Path("data/agenticir/haze") / source_stem / "predict_depth.mat"
+            declared_depth_sha = None
         absolute_depth = ROOT / depth
         if not absolute_depth.is_file():
             raise FileNotFoundError(absolute_depth)
+        observed_depth_sha = sha256(absolute_depth)
+        if declared_depth_sha is not None and observed_depth_sha != declared_depth_sha:
+            raise RuntimeError("explicit haze depth SHA-256 changed")
         return {
             "operator": "AgenticIR.atmospheric_scattering_project_strength",
             "agenticir_level": level - 1,
             "airlight": float(max(rng.normal(HAZE_A_MEANS[level], 0.015), 0.4)),
             "beta": float(rng.normal(HAZE_BETA_MEANS[level], 0.30)),
             "depth_path": depth.as_posix(),
-            "depth_sha256": sha256(absolute_depth),
+            "depth_sha256": observed_depth_sha,
         }
     if name == "rain":
         mean, std = RAIN_DISTRIBUTIONS[level]

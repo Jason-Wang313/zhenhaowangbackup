@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "status": "frozen_source_disjoint_validation_before_model_correction_or_inference",
+  "seed": 2026082837,
+  "source_manifest": "manifests/qwen_multidegradation_visibility_v2b_sources.json",
+  "source_manifest_sha256": "2c9ba8fced240a78684b17880f1dabc7334b965b2e9986ac8e2c1a7a413595b6",
+  "old_manifest": "manifests/qwen_multidegradation_pilot_v2.jsonl",
+  "old_manifest_sha256": "0ec9b367d3b795b01f8a2185b0ff6bfda8a8d21b29926929371bac4bf013ce7e",
+  "parent_visibility_contract": "configs/qwen_multidegradation_visibility_v2_production_correction1.json",
+  "parent_visibility_contract_sha256": "52b5e1ddf296c9681d4d8e981db455273280b3435d1b53174326e387255ce060",
+  "visibility_anchor": "reports/qwen_multidegradation_visibility_anchor_luma_normalized_v2.json",
+  "visibility_anchor_sha256": "155ddf13a9f65df9074193728ed69f2de506d32d4d6189d992ab6ccb229941e5",
+  "composition_counts": {
+    "0": 120,
+    "1": 360,
+    "2": 360,
+    "3": 360
+  },
+  "expected_records": 1200,
+  "expected_sources": 200,
+  "expected_depth_sources": 20,
+  "visibility_policy": {
+    "policy_name": "candidate_isolated_q10_x0.85_then_final_relative_retention_0.2_physical_final",
+    "visibility_mode": "candidate_isolated_anchor_and_final_retention",
+    "primary_metric": "rgb_rmse_over_full_luma",
+    "anchor_quantile": "q10",
+    "anchor_multiplier": 0.85,
+    "minimum_rmse_survival_ratio": 0.20,
+    "physical_application_order": [
+      "haze",
+      "blur",
+      "rain",
+      "low_light",
+      "noise"
+    ],
+    "maximum_attempts_per_record": 1024,
+    "composition_rescue": {
+      "start_attempt": 256,
+      "haze_beta_scale_range": [0.30, 0.85],
+      "haze_airlight_contrast_scale_range": [0.45, 0.90],
+      "noise_sigma_scale_range": [0.55, 0.95]
+    }
+  },
+  "manifest": "manifests/qwen_multidegradation_visibility_v2b_validation.jsonl",
+  "metadata": "manifests/qwen_multidegradation_visibility_v2b_validation.json",
+  "screening_root": "data/qwen_multidegradation_visibility_v2b_screening",
+  "generation_evidence_root": "data/qwen_multidegradation_visibility_v2b/.generation",
+  "data_root": "data/qwen_multidegradation_visibility_v2b"
+}

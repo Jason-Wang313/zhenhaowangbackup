@@ -254,7 +254,9 @@ def ordered_source_pool(
     eligible = [
         source
         for source in sources
-        if "haze" not in combo or source["dataset"] == "mio100"
+        if "haze" not in combo
+        or source["dataset"] == "mio100"
+        or source.get("depth_path") is not None
     ]
     return tuple(
         sorted(

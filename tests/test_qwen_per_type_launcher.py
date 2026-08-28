@@ -97,6 +97,24 @@ class QwenPerTypeLauncherTests(unittest.TestCase):
         self.assertLess(validation_check, fixed_test)
         self.assertIn("DETACHED_NOHUP_STARTED", launcher)
 
+    def test_visibility_v2b_launcher_is_two_eight_gpu_and_protected_test_gated(self):
+        runner = (
+            ROOT / "smoke/run_qwen_multidegradation_visibility_v2b_hard_triple.sh"
+        ).read_text()
+        launcher = (
+            ROOT / "smoke/launch_qwen_multidegradation_visibility_v2b_hard_triple.sh"
+        ).read_text()
+        for text in (runner, launcher):
+            self.assertIn("0,1)", text)
+            self.assertIn("0,1,2,3,4,5,6,7)", text)
+        validation_check = runner.index('if [[ $validation_status -ne 0 ]]')
+        protected_test = runner.index("--test-only")
+        self.assertLess(validation_check, protected_test)
+        self.assertIn("PROTECTED_TEST_NOT_ACCESSED", runner)
+        self.assertIn("ACCUMULATION=4", runner)
+        self.assertIn("ACCUMULATION=1", runner)
+        self.assertIn("DETACHED_NOHUP_STARTED", launcher)
+
 
 if __name__ == "__main__":
     unittest.main()
