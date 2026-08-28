@@ -1,0 +1,4657 @@
+{
+  "accepted_records": 22,
+  "automatic_gate_pass": false,
+  "checks": {
+    "all_components_visible": false,
+    "all_slots_accepted": false,
+    "mean_attempts": false,
+    "p95_attempts": false
+  },
+  "components": 120,
+  "config": "configs/qwen_multidegradation_visibility_v2_correction3.json",
+  "config_sha256": "03e5396147e37844f484e04104130d0091c9b14b21d6893c9506bbab0cb14439",
+  "maximum_attempts": 32,
+  "mean_attempts": 18.45,
+  "p95_attempts": 32.0,
+  "records": 40,
+  "results": [
+    {
+      "accepted": true,
+      "attempts": 1,
+      "combination": [
+        "blur",
+        "noise",
+        "rain"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 758,
+          "y": 980
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "rain"
+        ],
+        "levels": {
+          "blur": 2,
+          "noise": 4,
+          "rain": 2
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 1,
+            "angle_degrees": -61.94314544065165,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 10,
+            "seed": 2133743494,
+            "sigma": 12.0
+          },
+          "noise": {
+            "agenticir_level": 3,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 3349935265,
+            "sigma_0_255": 87.45955936118379
+          },
+          "rain": {
+            "agenticir_level": 1,
+            "angle_degrees": 18,
+            "length": 37,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 1672616634,
+            "value": 3.0,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_00_0000.png",
+        "record_id": "tra_v2_c3_00_0000",
+        "screening_attempt": 0,
+        "seed": 3400150656,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0322",
+        "source_path": "data/clean_pool/div2k/0322.png",
+        "source_sha256": "596f9fff9a597fd8713330733bc8e3e82ecf289f1a934d765b27239060c99195",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"rain\"],\"levels\":{\"blur\":2,\"noise\":4,\"rain\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_00_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "7347d3985334e7236e41b85807684db427d30ac7cfcad66d15ec1bb8941e4acc",
+          "degradation": "blur",
+          "final_primary_value": 0.20419874303337973,
+          "full_sha256": "a9214c74c94eb25059b2e7d5f91b7932244224b191dddaf464268d4dfc60a5ef",
+          "level": 2,
+          "minimum_final_primary_value": 0.11832757679756534,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8550936821021992
+        },
+        {
+          "counterfactual_sha256": "c98fb0420ccb67e1be5b533e3998d12b4a816f5a2b4fae60d6a01df2e4dcd0bf",
+          "degradation": "rain",
+          "final_primary_value": 0.08572842790015445,
+          "full_sha256": "a9214c74c94eb25059b2e7d5f91b7932244224b191dddaf464268d4dfc60a5ef",
+          "level": 2,
+          "minimum_final_primary_value": 0.061867224650556774,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8232187243725669
+        },
+        {
+          "counterfactual_sha256": "a3c90f7b0845701dc86bc20d5c1ad37782b05d413c13edfe31175343e861a24b",
+          "degradation": "noise",
+          "final_primary_value": 0.5851671823078086,
+          "full_sha256": "a9214c74c94eb25059b2e7d5f91b7932244224b191dddaf464268d4dfc60a5ef",
+          "level": 4,
+          "minimum_final_primary_value": 0.4661210341531342,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 1,
+      "combination": [
+        "blur",
+        "noise",
+        "rain"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 979,
+          "y": 433
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "rain"
+        ],
+        "levels": {
+          "blur": 3,
+          "noise": 5,
+          "rain": 3
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 2,
+            "angle_degrees": 25.846798391877414,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 20,
+            "seed": 1003893559,
+            "sigma": 18.0
+          },
+          "noise": {
+            "agenticir_level": 4,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 2700002978,
+            "sigma_0_255": 188.03764933580268
+          },
+          "rain": {
+            "agenticir_level": 2,
+            "angle_degrees": -19,
+            "length": 36,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 1139300164,
+            "value": 59.58526395254175,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_00_0001.png",
+        "record_id": "tra_v2_c3_00_0001",
+        "screening_attempt": 0,
+        "seed": 4248911343,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0581",
+        "source_path": "data/clean_pool/div2k/0581.png",
+        "source_sha256": "07010cfac469abcb20aaf8ae8faaff35479baac3004f6fb0fac5d92ecbf68486",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"rain\"],\"levels\":{\"blur\":3,\"noise\":5,\"rain\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_00_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "5e285d4692746e5d3d166b21ea8f95f4a26fa6d75f396d105d7f4d6da33f0c8a",
+          "degradation": "blur",
+          "final_primary_value": 0.15303882565517746,
+          "full_sha256": "d9b21fe84fe8083de1af5b0eca2bca3233787439c2b57fa05eb7287241360894",
+          "level": 3,
+          "minimum_final_primary_value": 0.15241110172339903,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.5661806887980149
+        },
+        {
+          "counterfactual_sha256": "35b8f9d050e470b64243d255778f85a40da04269f72dae780b019473135bfca8",
+          "degradation": "rain",
+          "final_primary_value": 0.15777907039037847,
+          "full_sha256": "d9b21fe84fe8083de1af5b0eca2bca3233787439c2b57fa05eb7287241360894",
+          "level": 3,
+          "minimum_final_primary_value": 0.12308690573997817,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.6400635178274255
+        },
+        {
+          "counterfactual_sha256": "9d6f236b691b5d90758ed7b65f2a4818077b8f5ef529126de21a56c1abd1e837",
+          "degradation": "noise",
+          "final_primary_value": 0.8523728195108752,
+          "full_sha256": "d9b21fe84fe8083de1af5b0eca2bca3233787439c2b57fa05eb7287241360894",
+          "level": 5,
+          "minimum_final_primary_value": 0.7307221440752781,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 1,
+      "combination": [
+        "blur",
+        "noise",
+        "rain"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 82,
+          "y": 466
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "rain"
+        ],
+        "levels": {
+          "blur": 4,
+          "noise": 2,
+          "rain": 4
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 3,
+            "angle_degrees": -23.415540027390108,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 3484073862,
+            "sigma": 30.0
+          },
+          "noise": {
+            "agenticir_level": 1,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1164941454,
+            "sigma_0_255": 24.148616904197645
+          },
+          "rain": {
+            "agenticir_level": 3,
+            "angle_degrees": 13,
+            "length": 28,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 3001112705,
+            "value": 155.16004730624744,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_00_0002.png",
+        "record_id": "tra_v2_c3_00_0002",
+        "screening_attempt": 0,
+        "seed": 2078591279,
+        "source_dataset": "lsdir",
+        "source_id": "lsdir_0000491",
+        "source_path": "data/clean_pool/lsdir/0000491.png",
+        "source_sha256": "021ca6d1cdf887bccabc7b14f7703d6945009e3fcc6439a80ca05c3d6818f239",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"rain\"],\"levels\":{\"blur\":4,\"noise\":2,\"rain\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_00_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "94f0c04212f8e5f3e16cd368edb6178eeaf2815f16e44d1f83c909ec73d9c266",
+          "degradation": "blur",
+          "final_primary_value": 0.39356124543257665,
+          "full_sha256": "a03209416d37b6a733202a6ff8634db638e55281b0a2ac446788748259009df9",
+          "level": 4,
+          "minimum_final_primary_value": 0.18424921121777954,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.7754287078460455
+        },
+        {
+          "counterfactual_sha256": "de1195ea4e361ff86f8e3e44ed5d6f9b0a3d37f25effa19937c599ae9cba3a9b",
+          "degradation": "rain",
+          "final_primary_value": 0.3017545339645136,
+          "full_sha256": "a03209416d37b6a733202a6ff8634db638e55281b0a2ac446788748259009df9",
+          "level": 4,
+          "minimum_final_primary_value": 0.15916528630251636,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9762006462075071
+        },
+        {
+          "counterfactual_sha256": "331dd8b1e64aad1d360d0e7e7d39b52a13ee916f5406ce4861e71dc7f3034b82",
+          "degradation": "noise",
+          "final_primary_value": 0.20526872252496198,
+          "full_sha256": "a03209416d37b6a733202a6ff8634db638e55281b0a2ac446788748259009df9",
+          "level": 2,
+          "minimum_final_primary_value": 0.15433118480923033,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 2,
+      "combination": [
+        "blur",
+        "noise",
+        "rain"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 34,
+          "y": 400
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "rain"
+        ],
+        "levels": {
+          "blur": 5,
+          "noise": 3,
+          "rain": 5
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 4,
+            "angle_degrees": -64.83919318059223,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 396719653,
+            "sigma": 48.0
+          },
+          "noise": {
+            "agenticir_level": 2,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1061364289,
+            "sigma_0_255": 44.163457587833605
+          },
+          "rain": {
+            "agenticir_level": 4,
+            "angle_degrees": -9,
+            "length": 33,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 3165559326,
+            "value": 358.85039684061746,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_00_0003.png",
+        "record_id": "tra_v2_c3_00_0003",
+        "screening_attempt": 1,
+        "seed": 3339163326,
+        "source_dataset": "lsdir",
+        "source_id": "lsdir_0000679",
+        "source_path": "data/clean_pool/lsdir/0000679.png",
+        "source_sha256": "c29de521a8afa2376603ce55446b76a15f8bdc2b33cf7c92187e1eeaea8749dd",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"rain\"],\"levels\":{\"blur\":5,\"noise\":3,\"rain\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_00_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "ce1d95241054d4ffb60780ed4dd4bb360279c82bcd11e1b0622f1325d003f93c",
+          "degradation": "blur",
+          "final_primary_value": 0.27091824084535815,
+          "full_sha256": "704a41682bfe2283de9d253f48da3cd19e94e6ad4bcc33079ffbb785f83255f7",
+          "level": 5,
+          "minimum_final_primary_value": 0.1995126052041422,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.6580854569411451
+        },
+        {
+          "counterfactual_sha256": "cd5217d1222a3b3d7414b532e08dec87c01b7dc3861b7671c843fbc3aecc4c05",
+          "degradation": "rain",
+          "final_primary_value": 0.3930464381102764,
+          "full_sha256": "704a41682bfe2283de9d253f48da3cd19e94e6ad4bcc33079ffbb785f83255f7",
+          "level": 5,
+          "minimum_final_primary_value": 0.2073405175506128,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9649566205683066
+        },
+        {
+          "counterfactual_sha256": "afd9262d9252b251111cf71391f27dc782ec3b2c8c3b0acf5bdbbfec7ff8859e",
+          "degradation": "noise",
+          "final_primary_value": 0.3602308774295294,
+          "full_sha256": "704a41682bfe2283de9d253f48da3cd19e94e6ad4bcc33079ffbb785f83255f7",
+          "level": 3,
+          "minimum_final_primary_value": 0.2984481526588617,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.9447565861532073,
+      "combination": [
+        "blur",
+        "noise",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 51,
+          "y": 139
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "haze"
+        ],
+        "levels": {
+          "blur": 2,
+          "haze": 3,
+          "noise": 4
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 1,
+            "angle_degrees": 16.569903601820528,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 10,
+            "seed": 95575107,
+            "sigma": 12.0
+          },
+          "haze": {
+            "agenticir_level": 2,
+            "airlight": 0.7193043579045304,
+            "beta": 3.70318491632242,
+            "depth_path": "data/agenticir/haze/070/predict_depth.mat",
+            "depth_sha256": "081f461268a51a017d969df2ec7389f56211434bb8e34042eef00afe63959a82",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 3816604843
+          },
+          "noise": {
+            "agenticir_level": 3,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 3846573505,
+            "sigma_0_255": 101.09748435632481
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_01_0000.png",
+        "record_id": "tra_v2_c3_01_0000",
+        "screening_attempt": 27,
+        "seed": 2157175303,
+        "source_dataset": "mio100",
+        "source_id": "mio100_070",
+        "source_path": "data/clean_pool/mio100/070.png",
+        "source_sha256": "718ae2570e431003fb32f2a40e19f813545164ace18230ac03f9ec96b2747f85",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"haze\"],\"levels\":{\"blur\":2,\"noise\":4,\"haze\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_01_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "df056480ed91cd59baf557505856628bb253543eae72967879d934773277e0d0",
+          "degradation": "haze",
+          "final_primary_value": 0.31221734054741207,
+          "full_sha256": "27db6920f16576de39b45bf63ba45255ce44a142ae76808720c7e6e5feb7565b",
+          "level": 3,
+          "minimum_final_primary_value": 0.3304738438698548,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8165296697138873
+        },
+        {
+          "counterfactual_sha256": "a12cf72af166883fb0d7e5ceef7e2f13d007b6a854791cd47a5b3c90b4523a75",
+          "degradation": "blur",
+          "final_primary_value": 0.11419204477517765,
+          "full_sha256": "27db6920f16576de39b45bf63ba45255ce44a142ae76808720c7e6e5feb7565b",
+          "level": 2,
+          "minimum_final_primary_value": 0.11832757679756534,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.880722096733654
+        },
+        {
+          "counterfactual_sha256": "deed534af66e5f63204f8625b1fd800bab1541266dee98d10db84ff0f9068f85",
+          "degradation": "noise",
+          "final_primary_value": 0.545158458116229,
+          "full_sha256": "27db6920f16576de39b45bf63ba45255ce44a142ae76808720c7e6e5feb7565b",
+          "level": 4,
+          "minimum_final_primary_value": 0.4661210341531342,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.730362456377701,
+      "combination": [
+        "blur",
+        "noise",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 120,
+          "y": 203
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "haze"
+        ],
+        "levels": {
+          "blur": 3,
+          "haze": 4,
+          "noise": 5
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 2,
+            "angle_degrees": -10.255724319297357,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 20,
+            "seed": 1465317108,
+            "sigma": 18.0
+          },
+          "haze": {
+            "agenticir_level": 3,
+            "airlight": 0.8092981878148421,
+            "beta": 7.1041350502982095,
+            "depth_path": "data/agenticir/haze/014/predict_depth.mat",
+            "depth_sha256": "5d216588360bfcce1e9d8daa0b22976fb7bd3fdeec7f7e6168a36e8cd11d2dae",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 302070240
+          },
+          "noise": {
+            "agenticir_level": 4,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1216337117,
+            "sigma_0_255": 179.84131652693958
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_01_0001.png",
+        "record_id": "tra_v2_c3_01_0001",
+        "screening_attempt": 16,
+        "seed": 1283361677,
+        "source_dataset": "mio100",
+        "source_id": "mio100_014",
+        "source_path": "data/clean_pool/mio100/014.png",
+        "source_sha256": "2d569d9b923a96b1542c0b845dce0c7657794eba9f6f22ae5d02f335ef1bc4a0",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"haze\"],\"levels\":{\"blur\":3,\"noise\":5,\"haze\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_01_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "90b19590f517eda3a58c11ca4c06557d7702aa2823782eca3d3240b9978c8129",
+          "degradation": "haze",
+          "final_primary_value": 0.26765448405437414,
+          "full_sha256": "d0fca93ed763b4ed36f12d2146f469e2b35bab1a04a8789303b2ba375b0380f1",
+          "level": 4,
+          "minimum_final_primary_value": 0.3664680210724835,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.615704669705233
+        },
+        {
+          "counterfactual_sha256": "54bc2d5be65200c369780b4c1cf49cea8f524478f332e24f881fe1539d3a5fee",
+          "degradation": "blur",
+          "final_primary_value": 0.13134739788611008,
+          "full_sha256": "d0fca93ed763b4ed36f12d2146f469e2b35bab1a04a8789303b2ba375b0380f1",
+          "level": 3,
+          "minimum_final_primary_value": 0.15241110172339903,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.6704704832235614
+        },
+        {
+          "counterfactual_sha256": "10c5dd022a70a9b2b4cfcff07bb0c73d1a09f7520bfbd069b10b1e4feedf12e0",
+          "degradation": "noise",
+          "final_primary_value": 0.8333920703972385,
+          "full_sha256": "d0fca93ed763b4ed36f12d2146f469e2b35bab1a04a8789303b2ba375b0380f1",
+          "level": 5,
+          "minimum_final_primary_value": 0.7307221440752781,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.7552910109078134,
+      "combination": [
+        "blur",
+        "noise",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 251,
+          "y": 280
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "haze"
+        ],
+        "levels": {
+          "blur": 4,
+          "haze": 5,
+          "noise": 2
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 3,
+            "angle_degrees": 72.54768597803042,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 200792434,
+            "sigma": 30.0
+          },
+          "haze": {
+            "agenticir_level": 4,
+            "airlight": 0.9874603243570911,
+            "beta": 10.916155707267068,
+            "depth_path": "data/agenticir/haze/014/predict_depth.mat",
+            "depth_sha256": "5d216588360bfcce1e9d8daa0b22976fb7bd3fdeec7f7e6168a36e8cd11d2dae",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 3538240572
+          },
+          "noise": {
+            "agenticir_level": 1,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 19834909,
+            "sigma_0_255": 41.239575143055
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_01_0002.png",
+        "record_id": "tra_v2_c3_01_0002",
+        "screening_attempt": 3,
+        "seed": 2913242084,
+        "source_dataset": "mio100",
+        "source_id": "mio100_014",
+        "source_path": "data/clean_pool/mio100/014.png",
+        "source_sha256": "2d569d9b923a96b1542c0b845dce0c7657794eba9f6f22ae5d02f335ef1bc4a0",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"haze\"],\"levels\":{\"blur\":4,\"noise\":2,\"haze\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_01_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "ec5f7508dc238e244e000c9b207f91a2cce1a0fb0ff3a5f594902cf27ed6b45c",
+          "degradation": "haze",
+          "final_primary_value": 0.5157476509283714,
+          "full_sha256": "ac69305611db37f8d9bf1bded157210c77a07dc0f353c939e1d53e51cdb98bfd",
+          "level": 5,
+          "minimum_final_primary_value": 0.3494319077130411,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.952775077275384
+        },
+        {
+          "counterfactual_sha256": "3ac327ae5146a37ca9722cf8db6806f85aa400da9f05c2dc03b4eeb976cb4456",
+          "degradation": "blur",
+          "final_primary_value": 0.13916177299964394,
+          "full_sha256": "ac69305611db37f8d9bf1bded157210c77a07dc0f353c939e1d53e51cdb98bfd",
+          "level": 4,
+          "minimum_final_primary_value": 0.18424921121777954,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9706065855857929
+        },
+        {
+          "counterfactual_sha256": "036b8566ae55614915063a36880267127fcd3626e92d2953c5c90cb9fc0de352",
+          "degradation": "noise",
+          "final_primary_value": 0.2669518243492038,
+          "full_sha256": "ac69305611db37f8d9bf1bded157210c77a07dc0f353c939e1d53e51cdb98bfd",
+          "level": 2,
+          "minimum_final_primary_value": 0.15433118480923033,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 9,
+      "combination": [
+        "blur",
+        "noise",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 38,
+          "y": 531
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "haze"
+        ],
+        "levels": {
+          "blur": 5,
+          "haze": 2,
+          "noise": 3
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 4,
+            "angle_degrees": -26.118799209360375,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 2985497925,
+            "sigma": 48.0
+          },
+          "haze": {
+            "agenticir_level": 1,
+            "airlight": 0.5997718639246482,
+            "beta": 2.651507008416652,
+            "depth_path": "data/agenticir/haze/060/predict_depth.mat",
+            "depth_sha256": "a55eef00bda64574ca7c9a46e05686aa2dc38753e761e89a66167b1fccb250b9",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 4006716463
+          },
+          "noise": {
+            "agenticir_level": 2,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1019272308,
+            "sigma_0_255": 72.80489055502584
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_01_0003.png",
+        "record_id": "tra_v2_c3_01_0003",
+        "screening_attempt": 8,
+        "seed": 2243754420,
+        "source_dataset": "mio100",
+        "source_id": "mio100_060",
+        "source_path": "data/clean_pool/mio100/060.png",
+        "source_sha256": "d173273231bf0b68767ae3e287f4f34baa71e7d986a98c43a41fa9668fd8a0d4",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"haze\"],\"levels\":{\"blur\":5,\"noise\":3,\"haze\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_01_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "0fac10205f55c6e08356fd4a0550214eea6fbbc7b7cd5839e36a9334a8b2baf0",
+          "degradation": "haze",
+          "final_primary_value": 0.3205005961672318,
+          "full_sha256": "6f532551a883b54c29edeac143ad6624facac2f4e4cb8d6ffbfaf706d64ffffd",
+          "level": 2,
+          "minimum_final_primary_value": 0.24247769013820886,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.7718290387749143
+        },
+        {
+          "counterfactual_sha256": "4be8a9c4de3e3ed3415391e5531e76ccd22bb1f731a73064ce96142317a7e071",
+          "degradation": "blur",
+          "final_primary_value": 0.22462308673113893,
+          "full_sha256": "6f532551a883b54c29edeac143ad6624facac2f4e4cb8d6ffbfaf706d64ffffd",
+          "level": 5,
+          "minimum_final_primary_value": 0.1995126052041422,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8505050089534715
+        },
+        {
+          "counterfactual_sha256": "1e4a0ba1c91aab7cb53da7d0437f8301a10ecc072762b245fb05f237489ba2a1",
+          "degradation": "noise",
+          "final_primary_value": 0.7317327023844352,
+          "full_sha256": "6f532551a883b54c29edeac143ad6624facac2f4e4cb8d6ffbfaf706d64ffffd",
+          "level": 3,
+          "minimum_final_primary_value": 0.2984481526588617,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.6676753994715919,
+      "combination": [
+        "blur",
+        "noise",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 275,
+          "y": 167
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 2,
+          "low_light": 4,
+          "noise": 4
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 1,
+            "angle_degrees": 31.55753542568972,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 10,
+            "seed": 442045141,
+            "sigma": 12.0
+          },
+          "low_light": {
+            "agenticir_level": 3,
+            "dst_max": 151,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 2485773839,
+            "target_luma_ratio": 0.3
+          },
+          "noise": {
+            "agenticir_level": 3,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1980028473,
+            "sigma_0_255": 93.99852747427502
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_02_0000.png",
+        "record_id": "tra_v2_c3_02_0000",
+        "screening_attempt": 3,
+        "seed": 3912508229,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0134",
+        "source_path": "data/clean_pool/div2k/0134.png",
+        "source_sha256": "31dda565c507008f611fd7e62e0539aa2a5725202c9774e2b9dbabd154d2347e",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"low_light\"],\"levels\":{\"blur\":2,\"noise\":4,\"low_light\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_02_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "67176541977df7b719ad95198d196617cdced644281092f73475b8a9a41924cd",
+          "degradation": "blur",
+          "final_primary_value": 0.10043964738151594,
+          "full_sha256": "a537d1d36f48828fb3352726f55cd1ebeb6b5b81b52f43099a6f9c8c654df053",
+          "level": 2,
+          "minimum_final_primary_value": 0.11832757679756534,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 22.663704620339622
+        },
+        {
+          "counterfactual_sha256": "541b487de8a7c7d22b86a75229c20eb28a348a060177acc454eb72f8845363cc",
+          "degradation": "low_light",
+          "final_primary_value": 1.5886151721397253,
+          "full_sha256": "a537d1d36f48828fb3352726f55cd1ebeb6b5b81b52f43099a6f9c8c654df053",
+          "level": 4,
+          "minimum_final_primary_value": 2.379322607058727,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.6472216358943476
+        },
+        {
+          "counterfactual_sha256": "53030d4b7308bb6df7c3d398251eb50f208c2e94d4d45a2a0f035db23ecf62fa",
+          "degradation": "noise",
+          "final_primary_value": 0.9787143797834955,
+          "full_sha256": "a537d1d36f48828fb3352726f55cd1ebeb6b5b81b52f43099a6f9c8c654df053",
+          "level": 4,
+          "minimum_final_primary_value": 0.4661210341531342,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.22375574529367367,
+      "combination": [
+        "blur",
+        "noise",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 652,
+          "y": 282
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 3,
+          "low_light": 5,
+          "noise": 5
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 2,
+            "angle_degrees": -16.845938943856794,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 20,
+            "seed": 890945019,
+            "sigma": 18.0
+          },
+          "low_light": {
+            "agenticir_level": 4,
+            "dst_max": 119,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 2259151115,
+            "target_luma_ratio": 0.14
+          },
+          "noise": {
+            "agenticir_level": 4,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 3349996307,
+            "sigma_0_255": 182.15001507960585
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_02_0001.png",
+        "record_id": "tra_v2_c3_02_0001",
+        "screening_attempt": 23,
+        "seed": 1246776974,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0502",
+        "source_path": "data/clean_pool/div2k/0502.png",
+        "source_sha256": "5b83a723fbbc4c2b3ce0f12cc3cbba2e59325374bc9a2e94bfa1e84ebbeba6ef",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"low_light\"],\"levels\":{\"blur\":3,\"noise\":5,\"low_light\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_02_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "bfe6fe5eee8ac29f994039f65e2c17ca9fb43286ff56c1b0b7c35e6369c319b1",
+          "degradation": "blur",
+          "final_primary_value": 0.03495040477015907,
+          "full_sha256": "225be1d77f7cd850e76ae6260dec7f1003700c1e65d64d0592572b571ea5fd79",
+          "level": 3,
+          "minimum_final_primary_value": 0.15241110172339903,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.2614710053638583
+        },
+        {
+          "counterfactual_sha256": "cb80b387192930b8251e923e9df29d97fff69d0cf85c07a1d37f2a54c34d9417",
+          "degradation": "low_light",
+          "final_primary_value": 1.434210177585887,
+          "full_sha256": "225be1d77f7cd850e76ae6260dec7f1003700c1e65d64d0592572b571ea5fd79",
+          "level": 5,
+          "minimum_final_primary_value": 6.409713304583635,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.22452849811927636
+        },
+        {
+          "counterfactual_sha256": "b137a481fe3a2dbd6e704215f018fcc3abe935d2be9e1ff142095cf708d10988",
+          "degradation": "noise",
+          "final_primary_value": 1.3549398443984038,
+          "full_sha256": "225be1d77f7cd850e76ae6260dec7f1003700c1e65d64d0592572b571ea5fd79",
+          "level": 5,
+          "minimum_final_primary_value": 0.7307221440752781,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 5,
+      "combination": [
+        "blur",
+        "noise",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 284,
+          "y": 133
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 4,
+          "low_light": 2,
+          "noise": 2
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 3,
+            "angle_degrees": -33.59366570160553,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 746404757,
+            "sigma": 30.0
+          },
+          "low_light": {
+            "agenticir_level": 1,
+            "dst_max": 228,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 3808065616,
+            "target_luma_ratio": 0.5
+          },
+          "noise": {
+            "agenticir_level": 1,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 3285761241,
+            "sigma_0_255": 25.170439008262726
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_02_0002.png",
+        "record_id": "tra_v2_c3_02_0002",
+        "screening_attempt": 4,
+        "seed": 1520354743,
+        "source_dataset": "mio100",
+        "source_id": "mio100_035",
+        "source_path": "data/clean_pool/mio100/035.png",
+        "source_sha256": "4e230744a9cb7c3ebe976ae7267155312b876fb355283b4938b34b758aef7ff9",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"low_light\"],\"levels\":{\"blur\":4,\"noise\":2,\"low_light\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_02_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "abd4f14ac6abd83e7e10d075ca830f3abb50ab342d6b5b330638eca7bb4ece23",
+          "degradation": "blur",
+          "final_primary_value": 0.3033464935259337,
+          "full_sha256": "ea454893bc44a2b43c99a448119ac8d3d52c4dfc6cfc4ade70e2c19804892407",
+          "level": 4,
+          "minimum_final_primary_value": 0.18424921121777954,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0558315850270652
+        },
+        {
+          "counterfactual_sha256": "e77e6b0538a10240ab598589472d9e8616376501d2f29c8bbe7c4fbd500cc078",
+          "degradation": "low_light",
+          "final_primary_value": 1.0715819674176084,
+          "full_sha256": "ea454893bc44a2b43c99a448119ac8d3d52c4dfc6cfc4ade70e2c19804892407",
+          "level": 2,
+          "minimum_final_primary_value": 1.0242178648746638,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9626032841419447
+        },
+        {
+          "counterfactual_sha256": "664422ee8c48dc760038de9e0221f70b51f84383e8718dc14a5ccb9d2739af6e",
+          "degradation": "noise",
+          "final_primary_value": 0.38153793378739115,
+          "full_sha256": "ea454893bc44a2b43c99a448119ac8d3d52c4dfc6cfc4ade70e2c19804892407",
+          "level": 2,
+          "minimum_final_primary_value": 0.15433118480923033,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 26,
+      "combination": [
+        "blur",
+        "noise",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 69,
+          "y": 245
+        },
+        "degradations": [
+          "blur",
+          "noise",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 5,
+          "low_light": 3,
+          "noise": 3
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 4,
+            "angle_degrees": -16.66716133377379,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 3936914809,
+            "sigma": 48.0
+          },
+          "low_light": {
+            "agenticir_level": 2,
+            "dst_max": 193,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 2462165113,
+            "target_luma_ratio": 0.38
+          },
+          "noise": {
+            "agenticir_level": 2,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1716363995,
+            "sigma_0_255": 41.71010461849812
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_02_0003.png",
+        "record_id": "tra_v2_c3_02_0003",
+        "screening_attempt": 25,
+        "seed": 2156348297,
+        "source_dataset": "lsdir",
+        "source_id": "lsdir_0000976",
+        "source_path": "data/clean_pool/lsdir/0000976.png",
+        "source_sha256": "796325a0fd0f8d68d9947a693cc6a9f13062e482aa60997678c6541174a361ed",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"noise\",\"low_light\"],\"levels\":{\"blur\":5,\"noise\":3,\"low_light\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_02_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "39f0ce075d1b92c5b4df91eed5cd19b7eabd12b32114a7565f62fa46b1aa9062",
+          "degradation": "blur",
+          "final_primary_value": 0.4401576993842403,
+          "full_sha256": "71973a8512b063cb42efad12f3ed5cc357345cec39c2bfc940ab6e58f43687d8",
+          "level": 5,
+          "minimum_final_primary_value": 0.1995126052041422,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8170108184919085
+        },
+        {
+          "counterfactual_sha256": "a216d4b204ca858e10c4e8ae21fcaa104b3b065d7971a8cf0b97d8f90e3f010e",
+          "degradation": "low_light",
+          "final_primary_value": 1.6977806840825782,
+          "full_sha256": "71973a8512b063cb42efad12f3ed5cc357345cec39c2bfc940ab6e58f43687d8",
+          "level": 3,
+          "minimum_final_primary_value": 1.6921851055365582,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8542961088007367
+        },
+        {
+          "counterfactual_sha256": "0157a94a9b416c2d6f6fa952f15c3ca58d26dbe4082212e71e514ec2dec00017",
+          "degradation": "noise",
+          "final_primary_value": 0.7735323592378103,
+          "full_sha256": "71973a8512b063cb42efad12f3ed5cc357345cec39c2bfc940ab6e58f43687d8",
+          "level": 3,
+          "minimum_final_primary_value": 0.2984481526588617,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.7340772364841897,
+      "combination": [
+        "blur",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "rain"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 303,
+          "y": 186
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "blur": 2,
+          "haze": 3,
+          "rain": 5
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 1,
+            "angle_degrees": -75.8311230878946,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 10,
+            "seed": 2492011406,
+            "sigma": 12.0
+          },
+          "haze": {
+            "agenticir_level": 2,
+            "airlight": 0.7038899802394505,
+            "beta": 3.736384673030025,
+            "depth_path": "data/agenticir/haze/031/predict_depth.mat",
+            "depth_sha256": "e01757280f4e66ef77d5f715e9991024b50eb13c4532cfd5c21f1f7e580b34f6",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 3733861025
+          },
+          "rain": {
+            "agenticir_level": 4,
+            "angle_degrees": 5,
+            "length": 34,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 2969544274,
+            "value": 383.36283463940435,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_03_0000.png",
+        "record_id": "tra_v2_c3_03_0000",
+        "screening_attempt": 23,
+        "seed": 293533977,
+        "source_dataset": "mio100",
+        "source_id": "mio100_031",
+        "source_path": "data/clean_pool/mio100/031.png",
+        "source_sha256": "ee314f8cd1954636c1817c95d1cb0db5aa871e179961c3463869d5dc2100d422",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"haze\"],\"levels\":{\"blur\":2,\"rain\":5,\"haze\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_03_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "4eafe5b6fd6f7b4951c7370389261b3367696bba30a07e5c088048ce01ab8600",
+          "degradation": "haze",
+          "final_primary_value": 0.34395611760582745,
+          "full_sha256": "174501b2ccaaeeef5cdfbf48f2518fb8eb8e29fa42d7fbde84208467b3222ad1",
+          "level": 3,
+          "minimum_final_primary_value": 0.3304738438698548,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8359844734198805
+        },
+        {
+          "counterfactual_sha256": "b6ba8a8a9c47565b926f936c9634f5d84ba309618d2167524fa44791ae602dc4",
+          "degradation": "blur",
+          "final_primary_value": 0.08686158057542748,
+          "full_sha256": "174501b2ccaaeeef5cdfbf48f2518fb8eb8e29fa42d7fbde84208467b3222ad1",
+          "level": 2,
+          "minimum_final_primary_value": 0.11832757679756534,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8509353282741626
+        },
+        {
+          "counterfactual_sha256": "7ed8a9a4ed65446bd50fff8de091a66e729bacc28f53dbf420c25c58f6d492f1",
+          "degradation": "rain",
+          "final_primary_value": 0.19882469173660083,
+          "full_sha256": "174501b2ccaaeeef5cdfbf48f2518fb8eb8e29fa42d7fbde84208467b3222ad1",
+          "level": 5,
+          "minimum_final_primary_value": 0.2073405175506128,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.36588886677222515,
+      "combination": [
+        "blur",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "rain"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 186,
+          "y": 110
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "blur": 3,
+          "haze": 4,
+          "rain": 2
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 2,
+            "angle_degrees": -85.24512066720949,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 20,
+            "seed": 3261173992,
+            "sigma": 18.0
+          },
+          "haze": {
+            "agenticir_level": 3,
+            "airlight": 0.8313077263913603,
+            "beta": 7.341717581076305,
+            "depth_path": "data/agenticir/haze/006/predict_depth.mat",
+            "depth_sha256": "976228283f8f1dab79a4a09bba3a6e68ba7a2e6a05443dc9d0dfe9dd0c4b9702",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 982747772
+          },
+          "rain": {
+            "agenticir_level": 1,
+            "angle_degrees": 20,
+            "length": 27,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 310632542,
+            "value": 4.770129755508564,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_03_0001.png",
+        "record_id": "tra_v2_c3_03_0001",
+        "screening_attempt": 7,
+        "seed": 571007352,
+        "source_dataset": "mio100",
+        "source_id": "mio100_006",
+        "source_path": "data/clean_pool/mio100/006.png",
+        "source_sha256": "f62feddd2f379d039dd1effe18b6368c79a6fe31fb8177f797c9f230eb8e1211",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"haze\"],\"levels\":{\"blur\":3,\"rain\":2,\"haze\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_03_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "3fdffe302b1f8081a52c6eefe5e9b03e4d06aeda99a200c7a255af0faf2d7313",
+          "degradation": "haze",
+          "final_primary_value": 0.28881586494993,
+          "full_sha256": "8fd0ca18cdcdbe6fe0db0816eebd0cb26e815b9983d29f79f02f47d9274a9dab",
+          "level": 4,
+          "minimum_final_primary_value": 0.3664680210724835,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9686936932833199
+        },
+        {
+          "counterfactual_sha256": "b244a27d00936f0602cf02e594477d104e115ff08e802b64443372d5570e94cb",
+          "degradation": "blur",
+          "final_primary_value": 0.0557655252930808,
+          "full_sha256": "8fd0ca18cdcdbe6fe0db0816eebd0cb26e815b9983d29f79f02f47d9274a9dab",
+          "level": 3,
+          "minimum_final_primary_value": 0.15241110172339903,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9908191899883058
+        },
+        {
+          "counterfactual_sha256": "1d2321ad91365d2fef22256c8a07da04424689123168be73c3cbeee79dc23603",
+          "degradation": "rain",
+          "final_primary_value": 0.04488616033110562,
+          "full_sha256": "8fd0ca18cdcdbe6fe0db0816eebd0cb26e815b9983d29f79f02f47d9274a9dab",
+          "level": 2,
+          "minimum_final_primary_value": 0.061867224650556774,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.7766917794987929,
+      "combination": [
+        "blur",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "rain"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 8,
+          "y": 258
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "blur": 4,
+          "haze": 5,
+          "rain": 3
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 3,
+            "angle_degrees": -46.64017035730162,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 1350900710,
+            "sigma": 30.0
+          },
+          "haze": {
+            "agenticir_level": 4,
+            "airlight": 1.0081250137827735,
+            "beta": 10.480114766537332,
+            "depth_path": "data/agenticir/haze/014/predict_depth.mat",
+            "depth_sha256": "5d216588360bfcce1e9d8daa0b22976fb7bd3fdeec7f7e6168a36e8cd11d2dae",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 792868018
+          },
+          "rain": {
+            "agenticir_level": 2,
+            "angle_degrees": 29,
+            "length": 36,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 2135996809,
+            "value": 58.739778409123204,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_03_0002.png",
+        "record_id": "tra_v2_c3_03_0002",
+        "screening_attempt": 30,
+        "seed": 3600697376,
+        "source_dataset": "mio100",
+        "source_id": "mio100_014",
+        "source_path": "data/clean_pool/mio100/014.png",
+        "source_sha256": "2d569d9b923a96b1542c0b845dce0c7657794eba9f6f22ae5d02f335ef1bc4a0",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"haze\"],\"levels\":{\"blur\":4,\"rain\":3,\"haze\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_03_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "832902be06a99d63f5350f111886a581944e084aae5b9f6c4b20bbebb4d6e141",
+          "degradation": "haze",
+          "final_primary_value": 0.5503287433508558,
+          "full_sha256": "a60a7a33606ced7ca249899e94220cab0aafd47ee814d0b69f59bc47b0adf6b8",
+          "level": 5,
+          "minimum_final_primary_value": 0.3494319077130411,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9193790538145107
+        },
+        {
+          "counterfactual_sha256": "d0d4cd71b832390eecee5c51b4e5792e698ed7f64134a522e6bcf9afb3e4eae8",
+          "degradation": "blur",
+          "final_primary_value": 0.14310484773198615,
+          "full_sha256": "a60a7a33606ced7ca249899e94220cab0aafd47ee814d0b69f59bc47b0adf6b8",
+          "level": 4,
+          "minimum_final_primary_value": 0.18424921121777954,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.902539140613373
+        },
+        {
+          "counterfactual_sha256": "8c4909af1e4954a1c1c8d3a926c7066584ef06c451087e064ddbc1b9ef3ecb0c",
+          "degradation": "rain",
+          "final_primary_value": 0.16501489514177514,
+          "full_sha256": "a60a7a33606ced7ca249899e94220cab0aafd47ee814d0b69f59bc47b0adf6b8",
+          "level": 3,
+          "minimum_final_primary_value": 0.12308690573997817,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 15,
+      "combination": [
+        "blur",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "rain"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 530,
+          "y": 107
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "blur": 5,
+          "haze": 2,
+          "rain": 4
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 4,
+            "angle_degrees": -69.71860183954826,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 937460014,
+            "sigma": 48.0
+          },
+          "haze": {
+            "agenticir_level": 1,
+            "airlight": 0.6178059734489035,
+            "beta": 2.4810263335742673,
+            "depth_path": "data/agenticir/haze/095/predict_depth.mat",
+            "depth_sha256": "bd42c63a1b135684bb43f4c0afc029031cb9f29bfa82c273268f6417fd4b3a32",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 3704221009
+          },
+          "rain": {
+            "agenticir_level": 3,
+            "angle_degrees": -25,
+            "length": 26,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 2892186909,
+            "value": 141.92613896204494,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_03_0003.png",
+        "record_id": "tra_v2_c3_03_0003",
+        "screening_attempt": 14,
+        "seed": 1434124338,
+        "source_dataset": "mio100",
+        "source_id": "mio100_095",
+        "source_path": "data/clean_pool/mio100/095.png",
+        "source_sha256": "2f04f8c811593049180a1c6bdcf5d723d3c2f6443ba518c407e4976d7a6b2637",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"haze\"],\"levels\":{\"blur\":5,\"rain\":4,\"haze\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_03_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "b5c379c31b497b11d8b06f7a125482158eb0d210912de5e4d0ee88d8fb2e72d2",
+          "degradation": "haze",
+          "final_primary_value": 0.26845833937032804,
+          "full_sha256": "18702b54b1864cb0d0db108cabae2be81d0ef797cb56e04bf9312fc6d996397d",
+          "level": 2,
+          "minimum_final_primary_value": 0.24247769013820886,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.6341227929637171
+        },
+        {
+          "counterfactual_sha256": "c4e1eab91675849e3119fcc54cdad516d259299c229ea30a692e55845b30e257",
+          "degradation": "blur",
+          "final_primary_value": 0.29306201737581233,
+          "full_sha256": "18702b54b1864cb0d0db108cabae2be81d0ef797cb56e04bf9312fc6d996397d",
+          "level": 5,
+          "minimum_final_primary_value": 0.1995126052041422,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8506394530589635
+        },
+        {
+          "counterfactual_sha256": "edecb203f49b88d601399cb8ea523b2bf9fcee2e6da596c7042af316c3cf40a5",
+          "degradation": "rain",
+          "final_primary_value": 0.24276502406748554,
+          "full_sha256": "18702b54b1864cb0d0db108cabae2be81d0ef797cb56e04bf9312fc6d996397d",
+          "level": 4,
+          "minimum_final_primary_value": 0.15916528630251636,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 1,
+      "combination": [
+        "blur",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 1588,
+          "y": 329
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 2,
+          "low_light": 4,
+          "rain": 5
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 1,
+            "angle_degrees": -53.93046888575897,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 10,
+            "seed": 2430877178,
+            "sigma": 12.0
+          },
+          "low_light": {
+            "agenticir_level": 3,
+            "dst_max": 145,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 1980186311,
+            "target_luma_ratio": 0.3
+          },
+          "rain": {
+            "agenticir_level": 4,
+            "angle_degrees": 16,
+            "length": 23,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 41560564,
+            "value": 329.9497030818843,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_04_0000.png",
+        "record_id": "tra_v2_c3_04_0000",
+        "screening_attempt": 0,
+        "seed": 1567701592,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0166",
+        "source_path": "data/clean_pool/div2k/0166.png",
+        "source_sha256": "b089293f9428e0a13ea33d11dfeb899c70e971d0e7cc98f2d3c06fff795c7956",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"low_light\"],\"levels\":{\"blur\":2,\"rain\":5,\"low_light\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_04_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "bbb18013b8f9885cc7db037b505b6519c813ee7ed7e1e766ddf99c025772d95f",
+          "degradation": "blur",
+          "final_primary_value": 0.1359413715519038,
+          "full_sha256": "9a71f1cc02f7df18c152fa12ff1d55767cea5a24ce71dadba0804ea0ed74e463",
+          "level": 2,
+          "minimum_final_primary_value": 0.11832757679756534,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.7809037135269694
+        },
+        {
+          "counterfactual_sha256": "be60635999443d9f848d74bda5b3cc373e5d3e652ccef56aff39302bd43c60da",
+          "degradation": "rain",
+          "final_primary_value": 0.32126604669724396,
+          "full_sha256": "9a71f1cc02f7df18c152fa12ff1d55767cea5a24ce71dadba0804ea0ed74e463",
+          "level": 5,
+          "minimum_final_primary_value": 0.2073405175506128,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0013762108652435
+        },
+        {
+          "counterfactual_sha256": "325cd9a5d1fab08f84cc40408619a825810e68825ea9bd7d46119566a223c070",
+          "degradation": "low_light",
+          "final_primary_value": 2.4022302407555705,
+          "full_sha256": "9a71f1cc02f7df18c152fa12ff1d55767cea5a24ce71dadba0804ea0ed74e463",
+          "level": 4,
+          "minimum_final_primary_value": 2.379322607058727,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 2,
+      "combination": [
+        "blur",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 1155,
+          "y": 167
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 3,
+          "low_light": 5,
+          "rain": 2
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 2,
+            "angle_degrees": -8.597137490942231,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 20,
+            "seed": 2355525004,
+            "sigma": 18.0
+          },
+          "low_light": {
+            "agenticir_level": 4,
+            "dst_max": 118,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 567085616,
+            "target_luma_ratio": 0.14
+          },
+          "rain": {
+            "agenticir_level": 1,
+            "angle_degrees": -14,
+            "length": 23,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 2901922214,
+            "value": 11.314520511904206,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_04_0001.png",
+        "record_id": "tra_v2_c3_04_0001",
+        "screening_attempt": 1,
+        "seed": 2632541859,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0710",
+        "source_path": "data/clean_pool/div2k/0710.png",
+        "source_sha256": "c1e9812f8d1e40e73ff18e453cbceff371b4d2dcbeb1ec96300d9c25f7b9a042",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"low_light\"],\"levels\":{\"blur\":3,\"rain\":2,\"low_light\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_04_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "eef6190f90b93556dd4afdae0a6975f80cd95fe134e5ba7703acc0e62a191f5d",
+          "degradation": "blur",
+          "final_primary_value": 0.2815821957498467,
+          "full_sha256": "9364cad4e9edd4dda922a28e06f2515afed4e5b0e508ec22fcdbca3fdfc56756",
+          "level": 3,
+          "minimum_final_primary_value": 0.15241110172339903,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.1859739753670533
+        },
+        {
+          "counterfactual_sha256": "cbeeeb3ac719d59967f8cf4d7dbfadc2dd81e0a2991db4df45cb90426074379d",
+          "degradation": "rain",
+          "final_primary_value": 0.16151609202314826,
+          "full_sha256": "9364cad4e9edd4dda922a28e06f2515afed4e5b0e508ec22fcdbca3fdfc56756",
+          "level": 2,
+          "minimum_final_primary_value": 0.061867224650556774,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.280355248546154
+        },
+        {
+          "counterfactual_sha256": "eb2b2843d8bb88ca57ca0068fc7f088d55615429ec215ab9e897c8a942f2fbb1",
+          "degradation": "low_light",
+          "final_primary_value": 6.825779702528451,
+          "full_sha256": "9364cad4e9edd4dda922a28e06f2515afed4e5b0e508ec22fcdbca3fdfc56756",
+          "level": 5,
+          "minimum_final_primary_value": 6.409713304583635,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 1,
+      "combination": [
+        "blur",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 86,
+          "y": 434
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 4,
+          "low_light": 2,
+          "rain": 3
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 3,
+            "angle_degrees": 71.80345540454456,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 1343822992,
+            "sigma": 30.0
+          },
+          "low_light": {
+            "agenticir_level": 1,
+            "dst_max": 231,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 2829733599,
+            "target_luma_ratio": 0.5
+          },
+          "rain": {
+            "agenticir_level": 2,
+            "angle_degrees": -20,
+            "length": 25,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 3061117711,
+            "value": 63.74472798232282,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_04_0002.png",
+        "record_id": "tra_v2_c3_04_0002",
+        "screening_attempt": 0,
+        "seed": 4206979405,
+        "source_dataset": "lsdir",
+        "source_id": "lsdir_0000567",
+        "source_path": "data/clean_pool/lsdir/0000567.png",
+        "source_sha256": "c7d875ddf9a5707b5e97b8df6279fc2f63f4c9a86afee44c456dacaf4aae9bc8",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"low_light\"],\"levels\":{\"blur\":4,\"rain\":3,\"low_light\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_04_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "589eb782f04c1626e038ba6721be21a4d04810027c466835582aa6c9c30293bd",
+          "degradation": "blur",
+          "final_primary_value": 0.3575004007444183,
+          "full_sha256": "a563084175b5e84a5f169f169a7598a47036ee155eb87f38d38671b9da2b5716",
+          "level": 4,
+          "minimum_final_primary_value": 0.18424921121777954,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8859529308062414
+        },
+        {
+          "counterfactual_sha256": "f0af660dbd17c34f107d68165f577b3de6891698e34a260b3b87267f30ce8bd0",
+          "degradation": "rain",
+          "final_primary_value": 0.2685629397530505,
+          "full_sha256": "a563084175b5e84a5f169f169a7598a47036ee155eb87f38d38671b9da2b5716",
+          "level": 3,
+          "minimum_final_primary_value": 0.12308690573997817,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0028917905714323
+        },
+        {
+          "counterfactual_sha256": "1e5f1ce8a1bd36423066094e67901b2bde4ac4510215948f43db5191451c2775",
+          "degradation": "low_light",
+          "final_primary_value": 1.172258780281783,
+          "full_sha256": "a563084175b5e84a5f169f169a7598a47036ee155eb87f38d38671b9da2b5716",
+          "level": 2,
+          "minimum_final_primary_value": 1.0242178648746638,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 2,
+      "combination": [
+        "blur",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 636,
+          "y": 612
+        },
+        "degradations": [
+          "blur",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 5,
+          "low_light": 3,
+          "rain": 4
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 4,
+            "angle_degrees": -53.512666422180665,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 4087981493,
+            "sigma": 48.0
+          },
+          "low_light": {
+            "agenticir_level": 2,
+            "dst_max": 193,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 2325324916,
+            "target_luma_ratio": 0.38
+          },
+          "rain": {
+            "agenticir_level": 3,
+            "angle_degrees": 5,
+            "length": 26,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 3379917001,
+            "value": 142.12019361677218,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_04_0003.png",
+        "record_id": "tra_v2_c3_04_0003",
+        "screening_attempt": 1,
+        "seed": 403605460,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0101",
+        "source_path": "data/clean_pool/div2k/0101.png",
+        "source_sha256": "a17199aa0248b44f92f06abcf6ba1584e35a515acdc317c0a1431032bccdb2ea",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"rain\",\"low_light\"],\"levels\":{\"blur\":5,\"rain\":4,\"low_light\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_04_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "ed73705e88a11de1abe269c7897fc2d8d9345be31629ceb42f4cea7f35d07bd0",
+          "degradation": "blur",
+          "final_primary_value": 0.4703045101759622,
+          "full_sha256": "12da396c3836dd01f9ab990d342e2c70cfa20b1ba19e8ae5f275cc27ae674174",
+          "level": 5,
+          "minimum_final_primary_value": 0.1995126052041422,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8398536566348797
+        },
+        {
+          "counterfactual_sha256": "0dea52a816696ef26ef0bae88f1cbc97912e7f1fe2d641a43c63fe1ab9b2b02d",
+          "degradation": "rain",
+          "final_primary_value": 0.2862064562247078,
+          "full_sha256": "12da396c3836dd01f9ab990d342e2c70cfa20b1ba19e8ae5f275cc27ae674174",
+          "level": 4,
+          "minimum_final_primary_value": 0.15916528630251636,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.009716922577049
+        },
+        {
+          "counterfactual_sha256": "3044364cba7b5fa8b9393f109ed7c58c2e584a05b664e16214970ea3257d1308",
+          "degradation": "low_light",
+          "final_primary_value": 1.8600690504218176,
+          "full_sha256": "12da396c3836dd01f9ab990d342e2c70cfa20b1ba19e8ae5f275cc27ae674174",
+          "level": 3,
+          "minimum_final_primary_value": 1.6921851055365582,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 9,
+      "combination": [
+        "blur",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 26,
+          "y": 445
+        },
+        "degradations": [
+          "blur",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 2,
+          "haze": 2,
+          "low_light": 4
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 1,
+            "angle_degrees": -24.479094089206868,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 10,
+            "seed": 3616140679,
+            "sigma": 12.0
+          },
+          "haze": {
+            "agenticir_level": 1,
+            "airlight": 0.6169645871420365,
+            "beta": 2.631711582014261,
+            "depth_path": "data/agenticir/haze/024/predict_depth.mat",
+            "depth_sha256": "1e728348b5159c90b5e90b7cea480dc8cdc4215dcc59b398a1658c2dce6d4ad4",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 547109416
+          },
+          "low_light": {
+            "agenticir_level": 3,
+            "dst_max": 151,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 1131768173,
+            "target_luma_ratio": 0.3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_05_0000.png",
+        "record_id": "tra_v2_c3_05_0000",
+        "screening_attempt": 8,
+        "seed": 1252558644,
+        "source_dataset": "mio100",
+        "source_id": "mio100_024",
+        "source_path": "data/clean_pool/mio100/024.png",
+        "source_sha256": "e51441e174dd8dc0c47872ccb4221ab3f054b716588ee0f42d58a56098bd9538",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"haze\",\"low_light\"],\"levels\":{\"blur\":2,\"haze\":2,\"low_light\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_05_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "d296f0b1d0fd5aac260393b3a199ad2cdbe7e13cf482c55394ca56237b8a52d9",
+          "degradation": "haze",
+          "final_primary_value": 0.27353815095258344,
+          "full_sha256": "6a8fae019c98771f56e47011d561429ffc049c4dee120e468c3bd0b5acb66380",
+          "level": 2,
+          "minimum_final_primary_value": 0.24247769013820886,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9211442764492782
+        },
+        {
+          "counterfactual_sha256": "628a24d5ab856b5a04f57c50b2b018318941bd43dcbc174d82d792947a0cd1fd",
+          "degradation": "blur",
+          "final_primary_value": 0.5640976064272016,
+          "full_sha256": "6a8fae019c98771f56e47011d561429ffc049c4dee120e468c3bd0b5acb66380",
+          "level": 2,
+          "minimum_final_primary_value": 0.11832757679756534,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.6384711107520653
+        },
+        {
+          "counterfactual_sha256": "381c3fafd9600c28585b4f26eb815b875d89958752cb3d5851771f060663bef6",
+          "degradation": "low_light",
+          "final_primary_value": 2.3989245197136078,
+          "full_sha256": "6a8fae019c98771f56e47011d561429ffc049c4dee120e468c3bd0b5acb66380",
+          "level": 4,
+          "minimum_final_primary_value": 2.379322607058727,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.977809925617442,
+      "combination": [
+        "blur",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 371,
+          "y": 293
+        },
+        "degradations": [
+          "blur",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 3,
+          "haze": 3,
+          "low_light": 5
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 2,
+            "angle_degrees": 37.99528685152582,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 20,
+            "seed": 1662806846,
+            "sigma": 18.0
+          },
+          "haze": {
+            "agenticir_level": 2,
+            "airlight": 0.6922080091392196,
+            "beta": 3.6595851414274336,
+            "depth_path": "data/agenticir/haze/078/predict_depth.mat",
+            "depth_sha256": "2d7762195c9c45fe2bab2e583aaa0037e88dd61a71e792477a2e62c4d07a0eed",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 4088000815
+          },
+          "low_light": {
+            "agenticir_level": 4,
+            "dst_max": 122,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 2786094386,
+            "target_luma_ratio": 0.14
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_05_0001.png",
+        "record_id": "tra_v2_c3_05_0001",
+        "screening_attempt": 31,
+        "seed": 830743398,
+        "source_dataset": "mio100",
+        "source_id": "mio100_078",
+        "source_path": "data/clean_pool/mio100/078.png",
+        "source_sha256": "ae84b8b3592a0f623d5bd2c5791b049e6fd87155614fbbad37f1ac00a2cfa870",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"haze\",\"low_light\"],\"levels\":{\"blur\":3,\"haze\":3,\"low_light\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_05_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "59ebf3cf3f1ac4638ba523320a78d24b1f94316f3dd69a469ec3e0d949ca582d",
+          "degradation": "haze",
+          "final_primary_value": 0.43827310269063413,
+          "full_sha256": "6bfe4ed23073faa0916a287867c5f7ea4511d26cad16b8b8619f10e7acc13a55",
+          "level": 3,
+          "minimum_final_primary_value": 0.3304738438698548,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9896111919685612
+        },
+        {
+          "counterfactual_sha256": "ede2a57cecca90e885b1c43a285a381602abdd54ca03812c9eb2b76822a5d3d2",
+          "degradation": "blur",
+          "final_primary_value": 0.306003989448367,
+          "full_sha256": "6bfe4ed23073faa0916a287867c5f7ea4511d26cad16b8b8619f10e7acc13a55",
+          "level": 3,
+          "minimum_final_primary_value": 0.15241110172339903,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 2.1518265269974064
+        },
+        {
+          "counterfactual_sha256": "545c27d4e14a97e6877c0f3c23717f4e1a586132f71cf59a6dca482e0dbd1974",
+          "degradation": "low_light",
+          "final_primary_value": 6.267481289584052,
+          "full_sha256": "6bfe4ed23073faa0916a287867c5f7ea4511d26cad16b8b8619f10e7acc13a55",
+          "level": 5,
+          "minimum_final_primary_value": 6.409713304583635,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 4,
+      "combination": [
+        "blur",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 329,
+          "y": 168
+        },
+        "degradations": [
+          "blur",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 4,
+          "haze": 4,
+          "low_light": 2
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 3,
+            "angle_degrees": 84.35947717906012,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 289971838,
+            "sigma": 30.0
+          },
+          "haze": {
+            "agenticir_level": 3,
+            "airlight": 0.805456891114144,
+            "beta": 7.694066279748827,
+            "depth_path": "data/agenticir/haze/043/predict_depth.mat",
+            "depth_sha256": "41b471295e9ae254f7af25df6689c4f5680f47b21fcd47f268c1439b6fd49ba5",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 825686429
+          },
+          "low_light": {
+            "agenticir_level": 1,
+            "dst_max": 235,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 3736664479,
+            "target_luma_ratio": 0.5
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_05_0002.png",
+        "record_id": "tra_v2_c3_05_0002",
+        "screening_attempt": 3,
+        "seed": 3656790359,
+        "source_dataset": "mio100",
+        "source_id": "mio100_043",
+        "source_path": "data/clean_pool/mio100/043.png",
+        "source_sha256": "15880c27b3101797c4e5896dee7349ad832ac1c49fcd0c559b357f4e28296b4d",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"haze\",\"low_light\"],\"levels\":{\"blur\":4,\"haze\":4,\"low_light\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_05_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "9bdf1b89ed25308fcc6892a6f72710bbc6035f695aea63aff5cb1d89b59f7a96",
+          "degradation": "haze",
+          "final_primary_value": 0.7480604828058571,
+          "full_sha256": "0a22092ebfebb18306f63bd3cd3a1d824f93dc34db5f2b94516a1d2d478564ea",
+          "level": 4,
+          "minimum_final_primary_value": 0.3664680210724835,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0687274072441544
+        },
+        {
+          "counterfactual_sha256": "47383ff8d27b5cad1d698adb69855f7a269cc2432f60dbe5b6d289ed1ebef325",
+          "degradation": "blur",
+          "final_primary_value": 0.3770805347575911,
+          "full_sha256": "0a22092ebfebb18306f63bd3cd3a1d824f93dc34db5f2b94516a1d2d478564ea",
+          "level": 4,
+          "minimum_final_primary_value": 0.18424921121777954,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 149.59366653148237
+        },
+        {
+          "counterfactual_sha256": "5fa889813a00fa9b62c457d86a7293a324378a2e20a39903fb0afaf107499be3",
+          "degradation": "low_light",
+          "final_primary_value": 1.073153134401093,
+          "full_sha256": "0a22092ebfebb18306f63bd3cd3a1d824f93dc34db5f2b94516a1d2d478564ea",
+          "level": 2,
+          "minimum_final_primary_value": 1.0242178648746638,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 24,
+      "combination": [
+        "blur",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "blur",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 181,
+          "y": 469
+        },
+        "degradations": [
+          "blur",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "blur": 5,
+          "haze": 5,
+          "low_light": 3
+        },
+        "operators": {
+          "blur": {
+            "agenticir_level": 4,
+            "angle_degrees": -35.43493318341696,
+            "operator": "AgenticIR.motion_blur_project_strength",
+            "radius": 30,
+            "seed": 3513519797,
+            "sigma": 48.0
+          },
+          "haze": {
+            "agenticir_level": 4,
+            "airlight": 0.9850246239598275,
+            "beta": 10.665689092039534,
+            "depth_path": "data/agenticir/haze/059/predict_depth.mat",
+            "depth_sha256": "f81fe313363ca9b9620e41e8194356595b3a9cb4a5ff1528d44f335aac18a8a3",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 1062645284
+          },
+          "low_light": {
+            "agenticir_level": 2,
+            "dst_max": 190,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 393452928,
+            "target_luma_ratio": 0.38
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_05_0003.png",
+        "record_id": "tra_v2_c3_05_0003",
+        "screening_attempt": 23,
+        "seed": 124472994,
+        "source_dataset": "mio100",
+        "source_id": "mio100_059",
+        "source_path": "data/clean_pool/mio100/059.png",
+        "source_sha256": "e60c8277194566df02c7cefc895d1390756059f7a29ac67206ec202f1b897add",
+        "split": "train",
+        "target": "{\"degradations\":[\"blur\",\"haze\",\"low_light\"],\"levels\":{\"blur\":5,\"haze\":5,\"low_light\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_05_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "3c5c2aa9e8871cfd53bd7a4da46f230b583fee495137f6922a1e1358e0b8f5b2",
+          "degradation": "haze",
+          "final_primary_value": 1.0186189962527488,
+          "full_sha256": "4fcc0766981b1be81ad81c92fa5875960845e26c1217b9faa3fd3a4917a85a02",
+          "level": 5,
+          "minimum_final_primary_value": 0.3494319077130411,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.145496859983451
+        },
+        {
+          "counterfactual_sha256": "974de7ef4cc5ca35a8d3271a2f6ad4ed5111d2e84677d4b9b0c9f68cfa050c06",
+          "degradation": "blur",
+          "final_primary_value": 0.25892819959644986,
+          "full_sha256": "4fcc0766981b1be81ad81c92fa5875960845e26c1217b9faa3fd3a4917a85a02",
+          "level": 5,
+          "minimum_final_primary_value": 0.1995126052041422,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 63.86323185221449
+        },
+        {
+          "counterfactual_sha256": "e93c7a7a29164eda9a7097cd4936d1c7912dd10d286d276598c6a914f707f37c",
+          "degradation": "low_light",
+          "final_primary_value": 1.7518210791658875,
+          "full_sha256": "4fcc0766981b1be81ad81c92fa5875960845e26c1217b9faa3fd3a4917a85a02",
+          "level": 3,
+          "minimum_final_primary_value": 1.6921851055365582,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.9908094550662856,
+      "combination": [
+        "noise",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 82,
+          "y": 504
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "haze": 3,
+          "noise": 3,
+          "rain": 5
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 2,
+            "airlight": 0.699927789068744,
+            "beta": 3.6273493505200016,
+            "depth_path": "data/agenticir/haze/005/predict_depth.mat",
+            "depth_sha256": "4b3e7e5fd95c3075ff4162d72824c9d311e74b5e60ba4a68c0e91547edf8d211",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 2080766744
+          },
+          "noise": {
+            "agenticir_level": 2,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 412347147,
+            "sigma_0_255": 52.41316335888463
+          },
+          "rain": {
+            "agenticir_level": 4,
+            "angle_degrees": 17,
+            "length": 32,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 3541443362,
+            "value": 326.3319411967833,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_06_0000.png",
+        "record_id": "tra_v2_c3_06_0000",
+        "screening_attempt": 24,
+        "seed": 428030243,
+        "source_dataset": "mio100",
+        "source_id": "mio100_005",
+        "source_path": "data/clean_pool/mio100/005.png",
+        "source_sha256": "1d8eb1ef9c1817c087956135efa85be686e7169ef11eb532c768d32d7267a0ff",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"haze\"],\"levels\":{\"noise\":3,\"rain\":5,\"haze\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_06_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "b8a4f5394189ecbd4172d59d82a3aea995e9caa5a56eac07bb3a0ffc5f5b5914",
+          "degradation": "haze",
+          "final_primary_value": 0.4148822585857758,
+          "full_sha256": "408062c04277cbd4701d5ca9ea7b90e99d7253afd3e5fd03babd1ef45aa32b58",
+          "level": 3,
+          "minimum_final_primary_value": 0.3304738438698548,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.7691990858975872
+        },
+        {
+          "counterfactual_sha256": "00ab93fa6771edb5b933ecdd3d12a32ab561aa3afd871781e322f3087720e6bf",
+          "degradation": "rain",
+          "final_primary_value": 0.24604045332833346,
+          "full_sha256": "408062c04277cbd4701d5ca9ea7b90e99d7253afd3e5fd03babd1ef45aa32b58",
+          "level": 5,
+          "minimum_final_primary_value": 0.2073405175506128,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9531154641199624
+        },
+        {
+          "counterfactual_sha256": "afdd9bc7ed59dae676b8610f78539c1a21a1cd3fb255ed0af791073731113a83",
+          "degradation": "noise",
+          "final_primary_value": 0.29570525150146637,
+          "full_sha256": "408062c04277cbd4701d5ca9ea7b90e99d7253afd3e5fd03babd1ef45aa32b58",
+          "level": 3,
+          "minimum_final_primary_value": 0.2984481526588617,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 6,
+      "combination": [
+        "noise",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 492,
+          "y": 54
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "haze": 4,
+          "noise": 4,
+          "rain": 2
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 3,
+            "airlight": 0.7767770034509378,
+            "beta": 7.662569187571973,
+            "depth_path": "data/agenticir/haze/070/predict_depth.mat",
+            "depth_sha256": "081f461268a51a017d969df2ec7389f56211434bb8e34042eef00afe63959a82",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 1002981060
+          },
+          "noise": {
+            "agenticir_level": 3,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1413657526,
+            "sigma_0_255": 104.65390179216278
+          },
+          "rain": {
+            "agenticir_level": 1,
+            "angle_degrees": -22,
+            "length": 27,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 3825011442,
+            "value": 9.56371568081116,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_06_0001.png",
+        "record_id": "tra_v2_c3_06_0001",
+        "screening_attempt": 5,
+        "seed": 229260979,
+        "source_dataset": "mio100",
+        "source_id": "mio100_070",
+        "source_path": "data/clean_pool/mio100/070.png",
+        "source_sha256": "718ae2570e431003fb32f2a40e19f813545164ace18230ac03f9ec96b2747f85",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"haze\"],\"levels\":{\"noise\":4,\"rain\":2,\"haze\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_06_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "41765a6df60fbe1fdc2e207fbffa48ff3f04ffcbcdddb085c6c44aec0b7977e9",
+          "degradation": "haze",
+          "final_primary_value": 0.47754254847690253,
+          "full_sha256": "81ff44cc4393d9af815489e2d68a1fc346421cfeb0c02a05daa9ec2fd497aba5",
+          "level": 4,
+          "minimum_final_primary_value": 0.3664680210724835,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8331484212300649
+        },
+        {
+          "counterfactual_sha256": "384f06341100bc4e449bb1286147c7585487c3c95a5c7ea44974ab2759f2a6b5",
+          "degradation": "rain",
+          "final_primary_value": 0.07187548723108714,
+          "full_sha256": "81ff44cc4393d9af815489e2d68a1fc346421cfeb0c02a05daa9ec2fd497aba5",
+          "level": 2,
+          "minimum_final_primary_value": 0.061867224650556774,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8346009300670026
+        },
+        {
+          "counterfactual_sha256": "8349e2e4d372c873f78f34864ee6fbb869b9d82bd37a97a63fdbbd433836f79e",
+          "degradation": "noise",
+          "final_primary_value": 0.5339351551793245,
+          "full_sha256": "81ff44cc4393d9af815489e2d68a1fc346421cfeb0c02a05daa9ec2fd497aba5",
+          "level": 4,
+          "minimum_final_primary_value": 0.4661210341531342,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.46437289303877266,
+      "combination": [
+        "noise",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 344,
+          "y": 60
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "haze": 5,
+          "noise": 5,
+          "rain": 3
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 4,
+            "airlight": 1.0085217968582165,
+            "beta": 10.715197507932984,
+            "depth_path": "data/agenticir/haze/014/predict_depth.mat",
+            "depth_sha256": "5d216588360bfcce1e9d8daa0b22976fb7bd3fdeec7f7e6168a36e8cd11d2dae",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 468901878
+          },
+          "noise": {
+            "agenticir_level": 4,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 3587895898,
+            "sigma_0_255": 162.0224795006131
+          },
+          "rain": {
+            "agenticir_level": 2,
+            "angle_degrees": -10,
+            "length": 36,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 2876275791,
+            "value": 55.702864578753314,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_06_0002.png",
+        "record_id": "tra_v2_c3_06_0002",
+        "screening_attempt": 16,
+        "seed": 1382364577,
+        "source_dataset": "mio100",
+        "source_id": "mio100_014",
+        "source_path": "data/clean_pool/mio100/014.png",
+        "source_sha256": "2d569d9b923a96b1542c0b845dce0c7657794eba9f6f22ae5d02f335ef1bc4a0",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"haze\"],\"levels\":{\"noise\":5,\"rain\":3,\"haze\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_06_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "6b5b8d466730018b02506605948f7248a7282d4644296f900f388f917749b82e",
+          "degradation": "haze",
+          "final_primary_value": 0.31028947229795883,
+          "full_sha256": "084668d07eb76f3550bb5c9639da89549b0e850d6ff79ac4ec21af4a17af4e40",
+          "level": 5,
+          "minimum_final_primary_value": 0.3494319077130411,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8149691917858939
+        },
+        {
+          "counterfactual_sha256": "5fa8fce79bba7a42de9bc7778d232864d0cdb4bb9ffa20a51bf33c9c83684d5e",
+          "degradation": "rain",
+          "final_primary_value": 0.057158222513664377,
+          "full_sha256": "084668d07eb76f3550bb5c9639da89549b0e850d6ff79ac4ec21af4a17af4e40",
+          "level": 3,
+          "minimum_final_primary_value": 0.12308690573997817,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8643804893628877
+        },
+        {
+          "counterfactual_sha256": "f494d19f1ca6e68a47633a091716dfcbd5657a03f80055a417cf643cd30cab59",
+          "degradation": "noise",
+          "final_primary_value": 0.5720333686852553,
+          "full_sha256": "084668d07eb76f3550bb5c9639da89549b0e850d6ff79ac4ec21af4a17af4e40",
+          "level": 5,
+          "minimum_final_primary_value": 0.7307221440752781,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 1,
+      "combination": [
+        "noise",
+        "rain",
+        "haze"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 83,
+          "y": 172
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "haze"
+        ],
+        "levels": {
+          "haze": 2,
+          "noise": 2,
+          "rain": 4
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 1,
+            "airlight": 0.6195997529761146,
+            "beta": 2.5557362618883572,
+            "depth_path": "data/agenticir/haze/100/predict_depth.mat",
+            "depth_sha256": "bb1257cfc5a4a7cbb8da5f14d3704fe629be71cad6dd5eebe82f7bf8560547c9",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 2978397284
+          },
+          "noise": {
+            "agenticir_level": 1,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1427522591,
+            "sigma_0_255": 41.25231385516305
+          },
+          "rain": {
+            "agenticir_level": 3,
+            "angle_degrees": 4,
+            "length": 32,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 1063228416,
+            "value": 157.05038728408505,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_06_0003.png",
+        "record_id": "tra_v2_c3_06_0003",
+        "screening_attempt": 0,
+        "seed": 2489989350,
+        "source_dataset": "mio100",
+        "source_id": "mio100_100",
+        "source_path": "data/clean_pool/mio100/100.png",
+        "source_sha256": "b7f5d60dbb3e7047b9c62efc7d61db97052a2cde687d3fae367a14a6793a0c40",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"haze\"],\"levels\":{\"noise\":2,\"rain\":4,\"haze\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_06_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "19d65c55015ae7cd9b5f8abf5c742cdb526bc607302d1d57838e2a05f3582b46",
+          "degradation": "haze",
+          "final_primary_value": 0.4652247746930859,
+          "full_sha256": "083dcf72c6197ee3441472cc6959f0614cde1ea2650d60adf5b985146572e2e3",
+          "level": 2,
+          "minimum_final_primary_value": 0.24247769013820886,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8474319585117254
+        },
+        {
+          "counterfactual_sha256": "f42982e4c06ffcb38ce6e4c351c9c9919f0c63971302194356c9f06732d4f980",
+          "degradation": "rain",
+          "final_primary_value": 0.17992394413255852,
+          "full_sha256": "083dcf72c6197ee3441472cc6959f0614cde1ea2650d60adf5b985146572e2e3",
+          "level": 4,
+          "minimum_final_primary_value": 0.15916528630251636,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9598508991538106
+        },
+        {
+          "counterfactual_sha256": "9a87cb7a99db638d941e0eddfbcc2158d1029796960954e62ac25bf179824d91",
+          "degradation": "noise",
+          "final_primary_value": 0.25908629471642475,
+          "full_sha256": "083dcf72c6197ee3441472cc6959f0614cde1ea2650d60adf5b985146572e2e3",
+          "level": 2,
+          "minimum_final_primary_value": 0.15433118480923033,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.9427766790454842,
+      "combination": [
+        "noise",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "rain",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 413,
+          "y": 45
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "low_light": 4,
+          "noise": 3,
+          "rain": 5
+        },
+        "operators": {
+          "low_light": {
+            "agenticir_level": 3,
+            "dst_max": 160,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 3962170929,
+            "target_luma_ratio": 0.3
+          },
+          "noise": {
+            "agenticir_level": 2,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1069837896,
+            "sigma_0_255": 39.13725131044642
+          },
+          "rain": {
+            "agenticir_level": 4,
+            "angle_degrees": -16,
+            "length": 37,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 3963813973,
+            "value": 348.52637737453273,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_07_0000.png",
+        "record_id": "tra_v2_c3_07_0000",
+        "screening_attempt": 6,
+        "seed": 154638903,
+        "source_dataset": "lsdir",
+        "source_id": "lsdir_0000524",
+        "source_path": "data/clean_pool/lsdir/0000524.png",
+        "source_sha256": "db1b45cb9b7ae2bbf2a28842392678bf958e006a41ddf29fffedb5da83ec08f4",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"low_light\"],\"levels\":{\"noise\":3,\"rain\":5,\"low_light\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_07_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "9a048f7df722ddc1ce53eb09f35de5bfb987fb939a2dbde707edbd9f773b8414",
+          "degradation": "rain",
+          "final_primary_value": 0.27030209042140746,
+          "full_sha256": "1d2946e7b7dd6009c0f93ce1ac06089f893fabcb460f4c31e71a136cecb1cb08",
+          "level": 5,
+          "minimum_final_primary_value": 0.2073405175506128,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.7631175214153024
+        },
+        {
+          "counterfactual_sha256": "8377b2b586bb042acc598fe0290b710596dd9ea1fd6d962d7b7492e0aeac2447",
+          "degradation": "low_light",
+          "final_primary_value": 2.2431698658606702,
+          "full_sha256": "1d2946e7b7dd6009c0f93ce1ac06089f893fabcb460f4c31e71a136cecb1cb08",
+          "level": 4,
+          "minimum_final_primary_value": 2.379322607058727,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8404462885751175
+        },
+        {
+          "counterfactual_sha256": "ae0ba4cbcca2702acb089bd73e7cb3c37b1671af69c874f704d917c7c85e7bab",
+          "degradation": "noise",
+          "final_primary_value": 0.7655864661521934,
+          "full_sha256": "1d2946e7b7dd6009c0f93ce1ac06089f893fabcb460f4c31e71a136cecb1cb08",
+          "level": 3,
+          "minimum_final_primary_value": 0.2984481526588617,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.4085654278782556,
+      "combination": [
+        "noise",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "rain",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 708,
+          "y": 526
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "low_light": 5,
+          "noise": 4,
+          "rain": 2
+        },
+        "operators": {
+          "low_light": {
+            "agenticir_level": 4,
+            "dst_max": 122,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 446056152,
+            "target_luma_ratio": 0.14
+          },
+          "noise": {
+            "agenticir_level": 3,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 2635330131,
+            "sigma_0_255": 83.45315825639709
+          },
+          "rain": {
+            "agenticir_level": 1,
+            "angle_degrees": -9,
+            "length": 33,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 524837002,
+            "value": 13.437399148584161,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_07_0001.png",
+        "record_id": "tra_v2_c3_07_0001",
+        "screening_attempt": 30,
+        "seed": 4098401637,
+        "source_dataset": "lsdir",
+        "source_id": "lsdir_0000246",
+        "source_path": "data/clean_pool/lsdir/0000246.png",
+        "source_sha256": "aecedd09686ed491f5c8b6072d4285cb940ee28a8a03e45c7a08f6e5b832064a",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"low_light\"],\"levels\":{\"noise\":4,\"rain\":2,\"low_light\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_07_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "2a6012e08049385d169d4c8417e9ac625a65f60bce845a5a7adbf8e5c2b5229f",
+          "degradation": "rain",
+          "final_primary_value": 0.03280408634152873,
+          "full_sha256": "af1d9bbdbc7758c28fad47729a8857d58f7985a4016f09948c9237ce533599b8",
+          "level": 2,
+          "minimum_final_primary_value": 0.061867224650556774,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.3576981875403686
+        },
+        {
+          "counterfactual_sha256": "5faf5465dac56e61f644aeb3658c584c6bac2319627adf2c7d1b7f3116f1ac82",
+          "degradation": "low_light",
+          "final_primary_value": 2.6187872588641605,
+          "full_sha256": "af1d9bbdbc7758c28fad47729a8857d58f7985a4016f09948c9237ce533599b8",
+          "level": 5,
+          "minimum_final_primary_value": 6.409713304583635,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.3814112412899821
+        },
+        {
+          "counterfactual_sha256": "3218ff6624e72d638bf790c7065e6f03a189d3af3bebc0b4fe9bdb444d24f965",
+          "degradation": "noise",
+          "final_primary_value": 1.355299501910349,
+          "full_sha256": "af1d9bbdbc7758c28fad47729a8857d58f7985a4016f09948c9237ce533599b8",
+          "level": 4,
+          "minimum_final_primary_value": 0.4661210341531342,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.5918077205257494,
+      "combination": [
+        "noise",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "rain",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 1389,
+          "y": 55
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "low_light": 2,
+          "noise": 5,
+          "rain": 3
+        },
+        "operators": {
+          "low_light": {
+            "agenticir_level": 1,
+            "dst_max": 233,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 122918832,
+            "target_luma_ratio": 0.5
+          },
+          "noise": {
+            "agenticir_level": 4,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1186697050,
+            "sigma_0_255": 163.9644720069149
+          },
+          "rain": {
+            "agenticir_level": 2,
+            "angle_degrees": 9,
+            "length": 22,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 4034777303,
+            "value": 65.50537761860208,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_07_0002.png",
+        "record_id": "tra_v2_c3_07_0002",
+        "screening_attempt": 31,
+        "seed": 979506665,
+        "source_dataset": "div2k",
+        "source_id": "div2k_0209",
+        "source_path": "data/clean_pool/div2k/0209.png",
+        "source_sha256": "38579bb9e5cc29fa6a46af80912e968eb3f6a403b9ee1eeb6298895f76318788",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"low_light\"],\"levels\":{\"noise\":5,\"rain\":3,\"low_light\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_07_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "65bc760277b08d088690b756e5140ddf9a87fb6f5861ef474b24cd5d8b7ee989",
+          "degradation": "rain",
+          "final_primary_value": 0.07732751323609885,
+          "full_sha256": "7810b84e7c758a21fa023e0230e2c112ca3dd694711ea96cd1d48a78e862b052",
+          "level": 3,
+          "minimum_final_primary_value": 0.12308690573997817,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.5719662998309282
+        },
+        {
+          "counterfactual_sha256": "3a527509dce02a5a7edbf0bdfda806e43fc3bffa1554abe52f1924544d23a923",
+          "degradation": "low_light",
+          "final_primary_value": 0.6061400399332247,
+          "full_sha256": "7810b84e7c758a21fa023e0230e2c112ca3dd694711ea96cd1d48a78e862b052",
+          "level": 2,
+          "minimum_final_primary_value": 1.0242178648746638,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.545616542625923
+        },
+        {
+          "counterfactual_sha256": "54cfc76c240d3fb1dabb5cb95f8d50b7f3da969b9ad5d1fa0128e43920d4f427",
+          "degradation": "noise",
+          "final_primary_value": 0.9940472694253945,
+          "full_sha256": "7810b84e7c758a21fa023e0230e2c112ca3dd694711ea96cd1d48a78e862b052",
+          "level": 5,
+          "minimum_final_primary_value": 0.7307221440752781,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 6,
+      "combination": [
+        "noise",
+        "rain",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "rain",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 511,
+          "y": 118
+        },
+        "degradations": [
+          "noise",
+          "rain",
+          "low_light"
+        ],
+        "levels": {
+          "low_light": 3,
+          "noise": 2,
+          "rain": 4
+        },
+        "operators": {
+          "low_light": {
+            "agenticir_level": 2,
+            "dst_max": 194,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 857630441,
+            "target_luma_ratio": 0.38
+          },
+          "noise": {
+            "agenticir_level": 1,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 151584598,
+            "sigma_0_255": 21.5688668410354
+          },
+          "rain": {
+            "agenticir_level": 3,
+            "angle_degrees": -6,
+            "length": 37,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 1596534771,
+            "value": 140.43109910713932,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_07_0003.png",
+        "record_id": "tra_v2_c3_07_0003",
+        "screening_attempt": 5,
+        "seed": 2849744156,
+        "source_dataset": "lsdir",
+        "source_id": "lsdir_0000948",
+        "source_path": "data/clean_pool/lsdir/0000948.png",
+        "source_sha256": "7c8ba1ba3492502cf0cc1775d512929b649a80406702e3f935c0bcdc28412995",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"rain\",\"low_light\"],\"levels\":{\"noise\":2,\"rain\":4,\"low_light\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_07_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "41f9d527d86bc91d19359f59f144a40ff0f594abf14f29717038e057a99e37b5",
+          "degradation": "rain",
+          "final_primary_value": 0.2683724987750835,
+          "full_sha256": "9fc9eeb829c7d0abe463e6ec29229802f1fc87e69a2a81f1e3a94b1c75c79980",
+          "level": 4,
+          "minimum_final_primary_value": 0.15916528630251636,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.004315565133184
+        },
+        {
+          "counterfactual_sha256": "be3a1ab5a287ff8b793a17311337d98c6cd2ba8b94410f948dc6ab11d87c14cc",
+          "degradation": "low_light",
+          "final_primary_value": 1.7475958252725492,
+          "full_sha256": "9fc9eeb829c7d0abe463e6ec29229802f1fc87e69a2a81f1e3a94b1c75c79980",
+          "level": 3,
+          "minimum_final_primary_value": 1.6921851055365582,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9772765388976202
+        },
+        {
+          "counterfactual_sha256": "7bae5a479c8308269ba0c6524f552ece0783c9c232c534ce01539e8921cd7846",
+          "degradation": "noise",
+          "final_primary_value": 0.41515445088590064,
+          "full_sha256": "9fc9eeb829c7d0abe463e6ec29229802f1fc87e69a2a81f1e3a94b1c75c79980",
+          "level": 2,
+          "minimum_final_primary_value": 0.15433118480923033,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.9222551376026803,
+      "combination": [
+        "noise",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 208,
+          "y": 73
+        },
+        "degradations": [
+          "noise",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 2,
+          "low_light": 4,
+          "noise": 3
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 1,
+            "airlight": 0.616802326505878,
+            "beta": 1.982257016026725,
+            "depth_path": "data/agenticir/haze/070/predict_depth.mat",
+            "depth_sha256": "081f461268a51a017d969df2ec7389f56211434bb8e34042eef00afe63959a82",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 498229048
+          },
+          "low_light": {
+            "agenticir_level": 3,
+            "dst_max": 161,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 3590195321,
+            "target_luma_ratio": 0.3
+          },
+          "noise": {
+            "agenticir_level": 2,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1149740541,
+            "sigma_0_255": 38.578180790780536
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_08_0000.png",
+        "record_id": "tra_v2_c3_08_0000",
+        "screening_attempt": 11,
+        "seed": 3568851311,
+        "source_dataset": "mio100",
+        "source_id": "mio100_070",
+        "source_path": "data/clean_pool/mio100/070.png",
+        "source_sha256": "718ae2570e431003fb32f2a40e19f813545164ace18230ac03f9ec96b2747f85",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"haze\",\"low_light\"],\"levels\":{\"noise\":3,\"haze\":2,\"low_light\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_08_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "eb33ef3a0c9fce2926fe4b024f681652013be32f0b1ed1f9e4c631c25c137762",
+          "degradation": "haze",
+          "final_primary_value": 0.24110889573482153,
+          "full_sha256": "529cea57b0f357e5da62675c1530203f86e415b2868cd4b11bf30916fe2a0245",
+          "level": 2,
+          "minimum_final_primary_value": 0.24247769013820886,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.721125139988732
+        },
+        {
+          "counterfactual_sha256": "83ec65bc5532396e52c150af404bc2a5bcd851bc10d1e4babd3db4259b653f9d",
+          "degradation": "low_light",
+          "final_primary_value": 2.194342498374114,
+          "full_sha256": "529cea57b0f357e5da62675c1530203f86e415b2868cd4b11bf30916fe2a0245",
+          "level": 4,
+          "minimum_final_primary_value": 2.379322607058727,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8921111725161295
+        },
+        {
+          "counterfactual_sha256": "bf06c26ae43051450a5cb012b4fb24068c41d741013d9263d7b714d1933f19c7",
+          "degradation": "noise",
+          "final_primary_value": 0.7352469643899834,
+          "full_sha256": "529cea57b0f357e5da62675c1530203f86e415b2868cd4b11bf30916fe2a0245",
+          "level": 3,
+          "minimum_final_primary_value": 0.2984481526588617,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.45149310020193667,
+      "combination": [
+        "noise",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 30,
+          "y": 25
+        },
+        "degradations": [
+          "noise",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 3,
+          "low_light": 5,
+          "noise": 4
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 2,
+            "airlight": 0.7361828907715072,
+            "beta": 3.9921035637896205,
+            "depth_path": "data/agenticir/haze/065/predict_depth.mat",
+            "depth_sha256": "9ce141ca8eb022931fa860f9ca7d98e99a5230c1e919e0b513b4e577b08656c8",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 1610945845
+          },
+          "low_light": {
+            "agenticir_level": 4,
+            "dst_max": 119,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 2140626663,
+            "target_luma_ratio": 0.14
+          },
+          "noise": {
+            "agenticir_level": 3,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 537260014,
+            "sigma_0_255": 76.9787642941516
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_08_0001.png",
+        "record_id": "tra_v2_c3_08_0001",
+        "screening_attempt": 10,
+        "seed": 1445188573,
+        "source_dataset": "mio100",
+        "source_id": "mio100_065",
+        "source_path": "data/clean_pool/mio100/065.png",
+        "source_sha256": "f0770ae16bf79be3b5d94a7868da009f5ce1bbf54bfe5c879e352a4df590ef63",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"haze\",\"low_light\"],\"levels\":{\"noise\":4,\"haze\":3,\"low_light\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_08_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "ad124163da79f62396c1798af28ea231f8f2bab3fb8ab1430f4f5a8105d0e3b7",
+          "degradation": "haze",
+          "final_primary_value": 0.20826990128629036,
+          "full_sha256": "81fb5a7c88b6d4eee270a6a0aa3676dbd2529a16d23095728b83ca0fa55a9f11",
+          "level": 3,
+          "minimum_final_primary_value": 0.3304738438698548,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.37485441105409517
+        },
+        {
+          "counterfactual_sha256": "c2256d5c67d262b5a4defdd59e5a98cd2cc351ccb9778dd73c1d1a961a7a80ba",
+          "degradation": "low_light",
+          "final_primary_value": 2.8939413312920657,
+          "full_sha256": "81fb5a7c88b6d4eee270a6a0aa3676dbd2529a16d23095728b83ca0fa55a9f11",
+          "level": 5,
+          "minimum_final_primary_value": 6.409713304583635,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.47227921622514646
+        },
+        {
+          "counterfactual_sha256": "72c0906540474396432cadb87fb879b3557c8016f336cc4f468e44662574cb69",
+          "degradation": "noise",
+          "final_primary_value": 1.2736196771787942,
+          "full_sha256": "81fb5a7c88b6d4eee270a6a0aa3676dbd2529a16d23095728b83ca0fa55a9f11",
+          "level": 4,
+          "minimum_final_primary_value": 0.4661210341531342,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.6422109555694072,
+      "combination": [
+        "noise",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 271,
+          "y": 239
+        },
+        "degradations": [
+          "noise",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 4,
+          "low_light": 2,
+          "noise": 5
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 3,
+            "airlight": 0.8032836670962712,
+            "beta": 7.105653540209737,
+            "depth_path": "data/agenticir/haze/081/predict_depth.mat",
+            "depth_sha256": "b1fcc7f1916a39b177cc464c5917153d0af91b7a442d7b85b643206c7ad82065",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 2857082008
+          },
+          "low_light": {
+            "agenticir_level": 1,
+            "dst_max": 235,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 3766830656,
+            "target_luma_ratio": 0.5
+          },
+          "noise": {
+            "agenticir_level": 4,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 1292310198,
+            "sigma_0_255": 166.11588999910634
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_08_0002.png",
+        "record_id": "tra_v2_c3_08_0002",
+        "screening_attempt": 27,
+        "seed": 3739756226,
+        "source_dataset": "mio100",
+        "source_id": "mio100_081",
+        "source_path": "data/clean_pool/mio100/081.png",
+        "source_sha256": "f86df1e220755af6ab50844f797e3fb45165c5dde9ac8ee1750544154cfd1ad7",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"haze\",\"low_light\"],\"levels\":{\"noise\":5,\"haze\":4,\"low_light\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_08_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "0880feded452297ca1c4f2b83f1dce4829a888e66bf0c7cead934af04fceaf92",
+          "degradation": "haze",
+          "final_primary_value": 0.3955539681403841,
+          "full_sha256": "e527cecd4e500f5e54921821a343e0cb07ba3bbcdccfa7e280ca458e00cfad80",
+          "level": 4,
+          "minimum_final_primary_value": 0.3664680210724835,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.5937674087606205
+        },
+        {
+          "counterfactual_sha256": "c2f278e1f51538ef189c90b4f05fa0c452b0cf2b29527c2f498f6a6f37d74e45",
+          "degradation": "low_light",
+          "final_primary_value": 0.6577639337124158,
+          "full_sha256": "e527cecd4e500f5e54921821a343e0cb07ba3bbcdccfa7e280ca458e00cfad80",
+          "level": 2,
+          "minimum_final_primary_value": 1.0242178648746638,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.5938886462471209
+        },
+        {
+          "counterfactual_sha256": "b819f8360f5f3bcd24871b067bd24f7c632c60ff10c3373d0ae07c989965b4ea",
+          "degradation": "noise",
+          "final_primary_value": 0.9062005707511187,
+          "full_sha256": "e527cecd4e500f5e54921821a343e0cb07ba3bbcdccfa7e280ca458e00cfad80",
+          "level": 5,
+          "minimum_final_primary_value": 0.7307221440752781,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": false,
+      "attempts": 32,
+      "best_minimum_margin": 0.9402932875282307,
+      "combination": [
+        "noise",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "low_light",
+          "noise"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 9,
+          "y": 399
+        },
+        "degradations": [
+          "noise",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 5,
+          "low_light": 3,
+          "noise": 2
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 4,
+            "airlight": 1.0425367623950803,
+            "beta": 10.902388709400265,
+            "depth_path": "data/agenticir/haze/064/predict_depth.mat",
+            "depth_sha256": "3225c450ce4f217982636037a8123a2f8f050edb68d0b55b0cddff7c90d16ddd",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 1629628199
+          },
+          "low_light": {
+            "agenticir_level": 2,
+            "dst_max": 185,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 3505465518,
+            "target_luma_ratio": 0.38
+          },
+          "noise": {
+            "agenticir_level": 1,
+            "operator": "AgenticIR.color_gaussian_noise_equivalent",
+            "seed": 2314758219,
+            "sigma_0_255": 28.849588027420154
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_08_0003.png",
+        "record_id": "tra_v2_c3_08_0003",
+        "screening_attempt": 2,
+        "seed": 872385275,
+        "source_dataset": "mio100",
+        "source_id": "mio100_064",
+        "source_path": "data/clean_pool/mio100/064.png",
+        "source_sha256": "b34caae8d574b2c008d53ceb0490df55c099e68844b2819f0c02fc50db26cee0",
+        "split": "train",
+        "target": "{\"degradations\":[\"noise\",\"haze\",\"low_light\"],\"levels\":{\"noise\":2,\"haze\":5,\"low_light\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_08_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "f8cc9ae53cbd3efbad358c0a250a95829c3057a2a7322fe32c67e31a1d19b937",
+          "degradation": "haze",
+          "final_primary_value": 0.6359986057949102,
+          "full_sha256": "dc476c347e1447ba091b80d37083c20c25dc90425d74f14f32c09019caab2bc3",
+          "level": 5,
+          "minimum_final_primary_value": 0.3494319077130411,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9336062451959037
+        },
+        {
+          "counterfactual_sha256": "27399d0bdea8f027956c7d7e44f7c469a73f57ea85d193fe80df70cdcda32fba",
+          "degradation": "low_light",
+          "final_primary_value": 1.5911502959912764,
+          "full_sha256": "dc476c347e1447ba091b80d37083c20c25dc90425d74f14f32c09019caab2bc3",
+          "level": 3,
+          "minimum_final_primary_value": 1.6921851055365582,
+          "minimum_survival_ratio": 0.5,
+          "pass": false,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.9711589379469467
+        },
+        {
+          "counterfactual_sha256": "4c71b7c917454c07fc8be19a65a4305b923390ec3dfa39d4b5ddfcd15982e0f9",
+          "degradation": "noise",
+          "final_primary_value": 0.31880280530446403,
+          "full_sha256": "dc476c347e1447ba091b80d37083c20c25dc90425d74f14f32c09019caab2bc3",
+          "level": 2,
+          "minimum_final_primary_value": 0.15433118480923033,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 5,
+      "combination": [
+        "rain",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 228,
+          "y": 9
+        },
+        "degradations": [
+          "rain",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 2,
+          "low_light": 4,
+          "rain": 4
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 1,
+            "airlight": 0.5803594094901956,
+            "beta": 2.536786224672383,
+            "depth_path": "data/agenticir/haze/032/predict_depth.mat",
+            "depth_sha256": "84966c263a9a088beba74d17465305200a16a44fc55b5fba4c858ebd1ddfca97",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 668236211
+          },
+          "low_light": {
+            "agenticir_level": 3,
+            "dst_max": 146,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 596309989,
+            "target_luma_ratio": 0.3
+          },
+          "rain": {
+            "agenticir_level": 3,
+            "angle_degrees": -22,
+            "length": 24,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 1791675215,
+            "value": 137.05401025034953,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_09_0000.png",
+        "record_id": "tra_v2_c3_09_0000",
+        "screening_attempt": 4,
+        "seed": 3362816345,
+        "source_dataset": "mio100",
+        "source_id": "mio100_032",
+        "source_path": "data/clean_pool/mio100/032.png",
+        "source_sha256": "e9749385ec471240dd782d677482b0d949b80ccb7472dc409fa260d1748ed9b9",
+        "split": "train",
+        "target": "{\"degradations\":[\"rain\",\"haze\",\"low_light\"],\"levels\":{\"rain\":4,\"haze\":2,\"low_light\":4}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_09_0000",
+      "visibility": [
+        {
+          "counterfactual_sha256": "665b91a73c3e93e1b94d61e3e7528636d9b0edc23805428671aed4b070da6f69",
+          "degradation": "haze",
+          "final_primary_value": 0.33049025450560865,
+          "full_sha256": "24cc5ed39a72e9fd52c5e27e034c6a1ffae5a28112183ab3a7140f5156c6a7cc",
+          "level": 2,
+          "minimum_final_primary_value": 0.24247769013820886,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.8409450381913509
+        },
+        {
+          "counterfactual_sha256": "2abd26167819d1e47e280b139d98a16ceeecd953f0ac5d6773b94c499a438e44",
+          "degradation": "rain",
+          "final_primary_value": 0.35442874328809687,
+          "full_sha256": "24cc5ed39a72e9fd52c5e27e034c6a1ffae5a28112183ab3a7140f5156c6a7cc",
+          "level": 4,
+          "minimum_final_primary_value": 0.15916528630251636,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.2814044794579402
+        },
+        {
+          "counterfactual_sha256": "957a31f0b0c748af6088acc835930a7de190af71a4b7393f44505091766174e9",
+          "degradation": "low_light",
+          "final_primary_value": 2.3800320621107396,
+          "full_sha256": "24cc5ed39a72e9fd52c5e27e034c6a1ffae5a28112183ab3a7140f5156c6a7cc",
+          "level": 4,
+          "minimum_final_primary_value": 2.379322607058727,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 22,
+      "combination": [
+        "rain",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 67,
+          "y": 499
+        },
+        "degradations": [
+          "rain",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 3,
+          "low_light": 5,
+          "rain": 5
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 2,
+            "airlight": 0.6904158157470515,
+            "beta": 3.814999836557297,
+            "depth_path": "data/agenticir/haze/060/predict_depth.mat",
+            "depth_sha256": "a55eef00bda64574ca7c9a46e05686aa2dc38753e761e89a66167b1fccb250b9",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 583172533
+          },
+          "low_light": {
+            "agenticir_level": 4,
+            "dst_max": 122,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 3387694217,
+            "target_luma_ratio": 0.14
+          },
+          "rain": {
+            "agenticir_level": 4,
+            "angle_degrees": 0,
+            "length": 27,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 1215819400,
+            "value": 333.2543156314159,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_09_0001.png",
+        "record_id": "tra_v2_c3_09_0001",
+        "screening_attempt": 21,
+        "seed": 4081825691,
+        "source_dataset": "mio100",
+        "source_id": "mio100_060",
+        "source_path": "data/clean_pool/mio100/060.png",
+        "source_sha256": "d173273231bf0b68767ae3e287f4f34baa71e7d986a98c43a41fa9668fd8a0d4",
+        "split": "train",
+        "target": "{\"degradations\":[\"rain\",\"haze\",\"low_light\"],\"levels\":{\"rain\":5,\"haze\":3,\"low_light\":5}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_09_0001",
+      "visibility": [
+        {
+          "counterfactual_sha256": "0d6e2abb4246f6d426ef42515d2ca41a7a9c585e9cd741b77dedf43d26739143",
+          "degradation": "haze",
+          "final_primary_value": 0.4135690353548368,
+          "full_sha256": "74b1706f142ba8267903a7383ff88cd1aeb8e41b7c8fe10faf856b36197bfaee",
+          "level": 3,
+          "minimum_final_primary_value": 0.3304738438698548,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 0.7561229204967109
+        },
+        {
+          "counterfactual_sha256": "cc9d01a0bf362c89afcba786abaae38cf466386cb2bc7b533dfc5bc78e7d5823",
+          "degradation": "rain",
+          "final_primary_value": 0.4411859396615042,
+          "full_sha256": "74b1706f142ba8267903a7383ff88cd1aeb8e41b7c8fe10faf856b36197bfaee",
+          "level": 5,
+          "minimum_final_primary_value": 0.2073405175506128,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.2301671269728693
+        },
+        {
+          "counterfactual_sha256": "e80b022a33fc022b31ab042dd13116fdf3f7e656e43c46e067dc6269f3c13ad9",
+          "degradation": "low_light",
+          "final_primary_value": 6.427660786114049,
+          "full_sha256": "74b1706f142ba8267903a7383ff88cd1aeb8e41b7c8fe10faf856b36197bfaee",
+          "level": 5,
+          "minimum_final_primary_value": 6.409713304583635,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 2,
+      "combination": [
+        "rain",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 31,
+          "y": 475
+        },
+        "degradations": [
+          "rain",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 4,
+          "low_light": 2,
+          "rain": 2
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 3,
+            "airlight": 0.7912582898246963,
+            "beta": 7.160166839976188,
+            "depth_path": "data/agenticir/haze/085/predict_depth.mat",
+            "depth_sha256": "f52d051a1a43a89c8c0c4d801c07337f9a0a691541539e1cf9431bd70256f11a",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 3260209747
+          },
+          "low_light": {
+            "agenticir_level": 1,
+            "dst_max": 232,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 1173004443,
+            "target_luma_ratio": 0.5
+          },
+          "rain": {
+            "agenticir_level": 1,
+            "angle_degrees": 15,
+            "length": 22,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 202927639,
+            "value": 17.572839427829678,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_09_0002.png",
+        "record_id": "tra_v2_c3_09_0002",
+        "screening_attempt": 1,
+        "seed": 1722355378,
+        "source_dataset": "mio100",
+        "source_id": "mio100_085",
+        "source_path": "data/clean_pool/mio100/085.png",
+        "source_sha256": "6174b7cb004afd2a578ec1950d92b99c41115b5a6bf70a511f19156c62bd5274",
+        "split": "train",
+        "target": "{\"degradations\":[\"rain\",\"haze\",\"low_light\"],\"levels\":{\"rain\":2,\"haze\":4,\"low_light\":2}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_09_0002",
+      "visibility": [
+        {
+          "counterfactual_sha256": "af2ea7c22f18e4e58c2fdb4e6f6a42c600bed5b87127c2a4c4469aa83b280a15",
+          "degradation": "haze",
+          "final_primary_value": 0.9159516549672079,
+          "full_sha256": "9a0dc97a646e36492954ef566b0a74de59815a376aa5d653cd5d29044f3a2eb8",
+          "level": 4,
+          "minimum_final_primary_value": 0.3664680210724835,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.191834066690172
+        },
+        {
+          "counterfactual_sha256": "2ed9a874d279bbca5f5b7a6333bd0a0ed034b6916f4bf11f876a4b917cc0e3cc",
+          "degradation": "rain",
+          "final_primary_value": 0.5550895342448632,
+          "full_sha256": "9a0dc97a646e36492954ef566b0a74de59815a376aa5d653cd5d29044f3a2eb8",
+          "level": 2,
+          "minimum_final_primary_value": 0.061867224650556774,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 8.119144387360487
+        },
+        {
+          "counterfactual_sha256": "c58f290e3abe682eadc2254ab14904bb1d22a0f95bf2b0bc5f4b9073081604a6",
+          "degradation": "low_light",
+          "final_primary_value": 1.445798945133004,
+          "full_sha256": "9a0dc97a646e36492954ef566b0a74de59815a376aa5d653cd5d29044f3a2eb8",
+          "level": 2,
+          "minimum_final_primary_value": 1.0242178648746638,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    },
+    {
+      "accepted": true,
+      "attempts": 17,
+      "combination": [
+        "rain",
+        "haze",
+        "low_light"
+      ],
+      "record": {
+        "agenticir_revision": "9640a291480dee3ba8f2974125d4ee9e3440f3d6c",
+        "application_order": [
+          "haze",
+          "rain",
+          "low_light"
+        ],
+        "composition_size": 3,
+        "crop": {
+          "height": 448,
+          "width": 448,
+          "x": 262,
+          "y": 138
+        },
+        "degradations": [
+          "rain",
+          "haze",
+          "low_light"
+        ],
+        "levels": {
+          "haze": 5,
+          "low_light": 3,
+          "rain": 3
+        },
+        "operators": {
+          "haze": {
+            "agenticir_level": 4,
+            "airlight": 0.9821677492666199,
+            "beta": 10.78002123959272,
+            "depth_path": "data/agenticir/haze/035/predict_depth.mat",
+            "depth_sha256": "232a2b94f7f0f21e153859834486349781b5bcb9675c77d85c96f8e4b84de34d",
+            "operator": "AgenticIR.atmospheric_scattering_project_strength",
+            "seed": 3289050627
+          },
+          "low_light": {
+            "agenticir_level": 2,
+            "dst_max": 192,
+            "operator": "AgenticIR.darken_linear_mapping_plus_luma_calibration",
+            "seed": 9429338,
+            "target_luma_ratio": 0.38
+          },
+          "rain": {
+            "agenticir_level": 2,
+            "angle_degrees": -4,
+            "length": 26,
+            "operator": "AgenticIR.rain_project_strength",
+            "seed": 1870577863,
+            "value": 59.61618791907094,
+            "width": 3
+          }
+        },
+        "output_path": "data/qwen_multidegradation_pilot_v2/train/tra_v2_c3_09_0003.png",
+        "record_id": "tra_v2_c3_09_0003",
+        "screening_attempt": 16,
+        "seed": 2267950625,
+        "source_dataset": "mio100",
+        "source_id": "mio100_035",
+        "source_path": "data/clean_pool/mio100/035.png",
+        "source_sha256": "4e230744a9cb7c3ebe976ae7267155312b876fb355283b4938b34b758aef7ff9",
+        "split": "train",
+        "target": "{\"degradations\":[\"rain\",\"haze\",\"low_light\"],\"levels\":{\"rain\":3,\"haze\":5,\"low_light\":3}}",
+        "visibility_policy": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2"
+      },
+      "record_id": "tra_v2_c3_09_0003",
+      "visibility": [
+        {
+          "counterfactual_sha256": "7cedccd7202a092ef6bfc7b20c87e6962d03072fbf5927dcdb1008e07eb16fa5",
+          "degradation": "haze",
+          "final_primary_value": 0.7758070882445451,
+          "full_sha256": "3490a75047abfd5f00c1e0455abcf55dc6381f86ef6a35ff1751c507bbc10f88",
+          "level": 5,
+          "minimum_final_primary_value": 0.3494319077130411,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 0,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.2157941266337857
+        },
+        {
+          "counterfactual_sha256": "2f0ca7aaff55fd7b857a548d8dd92691f751be0af6bd3120b51fd4f8517abbf4",
+          "degradation": "rain",
+          "final_primary_value": 0.5303260471904478,
+          "full_sha256": "3490a75047abfd5f00c1e0455abcf55dc6381f86ef6a35ff1751c507bbc10f88",
+          "level": 3,
+          "minimum_final_primary_value": 0.12308690573997817,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 1,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 55.244984521625675
+        },
+        {
+          "counterfactual_sha256": "8d0f0d1e496ba0a4609074bb7802ac0108ae1f2c8e6a7d75c89265535cddea60",
+          "degradation": "low_light",
+          "final_primary_value": 1.7101235632573273,
+          "full_sha256": "3490a75047abfd5f00c1e0455abcf55dc6381f86ef6a35ff1751c507bbc10f88",
+          "level": 3,
+          "minimum_final_primary_value": 1.6921851055365582,
+          "minimum_survival_ratio": 0.5,
+          "pass": true,
+          "position": 2,
+          "primary_metric": "rgb_rmse_over_full_luma",
+          "survival_field": "relative_rmse_survival_ratio",
+          "survival_ratio": 1.0
+        }
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "status": "failed",
+  "visibility_anchor_sha256": "155ddf13a9f65df9074193728ed69f2de506d32d4d6189d992ab6ccb229941e5"
+}

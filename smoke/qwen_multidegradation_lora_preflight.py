@@ -35,6 +35,9 @@ from lowlight_restoration.qwen_multidegradation import (
     prepare_per_type_supervised_batch,
     prepare_supervised_batch,
 )
+from lowlight_restoration.qwen_type_calibration import (
+    validate_training_source_partition,
+)
 
 
 APPROVED_STATUSES = {
@@ -45,6 +48,7 @@ APPROVED_STATUSES = {
     "approved_qwen_multidegradation_lora_fixed_slot_schema_correction",
     "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining",
     "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation",
+    "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -124,11 +128,15 @@ def validate_contract(config: dict[str, object]) -> None:
         status in {
             "approved_qwen_multidegradation_per_type_dialogue_rank32_retraining",
             "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation",
+            "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated",
         }
     )
     per_type_continuation = (
         status
         == "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation"
+    )
+    visibility_v2 = (
+        status == "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated"
     )
     for section in (
         "contract", "model", "processor", "prompt", "data", "training",
@@ -278,7 +286,7 @@ def validate_contract(config: dict[str, object]) -> None:
     elif "language_lora_rank" in model or "language_lora_alpha" in model:
         raise ValueError("visual-only phase unexpectedly enables decoder LoRA")
     supported_worlds = distributed.get("supported_world_sizes")
-    expected_worlds = [2, 8] if per_type_continuation else [2, 4]
+    expected_worlds = [2, 8] if (per_type_continuation or visibility_v2) else [2, 4]
     if supported_worlds != expected_worlds:
         raise ValueError(f"this contract must support H100 world sizes {expected_worlds}")
     micro = int(training.get("micro_batch_size_per_rank", 0))
@@ -290,7 +298,7 @@ def validate_contract(config: dict[str, object]) -> None:
     stages = data.get("curriculum")
     expected_maxima = (
         [3, 3, 3, 3, 3]
-        if per_type_continuation
+        if (per_type_continuation or visibility_v2)
         else [3, 3, 3]
         if per_type_dialogue
         else [3]
@@ -327,9 +335,13 @@ def validate_contract(config: dict[str, object]) -> None:
     elif initial_steps != 0:
         raise ValueError("non-continuation experiment has an optimizer-step offset")
     if per_type_dialogue:
-        expected_images = int(data["expected_split_records"]["train"])
+        expected_images = (
+            int(data["gradient_records_per_epoch"])
+            if visibility_v2
+            else int(data["expected_split_records"]["train"])
+        )
         expected_dialogues = expected_images * len(DEGRADATIONS)
-        expected_stage_count = 5 if per_type_continuation else 3
+        expected_stage_count = 5 if (per_type_continuation or visibility_v2) else 3
         if len(stages) != expected_stage_count:
             raise ValueError(
                 f"per-type phase must preserve {expected_stage_count} full epochs"
@@ -342,12 +354,26 @@ def validate_contract(config: dict[str, object]) -> None:
             ):
                 raise ValueError("per-type stage does not cover every image/type pair")
         expected_dialogue_splits = {
-            split: int(count) * len(DEGRADATIONS)
+            split: (
+                expected_dialogues
+                if visibility_v2 and split == "train"
+                else int(count) * len(DEGRADATIONS)
+            )
             for split, count in data["expected_split_records"].items()
         }
         if data.get("expected_dialogue_split_records") != expected_dialogue_splits:
             raise ValueError("per-type dialogue split counts changed")
-        if training.get("semantic_token_loss") is not None:
+        semantic_loss = training.get("semantic_token_loss")
+        if visibility_v2:
+            if (
+                not isinstance(semantic_loss, dict)
+                or semantic_loss.get("enabled") is not True
+                or semantic_loss.get("semantic_token_ids")
+                != FIXED_SLOT_SEMANTIC_TOKEN_IDS
+                or float(semantic_loss.get("semantic_weight", 0.0)) != 8.0
+            ):
+                raise ValueError("visibility-v2 decision-token loss contract changed")
+        elif semantic_loss is not None:
             raise ValueError("advisor-directed per-type dialogue must use plain assistant CE")
         if per_type_continuation:
             validate_per_type_continuation_initialization(config)
@@ -388,6 +414,41 @@ def validate_contract(config: dict[str, object]) -> None:
                 != [5, 6, 8]
             ):
                 raise ValueError("continuation validation-selection contract changed")
+        elif visibility_v2:
+            if config.get("initialization") is not None:
+                raise ValueError("visibility-v2 retraining must start from the Qwen base")
+            expected_names = [
+                f"V2_H{epoch}_per_type_dialogue_epoch{epoch}"
+                for epoch in range(1, 6)
+            ]
+            partition_config = data.get("calibration_partition")
+            decision = config.get("decision_calibration")
+            if (
+                [stage.get("name") for stage in stages] != expected_names
+                or micro != 25
+                or global_batch != 200
+                or training.get("gradient_accumulation_steps_by_world_size")
+                != {"2": 4, "8": 1}
+                or float(training.get("lora_learning_rate", 0.0)) != 0.00005
+                or float(training.get("merger_learning_rate", 0.0)) != 0.000005
+                or float(training.get("language_lora_learning_rate", 0.0))
+                != 0.00002
+                or not isinstance(partition_config, dict)
+                or not isinstance(decision, dict)
+                or decision.get("level_token_ids") != FIXED_SLOT_SEMANTIC_TOKEN_IDS
+                or decision.get("fit_split") != "reserved_training_sources_only"
+                or decision.get("validation_or_test_used_for_fit") is not False
+                or int(decision.get("candidate_batch_size_per_rank", 0)) <= 0
+                or config.get("selection", {}).get("checkpoint")
+                != "V2_H5_per_type_dialogue_epoch5"
+                or float(
+                    config["gate"].get(
+                        "minimum_triple_degradation_set_exact_match_rate", 0.0
+                    )
+                )
+                != 0.8
+            ):
+                raise ValueError("visibility-v2 rank-32 training contract changed")
         elif config.get("initialization") is not None:
             raise ValueError("rank-32 per-type retraining must start from the frozen Qwen base")
         advisor_image = config.get("advisor_method_image")
@@ -506,7 +567,7 @@ def validate_contract(config: dict[str, object]) -> None:
                 raise RuntimeError("a fixed test was accessed before correction selection")
     expected_devices = (
         {"0,1": 2, "0,1,2,3,4,5,6,7": 8}
-        if per_type_continuation
+        if (per_type_continuation or visibility_v2)
         else {"0,1": 2, "0,1,2,3": 4}
     )
     if runtime.get("supported_visible_devices") != expected_devices:
@@ -732,10 +793,15 @@ def validate_data(
         if not output.is_file():
             raise FileNotFoundError(f"pilot image not generated: {output}")
     if full_hashes:
+        evidence_root = workspace_path(
+            data.get(
+                "generation_evidence_root",
+                "data/qwen_multidegradation_pilot_v1/.generation",
+            )
+        )
         def verify_generated(record: dict[str, object]) -> None:
             evidence_path = (
-                ROOT
-                / "data/qwen_multidegradation_pilot_v1/.generation"
+                evidence_root
                 / str(record["split"])
                 / f"{record['record_id']}.json"
             )
@@ -755,6 +821,27 @@ def validate_data(
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
             list(executor.map(verify_generated, records))
+    partition_evidence: dict[str, object] | None = None
+    partition_config = data.get("calibration_partition")
+    if partition_config is not None:
+        if not isinstance(partition_config, dict):
+            raise ValueError("calibration partition contract is malformed")
+        partition_path = workspace_path(partition_config.get("path"))
+        if sha256(partition_path) != partition_config.get("sha256"):
+            raise RuntimeError("calibration partition hash changed")
+        partition = json.loads(partition_path.read_text())
+        partition_evidence = validate_training_source_partition(
+            partition,
+            records,
+            manifest_sha256=str(data["manifest_sha256"]),
+        )
+        if (
+            int(partition_evidence["gradient_records_per_epoch"])
+            != int(data["gradient_records_per_epoch"])
+            or int(partition_evidence["calibration_records"])
+            != int(data["calibration_records"])
+        ):
+            raise RuntimeError("calibration partition counts changed")
     representatives = [
         next(record for record in records if record["split"] == "train" and record["composition_size"] == size)
         for size in range(4)
@@ -783,12 +870,47 @@ def validate_data(
         expected_count = len(labels)
     if len(counts) != expected_count or any(count <= 0 for count in counts):
         raise RuntimeError("assistant-token supervision is empty")
+    decision_token_positions_verified = False
+    decision = config.get("decision_calibration")
+    if decision is not None:
+        if not isinstance(decision, dict):
+            raise ValueError("decision calibration is malformed")
+        token_ids = decision.get("level_token_ids")
+        if token_ids != FIXED_SLOT_SEMANTIC_TOKEN_IDS:
+            raise RuntimeError("L1--L5 decoder token identities changed")
+        labels_tensor = batch["labels"]
+        for row in labels_tensor:
+            matches = sum(int(row.eq(token_id).sum().item()) for token_id in token_ids)
+            if matches != 1:
+                raise RuntimeError("assistant response does not contain one decision token")
+        for level, token_id in enumerate(token_ids, start=1):
+            encoded = processor.tokenizer(
+                str(level), add_special_tokens=False
+            )["input_ids"]
+            if encoded != [token_id]:
+                raise RuntimeError("frozen L1--L5 single-token mapping changed")
+        decision_token_positions_verified = True
     return {
         "records": len(records),
         "unique_sources_used": len(source_roles),
         "representative_target_token_counts": counts,
         "pixel_values_shape": list(batch["pixel_values"].shape),
         "all_generated_image_hashes_verified": full_hashes,
+        "decision_token_positions_verified": decision_token_positions_verified,
+        "training_only_calibration_partition": (
+            {
+                "calibration_records": partition_evidence["calibration_records"],
+                "gradient_eligible_records": partition_evidence[
+                    "gradient_eligible_records"
+                ],
+                "gradient_records_per_epoch": partition_evidence[
+                    "gradient_records_per_epoch"
+                ],
+                "source_disjoint": partition_evidence["source_disjoint"],
+            }
+            if partition_evidence is not None
+            else None
+        ),
     }
 
 

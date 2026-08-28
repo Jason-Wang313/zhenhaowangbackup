@@ -48,9 +48,16 @@ from lowlight_restoration.qwen_multidegradation import (
     evaluate_outputs,
     make_label,
     per_type_prompt_text,
+    per_type_response,
     prepare_per_type_supervised_batch,
     prepare_supervised_batch,
     prompt_text,
+)
+from lowlight_restoration.qwen_type_calibration import (
+    calibrated_level,
+    fit_type_calibration,
+    partition_records,
+    validate_training_source_partition,
 )
 from smoke.qwen_multidegradation_lora_preflight import (
     accumulation_steps_for_world,
@@ -562,12 +569,15 @@ def stage_records(
     epoch: int = 0,
     target_schema: str = VARIABLE_ACTIVE_SCHEMA,
     global_batch_size: int | None = None,
+    excluded_source_ids: Sequence[str] = (),
 ) -> list[Mapping[str, object]]:
+    excluded = set(map(str, excluded_source_ids))
     selected = [
         record
         for record in records
         if record["split"] == "train"
         and int(record["composition_size"]) <= int(stage["maximum_composition_size"])
+        and str(record["source_id"]) not in excluded
     ]
     selected.sort(
         key=lambda record: (
@@ -578,8 +588,9 @@ def stage_records(
     )
     if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
         source_records = int(stage.get("source_records", 0))
-        if len(selected) != source_records:
+        if len(selected) < source_records:
             raise RuntimeError(f"stage source record count changed: {stage['name']}")
+        selected = selected[:source_records]
         if global_batch_size is None or global_batch_size <= 0:
             raise ValueError("per-type dialogue stages require a global batch size")
         if global_batch_size % len(DEGRADATIONS):
@@ -693,6 +704,21 @@ def train_variant(
     prompt_config = config["prompt"]
     assert isinstance(prompt_config, Mapping)
     target_schema = str(prompt_config["target_schema"])
+    excluded_source_ids: Sequence[str] = ()
+    partition_config = data.get("calibration_partition")
+    if partition_config is not None:
+        if not isinstance(partition_config, Mapping):
+            raise ValueError("training-only calibration partition config is malformed")
+        partition_path = workspace_path(partition_config["path"])
+        if sha256(partition_path) != partition_config.get("sha256"):
+            raise RuntimeError("training-only calibration partition changed")
+        partition = json.loads(partition_path.read_text())
+        validate_training_source_partition(
+            partition,
+            records,
+            manifest_sha256=str(data["manifest_sha256"]),
+        )
+        excluded_source_ids = list(partition["calibration_source_ids"])
 
     for stage_index, stage in enumerate(stages):
         if stage_index < completed_stages:
@@ -716,6 +742,7 @@ def train_variant(
                 epoch=epoch,
                 target_schema=target_schema,
                 global_batch_size=global_batch,
+                excluded_source_ids=excluded_source_ids,
             )
             epoch_losses: list[float] = []
             for epoch_step in range(steps_per_epoch):
@@ -1011,6 +1038,257 @@ def generate_per_type_outputs(
     return aggregated, details
 
 
+def score_per_type_candidates(
+    model: torch.nn.Module,
+    processor: Any,
+    records: Sequence[Mapping[str, object]],
+    config: Mapping[str, object],
+    *,
+    rank: int,
+    world: int,
+    device: torch.device,
+) -> list[dict[str, dict[str, object]]]:
+    """Score L1--L5 at the decoder decision token without using ground truth."""
+
+    calibration_config = config.get("decision_calibration")
+    if not isinstance(calibration_config, Mapping):
+        raise ValueError("decision-calibration contract is missing")
+    digit_ids = calibration_config.get("level_token_ids")
+    if (
+        not isinstance(digit_ids, list)
+        or len(digit_ids) != 5
+        or any(not isinstance(value, int) for value in digit_ids)
+    ):
+        raise ValueError("L1--L5 decision token IDs are malformed")
+    indexed = [
+        (record_index, degradation, record)
+        for record_index, record in enumerate(records)
+        for degradation in DEGRADATIONS
+    ]
+    local_indexed = [
+        item for flat_index, item in enumerate(indexed) if flat_index % world == rank
+    ]
+    local: list[tuple[int, str, list[float]]] = []
+    batch_size = int(calibration_config["candidate_batch_size_per_rank"])
+    placeholder = make_label((), {})
+    model.eval()
+    model.gradient_checkpointing_disable()
+    model.config.use_cache = False
+    for offset in range(0, len(local_indexed), batch_size):
+        chunk = local_indexed[offset : offset + batch_size]
+        images = open_images([record for _, _, record in chunk])
+        queries = [degradation for _, degradation, _ in chunk]
+        batch, _ = prepare_per_type_supervised_batch(
+            processor,
+            [placeholder] * len(chunk),
+            images,
+            queries,
+        )
+        labels = batch["labels"]
+        positions: list[int] = []
+        for row in range(labels.shape[0]):
+            matches = torch.nonzero(labels[row].eq(int(digit_ids[0])), as_tuple=False)
+            if matches.shape != (1, 1):
+                raise RuntimeError("forced L1 response has an ambiguous decision token")
+            position = int(matches[0, 0].item())
+            if position <= 0:
+                raise RuntimeError("decision token has no causal predecessor")
+            positions.append(position)
+        inputs = move_batch(
+            {key: value for key, value in batch.items() if key != "labels"},
+            device,
+        )
+        with torch.no_grad():
+            output_value = model(**inputs, use_cache=False)
+        logits = getattr(output_value, "logits", None)
+        if not isinstance(logits, torch.Tensor):
+            raise RuntimeError("Qwen candidate scoring omitted decoder logits")
+        for row, ((record_index, degradation, _), position) in enumerate(
+            zip(chunk, positions, strict=True)
+        ):
+            values = logits[row, position - 1, digit_ids].float().cpu().tolist()
+            local.append((record_index, degradation, [float(value) for value in values]))
+        if (offset // batch_size + 1) % 25 == 0 or offset + batch_size >= len(local_indexed):
+            print(
+                f"QWEN_MULTIDEGRADATION_CANDIDATE_SCORE rank={rank} "
+                f"completed={min(offset+batch_size,len(local_indexed))}/{len(local_indexed)}",
+                flush=True,
+            )
+    gathered: list[object | None] = [None] * world
+    dist.all_gather_object(gathered, local)
+    flattened = [
+        item
+        for rank_items in gathered
+        if isinstance(rank_items, list)
+        for item in rank_items
+    ]
+    identities = [(index, degradation) for index, degradation, _ in flattened]
+    expected = [
+        (index, degradation)
+        for index in range(len(records))
+        for degradation in DEGRADATIONS
+    ]
+    if len(flattened) != len(expected) or sorted(identities) != sorted(expected):
+        raise RuntimeError("distributed L1--L5 candidate scoring is incomplete")
+    lookup = {
+        (index, degradation): scores
+        for index, degradation, scores in flattened
+    }
+    return [
+        {
+            degradation: {"candidate_scores": lookup[(index, degradation)]}
+            for degradation in DEGRADATIONS
+        }
+        for index in range(len(records))
+    ]
+
+
+def load_or_fit_training_calibration(
+    model: torch.nn.Module,
+    processor: Any,
+    all_records: Sequence[Mapping[str, object]],
+    config: Mapping[str, object],
+    *,
+    config_sha: str,
+    adapter_sha: str,
+    output: Path,
+    rank: int,
+    world: int,
+    device: torch.device,
+) -> dict[str, object]:
+    """Fit once on reserved training sources, or verify and reuse that fit."""
+
+    calibration_config = config.get("decision_calibration")
+    data = config["data"]
+    if not isinstance(calibration_config, Mapping) or not isinstance(data, Mapping):
+        raise ValueError("decision calibration/data contract is malformed")
+    partition_config = data.get("calibration_partition")
+    if not isinstance(partition_config, Mapping):
+        raise ValueError("training-only calibration partition is missing")
+    partition_path = workspace_path(partition_config["path"])
+    if sha256(partition_path) != partition_config.get("sha256"):
+        raise RuntimeError("training-only calibration partition changed")
+    partition = json.loads(partition_path.read_text())
+    validate_training_source_partition(
+        partition,
+        all_records,
+        manifest_sha256=str(data["manifest_sha256"]),
+    )
+    calibration_path = output / "training_only_type_calibration.json"
+    score_path = output / "training_only_candidate_scores.json"
+
+    def existing_calibration() -> dict[str, object] | None:
+        if not calibration_path.is_file():
+            return None
+        payload = json.loads(calibration_path.read_text())
+        if (
+            payload.get("config_sha256") != config_sha
+            or payload.get("adapter_sha256") != adapter_sha
+            or payload.get("partition_sha256") != partition_config["sha256"]
+            or payload.get("validation_or_test_used_for_fit") is not False
+            or not score_path.is_file()
+            or sha256(score_path) != payload.get("candidate_scores_sha256")
+        ):
+            raise RuntimeError("existing training-only calibration identity changed")
+        return payload
+
+    existing = broadcast_rank0(rank, existing_calibration)
+    if existing is not None:
+        return dict(existing)
+    calibration_records, _ = partition_records(all_records, partition)
+    scored = score_per_type_candidates(
+        model,
+        processor,
+        calibration_records,
+        config,
+        rank=rank,
+        world=world,
+        device=device,
+    )
+
+    def fit_and_publish() -> dict[str, object]:
+        rows: list[dict[str, object]] = []
+        for record, details in zip(calibration_records, scored, strict=True):
+            levels = record["levels"]
+            if not isinstance(levels, Mapping):
+                raise RuntimeError("calibration truth levels are malformed")
+            for degradation in DEGRADATIONS:
+                rows.append(
+                    {
+                        "record_id": record["record_id"],
+                        "source_id": record["source_id"],
+                        "degradation": degradation,
+                        "true_level": int(levels.get(degradation, 1)),
+                        "candidate_scores": details[degradation]["candidate_scores"],
+                    }
+                )
+        score_payload = {
+            "schema_version": 1,
+            "status": "training_sources_only",
+            "config_sha256": config_sha,
+            "adapter_sha256": adapter_sha,
+            "partition": partition_config["path"],
+            "partition_sha256": partition_config["sha256"],
+            "validation_or_test_used": False,
+            "rows": rows,
+        }
+        atomic_json(score_path, score_payload)
+        fitted = fit_type_calibration(
+            rows,
+            regularization=float(calibration_config["regularization"]),
+            maximum_iterations=int(calibration_config["maximum_iterations"]),
+        )
+        fitted.update(
+            {
+                "config_sha256": config_sha,
+                "adapter_sha256": adapter_sha,
+                "partition": partition_config["path"],
+                "partition_sha256": partition_config["sha256"],
+                "candidate_scores": score_path.relative_to(ROOT).as_posix(),
+                "candidate_scores_sha256": sha256(score_path),
+            }
+        )
+        atomic_json(calibration_path, fitted)
+        return fitted
+
+    fitted = broadcast_rank0(rank, fit_and_publish)
+    return dict(fitted)
+
+
+def calibrated_per_type_outputs(
+    scored: Sequence[Mapping[str, Mapping[str, object]]],
+    calibration: Mapping[str, object],
+) -> tuple[list[str], list[dict[str, dict[str, object]]]]:
+    aggregated: list[str] = []
+    all_details: list[dict[str, dict[str, object]]] = []
+    for record_scores in scored:
+        raw_by_type: dict[str, str] = {}
+        details: dict[str, dict[str, object]] = {}
+        for degradation in DEGRADATIONS:
+            candidate_scores = record_scores[degradation]["candidate_scores"]
+            level, adjusted = calibrated_level(
+                degradation, candidate_scores, calibration
+            )
+            raw = per_type_response(degradation, level)
+            raw_by_type[degradation] = raw
+            details[degradation] = {
+                "raw_output": raw,
+                "predicted_level": level,
+                "candidate_scores": list(candidate_scores),
+                "calibrated_scores": adjusted,
+                "decision_rule": "training_only_affine_calibrated_l1_l5_argmax",
+            }
+        serialized, parsed = aggregate_per_type_responses(raw_by_type)
+        if serialized is None:
+            raise RuntimeError("calibrated candidate decisions failed to aggregate")
+        for degradation in DEGRADATIONS:
+            if parsed[degradation]["predicted_level"] != details[degradation]["predicted_level"]:
+                raise RuntimeError("calibrated decision changed during serialization")
+        aggregated.append(serialized)
+        all_details.append(details)
+    return aggregated, all_details
+
+
 def generate_outputs(
     model: torch.nn.Module,
     processor: Any,
@@ -1122,6 +1400,9 @@ def evaluate_split(
     rank: int,
     world: int,
     device: torch.device,
+    output: Path,
+    config_sha: str,
+    adapter_sha: str,
 ) -> tuple[list[dict[str, object]], dict[str, object]]:
     records = [record for record in all_records if record["split"] == split]
     prompt_config = config["prompt"]
@@ -1129,15 +1410,42 @@ def evaluate_split(
     target_schema = str(prompt_config["target_schema"])
     per_type_details: list[dict[str, dict[str, object]]] | None = None
     if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
-        raw, per_type_details = generate_per_type_outputs(
-            model,
-            processor,
-            records,
-            config,
-            rank=rank,
-            world=world,
-            device=device,
-        )
+        if config.get("decision_calibration") is not None:
+            calibration = load_or_fit_training_calibration(
+                model,
+                processor,
+                all_records,
+                config,
+                config_sha=config_sha,
+                adapter_sha=adapter_sha,
+                output=output,
+                rank=rank,
+                world=world,
+                device=device,
+            )
+            scored = score_per_type_candidates(
+                model,
+                processor,
+                records,
+                config,
+                rank=rank,
+                world=world,
+                device=device,
+            )
+            raw, per_type_details = calibrated_per_type_outputs(
+                scored, calibration
+            )
+        else:
+            calibration = None
+            raw, per_type_details = generate_per_type_outputs(
+                model,
+                processor,
+                records,
+                config,
+                rank=rank,
+                world=world,
+                device=device,
+            )
         evaluation_schema = FIXED_FIVE_SLOT_SCHEMA
     else:
         raw = generate_outputs(
@@ -1199,6 +1507,15 @@ def evaluate_split(
                 },
             }
         )
+        if calibration is not None:
+            metrics["decision_calibration"] = {
+                "schema": calibration["calibration_schema"],
+                "fit_data": "reserved_training_sources_only",
+                "fit_records": calibration["records"],
+                "raw_nll": calibration["raw_nll"],
+                "calibrated_nll": calibration["calibrated_nll"],
+                "validation_or_test_used_for_fit": False,
+            }
     return rows, metrics
 
 
@@ -1397,6 +1714,9 @@ def main() -> int:
             rank=rank,
             world=world,
             device=device,
+            output=output,
+            config_sha=config_sha,
+            adapter_sha=sha256(final_checkpoint / "adapter.safetensors"),
         )
         checks = gate_checks(metrics, config, bool(training_result["gradient_audit_pass"]))
         automatic_pass = all(checks.values())

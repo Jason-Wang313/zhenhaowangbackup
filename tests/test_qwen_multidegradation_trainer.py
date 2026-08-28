@@ -8,6 +8,7 @@ import torch
 from torch import nn
 
 from smoke.train_qwen_multidegradation_lora_ddp import (
+    calibrated_per_type_outputs,
     create_optimizer,
     gate_checks,
     learning_rate_scale,
@@ -169,6 +170,65 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
                 },
                 {name: 40 for name in DEGRADATIONS},
             )
+
+    def test_visibility_v2_excludes_calibration_sources_and_balances_batches(self):
+        config, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_visibility_v2_rank32.json"
+        )
+        records = read_jsonl(ROOT / config["data"]["manifest"])
+        partition = json.loads(
+            (ROOT / config["data"]["calibration_partition"]["path"]).read_text()
+        )
+        dialogues = stage_records(
+            records,
+            config["data"]["curriculum"][0],
+            config["training"]["seed"],
+            target_schema=config["prompt"]["target_schema"],
+            global_batch_size=config["training"]["global_batch_size"],
+            excluded_source_ids=partition["calibration_source_ids"],
+        )
+        self.assertEqual(len(dialogues), 42000)
+        self.assertFalse(
+            {record["source_id"] for record in dialogues}
+            & set(partition["calibration_source_ids"])
+        )
+        for offset in range(0, len(dialogues), 200):
+            batch = dialogues[offset : offset + 200]
+            self.assertEqual(
+                {
+                    name: sum(record["query_degradation"] == name for record in batch)
+                    for name in DEGRADATIONS
+                },
+                {name: 40 for name in DEGRADATIONS},
+            )
+
+    def test_calibrated_candidate_outputs_remain_decoder_dialogue_json(self):
+        scores = [
+            {
+                degradation: {
+                    "candidate_scores": [0.0, 1.0, 2.0, 3.0, 4.0]
+                }
+                for degradation in DEGRADATIONS
+            }
+        ]
+        calibration = {
+            "calibration_schema": "qwen_per_type_candidate_affine_v1",
+            "validation_or_test_used_for_fit": False,
+            "degradation_order": list(DEGRADATIONS),
+            "temperature": {name: 1.0 for name in DEGRADATIONS},
+            "class_bias": {name: [0.0] * 5 for name in DEGRADATIONS},
+        }
+        outputs, details = calibrated_per_type_outputs(scores, calibration)
+        self.assertEqual(
+            json.loads(outputs[0]),
+            {name: 5 for name in DEGRADATIONS},
+        )
+        self.assertTrue(
+            all(
+                details[0][name]["raw_output"].endswith("L5.")
+                for name in DEGRADATIONS
+            )
+        )
 
     def test_per_type_overfit_expansion_asks_all_five_questions(self):
         selected = select_overfit_records(self.records, seed=2026082506)

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "seed": 2026082807,
+  "manifest": "manifests/qwen_multidegradation_pilot_v1.jsonl",
+  "manifest_sha256": "0d5fa12abc387ad857c85ad574dcf8ecf7dc158c443d470c096610de04255599",
+  "cohort": {
+    "split": "train",
+    "composition_size": 1,
+    "expected_records": 2880,
+    "expected_per_type_level": 144
+  },
+  "quantiles": [0.1, 0.25, 0.5],
+  "output": "reports/qwen_multidegradation_visibility_anchor_luma_normalized_v2.json"
+}

@@ -195,6 +195,30 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
             (ROOT / config["initialization"]["base_fixed_test_result"]).exists()
         )
 
+    def test_visibility_v2_rank32_contract_is_training_calibrated_and_test_blind(self):
+        config, _ = load_config(
+            ROOT / "configs/qwen_multidegradation_visibility_v2_rank32.json"
+        )
+        validate_contract(config)
+        self.assertEqual(config["distributed"]["supported_world_sizes"], [2, 8])
+        self.assertEqual(
+            config["training"]["semantic_token_loss"]["semantic_token_ids"],
+            [16, 17, 18, 19, 20],
+        )
+        self.assertEqual(
+            config["decision_calibration"]["fit_split"],
+            "reserved_training_sources_only",
+        )
+        self.assertFalse(
+            config["decision_calibration"]["validation_or_test_used_for_fit"]
+        )
+        fixed_test = (
+            ROOT
+            / config["runtime"]["output_root"]
+            / "merger_trainable/fixed_test_result.json"
+        )
+        self.assertFalse(fixed_test.exists())
+
 
 if __name__ == "__main__":
     unittest.main()

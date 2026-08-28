@@ -1,0 +1,52 @@
+{
+  "causal_audit": "reports/qwen_multidegradation_visibility_audit_luma_normalized_v2.json",
+  "causal_audit_sha256": "ca6e32cef9c652a0f291fa3800932c1208cfdf213aa18f240b2df5a80039d14d",
+  "config": "configs/qwen_multidegradation_visibility_v2_production_correction1.json",
+  "config_sha256": "52b5e1ddf296c9681d4d8e981db455273280b3435d1b53174326e387255ce060",
+  "manifest": "manifests/qwen_multidegradation_pilot_v2.jsonl",
+  "manifest_sha256": "0ec9b367d3b795b01f8a2185b0ff6bfda8a8d21b29926929371bac4bf013ce7e",
+  "passing_pilot": "reports/qwen_multidegradation_visibility_v2_final_pilot.json",
+  "passing_pilot_config": "configs/qwen_multidegradation_visibility_v2_final.json",
+  "passing_pilot_config_sha256": "efb8720c4e6f54c7aca4c9d1ba415ade54ec37d7df78b04d27317cec6b42661c",
+  "passing_pilot_sha256": "5c916401a59295bcdc94318d8eaf7d0e4b501d34f7f42af24afca4ae049d37eb",
+  "schema_version": 1,
+  "screening_root": "data/qwen_multidegradation_visibility_v2_screening",
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "status": "frozen_manifest_only_images_not_implied_generated",
+  "validation": {
+    "combination_and_severity_balanced": true,
+    "haze_depth_policy": "verified_mio100_depth_only",
+    "maximum_screening_attempts": 549,
+    "mean_screening_attempts": 3.928916666666667,
+    "p95_screening_attempts": 7.0,
+    "records": 12000,
+    "source_disjoint": true,
+    "split_composition_counts": {
+      "test": {
+        "0": 120,
+        "1": 360,
+        "2": 360,
+        "3": 360
+      },
+      "train": {
+        "0": 960,
+        "1": 2880,
+        "2": 2880,
+        "3": 2880
+      },
+      "validation": {
+        "0": 120,
+        "1": 360,
+        "2": 360,
+        "3": 360
+      }
+    },
+    "unique_record_ids": 12000,
+    "unique_sources_used": 1977,
+    "visibility_policy": "candidate_isolated_q10_x0.85_then_final_relative_retention_0.2_physical_final",
+    "visible_active_components": 21600
+  },
+  "visibility_anchor": "reports/qwen_multidegradation_visibility_anchor_luma_normalized_v2.json",
+  "visibility_anchor_sha256": "155ddf13a9f65df9074193728ed69f2de506d32d4d6189d992ab6ccb229941e5"
+}

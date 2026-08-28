@@ -82,6 +82,21 @@ class QwenPerTypeLauncherTests(unittest.TestCase):
         self.assertIn("remain-on-exit", launcher)
         self.assertIn("nohup env CUDA_VISIBLE_DEVICES", launcher)
 
+    def test_visibility_v2_launcher_is_two_eight_gpu_and_validation_gated(self):
+        runner = (
+            ROOT / "smoke/run_qwen_multidegradation_visibility_v2_rank32.sh"
+        ).read_text()
+        launcher = (
+            ROOT / "smoke/launch_qwen_multidegradation_visibility_v2_rank32.sh"
+        ).read_text()
+        for text in (runner, launcher):
+            self.assertIn("0,1)", text)
+            self.assertIn("0,1,2,3,4,5,6,7)", text)
+        validation_check = runner.index('if [[ $validation_status -ne 0 ]]')
+        fixed_test = runner.index("--test-only")
+        self.assertLess(validation_check, fixed_test)
+        self.assertIn("DETACHED_NOHUP_STARTED", launcher)
+
 
 if __name__ == "__main__":
     unittest.main()

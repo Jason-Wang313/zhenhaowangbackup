@@ -82,7 +82,12 @@ def select(config_path: Path) -> dict[str, object]:
         result = json.loads(path.read_text())
         if result.get("config_sha256") != config_sha or result.get("variant") != variant:
             raise RuntimeError(f"validation result contract mismatch: {candidate}")
-        if result.get("validation_checkpoint_stage") not in (None, candidate):
+        final_stage = str(config["data"]["curriculum"][-1]["name"])
+        if result.get("validation_checkpoint_stage") not in (
+            None,
+            candidate,
+            final_stage,
+        ):
             raise RuntimeError(f"validation checkpoint mismatch: {candidate}")
         results[candidate] = (result, path)
     eligible = [

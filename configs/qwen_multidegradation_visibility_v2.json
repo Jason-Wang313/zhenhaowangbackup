@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "seed": 2026082803,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "visibility_anchor": "reports/qwen_multidegradation_visibility_anchor_v1.json",
+  "visibility_anchor_sha256": "e38a1ee7582cb48a5e34fdf591537c7417725e4aa9d97ca22daa3937ec0d30f0",
+  "visibility_policy": {
+    "policy_name": "training_anchor_q25_survival_0.5_physical_v1",
+    "primary_metric": "rgb_rmse_0_255",
+    "anchor_quantile": "q25",
+    "minimum_rmse_survival_ratio": 0.50,
+    "physical_application_order": ["haze", "blur", "rain", "low_light", "noise"],
+    "maximum_attempts_per_record": 64
+  },
+  "pilot": {
+    "split": "train",
+    "composition_size": 3,
+    "records_per_combination": 4,
+    "expected_records": 40,
+    "maximum_mean_attempts": 12.0,
+    "maximum_p95_attempts": 40.0,
+    "output": "reports/qwen_multidegradation_visibility_v2_pilot.json"
+  },
+  "manifest": "manifests/qwen_multidegradation_pilot_v2.jsonl",
+  "metadata": "manifests/qwen_multidegradation_pilot_v2.json",
+  "data_root": "data/qwen_multidegradation_pilot_v2"
+}

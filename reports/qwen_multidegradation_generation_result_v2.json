@@ -1,0 +1,20 @@
+{
+  "completed_records": 12000,
+  "config": "configs/qwen_multidegradation_visibility_v2_production_correction1.json",
+  "config_sha256": "52b5e1ddf296c9681d4d8e981db455273280b3435d1b53174326e387255ce060",
+  "elapsed_seconds": 48.213297955691814,
+  "generated_records": 12000,
+  "manifest": "manifests/qwen_multidegradation_pilot_v2.jsonl",
+  "manifest_sha256": "0ec9b367d3b795b01f8a2185b0ff6bfda8a8d21b29926929371bac4bf013ce7e",
+  "requested_records": 12000,
+  "reused_records": 0,
+  "schema_version": 1,
+  "split_counts": {
+    "test": 1200,
+    "train": 9600,
+    "validation": 1200
+  },
+  "status": "pass",
+  "visibility_hash_verified_records": 10800,
+  "workers": 64
+}

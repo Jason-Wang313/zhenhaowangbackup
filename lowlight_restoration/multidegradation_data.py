@@ -321,6 +321,27 @@ def validate_pilot_records(records: Sequence[Mapping[str, object]]) -> dict[str,
         for size, count in expected.items():
             if counts[(split, size)] != count:
                 raise ValueError(f"bad {split} composition {size} count")
+            expected_combinations = (
+                {()}
+                if size == 0
+                else set(itertools.combinations(DEGRADATIONS, size))
+            )
+            observed_combinations = {
+                names
+                for observed_split, names in combinations
+                if observed_split == split and len(names) == size
+            }
+            if observed_combinations != expected_combinations:
+                raise ValueError(
+                    f"bad {split} composition {size} combination coverage"
+                )
+            expected_per_combination = count // len(expected_combinations)
+            for names in expected_combinations:
+                if combinations[(split, names)] != expected_per_combination:
+                    raise ValueError(
+                        f"unbalanced combination: {split} {names} "
+                        f"{combinations[(split, names)]}"
+                    )
     for (split, names), count in combinations.items():
         if not names:
             continue
@@ -463,7 +484,17 @@ def _apply_rain(image: np.ndarray, parameters: Mapping[str, object]) -> np.ndarr
     return np.rint(image.astype(np.float32) + rain_rgb).clip(0, 255).astype(np.uint8)
 
 
-def generate_record(record: Mapping[str, object]) -> tuple[np.ndarray, str]:
+def generate_record_stages(
+    record: Mapping[str, object],
+    *,
+    application_order: Sequence[str] | None = None,
+) -> tuple[np.ndarray, ...]:
+    """Render every prefix of an ordered subset of a frozen record.
+
+    The subset path is used for causal visibility audits. It deliberately
+    reuses the frozen crop, parameters, and random seeds; the only intervention
+    is omitting operators from the original application sequence.
+    """
     source_path = ROOT / str(record["source_path"])
     if sha256(source_path) != record["source_sha256"]:
         raise RuntimeError(f"source hash changed: {source_path}")
@@ -479,7 +510,18 @@ def generate_record(record: Mapping[str, object]) -> tuple[np.ndarray, str]:
         raise RuntimeError(f"crop shape mismatch: {record['record_id']}")
     operators = record["operators"]
     assert isinstance(operators, Mapping)
-    for name in record["application_order"]:
+    frozen_order = tuple(str(name) for name in record["application_order"])
+    selected_order = (
+        frozen_order
+        if application_order is None
+        else tuple(str(name) for name in application_order)
+    )
+    if len(selected_order) != len(set(selected_order)):
+        raise ValueError("causal application order contains duplicate operators")
+    if tuple(name for name in frozen_order if name in selected_order) != selected_order:
+        raise ValueError("causal application order must be an ordered subset")
+    stages = [image.copy()]
+    for name in selected_order:
         parameters = operators[name]
         assert isinstance(parameters, Mapping)
         if name == "low_light":
@@ -494,6 +536,21 @@ def generate_record(record: Mapping[str, object]) -> tuple[np.ndarray, str]:
             image = _apply_rain(image, parameters)
         else:
             raise ValueError(name)
+        stages.append(image.copy())
+    return tuple(stages)
+
+
+def generate_record(
+    record: Mapping[str, object],
+    *,
+    application_order: Sequence[str] | None = None,
+) -> tuple[np.ndarray, str]:
+    """Render a record or an ordered causal subset and return its PNG hash."""
+
+    image = generate_record_stages(
+        record,
+        application_order=application_order,
+    )[-1]
     return image, hashlib.sha256(cv2.imencode(".png", image)[1].tobytes()).hexdigest()
 
 

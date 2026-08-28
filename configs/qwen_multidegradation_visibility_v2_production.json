@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "seed": 2026082811,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "visibility_anchor": "reports/qwen_multidegradation_visibility_anchor_luma_normalized_v2.json",
+  "visibility_anchor_sha256": "155ddf13a9f65df9074193728ed69f2de506d32d4d6189d992ab6ccb229941e5",
+  "causal_audit": "reports/qwen_multidegradation_visibility_audit_luma_normalized_v2.json",
+  "causal_audit_sha256": "ca6e32cef9c652a0f291fa3800932c1208cfdf213aa18f240b2df5a80039d14d",
+  "passing_pilot": "reports/qwen_multidegradation_visibility_v2_final_pilot.json",
+  "passing_pilot_sha256": "5c916401a59295bcdc94318d8eaf7d0e4b501d34f7f42af24afca4ae049d37eb",
+  "passing_pilot_config": "configs/qwen_multidegradation_visibility_v2_final.json",
+  "passing_pilot_config_sha256": "efb8720c4e6f54c7aca4c9d1ba415ade54ec37d7df78b04d27317cec6b42661c",
+  "visibility_policy": {
+    "policy_name": "candidate_isolated_q10_x0.85_then_final_relative_retention_0.2_physical_final",
+    "visibility_mode": "candidate_isolated_anchor_and_final_retention",
+    "primary_metric": "rgb_rmse_over_full_luma",
+    "anchor_quantile": "q10",
+    "anchor_multiplier": 0.85,
+    "minimum_rmse_survival_ratio": 0.20,
+    "physical_application_order": ["haze", "blur", "rain", "low_light", "noise"],
+    "maximum_attempts_per_record": 256
+  },
+  "manifest": "manifests/qwen_multidegradation_pilot_v2.jsonl",
+  "metadata": "manifests/qwen_multidegradation_pilot_v2.json",
+  "screening_root": "data/qwen_multidegradation_visibility_v2_screening",
+  "data_root": "data/qwen_multidegradation_pilot_v2"
+}

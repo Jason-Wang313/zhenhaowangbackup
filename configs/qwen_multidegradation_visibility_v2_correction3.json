@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "seed": 2026082808,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "visibility_anchor": "reports/qwen_multidegradation_visibility_anchor_luma_normalized_v2.json",
+  "visibility_anchor_sha256": "155ddf13a9f65df9074193728ed69f2de506d32d4d6189d992ab6ccb229941e5",
+  "causal_audit": "reports/qwen_multidegradation_visibility_audit_luma_normalized_v2.json",
+  "causal_audit_sha256": "ca6e32cef9c652a0f291fa3800932c1208cfdf213aa18f240b2df5a80039d14d",
+  "supersedes_failed_pilots": [
+    "reports/qwen_multidegradation_visibility_v2_pilot.json",
+    "reports/qwen_multidegradation_visibility_v2_correction1_pilot.json",
+    "reports/qwen_multidegradation_visibility_v2_correction2_pilot.json"
+  ],
+  "visibility_policy": {
+    "policy_name": "luma_normalized_training_anchor_q10_survival_0.5_physical_v2",
+    "primary_metric": "rgb_rmse_over_full_luma",
+    "anchor_quantile": "q10",
+    "minimum_rmse_survival_ratio": 0.50,
+    "physical_application_order": ["haze", "blur", "rain", "low_light", "noise"],
+    "maximum_attempts_per_record": 32
+  },
+  "pilot": {
+    "split": "train",
+    "composition_size": 3,
+    "records_per_combination": 4,
+    "expected_records": 40,
+    "maximum_mean_attempts": 6.0,
+    "maximum_p95_attempts": 20.0,
+    "output": "reports/qwen_multidegradation_visibility_v2_correction3_pilot.json"
+  },
+  "manifest": "manifests/qwen_multidegradation_pilot_v2.jsonl",
+  "metadata": "manifests/qwen_multidegradation_pilot_v2.json",
+  "data_root": "data/qwen_multidegradation_pilot_v2"
+}

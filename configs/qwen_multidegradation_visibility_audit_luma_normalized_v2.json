@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "seed": 2026082806,
+  "manifest": "manifests/qwen_multidegradation_pilot_v1.jsonl",
+  "manifest_sha256": "0d5fa12abc387ad857c85ad574dcf8ecf7dc158c443d470c096610de04255599",
+  "predictions": "checkpoints/qwen_multidegradation_per_type_rank32_continue_v2/merger_trainable/validation_predictions_H6_per_type_dialogue_epoch6.json",
+  "predictions_sha256": "42d9452dad4b5c741067128a88c03b785cd471b1160bdd7657142f25c9d66512",
+  "cohort": {
+    "split": "validation",
+    "composition_size": 3,
+    "expected_records": 360,
+    "expected_components": 1080
+  },
+  "confirmation": {
+    "metric_space": "luma_normalized_rgb",
+    "minimum_first_position_miss_fraction": 0.60,
+    "maximum_first_to_last_recall_ratio": 0.85,
+    "maximum_first_to_last_median_survival_ratio": 0.85,
+    "minimum_stratified_final_rmse_detection_auc": 0.58,
+    "minimum_required_conditions": 2,
+    "require_at_least_one_counterfactual_condition": true
+  },
+  "output": "reports/qwen_multidegradation_visibility_audit_luma_normalized_v2.json"
+}
