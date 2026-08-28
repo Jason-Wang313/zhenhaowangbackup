@@ -63,6 +63,7 @@ from lowlight_restoration.qwen_type_calibration import (
 from smoke.qwen_multidegradation_lora_preflight import (
     accumulation_steps_for_world,
     load_config,
+    micro_batch_size_for_world,
     run_preflight,
     validate_contract,
     validate_software_runtime,
@@ -228,7 +229,7 @@ def validate_runtime(config: Mapping[str, object], local_rank: int) -> dict[str,
         "world_size": world,
         "gradient_accumulation_steps": accumulation,
         "effective_global_batch_size": (
-            world * int(training["micro_batch_size_per_rank"]) * accumulation
+            world * micro_batch_size_for_world(dict(config), world) * accumulation
         ),
         "gpu": torch.cuda.get_device_name(local_rank),
         "gpu_memory_gib": memory,
@@ -777,7 +778,7 @@ def train_variant(
         find_unused_parameters=bool(distributed["find_unused_parameters"]),
     )
     optimizer = create_optimizer(model, config)
-    micro = int(training["micro_batch_size_per_rank"])
+    micro = micro_batch_size_for_world(dict(config), world)
     global_batch = int(training["global_batch_size"])
     accumulation = accumulation_steps_for_world(dict(config), world)
     completed_stages, global_step = resume_stage(

@@ -183,7 +183,8 @@
   "training": {
     "seed": 2026082841,
     "micro_batch_size_per_rank": 25,
-    "gradient_accumulation_steps_by_world_size": {"2": 4, "8": 1},
+    "micro_batch_size_per_rank_by_world_size": {"2": 100, "8": 25},
+    "gradient_accumulation_steps_by_world_size": {"2": 1, "8": 1},
     "global_batch_size": 200,
     "epochs_per_curriculum_stage": 1,
     "initial_optimizer_steps": 1050,

@@ -90,6 +90,21 @@ def accumulation_steps_for_world(config: dict[str, object], world: int) -> int:
     return steps
 
 
+def micro_batch_size_for_world(config: dict[str, object], world: int) -> int:
+    training = config["training"]
+    assert isinstance(training, dict)
+    mapping = training.get("micro_batch_size_per_rank_by_world_size")
+    if mapping is None:
+        micro = int(training.get("micro_batch_size_per_rank", 0))
+    else:
+        if not isinstance(mapping, dict) or str(world) not in mapping:
+            raise ValueError(f"no micro-batch contract for world size {world}")
+        micro = int(mapping[str(world)])
+    if micro <= 0:
+        raise ValueError("micro batch size must be positive")
+    return micro
+
+
 def validate_software_runtime(config: dict[str, object]) -> dict[str, str]:
     import torch
     import transformers
@@ -329,7 +344,8 @@ def validate_contract(config: dict[str, object]) -> None:
     global_batch = int(training.get("global_batch_size", 0))
     for world in supported_worlds:
         accumulation = accumulation_steps_for_world(config, world)
-        if micro * accumulation * world != global_batch:
+        world_micro = micro_batch_size_for_world(config, world)
+        if world_micro * accumulation * world != global_batch:
             raise ValueError(f"global batch does not match DDP semantics for world {world}")
     stages = data.get("curriculum")
     expected_maxima = (
@@ -509,8 +525,10 @@ def validate_contract(config: dict[str, object]) -> None:
                     or any(stage.get("source_sampling") != expected_sampling for stage in stages)
                     or micro != 25
                     or global_batch != 200
+                    or training.get("micro_batch_size_per_rank_by_world_size")
+                    != {"2": 100, "8": 25}
                     or training.get("gradient_accumulation_steps_by_world_size")
-                    != {"2": 4, "8": 1}
+                    != {"2": 1, "8": 1}
                     or float(training.get("lora_learning_rate", 0.0)) != 0.00001
                     or float(training.get("merger_learning_rate", 0.0)) != 0.000001
                     or float(training.get("language_lora_learning_rate", 0.0))
@@ -547,7 +565,7 @@ def validate_contract(config: dict[str, object]) -> None:
                 or micro != 25
                 or global_batch != 200
                 or training.get("gradient_accumulation_steps_by_world_size")
-                != {"2": 4, "8": 1}
+                != ({"2": 1, "8": 1} if visibility_v2b else {"2": 4, "8": 1})
                 or float(training.get("lora_learning_rate", 0.0))
                 != (0.00001 if visibility_v2b else 0.00005)
                 or float(training.get("merger_learning_rate", 0.0))

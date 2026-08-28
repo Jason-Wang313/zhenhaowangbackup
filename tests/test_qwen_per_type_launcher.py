@@ -111,7 +111,8 @@ class QwenPerTypeLauncherTests(unittest.TestCase):
         protected_test = runner.index("--test-only")
         self.assertLess(validation_check, protected_test)
         self.assertIn("PROTECTED_TEST_NOT_ACCESSED", runner)
-        self.assertIn("ACCUMULATION=4", runner)
+        self.assertIn("MICRO=100", runner)
+        self.assertIn("MICRO=25", runner)
         self.assertIn("ACCUMULATION=1", runner)
         self.assertIn("DETACHED_NOHUP_STARTED", launcher)
 

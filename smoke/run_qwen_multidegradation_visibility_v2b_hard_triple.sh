@@ -35,8 +35,8 @@ if ! flock -n 9; then
   exit 1
 fi
 case "${CUDA_VISIBLE_DEVICES:-}" in
-  0,1) NPROC=2; ACCUMULATION=4 ;;
-  0,1,2,3,4,5,6,7) NPROC=8; ACCUMULATION=1 ;;
+  0,1) NPROC=2; MICRO=100; ACCUMULATION=1 ;;
+  0,1,2,3,4,5,6,7) NPROC=8; MICRO=25; ACCUMULATION=1 ;;
   *) echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1 or 0,1,2,3,4,5,6,7" >&2; exit 1 ;;
 esac
 if [[ ! -x "$PYTHON" ]]; then
@@ -52,7 +52,7 @@ echo "QWEN_VISIBILITY_V2B_CONFIG $CONFIG"
 echo "QWEN_VISIBILITY_V2B_GIT_REVISION $(git rev-parse HEAD)"
 echo "QWEN_VISIBILITY_V2B_VISIBLE_DEVICES $CUDA_VISIBLE_DEVICES"
 echo "QWEN_VISIBILITY_V2B_WORLD_SIZE $NPROC"
-echo "QWEN_VISIBILITY_V2B_BATCH micro_per_rank=25 accumulation=$ACCUMULATION global=200"
+echo "QWEN_VISIBILITY_V2B_BATCH micro_per_rank=$MICRO accumulation=$ACCUMULATION global=200"
 echo "QWEN_VISIBILITY_V2B_SCHEDULE continuation_epochs=3 dialogues=126000 steps=630"
 echo "QWEN_VISIBILITY_V2B_GATE fresh_validation_triple_exact_ge_0.83 protected_test_ge_0.80"
 
