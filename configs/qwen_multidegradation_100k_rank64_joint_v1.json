@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "status": "advisor_approved_qwen_100k_rank64_joint",
+  "contract": {
+    "path": "configs/qwen_multidegradation_contract_v1.json",
+    "sha256": "b2a28d44bb599a7044463438f03944503cbc3def0c7c5532af952a6b3d65df49"
+  },
+  "data_contract": {
+    "path": "configs/qwen_multidegradation_100k_data_v1.json",
+    "sha256": "31de339345dfa1fc6c639dda5d7d6c61c959b558292bf0a02293bd17884ff4b1"
+  },
+  "model": {
+    "inventory_config": "configs/qwen_lowlight_smoke25.json",
+    "inventory_config_sha256": "20d1dfdc1bb25611508a06d8c241146ebad246b2404c44c68831dcf19d49b6b1",
+    "local_path": "models/qwen2.5-vl-7b-instruct",
+    "architecture": "Qwen2_5_VLForConditionalGeneration",
+    "dtype": "bfloat16",
+    "attention_implementation": "sdpa",
+    "expected_visual_depth": 32,
+    "expected_lora_modules": 272,
+    "expected_visual_lora_modules": 160,
+    "expected_language_lora_modules": 112,
+    "expected_lora_trainable_parameters": 44605440,
+    "expected_language_lora_trainable_parameters": 40370176,
+    "expected_merger_trainable_parameters": 44574464,
+    "expected_trainable_parameters_with_merger": 129550080,
+    "lora_rank": 64,
+    "lora_alpha": 64,
+    "language_lora_rank": 64,
+    "language_lora_alpha": 64,
+    "lora_dropout": 0.0,
+    "variants": ["merger_trainable"],
+    "frozen_modules": [
+      "model.language_model.base_weights",
+      "lm_head",
+      "model.visual.patch_embed"
+    ]
+  },
+  "processor": {
+    "use_fast": false,
+    "padding_side": "right",
+    "min_pixels": 200704,
+    "max_pixels": 200704
+  },
+  "prompt": {
+    "system_prompt_sha256": "5bafc319a0b99371dfdf02e898b313bddd66625d50a26983159ae0aee5efa764",
+    "degradation_question_sha256": "a660434a73b987cb76ba7b0fb4951d84a7172e3f30522a10adb3809c1e1b4982",
+    "target_schema": "fixed_five_slot_l1_absent_l2_l5_v1"
+  },
+  "data": {
+    "manifest": "manifests/qwen_multidegradation_100k_blur_v6.jsonl",
+    "manifest_sha256": "752f583fa48b8502fb73ff8cf07a4ab515fd1594f8a83d7ebc527d0ce19afdae",
+    "generation_result": "reports/qwen_multidegradation_100k_blur_v6_generation.json",
+    "generation_result_sha256": "c0a4ae9ac27d49a5fe01fb6332c3e9afb4ff3e3f2c5cbed01419e23fd3351b5a",
+    "generation_evidence_root": "data/qwen_multidegradation_100k_blur_v6/.generation",
+    "real_sanity_manifest": "manifests/qwen_multidegradation_real_sanity_v3.json",
+    "real_sanity_manifest_sha256": "59f5302aa3b58ba185c1d0fd0deaf82dbf7c0dc2c7b9345ca388854e666b6fad",
+    "sidd_official_verification": {
+      "path": "manifests/qwen_multidegradation_sidd_official_verification_v3.json",
+      "sha256": "d19ab870183f55ce72ddebbac63b5d920e15cf3b169ee1528de0a0ec96a717de"
+    },
+    "training_split": "train",
+    "validation_split": "validation",
+    "fixed_test_split": "test",
+    "expected_split_records": {"train": 100000, "validation": 10000, "test": 10000},
+    "expected_dialogue_split_records": {"train": 100000, "validation": 10000, "test": 10000},
+    "curriculum": [
+      {"name": "J1_clean_single", "maximum_composition_size": 1, "source_records": 40000, "records": 40000, "epochs": 1},
+      {"name": "J2_plus_double", "maximum_composition_size": 2, "source_records": 70000, "records": 70000, "epochs": 1},
+      {"name": "J3_plus_triple", "maximum_composition_size": 3, "source_records": 100000, "records": 100000, "epochs": 1}
+    ]
+  },
+  "training": {
+    "seed": 2026082864,
+    "micro_batch_size_per_rank": 20,
+    "micro_batch_size_per_rank_by_world_size": {"1": 20, "2": 20, "4": 25, "8": 25},
+    "gradient_accumulation_steps_by_world_size": {"1": 10, "2": 5, "4": 2, "8": 1},
+    "global_batch_size": 200,
+    "epochs_per_curriculum_stage": 1,
+    "initial_optimizer_steps": 0,
+    "total_optimizer_steps": 1050,
+    "lora_learning_rate": 0.00005,
+    "merger_learning_rate": 0.000005,
+    "language_lora_learning_rate": 0.00002,
+    "minimum_learning_rate_ratio": 0.2,
+    "warmup_steps": 50,
+    "weight_decay": 0.01,
+    "adam_beta1": 0.9,
+    "adam_beta2": 0.999,
+    "adam_epsilon": 1e-8,
+    "max_grad_norm": 1.0,
+    "gradient_checkpointing": true,
+    "fused_adamw": true,
+    "semantic_token_loss": {
+      "enabled": true,
+      "semantic_weight": 8.0,
+      "semantic_token_ids": [16, 17, 18, 19, 20],
+      "semantic_weight_by_degradation": null
+    }
+  },
+  "overfit": {
+    "variant": "merger_trainable",
+    "records": 40,
+    "records_per_composition_size": 10,
+    "total_optimizer_steps": 50,
+    "require_all_twenty_type_level_pairs": true
+  },
+  "distributed": {
+    "backend": "nccl",
+    "supported_world_sizes": [1, 2, 4, 8],
+    "timeout_minutes": 60,
+    "find_unused_parameters": false
+  },
+  "generation": {
+    "do_sample": false,
+    "batch_size_per_rank": 16,
+    "max_new_tokens": 32
+  },
+  "gate": {
+    "minimum_valid_structured_output_rate": 0.99,
+    "minimum_type_macro_f1": 0.92,
+    "minimum_type_micro_f1": 0.92,
+    "minimum_degradation_set_exact_match_rate": 0.85,
+    "minimum_combined_label_exact_match_rate": 0.70,
+    "minimum_severity_typed_accuracy": 0.75,
+    "maximum_severity_typed_mae_with_missing_penalty": 0.50,
+    "maximum_severity_typed_mse_with_missing_penalty": 1.0,
+    "minimum_triple_degradation_set_exact_match_rate": 0.80,
+    "minimum_triple_combined_label_exact_match_rate": 0.65,
+    "minimum_protected_test_triple_degradation_set_exact_match_rate": 0.80,
+    "require_all_trainable_parameters_receive_gradient": true,
+    "require_no_frozen_gradients": true
+  },
+  "runtime": {
+    "offline": true,
+    "device": "cuda",
+    "minimum_gpu_memory_gib": 78,
+    "required_python": "3.12.13",
+    "required_pytorch": "2.7.0+cu128",
+    "required_transformers": "5.14.1",
+    "output_root": "checkpoints/qwen_multidegradation_100k_rank64_joint_v1"
+  }
+}

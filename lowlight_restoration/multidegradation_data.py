@@ -11,6 +11,7 @@ import os
 import random
 import tempfile
 from collections import Counter, defaultdict
+from functools import lru_cache
 from pathlib import Path
 from typing import Iterable, Mapping, Sequence
 
@@ -46,6 +47,14 @@ NOISE_SIGMA_RANGES = {
     5: (159.6, 199.5),
 }
 BLUR_PARAMETERS = {2: (10, 12.0), 3: (20, 18.0), 4: (30, 30.0), 5: (30, 48.0)}
+# Human-approved 2026-08-28 motion-blur ladder.  Keep the legacy profile above
+# immutable so old manifests remain exactly reproducible.
+BLUR_PARAMETERS_EXTREME_V6 = {
+    2: (22, 18.0),
+    3: (30, 24.0),
+    4: (90, 72.0),
+    5: (200, 160.0),
+}
 HAZE_A_MEANS = {2: 0.60, 3: 0.70, 4: 0.80, 5: 1.00}
 HAZE_BETA_MEANS = {2: 2.4, 3: 3.6, 4: 7.2, 5: 10.8}
 RAIN_DISTRIBUTIONS = {2: (5.0, 5.0), 3: (60.0, 5.0), 4: (150.0, 10.0), 5: (340.0, 20.0)}
@@ -66,6 +75,13 @@ def sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+@lru_cache(maxsize=None)
+def _verified_depth_sha256(path_text: str) -> str:
+    """Hash each immutable aligned depth file once per construction process."""
+
+    return sha256(Path(path_text))
 
 
 def load_source_inventory(path: Path) -> list[dict[str, object]]:
@@ -138,6 +154,7 @@ def _operator_parameters(
     *,
     seed: int,
     source: Mapping[str, object],
+    blur_parameters: Mapping[int, tuple[int, float]] = BLUR_PARAMETERS,
 ) -> dict[str, object]:
     rng = np.random.default_rng(seed)
     if name == "low_light":
@@ -156,7 +173,7 @@ def _operator_parameters(
             "sigma_0_255": float(rng.uniform(low, high)),
         }
     if name == "blur":
-        radius, sigma = BLUR_PARAMETERS[level]
+        radius, sigma = blur_parameters[level]
         return {
             "operator": "AgenticIR.motion_blur_project_strength",
             "agenticir_level": level - 1,
@@ -182,7 +199,7 @@ def _operator_parameters(
         absolute_depth = ROOT / depth
         if not absolute_depth.is_file():
             raise FileNotFoundError(absolute_depth)
-        observed_depth_sha = sha256(absolute_depth)
+        observed_depth_sha = _verified_depth_sha256(str(absolute_depth.resolve()))
         if declared_depth_sha is not None and observed_depth_sha != declared_depth_sha:
             raise RuntimeError("explicit haze depth SHA-256 changed")
         return {

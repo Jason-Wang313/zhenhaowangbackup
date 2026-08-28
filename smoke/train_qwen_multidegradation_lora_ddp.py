@@ -1508,6 +1508,14 @@ def gate_checks(
         "triple_set_exact": float(triple["degradation_set_exact_match_rate"]) >= triple_threshold,
         "gradient_scope": gradient_pass,
     }
+    if "maximum_severity_typed_mse_with_missing_penalty" in gate:
+        checks["severity_mse"] = float(
+            metrics["severity_typed_mse_with_missing_penalty"]
+        ) < float(gate["maximum_severity_typed_mse_with_missing_penalty"])
+    if "minimum_triple_combined_label_exact_match_rate" in gate:
+        checks["triple_combined_label_exact"] = float(
+            triple["combined_label_exact_match_rate"]
+        ) >= float(gate["minimum_triple_combined_label_exact_match_rate"])
     if "minimum_per_type_valid_response_rate" in gate:
         checks["per_type_valid_response"] = (
             float(metrics["per_type_valid_response_rate"])

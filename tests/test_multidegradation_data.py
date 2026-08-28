@@ -3,6 +3,8 @@ from collections import Counter
 from pathlib import Path
 
 from lowlight_restoration.multidegradation_data import (
+    BLUR_PARAMETERS,
+    BLUR_PARAMETERS_EXTREME_V6,
     ROOT,
     SPLIT_SOURCE_COUNTS,
     assign_source_splits,
@@ -79,6 +81,25 @@ class MultiDegradationDataTests(unittest.TestCase):
         missing = {key: value for key, value in explicit.items() if key != "depth_sha256"}
         with self.assertRaisesRegex(ValueError, "missing its frozen SHA-256"):
             _operator_parameters("haze", 2, seed=7, source=missing)
+
+    def test_human_approved_blur_profile_is_locked_without_changing_legacy(self):
+        self.assertEqual(
+            BLUR_PARAMETERS,
+            {2: (10, 12.0), 3: (20, 18.0), 4: (30, 30.0), 5: (30, 48.0)},
+        )
+        self.assertEqual(
+            BLUR_PARAMETERS_EXTREME_V6,
+            {2: (22, 18.0), 3: (30, 24.0), 4: (90, 72.0), 5: (200, 160.0)},
+        )
+        source = self.inventory[0]
+        parameters = _operator_parameters(
+            "blur",
+            5,
+            seed=7,
+            source=source,
+            blur_parameters=BLUR_PARAMETERS_EXTREME_V6,
+        )
+        self.assertEqual((parameters["radius"], parameters["sigma"]), (200, 160.0))
 
     def test_clean_crop_is_literal_and_one_composite_is_deterministic(self):
         clean = next(record for record in self.records if record["composition_size"] == 0)

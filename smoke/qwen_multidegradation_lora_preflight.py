@@ -50,6 +50,8 @@ APPROVED_STATUSES = {
     "approved_qwen_multidegradation_per_type_dialogue_rank32_continuation",
     "approved_qwen_visibility_v2_per_type_rank32_decision_calibrated",
     "approved_qwen_visibility_v2b_hard_triple_continuation",
+    "advisor_approved_qwen_100k_rank64_joint",
+    "advisor_approved_qwen_100k_rank64_per_type",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -126,8 +128,208 @@ def validate_software_runtime(config: dict[str, object]) -> dict[str, str]:
     return actual
 
 
+def validate_rank64_100k_contract(config: dict[str, object]) -> None:
+    """Validate the advisor-requested fair joint-vs-per-type comparison."""
+
+    status = str(config.get("status"))
+    per_type = status == "advisor_approved_qwen_100k_rank64_per_type"
+    if status not in {
+        "advisor_approved_qwen_100k_rank64_joint",
+        "advisor_approved_qwen_100k_rank64_per_type",
+    }:
+        raise ValueError("unknown rank-64 100k comparison status")
+    for section in (
+        "contract",
+        "data_contract",
+        "model",
+        "processor",
+        "prompt",
+        "data",
+        "training",
+        "overfit",
+        "distributed",
+        "generation",
+        "gate",
+        "runtime",
+    ):
+        if not isinstance(config.get(section), dict):
+            raise ValueError(f"missing rank-64 100k section: {section}")
+    contract = config["contract"]
+    data_contract = config["data_contract"]
+    model = config["model"]
+    prompt = config["prompt"]
+    data = config["data"]
+    training = config["training"]
+    distributed = config["distributed"]
+    generation = config["generation"]
+    gate = config["gate"]
+    runtime = config["runtime"]
+    assert all(
+        isinstance(item, dict)
+        for item in (
+            contract,
+            data_contract,
+            model,
+            prompt,
+            data,
+            training,
+            distributed,
+            generation,
+            gate,
+            runtime,
+        )
+    )
+    for section, description in (
+        (contract, "advisor contract"),
+        (data_contract, "100k data contract"),
+    ):
+        path = workspace_path(section["path"])
+        if sha256(path) != section.get("sha256"):
+            raise RuntimeError(f"{description} changed")
+    data_contract_payload = json.loads(workspace_path(data_contract["path"]).read_text())
+    if (
+        data_contract_payload.get("status")
+        != "human_approved_extreme_blur_v6_100k_contract"
+    ):
+        raise RuntimeError("rank-64 config is not bound to approved blur v6")
+    if sha256(workspace_path(model["inventory_config"])) != model.get(
+        "inventory_config_sha256"
+    ):
+        raise RuntimeError("Qwen inventory changed")
+    expected_model = {
+        "lora_rank": 64,
+        "lora_alpha": 64,
+        "language_lora_rank": 64,
+        "language_lora_alpha": 64,
+        "expected_visual_lora_modules": 160,
+        "expected_language_lora_modules": 112,
+        "expected_lora_modules": 272,
+        "expected_lora_trainable_parameters": 44605440,
+        "expected_language_lora_trainable_parameters": 40370176,
+        "expected_merger_trainable_parameters": 44574464,
+        "expected_trainable_parameters_with_merger": 129550080,
+    }
+    for key, expected in expected_model.items():
+        if model.get(key) != expected:
+            raise ValueError(f"rank-64 model contract changed: {key}")
+    if model.get("variants") != ["merger_trainable"]:
+        raise ValueError("rank-64 comparison must train the visual merger")
+    expected_prompt = (
+        {
+            "target_schema": PER_TYPE_DIALOGUE_SCHEMA,
+            "system_prompt_sha256": hashlib.sha256(
+                PER_TYPE_SYSTEM_PROMPT.encode()
+            ).hexdigest(),
+            "degradation_question_template_sha256": hashlib.sha256(
+                PER_TYPE_QUESTION_TEMPLATE.encode()
+            ).hexdigest(),
+            "response_template_sha256": hashlib.sha256(
+                PER_TYPE_RESPONSE_TEMPLATE.encode()
+            ).hexdigest(),
+            "query_degradations": list(DEGRADATIONS),
+        }
+        if per_type
+        else {
+            "target_schema": FIXED_FIVE_SLOT_SCHEMA,
+            "system_prompt_sha256": hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
+            "degradation_question_sha256": hashlib.sha256(
+                FIXED_FIVE_SLOT_QUESTION.encode()
+            ).hexdigest(),
+        }
+    )
+    for key, expected in expected_prompt.items():
+        if prompt.get(key) != expected:
+            raise RuntimeError(f"rank-64 prompt contract changed: {key}")
+    manifest = workspace_path(data["manifest"])
+    generation_result_path = workspace_path(data["generation_result"])
+    if (
+        sha256(manifest) != data.get("manifest_sha256")
+        or sha256(generation_result_path) != data.get("generation_result_sha256")
+    ):
+        raise RuntimeError("rank-64 100k generated data changed")
+    generation_result = json.loads(generation_result_path.read_text())
+    if (
+        generation_result.get("status") != "pass"
+        or generation_result.get("completed_records") != 120000
+        or generation_result.get("manifest_sha256") != data["manifest_sha256"]
+        or generation_result.get("protected_test_inference_performed") is not False
+        or generation_result.get("foundir_used") is not False
+    ):
+        raise RuntimeError("rank-64 100k generation is incomplete")
+    expected_splits = {"train": 100000, "validation": 10000, "test": 10000}
+    if data.get("expected_split_records") != expected_splits:
+        raise ValueError("rank-64 100k split cardinality changed")
+    multiplier = len(DEGRADATIONS) if per_type else 1
+    expected_dialogues = {
+        split: count * multiplier for split, count in expected_splits.items()
+    }
+    if data.get("expected_dialogue_split_records") != expected_dialogues:
+        raise ValueError("rank-64 dialogue cardinality changed")
+    expected_source_stages = [40000, 70000, 100000]
+    stages = data.get("curriculum")
+    if not isinstance(stages, list) or len(stages) != 3:
+        raise ValueError("rank-64 curriculum must have three stages")
+    for index, (stage, source_records) in enumerate(
+        zip(stages, expected_source_stages, strict=True), start=1
+    ):
+        if (
+            stage.get("maximum_composition_size") != index
+            or int(stage.get("source_records", source_records)) != source_records
+            or int(stage.get("records", 0)) != source_records * multiplier
+            or int(stage.get("epochs", 0)) != 1
+        ):
+            raise ValueError("rank-64 curriculum coverage changed")
+    if distributed.get("supported_world_sizes") != [1, 2, 4, 8]:
+        raise ValueError("rank-64 comparison must support 1/2/4/8 GPUs")
+    global_batch = int(training.get("global_batch_size", 0))
+    if global_batch != 200:
+        raise ValueError("rank-64 comparison global batch changed")
+    for world in (1, 2, 4, 8):
+        if (
+            micro_batch_size_for_world(config, world)
+            * accumulation_steps_for_world(config, world)
+            * world
+            != global_batch
+        ):
+            raise ValueError(f"rank-64 DDP batch mismatch for world {world}")
+    expected_steps = sum(
+        int(stage["records"]) // global_batch for stage in stages
+    )
+    if (
+        int(training.get("initial_optimizer_steps", -1)) != 0
+        or int(training.get("total_optimizer_steps", -1)) != expected_steps
+        or int(training.get("epochs_per_curriculum_stage", 0)) != 1
+    ):
+        raise ValueError("rank-64 optimizer schedule changed")
+    semantic = training.get("semantic_token_loss")
+    if (
+        not isinstance(semantic, dict)
+        or semantic.get("enabled") is not True
+        or semantic.get("semantic_token_ids") != FIXED_SLOT_SEMANTIC_TOKEN_IDS
+        or float(semantic.get("semantic_weight", 0.0)) != 8.0
+        or semantic.get("semantic_weight_by_degradation") is not None
+    ):
+        raise ValueError("rank-64 comparison decision-token loss changed")
+    if config.get("initialization") is not None:
+        raise ValueError("rank-64 fair comparison must start both methods from base Qwen")
+    if float(gate.get("maximum_severity_typed_mse_with_missing_penalty", -1)) != 1.0:
+        raise ValueError("rank-64 comparison requires severity MSE < 1")
+    if float(gate.get("minimum_triple_combined_label_exact_match_rate", -1)) != 0.65:
+        raise ValueError("rank-64 comparison requires strict triple label exact >= 0.65")
+    if int(generation.get("batch_size_per_rank", 0)) <= 0:
+        raise ValueError("rank-64 generation batch is invalid")
+    if float(runtime.get("minimum_gpu_memory_gib", 0.0)) > 80.0:
+        raise ValueError("rank-64 runtime would reject an 80GB H100")
+
+
 def validate_contract(config: dict[str, object]) -> None:
     status = config.get("status")
+    if status in {
+        "advisor_approved_qwen_100k_rank64_joint",
+        "advisor_approved_qwen_100k_rank64_per_type",
+    }:
+        validate_rank64_100k_contract(config)
+        return
     correction = status != "approved_qwen_multidegradation_lora_frozen_merger_ablation"
     semantic_correction = (
         status == "approved_qwen_multidegradation_lora_semantic_loss_correction"
@@ -1156,6 +1358,32 @@ def validate_data(
             if encoded != [token_id]:
                 raise RuntimeError("frozen L1--L5 single-token mapping changed")
         decision_token_positions_verified = True
+    semantic_token_positions_verified = False
+    if config.get("status") in {
+        "advisor_approved_qwen_100k_rank64_joint",
+        "advisor_approved_qwen_100k_rank64_per_type",
+    }:
+        semantic = config["training"].get("semantic_token_loss")
+        if not isinstance(semantic, dict):
+            raise RuntimeError("rank-64 semantic-token loss is missing")
+        token_ids = semantic.get("semantic_token_ids")
+        if token_ids != FIXED_SLOT_SEMANTIC_TOKEN_IDS:
+            raise RuntimeError("rank-64 L1--L5 token IDs changed")
+        for level, token_id in enumerate(token_ids, start=1):
+            if processor.tokenizer(
+                str(level), add_special_tokens=False
+            )["input_ids"] != [token_id]:
+                raise RuntimeError("rank-64 L1--L5 tokens are no longer atomic")
+        expected_per_row = 1 if target_schema == PER_TYPE_DIALOGUE_SCHEMA else 5
+        for row in batch["labels"]:
+            matches = sum(
+                int(row.eq(token_id).sum().item()) for token_id in token_ids
+            )
+            if matches != expected_per_row:
+                raise RuntimeError(
+                    "rank-64 assistant answer has the wrong decision-token count"
+                )
+        semantic_token_positions_verified = True
     return {
         "records": len(records),
         "unique_sources_used": len(source_roles),
@@ -1175,6 +1403,7 @@ def validate_data(
             else None
         ),
         "decision_token_positions_verified": decision_token_positions_verified,
+        "semantic_token_positions_verified": semantic_token_positions_verified,
         "training_only_calibration_partition": (
             {
                 "calibration_records": partition_evidence["calibration_records"],

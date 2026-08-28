@@ -155,6 +155,7 @@ class QwenMultiDegradationMetricTests(unittest.TestCase):
         ):
             self.assertEqual(metrics[key], 1.0, key)
         self.assertEqual(metrics["severity_typed_mae_with_missing_penalty"], 0.0)
+        self.assertEqual(metrics["severity_typed_mse_with_missing_penalty"], 0.0)
         self.assertEqual(metrics["active_severity_support"], 6)
         for size in range(4):
             self.assertEqual(metrics["by_composition_size"][str(size)]["samples"], 1)
@@ -195,6 +196,10 @@ class QwenMultiDegradationMetricTests(unittest.TestCase):
         self.assertLess(metrics["type_micro_f1"], 1.0)
         self.assertLess(metrics["severity_typed_accuracy"], 1.0)
         self.assertGreater(metrics["severity_typed_mae_with_missing_penalty"], 0.0)
+        self.assertGreater(
+            metrics["severity_typed_mse_with_missing_penalty"],
+            metrics["severity_typed_mae_with_missing_penalty"],
+        )
         self.assertIsNotNone(rows[-1]["parse_error"])
 
     def test_metric_json_is_machine_serializable(self):

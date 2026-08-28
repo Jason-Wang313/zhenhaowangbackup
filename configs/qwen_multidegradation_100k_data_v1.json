@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "status": "human_approved_extreme_blur_v6_100k_contract",
+  "seed": 2026082806,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "crop_size": 448,
+  "split_composition_counts": {
+    "train": {"0": 10000, "1": 30000, "2": 30000, "3": 30000},
+    "validation": {"0": 1000, "1": 3000, "2": 3000, "3": 3000},
+    "test": {"0": 1000, "1": 3000, "2": 3000, "3": 3000}
+  },
+  "blur": {
+    "type": "motion",
+    "profile": "extreme_v6_human_approved_2026_08_28",
+    "parameters": {
+      "2": {"radius": 22, "sigma": 18.0, "kernel_width": 45},
+      "3": {"radius": 30, "sigma": 24.0, "kernel_width": 61},
+      "4": {"radius": 90, "sigma": 72.0, "kernel_width": 181},
+      "5": {"radius": 200, "sigma": 160.0, "kernel_width": 401}
+    },
+    "preview": "reports/blur_extreme_preview_v6/contact_sheet.png",
+    "preview_sha256": "216eb0371652c21d23d3dd946e8c9e979971ffde9d125fa7b4875fe29ea7c0c4",
+    "preview_report": "reports/blur_extreme_preview_v6/preview_report.json",
+    "preview_report_sha256": "4c8b079152e41348c54d272a77dbc4b947fbfa4d3db008fa747e966e73626227"
+  },
+  "physical_application_order": ["haze", "blur", "rain", "low_light", "noise"],
+  "haze_depth_policy": "verified_mio100_depth_only",
+  "manifest": "manifests/qwen_multidegradation_100k_blur_v6.jsonl",
+  "metadata": "manifests/qwen_multidegradation_100k_blur_v6.json",
+  "data_root": "data/qwen_multidegradation_100k_blur_v6",
+  "generation_evidence_root": "data/qwen_multidegradation_100k_blur_v6/.generation",
+  "generation_result": "reports/qwen_multidegradation_100k_blur_v6_generation.json"
+}

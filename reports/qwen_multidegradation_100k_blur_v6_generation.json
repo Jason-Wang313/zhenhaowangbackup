@@ -1,0 +1,22 @@
+{
+  "chunk_size": 4,
+  "completed_records": 120000,
+  "data_contract": "configs/qwen_multidegradation_100k_data_v1.json",
+  "data_contract_sha256": "31de339345dfa1fc6c639dda5d7d6c61c959b558292bf0a02293bd17884ff4b1",
+  "elapsed_seconds": 1858.959455853328,
+  "foundir_used": false,
+  "generated_records": 119899,
+  "manifest": "manifests/qwen_multidegradation_100k_blur_v6.jsonl",
+  "manifest_sha256": "752f583fa48b8502fb73ff8cf07a4ab515fd1594f8a83d7ebc527d0ce19afdae",
+  "protected_test_inference_performed": false,
+  "requested_records": 120000,
+  "reused_records": 101,
+  "schema_version": 1,
+  "split_counts": {
+    "test": 10000,
+    "train": 100000,
+    "validation": 10000
+  },
+  "status": "pass",
+  "workers": 48
+}

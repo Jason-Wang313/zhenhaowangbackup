@@ -563,7 +563,7 @@ def evaluate_outputs(
     }
     rows: list[dict[str, object]] = []
     valid_count = set_exact_count = label_exact_count = 0
-    severity_correct = severity_error = severity_support = 0
+    severity_correct = severity_error = severity_squared_error = severity_support = 0
     overlap_correct = overlap_error = overlap_support = 0
     composition = {
         size: Counter({"samples": 0, "valid": 0, "set_exact": 0, "label_exact": 0})
@@ -610,6 +610,7 @@ def evaluate_outputs(
             severity_support += 1
             severity_correct += int(correct)
             severity_error += penalty
+            severity_squared_error += penalty * penalty
             if predicted_level is not None:
                 overlap_support += 1
                 overlap_correct += int(correct)
@@ -653,6 +654,9 @@ def evaluate_outputs(
         "type_macro_f1": sum(float(value["f1"]) for value in per_type.values()) / len(DEGRADATIONS),
         "severity_typed_accuracy": _safe_div(severity_correct, severity_support),
         "severity_typed_mae_with_missing_penalty": _safe_div(severity_error, severity_support),
+        "severity_typed_mse_with_missing_penalty": _safe_div(
+            severity_squared_error, severity_support
+        ),
         "severity_overlap_only_accuracy": _safe_div(overlap_correct, overlap_support),
         "severity_overlap_only_mae": _safe_div(overlap_error, overlap_support),
         "active_severity_support": severity_support,

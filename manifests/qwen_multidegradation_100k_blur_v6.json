@@ -1,0 +1,48 @@
+{
+  "data_contract": "configs/qwen_multidegradation_100k_data_v1.json",
+  "data_contract_sha256": "31de339345dfa1fc6c639dda5d7d6c61c959b558292bf0a02293bd17884ff4b1",
+  "foundir_used": false,
+  "manifest": "manifests/qwen_multidegradation_100k_blur_v6.jsonl",
+  "manifest_sha256": "752f583fa48b8502fb73ff8cf07a4ab515fd1594f8a83d7ebc527d0ce19afdae",
+  "protected_test_inference_performed": false,
+  "schema_version": 1,
+  "status": "frozen_100k_train_manifest_images_not_implied_generated",
+  "validation": {
+    "blur_level_counts": {
+      "2": 10800,
+      "3": 10800,
+      "4": 10800,
+      "5": 10800
+    },
+    "blur_profile": "extreme_v6_human_approved_2026_08_28",
+    "combination_and_level_balanced": true,
+    "records": 120000,
+    "source_disjoint": true,
+    "split_composition_counts": {
+      "test": {
+        "0": 1000,
+        "1": 3000,
+        "2": 3000,
+        "3": 3000
+      },
+      "train": {
+        "0": 10000,
+        "1": 30000,
+        "2": 30000,
+        "3": 30000
+      },
+      "validation": {
+        "0": 1000,
+        "1": 3000,
+        "2": 3000,
+        "3": 3000
+      }
+    },
+    "split_records": {
+      "test": 10000,
+      "train": 100000,
+      "validation": 10000
+    },
+    "unique_sources_used": 2000
+  }
+}
