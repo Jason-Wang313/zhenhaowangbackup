@@ -17,7 +17,10 @@ from lowlight_restoration.config import TrainConfig, load_train_config
 from lowlight_restoration import authorization
 from lowlight_restoration.authorization import validate_run_authorization
 from lowlight_restoration.data import LowLightPairDataset, load_pair_manifest
-from lowlight_restoration.flow import build_reference_flow_batch
+from lowlight_restoration.flow import (
+    build_degraded_anchored_flow_batch,
+    build_reference_flow_batch,
+)
 from lowlight_restoration.lora import (
     LoRALinear,
     inject_lora,
@@ -142,6 +145,37 @@ class FlowTests(unittest.TestCase):
         torch.testing.assert_close(batch.target_velocity, expected_velocity_tokens)
         self.assertTrue(torch.all(batch.model_ids[:, :4, 0] == 0))
         self.assertTrue(torch.all(batch.model_ids[:, 4:, 0] == 10))
+
+    def test_degraded_anchored_flow_formula_and_layout(self) -> None:
+        clean = torch.tensor([[[[1.0, 2.0], [3.0, 4.0]]]])
+        degraded = clean * 0.5
+        noise = torch.ones_like(clean) * 2.0
+        batch = build_degraded_anchored_flow_batch(
+            clean,
+            degraded,
+            noise,
+            torch.tensor([0.25]),
+            pack_image,
+            anchor_noise_scale=0.1,
+            reference_time_coordinate=7,
+        )
+        source = degraded + 0.1 * noise
+        expected_path = 0.75 * clean + 0.25 * source
+        expected_velocity = source - clean
+        torch.testing.assert_close(batch.model_tokens[:, :4], pack_image(expected_path)[0])
+        torch.testing.assert_close(batch.model_tokens[:, 4:], pack_image(degraded)[0])
+        torch.testing.assert_close(batch.target_velocity, pack_image(expected_velocity)[0])
+        self.assertTrue(torch.all(batch.model_ids[:, :4, 0] == 0))
+        self.assertTrue(torch.all(batch.model_ids[:, 4:, 0] == 7))
+        with self.assertRaises(ValueError):
+            build_degraded_anchored_flow_batch(
+                clean,
+                degraded,
+                noise,
+                torch.tensor([0.25]),
+                pack_image,
+                anchor_noise_scale=0.5,
+            )
 
 
 class DatasetTests(unittest.TestCase):

@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "status": "advisor_approved_five_type_foundir_dit_readiness",
+  "scope": {
+    "degradations": ["blur", "noise", "rain", "haze", "low_light"],
+    "include_single_double_triple": true,
+    "exclude_jpeg": true,
+    "exclude_noncanonical_raindrop_nightrain_until_explicit_mapping": true,
+    "foundir_official_test_access": "forbidden_during_development"
+  },
+  "data": {
+    "training_root": "data/foundir/MillionIRData/Train",
+    "official_metadata": "third_party/foundir/MillionIRData_train_meta_info.txt",
+    "official_metadata_sha256": "fcc5668470fda3f49750019d9a0ac4d009bbecaa45d928f24d1c615ff8f54ad5",
+    "expected_official_records": 1010064,
+    "expected_five_type_records": 685495,
+    "expected_categories": {
+      "01Blur": 109480,
+      "02Blur_Noise": 29950,
+      "05Noise": 58015,
+      "08Haze": 79800,
+      "09Lowlight_Haze": 79800,
+      "10Rain": 39900,
+      "13Rain_Haze": 79750,
+      "14Lowlight": 39962,
+      "15Lowlight_Blur": 85893,
+      "16Lowlight_Noise": 52995,
+      "18Lowlight_Blur_Noise": 29950
+    },
+    "split_seed": 2026083001,
+    "split_policy": "GT_exact_and_perceptual_component_grouped_96_2_2",
+    "crop_size": 512
+  },
+  "qwen_condition": {
+    "architecture": "Qwen2.5-VL-7B-Instruct",
+    "method": "joint_fixed_five_slot",
+    "training_config": "configs/qwen_multidegradation_100k_rank64_joint_v1.json",
+    "training_config_sha256": "a0ad3162043f27eb3755ae80602258b1f7b5d51e969abc2c472d24c49f1d4ad8",
+    "adapter": "checkpoints/qwen_multidegradation_100k_rank64_joint_v1/merger_trainable/checkpoints/J3_plus_triple/adapter.safetensors",
+    "adapter_sha256": "e6cbbbef10d904f2d1528c2a3bee4c2b0bf01fc333022a55a91a0b0020f7fd64",
+    "validation_result": "checkpoints/qwen_multidegradation_100k_rank64_joint_v1/merger_trainable/validation_result.json",
+    "validation_result_sha256": "766894847aa91b297b0b2a7bac09b027f72ce99ad7bdf58a5afcf99252185b73",
+    "frozen": true,
+    "canonical_text_version": "five_slot_restoration_v1"
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "text_encoder": "models/qwen3-4b-fp8",
+    "dtype": "bfloat16",
+    "reference_path": "native_flux2_reference_image_tokens",
+    "restoration_adapter": "not_admitted_before_native_path_overfit_evidence"
+  },
+  "lora": {
+    "rank": 32,
+    "alpha": 32.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "curriculum": [
+    {"name": "single", "maximum_composition_size": 1},
+    {"name": "single_plus_double", "maximum_composition_size": 2},
+    {"name": "single_plus_double_plus_triple", "maximum_composition_size": 3}
+  ],
+  "distributed": {
+    "required_world_size": 8,
+    "supported_gpu_names": ["NVIDIA H100 80GB HBM3", "NVIDIA H200"],
+    "minimum_memory_gib": 75,
+    "global_batch_size": 32,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 4,
+    "backend": "nccl",
+    "timeout_minutes": 60
+  },
+  "overfit": {
+    "records": 128,
+    "steps": 200,
+    "require_loss_ratio_at_most": 0.35,
+    "minimum_restored_psnr_gain_db": 2.0,
+    "evaluation_records": 32,
+    "require_all_five_types": true,
+    "require_all_composition_sizes": true,
+    "conditions_csv": "manifests/foundir_five_type_overfit_qwen_conditions_v1.csv",
+    "conditions_json": "manifests/foundir_five_type_overfit_qwen_conditions_v1.json"
+  },
+  "flow_training": {
+    "objective": "degraded_anchored_residual_flow",
+    "anchor_noise_scale": 0.05,
+    "reference_time_coordinate": 10,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "timestep_sampling": "uniform",
+    "inference_steps": 6,
+    "seed": 2026083002
+  },
+  "vae_ceiling": {
+    "records_per_category": 4,
+    "center_crop_size": 512,
+    "minimum_psnr_db": 35.0,
+    "maximum_lpips": 0.03,
+    "minimum_high_frequency_correlation": 0.9,
+    "autoencoder_bytes": 336211292,
+    "flux2_revision": "50fe5162777813d869182b139e83b10743caef15"
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_five_type_flux2_dit_v1",
+    "manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "manifest_summary": "manifests/foundir_five_type_pairs_v1.json",
+    "persistent_log": "logs/foundir_five_type_flux2_dit_v1.log",
+    "gpu_telemetry": "logs/foundir_five_type_flux2_dit_v1_gpu.csv",
+    "offline": true
+  }
+}
