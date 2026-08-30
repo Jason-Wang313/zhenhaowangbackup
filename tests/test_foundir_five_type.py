@@ -21,6 +21,11 @@ from smoke.export_foundir_five_type_qwen_conditions import (
     condition_row,
     select_balanced_pilot,
 )
+from smoke.export_foundir_five_type_qwen_conditions_sharded_ddp import (
+    append_rows,
+    load_shard,
+    merge_shards,
+)
 
 
 class FoundIRFiveTypeTests(unittest.TestCase):
@@ -160,6 +165,57 @@ class FoundIRFiveTypeTests(unittest.TestCase):
         oracle = json.loads(row["type_oracle_levels_json"])
         self.assertEqual(predicted["rain"], 3)
         self.assertEqual(oracle, {"blur": 2, "noise": 4, "rain": 1, "haze": 1, "low_light": 1})
+
+    def test_sharded_condition_export_resumes_and_merges_in_manifest_order(self) -> None:
+        raw = '{"blur":2,"noise":1,"rain":1,"haze":1,"low_light":1}'
+        records = []
+        for index in range(4):
+            records.append(
+                {
+                    "record_id": f"r{index}",
+                    "split": "train" if index < 2 else "validation",
+                    "source_group": f"g{index}",
+                    "category": "01Blur",
+                    "composition_size": "1",
+                    "lq_path": f"lq{index}.png",
+                    "gt_path": f"gt{index}.png",
+                    "lq_sha256": f"{index + 1:064x}",
+                    "gt_sha256": f"{index + 11:064x}",
+                }
+            )
+        with tempfile.TemporaryDirectory(dir=WORKSPACE_ROOT) as directory:
+            root = Path(directory)
+            shard_dir = root / "shards"
+            for rank in range(2):
+                assigned = records[rank::2]
+                append_rows(
+                    shard_dir / f"rank_{rank:02d}.jsonl",
+                    [condition_row(record, raw) for record in assigned],
+                )
+                self.assertEqual(len(load_shard(shard_dir / f"rank_{rank:02d}.jsonl", assigned)), 2)
+            manifest = root / "manifest.csv"
+            manifest.write_text("placeholder\n")
+            qwen_config = root / "qwen.json"
+            qwen_config.write_text("{}\n")
+            adapter = root / "adapter.safetensors"
+            adapter.write_bytes(b"adapter")
+            output_csv = root / "conditions.csv"
+            output_json = root / "conditions.json"
+            payload = merge_shards(
+                manifest_rows=records,
+                shard_dir=shard_dir,
+                world=2,
+                output_csv=output_csv,
+                output_json=output_json,
+                config_path=qwen_config,
+                qwen_config_path=qwen_config,
+                manifest_path=manifest,
+                adapter=adapter,
+            )
+            with output_csv.open(newline="") as handle:
+                merged = list(csv.DictReader(handle))
+            self.assertEqual([row["record_id"] for row in merged], ["r0", "r1", "r2", "r3"])
+            self.assertEqual(payload["records"], 4)
 
 
 if __name__ == "__main__":

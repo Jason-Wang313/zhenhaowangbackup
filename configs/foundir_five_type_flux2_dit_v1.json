@@ -103,6 +103,81 @@
     "inference_steps": 6,
     "seed": 2026083002
   },
+  "full_conditions": {
+    "csv": "manifests/foundir_five_type_all_qwen_conditions_v1.csv",
+    "summary": "manifests/foundir_five_type_all_qwen_conditions_v1.json",
+    "shard_directory": "checkpoints/foundir_five_type_flux2_dit_v1/qwen_condition_shards",
+    "scope": "train_validation_internal_test"
+  },
+  "prompt_cache": {
+    "directory": "checkpoints/foundir_five_type_flux2_dit_v1/qwen3_prompt_cache",
+    "index": "checkpoints/foundir_five_type_flux2_dit_v1/qwen3_prompt_cache/index.json",
+    "maximum_resident_contexts_per_rank": 512,
+    "qwen3_weight_sha256": {
+      "model-00001-of-00002.safetensors": "30b1bebf7b81f39f280b09c74f90feed00835a73145955a8d2fb69543b8371fb",
+      "model-00002-of-00002.safetensors": "79f82dbc594a0237e24982800665eb0ddbe8c7bbdf3ac49c2a0005682aca15dc"
+    }
+  },
+  "full_training": {
+    "initialization": "fresh_zero_lora_after_stage0_architecture_gate",
+    "curriculum": [
+      {"name": "single", "maximum_composition_size": 1, "presentations": 360000},
+      {"name": "single_plus_double", "maximum_composition_size": 2, "presentations": 720000},
+      {"name": "single_plus_double_plus_triple", "maximum_composition_size": 3, "presentations": 720000}
+    ],
+    "sampling": "composition_then_category_balanced_with_replacement",
+    "identity_pair_probability": 0.05,
+    "generic_condition_probability": 0.05,
+    "learning_rate": 0.00005,
+    "minimum_learning_rate_ratio": 0.1,
+    "warmup_steps": 500,
+    "weight_decay": 0.01,
+    "max_grad_norm": 1.0,
+    "checkpoint_every_steps": 2500,
+    "loss": {
+      "flow_mse_weight": 1.0,
+      "predicted_clean_latent_l1_weight": 0.1,
+      "rgb_charbonnier_weight": 0.1,
+      "rgb_auxiliary_every_steps": 8,
+      "charbonnier_epsilon": 0.001
+    },
+    "hardware_schedule": {
+      "H100": {"micro_batch_size_per_rank": 1, "gradient_accumulation_steps": 4},
+      "H200": {"micro_batch_size_per_rank": 2, "gradient_accumulation_steps": 2}
+    }
+  },
+  "evaluation": {
+    "contract_csv": "manifests/foundir_five_type_evaluation_contract_v1.csv",
+    "contract_json": "manifests/foundir_five_type_evaluation_contract_v1.json",
+    "folds": 3,
+    "records_per_category_per_fold": 20,
+    "development_split": "validation",
+    "sealed_split": "internal_test",
+    "checkpoint_selection": "maximize_worst_five_task_normalized_psnr_lpips_margin",
+    "candidate_steps": [11250, 33750, 42500, 50000, 55000, 56250],
+    "inference_steps": 6,
+    "condition_arms": ["generic", "qwen", "shuffled_wrong", "type_oracle"],
+    "full_resolution_records_per_category": 3,
+    "tile_size": 512,
+    "tile_overlap": 128,
+    "seam_band_width": 4,
+    "sow_stage2_thresholds": {
+      "blur": {"psnr": 25.9, "lpips": 0.18},
+      "noise": {"psnr": 38.9, "lpips": 0.10},
+      "rain": {"psnr": 34.2, "lpips": 0.08},
+      "haze": {"psnr": 22.1, "lpips": 0.19},
+      "low_light": {"psnr": 18.9, "lpips": 0.28}
+    }
+  },
+  "released_baseline": {
+    "generalist": "third_party/foundir/premodel/model-2000.pt",
+    "generalist_sha256": "2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9",
+    "lowlight_specialist": "third_party/foundir/specialist_model/ckpt/lowlight.pth",
+    "lowlight_specialist_sha256": "f834248e145d020d5a02f257b7ceb383b579add2522932938b3e1e0bd460abe6",
+    "weather_specialist": "third_party/foundir/specialist_model/ckpt/weather.pth",
+    "weather_specialist_sha256": "25fa90003de8fa6965d861fc66159fb0c188654723acc15e8c49ec8359ca8b93",
+    "comparison_scope": "same_frozen_development_and_sealed_records"
+  },
   "vae_ceiling": {
     "records_per_category": 4,
     "center_crop_size": 512,

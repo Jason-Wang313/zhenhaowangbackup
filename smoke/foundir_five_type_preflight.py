@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.foundir_five_type import category_counts, load_five_type_metadata
+from lowlight_restoration.foundir_flux2_protocol import SOW_STAGE2_THRESHOLDS
 
 
 def sha256(path: Path) -> str:
@@ -58,6 +59,21 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
             if sha256(path) != section[hash_key]:
                 raise RuntimeError(f"frozen artifact changed: {path}")
 
+    prompt_cache = config["prompt_cache"]
+    for name, expected in prompt_cache["qwen3_weight_sha256"].items():
+        path = workspace_path(str(Path(config["model"]["text_encoder"]) / name))
+        if not path.is_file() or (not skip_large_hashes and sha256(path) != expected):
+            raise RuntimeError(f"frozen FLUX Qwen3 text-encoder weight changed: {path}")
+    baseline = config["released_baseline"]
+    for path_key, hash_key in (
+        ("generalist", "generalist_sha256"),
+        ("lowlight_specialist", "lowlight_specialist_sha256"),
+        ("weather_specialist", "weather_specialist_sha256"),
+    ):
+        path = workspace_path(baseline[path_key])
+        if not path.is_file() or (not skip_large_hashes and sha256(path) != baseline[hash_key]):
+            raise RuntimeError(f"released FoundIR baseline changed: {path}")
+
     distributed = config["distributed"]
     flow = config["flow_training"]
     if (
@@ -71,6 +87,42 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
         or not 0.0 <= float(flow.get("anchor_noise_scale", -1)) <= 0.25
     ):
         raise RuntimeError("eight-GPU FLUX training contract changed")
+    full = config["full_training"]
+    curriculum = full.get("curriculum")
+    hardware = full.get("hardware_schedule")
+    total_steps = sum(int(stage.get("presentations", 0)) for stage in curriculum or []) // int(distributed["global_batch_size"])
+    stage_end_steps = []
+    cumulative_presentations = 0
+    for stage in curriculum or []:
+        cumulative_presentations += int(stage.get("presentations", 0))
+        stage_end_steps.append(cumulative_presentations // int(distributed["global_batch_size"]))
+    candidate_steps = config["evaluation"].get("candidate_steps")
+    if (
+        not isinstance(curriculum, list)
+        or [stage.get("maximum_composition_size") for stage in curriculum] != [1, 2, 3]
+        or any(int(stage.get("presentations", 0)) % int(distributed["global_batch_size"]) for stage in curriculum)
+        or set(hardware) != {"H100", "H200"}
+        or any(
+            8 * int(schedule["micro_batch_size_per_rank"]) * int(schedule["gradient_accumulation_steps"])
+            != int(distributed["global_batch_size"])
+            for schedule in hardware.values()
+        )
+        or not 0.0 <= float(full.get("identity_pair_probability", -1)) <= 0.1
+        or not 0.0 <= float(full.get("generic_condition_probability", -1)) <= 0.1
+        or config["evaluation"].get("sow_stage2_thresholds") != SOW_STAGE2_THRESHOLDS
+        or not isinstance(candidate_steps, list)
+        or candidate_steps != sorted(set(candidate_steps))
+        or any(
+            int(step) <= 0
+            or int(step) > total_steps
+            or (
+                int(step) not in stage_end_steps
+                and int(step) % int(full["checkpoint_every_steps"]) != 0
+            )
+            for step in candidate_steps
+        )
+    ):
+        raise RuntimeError("full curriculum/evaluation contract changed")
 
     training_root = workspace_path(data["training_root"])
     missing_examples: list[str] = []
