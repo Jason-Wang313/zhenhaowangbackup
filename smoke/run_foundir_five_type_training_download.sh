@@ -10,6 +10,7 @@ STAGE="$ROOT/data/foundir/_download_stage/five_type_archives_v1"
 STATE="$ROOT/data/foundir/_download_stage/state_v1"
 LOCK="$STATE/download.lock"
 COMPLETE="$STATE/download.complete"
+INSTALLER="$ROOT/smoke/install_foundir_five_type_training_archives.sh"
 EXPECTED_FILES=27
 EXPECTED_BYTES=3737165269315
 DOWNLOAD_WORKERS=${FOUNDIR_DOWNLOAD_WORKERS:-12}
@@ -38,6 +39,19 @@ if [[ ! -d "$CFG" ]] || [[ "$(stat -c '%a' "$CFG")" != 700 ]]; then
 fi
 if [[ ! -f "$MANIFEST" ]]; then
   echo "ERROR: archive manifest is missing: $MANIFEST" >&2
+  exit 1
+fi
+if [[ -f "$COMPLETE" ]]; then
+  if grep -qx 'FOUNDIR_FIVE_TYPE_DOWNLOAD_COMPLETE' "$COMPLETE"; then
+    echo "FOUNDIR_FIVE_TYPE_DOWNLOAD_REUSE marker=$COMPLETE"
+    if [[ ! -x "$INSTALLER" ]]; then
+      echo "ERROR: FoundIR five-type archive installer is missing or not executable: $INSTALLER" >&2
+      exit 1
+    fi
+    "$INSTALLER"
+    exit 0
+  fi
+  echo "ERROR: existing FoundIR download marker is inconsistent: $COMPLETE" >&2
   exit 1
 fi
 if [[ ! "$DOWNLOAD_WORKERS" =~ ^[1-9][0-9]*$ ]] || [[ "$DOWNLOAD_WORKERS" -gt "$EXPECTED_FILES" ]]; then
@@ -164,3 +178,8 @@ fi
 printf 'FOUNDIR_FIVE_TYPE_DOWNLOAD_COMPLETE\nutc=%s\nfiles=%s\nbytes=%s\nmanifest=%s\n' \
   "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$verified_files" "$verified_bytes" "$MANIFEST" >"$COMPLETE"
 echo "FOUNDIR_FIVE_TYPE_DOWNLOAD_PASS files=$verified_files bytes=$verified_bytes marker=$COMPLETE"
+if [[ ! -x "$INSTALLER" ]]; then
+  echo "ERROR: FoundIR five-type archive installer is missing or not executable: $INSTALLER" >&2
+  exit 1
+fi
+"$INSTALLER"
