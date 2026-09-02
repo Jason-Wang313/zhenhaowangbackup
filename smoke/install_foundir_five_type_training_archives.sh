@@ -15,6 +15,7 @@ LOCK="$STATE/install.lock"
 COMPLETE="$STATE/install.complete"
 PREFLIGHT="$STATE/preflight_$(date -u +%Y%m%dT%H%M%SZ)_$$.log"
 EXTRACT_WORKERS=${FOUNDIR_EXTRACT_WORKERS:-2}
+READY_ONLY=${FOUNDIR_INSTALL_READY_ONLY:-0}
 
 categories=(
   01Blur 02Blur_Noise 05Noise 08Haze 09Lowlight_Haze 10Rain
@@ -57,9 +58,15 @@ on_exit() {
 }
 trap on_exit EXIT
 
-if [[ ! -f "$DOWNLOAD_MARKER" ]] || ! grep -qx 'FOUNDIR_FIVE_TYPE_DOWNLOAD_COMPLETE' "$DOWNLOAD_MARKER"; then
-  echo "ERROR: verified download completion marker is absent: $DOWNLOAD_MARKER" >&2
+if [[ "$READY_ONLY" != 0 && "$READY_ONLY" != 1 ]]; then
+  echo "ERROR: FOUNDIR_INSTALL_READY_ONLY must be 0 or 1" >&2
   exit 1
+fi
+if [[ "$READY_ONLY" == 0 ]]; then
+  if [[ ! -f "$DOWNLOAD_MARKER" ]] || ! grep -qx 'FOUNDIR_FIVE_TYPE_DOWNLOAD_COMPLETE' "$DOWNLOAD_MARKER"; then
+    echo "ERROR: verified download completion marker is absent: $DOWNLOAD_MARKER" >&2
+    exit 1
+  fi
 fi
 if [[ ! -x "$SEVEN" || ! -f "$SEVEN_DEB" ]]; then
   echo "ERROR: workspace-local 7-Zip package is missing" >&2
@@ -87,17 +94,33 @@ while IFS=$'\t' read -r filename size_bytes provider_md5 category; do
   fi
 done <"$MANIFEST"
 
-for filename in "${!archive_sizes[@]}"; do
-  archive="$ARCHIVES/$filename"
-  if [[ ! -f "$archive" ]] || [[ "$(stat -c '%s' "$archive")" -ne "${archive_sizes[$filename]}" ]]; then
-    echo "ERROR: archive is missing or has the wrong size: $archive" >&2
-    exit 1
-  fi
-  if [[ -e "$archive.BaiduPCS-Go-downloading" ]]; then
-    echo "ERROR: archive still has a download sidecar: $archive" >&2
-    exit 1
-  fi
-done
+category_ready() {
+  local wanted=$1
+  local found=0
+  local filename
+  local size_bytes
+  local provider_md5
+  local category
+  local archive
+  while IFS=$'\t' read -r filename size_bytes provider_md5 category; do
+    [[ "$filename" == filename || "$category" != "$wanted" ]] && continue
+    found=1
+    archive="$ARCHIVES/$filename"
+    if [[ ! -f "$archive" ]] || [[ "$(stat -c '%s' "$archive")" -ne "$size_bytes" ]] || [[ -e "$archive.BaiduPCS-Go-downloading" ]]; then
+      return 1
+    fi
+  done <"$MANIFEST"
+  [[ $found -eq 1 ]]
+}
+
+if [[ "$READY_ONLY" == 0 ]]; then
+  for category in "${categories[@]}"; do
+    if ! category_ready "$category"; then
+      echo "ERROR: one or more archive parts are incomplete for category: $category" >&2
+      exit 1
+    fi
+  done
+fi
 
 install_category() {
   local category=$1
@@ -127,6 +150,9 @@ install_category() {
   echo "FOUNDIR_FIVE_TYPE_EXTRACT_START category=$category archive=$archive attempt=$attempt utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
   "$SEVEN" x -y -bb1 -mmt=16 "-o$attempt" "$archive"
 
+  if [[ -d "$attempt/LQ" && -d "$attempt/GT" ]]; then
+    candidates+=("$attempt")
+  fi
   while IFS= read -r -d '' candidate; do
     if [[ -d "$candidate/LQ" && -d "$candidate/GT" ]]; then
       candidates+=("$candidate")
@@ -156,11 +182,18 @@ install_worker() {
   local worker=$1
   local i
   for ((i=worker; i<${#categories[@]}; i+=EXTRACT_WORKERS)); do
-    install_category "${categories[$i]}"
+    if category_ready "${categories[$i]}"; then
+      install_category "${categories[$i]}"
+    elif [[ "$READY_ONLY" == 1 ]]; then
+      echo "FOUNDIR_FIVE_TYPE_INSTALL_NOT_READY category=${categories[$i]}"
+    else
+      echo "ERROR: category became incomplete after the initial archive check: ${categories[$i]}" >&2
+      return 1
+    fi
   done
 }
 
-echo "FOUNDIR_FIVE_TYPE_INSTALL_START utc=$(date -u +%Y-%m-%dT%H:%M:%SZ) extract_workers=$EXTRACT_WORKERS official_test_accessed=false"
+echo "FOUNDIR_FIVE_TYPE_INSTALL_START utc=$(date -u +%Y-%m-%dT%H:%M:%SZ) extract_workers=$EXTRACT_WORKERS ready_only=$READY_ONLY official_test_accessed=false"
 declare -a worker_pids=()
 for ((worker=0; worker<EXTRACT_WORKERS; worker++)); do
   install_worker "$worker" &
@@ -176,6 +209,15 @@ for worker in "${!worker_pids[@]}"; do
 done
 if [[ $install_status -ne 0 ]]; then
   exit 1
+fi
+
+if [[ "$READY_ONLY" == 1 ]]; then
+  installed_categories=0
+  for category in "${categories[@]}"; do
+    [[ -f "$STATE/$category.complete" ]] && installed_categories=$((installed_categories + 1))
+  done
+  echo "FOUNDIR_FIVE_TYPE_READY_INSTALL_PASS installed_categories=$installed_categories total_categories=${#categories[@]} official_test_accessed=false"
+  exit 0
 fi
 
 QWEN_PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
