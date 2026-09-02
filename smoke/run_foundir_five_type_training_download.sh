@@ -29,6 +29,22 @@ on_exit() {
 }
 trap on_exit EXIT
 
+run_installer_when_available() {
+  local installer_status
+  while true; do
+    if "$INSTALLER"; then
+      return 0
+    else
+      installer_status=$?
+    fi
+    if [[ $installer_status -ne 75 ]]; then
+      return "$installer_status"
+    fi
+    echo "FOUNDIR_FIVE_TYPE_INSTALL_LOCKED retry_in_seconds=60"
+    sleep 60
+  done
+}
+
 if [[ ! -x "$BIN" ]]; then
   echo "ERROR: verified BaiduPCS-Go binary is missing or not executable: $BIN" >&2
   exit 1
@@ -48,7 +64,7 @@ if [[ -f "$COMPLETE" ]]; then
       echo "ERROR: FoundIR five-type archive installer is missing or not executable: $INSTALLER" >&2
       exit 1
     fi
-    "$INSTALLER"
+    run_installer_when_available
     exit 0
   fi
   echo "ERROR: existing FoundIR download marker is inconsistent: $COMPLETE" >&2
@@ -182,4 +198,4 @@ if [[ ! -x "$INSTALLER" ]]; then
   echo "ERROR: FoundIR five-type archive installer is missing or not executable: $INSTALLER" >&2
   exit 1
 fi
-"$INSTALLER"
+run_installer_when_available
