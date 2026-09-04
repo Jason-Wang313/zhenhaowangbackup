@@ -28,6 +28,8 @@ from lowlight_restoration.foundir_five_type import (
 )
 from smoke.check_low_light_source_pool import perceptual_hash
 
+PROGRESS_INTERVAL = 10_000
+
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -117,6 +119,7 @@ def build(config_path: Path, output_csv: Path, output_json: Path, *, workers: in
         )
     output_csv.parent.mkdir(parents=True, exist_ok=True)
     output_json.parent.mkdir(parents=True, exist_ok=True)
+    total_records = len(records)
     indexed = enumerate(records)
     inspected: list[dict[str, object]] = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
@@ -124,8 +127,8 @@ def build(config_path: Path, output_csv: Path, output_json: Path, *, workers: in
             executor.map(partial(inspect_pair, training_root=training_root), indexed), start=1
         ):
             inspected.append(result)
-            if count % 10000 == 0:
-                print(f"FOUNDIR_FIVE_TYPE_INSPECTED {count}/{len(indexed)}", flush=True)
+            if count % PROGRESS_INTERVAL == 0:
+                print(f"FOUNDIR_FIVE_TYPE_INSPECTED {count}/{total_records}", flush=True)
     inspected.sort(key=lambda item: int(item["index"]))
 
     exact_first: dict[str, int] = {}

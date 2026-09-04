@@ -5,6 +5,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from PIL import Image
 
@@ -109,7 +110,11 @@ class FoundIRFiveTypeTests(unittest.TestCase):
             )
             output_csv = root / "nested" / "pairs.csv"
             output_json = root / "nested" / "pairs.json"
-            summary = build(config, output_csv, output_json, workers=2)
+            # Exercise the progress-reporting branch without creating 10,000
+            # fixture images.  This guards against querying the length of the
+            # one-shot enumerate iterator used by the parallel inspector.
+            with patch("smoke.build_foundir_five_type_manifest.PROGRESS_INTERVAL", 1):
+                summary = build(config, output_csv, output_json, workers=2)
             with output_csv.open(newline="") as handle:
                 built = list(csv.DictReader(handle))
             self.assertEqual(summary["records"], 3)
