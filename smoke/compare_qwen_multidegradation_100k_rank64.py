@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -34,9 +35,21 @@ def score(metrics: dict[str, object]) -> tuple[float, ...]:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--joint-result", type=Path, default=RESULTS["joint"])
+    parser.add_argument("--per-type-result", type=Path, default=RESULTS["per_type"])
+    parser.add_argument("--output", type=Path, default=OUTPUT)
+    args = parser.parse_args()
+    result_paths = {
+        "joint": args.joint_result.resolve(),
+        "per_type": args.per_type_result.resolve(),
+    }
+    output = args.output.resolve()
+    for path in (*result_paths.values(), output):
+        path.relative_to(ROOT.resolve())
     rows: dict[str, object] = {}
     loaded: dict[str, dict[str, object]] = {}
-    for method, path in RESULTS.items():
+    for method, path in result_paths.items():
         result = json.loads(path.read_text())
         metrics = result["metrics"]
         if result.get("split") != "validation" or metrics.get("samples") != 10000:
@@ -81,7 +94,7 @@ def main() -> None:
         "foundir_used": False,
     }
     write_new_or_verify(
-        OUTPUT,
+        output,
         (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode(),
     )
     print("QWEN_100K_RANK64_COMPARISON_PASS " + json.dumps(payload, sort_keys=True))

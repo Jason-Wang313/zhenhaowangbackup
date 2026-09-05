@@ -165,14 +165,16 @@ def main() -> None:
     results: list[dict[str, object]] = []
     with concurrent.futures.ProcessPoolExecutor(max_workers=args.workers) as executor:
         completed = 0
+        next_progress = 1000
         for chunk_results in executor.map(generate_chunk, work):
             results.extend(chunk_results)
             completed += len(chunk_results)
-            if completed % 1000 == 0 or completed == len(records):
+            if completed >= next_progress or completed == len(records):
                 print(
                     f"QWEN_100K_GENERATION_PROGRESS {completed}/{len(records)}",
                     flush=True,
                 )
+                next_progress = ((completed // 1000) + 1) * 1000
     summary = {
         "schema_version": 1,
         "status": "pass" if len(records) == 120000 else "bounded_partial_pass",

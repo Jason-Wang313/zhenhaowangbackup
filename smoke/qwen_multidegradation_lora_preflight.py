@@ -52,6 +52,19 @@ APPROVED_STATUSES = {
     "approved_qwen_visibility_v2b_hard_triple_continuation",
     "advisor_approved_qwen_100k_rank64_joint",
     "advisor_approved_qwen_100k_rank64_per_type",
+    "advisor_directed_qwen_100k_rank64_joint_mild_v7",
+    "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
+}
+
+RANK64_100K_STATUSES = {
+    "advisor_approved_qwen_100k_rank64_joint",
+    "advisor_approved_qwen_100k_rank64_per_type",
+    "advisor_directed_qwen_100k_rank64_joint_mild_v7",
+    "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
+}
+RANK64_100K_PER_TYPE_STATUSES = {
+    "advisor_approved_qwen_100k_rank64_per_type",
+    "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -132,11 +145,8 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
     """Validate the advisor-requested fair joint-vs-per-type comparison."""
 
     status = str(config.get("status"))
-    per_type = status == "advisor_approved_qwen_100k_rank64_per_type"
-    if status not in {
-        "advisor_approved_qwen_100k_rank64_joint",
-        "advisor_approved_qwen_100k_rank64_per_type",
-    }:
+    per_type = status in RANK64_100K_PER_TYPE_STATUSES
+    if status not in RANK64_100K_STATUSES:
         raise ValueError("unknown rank-64 100k comparison status")
     for section in (
         "contract",
@@ -187,11 +197,13 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
         if sha256(path) != section.get("sha256"):
             raise RuntimeError(f"{description} changed")
     data_contract_payload = json.loads(workspace_path(data_contract["path"]).read_text())
-    if (
-        data_contract_payload.get("status")
-        != "human_approved_extreme_blur_v6_100k_contract"
-    ):
-        raise RuntimeError("rank-64 config is not bound to approved blur v6")
+    expected_data_status = (
+        "advisor_directed_mild_blur_noise_v7_100k_contract"
+        if status.startswith("advisor_directed_")
+        else "human_approved_extreme_blur_v6_100k_contract"
+    )
+    if data_contract_payload.get("status") != expected_data_status:
+        raise RuntimeError("rank-64 config is bound to the wrong synthetic corpus")
     if sha256(workspace_path(model["inventory_config"])) != model.get(
         "inventory_config_sha256"
     ):
@@ -324,10 +336,7 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
 
 def validate_contract(config: dict[str, object]) -> None:
     status = config.get("status")
-    if status in {
-        "advisor_approved_qwen_100k_rank64_joint",
-        "advisor_approved_qwen_100k_rank64_per_type",
-    }:
+    if status in RANK64_100K_STATUSES:
         validate_rank64_100k_contract(config)
         return
     correction = status != "approved_qwen_multidegradation_lora_frozen_merger_ablation"
@@ -1359,10 +1368,7 @@ def validate_data(
                 raise RuntimeError("frozen L1--L5 single-token mapping changed")
         decision_token_positions_verified = True
     semantic_token_positions_verified = False
-    if config.get("status") in {
-        "advisor_approved_qwen_100k_rank64_joint",
-        "advisor_approved_qwen_100k_rank64_per_type",
-    }:
+    if config.get("status") in RANK64_100K_STATUSES:
         semantic = config["training"].get("semantic_token_loss")
         if not isinstance(semantic, dict):
             raise RuntimeError("rank-64 semantic-token loss is missing")
