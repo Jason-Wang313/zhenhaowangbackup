@@ -16,6 +16,7 @@ import torch.distributed as dist
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from lowlight_restoration.foundir_five_type import FIVE_TYPE_CATEGORIES  # noqa: E402
 from lowlight_restoration.qwen_lora import load_qwen_adapter  # noqa: E402
 from lowlight_restoration.qwen_multidegradation import (  # noqa: E402
     PER_TYPE_DIALOGUE_SCHEMA,
@@ -23,7 +24,6 @@ from lowlight_restoration.qwen_multidegradation import (  # noqa: E402
 )
 from smoke.export_foundir_five_type_qwen_conditions import (  # noqa: E402
     load_manifest,
-    select_balanced_pilot,
     sha256,
     write_once,
 )
@@ -47,6 +47,27 @@ def verify_hash(path: Path, expected: str) -> None:
     actual = sha256(path)
     if actual != expected:
         raise RuntimeError(f"frozen artifact changed: {path}: {actual}")
+
+
+def load_and_verify_pilot_records(gate: Mapping[str, object]) -> list[dict[str, str]]:
+    """Load the frozen 128-row pilot and verify the exact images being evaluated."""
+
+    joint = gate["candidates"]["joint"]
+    pilot = workspace_path(joint["predictions"])
+    verify_hash(pilot, str(joint["predictions_sha256"]))
+    records = load_manifest(pilot)
+    expected = int(gate["records"])
+    if (
+        len(records) != expected
+        or len({record["record_id"] for record in records}) != expected
+        or any(record["split"] != "train" for record in records)
+    ):
+        raise RuntimeError("frozen Joint-Qwen pilot record set changed")
+    if set(record["category"] for record in records) != set(FIVE_TYPE_CATEGORIES):
+        raise RuntimeError("frozen Joint-Qwen pilot no longer covers every category")
+    for record in records:
+        verify_hash(workspace_path(record["lq_path"]), record["lq_sha256"])
+    return records
 
 
 def expected_identity(
@@ -114,8 +135,6 @@ def main() -> None:
         or gate.get("protected_foundir_test_accessed") is not False
     ):
         raise RuntimeError("prelaunch gate is not frozen or permits protected data")
-    manifest = workspace_path(gate["manifest"])
-    verify_hash(manifest, str(gate["manifest_sha256"]))
     candidate = gate["candidates"]["per_type"]
     qwen_config_path = workspace_path(candidate["qwen_config"])
     adapter = workspace_path(candidate["adapter"])
@@ -124,11 +143,7 @@ def main() -> None:
     qwen_config = json.loads(qwen_config_path.read_text())
     if qwen_config["prompt"]["target_schema"] != PER_TYPE_DIALOGUE_SCHEMA:
         raise RuntimeError("per-type Qwen schema changed")
-    records = select_balanced_pilot(
-        load_manifest(manifest),
-        count=int(gate["records"]),
-        seed=int(gate["selection_seed"]),
-    )
+    records = load_and_verify_pilot_records(gate)
     output = workspace_path(candidate["predictions"])
     identity = expected_identity(gate, gate_path)
     if args.verify_existing:

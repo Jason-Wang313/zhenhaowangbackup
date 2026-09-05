@@ -40,6 +40,7 @@
     "valid_output_rate"
   ],
   "output": "reports/foundir_five_type_qwen_training_domain_gate_v1.json",
+  "completion_output": "reports/foundir_five_type_prelaunch_v1.json",
   "alexnet_cache": "models/torch/hub/checkpoints/alexnet-owt-7be5be79.pth",
   "alexnet_cache_sha256": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
   "protected_foundir_test_accessed": false

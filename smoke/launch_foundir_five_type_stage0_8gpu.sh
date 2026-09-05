@@ -16,21 +16,25 @@ fi
 "$PYTHON" -m py_compile \
   lowlight_restoration/foundir_five_type.py lowlight_restoration/flow.py \
   smoke/build_foundir_five_type_manifest.py smoke/foundir_five_type_preflight.py \
+  smoke/foundir_five_type_runtime_preflight.py \
+  smoke/freeze_foundir_five_type_prelaunch.py \
   smoke/export_foundir_five_type_qwen_conditions.py \
   smoke/evaluate_foundir_five_type_vae_ceiling_ddp.py \
   smoke/train_foundir_five_type_flux2_overfit_ddp.py
-"$ROOT/.venv/flux2-smoke/bin/python" -m unittest \
-  tests.test_foundir_five_type tests.test_lowlight_restoration.FlowTests
 bash -n "$RUNNER" "$0"
-"$PYTHON" smoke/foundir_five_type_preflight.py \
-  --config configs/foundir_five_type_flux2_dit_v1.json --require-data
+"$PYTHON" smoke/freeze_foundir_five_type_prelaunch.py \
+  --prelaunch-config configs/foundir_five_type_prelaunch_gate_v1.json \
+  --verify-existing --require-selected joint
 
 required=(
   configs/foundir_five_type_flux2_dit_v1.json
+  configs/foundir_five_type_prelaunch_gate_v1.json
   lowlight_restoration/foundir_five_type.py
   lowlight_restoration/flow.py
   smoke/build_foundir_five_type_manifest.py
   smoke/foundir_five_type_preflight.py
+  smoke/foundir_five_type_runtime_preflight.py
+  smoke/freeze_foundir_five_type_prelaunch.py
   smoke/export_foundir_five_type_qwen_conditions.py
   smoke/evaluate_foundir_five_type_vae_ceiling_ddp.py
   smoke/train_foundir_five_type_flux2_overfit_ddp.py

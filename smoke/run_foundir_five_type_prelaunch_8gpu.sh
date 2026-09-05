@@ -6,11 +6,6 @@ CONFIG="$ROOT/configs/foundir_five_type_flux2_dit_v1.json"
 PRELAUNCH="$ROOT/configs/foundir_five_type_prelaunch_gate_v1.json"
 QWEN_PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 FLUX_PYTHON="$ROOT/.venv/flux2-smoke/bin/python"
-MANIFEST="$ROOT/manifests/foundir_five_type_pairs_v1.csv"
-MANIFEST_JSON="$ROOT/manifests/foundir_five_type_pairs_v1.json"
-JOINT_CONFIG="$ROOT/configs/qwen_multidegradation_100k_rank64_joint_v1.json"
-JOINT_CSV="$ROOT/manifests/foundir_five_type_overfit_qwen_conditions_v1.csv"
-JOINT_JSON="$ROOT/manifests/foundir_five_type_overfit_qwen_conditions_v1.json"
 PER_TYPE_JSON="$ROOT/manifests/foundir_five_type_overfit_qwen_per_type_predictions_v1.json"
 LOG="$ROOT/logs/foundir_five_type_prelaunch_v1.log"
 GPU_LOG="$ROOT/logs/foundir_five_type_prelaunch_v1_gpu.csv"
@@ -73,27 +68,16 @@ if ! kill -0 "$telemetry_pid" 2>/dev/null; then
   exit 1
 fi
 
-# Catch offline weights, package drift, corrupt checkpoints, CUDA-extension
-# imports, and GPU inventory problems before any restoration optimizer step.
-"$FLUX_PYTHON" smoke/foundir_five_type_runtime_preflight.py \
-  --config "$CONFIG" --require-cuda --full-deserialization
+# Prove the eight-rank transport first so a broken NCCL setup fails before any
+# large model is loaded.
 "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
   smoke/foundir_five_type_distributed_canary.py
 
-# Re-verify the complete authorized training set and immutable manifest.
-"$QWEN_PYTHON" smoke/foundir_five_type_preflight.py \
-  --config "$CONFIG" --require-data
-"$QWEN_PYTHON" smoke/build_foundir_five_type_manifest.py \
-  --config "$CONFIG" --output-csv "$MANIFEST" --output-json "$MANIFEST_JSON" \
-  --verify-existing
-
-# The corrected joint cache is immutable. Generate the per-type candidate on
-# precisely the same 128 training records, then choose only a candidate that
-# passes every predeclared type-recognition threshold.
-"$QWEN_PYTHON" smoke/export_foundir_five_type_qwen_conditions.py \
-  --config "$CONFIG" --qwen-config "$JOINT_CONFIG" --manifest "$MANIFEST" \
-  --output-csv "$JOINT_CSV" --output-json "$JOINT_JSON" --records 128 \
-  --verify-existing
+# The complete 685,495-pair manifest was already fully decoded, aligned, and
+# hashed.  The frozen Joint-Qwen 128-row pilot is its content-addressed subset.
+# Re-reading the 265 MiB CSV several times here adds no new evidence.  The
+# per-type exporter instead verifies the exact hashes of the 128 LQ files it
+# will actually inspect, and the final gate verifies every frozen artifact.
 if [[ -f "$PER_TYPE_JSON" ]]; then
   "$QWEN_PYTHON" smoke/export_foundir_five_type_qwen_per_type_pilot.py \
     --prelaunch-config "$PRELAUNCH" --verify-existing
@@ -103,6 +87,14 @@ else
     --prelaunch-config "$PRELAUNCH"
 fi
 "$QWEN_PYTHON" smoke/evaluate_foundir_five_type_qwen_training_gate.py \
+  --prelaunch-config "$PRELAUNCH"
+
+# Only candidates that pass the scientific gate pay the cost of checking the
+# complete future FLUX/released-baseline runtime. This is still before any
+# restoration optimizer step.
+"$FLUX_PYTHON" smoke/foundir_five_type_runtime_preflight.py \
+  --config "$CONFIG" --require-cuda --full-deserialization
+"$QWEN_PYTHON" smoke/freeze_foundir_five_type_prelaunch.py \
   --prelaunch-config "$PRELAUNCH"
 
 echo "FOUNDIR_FIVE_TYPE_PRELAUNCH_PASS utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"

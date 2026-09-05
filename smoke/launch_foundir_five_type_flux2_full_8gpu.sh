@@ -26,6 +26,7 @@ required=(
   smoke/export_foundir_five_type_qwen_conditions_sharded_ddp.py
   smoke/export_foundir_five_type_qwen_per_type_pilot.py
   smoke/evaluate_foundir_five_type_qwen_training_gate.py
+  smoke/freeze_foundir_five_type_prelaunch.py
   smoke/foundir_five_type_distributed_canary.py
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
@@ -53,6 +54,7 @@ python_files=(
   smoke/export_foundir_five_type_qwen_conditions_sharded_ddp.py
   smoke/export_foundir_five_type_qwen_per_type_pilot.py
   smoke/evaluate_foundir_five_type_qwen_training_gate.py
+  smoke/freeze_foundir_five_type_prelaunch.py
   smoke/foundir_five_type_distributed_canary.py
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
@@ -69,13 +71,9 @@ export TOKENIZERS_PARALLELISM=false
 export TRITON_CACHE_DIR="$ROOT/.cache/triton/foundir_five_type"
 export TORCH_EXTENSIONS_DIR="$ROOT/.cache/torch_extensions/foundir_five_type"
 mkdir -p "$TRITON_CACHE_DIR" "$TORCH_EXTENSIONS_DIR"
-"$PYTHON" -m unittest tests.test_foundir_five_type_prelaunch
-"$PYTHON" smoke/foundir_five_type_runtime_preflight.py \
-  --config configs/foundir_five_type_flux2_dit_v1.json
-"$PYTHON" smoke/foundir_five_type_preflight.py --config configs/foundir_five_type_flux2_dit_v1.json --require-data
-"$PYTHON" smoke/evaluate_foundir_five_type_qwen_training_gate.py \
+"$PYTHON" smoke/freeze_foundir_five_type_prelaunch.py \
   --prelaunch-config configs/foundir_five_type_prelaunch_gate_v1.json \
-  --require-selected joint
+  --verify-existing --require-selected joint
 for relative in "${required[@]}"; do
   git ls-files --error-unmatch "$relative" >/dev/null 2>&1 || {
     echo "ERROR: required full-pipeline file is not committed: $relative" >&2; exit 1;

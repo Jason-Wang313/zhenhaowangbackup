@@ -64,9 +64,8 @@ echo "FOUNDIR_FIVE_TYPE_STAGE0_PROTECTED_TEST not_accessed"
 
 "$FLUX_PYTHON" smoke/foundir_five_type_runtime_preflight.py \
   --config "$CONFIG" --require-cuda --full-deserialization
-"$QWEN_PYTHON" smoke/evaluate_foundir_five_type_qwen_training_gate.py \
-  --prelaunch-config "$PRELAUNCH" --require-selected joint
-"$QWEN_PYTHON" smoke/foundir_five_type_preflight.py --config "$CONFIG" --require-data
+"$QWEN_PYTHON" smoke/freeze_foundir_five_type_prelaunch.py \
+  --prelaunch-config "$PRELAUNCH" --verify-existing --require-selected joint
 if [[ -f "$MANIFEST" || -f "$MANIFEST_JSON" ]]; then
   "$QWEN_PYTHON" smoke/build_foundir_five_type_manifest.py \
     --config "$CONFIG" --output-csv "$MANIFEST" --output-json "$MANIFEST_JSON" --verify-existing

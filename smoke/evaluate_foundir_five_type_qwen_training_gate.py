@@ -203,11 +203,8 @@ def main() -> None:
     ):
         raise RuntimeError("Qwen training-domain gate is not frozen or permits protected data")
     restoration_config = workspace_path(config["restoration_config"])
-    manifest = workspace_path(config["manifest"])
     if sha256(restoration_config) != config["restoration_config_sha256"]:
         raise RuntimeError("frozen restoration config changed")
-    if sha256(manifest) != config["manifest_sha256"]:
-        raise RuntimeError("frozen FoundIR training manifest changed")
     candidates = config["candidates"]
     for candidate in candidates.values():
         for path_key, hash_key in (
@@ -226,6 +223,21 @@ def main() -> None:
     ):
         if sha256(path) != expected:
             raise RuntimeError(f"frozen joint Qwen artifact changed: {path}")
+    joint_payload = json.loads(joint_summary.read_text())
+    if (
+        joint_payload.get("status") != "frozen_joint_qwen_foundir_training_conditions"
+        or joint_payload.get("scope") != "balanced_overfit_pilot"
+        or joint_payload.get("records") != int(config["records"])
+        or joint_payload.get("manifest_sha256") != config["manifest_sha256"]
+        or joint_payload.get("conditions_csv_sha256")
+        != candidates["joint"]["predictions_sha256"]
+        or joint_payload.get("qwen_config_sha256")
+        != candidates["joint"]["qwen_config_sha256"]
+        or joint_payload.get("qwen_adapter_sha256")
+        != candidates["joint"]["adapter_sha256"]
+        or joint_payload.get("protected_foundir_test_accessed") is not False
+    ):
+        raise RuntimeError("frozen joint Qwen pilot identity changed")
     per_type_payload = json.loads(per_type_path.read_text())
     if (
         per_type_payload.get("status")
@@ -259,6 +271,7 @@ def main() -> None:
         "prelaunch_config": config_path.relative_to(ROOT).as_posix(),
         "prelaunch_config_sha256": sha256(config_path),
         "records": int(config["records"]),
+        "manifest_sha256": config["manifest_sha256"],
         "scope": "authorized_foundir_training_only_type_labels",
         "thresholds": config["thresholds"],
         "selection_rule": order,

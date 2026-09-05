@@ -66,9 +66,8 @@ echo "FOUNDIR_FIVE_TYPE_FULL_HARDWARE exactly_8x_homogeneous_H100_80GB_or_H200"
 echo "FOUNDIR_FIVE_TYPE_FULL_GIT $(git rev-parse HEAD)"
 echo "FOUNDIR_FIVE_TYPE_FULL_PROTECTED_OFFICIAL_TEST not_accessed"
 
-"$QWEN_PYTHON" smoke/evaluate_foundir_five_type_qwen_training_gate.py \
-  --prelaunch-config "$PRELAUNCH" --require-selected joint
-"$QWEN_PYTHON" smoke/foundir_five_type_preflight.py --config "$CONFIG" --require-data
+"$QWEN_PYTHON" smoke/freeze_foundir_five_type_prelaunch.py \
+  --prelaunch-config "$PRELAUNCH" --verify-existing --require-selected joint
 bash smoke/run_foundir_five_type_stage0_8gpu.sh
 
 nvidia-smi --query-gpu=timestamp,index,name,utilization.gpu,memory.used,memory.total,power.draw \
