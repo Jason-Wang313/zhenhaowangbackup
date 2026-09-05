@@ -52,3 +52,19 @@ def test_missing_or_inconsistent_results_are_true_errors(tmp_path: Path) -> None
     assert classify(tmp_path, output, "d" * 64, "merger_trainable") == 1
     (output / "stage/adapter.safetensors").write_bytes(b"changed")
     assert classify(tmp_path, output, "c" * 64, "merger_trainable") == 1
+
+
+def test_fixed_test_result_is_verified_separately(tmp_path: Path) -> None:
+    output = _write_result(tmp_path, passed=True)
+    validation = output / "validation_result.json"
+    result = json.loads(validation.read_text())
+    predictions = output / "test_predictions.json"
+    predictions.write_text("{}\n")
+    result.update(
+        split="test",
+        predictions=predictions.relative_to(tmp_path).as_posix(),
+        predictions_sha256=_sha256(predictions),
+    )
+    (output / "fixed_test_result.json").write_text(json.dumps(result))
+    assert classify(tmp_path, output, "c" * 64, "merger_trainable", "test") == 0
+    assert classify(tmp_path, output, "c" * 64, "merger_trainable") == 0

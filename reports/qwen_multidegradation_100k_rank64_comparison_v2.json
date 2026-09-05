@@ -1,0 +1,42 @@
+{
+  "foundir_used": false,
+  "methods": {
+    "joint": {
+      "automatic_gate_pass": false,
+      "overall_combined_label_exact": 0.8057,
+      "overall_set_exact": 0.8624,
+      "overall_type_micro_f1": 0.9588565994462003,
+      "result": "checkpoints/qwen_multidegradation_100k_rank64_joint_v2/merger_trainable/validation_result.json",
+      "result_sha256": "a9cbb80af61c687f6927635395193a02a41bf5e725afd01c400f8aee8547ff55",
+      "severity_typed_accuracy": 0.8990555555555556,
+      "severity_typed_mae": 0.19933333333333333,
+      "severity_typed_mse": 0.49322222222222223,
+      "triple_combined_label_exact": 0.767,
+      "triple_set_exact": 0.788
+    },
+    "per_type": {
+      "automatic_gate_pass": true,
+      "overall_combined_label_exact": 0.8226,
+      "overall_set_exact": 0.8739,
+      "overall_type_micro_f1": 0.963431629410781,
+      "result": "checkpoints/qwen_multidegradation_100k_rank64_per_type_v2/merger_trainable/validation_result.json",
+      "result_sha256": "f9cf96e6ccddd30686b95241a72b8409f2eecb1d5cd41626e2df2e0aa88e0637",
+      "severity_typed_accuracy": 0.9239444444444445,
+      "severity_typed_mae": 0.157,
+      "severity_typed_mse": 0.3988888888888889,
+      "triple_combined_label_exact": 0.778,
+      "triple_set_exact": 0.817
+    }
+  },
+  "primary_selection_metric": "triple_combined_label_exact_match_rate",
+  "protected_test_accessed": false,
+  "schema_version": 1,
+  "selected_method": "per_type",
+  "status": "validation_comparison_complete",
+  "tie_breakers": [
+    "overall_combined_label_exact_match_rate",
+    "triple_degradation_set_exact_match_rate",
+    "type_micro_f1",
+    "negative_severity_typed_mse_with_missing_penalty"
+  ]
+}

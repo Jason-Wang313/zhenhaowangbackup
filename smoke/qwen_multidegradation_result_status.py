@@ -43,8 +43,13 @@ def classify(
     output_dir: Path,
     config_sha256: str,
     variant: str,
+    split: str = "validation",
 ) -> int:
-    result_path = output_dir / "validation_result.json"
+    if split not in {"validation", "test"}:
+        return 1
+    result_path = output_dir / (
+        "validation_result.json" if split == "validation" else "fixed_test_result.json"
+    )
     if not result_path.is_file():
         return 1
     try:
@@ -58,7 +63,7 @@ def classify(
         or result.get("config_sha256") != config_sha256
         or result.get("preflight_config_sha256") != config_sha256
         or result.get("variant") != variant
-        or result.get("split") != "validation"
+        or result.get("split") != split
         or not isinstance(checks, dict)
         or not checks
         or not all(isinstance(value, bool) for value in checks.values())
@@ -92,12 +97,14 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--config-sha256", required=True)
     parser.add_argument("--variant", required=True)
+    parser.add_argument("--split", choices=("validation", "test"), default="validation")
     args = parser.parse_args()
     return classify(
         args.workspace_root.resolve(),
         args.output_dir.resolve(),
         args.config_sha256,
         args.variant,
+        args.split,
     )
 
 
