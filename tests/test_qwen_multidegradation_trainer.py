@@ -3,6 +3,7 @@ import itertools
 import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
 from unittest.mock import patch
 
 import torch
@@ -12,6 +13,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (
     calibrated_per_type_outputs,
     create_optimizer,
     gate_checks,
+    left_padded_generation,
     learning_rate_scale,
     rank_microbatch,
     resume_stage,
@@ -54,6 +56,20 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         self.assertAlmostEqual(learning_rate_scale(1, 100, 10, 0.1), 0.1)
         self.assertAlmostEqual(learning_rate_scale(10, 100, 10, 0.1), 1.0)
         self.assertAlmostEqual(learning_rate_scale(100, 100, 10, 0.1), 0.1)
+
+    def test_generation_padding_is_left_and_always_restored(self):
+        processor = SimpleNamespace(
+            tokenizer=SimpleNamespace(padding_side="right")
+        )
+        with left_padded_generation(processor):
+            self.assertEqual(processor.tokenizer.padding_side, "left")
+        self.assertEqual(processor.tokenizer.padding_side, "right")
+
+        with self.assertRaisesRegex(RuntimeError, "generation failed"):
+            with left_padded_generation(processor):
+                self.assertEqual(processor.tokenizer.padding_side, "left")
+                raise RuntimeError("generation failed")
+        self.assertEqual(processor.tokenizer.padding_side, "right")
 
     def test_progressive_stages_retain_prior_compositions(self):
         stages = self.config["data"]["curriculum"]

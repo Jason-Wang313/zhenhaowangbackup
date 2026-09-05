@@ -35,12 +35,15 @@ from lowlight_restoration.qwen_multidegradation import (  # noqa: E402
 )
 from smoke.train_qwen_multidegradation_lora_ddp import (  # noqa: E402
     broadcast_rank0,
+    left_padded_generation,
     load_model,
     open_images,
     seed_everything,
     setup_distributed,
     validate_runtime,
 )
+
+PILOT_DECODING_VERSION = "left_padding_v2"
 
 
 def sha256(path: Path) -> str:
@@ -149,6 +152,8 @@ def raw_shard_identity(
     """Bind resume shards to every input and frozen model artifact."""
 
     payload = {
+        "decoding_version": PILOT_DECODING_VERSION,
+        "padding_side": "left",
         "manifest_sha256": manifest_sha256,
         "qwen_config_sha256": qwen_config_sha256,
         "adapter_sha256": adapter_sha256,
@@ -163,7 +168,11 @@ def raw_shard_identity(
 
 
 def raw_shard_path(output_csv: Path, rank: int) -> Path:
-    return output_csv.parent / f".{output_csv.name}.raw_shards" / f"rank_{rank:02d}.json"
+    return (
+        output_csv.parent
+        / f".{output_csv.name}.{PILOT_DECODING_VERSION}.raw_shards"
+        / f"rank_{rank:02d}.json"
+    )
 
 
 def encode_raw_shard(
@@ -323,38 +332,39 @@ def generate_rank_raw_outputs(
     ]
     local: list[tuple[int, Mapping[str, str], str]] = []
     batch_size = int(generation["batch_size_per_rank"])
-    for offset in range(0, len(indexed), batch_size):
-        chunk = indexed[offset : offset + batch_size]
-        images = open_images([record for _, record in chunk])
-        encoded = processor(
-            text=[prompt] * len(chunk), images=images, padding=True, return_tensors="pt"
-        )
-        inputs = {
-            key: value.to(device)
-            for key, value in encoded.items()
-            if isinstance(value, torch.Tensor)
-        }
-        input_length = int(inputs["input_ids"].shape[1])
-        with torch.no_grad():
-            generated = model.generate(
-                **inputs,
-                do_sample=False,
-                max_new_tokens=int(generation["max_new_tokens"]),
-                use_cache=True,
+    with left_padded_generation(processor):
+        for offset in range(0, len(indexed), batch_size):
+            chunk = indexed[offset : offset + batch_size]
+            images = open_images([record for _, record in chunk])
+            encoded = processor(
+                text=[prompt] * len(chunk), images=images, padding=True, return_tensors="pt"
             )
-        for row, (index, record) in enumerate(chunk):
-            raw = processor.tokenizer.decode(
-                generated[row, input_length:],
-                skip_special_tokens=True,
-                clean_up_tokenization_spaces=False,
-            ).strip()
-            local.append((index, record, raw))
-        if (offset // batch_size + 1) % 25 == 0 or offset + batch_size >= len(indexed):
-            print(
-                f"QWEN_MULTIDEGRADATION_GENERATE rank={rank} "
-                f"completed={min(offset+batch_size,len(indexed))}/{len(indexed)}",
-                flush=True,
-            )
+            inputs = {
+                key: value.to(device)
+                for key, value in encoded.items()
+                if isinstance(value, torch.Tensor)
+            }
+            input_length = int(inputs["input_ids"].shape[1])
+            with torch.no_grad():
+                generated = model.generate(
+                    **inputs,
+                    do_sample=False,
+                    max_new_tokens=int(generation["max_new_tokens"]),
+                    use_cache=True,
+                )
+            for row, (index, record) in enumerate(chunk):
+                raw = processor.tokenizer.decode(
+                    generated[row, input_length:],
+                    skip_special_tokens=True,
+                    clean_up_tokenization_spaces=False,
+                ).strip()
+                local.append((index, record, raw))
+            if (offset // batch_size + 1) % 25 == 0 or offset + batch_size >= len(indexed):
+                print(
+                    f"QWEN_MULTIDEGRADATION_GENERATE rank={rank} "
+                    f"completed={min(offset+batch_size,len(indexed))}/{len(indexed)}",
+                    flush=True,
+                )
     return local
 
 
@@ -409,6 +419,8 @@ def main() -> None:
             or payload.get("qwen_config_sha256") != sha256(args.qwen_config)
             or payload.get("qwen_adapter_sha256") != sha256(adapter)
             or payload.get("conditions_csv_sha256") != sha256(args.output_csv)
+            or payload.get("decoding_version") != PILOT_DECODING_VERSION
+            or payload.get("padding_side") != "left"
             or payload.get("protected_foundir_test_accessed") is not False
         ):
             raise RuntimeError("existing Qwen condition cache identity changed")
@@ -504,6 +516,8 @@ def main() -> None:
                 "qwen_config_sha256": qwen_config_sha,
                 "qwen_adapter": adapter.relative_to(ROOT).as_posix(),
                 "qwen_adapter_sha256": adapter_sha,
+                "decoding_version": PILOT_DECODING_VERSION,
+                "padding_side": "left",
                 "conditions_csv": args.output_csv.relative_to(ROOT).as_posix(),
                 "conditions_csv_sha256": hashlib.sha256(csv_content).hexdigest(),
                 "protected_foundir_test_accessed": False,

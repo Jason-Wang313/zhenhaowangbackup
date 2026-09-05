@@ -142,6 +142,19 @@ def seed_everything(seed: int) -> None:
     torch.cuda.manual_seed_all(seed)
 
 
+@contextlib.contextmanager
+def left_padded_generation(processor: Any):
+    """Use decoder-safe left padding for a batched generation operation."""
+
+    tokenizer = processor.tokenizer
+    original_padding_side = tokenizer.padding_side
+    tokenizer.padding_side = "left"
+    try:
+        yield
+    finally:
+        tokenizer.padding_side = original_padding_side
+
+
 def label_for(record: Mapping[str, object]) -> DegradationLabel:
     levels = record["levels"]
     if not isinstance(levels, Mapping):
@@ -1076,9 +1089,7 @@ def generate_per_type_outputs(
     ]
     local: list[tuple[int, str, str]] = []
     batch_size = int(generation["batch_size_per_rank"])
-    original_padding_side = processor.tokenizer.padding_side
-    processor.tokenizer.padding_side = "left"
-    try:
+    with left_padded_generation(processor):
         for offset in range(0, len(local_indexed), batch_size):
             chunk = local_indexed[offset : offset + batch_size]
             images = open_images([record for _, _, record in chunk])
@@ -1117,8 +1128,6 @@ def generate_per_type_outputs(
                     f"completed={min(offset+batch_size,len(local_indexed))}/{len(local_indexed)}",
                     flush=True,
                 )
-    finally:
-        processor.tokenizer.padding_side = original_padding_side
     gathered: list[object | None] = [None] * world
     dist.all_gather_object(gathered, local)
     flattened = [
@@ -1437,38 +1446,39 @@ def generate_outputs(
     indexed = [(index, record) for index, record in enumerate(records) if index % world == rank]
     local: list[tuple[int, str]] = []
     batch_size = int(generation["batch_size_per_rank"])
-    for offset in range(0, len(indexed), batch_size):
-        chunk = indexed[offset : offset + batch_size]
-        images = open_images([record for _, record in chunk])
-        encoded = processor(
-            text=[prompt] * len(chunk), images=images, padding=True, return_tensors="pt"
-        )
-        inputs = {
-            key: value.to(device)
-            for key, value in encoded.items()
-            if isinstance(value, torch.Tensor)
-        }
-        input_length = int(inputs["input_ids"].shape[1])
-        with torch.no_grad():
-            generated = model.generate(
-                **inputs,
-                do_sample=False,
-                max_new_tokens=int(generation["max_new_tokens"]),
-                use_cache=True,
+    with left_padded_generation(processor):
+        for offset in range(0, len(indexed), batch_size):
+            chunk = indexed[offset : offset + batch_size]
+            images = open_images([record for _, record in chunk])
+            encoded = processor(
+                text=[prompt] * len(chunk), images=images, padding=True, return_tensors="pt"
             )
-        for row, (index, _) in enumerate(chunk):
-            raw = processor.tokenizer.decode(
-                generated[row, input_length:],
-                skip_special_tokens=True,
-                clean_up_tokenization_spaces=False,
-            ).strip()
-            local.append((index, raw))
-        if (offset // batch_size + 1) % 25 == 0 or offset + batch_size >= len(indexed):
-            print(
-                f"QWEN_MULTIDEGRADATION_GENERATE rank={rank} "
-                f"completed={min(offset+batch_size,len(indexed))}/{len(indexed)}",
-                flush=True,
-            )
+            inputs = {
+                key: value.to(device)
+                for key, value in encoded.items()
+                if isinstance(value, torch.Tensor)
+            }
+            input_length = int(inputs["input_ids"].shape[1])
+            with torch.no_grad():
+                generated = model.generate(
+                    **inputs,
+                    do_sample=False,
+                    max_new_tokens=int(generation["max_new_tokens"]),
+                    use_cache=True,
+                )
+            for row, (index, _) in enumerate(chunk):
+                raw = processor.tokenizer.decode(
+                    generated[row, input_length:],
+                    skip_special_tokens=True,
+                    clean_up_tokenization_spaces=False,
+                ).strip()
+                local.append((index, raw))
+            if (offset // batch_size + 1) % 25 == 0 or offset + batch_size >= len(indexed):
+                print(
+                    f"QWEN_MULTIDEGRADATION_GENERATE rank={rank} "
+                    f"completed={min(offset+batch_size,len(indexed))}/{len(indexed)}",
+                    flush=True,
+                )
     gathered: list[object | None] = [None] * world
     dist.all_gather_object(gathered, local)
     flattened = [item for rank_items in gathered if isinstance(rank_items, list) for item in rank_items]

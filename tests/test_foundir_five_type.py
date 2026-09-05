@@ -20,9 +20,11 @@ from lowlight_restoration.foundir_five_type import (
 from smoke.build_foundir_five_type_manifest import ROOT as WORKSPACE_ROOT, build
 from smoke.evaluate_foundir_five_type_vae_ceiling_ddp import select_balanced_targets
 from smoke.export_foundir_five_type_qwen_conditions import (
+    PILOT_DECODING_VERSION,
     condition_rows_from_raw_outputs,
     condition_row,
     encode_raw_shard,
+    generate_rank_raw_outputs,
     load_all_raw_shards,
     raw_shard_identity,
     raw_shard_path,
@@ -32,6 +34,7 @@ from smoke.export_foundir_five_type_qwen_conditions import (
 from smoke import export_foundir_five_type_qwen_conditions as pilot_export
 from smoke.export_foundir_five_type_qwen_conditions_sharded_ddp import (
     append_rows,
+    generate_local,
     load_shard,
     merge_shards,
 )
@@ -241,6 +244,19 @@ class FoundIRFiveTypeTests(unittest.TestCase):
         self.assertLess(barrier, broadcast)
         self.assertNotIn("dist.barrier()", source[broadcast:])
 
+    def test_foundir_joint_export_uses_left_padding_and_versioned_shards(self) -> None:
+        self.assertIn(
+            "with left_padded_generation(processor)",
+            inspect.getsource(generate_rank_raw_outputs),
+        )
+        self.assertIn(
+            "with left_padded_generation(processor)",
+            inspect.getsource(generate_local),
+        )
+        path = raw_shard_path(Path("conditions.csv"), 3)
+        self.assertEqual(path.name, "rank_03.json")
+        self.assertIn(PILOT_DECODING_VERSION, path.parent.name)
+
     def test_sharded_condition_export_resumes_and_merges_in_manifest_order(self) -> None:
         raw = '{"blur":2,"noise":1,"rain":1,"haze":1,"low_light":1}'
         records = []
@@ -291,6 +307,8 @@ class FoundIRFiveTypeTests(unittest.TestCase):
                 merged = list(csv.DictReader(handle))
             self.assertEqual([row["record_id"] for row in merged], ["r0", "r1", "r2", "r3"])
             self.assertEqual(payload["records"], 4)
+            self.assertEqual(payload["decoding_version"], "left_padding_v2")
+            self.assertEqual(payload["padding_side"], "left")
 
 
 if __name__ == "__main__":

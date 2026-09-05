@@ -33,6 +33,7 @@ from smoke.export_foundir_five_type_qwen_conditions import (  # noqa: E402
     sha256,
 )
 from smoke.train_qwen_multidegradation_lora_ddp import (  # noqa: E402
+    left_padded_generation,
     load_model,
     seed_everything,
     setup_distributed,
@@ -97,38 +98,39 @@ def generate_local(
     starting_offset: int,
 ) -> None:
     prompt = prompt_text(processor, FIXED_FIVE_SLOT_SCHEMA)
-    for offset in range(starting_offset, len(records), batch_size):
-        chunk = records[offset : offset + batch_size]
-        images = open_images(chunk)
-        encoded = processor(
-            text=[prompt] * len(chunk), images=images, padding=True, return_tensors="pt"
-        )
-        inputs = {
-            key: value.to(device)
-            for key, value in encoded.items()
-            if isinstance(value, torch.Tensor)
-        }
-        input_length = int(inputs["input_ids"].shape[1])
-        with torch.inference_mode():
-            generated = model.generate(
-                **inputs,
-                do_sample=False,
-                max_new_tokens=max_new_tokens,
-                use_cache=True,
+    with left_padded_generation(processor):
+        for offset in range(starting_offset, len(records), batch_size):
+            chunk = records[offset : offset + batch_size]
+            images = open_images(chunk)
+            encoded = processor(
+                text=[prompt] * len(chunk), images=images, padding=True, return_tensors="pt"
             )
-        rows = []
-        for index, record in enumerate(chunk):
-            raw = processor.tokenizer.decode(
-                generated[index, input_length:],
-                skip_special_tokens=True,
-                clean_up_tokenization_spaces=False,
-            ).strip()
-            rows.append(condition_row(record, raw))
-        append_rows(shard, rows)
-        print(
-            f"FOUNDIR_QWEN_SHARD rank={dist.get_rank()} completed={offset+len(chunk)}/{len(records)}",
-            flush=True,
-        )
+            inputs = {
+                key: value.to(device)
+                for key, value in encoded.items()
+                if isinstance(value, torch.Tensor)
+            }
+            input_length = int(inputs["input_ids"].shape[1])
+            with torch.inference_mode():
+                generated = model.generate(
+                    **inputs,
+                    do_sample=False,
+                    max_new_tokens=max_new_tokens,
+                    use_cache=True,
+                )
+            rows = []
+            for index, record in enumerate(chunk):
+                raw = processor.tokenizer.decode(
+                    generated[index, input_length:],
+                    skip_special_tokens=True,
+                    clean_up_tokenization_spaces=False,
+                ).strip()
+                rows.append(condition_row(record, raw))
+            append_rows(shard, rows)
+            print(
+                f"FOUNDIR_QWEN_SHARD rank={dist.get_rank()} completed={offset+len(chunk)}/{len(records)}",
+                flush=True,
+            )
 
 
 def publish_file_once(temporary: Path, destination: Path) -> None:
@@ -193,6 +195,8 @@ def merge_shards(
         "qwen_config_sha256": sha256(qwen_config_path),
         "qwen_adapter": adapter.relative_to(ROOT).as_posix(),
         "qwen_adapter_sha256": sha256(adapter),
+        "decoding_version": "left_padding_v2",
+        "padding_side": "left",
         "restoration_config": config_path.relative_to(ROOT).as_posix(),
         "restoration_config_sha256": sha256(config_path),
         "conditions_csv": output_csv.relative_to(ROOT).as_posix(),
@@ -223,6 +227,8 @@ def verify_existing(
         or payload.get("manifest_sha256") != sha256(manifest)
         or payload.get("qwen_config_sha256") != sha256(qwen_config)
         or payload.get("qwen_adapter_sha256") != sha256(adapter)
+        or payload.get("decoding_version") != "left_padding_v2"
+        or payload.get("padding_side") != "left"
         or payload.get("restoration_config_sha256") != sha256(config)
         or payload.get("conditions_csv_sha256") != sha256(output_csv)
         or payload.get("protected_foundir_test_accessed") is not False
