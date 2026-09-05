@@ -167,7 +167,21 @@ def open_images(records: Sequence[Mapping[str, object]]) -> list[Image.Image]:
     for record in records:
         path = workspace_path(record["output_path"])
         with Image.open(path) as handle:
-            images.append(handle.convert("RGB"))
+            image = handle.convert("RGB")
+            crop_box = record.get("crop_box")
+            if crop_box is not None:
+                if (
+                    not isinstance(crop_box, Sequence)
+                    or isinstance(crop_box, (str, bytes))
+                    or len(crop_box) != 4
+                    or any(isinstance(value, bool) or not isinstance(value, int) for value in crop_box)
+                ):
+                    raise ValueError(f"invalid crop_box for {record.get('record_id')}")
+                left, top, right, bottom = crop_box
+                if left < 0 or top < 0 or right <= left or bottom <= top or right > image.width or bottom > image.height:
+                    raise ValueError(f"out-of-bounds crop_box for {record.get('record_id')}")
+                image = image.crop((left, top, right, bottom))
+            images.append(image)
     return images
 
 

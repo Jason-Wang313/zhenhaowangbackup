@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "status": "frozen_training_only_scale_mismatch_diagnostic",
+  "prelaunch_config": "configs/foundir_five_type_prelaunch_gate_v1.json",
+  "prelaunch_config_sha256": "e0c5359e3dc1a05c9b5fbe92b31e9268a60385266c072a597355bfc152290538",
+  "failed_full_image_result": "reports/foundir_five_type_qwen_training_domain_gate_v1.json",
+  "failed_full_image_result_sha256": "97c612deddbd7c0eabcb3760f7ae6204e19cd4785657b5c5ca3a9da6b69d0444",
+  "records": 128,
+  "crop_size": 448,
+  "views": ["top_left", "top_right", "center", "bottom_left", "bottom_right"],
+  "aggregations": ["center", "maximum", "second_highest", "median"],
+  "candidates": {
+    "joint": {
+      "output": "reports/foundir_five_type_native_patch_joint_v1.json"
+    },
+    "per_type": {
+      "output": "reports/foundir_five_type_native_patch_per_type_v1.json"
+    }
+  },
+  "thresholds": {
+    "minimum_valid_output_rate": 0.99,
+    "minimum_type_micro_f1": 0.80,
+    "minimum_type_macro_f1": 0.70,
+    "minimum_degradation_set_exact": 0.60,
+    "minimum_each_type_recall": 0.50
+  },
+  "selection_rule": [
+    "degradation_set_exact",
+    "minimum_type_recall",
+    "type_micro_f1",
+    "valid_output_rate"
+  ],
+  "output": "reports/foundir_five_type_native_patch_diagnostic_v1.json",
+  "restoration_training_authorized_by_this_diagnostic": false,
+  "protected_foundir_test_accessed": false
+}
