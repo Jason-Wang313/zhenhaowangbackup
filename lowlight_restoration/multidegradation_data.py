@@ -55,6 +55,23 @@ BLUR_PARAMETERS_EXTREME_V6 = {
     4: (90, 72.0),
     5: (200, 160.0),
 }
+# Advisor-directed 2026-09-05 correction.  The v6 ladder made even L2 much
+# stronger than the blur/noise present in the downstream FoundIR training
+# domain.  Keep v6 immutable, and use logarithmic mild-to-strong ladders for
+# the new v7 corpus so subtle degradations are represented instead of being
+# silently taught as "absent".
+BLUR_PARAMETERS_MILD_V7 = {
+    2: (1, 1.0),
+    3: (2, 1.6),
+    4: (4, 3.2),
+    5: (8, 6.4),
+}
+NOISE_SIGMA_RANGES_MILD_V7 = {
+    2: (1.0, 3.0),
+    3: (3.0, 6.0),
+    4: (6.0, 12.0),
+    5: (12.0, 25.0),
+}
 HAZE_A_MEANS = {2: 0.60, 3: 0.70, 4: 0.80, 5: 1.00}
 HAZE_BETA_MEANS = {2: 2.4, 3: 3.6, 4: 7.2, 5: 10.8}
 RAIN_DISTRIBUTIONS = {2: (5.0, 5.0), 3: (60.0, 5.0), 4: (150.0, 10.0), 5: (340.0, 20.0)}
@@ -82,6 +99,43 @@ def _verified_depth_sha256(path_text: str) -> str:
     """Hash each immutable aligned depth file once per construction process."""
 
     return sha256(Path(path_text))
+
+
+@lru_cache(maxsize=4)
+def _verified_source_image(path_text: str, expected_sha256: str) -> np.ndarray:
+    """Load one immutable source once per worker instead of once per record."""
+
+    path = Path(path_text)
+    if sha256(path) != expected_sha256:
+        raise RuntimeError(f"source hash changed: {path}")
+    image = cv2.imread(str(path), cv2.IMREAD_COLOR)
+    if image is None:
+        raise RuntimeError(f"cannot read source: {path}")
+    return image
+
+
+@lru_cache(maxsize=4)
+def _normalized_depth(
+    path_text: str,
+    expected_sha256: str,
+    source_height: int,
+    source_width: int,
+) -> np.ndarray:
+    """Verify, resize, and normalize one immutable depth map once per worker."""
+
+    path = Path(path_text)
+    if sha256(path) != expected_sha256:
+        raise RuntimeError(f"depth hash changed: {path}")
+    depth = loadmat(path)["data_obj"]
+    depth = cv2.resize(
+        depth,
+        (source_width, source_height),
+        interpolation=cv2.INTER_CUBIC,
+    )
+    maximum = float(depth.max())
+    if maximum <= 0:
+        raise RuntimeError("haze depth has no positive values")
+    return depth / maximum
 
 
 def load_source_inventory(path: Path) -> list[dict[str, object]]:
@@ -155,6 +209,7 @@ def _operator_parameters(
     seed: int,
     source: Mapping[str, object],
     blur_parameters: Mapping[int, tuple[int, float]] = BLUR_PARAMETERS,
+    noise_sigma_ranges: Mapping[int, tuple[float, float]] = NOISE_SIGMA_RANGES,
 ) -> dict[str, object]:
     rng = np.random.default_rng(seed)
     if name == "low_light":
@@ -166,7 +221,7 @@ def _operator_parameters(
             "target_luma_ratio": LOWLIGHT_RATIOS[level],
         }
     if name == "noise":
-        low, high = NOISE_SIGMA_RANGES[level]
+        low, high = noise_sigma_ranges[level]
         return {
             "operator": "AgenticIR.color_gaussian_noise_equivalent",
             "agenticir_level": level - 1,
@@ -482,12 +537,13 @@ def _apply_haze(
     source_shape: tuple[int, int],
     crop: Mapping[str, int],
 ) -> np.ndarray:
-    depth = loadmat(ROOT / str(parameters["depth_path"]))["data_obj"]
-    depth = cv2.resize(depth, (source_shape[1], source_shape[0]), interpolation=cv2.INTER_CUBIC)
-    maximum = float(depth.max())
-    if maximum <= 0:
-        raise RuntimeError("haze depth has no positive values")
-    depth = depth / maximum
+    depth_path = ROOT / str(parameters["depth_path"])
+    depth = _normalized_depth(
+        str(depth_path.resolve()),
+        str(parameters["depth_sha256"]),
+        int(source_shape[0]),
+        int(source_shape[1]),
+    )
     x, y = int(crop["x"]), int(crop["y"])
     h, w = int(crop["height"]), int(crop["width"])
     depth_crop = depth[y : y + h, x : x + w]
@@ -525,12 +581,11 @@ def generate_record_stages(
     reuses the frozen crop, parameters, and random seeds; the only intervention
     is omitting operators from the original application sequence.
     """
-    source_path = ROOT / str(record["source_path"])
-    if sha256(source_path) != record["source_sha256"]:
-        raise RuntimeError(f"source hash changed: {source_path}")
-    source = cv2.imread(str(source_path), cv2.IMREAD_COLOR)
-    if source is None:
-        raise RuntimeError(f"cannot read source: {source_path}")
+    source_path = (ROOT / str(record["source_path"])).resolve()
+    source = _verified_source_image(
+        str(source_path),
+        str(record["source_sha256"]),
+    )
     crop = record["crop"]
     assert isinstance(crop, Mapping)
     x, y = int(crop["x"]), int(crop["y"])

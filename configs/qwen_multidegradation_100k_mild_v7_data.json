@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "advisor_directed_mild_blur_noise_v7_100k_contract",
+  "seed": 2026082806,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "crop_size": 448,
+  "split_composition_counts": {
+    "train": {"0": 10000, "1": 30000, "2": 30000, "3": 30000},
+    "validation": {"0": 1000, "1": 3000, "2": 3000, "3": 3000},
+    "test": {"0": 1000, "1": 3000, "2": 3000, "3": 3000}
+  },
+  "blur": {
+    "type": "motion",
+    "profile": "mild_v7_advisor_directed_2026_09_05",
+    "parameters": {
+      "2": {"radius": 1, "sigma": 1.0, "kernel_width": 3},
+      "3": {"radius": 2, "sigma": 1.6, "kernel_width": 5},
+      "4": {"radius": 4, "sigma": 3.2, "kernel_width": 9},
+      "5": {"radius": 8, "sigma": 6.4, "kernel_width": 17}
+    }
+  },
+  "noise": {
+    "type": "color_gaussian",
+    "profile": "mild_v7_advisor_directed_2026_09_05",
+    "parameters": {
+      "2": {"sigma_0_255_min": 1.0, "sigma_0_255_max": 3.0},
+      "3": {"sigma_0_255_min": 3.0, "sigma_0_255_max": 6.0},
+      "4": {"sigma_0_255_min": 6.0, "sigma_0_255_max": 12.0},
+      "5": {"sigma_0_255_min": 12.0, "sigma_0_255_max": 25.0}
+    }
+  },
+  "rationale": "FoundIR-training-only aggregate diagnostics showed that v6 synthetic blur/noise were far stronger than the downstream domain. FoundIR pixels and labels are not included in Qwen training.",
+  "physical_application_order": ["haze", "blur", "rain", "low_light", "noise"],
+  "haze_depth_policy": "verified_mio100_depth_only",
+  "manifest": "manifests/qwen_multidegradation_100k_mild_v7.jsonl",
+  "metadata": "manifests/qwen_multidegradation_100k_mild_v7.json",
+  "data_root": "data/qwen_multidegradation_100k_mild_v7",
+  "generation_evidence_root": "data/qwen_multidegradation_100k_mild_v7/.generation",
+  "generation_result": "reports/qwen_multidegradation_100k_mild_v7_generation.json"
+}

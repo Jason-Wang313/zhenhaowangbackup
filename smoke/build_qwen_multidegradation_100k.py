@@ -18,6 +18,9 @@ sys.path.insert(0, str(ROOT))
 from lowlight_restoration.multidegradation_data import (
     AGENTICIR_REVISION,
     BLUR_PARAMETERS_EXTREME_V6,
+    BLUR_PARAMETERS_MILD_V7,
+    NOISE_SIGMA_RANGES,
+    NOISE_SIGMA_RANGES_MILD_V7,
     SPLITS,
     _balanced_levels,
     _operator_parameters,
@@ -36,6 +39,36 @@ from lowlight_restoration.qwen_multidegradation import (
 )
 
 
+V6_STATUS = "human_approved_extreme_blur_v6_100k_contract"
+V7_STATUS = "advisor_directed_mild_blur_noise_v7_100k_contract"
+
+
+def parameter_profile(
+    contract: Mapping[str, object],
+) -> tuple[
+    Mapping[int, tuple[int, float]],
+    Mapping[int, tuple[float, float]],
+    str,
+    str | None,
+]:
+    status = contract.get("status")
+    if status == V6_STATUS:
+        return (
+            BLUR_PARAMETERS_EXTREME_V6,
+            NOISE_SIGMA_RANGES,
+            "extreme_v6_human_approved_2026_08_28",
+            None,
+        )
+    if status == V7_STATUS:
+        return (
+            BLUR_PARAMETERS_MILD_V7,
+            NOISE_SIGMA_RANGES_MILD_V7,
+            "mild_v7_advisor_directed_2026_09_05",
+            "mild_v7_advisor_directed_2026_09_05",
+        )
+    raise ValueError("100k data contract status is not approved")
+
+
 def workspace_path(value: object) -> Path:
     path = (ROOT / str(value)).resolve()
     path.relative_to(ROOT.resolve())
@@ -45,12 +78,9 @@ def workspace_path(value: object) -> Path:
 def load_contract(path: Path) -> tuple[dict[str, object], str]:
     raw = path.read_bytes()
     contract = json.loads(raw)
-    if (
-        contract.get("schema_version") != 1
-        or contract.get("status")
-        != "human_approved_extreme_blur_v6_100k_contract"
-    ):
+    if contract.get("schema_version") != 1:
         raise ValueError("100k data contract is not approved")
+    blur_parameters, noise_ranges, _, _ = parameter_profile(contract)
     if sha256(workspace_path(contract["source_manifest"])) != contract.get(
         "source_manifest_sha256"
     ):
@@ -58,22 +88,31 @@ def load_contract(path: Path) -> tuple[dict[str, object], str]:
     blur = contract.get("blur")
     if not isinstance(blur, dict):
         raise ValueError("100k blur contract is missing")
-    for path_key, hash_key in (
-        ("preview", "preview_sha256"),
-        ("preview_report", "preview_report_sha256"),
-    ):
-        if sha256(workspace_path(blur[path_key])) != blur.get(hash_key):
-            raise RuntimeError(f"approved blur evidence changed: {path_key}")
+    if contract.get("status") == V6_STATUS:
+        for path_key, hash_key in (
+            ("preview", "preview_sha256"),
+            ("preview_report", "preview_report_sha256"),
+        ):
+            if sha256(workspace_path(blur[path_key])) != blur.get(hash_key):
+                raise RuntimeError(f"approved blur evidence changed: {path_key}")
     expected = {
         str(level): {
             "radius": radius,
             "sigma": sigma,
             "kernel_width": 2 * radius + 1,
         }
-        for level, (radius, sigma) in BLUR_PARAMETERS_EXTREME_V6.items()
+        for level, (radius, sigma) in blur_parameters.items()
     }
     if blur.get("parameters") != expected:
         raise RuntimeError("100k blur parameters differ from approved preview")
+    noise = contract.get("noise")
+    if contract.get("status") == V7_STATUS:
+        expected_noise = {
+            str(level): {"sigma_0_255_min": low, "sigma_0_255_max": high}
+            for level, (low, high) in noise_ranges.items()
+        }
+        if not isinstance(noise, dict) or noise.get("parameters") != expected_noise:
+            raise RuntimeError("100k noise parameters differ from advisor-directed v7")
     return contract, __import__("hashlib").sha256(raw).hexdigest()
 
 
@@ -84,17 +123,14 @@ def build_record(
     combination_index: int,
     index: int,
     combo: tuple[str, ...],
-    sources: Sequence[Mapping[str, object]],
+    ordered_sources: Sequence[Mapping[str, object]],
     contract: Mapping[str, object],
     contract_sha: str,
 ) -> dict[str, object]:
-    seed = int(contract["seed"])
-    ordered_sources = sorted(
-        sources,
-        key=lambda source: stable_digest(
-            seed, "100k", split, combo, source["source_id"]
-        ),
+    blur_parameters, noise_ranges, blur_profile, noise_profile = parameter_profile(
+        contract
     )
+    seed = int(contract["seed"])
     source = ordered_sources[index % len(ordered_sources)]
     record_seed = stable_seed(
         seed, "100k", split, size, combination_index, index
@@ -116,7 +152,8 @@ def build_record(
             levels[name],
             seed=operator_seed,
             source=source,
-            blur_parameters=BLUR_PARAMETERS_EXTREME_V6,
+            blur_parameters=blur_parameters,
+            noise_sigma_ranges=noise_ranges,
         )
         parameters["seed"] = operator_seed
         operators[name] = parameters
@@ -124,7 +161,7 @@ def build_record(
     record_id = (
         f"{split[:3]}_100k_c{size}_{combination_index:02d}_{index:05d}"
     )
-    return {
+    record = {
         "record_id": record_id,
         "split": split,
         "source_id": source["source_id"],
@@ -149,8 +186,11 @@ def build_record(
         ),
         "agenticir_revision": AGENTICIR_REVISION,
         "data_contract_sha256": contract_sha,
-        "blur_profile": "extreme_v6_human_approved_2026_08_28",
+        "blur_profile": blur_profile,
     }
+    if noise_profile is not None:
+        record["noise_profile"] = noise_profile
+    return record
 
 
 def build_records(
@@ -183,6 +223,16 @@ def build_records(
                 raise ValueError("100k combination quota is not level-balanced")
             for combination_index, combo in enumerate(combos):
                 pool = haze_sources if "haze" in combo else sources
+                ordered_pool = sorted(
+                    pool,
+                    key=lambda source: stable_digest(
+                        int(contract["seed"]),
+                        "100k",
+                        split,
+                        combo,
+                        source["source_id"],
+                    ),
+                )
                 for index in range(per_combo):
                     records.append(
                         build_record(
@@ -191,7 +241,7 @@ def build_records(
                             combination_index=combination_index,
                             index=index,
                             combo=combo,
-                            sources=pool,
+                            ordered_sources=ordered_pool,
                             contract=contract,
                             contract_sha=contract_sha,
                         )
@@ -222,6 +272,9 @@ def validate_records(
     contract: Mapping[str, object],
     contract_sha: str,
 ) -> dict[str, object]:
+    blur_parameters, noise_ranges, blur_profile, noise_profile = parameter_profile(
+        contract
+    )
     expected_total = sum(
         int(value)
         for split_counts in contract["split_composition_counts"].values()
@@ -260,11 +313,17 @@ def validate_records(
             raise RuntimeError("100k haze lacks an objective aligned depth map")
         if "blur" in names:
             level = int(record["levels"]["blur"])
-            radius, sigma = BLUR_PARAMETERS_EXTREME_V6[level]
+            radius, sigma = blur_parameters[level]
             actual = record["operators"]["blur"]
             if (actual["radius"], actual["sigma"]) != (radius, sigma):
                 raise RuntimeError("100k blur parameters changed")
             blur_counts[level] += 1
+        if "noise" in names:
+            level = int(record["levels"]["noise"])
+            low, high = noise_ranges[level]
+            sigma = float(record["operators"]["noise"]["sigma_0_255"])
+            if not low <= sigma <= high:
+                raise RuntimeError("100k noise parameters changed")
         composition[(split, size)] += 1
         combinations[(split, names)] += 1
         for name, level in label.levels:
@@ -293,7 +352,8 @@ def validate_records(
         "source_disjoint": True,
         "combination_and_level_balanced": True,
         "blur_level_counts": {str(level): blur_counts[level] for level in range(2, 6)},
-        "blur_profile": "extreme_v6_human_approved_2026_08_28",
+        "blur_profile": blur_profile,
+        "noise_profile": noise_profile or "legacy_agenticir_ranges",
     }
 
 

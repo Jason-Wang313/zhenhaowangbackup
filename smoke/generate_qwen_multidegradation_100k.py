@@ -11,6 +11,7 @@ import os
 import sys
 import time
 from collections import Counter
+from collections import defaultdict
 from pathlib import Path
 from typing import Sequence
 
@@ -34,7 +35,10 @@ def workspace_path(value: object) -> Path:
 def load_contract(path: Path) -> tuple[dict[str, object], str]:
     raw = path.read_bytes()
     config = json.loads(raw)
-    if config.get("status") != "human_approved_extreme_blur_v6_100k_contract":
+    if config.get("status") not in {
+        "human_approved_extreme_blur_v6_100k_contract",
+        "advisor_directed_mild_blur_noise_v7_100k_contract",
+    }:
         raise ValueError("scaled data generation contract is not approved")
     return config, hashlib.sha256(raw).hexdigest()
 
@@ -80,6 +84,24 @@ def chunks(
     return [list(records[offset : offset + size]) for offset in range(0, len(records), size)]
 
 
+def source_grouped_chunks(
+    records: Sequence[dict[str, object]], size: int
+) -> list[list[dict[str, object]]]:
+    """Keep records from one source together so workers reuse decoded inputs."""
+
+    grouped: dict[tuple[str, str], list[dict[str, object]]] = defaultdict(list)
+    for record in records:
+        grouped[(str(record["source_path"]), str(record["source_sha256"]))].append(
+            record
+        )
+    work: list[list[dict[str, object]]] = []
+    for key in sorted(grouped):
+        work.extend(chunks(grouped[key], size))
+    if sum(map(len, work)) != len(records):
+        raise RuntimeError("source-grouped generation lost records")
+    return work
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -89,6 +111,11 @@ def main() -> None:
     )
     parser.add_argument("--workers", type=int, default=min(48, os.cpu_count() or 1))
     parser.add_argument("--chunk-size", type=int, default=8)
+    parser.add_argument(
+        "--group-by-source",
+        action="store_true",
+        help="group records by immutable source to avoid repeated decode/hash work",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument(
         "--smoke",
@@ -125,18 +152,22 @@ def main() -> None:
         if args.limit <= 0:
             raise SystemExit("limit must be positive")
         records = records[: args.limit]
+    record_chunks = (
+        source_grouped_chunks(records, args.chunk_size)
+        if args.group_by_source
+        else chunks(records, args.chunk_size)
+    )
     work = [
         (chunk, str(config["generation_evidence_root"]))
-        for chunk in chunks(records, args.chunk_size)
+        for chunk in record_chunks
     ]
     started = time.monotonic()
     results: list[dict[str, object]] = []
     with concurrent.futures.ProcessPoolExecutor(max_workers=args.workers) as executor:
-        for completed_chunks, chunk_results in enumerate(
-            executor.map(generate_chunk, work), start=1
-        ):
+        completed = 0
+        for chunk_results in executor.map(generate_chunk, work):
             results.extend(chunk_results)
-            completed = min(completed_chunks * args.chunk_size, len(records))
+            completed += len(chunk_results)
             if completed % 1000 == 0 or completed == len(records):
                 print(
                     f"QWEN_100K_GENERATION_PROGRESS {completed}/{len(records)}",
@@ -158,6 +189,7 @@ def main() -> None:
         ),
         "workers": args.workers,
         "chunk_size": args.chunk_size,
+        "source_grouped": args.group_by_source,
         "elapsed_seconds": time.monotonic() - started,
         "protected_test_inference_performed": False,
         "foundir_used": False,

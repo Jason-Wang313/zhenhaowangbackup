@@ -5,6 +5,8 @@ from pathlib import Path
 from lowlight_restoration.multidegradation_data import (
     BLUR_PARAMETERS,
     BLUR_PARAMETERS_EXTREME_V6,
+    BLUR_PARAMETERS_MILD_V7,
+    NOISE_SIGMA_RANGES_MILD_V7,
     ROOT,
     SPLIT_SOURCE_COUNTS,
     assign_source_splits,
@@ -100,6 +102,28 @@ class MultiDegradationDataTests(unittest.TestCase):
             blur_parameters=BLUR_PARAMETERS_EXTREME_V6,
         )
         self.assertEqual((parameters["radius"], parameters["sigma"]), (200, 160.0))
+
+    def test_advisor_directed_v7_covers_subtle_blur_and_noise(self):
+        self.assertEqual(
+            BLUR_PARAMETERS_MILD_V7,
+            {2: (1, 1.0), 3: (2, 1.6), 4: (4, 3.2), 5: (8, 6.4)},
+        )
+        self.assertEqual(
+            NOISE_SIGMA_RANGES_MILD_V7,
+            {2: (1.0, 3.0), 3: (3.0, 6.0), 4: (6.0, 12.0), 5: (12.0, 25.0)},
+        )
+        source = self.inventory[0]
+        blur = _operator_parameters(
+            "blur", 2, seed=7, source=source,
+            blur_parameters=BLUR_PARAMETERS_MILD_V7,
+        )
+        noise = _operator_parameters(
+            "noise", 2, seed=7, source=source,
+            noise_sigma_ranges=NOISE_SIGMA_RANGES_MILD_V7,
+        )
+        self.assertEqual((blur["radius"], blur["sigma"]), (1, 1.0))
+        self.assertGreaterEqual(noise["sigma_0_255"], 1.0)
+        self.assertLessEqual(noise["sigma_0_255"], 3.0)
 
     def test_clean_crop_is_literal_and_one_composite_is_deterministic(self):
         clean = next(record for record in self.records if record["composition_size"] == 0)

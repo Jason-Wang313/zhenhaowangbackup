@@ -7,6 +7,7 @@ from lowlight_restoration.multidegradation_data import (
     ROOT,
     sha256,
 )
+from smoke.generate_qwen_multidegradation_100k import source_grouped_chunks
 
 
 class QwenMultidegradation100kTests(unittest.TestCase):
@@ -115,6 +116,23 @@ class QwenMultidegradation100kTests(unittest.TestCase):
                     "gradient_accumulation_steps_by_world_size"
                 ][str(world)]
                 self.assertEqual(world * micro * accumulation, 200)
+
+    def test_source_grouped_generation_preserves_every_record(self):
+        records = [
+            {"record_id": "a1", "source_path": "a.png", "source_sha256": "1"},
+            {"record_id": "b1", "source_path": "b.png", "source_sha256": "2"},
+            {"record_id": "a2", "source_path": "a.png", "source_sha256": "1"},
+            {"record_id": "a3", "source_path": "a.png", "source_sha256": "1"},
+        ]
+        grouped = source_grouped_chunks(records, 2)
+        self.assertEqual(
+            sorted(row["record_id"] for chunk in grouped for row in chunk),
+            ["a1", "a2", "a3", "b1"],
+        )
+        self.assertTrue(
+            all(len({row["source_path"] for row in chunk}) == 1 for chunk in grouped)
+        )
+        self.assertTrue(all(len(chunk) <= 2 for chunk in grouped))
 
 
 if __name__ == "__main__":
