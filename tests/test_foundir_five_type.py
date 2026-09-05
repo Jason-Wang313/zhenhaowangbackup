@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import inspect
 import json
 import tempfile
 import unittest
@@ -19,9 +20,16 @@ from lowlight_restoration.foundir_five_type import (
 from smoke.build_foundir_five_type_manifest import ROOT as WORKSPACE_ROOT, build
 from smoke.evaluate_foundir_five_type_vae_ceiling_ddp import select_balanced_targets
 from smoke.export_foundir_five_type_qwen_conditions import (
+    condition_rows_from_raw_outputs,
     condition_row,
+    encode_raw_shard,
+    load_all_raw_shards,
+    raw_shard_identity,
+    raw_shard_path,
     select_balanced_pilot,
+    write_raw_shard_once,
 )
+from smoke import export_foundir_five_type_qwen_conditions as pilot_export
 from smoke.export_foundir_five_type_qwen_conditions_sharded_ddp import (
     append_rows,
     load_shard,
@@ -170,6 +178,68 @@ class FoundIRFiveTypeTests(unittest.TestCase):
         oracle = json.loads(row["type_oracle_levels_json"])
         self.assertEqual(predicted["rain"], 3)
         self.assertEqual(oracle, {"blur": 2, "noise": 4, "rain": 1, "haze": 1, "low_light": 1})
+
+    def test_pilot_raw_shards_resume_merge_and_surface_parser_error(self) -> None:
+        good = '{"blur":2,"noise":1,"rain":1,"haze":1,"low_light":1}'
+        records = [
+            {
+                "record_id": f"r{index}",
+                "split": "train",
+                "source_group": f"g{index}",
+                "category": "01Blur",
+                "composition_size": "1",
+                "lq_path": f"lq{index}.png",
+                "gt_path": f"gt{index}.png",
+                "lq_sha256": f"{index + 1:064x}",
+                "gt_sha256": f"{index + 11:064x}",
+            }
+            for index in range(4)
+        ]
+        identity = raw_shard_identity(
+            records,
+            manifest_sha256="a" * 64,
+            qwen_config_sha256="b" * 64,
+            adapter_sha256="c" * 64,
+        )
+        with tempfile.TemporaryDirectory(dir=WORKSPACE_ROOT) as directory:
+            output_csv = Path(directory) / "pilot.csv"
+            for rank in range(2):
+                assigned = [
+                    (index, record)
+                    for index, record in enumerate(records)
+                    if index % 2 == rank
+                ]
+                content = encode_raw_shard(
+                    [(index, record, good) for index, record in assigned],
+                    identity=identity,
+                    rank=rank,
+                    world=2,
+                )
+                shard = raw_shard_path(output_csv, rank)
+                write_raw_shard_once(shard, content)
+                # An identical resume is accepted without replacing the shard.
+                before = shard.stat().st_ino
+                write_raw_shard_once(shard, content)
+                self.assertEqual(shard.stat().st_ino, before)
+            merged = load_all_raw_shards(
+                output_csv, records, identity=identity, world=2
+            )
+            self.assertEqual(merged, [good] * 4)
+            with self.assertRaisesRegex(ValueError, "record_id=r2"):
+                condition_rows_from_raw_outputs(
+                    records, [good, good, "not-json", good]
+                )
+            with self.assertRaises(RuntimeError):
+                write_raw_shard_once(
+                    raw_shard_path(output_csv, 0), b"different\n"
+                )
+
+    def test_pilot_export_broadcasts_rank_zero_result_without_final_barrier(self) -> None:
+        source = inspect.getsource(pilot_export.main)
+        barrier = source.index("dist.barrier()")
+        broadcast = source.index("broadcast_rank0(rank, publish_conditions)")
+        self.assertLess(barrier, broadcast)
+        self.assertNotIn("dist.barrier()", source[broadcast:])
 
     def test_sharded_condition_export_resumes_and_merges_in_manifest_order(self) -> None:
         raw = '{"blur":2,"noise":1,"rain":1,"haze":1,"low_light":1}'

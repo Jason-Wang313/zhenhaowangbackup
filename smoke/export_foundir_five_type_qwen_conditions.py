@@ -10,10 +10,12 @@ import io
 import json
 import os
 import sys
+import tempfile
 from collections import defaultdict
 from pathlib import Path
 from typing import Mapping, Sequence
 
+import torch
 import torch.distributed as dist
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,10 +31,12 @@ from lowlight_restoration.qwen_multidegradation import (  # noqa: E402
     FIXED_FIVE_SLOT_SCHEMA,
     canonical_fixed_five_slot_target,
     parse_output,
+    prompt_text,
 )
 from smoke.train_qwen_multidegradation_lora_ddp import (  # noqa: E402
-    generate_outputs,
+    broadcast_rank0,
     load_model,
+    open_images,
     seed_everything,
     setup_distributed,
     validate_runtime,
@@ -135,6 +139,225 @@ def write_once(path: Path, content: bytes) -> None:
         handle.write(content)
 
 
+def raw_shard_identity(
+    records: Sequence[Mapping[str, str]],
+    *,
+    manifest_sha256: str,
+    qwen_config_sha256: str,
+    adapter_sha256: str,
+) -> str:
+    """Bind resume shards to every input and frozen model artifact."""
+
+    payload = {
+        "manifest_sha256": manifest_sha256,
+        "qwen_config_sha256": qwen_config_sha256,
+        "adapter_sha256": adapter_sha256,
+        "records": [
+            [str(record["record_id"]), str(record["lq_sha256"])]
+            for record in records
+        ],
+    }
+    return hashlib.sha256(
+        json.dumps(payload, separators=(",", ":"), sort_keys=True).encode()
+    ).hexdigest()
+
+
+def raw_shard_path(output_csv: Path, rank: int) -> Path:
+    return output_csv.parent / f".{output_csv.name}.raw_shards" / f"rank_{rank:02d}.json"
+
+
+def encode_raw_shard(
+    rows: Sequence[tuple[int, Mapping[str, str], str]],
+    *,
+    identity: str,
+    rank: int,
+    world: int,
+) -> bytes:
+    payload = {
+        "schema_version": 1,
+        "identity": identity,
+        "rank": rank,
+        "world_size": world,
+        "rows": [
+            {
+                "index": index,
+                "record_id": str(record["record_id"]),
+                "lq_sha256": str(record["lq_sha256"]),
+                "raw_output": raw,
+            }
+            for index, record, raw in rows
+        ],
+    }
+    return (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode()
+
+
+def write_raw_shard_once(path: Path, content: bytes) -> None:
+    """Publish a complete rank shard atomically and never replace it."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        dir=path.parent, prefix=f".{path.name}.", delete=False
+    ) as handle:
+        temporary = Path(handle.name)
+        handle.write(content)
+        handle.flush()
+        os.fsync(handle.fileno())
+    try:
+        if path.exists():
+            if path.read_bytes() != content:
+                raise RuntimeError(f"refusing to overwrite differing raw Qwen shard: {path}")
+            return
+        try:
+            os.link(temporary, path)
+        except FileExistsError:
+            if path.read_bytes() != content:
+                raise RuntimeError(f"raw Qwen shard raced with differing content: {path}")
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def load_raw_shard(
+    path: Path,
+    assigned: Sequence[tuple[int, Mapping[str, str]]],
+    *,
+    identity: str,
+    rank: int,
+    world: int,
+) -> list[tuple[int, str]]:
+    payload = json.loads(path.read_text())
+    if (
+        payload.get("schema_version") != 1
+        or payload.get("identity") != identity
+        or payload.get("rank") != rank
+        or payload.get("world_size") != world
+    ):
+        raise RuntimeError(f"raw Qwen shard identity changed: {path}")
+    rows = payload.get("rows")
+    if not isinstance(rows, list) or len(rows) != len(assigned):
+        raise RuntimeError(f"raw Qwen shard cardinality changed: {path}")
+    loaded: list[tuple[int, str]] = []
+    for value, (expected_index, expected_record) in zip(rows, assigned, strict=True):
+        if not isinstance(value, dict):
+            raise RuntimeError(f"raw Qwen shard row is invalid: {path}")
+        raw = value.get("raw_output")
+        if (
+            value.get("index") != expected_index
+            or value.get("record_id") != expected_record["record_id"]
+            or value.get("lq_sha256") != expected_record["lq_sha256"]
+            or not isinstance(raw, str)
+        ):
+            raise RuntimeError(f"raw Qwen shard input mapping changed: {path}")
+        loaded.append((expected_index, raw))
+    return loaded
+
+
+def load_all_raw_shards(
+    output_csv: Path,
+    records: Sequence[Mapping[str, str]],
+    *,
+    identity: str,
+    world: int,
+) -> list[str]:
+    indexed: list[tuple[int, str]] = []
+    for rank in range(world):
+        assigned = [
+            (index, record)
+            for index, record in enumerate(records)
+            if index % world == rank
+        ]
+        indexed.extend(
+            load_raw_shard(
+                raw_shard_path(output_csv, rank),
+                assigned,
+                identity=identity,
+                rank=rank,
+                world=world,
+            )
+        )
+    if sorted(index for index, _ in indexed) != list(range(len(records))):
+        raise RuntimeError("raw Qwen shards do not cover the selected records exactly once")
+    return [raw for _, raw in sorted(indexed)]
+
+
+def condition_rows_from_raw_outputs(
+    records: Sequence[Mapping[str, str]], raw_outputs: Sequence[str]
+) -> list[dict[str, str]]:
+    if len(records) != len(raw_outputs):
+        raise RuntimeError("raw Qwen output cardinality changed")
+    rows: list[dict[str, str]] = []
+    for record, raw in zip(records, raw_outputs, strict=True):
+        try:
+            rows.append(condition_row(record, raw))
+        except Exception as exc:
+            raise ValueError(
+                "invalid frozen-Qwen output for "
+                f"record_id={record['record_id']}: {raw!r}"
+            ) from exc
+    return rows
+
+
+def generate_rank_raw_outputs(
+    model: torch.nn.Module,
+    processor: object,
+    records: Sequence[Mapping[str, str]],
+    config: Mapping[str, object],
+    *,
+    rank: int,
+    world: int,
+    device: torch.device,
+) -> list[tuple[int, Mapping[str, str], str]]:
+    """Generate only this rank's rows; cross-rank transfer uses durable shards."""
+
+    generation = config["generation"]
+    prompt_config = config["prompt"]
+    assert isinstance(generation, Mapping)
+    assert isinstance(prompt_config, Mapping)
+    model.eval()
+    model.gradient_checkpointing_disable()
+    model.config.use_cache = True
+    prompt = prompt_text(processor, str(prompt_config["target_schema"]))
+    indexed = [
+        (index, record)
+        for index, record in enumerate(records)
+        if index % world == rank
+    ]
+    local: list[tuple[int, Mapping[str, str], str]] = []
+    batch_size = int(generation["batch_size_per_rank"])
+    for offset in range(0, len(indexed), batch_size):
+        chunk = indexed[offset : offset + batch_size]
+        images = open_images([record for _, record in chunk])
+        encoded = processor(
+            text=[prompt] * len(chunk), images=images, padding=True, return_tensors="pt"
+        )
+        inputs = {
+            key: value.to(device)
+            for key, value in encoded.items()
+            if isinstance(value, torch.Tensor)
+        }
+        input_length = int(inputs["input_ids"].shape[1])
+        with torch.no_grad():
+            generated = model.generate(
+                **inputs,
+                do_sample=False,
+                max_new_tokens=int(generation["max_new_tokens"]),
+                use_cache=True,
+            )
+        for row, (index, record) in enumerate(chunk):
+            raw = processor.tokenizer.decode(
+                generated[row, input_length:],
+                skip_special_tokens=True,
+                clean_up_tokenization_spaces=False,
+            ).strip()
+            local.append((index, record, raw))
+        if (offset // batch_size + 1) % 25 == 0 or offset + batch_size >= len(indexed):
+            print(
+                f"QWEN_MULTIDEGRADATION_GENERATE rank={rank} "
+                f"completed={min(offset+batch_size,len(indexed))}/{len(indexed)}",
+                flush=True,
+            )
+    return local
+
+
 def load_manifest(path: Path) -> list[dict[str, str]]:
     with path.open(newline="") as handle:
         reader = csv.DictReader(handle)
@@ -202,20 +425,68 @@ def main() -> None:
         validate_runtime(qwen_config, device.index or 0)
         os.environ.update(HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1")
         seed_everything(seed)
-        model, processor, _ = load_model(qwen_config, variant="merger_trainable", device=device)
-        load_qwen_adapter(model, adapter)
         generation_records = [{**row, "output_path": row["lq_path"]} for row in selected]
-        raw_outputs = generate_outputs(
-            model,
-            processor,
-            generation_records,
-            qwen_config,
-            rank=rank,
-            world=world,
-            device=device,
+        manifest_sha = sha256(args.manifest)
+        qwen_config_sha = sha256(args.qwen_config)
+        adapter_sha = sha256(adapter)
+        identity = raw_shard_identity(
+            selected,
+            manifest_sha256=manifest_sha,
+            qwen_config_sha256=qwen_config_sha,
+            adapter_sha256=adapter_sha,
         )
-        if rank == 0:
-            rows = [condition_row(record, raw) for record, raw in zip(selected, raw_outputs, strict=True)]
+        assigned = [
+            (index, record)
+            for index, record in enumerate(selected)
+            if index % world == rank
+        ]
+        shard = raw_shard_path(args.output_csv, rank)
+        if shard.exists():
+            load_raw_shard(
+                shard, assigned, identity=identity, rank=rank, world=world
+            )
+            print(
+                f"FOUNDIR_FIVE_TYPE_QWEN_RAW_SHARD_VERIFY_PASS rank={rank} "
+                f"records={len(assigned)}",
+                flush=True,
+            )
+        else:
+            model, processor, _ = load_model(
+                qwen_config, variant="merger_trainable", device=device
+            )
+            load_qwen_adapter(model, adapter)
+            generated = generate_rank_raw_outputs(
+                model,
+                processor,
+                generation_records,
+                qwen_config,
+                rank=rank,
+                world=world,
+                device=device,
+            )
+            content = encode_raw_shard(
+                generated, identity=identity, rank=rank, world=world
+            )
+            write_raw_shard_once(shard, content)
+            load_raw_shard(
+                shard, assigned, identity=identity, rank=rank, world=world
+            )
+            print(
+                f"FOUNDIR_FIVE_TYPE_QWEN_RAW_SHARD_PASS rank={rank} "
+                f"records={len(assigned)}",
+                flush=True,
+            )
+
+        # All ranks finish durable publication before rank zero parses.  The
+        # rank-zero helper catches and broadcasts parser/publication errors,
+        # so nonzero ranks cannot wait for an unmatched final barrier.
+        dist.barrier()
+
+        def publish_conditions() -> dict[str, object]:
+            raw_outputs = load_all_raw_shards(
+                args.output_csv, selected, identity=identity, world=world
+            )
+            rows = condition_rows_from_raw_outputs(selected, raw_outputs)
             csv_content = encode_csv(rows)
             write_once(args.output_csv, csv_content)
             counts: dict[str, int] = defaultdict(int)
@@ -228,18 +499,25 @@ def main() -> None:
                 "records": len(rows),
                 "category_counts": dict(sorted(counts.items())),
                 "manifest": args.manifest.relative_to(ROOT).as_posix(),
-                "manifest_sha256": sha256(args.manifest),
+                "manifest_sha256": manifest_sha,
                 "qwen_config": args.qwen_config.relative_to(ROOT).as_posix(),
-                "qwen_config_sha256": sha256(args.qwen_config),
+                "qwen_config_sha256": qwen_config_sha,
                 "qwen_adapter": adapter.relative_to(ROOT).as_posix(),
-                "qwen_adapter_sha256": sha256(adapter),
+                "qwen_adapter_sha256": adapter_sha,
                 "conditions_csv": args.output_csv.relative_to(ROOT).as_posix(),
                 "conditions_csv_sha256": hashlib.sha256(csv_content).hexdigest(),
                 "protected_foundir_test_accessed": False,
             }
             write_once(args.output_json, (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
-            print("FOUNDIR_FIVE_TYPE_QWEN_CONDITIONS_PASS " + json.dumps(payload, sort_keys=True), flush=True)
-        dist.barrier()
+            return payload
+
+        payload = broadcast_rank0(rank, publish_conditions)
+        if rank == 0:
+            print(
+                "FOUNDIR_FIVE_TYPE_QWEN_CONDITIONS_PASS "
+                + json.dumps(payload, sort_keys=True),
+                flush=True,
+            )
     finally:
         if initialized and dist.is_initialized():
             dist.destroy_process_group()
