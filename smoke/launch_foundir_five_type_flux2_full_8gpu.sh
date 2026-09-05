@@ -15,6 +15,7 @@ fi
 
 required=(
   configs/foundir_five_type_flux2_dit_v1.json
+  configs/foundir_five_type_prelaunch_gate_v1.json
   lowlight_restoration/flux_prompt_cache.py
   lowlight_restoration/foundir_five_type.py
   lowlight_restoration/foundir_flux2_protocol.py
@@ -23,16 +24,23 @@ required=(
   smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py
   smoke/evaluate_foundir_five_type_released_baselines_ddp.py
   smoke/export_foundir_five_type_qwen_conditions_sharded_ddp.py
+  smoke/export_foundir_five_type_qwen_per_type_pilot.py
+  smoke/evaluate_foundir_five_type_qwen_training_gate.py
+  smoke/foundir_five_type_distributed_canary.py
   smoke/foundir_five_type_preflight.py
+  smoke/foundir_five_type_runtime_preflight.py
   smoke/freeze_foundir_five_type_evaluation_contract.py
   smoke/freeze_foundir_five_type_flux2_final_report.py
   smoke/select_foundir_five_type_flux2_checkpoint.py
   smoke/train_foundir_five_type_flux2_full_ddp.py
   smoke/run_foundir_five_type_flux2_full_8gpu.sh
+  smoke/run_foundir_five_type_prelaunch_8gpu.sh
   smoke/launch_foundir_five_type_flux2_full_8gpu.sh
+  smoke/launch_foundir_five_type_prelaunch_8gpu.sh
   tests/test_flux_prompt_cache.py
   tests/test_foundir_five_type.py
   tests/test_foundir_flux2_protocol.py
+  tests/test_foundir_five_type_prelaunch.py
 )
 python_files=(
   lowlight_restoration/flux_prompt_cache.py
@@ -43,7 +51,11 @@ python_files=(
   smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py
   smoke/evaluate_foundir_five_type_released_baselines_ddp.py
   smoke/export_foundir_five_type_qwen_conditions_sharded_ddp.py
+  smoke/export_foundir_five_type_qwen_per_type_pilot.py
+  smoke/evaluate_foundir_five_type_qwen_training_gate.py
+  smoke/foundir_five_type_distributed_canary.py
   smoke/foundir_five_type_preflight.py
+  smoke/foundir_five_type_runtime_preflight.py
   smoke/freeze_foundir_five_type_evaluation_contract.py
   smoke/freeze_foundir_five_type_flux2_final_report.py
   smoke/select_foundir_five_type_flux2_checkpoint.py
@@ -51,7 +63,19 @@ python_files=(
 )
 "$PYTHON" -m py_compile "${python_files[@]}"
 bash -n "$RUNNER" "$0"
+export TORCH_HOME="$ROOT/models/torch"
+export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1
+export TOKENIZERS_PARALLELISM=false
+export TRITON_CACHE_DIR="$ROOT/.cache/triton/foundir_five_type"
+export TORCH_EXTENSIONS_DIR="$ROOT/.cache/torch_extensions/foundir_five_type"
+mkdir -p "$TRITON_CACHE_DIR" "$TORCH_EXTENSIONS_DIR"
+"$PYTHON" -m unittest tests.test_foundir_five_type_prelaunch
+"$PYTHON" smoke/foundir_five_type_runtime_preflight.py \
+  --config configs/foundir_five_type_flux2_dit_v1.json
 "$PYTHON" smoke/foundir_five_type_preflight.py --config configs/foundir_five_type_flux2_dit_v1.json --require-data
+"$PYTHON" smoke/evaluate_foundir_five_type_qwen_training_gate.py \
+  --prelaunch-config configs/foundir_five_type_prelaunch_gate_v1.json \
+  --require-selected joint
 for relative in "${required[@]}"; do
   git ls-files --error-unmatch "$relative" >/dev/null 2>&1 || {
     echo "ERROR: required full-pipeline file is not committed: $relative" >&2; exit 1;

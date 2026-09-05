@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "frozen_training_only_prelaunch_gate",
+  "restoration_config": "configs/foundir_five_type_flux2_dit_v1.json",
+  "restoration_config_sha256": "6e82bc8d3dd37df80a5e300ef161512efcb6e8c94751b0e1f4d35137d5ea6ac8",
+  "manifest": "manifests/foundir_five_type_pairs_v1.csv",
+  "manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "records": 128,
+  "selection_seed": 2026083001,
+  "candidates": {
+    "joint": {
+      "qwen_config": "configs/qwen_multidegradation_100k_rank64_joint_v1.json",
+      "qwen_config_sha256": "a0ad3162043f27eb3755ae80602258b1f7b5d51e969abc2c472d24c49f1d4ad8",
+      "adapter": "checkpoints/qwen_multidegradation_100k_rank64_joint_v1/merger_trainable/checkpoints/J3_plus_triple/adapter.safetensors",
+      "adapter_sha256": "e6cbbbef10d904f2d1528c2a3bee4c2b0bf01fc333022a55a91a0b0020f7fd64",
+      "predictions": "manifests/foundir_five_type_overfit_qwen_conditions_v1.csv",
+      "predictions_sha256": "ddf5a7ca4405188c5e541fa20baa95a6c22338b0d21624166091526f00c2b407",
+      "summary": "manifests/foundir_five_type_overfit_qwen_conditions_v1.json",
+      "summary_sha256": "60084f1db98135d18407fc6fbccc0fa760e89b5a735eae0a4fb4ef33bcee00ab"
+    },
+    "per_type": {
+      "qwen_config": "configs/qwen_multidegradation_100k_rank64_per_type_v1.json",
+      "qwen_config_sha256": "df613b579b6668bf41f898918b49d893780f61904bf51863b54cd9e458bbf80f",
+      "adapter": "checkpoints/qwen_multidegradation_100k_rank64_per_type_v1/merger_trainable/checkpoints/P3_plus_triple/adapter.safetensors",
+      "adapter_sha256": "8f762b03af89fc21d0fe74cf33f407ece955c99247f8b3a00fed4e5e4bf7d2b4",
+      "predictions": "manifests/foundir_five_type_overfit_qwen_per_type_predictions_v1.json"
+    }
+  },
+  "thresholds": {
+    "minimum_valid_output_rate": 0.99,
+    "minimum_type_micro_f1": 0.80,
+    "minimum_type_macro_f1": 0.70,
+    "minimum_degradation_set_exact": 0.60,
+    "minimum_each_type_recall": 0.50
+  },
+  "selection_rule": [
+    "degradation_set_exact",
+    "minimum_type_recall",
+    "type_micro_f1",
+    "valid_output_rate"
+  ],
+  "output": "reports/foundir_five_type_qwen_training_domain_gate_v1.json",
+  "alexnet_cache": "models/torch/hub/checkpoints/alexnet-owt-7be5be79.pth",
+  "alexnet_cache_sha256": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02",
+  "protected_foundir_test_accessed": false
+}
