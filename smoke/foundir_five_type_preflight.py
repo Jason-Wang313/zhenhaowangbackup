@@ -59,6 +59,16 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
             if sha256(path) != section[hash_key]:
                 raise RuntimeError(f"frozen artifact changed: {path}")
 
+    qwen_condition = config["qwen_condition"]
+    for path_key, hash_key in (
+        ("foundir_training_diagnostic", "foundir_training_diagnostic_sha256"),
+        ("foundir_training_views", "foundir_training_views_sha256"),
+    ):
+        if path_key in qwen_condition:
+            path = workspace_path(qwen_condition[path_key])
+            if not path.is_file() or sha256(path) != qwen_condition[hash_key]:
+                raise RuntimeError(f"frozen Qwen training-only diagnostic changed: {path}")
+
     prompt_cache = config["prompt_cache"]
     for name, expected in prompt_cache["qwen3_weight_sha256"].items():
         path = workspace_path(str(Path(config["model"]["text_encoder"]) / name))
@@ -97,6 +107,13 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
         cumulative_presentations += int(stage.get("presentations", 0))
         stage_end_steps.append(cumulative_presentations // int(distributed["global_batch_size"]))
     candidate_steps = config["evaluation"].get("candidate_steps")
+    no_ablation_v2 = config["qwen_condition"].get("method") == "per_type_dialogue_center_crop_448"
+    if no_ablation_v2 and (
+        config["scope"].get("exclude_jpeg") is not True
+        or config["evaluation"].get("condition_arms") != ["qwen"]
+        or float(full.get("generic_condition_probability", -1)) != 0.0
+    ):
+        raise RuntimeError("physical-v8 route must remain no-JPEG and no-ablation")
     if (
         not isinstance(curriculum, list)
         or [stage.get("maximum_composition_size") for stage in curriculum] != [1, 2, 3]
@@ -126,7 +143,7 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
 
     training_root = workspace_path(data["training_root"])
     missing_examples: list[str] = []
-    if training_root.is_dir():
+    if training_root.is_dir() and require_data:
         for record in records:
             for relative in (record.gt_relative, record.lq_relative):
                 path = training_root / relative

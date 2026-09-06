@@ -277,6 +277,10 @@ def evaluate_arms(
     selected = list(records[:count])
     shift = max(1, len(records) // 2)
     flow = config["flow_training"]
+    configured_arms = tuple(config["evaluation"].get("condition_arms", ("qwen",)))
+    allowed_arms = {"qwen", "generic", "type_oracle", "shuffled_wrong"}
+    if not configured_arms or set(configured_arms) - allowed_arms:
+        raise RuntimeError(f"invalid overfit condition arms: {configured_arms}")
     results: list[dict[str, object]] = []
     for index in range(rank, count, world):
         record = selected[index]
@@ -289,7 +293,8 @@ def evaluate_arms(
             "type_oracle": str(record["type_oracle_text"]),
             "shuffled_wrong": str(records[(index + shift) % len(records)]["qwen_text"]),
         }
-        for arm, prompt in prompts.items():
+        for arm in configured_arms:
+            prompt = prompts[arm]
             context, ids = batch_context(contexts, prompt, device)
             prediction = restore(
                 model, autoencoder, lq, context, ids, pack_image,
@@ -352,10 +357,17 @@ def main() -> int:
             AE_MODEL_PATH=str(ROOT / config["model"]["autoencoder_weights"]),
             QWEN3_MODEL_PATH=str(ROOT / config["model"]["text_encoder"]),
         )
+        configured_arms = tuple(config["evaluation"].get("condition_arms", ("qwen",)))
+        prompt_keys = {
+            "qwen": "qwen_text",
+            "generic": "generic_text",
+            "type_oracle": "type_oracle_text",
+            "shuffled_wrong": "qwen_text",
+        }
         prompts = [
-            str(row[key])
+            str(row[prompt_keys[arm]])
             for row in rows
-            for key in ("qwen_text", "type_oracle_text", "generic_text")
+            for arm in configured_arms
         ]
         contexts = encode_prompts(config, prompts, device)
         records = prepare_crops(rows, crop_size=int(config["data"]["crop_size"]), seed=seed)
@@ -483,7 +495,7 @@ def main() -> int:
         if rank == 0:
             result_rows = [row for part in gathered if isinstance(part, list) for row in part]
             arm_metrics = {}
-            for arm in ("qwen", "generic", "type_oracle", "shuffled_wrong"):
+            for arm in configured_arms:
                 values = [row for row in result_rows if row["arm"] == arm]
                 arm_metrics[arm] = {
                     "records": len(values),

@@ -32,11 +32,13 @@ QWEN3_FILES = {
 }
 
 
-def load_prompts(path: Path) -> list[str]:
+def load_prompts(
+    path: Path, required: set[str] | None = None
+) -> list[str]:
     with path.open(newline="") as handle:
         reader = csv.DictReader(handle)
         rows = list(reader)
-    required = {"qwen_text", "type_oracle_text", "generic_text"}
+    required = required or {"qwen_text", "type_oracle_text", "generic_text"}
     if reader.fieldnames is None or not required.issubset(reader.fieldnames):
         raise RuntimeError("condition CSV has no complete restoration text interface")
     prompts = sorted({row[key] for row in rows for key in sorted(required)})
@@ -171,7 +173,10 @@ def main() -> None:
     args.conditions = resolve_workspace_path(ROOT, args.conditions)
     args.output = resolve_workspace_path(ROOT, args.output)
     config = json.loads(args.config.read_text())
-    prompts = load_prompts(args.conditions)
+    prompt_columns = {"qwen_text", "generic_text"}
+    if set(config["evaluation"].get("condition_arms", ())) != {"qwen"}:
+        prompt_columns.add("type_oracle_text")
+    prompts = load_prompts(args.conditions, prompt_columns)
     verify_weights(config)
     if args.verify_existing:
         payload = build_index(prompts=prompts, root=args.output, config_path=args.config, conditions=args.conditions)

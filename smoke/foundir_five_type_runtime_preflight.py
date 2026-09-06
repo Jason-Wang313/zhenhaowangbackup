@@ -121,6 +121,7 @@ def verify_imports(*, require_cuda: bool) -> dict[str, object]:
         "smoke.evaluate_foundir_five_type_vae_ceiling_ddp",
         "smoke.train_foundir_five_type_flux2_overfit_ddp",
         "smoke.export_foundir_five_type_qwen_conditions_sharded_ddp",
+        "smoke.export_foundir_five_type_physical_v8_conditions_ddp",
         "smoke.build_foundir_flux_qwen3_prompt_cache_ddp",
         "smoke.freeze_foundir_five_type_evaluation_contract",
         "smoke.train_foundir_five_type_flux2_full_ddp",
@@ -129,6 +130,7 @@ def verify_imports(*, require_cuda: bool) -> dict[str, object]:
         "smoke.evaluate_foundir_five_type_flux2_tiled_ddp",
         "smoke.evaluate_foundir_five_type_released_baselines_ddp",
         "smoke.freeze_foundir_five_type_flux2_final_report",
+        "smoke.freeze_foundir_five_type_flux2_main_v2_report",
     )
     for name in modules:
         importlib.import_module(name)

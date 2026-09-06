@@ -99,6 +99,37 @@ CURRENT ROUTE DECISIONS AND DEPRECATED PROTOTYPES
   experimental evidence remain reusable foundations for the authoritative
   route.
 
+ADVISOR CONFIRMATION — FOUNDIR SCOPE AND JPEG EXCLUSION (2026-09-06)
+
+The advisor confirmed that the first FoundIR work covers only blur, noise,
+rain, haze, and low-light, including single and mixed combinations. JPEG and
+all other degradation categories are excluded from the first version and from
+its main training, validation, and acceptance gates.
+
+The first FLUX route is: freeze the VAE and FLUX native Qwen3 text encoder;
+use DiT LoRA rank 32/alpha 32 on the agreed image-attention and text-image
+interaction layers; start with the native FLUX.2 reference-image token path;
+add a restoration adapter only if a small overfit demonstrates that the native
+path is insufficient. The frozen Qwen's actual predictions are the primary
+restoration condition. Oracle/generic/shuffled conditions are optional
+ablations, not deployment substitutes.
+
+User execution decision (2026-09-06): do not run the optional Qwen-condition
+ablations in the current FLUX mainline. Training, checkpoint selection, and
+development/internal evaluation use the frozen physical-v8 Qwen predictions.
+Do not run oracle, generic, or shuffled/wrong condition comparisons unless the
+user explicitly re-authorizes them later. Released FoundIR model comparison is
+a restoration benchmark comparison, not a Qwen-condition ablation, and remains
+allowed. Five-percent clean GT-to-GT identity pairs remain allowed as training
+regularization; generic-condition dropout on degraded pairs is zero.
+
+Operational prohibition: never create a JPEG gate, mix JPEG examples into the
+five-type main corpus, or treat a post-JPEG failure as failure of the
+advisor-approved five-type task. A JPEG experiment requires explicit advisor
+re-authorization and must be labeled auxiliary/diagnostic. The prior
+post-target-JPEG v9 run was agent-initiated, not advisor-approved; preserve its
+results only as historical evidence.
+
 
 
 1.	合作需求/任务
