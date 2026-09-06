@@ -48,8 +48,13 @@ def workspace_path(value: str | Path) -> Path:
 
 def load_contract(config_path: Path) -> tuple[dict[str, object], list[dict[str, str]]]:
     config = json.loads(config_path.read_text())
+    status = config.get("status")
     if (
-        config.get("status") != "frozen_foundir_training_only_qwen_real_gate"
+        status
+        not in {
+            "frozen_foundir_training_only_qwen_real_gate",
+            "frozen_foundir_training_only_qwen_real_gate_physical_v8",
+        }
         or config.get("scope") != "inference_only_no_qwen_training"
         or config.get("qwen_training_performed") is not False
         or config.get("restoration_training_performed") is not False
@@ -60,6 +65,12 @@ def load_contract(config_path: Path) -> tuple[dict[str, object], list[dict[str, 
     artifacts = config.get("artifacts")
     if not isinstance(artifacts, Mapping):
         raise RuntimeError("the v2 Qwen real gate artifacts are missing")
+    if status == "frozen_foundir_training_only_qwen_real_gate_physical_v8" and (
+        config.get("protected_synthetic_test_accessed") is not False
+        or set(artifacts)
+        != {"manifest", "qwen_config", "adapter", "synthetic_validation"}
+    ):
+        raise RuntimeError("the physical-v8 gate must not depend on a protected test")
     loaded: dict[str, object] = {}
     for name, artifact in artifacts.items():
         if not isinstance(artifact, Mapping):
@@ -70,23 +81,41 @@ def load_contract(config_path: Path) -> tuple[dict[str, object], list[dict[str, 
         if path.suffix == ".json":
             loaded[str(name)] = json.loads(path.read_text())
 
-    comparison = loaded["comparison"]
-    selection = loaded["checkpoint_selection"]
     validation = loaded["synthetic_validation"]
-    synthetic_test = loaded["synthetic_test"]
     adapter_sha = artifacts["adapter"]["sha256"]
+    if status == "frozen_foundir_training_only_qwen_real_gate":
+        comparison = loaded["comparison"]
+        selection = loaded["checkpoint_selection"]
+        synthetic_test = loaded["synthetic_test"]
+        selected_qwen_ok = (
+            comparison.get("selected_method") == "per_type"
+            and comparison.get("protected_test_accessed") is False
+            and comparison.get("foundir_used") is False
+            and selection.get("selected_adapter_sha256") == adapter_sha
+            and selection.get("selection_data") == "synthetic_validation_only"
+            and synthetic_test.get("status") == "passed"
+            and synthetic_test.get("split") == "test"
+            and synthetic_test.get("adapter_sha256") == adapter_sha
+        )
+        expected_output_root = "checkpoints/qwen_multidegradation_100k_rank64_per_type_v2"
+    else:
+        # The physical-v8 correction is selected from validation only.  The
+        # protected synthetic test is deliberately neither required nor read.
+        selected_qwen_ok = (
+            validation.get("automatic_gate_pass") is True
+            and validation.get("validation_checkpoint_stage")
+            == "V8_physical_shard5"
+            and validation.get("config_sha256")
+            == artifacts["qwen_config"]["sha256"]
+        )
+        expected_output_root = (
+            "checkpoints/qwen_multidegradation_100k_rank64_per_type_physical_v8"
+        )
     if (
-        comparison.get("selected_method") != "per_type"
-        or comparison.get("protected_test_accessed") is not False
-        or comparison.get("foundir_used") is not False
-        or selection.get("selected_adapter_sha256") != adapter_sha
-        or selection.get("selection_data") != "synthetic_validation_only"
+        not selected_qwen_ok
         or validation.get("status") != "passed"
         or validation.get("split") != "validation"
         or validation.get("adapter_sha256") != adapter_sha
-        or synthetic_test.get("status") != "passed"
-        or synthetic_test.get("split") != "test"
-        or synthetic_test.get("adapter_sha256") != adapter_sha
     ):
         raise RuntimeError("the selected Qwen did not pass frozen synthetic selection")
 
@@ -95,7 +124,7 @@ def load_contract(config_path: Path) -> tuple[dict[str, object], list[dict[str, 
         qwen_config.get("prompt", {}).get("target_schema")
         != "per_type_dialogue_l1_absent_l2_l5_v1"
         or qwen_config.get("runtime", {}).get("output_root")
-        != "checkpoints/qwen_multidegradation_100k_rank64_per_type_v2"
+        != expected_output_root
     ):
         raise RuntimeError("the gate is not bound to the selected per-type Qwen")
 
@@ -114,7 +143,7 @@ def load_contract(config_path: Path) -> tuple[dict[str, object], list[dict[str, 
 
 def identity(config_path: Path, config: Mapping[str, object]) -> dict[str, object]:
     artifacts = config["artifacts"]
-    return {
+    result = {
         "schema_version": 1,
         "config_sha256": sha256(config_path),
         "manifest_sha256": artifacts["manifest"]["sha256"],
@@ -127,6 +156,9 @@ def identity(config_path: Path, config: Mapping[str, object]) -> dict[str, objec
         "qwen_training_performed": False,
         "protected_foundir_official_test_accessed": False,
     }
+    if "checkpoint_family" in config:
+        result["checkpoint_family"] = config["checkpoint_family"]
+    return result
 
 
 def verify_raw(payload: Mapping[str, object], expected: Mapping[str, object]) -> None:
