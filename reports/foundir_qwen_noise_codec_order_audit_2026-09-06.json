@@ -1,0 +1,207 @@
+{
+  "conclusion": "Noise is detected on every PNG Blur+Noise pilot record but is absent on nearly every JPEG Noise/Lowlight+Noise record. The synthetic physical-v8 pipeline places JPEG before Noise, so it does not teach post-codec-suppressed Noise. File-format, quantization-table, residual, and prediction evidence strongly support this mismatch; the unavailable FoundIR data generator means the exact upstream operator order is not claimed as proven.",
+  "full_training_extension_counts": {
+    "02Blur_Noise": {
+      ".png": 29950
+    },
+    "05Noise": {
+      ".jpg": 58015
+    },
+    "16Lowlight_Noise": {
+      ".jpg": 52995
+    },
+    "18Lowlight_Blur_Noise": {
+      ".png": 29950
+    }
+  },
+  "physical_v8_order": "non_target_codec_then_target_degradations_with_noise_last",
+  "pilot_actual_format_counts": {
+    "01Blur": {
+      "JPEG": 2,
+      "PNG": 10
+    },
+    "02Blur_Noise": {
+      "PNG": 12
+    },
+    "05Noise": {
+      "JPEG": 12
+    },
+    "08Haze": {
+      "JPEG": 12
+    },
+    "09Lowlight_Haze": {
+      "JPEG": 12
+    },
+    "10Rain": {
+      "JPEG": 6,
+      "PNG": 6
+    },
+    "13Rain_Haze": {
+      "JPEG": 12
+    },
+    "14Lowlight": {
+      "JPEG": 11
+    },
+    "15Lowlight_Blur": {
+      "JPEG": 4,
+      "PNG": 7
+    },
+    "16Lowlight_Noise": {
+      "JPEG": 8,
+      "MPO": 3
+    },
+    "18Lowlight_Blur_Noise": {
+      "PNG": 11
+    }
+  },
+  "pilot_inferred_jpeg_quality_counts": {
+    "01Blur": {
+      "75": 2
+    },
+    "05Noise": {
+      "75": 8,
+      "99": 4
+    },
+    "08Haze": {
+      "75": 12
+    },
+    "09Lowlight_Haze": {
+      "95": 12
+    },
+    "10Rain": {
+      "40": 6
+    },
+    "13Rain_Haze": {
+      "95": 12
+    },
+    "14Lowlight": {
+      "100": 11
+    },
+    "15Lowlight_Blur": {
+      "100": 4
+    },
+    "16Lowlight_Noise": {
+      "100": 1,
+      "75": 7,
+      "94": 3
+    }
+  },
+  "pilot_noise_decisions": {
+    "02Blur_Noise": {
+      "all_views_noise_absent": 0,
+      "any_view_noise_present": 12,
+      "records": 12,
+      "second_highest_noise_present": 12
+    },
+    "05Noise": {
+      "all_views_noise_absent": 10,
+      "any_view_noise_present": 2,
+      "records": 12,
+      "second_highest_noise_present": 1
+    },
+    "16Lowlight_Noise": {
+      "all_views_noise_absent": 10,
+      "any_view_noise_present": 1,
+      "records": 11,
+      "second_highest_noise_present": 1
+    },
+    "18Lowlight_Blur_Noise": {
+      "all_views_noise_absent": 0,
+      "any_view_noise_present": 11,
+      "records": 11,
+      "second_highest_noise_present": 11
+    }
+  },
+  "pilot_residual_aligned_pair_counts": {
+    "01Blur": 12,
+    "02Blur_Noise": 12,
+    "05Noise": 12,
+    "08Haze": 9,
+    "09Lowlight_Haze": 8,
+    "10Rain": 12,
+    "13Rain_Haze": 10,
+    "14Lowlight": 11,
+    "15Lowlight_Blur": 11,
+    "16Lowlight_Noise": 11,
+    "18Lowlight_Blur_Noise": 11
+  },
+  "pilot_residual_medians_reduced_by_4": {
+    "01Blur": {
+      "residual_highpass_std": 0.04911869950592518,
+      "residual_horizontal_neighbor_correlation": 0.45638309758150775,
+      "residual_luma_std": 0.06863998249173164,
+      "residual_rgb_rmse": 0.07092446088790894
+    },
+    "02Blur_Noise": {
+      "residual_highpass_std": 0.0037232631584629416,
+      "residual_horizontal_neighbor_correlation": 0.012190228489983933,
+      "residual_luma_std": 0.004120041150599718,
+      "residual_rgb_rmse": 0.0060821217484772205
+    },
+    "05Noise": {
+      "residual_highpass_std": 0.003073516534641385,
+      "residual_horizontal_neighbor_correlation": 0.0720039319642783,
+      "residual_luma_std": 0.003673614701256156,
+      "residual_rgb_rmse": 0.005090058082714677
+    },
+    "08Haze": {
+      "residual_highpass_std": 0.046669527888298035,
+      "residual_horizontal_neighbor_correlation": 0.9387321975986516,
+      "residual_luma_std": 0.18107759952545166,
+      "residual_rgb_rmse": 0.24608482420444489
+    },
+    "09Lowlight_Haze": {
+      "residual_highpass_std": 0.05003889091312885,
+      "residual_horizontal_neighbor_correlation": 0.9569612786262328,
+      "residual_luma_std": 0.2337084636092186,
+      "residual_rgb_rmse": 0.44405874609947205
+    },
+    "10Rain": {
+      "residual_highpass_std": 0.027466295287013054,
+      "residual_horizontal_neighbor_correlation": 0.2116915953638394,
+      "residual_luma_std": 0.03831667639315128,
+      "residual_rgb_rmse": 0.04368136450648308
+    },
+    "13Rain_Haze": {
+      "residual_highpass_std": 0.054612886160612106,
+      "residual_horizontal_neighbor_correlation": 0.9012936298103333,
+      "residual_luma_std": 0.18201502412557602,
+      "residual_rgb_rmse": 0.20855441689491272
+    },
+    "14Lowlight": {
+      "residual_highpass_std": 0.01903056539595127,
+      "residual_horizontal_neighbor_correlation": 0.9857940270488648,
+      "residual_luma_std": 0.14711809158325195,
+      "residual_rgb_rmse": 0.39007866382598877
+    },
+    "15Lowlight_Blur": {
+      "residual_highpass_std": 0.047943685203790665,
+      "residual_horizontal_neighbor_correlation": 0.891610507307143,
+      "residual_luma_std": 0.13678638637065887,
+      "residual_rgb_rmse": 0.3109142482280731
+    },
+    "16Lowlight_Noise": {
+      "residual_highpass_std": 0.01988282985985279,
+      "residual_horizontal_neighbor_correlation": 0.9745249466130254,
+      "residual_luma_std": 0.10355092585086823,
+      "residual_rgb_rmse": 0.31614816188812256
+    },
+    "18Lowlight_Blur_Noise": {
+      "residual_highpass_std": 0.038696516305208206,
+      "residual_horizontal_neighbor_correlation": 0.9551404700296239,
+      "residual_luma_std": 0.14865398406982422,
+      "residual_rgb_rmse": 0.2771945297718048
+    }
+  },
+  "pilot_residual_shape_mismatch_counts": {
+    "08Haze": 3,
+    "09Lowlight_Haze": 4,
+    "13Rain_Haze": 2
+  },
+  "protected_foundir_official_test_accessed": false,
+  "protected_synthetic_test_accessed": false,
+  "qwen_training_performed": false,
+  "schema_version": 1,
+  "scope": "FoundIR_training_only_read_only_diagnostic",
+  "status": "codec_order_mismatch_strongly_supported_not_generator_proven"
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "status": "synthetic_only_postcodec_v9_data_contract",
+  "seed": 2026090609,
+  "base_manifest": "manifests/qwen_multidegradation_100k_physical_v8b.jsonl",
+  "base_manifest_sha256": "777d0130bb0ff9590ad967e8bc848b13399de71df58bf72739f95be62720fb02",
+  "base_generation_evidence_root": "data/qwen_multidegradation_100k_physical_v8b/.generation",
+  "manifest": "manifests/qwen_multidegradation_postcodec_v9.jsonl",
+  "metadata": "manifests/qwen_multidegradation_postcodec_v9.json"
+}

@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.multidegradation_data import read_jsonl, sha256
+from lowlight_restoration.qwen_input_transform import apply_qwen_input_transform
 from lowlight_restoration.qwen_lora import configure_qwen_visual_lora
 from lowlight_restoration.qwen_multidegradation import (
     DEGRADATIONS,
@@ -55,6 +56,7 @@ APPROVED_STATUSES = {
     "advisor_directed_qwen_100k_rank64_joint_mild_v7",
     "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
     "advisor_directed_qwen_100k_rank64_per_type_physical_v8",
+    "advisor_directed_qwen_postcodec_v9_continuation",
 }
 
 RANK64_100K_STATUSES = {
@@ -69,6 +71,7 @@ RANK64_100K_PER_TYPE_STATUSES = {
     "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
     "advisor_directed_qwen_100k_rank64_per_type_physical_v8",
 }
+POSTCODEC_V9_STATUS = "advisor_directed_qwen_postcodec_v9_continuation"
 
 SEMANTIC_TARGET_TOKEN_IDS = [
     17, 18, 19, 20, 71, 1335, 2198, 3417, 8899, 9832, 10303, 28503,
@@ -411,8 +414,187 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
         raise ValueError("rank-64 runtime would reject an 80GB H100")
 
 
+def validate_postcodec_v9_contract(config: dict[str, object]) -> None:
+    """Validate the bounded synthetic-only codec-order correction."""
+
+    for section in (
+        "contract",
+        "data_contract",
+        "initialization",
+        "model",
+        "processor",
+        "prompt",
+        "data",
+        "training",
+        "overfit",
+        "distributed",
+        "generation",
+        "gate",
+        "selection",
+        "runtime",
+    ):
+        if not isinstance(config.get(section), dict):
+            raise ValueError(f"missing post-codec v9 section: {section}")
+    contract = config["contract"]
+    data_contract = config["data_contract"]
+    initialization = config["initialization"]
+    model = config["model"]
+    prompt = config["prompt"]
+    data = config["data"]
+    training = config["training"]
+    distributed = config["distributed"]
+    gate = config["gate"]
+    runtime = config["runtime"]
+    assert all(
+        isinstance(value, dict)
+        for value in (
+            contract,
+            data_contract,
+            initialization,
+            model,
+            prompt,
+            data,
+            training,
+            distributed,
+            gate,
+            runtime,
+        )
+    )
+    for section, label in (
+        (contract, "advisor contract"),
+        (data_contract, "post-codec data contract"),
+    ):
+        path = workspace_path(section["path"])
+        if sha256(path) != section.get("sha256"):
+            raise RuntimeError(f"{label} changed")
+    data_contract_payload = json.loads(workspace_path(data_contract["path"]).read_text())
+    if (
+        data_contract_payload.get("status")
+        != "synthetic_only_postcodec_v9_data_contract"
+        or data_contract_payload.get("base_manifest")
+        != "manifests/qwen_multidegradation_100k_physical_v8b.jsonl"
+        or data_contract_payload.get("base_manifest_sha256")
+        != "777d0130bb0ff9590ad967e8bc848b13399de71df58bf72739f95be62720fb02"
+    ):
+        raise RuntimeError("post-codec v9 data ancestry changed")
+    manifest = workspace_path(data["manifest"])
+    metadata_path = workspace_path(data["generation_result"])
+    if (
+        sha256(manifest) != data.get("manifest_sha256")
+        or sha256(metadata_path) != data.get("generation_result_sha256")
+    ):
+        raise RuntimeError("post-codec v9 replay manifest changed")
+    metadata = json.loads(metadata_path.read_text())
+    if (
+        metadata.get("status") != "synthetic_only_postcodec_v9_replay_frozen"
+        or metadata.get("manifest_sha256") != data["manifest_sha256"]
+        or metadata.get("split_counts") != {"train": 20000, "validation": 12400}
+        or metadata.get("jpeg_qualities") != [75, 85, 94, 99]
+        or metadata.get("jpeg_order") != "after_target_degradations"
+        or metadata.get("foundir_images_used_for_qwen_training") is not False
+        or metadata.get("protected_synthetic_test_accessed") is not False
+    ):
+        raise RuntimeError("post-codec v9 replay metadata is inconsistent")
+    base_config_path = workspace_path(initialization["base_config"])
+    adapter_path = workspace_path(initialization["adapter"])
+    validation_path = workspace_path(initialization["validation_result"])
+    for path, expected, label in (
+        (base_config_path, initialization.get("base_config_sha256"), "base config"),
+        (adapter_path, initialization.get("adapter_sha256"), "adapter"),
+        (validation_path, initialization.get("validation_result_sha256"), "validation"),
+    ):
+        if sha256(path) != expected:
+            raise RuntimeError(f"post-codec v9 initialization {label} changed")
+    base_config = json.loads(base_config_path.read_text())
+    base_validation = json.loads(validation_path.read_text())
+    if (
+        base_config.get("status")
+        != "advisor_directed_qwen_100k_rank64_per_type_physical_v8"
+        or base_config.get("model") != model
+        or base_config.get("prompt") != prompt
+        or base_validation.get("automatic_gate_pass") is not True
+        or base_validation.get("adapter") != initialization["adapter"]
+        or base_validation.get("adapter_sha256") != initialization["adapter_sha256"]
+        or initialization.get("optimizer") is not None
+        or initialization.get("allow_missing_adapter_prefixes") != []
+    ):
+        raise RuntimeError("post-codec v9 must continue the frozen physical-v8 winner")
+    if data.get("expected_split_records") != {"train": 20000, "validation": 12400}:
+        raise ValueError("post-codec v9 split cardinality changed")
+    if data.get("expected_dialogue_split_records") != {
+        "train": 100000,
+        "validation": 62000,
+    }:
+        raise ValueError("post-codec v9 dialogue cardinality changed")
+    stages = data.get("curriculum")
+    if stages != [
+        {
+            "name": "V9_postcodec_replay",
+            "source_order_key": "V9_postcodec_replay_epoch1",
+            "source_start": 0,
+            "maximum_composition_size": 3,
+            "source_records": 20000,
+            "records": 100000,
+            "epochs": 1,
+        }
+    ]:
+        raise ValueError("post-codec v9 must use one bounded replay epoch")
+    if (
+        int(training.get("global_batch_size", 0)) != 200
+        or int(training.get("initial_optimizer_steps", -1)) != 0
+        or int(training.get("continuation_optimizer_steps", -1)) != 500
+        or int(training.get("total_optimizer_steps", -1)) != 500
+        or int(training.get("warmup_steps", -1)) != 20
+        or float(training.get("lora_learning_rate", 0)) != 0.000005
+        or float(training.get("merger_learning_rate", 0)) != 0.0000005
+        or float(training.get("language_lora_learning_rate", 0)) != 0.000002
+        or training.get("semantic_token_loss")
+        != {
+            "enabled": True,
+            "semantic_weight": 8,
+            "semantic_token_ids": FIXED_SLOT_SEMANTIC_TOKEN_IDS,
+            "semantic_weight_by_degradation": None,
+        }
+        or training.get("presence_auxiliary_loss")
+        != {
+            "enabled": True,
+            "weight": 1.0,
+            "level_token_ids": FIXED_SLOT_SEMANTIC_TOKEN_IDS,
+        }
+    ):
+        raise ValueError("post-codec v9 optimizer/loss contract changed")
+    if distributed.get("supported_world_sizes") != [1, 2, 4, 8]:
+        raise ValueError("post-codec v9 world-size support changed")
+    for world in (1, 2, 4, 8):
+        if (
+            micro_batch_size_for_world(config, world)
+            * accumulation_steps_for_world(config, world)
+            * world
+            != 200
+        ):
+            raise ValueError(f"post-codec v9 global batch changed for world {world}")
+    if runtime.get("supported_visible_devices") != {
+        "0": 1,
+        "0,1": 2,
+        "0,1,2,3": 4,
+        "0,1,2,3,4,5,6,7": 8,
+    }:
+        raise ValueError("post-codec v9 device contract changed")
+    domain_thresholds = gate.get("validation_domain_thresholds")
+    if not isinstance(domain_thresholds, dict) or set(domain_thresholds) != {
+        "v8_original",
+        "post_target_jpeg",
+    }:
+        raise ValueError("post-codec v9 domain gates changed")
+    if config["selection"].get("data") != "synthetic_validation_only_no_test":
+        raise ValueError("post-codec v9 selection could access protected test data")
+
+
 def validate_contract(config: dict[str, object]) -> None:
     status = config.get("status")
+    if status == POSTCODEC_V9_STATUS:
+        validate_postcodec_v9_contract(config)
+        return
     if status in RANK64_100K_STATUSES:
         validate_rank64_100k_contract(config)
         return
@@ -1279,6 +1461,7 @@ def validate_data(
     data = config["data"]
     assert isinstance(data, dict)
     records = read_jsonl(workspace_path(data["manifest"]))
+    postcodec_v9 = config.get("status") == POSTCODEC_V9_STATUS
     counts = Counter(record["split"] for record in records)
     if dict(counts) != data["expected_split_records"]:
         raise RuntimeError(f"pilot split counts changed: {counts}")
@@ -1287,9 +1470,10 @@ def validate_data(
         previous = source_roles.setdefault(record["source_id"], record["split"])
         if previous != record["split"]:
             raise RuntimeError(f"source leakage: {record['source_id']}")
-        output = workspace_path(record["output_path"])
-        if not output.is_file():
-            raise FileNotFoundError(f"pilot image not generated: {output}")
+        if not postcodec_v9 or full_hashes:
+            output = workspace_path(record["output_path"])
+            if not output.is_file():
+                raise FileNotFoundError(f"pilot image not generated: {output}")
     external_validation: list[dict[str, object]] = []
     if config.get("status") == "approved_qwen_visibility_v2b_hard_triple_continuation":
         external_validation = read_jsonl(workspace_path(data["validation_manifest"]))
@@ -1315,7 +1499,40 @@ def validate_data(
                 raise FileNotFoundError(f"v2b validation image not generated: {output}")
         if len(fresh_source_ids) < 180:
             raise RuntimeError("v2b validation does not use the frozen fresh source pool")
-    if full_hashes:
+    if full_hashes and postcodec_v9:
+        data_contract = json.loads(
+            workspace_path(config["data_contract"]["path"]).read_text()
+        )
+        base_records = {
+            str(record["record_id"]): record
+            for record in read_jsonl(workspace_path(data_contract["base_manifest"]))
+        }
+        evidence_root = workspace_path(
+            data_contract["base_generation_evidence_root"]
+        )
+
+        def verify_postcodec_base(record: dict[str, object]) -> None:
+            base_id = str(record.get("base_record_id"))
+            base = base_records.get(base_id)
+            if base is None:
+                raise RuntimeError(f"v9 base record is missing: {base_id}")
+            base_hash = hashlib.sha256(
+                json.dumps(base, separators=(",", ":"), sort_keys=True).encode()
+            ).hexdigest()
+            evidence_path = evidence_root / str(base["split"]) / f"{base_id}.json"
+            evidence = json.loads(evidence_path.read_text())
+            output = workspace_path(record["output_path"])
+            if (
+                record.get("base_manifest_record_sha256") != base_hash
+                or evidence.get("record_id") != base_id
+                or evidence.get("manifest_record_sha256") != base_hash
+                or sha256(output) != evidence.get("output_sha256")
+            ):
+                raise RuntimeError(f"v9 base evidence changed: {base_id}")
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=16) as executor:
+            list(executor.map(verify_postcodec_base, records))
+    elif full_hashes:
         evidence_root = workspace_path(
             data.get(
                 "generation_evidence_root",
@@ -1404,7 +1621,12 @@ def validate_data(
     labels = []
     for record in representatives:
         with Image.open(workspace_path(record["output_path"])) as handle:
-            images.append(handle.convert("RGB"))
+            transform = record.get("input_transform")
+            if transform is not None and not isinstance(transform, dict):
+                raise ValueError("representative input transform is malformed")
+            images.append(
+                apply_qwen_input_transform(handle.convert("RGB"), transform)
+            )
         labels.append(make_label(record["degradations"], record["levels"]))
     prompt = config["prompt"]
     assert isinstance(prompt, dict)
@@ -1445,7 +1667,7 @@ def validate_data(
                 raise RuntimeError("frozen L1--L5 single-token mapping changed")
         decision_token_positions_verified = True
     semantic_token_positions_verified = False
-    if config.get("status") in RANK64_100K_STATUSES:
+    if config.get("status") in RANK64_100K_STATUSES | {POSTCODEC_V9_STATUS}:
         semantic = config["training"].get("semantic_token_loss")
         if not isinstance(semantic, dict):
             raise RuntimeError("rank-64 semantic-token loss is missing")

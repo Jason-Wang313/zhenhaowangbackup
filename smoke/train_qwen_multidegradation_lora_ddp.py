@@ -39,6 +39,7 @@ from lowlight_restoration.qwen_lora import (
     load_qwen_adapter,
     save_qwen_adapter,
 )
+from lowlight_restoration.qwen_input_transform import apply_qwen_input_transform
 from lowlight_restoration.qwen_multidegradation import (
     DEGRADATIONS,
     FIXED_FIVE_SLOT_SCHEMA,
@@ -181,6 +182,12 @@ def open_images(records: Sequence[Mapping[str, object]]) -> list[Image.Image]:
                 if left < 0 or top < 0 or right <= left or bottom <= top or right > image.width or bottom > image.height:
                     raise ValueError(f"out-of-bounds crop_box for {record.get('record_id')}")
                 image = image.crop((left, top, right, bottom))
+            transform = record.get("input_transform")
+            if transform is not None and not isinstance(transform, Mapping):
+                raise ValueError(
+                    f"invalid input_transform for {record.get('record_id')}"
+                )
+            image = apply_qwen_input_transform(image, transform)
             images.append(image)
     return images
 
@@ -1616,6 +1623,44 @@ def gate_checks(
             float(metrics["per_type_level_accuracy"])
             >= float(gate["minimum_per_type_level_accuracy"])
         )
+    domain_thresholds = gate.get("validation_domain_thresholds")
+    if split == "validation" and domain_thresholds is not None:
+        if not isinstance(domain_thresholds, Mapping):
+            raise ValueError("validation-domain thresholds are malformed")
+        domains = metrics.get("by_evaluation_domain")
+        if not isinstance(domains, Mapping):
+            raise RuntimeError("validation-domain metrics are missing")
+        for domain, thresholds in domain_thresholds.items():
+            domain_metrics = domains.get(domain)
+            if not isinstance(thresholds, Mapping) or not isinstance(
+                domain_metrics, Mapping
+            ):
+                raise RuntimeError(f"validation domain is missing: {domain}")
+            prefix = f"domain_{domain}"
+            checks[f"{prefix}_valid"] = float(
+                domain_metrics["valid_structured_output_rate"]
+            ) >= float(thresholds["minimum_valid_structured_output_rate"])
+            checks[f"{prefix}_micro_f1"] = float(
+                domain_metrics["type_micro_f1"]
+            ) >= float(thresholds["minimum_type_micro_f1"])
+            checks[f"{prefix}_set_exact"] = float(
+                domain_metrics["degradation_set_exact_match_rate"]
+            ) >= float(thresholds["minimum_degradation_set_exact_match_rate"])
+            checks[f"{prefix}_triple_set_exact"] = float(
+                domain_metrics["by_composition_size"]["3"][
+                    "degradation_set_exact_match_rate"
+                ]
+            ) >= float(thresholds["minimum_triple_degradation_set_exact_match_rate"])
+            checks[f"{prefix}_severity"] = float(
+                domain_metrics["severity_typed_accuracy"]
+            ) >= float(thresholds["minimum_severity_typed_accuracy"])
+            noise = domain_metrics["per_type"]["noise"]
+            checks[f"{prefix}_noise_recall"] = float(noise["recall"]) >= float(
+                thresholds["minimum_noise_recall"]
+            )
+            checks[f"{prefix}_noise_precision"] = float(noise["precision"]) >= float(
+                thresholds["minimum_noise_precision"]
+            )
     return checks
 
 
@@ -1696,6 +1741,30 @@ def evaluate_split(
     for row, record in zip(rows, records, strict=True):
         row["record_id"] = record["record_id"]
         row["source_id"] = record["source_id"]
+        if record.get("evaluation_domain") is not None:
+            row["evaluation_domain"] = record["evaluation_domain"]
+    domains = sorted(
+        {
+            str(record["evaluation_domain"])
+            for record in records
+            if record.get("evaluation_domain")
+        }
+    )
+    if domains:
+        domain_metrics: dict[str, object] = {}
+        for domain in domains:
+            indices = [
+                index
+                for index, record in enumerate(records)
+                if record.get("evaluation_domain") == domain
+            ]
+            _, domain_result = evaluate_outputs(
+                [label_for(records[index]) for index in indices],
+                [raw[index] for index in indices],
+                target_schema=evaluation_schema,
+            )
+            domain_metrics[domain] = domain_result
+        metrics["by_evaluation_domain"] = domain_metrics
     if per_type_details is not None:
         total = valid = correct = active_total = active_correct = 0
         absent_total = absent_correct = 0
