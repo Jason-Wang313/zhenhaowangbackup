@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "frozen_foundir_training_only_qwen_real_gate",
+  "scope": "inference_only_no_qwen_training",
+  "records": 128,
+  "crop_size": 448,
+  "views": ["top_left", "top_right", "center", "bottom_left", "bottom_right"],
+  "aggregation": "second_highest",
+  "artifacts": {
+    "manifest": {
+      "path": "manifests/foundir_five_type_overfit_qwen_conditions_v1.csv",
+      "sha256": "ddf5a7ca4405188c5e541fa20baa95a6c22338b0d21624166091526f00c2b407"
+    },
+    "qwen_config": {
+      "path": "configs/qwen_multidegradation_100k_rank64_per_type_v2.json",
+      "sha256": "fdae194473cb5bba83c640f774fefc3f618b6ac54271f1d913ff65d7bd483f46"
+    },
+    "adapter": {
+      "path": "checkpoints/qwen_multidegradation_100k_rank64_per_type_v2/merger_trainable/checkpoints/P3_plus_triple/adapter.safetensors",
+      "sha256": "a1be9d1c2a225693c2311ae5204c43af1af5c58790363cbc7316f954e252aaff"
+    },
+    "comparison": {
+      "path": "reports/qwen_multidegradation_100k_rank64_comparison_v2.json",
+      "sha256": "3e5f6a71177e39a2fc7cd2d017b9969c6eb173ac47f6594adcd5aca6d71030e3"
+    },
+    "checkpoint_selection": {
+      "path": "checkpoints/qwen_multidegradation_100k_rank64_per_type_v2/checkpoint_selection.json",
+      "sha256": "1d4cfb727b893bbd8bec0b84fd02230d81c87619a8a49d2ffef76c0b934a208b"
+    },
+    "synthetic_validation": {
+      "path": "checkpoints/qwen_multidegradation_100k_rank64_per_type_v2/merger_trainable/validation_result.json",
+      "sha256": "f9cf96e6ccddd30686b95241a72b8409f2eecb1d5cd41626e2df2e0aa88e0637"
+    },
+    "synthetic_test": {
+      "path": "checkpoints/qwen_multidegradation_100k_rank64_per_type_v2/merger_trainable/fixed_test_result.json",
+      "sha256": "b72bbc4dae5a2fd6f7ce6413459bc3a814e95ee86f7e52b054159b984267d1fb"
+    }
+  },
+  "thresholds": {
+    "minimum_valid_output_rate": 0.99,
+    "minimum_type_micro_f1": 0.80,
+    "minimum_type_macro_f1": 0.70,
+    "minimum_degradation_set_exact": 0.60,
+    "minimum_each_type_recall": 0.50
+  },
+  "raw_output": "reports/foundir_five_type_qwen_real_gate_v2_views.json",
+  "output": "reports/foundir_five_type_qwen_real_gate_v2.json",
+  "qwen_training_performed": false,
+  "restoration_training_performed": false,
+  "protected_foundir_official_test_accessed": false
+}
