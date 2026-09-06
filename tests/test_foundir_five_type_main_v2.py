@@ -67,6 +67,10 @@ class FoundIRFiveTypeMainV2Tests(unittest.TestCase):
         self.assertNotIn("postcodec", runner.lower())
         self.assertNotIn("MillionIRData/Test", runner)
 
+    def test_evaluator_rejects_disabled_condition_arms(self) -> None:
+        source = (ROOT / "smoke/evaluate_foundir_five_type_flux2_ddp.py").read_text()
+        self.assertIn("condition arm {args.arm!r} is disabled", source)
+
     def test_launcher_requires_eight_explicit_devices(self) -> None:
         launcher = (ROOT / "smoke/launch_foundir_five_type_flux2_main_v2_8gpu.sh").read_text()
         self.assertIn('CUDA_VISIBLE_DEVICES:-}" == "0,1,2,3,4,5,6,7"', launcher)

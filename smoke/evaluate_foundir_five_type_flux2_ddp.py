@@ -226,6 +226,11 @@ def main() -> None:
     if args.selection is not None:
         args.selection = resolve_workspace_path(ROOT, args.selection)
     config = json.loads(args.config.read_text())
+    admitted_arms = tuple(config["evaluation"].get("condition_arms", ARMS))
+    if args.arm not in admitted_arms:
+        raise RuntimeError(
+            f"condition arm {args.arm!r} is disabled by this experiment contract"
+        )
     config_sha = file_sha256(args.config)
     checkpoint_sha = file_sha256(args.checkpoint)
     conditions_path = ROOT / config["full_conditions"]["csv"]

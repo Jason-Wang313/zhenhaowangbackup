@@ -81,6 +81,16 @@ else
     smoke/evaluate_foundir_five_type_vae_ceiling_ddp.py \
     --config "$CONFIG" --manifest "$MANIFEST"
 fi
+"$FLUX_PYTHON" - "$CONFIG" "$MANIFEST" "$VAE_RESULT" <<'PY'
+import hashlib,json,pathlib,sys
+sha=lambda p: hashlib.sha256(pathlib.Path(p).read_bytes()).hexdigest()
+p=json.loads(pathlib.Path(sys.argv[3]).read_text())
+assert p["config_sha256"] == sha(sys.argv[1])
+assert p["manifest_sha256"] == sha(sys.argv[2])
+assert p["protected_foundir_test_accessed"] is False
+print("FOUNDIR_FIVE_TYPE_V2_VAE_GATE", p["status"])
+raise SystemExit(0 if p["status"] == "latent_ceiling_clear" else 2)
+PY
 
 OVERFIT_RESULT="$OUTPUT/native_reference_overfit/result.json"
 if [[ ! -f "$OVERFIT_RESULT" ]]; then
