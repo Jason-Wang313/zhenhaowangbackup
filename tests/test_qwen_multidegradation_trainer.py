@@ -12,6 +12,7 @@ from torch import nn
 from smoke.train_qwen_multidegradation_lora_ddp import (
     calibrated_per_type_outputs,
     create_optimizer,
+    decoder_presence_auxiliary_loss,
     gate_checks,
     left_padded_generation,
     learning_rate_scale,
@@ -294,6 +295,103 @@ class QwenMultiDegradationTrainerTests(unittest.TestCase):
         )
         expected = (12 * token_losses[0] + 8 * token_losses[1]) / 20
         self.assertAlmostEqual(loss.item(), expected.item(), places=6)
+
+    def test_decoder_presence_loss_uses_l1_vs_pooled_l2_l5_logits(self):
+        labels = torch.tensor([[-100, 10], [-100, 13]])
+        logits = torch.zeros((2, 2, 20), dtype=torch.float32, requires_grad=True)
+        logits.data[0, 0, [10, 11, 12, 13, 14]] = torch.tensor(
+            [3.0, 0.0, 0.0, 0.0, 0.0]
+        )
+        logits.data[1, 0, [10, 11, 12, 13, 14]] = torch.tensor(
+            [0.0, 0.0, 0.0, 3.0, 0.0]
+        )
+        loss = decoder_presence_auxiliary_loss(
+            logits,
+            labels,
+            level_token_ids=[10, 11, 12, 13, 14],
+        )
+        expected_scores = torch.stack(
+            (
+                torch.stack((torch.tensor(3.0), torch.log(torch.tensor(4.0)))),
+                torch.stack(
+                    (
+                        torch.tensor(0.0),
+                        torch.log(torch.exp(torch.tensor(3.0)) + 3.0),
+                    )
+                ),
+            )
+        )
+        expected = torch.nn.functional.cross_entropy(
+            expected_scores, torch.tensor([0, 1])
+        )
+        self.assertAlmostEqual(loss.item(), expected.item(), places=6)
+        loss.backward()
+        self.assertGreater(float(logits.grad.abs().sum()), 0.0)
+
+    def test_training_loss_combines_decoder_presence_without_a_new_head(self):
+        labels = torch.tensor([[-100, 10]])
+        logits = torch.zeros((1, 2, 20), dtype=torch.float32, requires_grad=True)
+        output = SimpleNamespace(logits=logits)
+        training = {
+            "semantic_token_loss": {
+                "enabled": True,
+                "semantic_token_ids": [10, 11, 12, 13, 14],
+                "semantic_weight": 8.0,
+                "semantic_weight_by_degradation": None,
+            },
+            "presence_auxiliary_loss": {
+                "enabled": True,
+                "weight": 1.0,
+                "level_token_ids": [10, 11, 12, 13, 14],
+            },
+        }
+        combined = training_loss(output, labels, training)
+        semantic = semantic_assistant_token_loss(
+            logits,
+            labels,
+            semantic_token_ids=[10, 11, 12, 13, 14],
+            semantic_weight=8.0,
+        )
+        presence = decoder_presence_auxiliary_loss(
+            logits,
+            labels,
+            level_token_ids=[10, 11, 12, 13, 14],
+        )
+        self.assertAlmostEqual(combined.item(), (semantic + presence).item(), places=6)
+
+    def test_resumable_source_shards_are_disjoint_and_cover_one_epoch(self):
+        records = [
+            {
+                "record_id": f"r{index:03d}",
+                "source_id": f"s{index:03d}",
+                "split": "train",
+                "composition_size": index % 4,
+                "degradations": [],
+            }
+            for index in range(40)
+        ]
+        selected_ids = []
+        for shard in range(4):
+            stage = {
+                "name": f"shard{shard}",
+                "source_order_key": "one_epoch",
+                "source_start": shard * 10,
+                "maximum_composition_size": 3,
+                "source_records": 10,
+                "records": 50,
+            }
+            dialogues = stage_records(
+                records,
+                stage,
+                17,
+                target_schema="per_type_dialogue_l1_absent_l2_l5_v1",
+                global_batch_size=10,
+            )
+            ids = {record["record_id"] for record in dialogues}
+            self.assertEqual(len(ids), 10)
+            selected_ids.extend(ids)
+        self.assertEqual(len(selected_ids), 40)
+        self.assertEqual(len(set(selected_ids)), 40)
 
     def test_hard_triple_sampler_preserves_mixture_and_exact_quotas(self):
         records = []

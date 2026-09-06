@@ -38,6 +38,7 @@ def load_contract(path: Path) -> tuple[dict[str, object], str]:
     if config.get("status") not in {
         "human_approved_extreme_blur_v6_100k_contract",
         "advisor_directed_mild_blur_noise_v7_100k_contract",
+        "foundir_physics_blur_noise_v8_100k_contract",
     }:
         raise ValueError("scaled data generation contract is not approved")
     return config, hashlib.sha256(raw).hexdigest()
@@ -145,7 +146,19 @@ def main() -> None:
                 continue
             names = tuple(record["degradations"])
             level_signature = tuple(record["levels"].values())
-            key = (record["composition_size"], names, level_signature)
+            family_signature = tuple(
+                (name, record["operators"][name].get("family"))
+                for name in names
+                if name in {"blur", "noise"}
+            )
+            nuisance = record.get("non_target_nuisance", {}).get("family")
+            key = (
+                record["composition_size"],
+                names,
+                level_signature,
+                family_signature,
+                nuisance,
+            )
             selected.setdefault(key, record)
         records = list(selected.values())
     elif args.limit is not None:

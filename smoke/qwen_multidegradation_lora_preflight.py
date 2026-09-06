@@ -54,6 +54,7 @@ APPROVED_STATUSES = {
     "advisor_approved_qwen_100k_rank64_per_type",
     "advisor_directed_qwen_100k_rank64_joint_mild_v7",
     "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
+    "advisor_directed_qwen_100k_rank64_per_type_physical_v8",
 }
 
 RANK64_100K_STATUSES = {
@@ -61,10 +62,12 @@ RANK64_100K_STATUSES = {
     "advisor_approved_qwen_100k_rank64_per_type",
     "advisor_directed_qwen_100k_rank64_joint_mild_v7",
     "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
+    "advisor_directed_qwen_100k_rank64_per_type_physical_v8",
 }
 RANK64_100K_PER_TYPE_STATUSES = {
     "advisor_approved_qwen_100k_rank64_per_type",
     "advisor_directed_qwen_100k_rank64_per_type_mild_v7",
+    "advisor_directed_qwen_100k_rank64_per_type_physical_v8",
 }
 
 SEMANTIC_TARGET_TOKEN_IDS = [
@@ -146,6 +149,7 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
 
     status = str(config.get("status"))
     per_type = status in RANK64_100K_PER_TYPE_STATUSES
+    physical_v8 = status == "advisor_directed_qwen_100k_rank64_per_type_physical_v8"
     if status not in RANK64_100K_STATUSES:
         raise ValueError("unknown rank-64 100k comparison status")
     for section in (
@@ -198,9 +202,13 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
             raise RuntimeError(f"{description} changed")
     data_contract_payload = json.loads(workspace_path(data_contract["path"]).read_text())
     expected_data_status = (
-        "advisor_directed_mild_blur_noise_v7_100k_contract"
-        if status.startswith("advisor_directed_")
-        else "human_approved_extreme_blur_v6_100k_contract"
+        "foundir_physics_blur_noise_v8_100k_contract"
+        if physical_v8
+        else (
+            "advisor_directed_mild_blur_noise_v7_100k_contract"
+            if status.startswith("advisor_directed_")
+            else "human_approved_extreme_blur_v6_100k_contract"
+        )
     )
     if data_contract_payload.get("status") != expected_data_status:
         raise RuntimeError("rank-64 config is bound to the wrong synthetic corpus")
@@ -277,20 +285,42 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
     }
     if data.get("expected_dialogue_split_records") != expected_dialogues:
         raise ValueError("rank-64 dialogue cardinality changed")
-    expected_source_stages = [40000, 70000, 100000]
     stages = data.get("curriculum")
-    if not isinstance(stages, list) or len(stages) != 3:
-        raise ValueError("rank-64 curriculum must have three stages")
-    for index, (stage, source_records) in enumerate(
-        zip(stages, expected_source_stages, strict=True), start=1
-    ):
+    if physical_v8:
+        expected_names = [f"V8_physical_shard{index}" for index in range(1, 6)]
         if (
-            stage.get("maximum_composition_size") != index
-            or int(stage.get("source_records", source_records)) != source_records
-            or int(stage.get("records", 0)) != source_records * multiplier
-            or int(stage.get("epochs", 0)) != 1
+            not isinstance(stages, list)
+            or len(stages) != 5
+            or [stage.get("name") for stage in stages] != expected_names
+            or any(stage.get("maximum_composition_size") != 3 for stage in stages)
+            or any(int(stage.get("source_records", 0)) != 20000 for stage in stages)
+            or any(int(stage.get("records", 0)) != 100000 for stage in stages)
+            or any(int(stage.get("epochs", 0)) != 1 for stage in stages)
+            or [int(stage.get("source_start", -1)) for stage in stages]
+            != [0, 20000, 40000, 60000, 80000]
+            or any(
+                stage.get("source_order_key")
+                != "V8_physical_full_mixture_epoch1"
+                for stage in stages
+            )
         ):
-            raise ValueError("rank-64 curriculum coverage changed")
+            raise ValueError(
+                "v8 continuation must replay one complete resumable full mixture"
+            )
+    else:
+        expected_source_stages = [40000, 70000, 100000]
+        if not isinstance(stages, list) or len(stages) != 3:
+            raise ValueError("rank-64 curriculum must have three stages")
+        for index, (stage, source_records) in enumerate(
+            zip(stages, expected_source_stages, strict=True), start=1
+        ):
+            if (
+                stage.get("maximum_composition_size") != index
+                or int(stage.get("source_records", source_records)) != source_records
+                or int(stage.get("records", 0)) != source_records * multiplier
+                or int(stage.get("epochs", 0)) != 1
+            ):
+                raise ValueError("rank-64 curriculum coverage changed")
     if distributed.get("supported_world_sizes") != [1, 2, 4, 8]:
         raise ValueError("rank-64 comparison must support 1/2/4/8 GPUs")
     global_batch = int(training.get("global_batch_size", 0))
@@ -322,8 +352,55 @@ def validate_rank64_100k_contract(config: dict[str, object]) -> None:
         or semantic.get("semantic_weight_by_degradation") is not None
     ):
         raise ValueError("rank-64 comparison decision-token loss changed")
-    if config.get("initialization") is not None:
-        raise ValueError("rank-64 fair comparison must start both methods from base Qwen")
+    initialization = config.get("initialization")
+    if physical_v8:
+        if not isinstance(initialization, dict):
+            raise ValueError("v8 continuation initialization is missing")
+        for path_key, hash_key in (
+            ("base_config", "base_config_sha256"),
+            ("adapter", "adapter_sha256"),
+            ("validation_result", "validation_result_sha256"),
+        ):
+            path = workspace_path(initialization.get(path_key))
+            if sha256(path) != initialization.get(hash_key):
+                raise RuntimeError(f"v8 initialization changed: {path_key}")
+        if (
+            initialization.get("optimizer") is not None
+            or initialization.get("allow_missing_adapter_prefixes") != []
+            or int(initialization.get("initial_dialogue_presentations", 0)) != 1050000
+        ):
+            raise ValueError("v8 must initialize the v7 adapter with a fresh optimizer")
+        base_config = json.loads(workspace_path(initialization["base_config"]).read_text())
+        if (
+            base_config.get("status")
+            != "advisor_directed_qwen_100k_rank64_per_type_mild_v7"
+            or base_config.get("model") != model
+            or sha256(workspace_path(initialization["base_config"]))
+            != initialization["base_config_sha256"]
+        ):
+            raise RuntimeError("v8 initialization architecture is not the v7 winner")
+        validation = json.loads(
+            workspace_path(initialization["validation_result"]).read_text()
+        )
+        if (
+            validation.get("automatic_gate_pass") is not True
+            or validation.get("adapter") != initialization["adapter"]
+            or validation.get("adapter_sha256") != initialization["adapter_sha256"]
+            or validation.get("config_sha256") != initialization["base_config_sha256"]
+        ):
+            raise RuntimeError("v8 initialization evidence is inconsistent")
+        presence = training.get("presence_auxiliary_loss")
+        if presence != {
+            "enabled": True,
+            "weight": 1.0,
+            "level_token_ids": FIXED_SLOT_SEMANTIC_TOKEN_IDS,
+        }:
+            raise ValueError("v8 decoder presence auxiliary loss changed")
+    else:
+        if initialization is not None:
+            raise ValueError("rank-64 fair comparison must start both methods from base Qwen")
+        if training.get("presence_auxiliary_loss") is not None:
+            raise ValueError("legacy rank-64 comparison unexpectedly enables presence loss")
     if float(gate.get("maximum_severity_typed_mse_with_missing_penalty", -1)) != 1.0:
         raise ValueError("rank-64 comparison requires severity MSE < 1")
     if float(gate.get("minimum_triple_combined_label_exact_match_rate", -1)) != 0.65:
@@ -1390,6 +1467,25 @@ def validate_data(
                     "rank-64 assistant answer has the wrong decision-token count"
                 )
         semantic_token_positions_verified = True
+    presence_token_positions_verified = False
+    presence = config["training"].get("presence_auxiliary_loss")
+    if presence is not None:
+        if (
+            not isinstance(presence, dict)
+            or presence.get("level_token_ids") != FIXED_SLOT_SEMANTIC_TOKEN_IDS
+        ):
+            raise RuntimeError("decoder presence-loss L1--L5 token IDs changed")
+        expected_per_row = 1 if target_schema == PER_TYPE_DIALOGUE_SCHEMA else 5
+        for row in batch["labels"]:
+            matches = sum(
+                int(row.eq(token_id).sum().item())
+                for token_id in FIXED_SLOT_SEMANTIC_TOKEN_IDS
+            )
+            if matches != expected_per_row:
+                raise RuntimeError(
+                    "presence-loss assistant answer has the wrong decision-token count"
+                )
+        presence_token_positions_verified = True
     return {
         "records": len(records),
         "unique_sources_used": len(source_roles),
@@ -1410,6 +1506,7 @@ def validate_data(
         ),
         "decision_token_positions_verified": decision_token_positions_verified,
         "semantic_token_positions_verified": semantic_token_positions_verified,
+        "presence_token_positions_verified": presence_token_positions_verified,
         "training_only_calibration_partition": (
             {
                 "calibration_records": partition_evidence["calibration_records"],

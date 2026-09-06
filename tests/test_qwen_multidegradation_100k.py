@@ -1,5 +1,6 @@
 import json
 import unittest
+from collections import Counter
 from pathlib import Path
 
 from lowlight_restoration.multidegradation_data import (
@@ -8,6 +9,13 @@ from lowlight_restoration.multidegradation_data import (
     NOISE_SIGMA_RANGES_MILD_V7,
     ROOT,
     sha256,
+    _balanced_levels,
+)
+from smoke.build_qwen_multidegradation_100k import (
+    V8_STATUS,
+    load_contract,
+    v8_non_target_nuisance,
+    v8_operator_parameters,
 )
 from smoke.generate_qwen_multidegradation_100k import source_grouped_chunks
 
@@ -244,6 +252,50 @@ class QwenMultidegradation100kTests(unittest.TestCase):
         ):
             self.assertEqual(per_type_stage["source_records"], joint_stage["source_records"])
             self.assertEqual(per_type_stage["records"], joint_stage["records"] * 5)
+
+    def test_v8_family_level_assignment_is_exactly_balanced(self):
+        for name in ("blur", "noise"):
+            counts = Counter()
+            for index in range(12):
+                level = _balanced_levels((name,), index)[name]
+                parameters = v8_operator_parameters(
+                    name,
+                    level,
+                    index=index,
+                    combination_index=0,
+                    seed=123 + index,
+                    source={},
+                )
+                counts[(parameters["family"], level)] += 1
+            self.assertEqual(len(counts), 12)
+            self.assertEqual(set(counts.values()), {1})
+
+    def test_v8_contract_and_hard_negative_clean_semantics(self):
+        path = ROOT / "configs/qwen_multidegradation_100k_physical_v8_data.json"
+        contract, digest = load_contract(path)
+        self.assertEqual(contract["status"], V8_STATUS)
+        self.assertEqual(len(digest), 64)
+        self.assertEqual(
+            v8_non_target_nuisance(
+                index=2,
+                combination_index=0,
+                size=0,
+                seed=9,
+                degradations=(),
+            )["family"],
+            "none",
+        )
+        observed = {
+            v8_non_target_nuisance(
+                index=index * 12,
+                combination_index=0,
+                size=1,
+                seed=100 + index,
+                degradations=("rain",),
+            )["family"]
+            for index in range(4)
+        }
+        self.assertEqual(observed, {"none", "jpeg", "resample"})
 
 
 if __name__ == "__main__":

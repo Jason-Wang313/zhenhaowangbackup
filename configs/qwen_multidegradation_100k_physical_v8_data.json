@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "status": "foundir_physics_blur_noise_v8_100k_contract",
+  "seed": 2026082806,
+  "source_manifest": "manifests/low_light_source_pool_2000.json",
+  "source_manifest_sha256": "031a6e43cf46e8bf2363be7ca6c67c533ffcf7a44241a5f605a542daac1729d5",
+  "crop_size": 448,
+  "split_composition_counts": {
+    "train": {"0": 10000, "1": 30000, "2": 30000, "3": 30000},
+    "validation": {"0": 1000, "1": 3000, "2": 3000, "3": 3000},
+    "test": {"0": 1000, "1": 3000, "2": 3000, "3": 3000}
+  },
+  "blur": {
+    "type": "physical_multifamily",
+    "profile": "physical_multifamily_v8_2026_09_06",
+    "families": {
+      "defocus": {
+        "2": {"radius": 1},
+        "3": {"radius": 2},
+        "4": {"radius": 3},
+        "5": {"radius": 5}
+      },
+      "camera_shake": {
+        "2": {"kernel_size": 5, "trajectory_steps": 7, "extent": 1.0},
+        "3": {"kernel_size": 7, "trajectory_steps": 11, "extent": 2.0},
+        "4": {"kernel_size": 13, "trajectory_steps": 19, "extent": 4.5},
+        "5": {"kernel_size": 21, "trajectory_steps": 31, "extent": 8.0}
+      },
+      "temporal_average": {
+        "2": {"kernel_size": 5, "frames": 3, "extent": 1.5},
+        "3": {"kernel_size": 7, "frames": 5, "extent": 3.0},
+        "4": {"kernel_size": 13, "frames": 9, "extent": 6.0},
+        "5": {"kernel_size": 21, "frames": 15, "extent": 10.0}
+      }
+    }
+  },
+  "noise": {
+    "type": "camera_isp_multifamily",
+    "profile": "physical_multifamily_v8_2026_09_06",
+    "families": {
+      "poisson_read": {
+        "2": {"photons": 12000.0, "read_std": 0.0005},
+        "3": {"photons": 4000.0, "read_std": 0.0015},
+        "4": {"photons": 1200.0, "read_std": 0.004},
+        "5": {"photons": 350.0, "read_std": 0.01}
+      },
+      "heteroscedastic_isp": {
+        "2": {"shot_variance": 0.00002, "read_variance": 0.000005},
+        "3": {"shot_variance": 0.0001, "read_variance": 0.00002},
+        "4": {"shot_variance": 0.0005, "read_variance": 0.0001},
+        "5": {"shot_variance": 0.0025, "read_variance": 0.0006}
+      },
+      "chroma_banding": {
+        "2": {"luma_std_0_255": 1.0, "chroma_std_0_255": 1.5, "row_std_0_255": 0.2},
+        "3": {"luma_std_0_255": 2.5, "chroma_std_0_255": 4.0, "row_std_0_255": 0.7},
+        "4": {"luma_std_0_255": 6.0, "chroma_std_0_255": 9.0, "row_std_0_255": 1.8},
+        "5": {"luma_std_0_255": 12.0, "chroma_std_0_255": 18.0, "row_std_0_255": 4.0}
+      }
+    }
+  },
+  "non_target_nuisance": {
+    "schedule": ["none", "none", "jpeg", "resample"],
+    "jpeg_quality_range": [65, 95],
+    "resample_scale_range": [0.78, 0.95],
+    "applied_before_target_degradations": true
+  },
+  "rationale": "Broaden synthetic Blur and Noise from scalar strengths to paper-described physical families, and add bounded non-target artifacts as hard negatives. No FoundIR image or label is used for Qwen gradients.",
+  "physical_application_order": ["haze", "blur", "rain", "low_light", "noise"],
+  "haze_depth_policy": "verified_mio100_depth_only",
+  "manifest": "manifests/qwen_multidegradation_100k_physical_v8b.jsonl",
+  "metadata": "manifests/qwen_multidegradation_100k_physical_v8b.json",
+  "data_root": "data/qwen_multidegradation_100k_physical_v8b",
+  "generation_evidence_root": "data/qwen_multidegradation_100k_physical_v8b/.generation",
+  "generation_result": "reports/qwen_multidegradation_100k_physical_v8b_generation.json"
+}

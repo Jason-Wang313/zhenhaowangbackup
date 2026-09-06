@@ -3,9 +3,11 @@ from collections import Counter
 from pathlib import Path
 
 from lowlight_restoration.multidegradation_data import (
+    BLUR_FAMILIES_PHYSICAL_V8,
     BLUR_PARAMETERS,
     BLUR_PARAMETERS_EXTREME_V6,
     BLUR_PARAMETERS_MILD_V7,
+    NOISE_FAMILIES_PHYSICAL_V8,
     NOISE_SIGMA_RANGES_MILD_V7,
     ROOT,
     SPLIT_SOURCE_COUNTS,
@@ -14,11 +16,15 @@ from lowlight_restoration.multidegradation_data import (
     generate_record,
     load_source_inventory,
     validate_pilot_records,
+    _apply_blur,
     _apply_lowlight,
+    _apply_noise,
+    _apply_non_target_nuisance,
     _operator_parameters,
 )
 
 import numpy as np
+import cv2
 
 
 class MultiDegradationDataTests(unittest.TestCase):
@@ -150,6 +156,83 @@ class MultiDegradationDataTests(unittest.TestCase):
         self.assertLess(float(result.mean()), float(image.mean()))
         self.assertAlmostEqual(float(result.mean()) / float(image.mean()), 0.30, places=2)
 
+    def test_v8_physical_blur_families_are_deterministic_and_ordered(self):
+        rng = np.random.default_rng(4)
+        image = np.rint(rng.uniform(20, 235, (128, 128, 3))).astype(np.uint8)
+        for family, levels in BLUR_FAMILIES_PHYSICAL_V8.items():
+            outputs = [
+                _apply_blur(
+                    image,
+                    {**levels[level], "family": family, "seed": 7123},
+                )
+                for level in range(2, 6)
+            ]
+            self.assertTrue(
+                np.array_equal(
+                    outputs[0],
+                    _apply_blur(
+                        image,
+                        {**levels[2], "family": family, "seed": 7123},
+                    ),
+                )
+            )
+            high_frequency = [
+                float(
+                    cv2.Laplacian(
+                        cv2.cvtColor(output, cv2.COLOR_BGR2GRAY),
+                        cv2.CV_32F,
+                    ).var()
+                )
+                for output in outputs
+            ]
+            self.assertTrue(
+                all(a > b for a, b in zip(high_frequency, high_frequency[1:])),
+                (family, high_frequency),
+            )
+
+    def test_v8_camera_noise_families_are_deterministic_and_ordered(self):
+        rng = np.random.default_rng(5)
+        image = np.rint(rng.uniform(20, 235, (128, 128, 3))).astype(np.uint8)
+        for family, levels in NOISE_FAMILIES_PHYSICAL_V8.items():
+            outputs = [
+                _apply_noise(
+                    image,
+                    {**levels[level], "family": family, "seed": 8123},
+                )
+                for level in range(2, 6)
+            ]
+            self.assertTrue(
+                np.array_equal(
+                    outputs[0],
+                    _apply_noise(
+                        image,
+                        {**levels[2], "family": family, "seed": 8123},
+                    ),
+                )
+            )
+            residual_rms = [
+                float(np.sqrt(np.mean((output.astype(np.float32) - image) ** 2)))
+                for output in outputs
+            ]
+            self.assertTrue(
+                all(a < b for a, b in zip(residual_rms, residual_rms[1:])),
+                (family, residual_rms),
+            )
+
+    def test_v8_non_target_nuisances_are_bounded_and_deterministic(self):
+        image = np.arange(64 * 64 * 3, dtype=np.uint8).reshape(64, 64, 3)
+        for parameters in (
+            {"family": "jpeg", "quality": 81, "seed": 3},
+            {"family": "resample", "scale": 0.83, "seed": 4},
+        ):
+            first = _apply_non_target_nuisance(image, parameters)
+            second = _apply_non_target_nuisance(image, parameters)
+            self.assertEqual(first.shape, image.shape)
+            self.assertEqual(first.dtype, np.uint8)
+            self.assertTrue(np.array_equal(first, second))
+            self.assertFalse(np.array_equal(first, image))
+
 
 if __name__ == "__main__":
     unittest.main()
+    NOISE_FAMILIES_PHYSICAL_V8,

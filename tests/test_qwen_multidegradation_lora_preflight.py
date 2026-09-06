@@ -219,6 +219,52 @@ class QwenMultiDegradationLoraPreflightTests(unittest.TestCase):
         )
         self.assertFalse(fixed_test.exists())
 
+    def test_v8_physical_continuation_is_hash_bound_and_test_blind(self):
+        config, config_sha = load_config(
+            ROOT
+            / "configs/qwen_multidegradation_100k_rank64_per_type_physical_v8.json"
+        )
+        validate_contract(config)
+        self.assertEqual(len(config_sha), 64)
+        self.assertEqual(config["model"]["lora_rank"], 64)
+        self.assertEqual(config["model"]["lora_alpha"], 64)
+        self.assertIsNone(config["initialization"]["optimizer"])
+        self.assertEqual(config["training"]["total_optimizer_steps"], 2500)
+        self.assertEqual(len(config["data"]["curriculum"]), 5)
+        self.assertEqual(
+            [stage["source_start"] for stage in config["data"]["curriculum"]],
+            [0, 20000, 40000, 60000, 80000],
+        )
+        self.assertEqual(
+            config["training"]["presence_auxiliary_loss"],
+            {
+                "enabled": True,
+                "weight": 1.0,
+                "level_token_ids": [16, 17, 18, 19, 20],
+            },
+        )
+        self.assertFalse(
+            (
+                ROOT
+                / config["runtime"]["output_root"]
+                / "merger_trainable/fixed_test_result.json"
+            ).exists()
+        )
+
+    def test_v8_rejects_presence_loss_or_initialization_drift(self):
+        config, _ = load_config(
+            ROOT
+            / "configs/qwen_multidegradation_100k_rank64_per_type_physical_v8.json"
+        )
+        changed = deepcopy(config)
+        changed["training"]["presence_auxiliary_loss"]["weight"] = 0.5
+        with self.assertRaisesRegex(ValueError, "presence auxiliary"):
+            validate_contract(changed)
+        changed = deepcopy(config)
+        changed["initialization"]["optimizer"] = "optimizer.pt"
+        with self.assertRaisesRegex(ValueError, "fresh optimizer"):
+            validate_contract(changed)
+
 
 if __name__ == "__main__":
     unittest.main()

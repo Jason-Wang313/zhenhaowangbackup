@@ -72,6 +72,51 @@ NOISE_SIGMA_RANGES_MILD_V7 = {
     4: (6.0, 12.0),
     5: (12.0, 25.0),
 }
+# FoundIR's paper describes captured defocus, camera-shake, temporal-average
+# blur and high-ISO camera noise.  V8 keeps the approved AgenticIR synthesis
+# route but broadens the two failed domains beyond one straight-motion kernel
+# and additive sRGB Gaussian noise.  These immutable templates are selected in
+# a type/level-balanced way by the v8 manifest builder.
+BLUR_FAMILIES_PHYSICAL_V8 = {
+    "defocus": {
+        2: {"radius": 1},
+        3: {"radius": 2},
+        4: {"radius": 3},
+        5: {"radius": 5},
+    },
+    "camera_shake": {
+        2: {"kernel_size": 5, "trajectory_steps": 7, "extent": 1.0},
+        3: {"kernel_size": 7, "trajectory_steps": 11, "extent": 2.0},
+        4: {"kernel_size": 13, "trajectory_steps": 19, "extent": 4.5},
+        5: {"kernel_size": 21, "trajectory_steps": 31, "extent": 8.0},
+    },
+    "temporal_average": {
+        2: {"kernel_size": 5, "frames": 3, "extent": 1.5},
+        3: {"kernel_size": 7, "frames": 5, "extent": 3.0},
+        4: {"kernel_size": 13, "frames": 9, "extent": 6.0},
+        5: {"kernel_size": 21, "frames": 15, "extent": 10.0},
+    },
+}
+NOISE_FAMILIES_PHYSICAL_V8 = {
+    "poisson_read": {
+        2: {"photons": 12000.0, "read_std": 0.0005},
+        3: {"photons": 4000.0, "read_std": 0.0015},
+        4: {"photons": 1200.0, "read_std": 0.0040},
+        5: {"photons": 350.0, "read_std": 0.0100},
+    },
+    "heteroscedastic_isp": {
+        2: {"shot_variance": 0.00002, "read_variance": 0.000005},
+        3: {"shot_variance": 0.00010, "read_variance": 0.000020},
+        4: {"shot_variance": 0.00050, "read_variance": 0.000100},
+        5: {"shot_variance": 0.00250, "read_variance": 0.000600},
+    },
+    "chroma_banding": {
+        2: {"luma_std_0_255": 1.0, "chroma_std_0_255": 1.5, "row_std_0_255": 0.2},
+        3: {"luma_std_0_255": 2.5, "chroma_std_0_255": 4.0, "row_std_0_255": 0.7},
+        4: {"luma_std_0_255": 6.0, "chroma_std_0_255": 9.0, "row_std_0_255": 1.8},
+        5: {"luma_std_0_255": 12.0, "chroma_std_0_255": 18.0, "row_std_0_255": 4.0},
+    },
+}
 HAZE_A_MEANS = {2: 0.60, 3: 0.70, 4: 0.80, 5: 1.00}
 HAZE_BETA_MEANS = {2: 2.4, 3: 3.6, 4: 7.2, 5: 10.8}
 RAIN_DISTRIBUTIONS = {2: (5.0, 5.0), 3: (60.0, 5.0), 4: (150.0, 10.0), 5: (340.0, 20.0)}
@@ -506,12 +551,128 @@ def _apply_lowlight(image: np.ndarray, parameters: Mapping[str, object]) -> np.n
 
 
 def _apply_noise(image: np.ndarray, parameters: Mapping[str, object]) -> np.ndarray:
+    family = str(parameters.get("family", "gaussian_rgb"))
     rng = np.random.default_rng(int(parameters["seed"]))
-    noise = rng.normal(0.0, float(parameters["sigma_0_255"]), image.shape)
-    return np.rint(image.astype(np.float32) + noise).clip(0, 255).astype(np.uint8)
+    if family == "gaussian_rgb":
+        noise = rng.normal(0.0, float(parameters["sigma_0_255"]), image.shape)
+        return np.rint(image.astype(np.float32) + noise).clip(0, 255).astype(np.uint8)
+
+    rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
+    if family == "poisson_read":
+        linear = np.power(rgb, 2.2)
+        photons = float(parameters["photons"])
+        shot = rng.poisson(linear * photons).astype(np.float32) / photons
+        noisy = shot + rng.normal(0.0, float(parameters["read_std"]), linear.shape)
+        result = np.power(np.clip(noisy, 0.0, 1.0), 1.0 / 2.2)
+        return cv2.cvtColor(
+            np.rint(result * 255.0).clip(0, 255).astype(np.uint8),
+            cv2.COLOR_RGB2BGR,
+        )
+    if family == "heteroscedastic_isp":
+        variance = (
+            float(parameters["shot_variance"]) * rgb
+            + float(parameters["read_variance"])
+        )
+        noise = rng.normal(0.0, 1.0, rgb.shape) * np.sqrt(variance)
+        result = np.clip(rgb + noise, 0.0, 1.0)
+        return cv2.cvtColor(
+            np.rint(result * 255.0).astype(np.uint8), cv2.COLOR_RGB2BGR
+        )
+    if family == "chroma_banding":
+        ycc = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb).astype(np.float32)
+        channel_std = np.array(
+            [
+                float(parameters["luma_std_0_255"]),
+                float(parameters["chroma_std_0_255"]),
+                float(parameters["chroma_std_0_255"]),
+            ],
+            dtype=np.float32,
+        )
+        ycc += rng.normal(0.0, 1.0, ycc.shape).astype(np.float32) * channel_std
+        rows = rng.normal(
+            0.0,
+            float(parameters["row_std_0_255"]),
+            (image.shape[0], 1, 1),
+        ).astype(np.float32)
+        ycc += rows
+        return cv2.cvtColor(
+            np.rint(ycc).clip(0, 255).astype(np.uint8), cv2.COLOR_YCrCb2BGR
+        )
+    raise ValueError(f"unsupported noise family: {family}")
+
+
+def _normalized_psf(kernel: np.ndarray) -> np.ndarray:
+    total = float(kernel.sum())
+    if not np.isfinite(total) or total <= 0:
+        raise RuntimeError("blur PSF has no finite positive mass")
+    return (kernel / total).astype(np.float32)
+
+
+def _defocus_psf(radius: int) -> np.ndarray:
+    size = radius * 2 + 1
+    yy, xx = np.ogrid[-radius : radius + 1, -radius : radius + 1]
+    return _normalized_psf((xx * xx + yy * yy <= radius * radius).astype(np.float32))
+
+
+def _camera_shake_psf(parameters: Mapping[str, object]) -> np.ndarray:
+    size = int(parameters["kernel_size"])
+    steps = int(parameters["trajectory_steps"])
+    extent = float(parameters["extent"])
+    rng = np.random.default_rng(int(parameters["seed"]))
+    trajectory = np.cumsum(rng.normal(0.0, 1.0, (steps, 2)), axis=0)
+    trajectory -= trajectory.mean(axis=0, keepdims=True)
+    radius = float(np.max(np.linalg.norm(trajectory, axis=1)))
+    if radius > 0:
+        trajectory *= extent / radius
+    center = (size - 1) / 2.0
+    kernel = np.zeros((size, size), dtype=np.float32)
+    for y, x in trajectory + center:
+        x0, y0 = int(np.floor(x)), int(np.floor(y))
+        fx, fy = float(x - x0), float(y - y0)
+        for dy, wy in ((0, 1.0 - fy), (1, fy)):
+            for dx, wx in ((0, 1.0 - fx), (1, fx)):
+                yy, xx = y0 + dy, x0 + dx
+                if 0 <= yy < size and 0 <= xx < size:
+                    kernel[yy, xx] += wy * wx
+    kernel = cv2.GaussianBlur(kernel, (3, 3), 0.45)
+    return _normalized_psf(kernel)
+
+
+def _temporal_average_psf(parameters: Mapping[str, object]) -> np.ndarray:
+    size = int(parameters["kernel_size"])
+    frames = int(parameters["frames"])
+    extent = float(parameters["extent"])
+    rng = np.random.default_rng(int(parameters["seed"]))
+    angle = float(rng.uniform(-np.pi, np.pi))
+    direction = np.array([np.sin(angle), np.cos(angle)], dtype=np.float32)
+    offsets = np.linspace(-extent / 2.0, extent / 2.0, frames)
+    center = (size - 1) / 2.0
+    kernel = np.zeros((size, size), dtype=np.float32)
+    for offset in offsets:
+        y, x = direction * offset + center
+        x0, y0 = int(np.floor(x)), int(np.floor(y))
+        fx, fy = float(x - x0), float(y - y0)
+        for dy, wy in ((0, 1.0 - fy), (1, fy)):
+            for dx, wx in ((0, 1.0 - fx), (1, fx)):
+                yy, xx = y0 + dy, x0 + dx
+                if 0 <= yy < size and 0 <= xx < size:
+                    kernel[yy, xx] += wy * wx
+    return _normalized_psf(kernel)
 
 
 def _apply_blur(image: np.ndarray, parameters: Mapping[str, object]) -> np.ndarray:
+    family = str(parameters.get("family", "agenticir_motion"))
+    if family == "defocus":
+        kernel = _defocus_psf(int(parameters["radius"]))
+        return cv2.filter2D(image, -1, kernel, borderType=cv2.BORDER_REPLICATE)
+    if family == "camera_shake":
+        kernel = _camera_shake_psf(parameters)
+        return cv2.filter2D(image, -1, kernel, borderType=cv2.BORDER_REPLICATE)
+    if family == "temporal_average":
+        kernel = _temporal_average_psf(parameters)
+        return cv2.filter2D(image, -1, kernel, borderType=cv2.BORDER_REPLICATE)
+    if family != "agenticir_motion":
+        raise ValueError(f"unsupported blur family: {family}")
     radius = int(parameters["radius"])
     sigma = float(parameters["sigma"])
     angle = float(parameters["angle_degrees"])
@@ -528,6 +689,37 @@ def _apply_blur(image: np.ndarray, parameters: Mapping[str, object]) -> np.ndarr
         shifted = cv2.warpAffine(image, matrix, (image.shape[1], image.shape[0]), borderMode=cv2.BORDER_REPLICATE)
         blurred += weights[index] * shifted
     return np.rint(blurred).clip(0, 255).astype(np.uint8)
+
+
+def _apply_non_target_nuisance(
+    image: np.ndarray, parameters: Mapping[str, object]
+) -> np.ndarray:
+    """Apply compression/resampling artifacts that are not project labels."""
+
+    family = str(parameters.get("family", "none"))
+    if family == "none":
+        return image
+    if family == "jpeg":
+        quality = int(parameters["quality"])
+        ok, encoded = cv2.imencode(
+            ".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), quality]
+        )
+        if not ok:
+            raise RuntimeError("failed to encode nuisance JPEG")
+        decoded = cv2.imdecode(encoded, cv2.IMREAD_COLOR)
+        if decoded is None:
+            raise RuntimeError("failed to decode nuisance JPEG")
+        return decoded
+    if family == "resample":
+        scale = float(parameters["scale"])
+        height, width = image.shape[:2]
+        smaller = cv2.resize(
+            image,
+            (max(1, round(width * scale)), max(1, round(height * scale))),
+            interpolation=cv2.INTER_AREA,
+        )
+        return cv2.resize(smaller, (width, height), interpolation=cv2.INTER_CUBIC)
+    raise ValueError(f"unsupported non-target nuisance: {family}")
 
 
 def _apply_haze(
@@ -593,6 +785,11 @@ def generate_record_stages(
     image = source[y : y + height, x : x + width].copy()
     if image.shape[:2] != (height, width):
         raise RuntimeError(f"crop shape mismatch: {record['record_id']}")
+    nuisance = record.get("non_target_nuisance")
+    if nuisance is not None:
+        if not isinstance(nuisance, Mapping):
+            raise ValueError("non-target nuisance parameters are malformed")
+        image = _apply_non_target_nuisance(image, nuisance)
     operators = record["operators"]
     assert isinstance(operators, Mapping)
     frozen_order = tuple(str(name) for name in record["application_order"])

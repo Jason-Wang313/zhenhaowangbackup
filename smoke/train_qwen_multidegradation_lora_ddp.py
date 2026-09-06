@@ -335,6 +335,50 @@ def semantic_assistant_token_loss(
     return loss
 
 
+def decoder_presence_auxiliary_loss(
+    logits: torch.Tensor,
+    labels: torch.Tensor,
+    *,
+    level_token_ids: Sequence[int],
+) -> torch.Tensor:
+    """Binary absent/present loss derived only from Qwen decoder logits.
+
+    L1 is the absent score. The present score is log-sum-exp over L2--L5.
+    This adds no classifier head and preserves the decoder as the decision
+    maker while directly penalizing omission of an active degradation.
+    """
+
+    if logits.ndim != 3 or labels.ndim != 2 or logits.shape[:2] != labels.shape:
+        raise ValueError("presence-loss logits and labels have incompatible shapes")
+    if (
+        len(level_token_ids) != 5
+        or len(set(level_token_ids)) != 5
+        or any(
+            isinstance(token, bool) or not isinstance(token, int) or token < 0
+            for token in level_token_ids
+        )
+    ):
+        raise ValueError("presence loss requires five unique L1--L5 token IDs")
+    shifted_logits = logits[:, :-1, :]
+    shifted_labels = labels[:, 1:].contiguous()
+    decision = torch.zeros_like(shifted_labels, dtype=torch.bool)
+    for token_id in level_token_ids:
+        decision.logical_or_(shifted_labels.eq(token_id))
+    if not torch.any(decision):
+        raise ValueError("presence loss found no supervised L1--L5 decisions")
+    decision_labels = shifted_labels[decision]
+    level_scores = shifted_logits[decision].float()[:, list(level_token_ids)]
+    binary_scores = torch.stack(
+        (level_scores[:, 0], torch.logsumexp(level_scores[:, 1:], dim=1)),
+        dim=1,
+    )
+    targets = decision_labels.ne(level_token_ids[0]).long()
+    loss = F.cross_entropy(binary_scores, targets)
+    if not torch.isfinite(loss):
+        raise RuntimeError("decoder presence auxiliary loss is non-finite")
+    return loss
+
+
 def training_loss(
     output_value: object,
     labels: torch.Tensor,
@@ -345,36 +389,53 @@ def training_loss(
     """Select the frozen baseline CE or the bounded semantic correction CE."""
 
     semantic = training.get("semantic_token_loss")
-    if semantic is None:
-        loss = getattr(output_value, "loss", None)
-        if not isinstance(loss, torch.Tensor):
-            raise RuntimeError("Qwen output omitted its language-model loss")
-        return loss
-    if not isinstance(semantic, Mapping) or semantic.get("enabled") is not True:
-        raise ValueError("semantic-token loss contract is malformed")
     logits = getattr(output_value, "logits", None)
+    if semantic is None:
+        primary_loss = getattr(output_value, "loss", None)
+        if not isinstance(primary_loss, torch.Tensor):
+            raise RuntimeError("Qwen output omitted its language-model loss")
+    else:
+        if not isinstance(semantic, Mapping) or semantic.get("enabled") is not True:
+            raise ValueError("semantic-token loss contract is malformed")
+        if not isinstance(logits, torch.Tensor):
+            raise RuntimeError("Qwen output omitted logits for semantic-token loss")
+        token_ids = semantic.get("semantic_token_ids")
+        if not isinstance(token_ids, list):
+            raise ValueError("semantic-token loss IDs must be a list")
+        type_weights = semantic.get("semantic_weight_by_degradation")
+        example_weights: list[float] | None = None
+        if type_weights is not None:
+            if (
+                not isinstance(type_weights, Mapping)
+                or set(map(str, type_weights)) != set(DEGRADATIONS)
+                or query_degradations is None
+                or any(name not in DEGRADATIONS for name in query_degradations)
+            ):
+                raise ValueError("per-degradation semantic weights are malformed")
+            example_weights = [float(type_weights[name]) for name in query_degradations]
+        primary_loss = semantic_assistant_token_loss(
+            logits,
+            labels,
+            semantic_token_ids=token_ids,
+            semantic_weight=float(semantic["semantic_weight"]),
+            example_semantic_weights=example_weights,
+        )
+
+    presence = training.get("presence_auxiliary_loss")
+    if presence is None:
+        return primary_loss
+    if not isinstance(presence, Mapping) or presence.get("enabled") is not True:
+        raise ValueError("presence auxiliary loss contract is malformed")
     if not isinstance(logits, torch.Tensor):
-        raise RuntimeError("Qwen output omitted logits for semantic-token loss")
-    token_ids = semantic.get("semantic_token_ids")
-    if not isinstance(token_ids, list):
-        raise ValueError("semantic-token loss IDs must be a list")
-    type_weights = semantic.get("semantic_weight_by_degradation")
-    example_weights: list[float] | None = None
-    if type_weights is not None:
-        if (
-            not isinstance(type_weights, Mapping)
-            or set(map(str, type_weights)) != set(DEGRADATIONS)
-            or query_degradations is None
-            or any(name not in DEGRADATIONS for name in query_degradations)
-        ):
-            raise ValueError("per-degradation semantic weights are malformed")
-        example_weights = [float(type_weights[name]) for name in query_degradations]
-    return semantic_assistant_token_loss(
+        raise RuntimeError("Qwen output omitted logits for presence auxiliary loss")
+    level_token_ids = presence.get("level_token_ids")
+    weight = float(presence.get("weight", 0.0))
+    if not isinstance(level_token_ids, list) or not math.isfinite(weight) or weight <= 0:
+        raise ValueError("presence auxiliary loss parameters are malformed")
+    return primary_loss + weight * decoder_presence_auxiliary_loss(
         logits,
         labels,
-        semantic_token_ids=token_ids,
-        semantic_weight=float(semantic["semantic_weight"]),
-        example_semantic_weights=example_weights,
+        level_token_ids=level_token_ids,
     )
 
 
@@ -637,11 +698,12 @@ def stage_records(
     ]
     sampling = stage.get("source_sampling")
     if sampling is None:
+        source_order_key = str(stage.get("source_order_key", stage["name"]))
         selected.sort(
             key=lambda record: (
-                stable_digest(seed, stage["name"], record["record_id"])
+                stable_digest(seed, source_order_key, record["record_id"])
                 if epoch == 0
-                else stable_digest(seed, stage["name"], epoch, record["record_id"])
+                else stable_digest(seed, source_order_key, epoch, record["record_id"])
             )
         )
     else:
@@ -721,9 +783,10 @@ def stage_records(
         )
     if target_schema == PER_TYPE_DIALOGUE_SCHEMA:
         source_records = int(stage.get("source_records", 0))
-        if len(selected) < source_records:
+        source_start = int(stage.get("source_start", 0))
+        if source_start < 0 or len(selected) < source_start + source_records:
             raise RuntimeError(f"stage source record count changed: {stage['name']}")
-        selected = selected[:source_records]
+        selected = selected[source_start : source_start + source_records]
         if global_batch_size is None or global_batch_size <= 0:
             raise ValueError("per-type dialogue stages require a global batch size")
         if global_batch_size % len(DEGRADATIONS):
@@ -918,7 +981,10 @@ def train_variant(
                         device_batch = move_batch(batch, device)
                         forward_batch = (
                             {key: value for key, value in device_batch.items() if key != "labels"}
-                            if training.get("semantic_token_loss") is not None
+                            if (
+                                training.get("semantic_token_loss") is not None
+                                or training.get("presence_auxiliary_loss") is not None
+                            )
                             else device_batch
                         )
                         output_value = ddp(**forward_batch, use_cache=False)

@@ -17,8 +17,10 @@ sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.multidegradation_data import (
     AGENTICIR_REVISION,
+    BLUR_FAMILIES_PHYSICAL_V8,
     BLUR_PARAMETERS_EXTREME_V6,
     BLUR_PARAMETERS_MILD_V7,
+    NOISE_FAMILIES_PHYSICAL_V8,
     NOISE_SIGMA_RANGES,
     NOISE_SIGMA_RANGES_MILD_V7,
     SPLITS,
@@ -41,6 +43,16 @@ from lowlight_restoration.qwen_multidegradation import (
 
 V6_STATUS = "human_approved_extreme_blur_v6_100k_contract"
 V7_STATUS = "advisor_directed_mild_blur_noise_v7_100k_contract"
+V8_STATUS = "foundir_physics_blur_noise_v8_100k_contract"
+
+
+def json_level_profile(
+    profile: Mapping[str, Mapping[int, Mapping[str, object]]],
+) -> dict[str, object]:
+    return {
+        family: {str(level): dict(parameters) for level, parameters in levels.items()}
+        for family, levels in profile.items()
+    }
 
 
 def parameter_profile(
@@ -65,6 +77,17 @@ def parameter_profile(
             NOISE_SIGMA_RANGES_MILD_V7,
             "mild_v7_advisor_directed_2026_09_05",
             "mild_v7_advisor_directed_2026_09_05",
+        )
+    if status == V8_STATUS:
+        # Legacy tuple profiles are not used to render v8; returning the v7
+        # ranges keeps the return type stable for callers that only need to
+        # distinguish old manifests.  V8 validation follows the explicit
+        # family templates below.
+        return (
+            BLUR_PARAMETERS_MILD_V7,
+            NOISE_SIGMA_RANGES_MILD_V7,
+            "physical_multifamily_v8_2026_09_06",
+            "physical_multifamily_v8_2026_09_06",
         )
     raise ValueError("100k data contract status is not approved")
 
@@ -95,16 +118,17 @@ def load_contract(path: Path) -> tuple[dict[str, object], str]:
         ):
             if sha256(workspace_path(blur[path_key])) != blur.get(hash_key):
                 raise RuntimeError(f"approved blur evidence changed: {path_key}")
-    expected = {
-        str(level): {
-            "radius": radius,
-            "sigma": sigma,
-            "kernel_width": 2 * radius + 1,
+    if contract.get("status") != V8_STATUS:
+        expected = {
+            str(level): {
+                "radius": radius,
+                "sigma": sigma,
+                "kernel_width": 2 * radius + 1,
+            }
+            for level, (radius, sigma) in blur_parameters.items()
         }
-        for level, (radius, sigma) in blur_parameters.items()
-    }
-    if blur.get("parameters") != expected:
-        raise RuntimeError("100k blur parameters differ from approved preview")
+        if blur.get("parameters") != expected:
+            raise RuntimeError("100k blur parameters differ from approved preview")
     noise = contract.get("noise")
     if contract.get("status") == V7_STATUS:
         expected_noise = {
@@ -113,7 +137,84 @@ def load_contract(path: Path) -> tuple[dict[str, object], str]:
         }
         if not isinstance(noise, dict) or noise.get("parameters") != expected_noise:
             raise RuntimeError("100k noise parameters differ from advisor-directed v7")
+    if contract.get("status") == V8_STATUS:
+        if blur.get("families") != json_level_profile(BLUR_FAMILIES_PHYSICAL_V8):
+            raise RuntimeError("v8 physical blur family contract changed")
+        if not isinstance(noise, dict) or noise.get("families") != json_level_profile(
+            NOISE_FAMILIES_PHYSICAL_V8
+        ):
+            raise RuntimeError("v8 physical noise family contract changed")
+        nuisance = contract.get("non_target_nuisance")
+        if nuisance != {
+            "schedule": ["none", "none", "jpeg", "resample"],
+            "jpeg_quality_range": [65, 95],
+            "resample_scale_range": [0.78, 0.95],
+            "applied_before_target_degradations": True,
+        }:
+            raise RuntimeError("v8 non-target nuisance contract changed")
     return contract, __import__("hashlib").sha256(raw).hexdigest()
+
+
+def v8_operator_parameters(
+    name: str,
+    level: int,
+    *,
+    index: int,
+    combination_index: int,
+    seed: int,
+    source: Mapping[str, object],
+) -> dict[str, object]:
+    profiles = {
+        "blur": BLUR_FAMILIES_PHYSICAL_V8,
+        "noise": NOISE_FAMILIES_PHYSICAL_V8,
+    }
+    if name not in profiles:
+        return _operator_parameters(name, level, seed=seed, source=source)
+    families = tuple(profiles[name])
+    # _balanced_levels cycles every four records. Holding a family for one
+    # four-record block makes every family contain every L2--L5 level equally
+    # in each sufficiently sized combination quota.
+    family = families[
+        ((index // 4) + combination_index + DEGRADATIONS.index(name))
+        % len(families)
+    ]
+    parameters = dict(profiles[name][family][level])
+    parameters.update(
+        {
+            "operator": f"FoundIR_paper_inspired.{family}",
+            "agenticir_level": level - 1,
+            "family": family,
+            "seed": seed,
+        }
+    )
+    return parameters
+
+
+def v8_non_target_nuisance(
+    *,
+    index: int,
+    combination_index: int,
+    size: int,
+    seed: int,
+    degradations: Sequence[str],
+) -> dict[str, object]:
+    # Keep the canonical clean-only records literal clean crops. JPEG and
+    # resampling are hard negatives only when at least one labeled target
+    # degradation is present; they never become a sixth target label.
+    if not degradations:
+        return {"family": "none", "seed": seed}
+    schedule = ("none", "none", "jpeg", "resample")
+    # A complete physical family x severity block has 3 * 4 = 12 records.
+    # Rotate nuisances between blocks so nuisance identity cannot reveal the
+    # target family or L2--L5 label within a block.
+    family = schedule[((index // 12) + combination_index + size) % len(schedule)]
+    rng = random.Random(stable_seed(seed, "v8_non_target_nuisance"))
+    parameters: dict[str, object] = {"family": family, "seed": seed}
+    if family == "jpeg":
+        parameters["quality"] = rng.randint(65, 95)
+    elif family == "resample":
+        parameters["scale"] = rng.uniform(0.78, 0.95)
+    return parameters
 
 
 def build_record(
@@ -147,13 +248,24 @@ def build_record(
     operators: dict[str, object] = {}
     for operator_index, name in enumerate(application_order):
         operator_seed = stable_seed(record_seed, operator_index, name)
-        parameters = _operator_parameters(
-            name,
-            levels[name],
-            seed=operator_seed,
-            source=source,
-            blur_parameters=blur_parameters,
-            noise_sigma_ranges=noise_ranges,
+        parameters = (
+            v8_operator_parameters(
+                name,
+                levels[name],
+                index=index,
+                combination_index=combination_index,
+                seed=operator_seed,
+                source=source,
+            )
+            if contract.get("status") == V8_STATUS
+            else _operator_parameters(
+                name,
+                levels[name],
+                seed=operator_seed,
+                source=source,
+                blur_parameters=blur_parameters,
+                noise_sigma_ranges=noise_ranges,
+            )
         )
         parameters["seed"] = operator_seed
         operators[name] = parameters
@@ -190,6 +302,14 @@ def build_record(
     }
     if noise_profile is not None:
         record["noise_profile"] = noise_profile
+    if contract.get("status") == V8_STATUS:
+        record["non_target_nuisance"] = v8_non_target_nuisance(
+            index=index,
+            combination_index=combination_index,
+            size=size,
+            seed=record_seed,
+            degradations=combo,
+        )
     return record
 
 
@@ -290,6 +410,9 @@ def validate_records(
     combinations = Counter()
     levels = Counter()
     blur_counts = Counter()
+    blur_family_level_counts = Counter()
+    noise_family_level_counts = Counter()
+    nuisance_counts = Counter()
     physical_order = tuple(map(str, contract["physical_application_order"]))
     for record in records:
         split = str(record["split"])
@@ -313,17 +436,45 @@ def validate_records(
             raise RuntimeError("100k haze lacks an objective aligned depth map")
         if "blur" in names:
             level = int(record["levels"]["blur"])
-            radius, sigma = blur_parameters[level]
             actual = record["operators"]["blur"]
-            if (actual["radius"], actual["sigma"]) != (radius, sigma):
-                raise RuntimeError("100k blur parameters changed")
+            if contract.get("status") == V8_STATUS:
+                family = str(actual.get("family"))
+                expected_parameters = BLUR_FAMILIES_PHYSICAL_V8.get(family, {}).get(level)
+                if expected_parameters is None or any(
+                    actual.get(key) != value for key, value in expected_parameters.items()
+                ):
+                    raise RuntimeError("v8 blur family parameters changed")
+                blur_family_level_counts[(split, names, family, level)] += 1
+            else:
+                radius, sigma = blur_parameters[level]
+                if (actual["radius"], actual["sigma"]) != (radius, sigma):
+                    raise RuntimeError("100k blur parameters changed")
             blur_counts[level] += 1
         if "noise" in names:
             level = int(record["levels"]["noise"])
-            low, high = noise_ranges[level]
-            sigma = float(record["operators"]["noise"]["sigma_0_255"])
-            if not low <= sigma <= high:
-                raise RuntimeError("100k noise parameters changed")
+            actual = record["operators"]["noise"]
+            if contract.get("status") == V8_STATUS:
+                family = str(actual.get("family"))
+                expected_parameters = NOISE_FAMILIES_PHYSICAL_V8.get(family, {}).get(level)
+                if expected_parameters is None or any(
+                    actual.get(key) != value for key, value in expected_parameters.items()
+                ):
+                    raise RuntimeError("v8 noise family parameters changed")
+                noise_family_level_counts[(split, names, family, level)] += 1
+            else:
+                low, high = noise_ranges[level]
+                sigma = float(actual["sigma_0_255"])
+                if not low <= sigma <= high:
+                    raise RuntimeError("100k noise parameters changed")
+        if contract.get("status") == V8_STATUS:
+            nuisance = record.get("non_target_nuisance")
+            if not isinstance(nuisance, Mapping) or nuisance.get("family") not in {
+                "none", "jpeg", "resample"
+            }:
+                raise RuntimeError("v8 non-target nuisance is malformed")
+            if not names and nuisance.get("family") != "none":
+                raise RuntimeError("v8 clean-only record is not a literal clean crop")
+            nuisance_counts[(split, str(nuisance["family"]))] += 1
         composition[(split, size)] += 1
         combinations[(split, names)] += 1
         for name, level in label.levels:
@@ -339,6 +490,27 @@ def validate_records(
             observed = [levels[(split, names, name, level)] for level in range(2, 6)]
             if observed != [count // 4] * 4:
                 raise RuntimeError(f"100k level balance changed: {split} {names}")
+        if contract.get("status") == V8_STATUS:
+            for name, family_counts in (
+                ("blur", blur_family_level_counts),
+                ("noise", noise_family_level_counts),
+            ):
+                if name not in names:
+                    continue
+                families = (
+                    BLUR_FAMILIES_PHYSICAL_V8
+                    if name == "blur"
+                    else NOISE_FAMILIES_PHYSICAL_V8
+                )
+                observed = [
+                    family_counts[(split, names, family, level)]
+                    for family in families
+                    for level in range(2, 6)
+                ]
+                if observed != [count // 12] * 12:
+                    raise RuntimeError(
+                        f"v8 family/level balance changed: {split} {names} {name}"
+                    )
     return {
         "records": len(records),
         "split_records": dict(Counter(str(record["split"]) for record in records)),
@@ -354,6 +526,19 @@ def validate_records(
         "blur_level_counts": {str(level): blur_counts[level] for level in range(2, 6)},
         "blur_profile": blur_profile,
         "noise_profile": noise_profile or "legacy_agenticir_ranges",
+        "blur_family_level_balanced": contract.get("status") == V8_STATUS,
+        "noise_family_level_balanced": contract.get("status") == V8_STATUS,
+        "non_target_nuisance_counts": (
+            {
+                split: {
+                    family: nuisance_counts[(split, family)]
+                    for family in ("none", "jpeg", "resample")
+                }
+                for split in SPLITS
+            }
+            if contract.get("status") == V8_STATUS
+            else None
+        ),
     }
 
 
