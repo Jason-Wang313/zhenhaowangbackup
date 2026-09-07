@@ -1257,3 +1257,29 @@ FOUNDIR QWEN CONDITION-EXPORT OPTIMIZATION — 2026-09-07
 - The active legacy process that started before this source change is
   unaffected and may continue producing valid chunks. Never discard or
   overwrite those chunks. The official FoundIR test remains inaccessible.
+
+RUNTIME RESULT AND APPROVED PARALLEL EXPORT ROUTE — 2026-09-07
+
+- The record-sharded large-batch candidate was tested on one complete legacy
+  512-record chunk. It took `53.85048` seconds (`9.50781` images/second) and
+  failed exact condition equivalence beginning at record
+  `foundir_train_0000017`. The warmed legacy exporter was faster at roughly
+  42--44 seconds per 512-record chunk. Never activate the rejected optimized
+  engine or treat its intentional benchmark exit as a training crash.
+- Further acceleration must preserve the legacy `generate_outputs` call
+  exactly. The approved route is chunk-level multi-instance partitioning:
+  eight mutually exclusive partitions, with every partition using its own
+  eight-rank legacy Qwen process. No image/question batching, prompt, decoder,
+  crop, weight, or condition conversion changes.
+- On each of two homogeneous eight-H200 instances, four partition workers may
+  run concurrently because the measured legacy footprint is about 19.8 GiB
+  per GPU and four copies remain well within 143.8 GiB. The H200 group runner
+  rejects other hardware or insufficient memory. H100 remains supported by
+  the original one-worker main route; do not use the four-worker H200 launcher
+  on H100.
+- Partition workers never publish the final combined CSV and never enter FLUX
+  training. After all eight partition-pass markers exist, restart exactly one
+  normal v3 main pipeline: it verifies all immutable chunks, publishes the
+  combined conditions, builds the prompt cache, and continues FLUX training.
+  The old unpartitioned exporter must be stopped before partition workers
+  start so it cannot race or redundantly recompute their chunks.

@@ -97,6 +97,12 @@ def record_indices_for_rank(total: int, rank: int, world: int) -> list[int]:
     return list(range(rank, total, world))
 
 
+def chunk_belongs_to_partition(chunk_index: int, partitions: int, partition_index: int) -> bool:
+    if chunk_index < 0 or partitions < 1 or partition_index < 0 or partition_index >= partitions:
+        raise ValueError("invalid chunk-partition dimensions")
+    return chunk_index % partitions == partition_index
+
+
 def generate_outputs_record_sharded(
     model: torch.nn.Module,
     processor: object,
@@ -381,9 +387,15 @@ def main() -> None:
     parser.add_argument("--chunk-records", type=int, default=512)
     parser.add_argument("--verify-existing", action="store_true")
     parser.add_argument("--benchmark-only", action="store_true")
+    parser.add_argument("--partitions", type=int, default=1)
+    parser.add_argument("--partition-index", type=int, default=0)
     args = parser.parse_args()
     if args.verify_existing and args.benchmark_only:
         parser.error("--verify-existing and --benchmark-only are mutually exclusive")
+    if args.partitions < 1 or args.partition_index < 0 or args.partition_index >= args.partitions:
+        parser.error("--partition-index must be in [0, --partitions)")
+    if (args.verify_existing or args.benchmark_only) and args.partitions != 1:
+        parser.error("verification and benchmark modes do not support partitions")
     config_path, manifest_path = workspace_path(args.config), workspace_path(args.manifest)
     config = json.loads(config_path.read_text())
     qwen = config["qwen_condition"]
@@ -432,21 +444,23 @@ def main() -> None:
         config_sha, qwen_sha, adapter_sha = sha256(config_path), sha256(qwen_config_path), sha256(adapter)
         missing = []
         complete = []
-        for start in range(0, len(rows), args.chunk_records):
+        assigned_chunks = 0
+        for chunk_index, start in enumerate(range(0, len(rows), args.chunk_records)):
             selected = rows[start : start + args.chunk_records]
             path = chunk_dir / f"chunk_{start:07d}_{start+len(selected):07d}.json"
             if path.exists():
                 verify_chunk(path, chunk_identity(selected, config_sha=config_sha, qwen_config_sha=qwen_sha, adapter_sha=adapter_sha), selected)
                 complete.append(start)
-            else:
+            elif chunk_belongs_to_partition(chunk_index, args.partitions, args.partition_index):
                 missing.append(start)
+            if chunk_belongs_to_partition(chunk_index, args.partitions, args.partition_index):
+                assigned_chunks += 1
         model = processor = None
-        use_optimized_engine = False
         if missing or args.benchmark_only:
             seed_everything(int(config["flow_training"]["seed"]))
             model, processor, _ = load_model(qwen_config, variant="merger_trainable", device=device)
             load_qwen_adapter(model, adapter)
-            if complete:
+            if args.benchmark_only and complete:
                 reference_start = complete[0]
                 reference_rows = rows[reference_start : reference_start + args.chunk_records]
                 reference_path = (
@@ -475,7 +489,7 @@ def main() -> None:
                     world=world,
                     device=device,
                 )
-                use_optimized_engine = bool(
+                optimized_equivalent = bool(
                     isinstance(optimization, Mapping)
                     and optimization.get("exact_condition_equivalence") is True
                 )
@@ -485,19 +499,14 @@ def main() -> None:
                         + json.dumps(optimization, sort_keys=True),
                         flush=True,
                     )
-                    if not use_optimized_engine:
-                        print(
-                            "FOUNDIR_PHYSICAL_V8_OPTIMIZATION_FALLBACK legacy_engine",
-                            flush=True,
-                        )
-            elif rank == 0:
+            elif args.benchmark_only and rank == 0:
                 print(
                     "FOUNDIR_PHYSICAL_V8_OPTIMIZATION_FALLBACK "
                     "no_immutable_reference_chunk",
                     flush=True,
                 )
             if args.benchmark_only:
-                if not use_optimized_engine:
+                if not complete or not optimized_equivalent:
                     raise RuntimeError(
                         "optimized export benchmark did not prove exact condition equivalence"
                     )
@@ -507,8 +516,7 @@ def main() -> None:
         for start in missing:
             selected = rows[start : start + args.chunk_records]
             generation_records = center_generation_records(selected, int(qwen["crop_size"]))
-            engine = generate_outputs_record_sharded if use_optimized_engine else generate_outputs
-            outputs = engine(
+            outputs = generate_outputs(
                 model, processor, generation_records, qwen_config,
                 rank=rank, world=world, device=device,
             )
@@ -524,6 +532,24 @@ def main() -> None:
             broadcast_rank0(rank, publish)
             if rank == 0:
                 print(f"FOUNDIR_PHYSICAL_V8_FULL_EXPORT completed={start+len(selected)}/{len(rows)}", flush=True)
+        if args.partitions > 1:
+            if rank == 0:
+                print(
+                    "FOUNDIR_PHYSICAL_V8_PARTITION_PASS "
+                    + json.dumps(
+                        {
+                            "partition_index": args.partition_index,
+                            "partitions": args.partitions,
+                            "assigned_chunks": assigned_chunks,
+                            "generated_chunks": len(missing),
+                            "engine": "legacy_exact_semantics",
+                            "protected_foundir_test_accessed": False,
+                        },
+                        sort_keys=True,
+                    ),
+                    flush=True,
+                )
+            return
         payload = broadcast_rank0(
             rank,
             lambda: publish_csv(

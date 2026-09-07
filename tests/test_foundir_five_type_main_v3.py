@@ -12,6 +12,7 @@ from smoke import foundir_five_type_runtime_preflight as runtime_preflight
 from smoke.export_foundir_five_type_physical_v8_conditions_ddp import (
     OPTIMIZED_EXPORT_ENGINE,
     center_generation_records,
+    chunk_belongs_to_partition,
     chunk_identity,
     optimized_batch_size,
     record_indices_for_rank,
@@ -81,6 +82,17 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertEqual(sorted(value for values in assignments for value in values), list(range(512)))
         self.assertEqual(len({value for values in assignments for value in values}), 512)
         self.assertEqual(OPTIMIZED_EXPORT_ENGINE, "record_sharded_per_type_batch_v1")
+
+    def test_multi_instance_chunks_are_disjoint_and_complete(self) -> None:
+        assignments = [
+            {index for index in range(1339) if chunk_belongs_to_partition(index, 8, partition)}
+            for partition in range(8)
+        ]
+        self.assertEqual(set().union(*assignments), set(range(1339)))
+        self.assertEqual(sum(len(values) for values in assignments), 1339)
+        for left in range(8):
+            for right in range(left + 1, 8):
+                self.assertFalse(assignments[left] & assignments[right])
 
     def test_optimized_batch_uses_one_call_per_type_for_a_full_chunk(self) -> None:
         h100 = SimpleNamespace(total_memory=80 * 1024**3)
@@ -170,6 +182,14 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertIn("FOUNDIR_PHYSICAL_V8_OPTIMIZATION_BENCHMARK_PASS", exporter)
         self.assertIn("exact_condition_equivalence", exporter)
         self.assertIn("generate_outputs_record_sharded", exporter)
+        self.assertIn("FOUNDIR_PHYSICAL_V8_PARTITION_PASS", exporter)
+        partition_runner = (ROOT / "smoke/run_foundir_qwen_export_partition_group_h200.sh").read_text()
+        partition_launcher = (ROOT / "smoke/launch_foundir_qwen_export_partition_group_h200.sh").read_text()
+        self.assertIn("PARTITIONS=8", partition_runner)
+        self.assertIn("WORKERS_PER_INSTANCE=4", partition_runner)
+        self.assertIn("--partition-index", partition_runner)
+        self.assertIn("NVIDIA\\ H200", partition_runner)
+        self.assertNotIn("MillionIRData/Test", partition_runner + partition_launcher)
         for relative in (
             "smoke/train_foundir_five_type_flux2_overfit_ddp.py",
             "smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py",
