@@ -6,6 +6,7 @@ import hashlib
 import json
 from collections import defaultdict
 from dataclasses import dataclass
+from fractions import Fraction
 from typing import Mapping, Sequence
 from pathlib import Path
 
@@ -178,6 +179,92 @@ def fold_for_group(source_group: str, *, seed: int, folds: int) -> int:
     return int(stable_digest(seed, "fold", source_group)[:16], 16) % folds
 
 
+def balanced_group_fold_assignment(
+    rows: Sequence[Mapping[str, str]],
+    *,
+    split: str,
+    folds: int,
+    seed: int,
+) -> dict[str, int]:
+    """Assign complete source groups while balancing category diversity first."""
+
+    if split not in {"validation", "internal_test"}:
+        raise ValueError("evaluation fold assignment needs an evaluation split")
+    if folds < 2:
+        raise ValueError("evaluation fold assignment needs at least two folds")
+    group_split: dict[str, str] = {}
+    group_category_records: dict[str, dict[str, int]] = defaultdict(
+        lambda: defaultdict(int)
+    )
+    category_records: dict[str, int] = defaultdict(int)
+    for row in rows:
+        group = row["source_group"]
+        if not group:
+            raise ValueError("evaluation record has an empty source group")
+        row_split = row["split"]
+        previous = group_split.setdefault(group, row_split)
+        if previous != row_split:
+            raise RuntimeError("source group crosses evaluation splits")
+        if row_split != split:
+            continue
+        category = row["category"]
+        if category not in FIVE_TYPE_CATEGORIES:
+            raise RuntimeError(f"unknown FoundIR evaluation category: {category}")
+        group_category_records[group][category] += 1
+        category_records[category] += 1
+    category_groups: dict[str, int] = defaultdict(int)
+    for counts in group_category_records.values():
+        for category in counts:
+            category_groups[category] += 1
+
+    def group_priority(item: tuple[str, dict[str, int]]) -> tuple[object, ...]:
+        group, counts = item
+        scarcity = max(Fraction(1, category_groups[category]) for category in counts)
+        return (
+            -scarcity,
+            -max(counts.values()),
+            -sum(counts.values()),
+            stable_digest(seed, split, "group-order", group),
+        )
+
+    fold_category_groups = [defaultdict(int) for _ in range(folds)]
+    fold_category_records = [defaultdict(int) for _ in range(folds)]
+    fold_group_counts = [0 for _ in range(folds)]
+    assignment: dict[str, int] = {}
+    for group, counts in sorted(group_category_records.items(), key=group_priority):
+        def fold_score(fold: int) -> tuple[object, ...]:
+            group_ratios = [
+                Fraction(
+                    fold_category_groups[fold][category] + 1,
+                    category_groups[category],
+                )
+                for category in counts
+            ]
+            record_ratios = [
+                Fraction(
+                    fold_category_records[fold][category] + count,
+                    category_records[category],
+                )
+                for category, count in counts.items()
+            ]
+            return (
+                max(group_ratios),
+                sum(group_ratios),
+                max(record_ratios),
+                sum(record_ratios),
+                fold_group_counts[fold],
+                stable_digest(seed, split, "fold-tie", group, fold),
+            )
+
+        fold = min(range(folds), key=fold_score)
+        assignment[group] = fold
+        fold_group_counts[fold] += 1
+        for category, count in counts.items():
+            fold_category_groups[fold][category] += 1
+            fold_category_records[fold][category] += count
+    return assignment
+
+
 def balanced_evaluation_subset(
     rows: Sequence[Mapping[str, str]],
     *,
@@ -186,45 +273,87 @@ def balanced_evaluation_subset(
     folds: int,
     seed: int,
 ) -> list[dict[str, str]]:
-    """Freeze a category-balanced, group-disjoint multi-fold subset."""
+    """Freeze a category-balanced subset with groups confined to one fold.
+
+    Selection maximizes source-group diversity before reusing any group.  A
+    sparse bucket is then filled by deterministic round-robin passes over its
+    groups, so the configured record quota remains exact without pretending
+    that correlated records are independent groups.
+    """
 
     if split not in {"validation", "internal_test"}:
         raise ValueError("evaluation subset must use validation or internal_test")
     if records_per_category_per_fold <= 0:
         raise ValueError("evaluation quota must be positive")
+    group_folds = balanced_group_fold_assignment(
+        rows,
+        split=split,
+        folds=folds,
+        seed=seed,
+    )
     buckets: dict[tuple[int, str], list[dict[str, str]]] = defaultdict(list)
-    group_split: dict[str, str] = {}
     for original in rows:
         if original["split"] != split:
             continue
         row = dict(original)
-        group = row["source_group"]
-        previous = group_split.setdefault(group, split)
-        if previous != split:
-            raise RuntimeError("source group crosses evaluation splits")
-        fold = fold_for_group(group, seed=seed, folds=folds)
+        fold = group_folds[row["source_group"]]
         buckets[(fold, row["category"])].append(row)
     selected: list[dict[str, str]] = []
     for fold in range(folds):
         for category in sorted(FIVE_TYPE_CATEGORIES):
-            candidates = sorted(
-                buckets[(fold, category)],
-                key=lambda row: stable_digest(seed, split, fold, category, row["record_id"]),
+            grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+            for row in buckets[(fold, category)]:
+                grouped[row["source_group"]].append(row)
+            group_order = sorted(
+                grouped,
+                key=lambda group: stable_digest(
+                    seed, split, fold, category, "group", group
+                ),
             )
-            seen_groups: set[str] = set()
+            for group, group_rows in grouped.items():
+                group_rows.sort(
+                    key=lambda row: stable_digest(
+                        seed,
+                        split,
+                        fold,
+                        category,
+                        "record",
+                        group,
+                        row["record_id"],
+                    )
+                )
+            available_records = sum(len(group_rows) for group_rows in grouped.values())
+            if available_records < records_per_category_per_fold:
+                raise RuntimeError(
+                    f"insufficient {split} records for fold={fold} category={category}: "
+                    f"{available_records}"
+                )
             chosen: list[dict[str, str]] = []
-            for row in candidates:
-                if row["source_group"] in seen_groups:
-                    continue
-                seen_groups.add(row["source_group"])
-                chosen.append({**row, "evaluation_fold": str(fold)})
-                if len(chosen) == records_per_category_per_fold:
+            round_index = 0
+            while len(chosen) < records_per_category_per_fold:
+                added_this_round = False
+                for group in group_order:
+                    group_rows = grouped[group]
+                    if round_index >= len(group_rows):
+                        continue
+                    chosen.append(
+                        {**group_rows[round_index], "evaluation_fold": str(fold)}
+                    )
+                    added_this_round = True
+                    if len(chosen) == records_per_category_per_fold:
+                        break
+                if not added_this_round:
                     break
+                round_index += 1
             if len(chosen) != records_per_category_per_fold:
                 raise RuntimeError(
-                    f"insufficient {split} groups for fold={fold} category={category}: {len(chosen)}"
+                    f"failed to fill {split} quota for fold={fold} category={category}: "
+                    f"{len(chosen)}"
                 )
             selected.extend(chosen)
+    record_ids = [row["record_id"] for row in selected]
+    if len(record_ids) != len(set(record_ids)):
+        raise RuntimeError("evaluation subset duplicates record IDs")
     groups_by_fold: dict[str, int] = {}
     for row in selected:
         previous = groups_by_fold.setdefault(row["source_group"], int(row["evaluation_fold"]))

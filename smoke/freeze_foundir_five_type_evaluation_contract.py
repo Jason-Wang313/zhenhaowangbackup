@@ -85,6 +85,27 @@ def publish_once(path: Path, content: bytes) -> None:
         handle.write(content)
 
 
+def evaluation_contract_statistics(
+    rows: Sequence[Mapping[str, str]],
+) -> dict[str, dict[str, int]]:
+    record_counts = Counter(
+        (row["evaluation_role"], row["category"], row["evaluation_fold"])
+        for row in rows
+    )
+    unique_groups: dict[tuple[str, str, str], set[str]] = {}
+    for row in rows:
+        key = (row["evaluation_role"], row["category"], row["evaluation_fold"])
+        unique_groups.setdefault(key, set()).add(row["source_group"])
+    return {
+        "role_category_fold_counts": {
+            "|".join(key): value for key, value in sorted(record_counts.items())
+        },
+        "role_category_fold_unique_group_counts": {
+            "|".join(key): len(values) for key, values in sorted(unique_groups.items())
+        },
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
@@ -101,13 +122,11 @@ def main() -> None:
     selected = contract_rows(config, rows)
     content = encode_csv(selected)
     roles = Counter(row["evaluation_role"] for row in selected)
-    role_category_fold_counts = Counter(
-        (row["evaluation_role"], row["category"], row["evaluation_fold"])
-        for row in selected
-    )
+    statistics = evaluation_contract_statistics(selected)
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "frozen_before_flux_full_training",
+        "selection_policy": "balanced_group_fold_assignment_then_group_diversity_round_robin_v1",
         "config_sha256": file_sha256(args.config),
         "conditions_sha256": file_sha256(args.conditions),
         "records": len(selected),
@@ -116,9 +135,7 @@ def main() -> None:
         "records_per_category_per_fold": int(config["evaluation"]["records_per_category_per_fold"]),
         "contract_csv": args.output_csv.relative_to(ROOT).as_posix(),
         "contract_csv_sha256": hashlib.sha256(content).hexdigest(),
-        "role_category_fold_counts": {
-            "|".join(key): value for key, value in sorted(role_category_fold_counts.items())
-        },
+        **statistics,
         "sealed_internal_test_accessed": False,
         "protected_foundir_test_accessed": False,
     }

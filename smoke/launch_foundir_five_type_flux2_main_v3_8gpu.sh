@@ -46,6 +46,7 @@ required=(
   smoke/run_foundir_five_type_stage0_v3_8gpu.sh
   smoke/run_foundir_five_type_flux2_main_v3_8gpu.sh
   smoke/launch_foundir_five_type_flux2_main_v3_8gpu.sh
+  tests/test_foundir_flux2_protocol.py
   tests/test_foundir_five_type_main_v3.py
   tests/test_pixel_refinement.py
 )
@@ -64,6 +65,7 @@ python_files=(
   smoke/evaluate_foundir_five_type_flux2_ddp.py
   smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py
   smoke/freeze_foundir_five_type_flux2_main_v3_report.py
+  tests/test_foundir_flux2_protocol.py
   tests/test_foundir_five_type_main_v3.py
   tests/test_pixel_refinement.py
 )
@@ -77,7 +79,10 @@ bash -n "$RUNNER" "$ROOT/smoke/run_foundir_five_type_stage0_v3_8gpu.sh" "$0"
 "$ROOT/.conda/gpu-train-stable/bin/python" \
   smoke/build_foundir_five_type_physical_v8_conditions.py \
   --config configs/foundir_five_type_flux2_dit_v3.json
-"$PYTHON" -m unittest tests.test_foundir_five_type_main_v3 tests.test_pixel_refinement
+"$PYTHON" -m unittest \
+  tests.test_foundir_flux2_protocol \
+  tests.test_foundir_five_type_main_v3 \
+  tests.test_pixel_refinement
 
 for relative in "${required[@]}"; do
   git ls-files --error-unmatch "$relative" >/dev/null 2>&1 || {

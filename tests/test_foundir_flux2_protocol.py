@@ -11,6 +11,7 @@ from lowlight_restoration.foundir_five_type import FIVE_TYPE_CATEGORIES
 from lowlight_restoration.foundir_flux2_protocol import (
     SOW_STAGE2_THRESHOLDS,
     aggregate_task_metrics,
+    balanced_group_fold_assignment,
     balanced_evaluation_subset,
     build_curriculum_pools,
     curriculum_record_index,
@@ -20,7 +21,10 @@ from lowlight_restoration.foundir_flux2_protocol import (
 )
 from smoke.evaluate_foundir_five_type_flux2_tiled_ddp import tiled_restore, tile_starts
 from smoke.train_foundir_five_type_flux2_full_ddp import CurriculumSampler
-from smoke.freeze_foundir_five_type_evaluation_contract import contract_rows
+from smoke.freeze_foundir_five_type_evaluation_contract import (
+    contract_rows,
+    evaluation_contract_statistics,
+)
 from smoke.select_foundir_five_type_flux2_checkpoint import ROOT as WORKSPACE_ROOT, select
 
 
@@ -99,6 +103,90 @@ class FoundIRFlux2ProtocolTests(unittest.TestCase):
         counts = Counter((row["evaluation_fold"], row["category"]) for row in subset)
         self.assertTrue(all(value == 3 for value in counts.values()))
 
+    def test_sparse_group_subset_fills_exact_quota_by_balanced_round_robin(self) -> None:
+        rows = []
+        for category, degradations in FIVE_TYPE_CATEGORIES.items():
+            for group_index in range(6):
+                group = f"validation-shared-group-{group_index}"
+                for record_index in range(12):
+                    rows.append(
+                        {
+                            "record_id": f"{category}-{group}-record-{record_index}",
+                            "split": "validation",
+                            "source_group": group,
+                            "category": category,
+                            "composition_size": str(len(degradations)),
+                        }
+                    )
+
+        selected = balanced_evaluation_subset(
+            rows,
+            split="validation",
+            records_per_category_per_fold=20,
+            folds=3,
+            seed=23,
+        )
+        repeated = balanced_evaluation_subset(
+            list(reversed(rows)),
+            split="validation",
+            records_per_category_per_fold=20,
+            folds=3,
+            seed=23,
+        )
+        self.assertEqual(selected, repeated)
+        self.assertEqual(len(selected), 20 * 3 * len(FIVE_TYPE_CATEGORIES))
+        self.assertEqual(len({row["record_id"] for row in selected}), len(selected))
+        counts = Counter((row["evaluation_fold"], row["category"]) for row in selected)
+        self.assertTrue(all(value == 20 for value in counts.values()))
+        groups_by_bucket = {}
+        per_group_counts = Counter()
+        group_folds = {}
+        for row in selected:
+            key = (row["evaluation_fold"], row["category"])
+            groups_by_bucket.setdefault(key, set()).add(row["source_group"])
+            per_group_counts[(key, row["source_group"])] += 1
+            group_folds.setdefault(row["source_group"], set()).add(row["evaluation_fold"])
+        self.assertTrue(all(len(groups) == 2 for groups in groups_by_bucket.values()))
+        self.assertTrue(all(len(values) == 1 for values in group_folds.values()))
+        for key, groups in groups_by_bucket.items():
+            values = [per_group_counts[(key, group)] for group in groups]
+            self.assertLessEqual(max(values) - min(values), 1)
+
+        assignments = balanced_group_fold_assignment(
+            rows,
+            split="validation",
+            folds=3,
+            seed=23,
+        )
+        repeated_assignments = balanced_group_fold_assignment(
+            list(reversed(rows)),
+            split="validation",
+            folds=3,
+            seed=23,
+        )
+        self.assertEqual(assignments, repeated_assignments)
+        self.assertEqual(Counter(assignments.values()), {0: 2, 1: 2, 2: 2})
+
+    def test_evaluation_subset_rejects_cross_split_groups_and_protected_test(self) -> None:
+        rows = synthetic_rows("validation", groups_per_category=80)
+        rows.append({**rows[0], "record_id": "cross-split", "split": "internal_test"})
+        with self.assertRaisesRegex(RuntimeError, "crosses evaluation splits"):
+            balanced_evaluation_subset(
+                rows,
+                split="validation",
+                records_per_category_per_fold=3,
+                folds=3,
+                seed=19,
+            )
+        with self.assertRaisesRegex(ValueError, "validation or internal_test"):
+            balanced_evaluation_subset(
+                rows,
+                split="test",
+                records_per_category_per_fold=3,
+                folds=3,
+                seed=19,
+            )
+
     def test_task_metrics_include_composite_records(self) -> None:
         rows = [
             {"category": category, "psnr": 30.0, "lpips": 0.1}
@@ -175,6 +263,18 @@ class FoundIRFlux2ProtocolTests(unittest.TestCase):
         development = {row["source_group"] for row in selected if row["evaluation_role"] == "development"}
         internal = {row["source_group"] for row in selected if row["evaluation_role"] == "sealed_internal_test"}
         self.assertFalse(development & internal)
+        statistics = evaluation_contract_statistics(selected)
+        self.assertTrue(
+            all(value == 3 for value in statistics["role_category_fold_counts"].values())
+        )
+        self.assertTrue(
+            all(
+                value == 3
+                for value in statistics[
+                    "role_category_fold_unique_group_counts"
+                ].values()
+            )
+        )
 
     def test_file_based_selection_uses_development_only(self) -> None:
         with tempfile.TemporaryDirectory(dir=WORKSPACE_ROOT) as directory:
