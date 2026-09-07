@@ -34,7 +34,6 @@ from lowlight_restoration.foundir_flux2_protocol import (  # noqa: E402
     curriculum_record_index,
     resolve_workspace_path,
     stable_digest,
-    validate_pixel_refinement_vae_evidence,
 )
 from lowlight_restoration.lora import (  # noqa: E402
     inject_lora,
@@ -333,15 +332,18 @@ def main() -> None:
         or evaluation_contract.get("sealed_internal_test_accessed") is not False
     ):
         raise RuntimeError("evaluation protocol was not frozen before full training")
-    stage0 = ROOT / config["runtime"]["output_dir"] / "native_reference_overfit" / "result.json"
+    stage0 = (
+        ROOT
+        / config["runtime"]["output_dir"]
+        / config["overfit"]["output_subdirectory"]
+        / "result.json"
+    )
     stage0_payload = json.loads(stage0.read_text())
     if (
         stage0_payload.get("automatic_gate_pass") is not True
         or stage0_payload.get("config_sha256") != config_sha
     ):
         raise RuntimeError("full training is forbidden before native-reference overfit passes")
-    validate_pixel_refinement_vae_evidence(ROOT, config, ROOT / config["runtime"]["manifest"])
-
     dist.init_process_group(backend=str(distributed_config["backend"]))
     started = time.monotonic()
     try:

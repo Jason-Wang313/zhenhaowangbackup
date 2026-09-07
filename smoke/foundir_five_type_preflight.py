@@ -14,7 +14,6 @@ sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.foundir_five_type import category_counts, load_five_type_metadata
 from lowlight_restoration.foundir_flux2_protocol import SOW_STAGE2_THRESHOLDS
-from lowlight_restoration.foundir_flux2_protocol import validate_pixel_refinement_vae_evidence
 from lowlight_restoration.pixel_refinement import BoundedPixelRefiner, pixel_refiner_parameter_count
 
 
@@ -37,6 +36,7 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
     allowed_statuses = {
         "advisor_approved_five_type_foundir_dit_readiness",
         "advisor_approved_five_type_foundir_dit_pixel_refinement_v3",
+        "advisor_approved_five_type_foundir_dit_sow_aligned_v3",
     }
     if config.get("status") not in allowed_statuses:
         raise RuntimeError("five-type DiT config is not approved")
@@ -147,8 +147,9 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
     ):
         raise RuntimeError("full curriculum/evaluation contract changed")
 
-    if config.get("status") == "advisor_approved_five_type_foundir_dit_pixel_refinement_v3":
+    if config.get("status") == "advisor_approved_five_type_foundir_dit_sow_aligned_v3":
         refinement = config.get("pixel_refinement", {})
+        overfit = config.get("overfit", {})
         refiner = BoundedPixelRefiner(
             width=int(refinement.get("width", -1)),
             blocks=int(refinement.get("blocks", -1)),
@@ -165,13 +166,11 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
             or not 0.0 < float(refinement.get("maximum_residual_m11", -1)) <= 0.5
             or config["model"].get("restoration_adapter")
             != "bounded_pixel_refinement_after_vae_decode"
+            or overfit.get("output_subdirectory") != "native_reference_overfit_sow"
+            or overfit.get("require_restored_lpips_improvement") is not True
+            or float(overfit.get("minimum_restored_psnr_gain_db", -1)) <= 0.0
         ):
             raise RuntimeError("v3 bounded pixel-refinement contract changed")
-        validate_pixel_refinement_vae_evidence(
-            ROOT,
-            config,
-            workspace_path(config["runtime"]["manifest"]),
-        )
 
     training_root = workspace_path(data["training_root"])
     missing_examples: list[str] = []

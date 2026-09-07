@@ -27,11 +27,13 @@ required=(
   lowlight_restoration/pixel_refinement.py
   lowlight_restoration/qwen_lora.py
   reports/foundir_five_type_flux2_main_v3_readiness_2026-09-07.md
+  reports/foundir_five_type_flux2_sow_metric_correction_2026-09-07.md
   smoke/build_foundir_five_type_physical_v8_conditions.py
   smoke/export_foundir_five_type_physical_v8_conditions_ddp.py
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
   smoke/build_foundir_flux_qwen3_prompt_cache_ddp.py
+  smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py
   smoke/train_foundir_five_type_flux2_overfit_ddp.py
   smoke/train_foundir_five_type_flux2_full_ddp.py
   smoke/train_qwen_multidegradation_lora_ddp.py
@@ -56,6 +58,7 @@ python_files=(
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
   smoke/build_foundir_flux_qwen3_prompt_cache_ddp.py
+  smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py
   smoke/train_foundir_five_type_flux2_overfit_ddp.py
   smoke/train_foundir_five_type_flux2_full_ddp.py
   smoke/evaluate_foundir_five_type_flux2_ddp.py

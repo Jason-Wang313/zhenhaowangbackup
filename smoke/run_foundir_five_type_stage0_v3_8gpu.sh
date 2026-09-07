@@ -65,19 +65,17 @@ kill -0 "$telemetry_pid" 2>/dev/null || {
   echo "ERROR: nvidia-smi telemetry failed to stay active" >&2; exit 1;
 }
 
-"$FLUX_PYTHON" - "$CONFIG" "$MANIFEST" <<'PY'
-import json,pathlib,sys
-from lowlight_restoration.foundir_flux2_protocol import validate_pixel_refinement_vae_evidence
-config=json.loads(pathlib.Path(sys.argv[1]).read_text())
-p=validate_pixel_refinement_vae_evidence(pathlib.Path.cwd(), config, pathlib.Path(sys.argv[2]))
-print("FOUNDIR_FIVE_TYPE_V3_VAE_EVIDENCE_REUSED", p["status"], p["failures"])
-PY
-
-OVERFIT_RESULT="$OUTPUT/native_reference_overfit/result.json"
+OVERFIT_RESULT="$OUTPUT/native_reference_overfit_sow/result.json"
+HISTORICAL_CHECKPOINT="$OUTPUT/native_reference_overfit/step_000200.safetensors"
 if [[ ! -f "$OVERFIT_RESULT" ]]; then
   set +e
-  "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
-    smoke/train_foundir_five_type_flux2_overfit_ddp.py --config "$CONFIG"
+  if [[ -f "$HISTORICAL_CHECKPOINT" ]]; then
+    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+      smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py --config "$CONFIG"
+  else
+    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+      smoke/train_foundir_five_type_flux2_overfit_ddp.py --config "$CONFIG"
+  fi
   torchrun_status=$?
   set -e
 else

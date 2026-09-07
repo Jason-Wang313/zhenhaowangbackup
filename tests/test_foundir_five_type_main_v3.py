@@ -13,9 +13,15 @@ from smoke.export_foundir_five_type_physical_v8_conditions_ddp import (
     center_generation_records,
     chunk_identity,
 )
-from smoke.train_foundir_five_type_flux2_overfit_ddp import evaluate_arms
-from smoke.train_foundir_five_type_flux2_overfit_ddp import balanced_overfit_evaluation_records
-from lowlight_restoration.foundir_flux2_protocol import validate_pixel_refinement_vae_evidence
+from smoke.train_foundir_five_type_flux2_overfit_ddp import (
+    aggregate_sow_overfit_metrics,
+    balanced_overfit_evaluation_records,
+    evaluate_arms,
+    sow_overfit_checks,
+)
+from smoke.recheck_foundir_five_type_flux2_overfit_sow_ddp import (
+    validate_historical_source,
+)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,11 +41,10 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertTrue(config["pixel_refinement"]["enabled"])
         self.assertEqual(config["pixel_refinement"]["expected_trainable_parameters"], 33251)
         self.assertEqual(config["model"]["restoration_adapter"], "bounded_pixel_refinement_after_vae_decode")
-        evidence = validate_pixel_refinement_vae_evidence(
-            ROOT, config, ROOT / config["runtime"]["manifest"]
-        )
-        self.assertEqual(evidence["status"], "pixel_refinement_required")
-        self.assertIn("05Noise:hf", evidence["failures"])
+        self.assertTrue(config["overfit"]["require_restored_lpips_improvement"])
+        self.assertEqual(config["overfit"]["output_subdirectory"], "native_reference_overfit_sow")
+        self.assertNotIn("high_frequency", json.dumps(config))
+        self.assertNotIn("hf_correlation", json.dumps(config))
 
     def test_center_crop_is_exact_and_deterministic(self) -> None:
         row = {
@@ -71,6 +76,44 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         source = inspect.getsource(evaluate_arms)
         self.assertIn('config["evaluation"].get("condition_arms"', source)
         self.assertIn("for arm in configured_arms", source)
+        self.assertIn("input_lpips", source)
+        self.assertIn("restored_lpips", source)
+        self.assertNotIn("high_frequency", source)
+
+    def test_overfit_gate_uses_psnr_and_lpips(self) -> None:
+        rows = [
+            {
+                "arm": "qwen",
+                "input_psnr": 20.0,
+                "decoded_psnr": 23.0,
+                "restored_psnr": 25.0,
+                "input_lpips": 0.30,
+                "decoded_lpips": 0.20,
+                "restored_lpips": 0.10,
+            }
+        ]
+        metrics = aggregate_sow_overfit_metrics(rows, ["qwen"])
+        self.assertAlmostEqual(metrics["qwen"]["psnr_gain_db"], 5.0)
+        self.assertAlmostEqual(metrics["qwen"]["lpips_improvement"], 0.20)
+        config = json.loads(CONFIG.read_text())
+        checks = sow_overfit_checks(
+            loss_ratio=0.1, arm_metrics=metrics, overfit=config["overfit"]
+        )
+        self.assertEqual(
+            checks,
+            {
+                "loss_ratio": True,
+                "restored_psnr_improves": True,
+                "restored_lpips_improves": True,
+            },
+        )
+
+    def test_sow_recheck_binds_immutable_v3_checkpoint(self) -> None:
+        config = json.loads(CONFIG.read_text())
+        checkpoint, result = validate_historical_source(config)
+        self.assertEqual(checkpoint.name, "step_000200.safetensors")
+        self.assertFalse(result["protected_foundir_test_accessed"])
+        self.assertLess(result["probe_loss_ratio"], config["overfit"]["require_loss_ratio_at_most"])
 
     def test_overfit_evaluation_is_category_balanced(self) -> None:
         records = [
@@ -99,13 +142,18 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertNotIn("MillionIRData/Test", runner)
         for relative in (
             "smoke/train_foundir_five_type_flux2_overfit_ddp.py",
+            "smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py",
             "smoke/train_foundir_five_type_flux2_full_ddp.py",
             "smoke/evaluate_foundir_five_type_flux2_ddp.py",
             "smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py",
         ):
-            self.assertIn("pixel_refinement", (ROOT / relative).read_text())
+            source = (ROOT / relative).read_text()
+            self.assertIn("pixel_refinement", source)
+            if "overfit" in relative:
+                self.assertNotIn("high_frequency", source)
+                self.assertNotIn("hf_correlation", source)
         stage0 = (ROOT / "smoke/run_foundir_five_type_stage0_v3_8gpu.sh").read_text()
-        self.assertIn("validate_pixel_refinement_vae_evidence", stage0)
+        self.assertIn("recheck_foundir_five_type_flux2_overfit_sow_ddp.py", stage0)
         self.assertNotIn("evaluate_foundir_five_type_vae_ceiling_ddp.py", stage0)
 
     def test_evaluator_rejects_disabled_condition_arms(self) -> None:

@@ -38,7 +38,6 @@ from lowlight_restoration.pixel_refinement import (  # noqa: E402
     BoundedPixelRefiner,
     pixel_refinement_losses,
     pixel_refiner_parameter_count,
-    spatial_highpass,
 )
 
 
@@ -315,15 +314,63 @@ def psnr(reference: torch.Tensor, prediction: torch.Tensor) -> float:
     return 100.0 if mse <= 1e-12 else -10.0 * math.log10(mse)
 
 
-def high_frequency_correlation(reference: torch.Tensor, prediction: torch.Tensor) -> float:
-    reference_hf = spatial_highpass(reference.float()).flatten()
-    prediction_hf = spatial_highpass(prediction.float()).flatten()
-    reference_hf = reference_hf - reference_hf.mean()
-    prediction_hf = prediction_hf - prediction_hf.mean()
-    denominator = torch.linalg.vector_norm(reference_hf) * torch.linalg.vector_norm(prediction_hf)
-    if float(denominator) <= 1e-12:
-        return 1.0 if torch.equal(reference_hf, prediction_hf) else 0.0
-    return float(torch.dot(reference_hf, prediction_hf) / denominator)
+def lpips_value(metric, reference: torch.Tensor, prediction: torch.Tensor) -> float:
+    """Return AlexNet LPIPS for tensors represented in normalized [-1, 1] RGB."""
+
+    reference_01 = (reference.float() + 1.0) * 0.5
+    prediction_01 = (prediction.float() + 1.0) * 0.5
+    with torch.inference_mode():
+        return float(metric(prediction_01, reference_01).item())
+
+
+def aggregate_sow_overfit_metrics(
+    result_rows: Sequence[Mapping[str, object]],
+    configured_arms: Sequence[str],
+) -> dict[str, dict[str, float | int]]:
+    """Aggregate only restoration metrics named by the FoundIR SOW."""
+
+    metrics: dict[str, dict[str, float | int]] = {}
+    for arm in configured_arms:
+        values = [row for row in result_rows if row["arm"] == arm]
+        if not values:
+            raise RuntimeError(f"overfit evaluation has no rows for arm {arm}")
+        metrics[arm] = {
+            "records": len(values),
+            "input_psnr": float(np.mean([float(row["input_psnr"]) for row in values])),
+            "decoded_psnr": float(np.mean([float(row["decoded_psnr"]) for row in values])),
+            "restored_psnr": float(np.mean([float(row["restored_psnr"]) for row in values])),
+            "psnr_gain_db": float(
+                np.mean(
+                    [float(row["restored_psnr"]) - float(row["input_psnr"]) for row in values]
+                )
+            ),
+            "input_lpips": float(np.mean([float(row["input_lpips"]) for row in values])),
+            "decoded_lpips": float(np.mean([float(row["decoded_lpips"]) for row in values])),
+            "restored_lpips": float(np.mean([float(row["restored_lpips"]) for row in values])),
+            "lpips_improvement": float(
+                np.mean(
+                    [float(row["input_lpips"]) - float(row["restored_lpips"]) for row in values]
+                )
+            ),
+        }
+    return metrics
+
+
+def sow_overfit_checks(
+    *,
+    loss_ratio: float,
+    arm_metrics: Mapping[str, Mapping[str, float | int]],
+    overfit: Mapping[str, object],
+) -> dict[str, bool]:
+    if overfit.get("require_restored_lpips_improvement") is not True:
+        raise RuntimeError("SOW-aligned overfit must require LPIPS improvement")
+    qwen = arm_metrics["qwen"]
+    return {
+        "loss_ratio": loss_ratio <= float(overfit["require_loss_ratio_at_most"]),
+        "restored_psnr_improves": float(qwen["psnr_gain_db"])
+        >= float(overfit["minimum_restored_psnr_gain_db"]),
+        "restored_lpips_improves": float(qwen["lpips_improvement"]) > 0.0,
+    }
 
 
 def evaluate_arms(
@@ -338,6 +385,7 @@ def evaluate_arms(
     world: int,
     device: torch.device,
     pixel_refiner=None,
+    lpips_metric=None,
 ) -> list[dict[str, object]]:
     count = int(config["overfit"]["evaluation_records"])
     if count % world:
@@ -351,12 +399,15 @@ def evaluate_arms(
     allowed_arms = {"qwen", "generic", "type_oracle", "shuffled_wrong"}
     if not configured_arms or set(configured_arms) - allowed_arms:
         raise RuntimeError(f"invalid overfit condition arms: {configured_arms}")
+    if lpips_metric is None:
+        raise RuntimeError("SOW-aligned overfit evaluation requires LPIPS")
     results: list[dict[str, object]] = []
     for index in range(rank, count, world):
         record = selected[index]
         gt = record["gt"].unsqueeze(0).to(device)
         lq = record["lq"].unsqueeze(0).to(device)
         input_psnr = psnr(gt, lq)
+        input_lpips = lpips_value(lpips_metric, gt, lq)
         prompts = {
             "qwen": str(record["qwen_text"]),
             "generic": str(record["generic_text"]),
@@ -381,10 +432,11 @@ def evaluate_arms(
                     "category": record["category"],
                     "arm": arm,
                     "input_psnr": input_psnr,
+                    "input_lpips": input_lpips,
                     "decoded_psnr": psnr(gt, decoded),
                     "restored_psnr": psnr(gt, prediction),
-                    "decoded_high_frequency_correlation": high_frequency_correlation(gt, decoded),
-                    "restored_high_frequency_correlation": high_frequency_correlation(gt, prediction),
+                    "decoded_lpips": lpips_value(lpips_metric, gt, decoded),
+                    "restored_lpips": lpips_value(lpips_metric, gt, prediction),
                 }
             )
     return results
@@ -401,11 +453,16 @@ def main() -> int:
     refinement = config["pixel_refinement"]
     if refinement.get("enabled") is not True:
         raise RuntimeError("pixel refinement must be enabled after the VAE ceiling failure")
-    output_dir = ROOT / config["runtime"]["output_dir"] / "native_reference_overfit"
+    output_dir = (
+        ROOT / config["runtime"]["output_dir"] / str(overfit["output_subdirectory"])
+    )
     conditions_path = ROOT / overfit["conditions_csv"]
     conditions_summary = ROOT / overfit["conditions_json"]
     summary = json.loads(conditions_summary.read_text())
-    if summary["conditions_csv_sha256"] != sha256(conditions_path):
+    if (
+        summary.get("config_sha256") != sha256(args.config)
+        or summary.get("conditions_csv_sha256") != sha256(conditions_path)
+    ):
         raise RuntimeError("Qwen condition cache identity changed")
     rows = load_conditions(conditions_path, int(overfit["records"]))
 
@@ -452,6 +509,7 @@ def main() -> int:
 
         from flux2.sampling import batched_prc_img
         from flux2.util import load_ae, load_flow_model
+        from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 
         autoencoder = load_ae(config["model"]["name"], device=device).eval().requires_grad_(False)
         model = load_flow_model(config["model"]["name"], device=device).eval().requires_grad_(False)
@@ -472,6 +530,9 @@ def main() -> int:
             raise RuntimeError(
                 f"pixel-refiner parameter count changed: {refiner_count}"
             )
+        lpips_metric = LearnedPerceptualImagePatchSimilarity(
+            net_type="alex", normalize=True
+        ).to(device).eval()
         flux_trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
         refiner_trainable = list(pixel_refiner.parameters())
         trainable = [*flux_trainable, *refiner_trainable]
@@ -620,49 +681,17 @@ def main() -> int:
         local_results = evaluate_arms(
             wrapped, autoencoder, records, contexts, batched_prc_img, config,
             rank=rank, world=world, device=device, pixel_refiner=wrapped_refiner,
+            lpips_metric=lpips_metric,
         )
         gathered: list[object | None] = [None] * world
         dist.all_gather_object(gathered, local_results)
         if rank == 0:
             result_rows = [row for part in gathered if isinstance(part, list) for row in part]
-            arm_metrics = {}
-            for arm in configured_arms:
-                values = [row for row in result_rows if row["arm"] == arm]
-                arm_metrics[arm] = {
-                    "records": len(values),
-                    "input_psnr": float(np.mean([row["input_psnr"] for row in values])),
-                    "restored_psnr": float(np.mean([row["restored_psnr"] for row in values])),
-                    "psnr_gain": float(np.mean([row["restored_psnr"] - row["input_psnr"] for row in values])),
-                    "refiner_psnr_gain": float(np.mean([row["restored_psnr"] - row["decoded_psnr"] for row in values])),
-                }
-            gate_categories = set(overfit["refiner_gate_categories"])
-            if not gate_categories.issubset(FIVE_TYPE_CATEGORIES):
-                raise RuntimeError("unknown pixel-refiner gate category")
-            refiner_gate_rows = [
-                row
-                for row in result_rows
-                if row["arm"] == "qwen" and row["category"] in gate_categories
-            ]
-            if set(row["category"] for row in refiner_gate_rows) != gate_categories:
-                raise RuntimeError("pixel-refiner gate does not cover every VAE failure category")
-            refiner_hf_gain = float(
-                np.mean(
-                    [
-                        row["restored_high_frequency_correlation"]
-                        - row["decoded_high_frequency_correlation"]
-                        for row in refiner_gate_rows
-                    ]
-                )
-            )
+            arm_metrics = aggregate_sow_overfit_metrics(result_rows, configured_arms)
             ratio = final_probe / initial_probe
-            checks = {
-                "loss_ratio": ratio <= float(overfit["require_loss_ratio_at_most"]),
-                "qwen_restoration_gain": arm_metrics["qwen"]["psnr_gain"] >= float(overfit["minimum_restored_psnr_gain_db"]),
-                "pixel_refiner_psnr_gain": arm_metrics["qwen"]["refiner_psnr_gain"]
-                >= float(overfit["minimum_refiner_psnr_gain_db"]),
-                "pixel_refiner_hf_gain_on_vae_failures": refiner_hf_gain
-                >= float(overfit["minimum_refiner_hf_correlation_gain"]),
-            }
+            checks = sow_overfit_checks(
+                loss_ratio=ratio, arm_metrics=arm_metrics, overfit=overfit
+            )
             payload = {
                 "schema_version": 1,
                 "status": "pass" if all(checks.values()) else "failed",
@@ -679,8 +708,6 @@ def main() -> int:
                 "final_probe_loss": final_probe,
                 "probe_loss_ratio": ratio,
                 "arm_metrics": arm_metrics,
-                "pixel_refiner_gate_categories": sorted(gate_categories),
-                "pixel_refiner_hf_correlation_gain": refiner_hf_gain,
                 "evaluation_rows": result_rows,
                 "training_losses": losses,
                 "wall_seconds": time.monotonic() - started,

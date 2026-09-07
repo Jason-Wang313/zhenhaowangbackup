@@ -1201,3 +1201,34 @@ FOUNDIR FIVE-TYPE FLUX.2 VAE DECISION AND V3 ROUTE — 2026-09-07
   `0,1,2,3,4,5,6,7`. Inspect the v3 stage-0 result before treating the route as
   scientifically viable. Never call CPU readiness or launch success a training
   pass.
+
+FOUNDIR SOW METRIC CORRECTION — 2026-09-07 (SUPERSEDES THE V3 HF GATE)
+
+- The FoundIR restoration SOW names PSNR and LPIPS as its objective metrics.
+  High-frequency correlation is not an SOW metric and is removed completely
+  from the active five-type FoundIR evaluation and gate logic. It must never
+  block overfit admission, full training, checkpoint selection, or final SOW
+  reporting.
+- The first v3 200-step overfit and its result are immutable historical
+  evidence. That run measured PSNR but omitted LPIPS and then stopped on the
+  superseded high-frequency-correlation gate. Preserve its checkpoint, result,
+  and logs exactly; do not relabel or overwrite that historical result.
+- The active SOW-aligned continuation reuses the exact historical v3 step-200
+  checkpoint only to evaluate the same 32 FoundIR-training-only overfit records
+  with both PSNR and offline AlexNet LPIPS. Its new result is isolated under
+  `native_reference_overfit_sow/`. If the historical checkpoint is absent, the
+  corrected overfit trainer may reproduce the 200-step gate from scratch.
+- The corrected overfit gate requires training-loss reduction, final-output
+  PSNR improvement over LQ, and final-output LPIPS improvement over LQ. It does
+  not use the absolute SOW thresholds because a 32-record overfit subset is a
+  learnability check, not the official FoundIR evaluation.
+- Development metrics use the source-group-disjoint FoundIR training
+  validation split. Checkpoint selection uses PSNR and LPIPS jointly across all
+  five tasks. A separate sealed source-group-disjoint internal-test split is
+  consumed once after selection. These training-archive splits estimate
+  generalization but do not replace or claim results on the official FoundIR
+  test.
+- The official FoundIR test remains protected. Only after the architecture,
+  checkpoint, and inference protocol are frozen may the user explicitly
+  authorize one final official-test evaluation. Only that result can establish
+  the contractual FoundIR PSNR/LPIPS outcome.

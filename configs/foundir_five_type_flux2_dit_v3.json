@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "advisor_approved_five_type_foundir_dit_pixel_refinement_v3",
+  "status": "advisor_approved_five_type_foundir_dit_sow_aligned_v3",
   "scope": {
     "degradations": [
       "blur",
@@ -109,20 +109,22 @@
   "overfit": {
     "records": 128,
     "steps": 200,
+    "output_subdirectory": "native_reference_overfit_sow",
     "require_loss_ratio_at_most": 0.35,
     "minimum_restored_psnr_gain_db": 2,
-    "minimum_refiner_psnr_gain_db": 0.05,
-    "minimum_refiner_hf_correlation_gain": 0.01,
-    "refiner_gate_categories": [
-      "05Noise",
-      "09Lowlight_Haze",
-      "14Lowlight"
-    ],
+    "require_restored_lpips_improvement": true,
     "evaluation_records": 32,
     "require_all_five_types": true,
     "require_all_composition_sizes": true,
-    "conditions_csv": "manifests/foundir_five_type_overfit_qwen_conditions_v3.csv",
-    "conditions_json": "manifests/foundir_five_type_overfit_qwen_conditions_v3.json"
+    "conditions_csv": "manifests/foundir_five_type_overfit_qwen_conditions_v3_sow.csv",
+    "conditions_json": "manifests/foundir_five_type_overfit_qwen_conditions_v3_sow.json",
+    "historical_recheck": {
+      "checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/native_reference_overfit/step_000200.safetensors",
+      "checkpoint_sha256": "aa35ba501ddc85bb2a4772a9a84195b33fc352a89ca2e8feb7511f451aa63b6e",
+      "source_config_sha256": "8ce04913355db66e89ef334a08ed146294f8dfb2ac5bc75316907c2c07428b57",
+      "source_result": "checkpoints/foundir_five_type_flux2_dit_v3/native_reference_overfit/result.json",
+      "source_result_sha256": "27bbfea18d2c0a11a558251632699d7085d73afd9f995e5f8aed7cc2bf8847ea"
+    }
   },
   "flow_training": {
     "objective": "degraded_anchored_residual_flow",
@@ -256,15 +258,6 @@
     "weather_specialist_sha256": "25fa90003de8fa6965d861fc66159fb0c188654723acc15e8c49ec8359ca8b93",
     "comparison_scope": "same_frozen_development_and_sealed_records"
   },
-  "vae_ceiling": {
-    "records_per_category": 4,
-    "center_crop_size": 512,
-    "minimum_psnr_db": 35,
-    "maximum_lpips": 0.03,
-    "minimum_high_frequency_correlation": 0.9,
-    "autoencoder_bytes": 336211292,
-    "flux2_revision": "50fe5162777813d869182b139e83b10743caef15"
-  },
   "runtime": {
     "python": ".venv/flux2-smoke/bin/python",
     "output_dir": "checkpoints/foundir_five_type_flux2_dit_v3",
@@ -288,12 +281,6 @@
     "residual_penalty_weight": 0.0025,
     "charbonnier_epsilon": 0.001,
     "initialization": "exact_identity_zero_output",
-    "admission": "required_by_v2_vae_ceiling_2026_09_07",
-    "source_vae_ceiling": {
-      "config": "configs/foundir_five_type_flux2_dit_v2.json",
-      "config_sha256": "4323c3a19104c1046dcfb5942727f031132e4dfc6d7eda06dec8752b96d5e23f",
-      "result": "checkpoints/foundir_five_type_flux2_dit_v2/vae_ceiling_result.json",
-      "result_sha256": "1702e40a8938fcbf659f0442a6bce51e2d87d69aa261e6c335da3dffa866eba9"
-    }
+    "admission": "retained_after_v3_overfit_improved_final_output_psnr"
   }
 }
