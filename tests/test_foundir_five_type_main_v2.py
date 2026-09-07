@@ -2,9 +2,13 @@ from __future__ import annotations
 
 import inspect
 import json
+import os
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest.mock import patch
 
+from smoke import foundir_five_type_runtime_preflight as runtime_preflight
 from smoke.export_foundir_five_type_physical_v8_conditions_ddp import (
     center_generation_records,
     chunk_identity,
@@ -70,6 +74,43 @@ class FoundIRFiveTypeMainV2Tests(unittest.TestCase):
     def test_evaluator_rejects_disabled_condition_arms(self) -> None:
         source = (ROOT / "smoke/evaluate_foundir_five_type_flux2_ddp.py").read_text()
         self.assertIn("condition arm {args.arm!r} is disabled", source)
+
+    def test_specialist_probe_uses_an_isolated_pinned_import_path(self) -> None:
+        with patch.dict(os.environ, {"PYTHONPATH": "/existing/path"}, clear=False):
+            environment = runtime_preflight.specialist_probe_environment()
+        entries = environment["PYTHONPATH"].split(os.pathsep)
+        expected = [
+            str(runtime_preflight.workspace_path(path))
+            for path in runtime_preflight.SPECIALIST_DEPENDENCY_RELATIVES
+        ]
+        self.assertEqual(entries[: len(expected)], expected)
+        self.assertEqual(entries[len(expected)], str(ROOT))
+        self.assertEqual(entries[-1], "/existing/path")
+
+    def test_specialist_probe_accepts_only_verified_child_marker(self) -> None:
+        payload = {
+            "versions": runtime_preflight.SPECIALIST_EXPECTED_VERSIONS,
+            "architecture": "WaveMamba",
+        }
+        completed = SimpleNamespace(
+            returncode=0,
+            stdout=runtime_preflight.SPECIALIST_PROBE_MARKER + json.dumps(payload) + "\n",
+            stderr="",
+        )
+        with patch.object(runtime_preflight.subprocess, "run", return_value=completed):
+            self.assertEqual(runtime_preflight.verify_specialist_runtime(), payload)
+
+        malformed = SimpleNamespace(returncode=0, stdout="no marker\n", stderr="")
+        with patch.object(runtime_preflight.subprocess, "run", return_value=malformed), self.assertRaisesRegex(
+            RuntimeError, "no pass marker"
+        ):
+            runtime_preflight.verify_specialist_runtime()
+
+        failed = SimpleNamespace(returncode=1, stdout="", stderr="dependency failure")
+        with patch.object(runtime_preflight.subprocess, "run", return_value=failed), self.assertRaisesRegex(
+            RuntimeError, "dependency failure"
+        ):
+            runtime_preflight.verify_specialist_runtime()
 
     def test_launcher_requires_eight_explicit_devices(self) -> None:
         launcher = (ROOT / "smoke/launch_foundir_five_type_flux2_main_v2_8gpu.sh").read_text()

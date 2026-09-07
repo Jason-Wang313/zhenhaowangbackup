@@ -61,3 +61,20 @@ proceeding to restoration after reviewing this evidence.
 The full-data existence scan is not repeated at launch. The already frozen
 685,495-row manifest/hash and completed installation marker are verified
 instead; this avoids millions of redundant shared-filesystem metadata calls.
+
+## Runtime-preflight correction — 2026-09-07
+
+The first v2 launch exited before any VAE, Qwen export, or FLUX training work.
+Its runtime preflight imported the FLUX/Qwen stack first and therefore cached
+`transformers 4.56.1` in the parent Python process. It then tried to verify the
+released FoundIR specialist's intentionally separate `transformers 4.47.1`
+stack in that same process and falsely reported dependency drift. The installed
+workspace-local dependency bundles had not changed.
+
+The specialist identity check now runs in a fresh subprocess whose import path
+is explicitly pinned to `transformers 4.47.1`, `tokenizers 0.21.0`, and
+`huggingface_hub 0.27.1`; the FLUX parent remains on 4.56.1. The subprocess must
+also initialize CUDA and import the actual WaveMamba architecture before it can
+emit its pass marker. Missing bundles, wrong versions, an import failure, a
+wrong architecture, or a missing marker still fail closed. The failed launch
+log is preserved, and restart remains safe because no stage output was created.

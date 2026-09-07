@@ -24,6 +24,18 @@ ALEXNET_SHA256 = "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee
 ALEXNET_BYTES = 244_408_911
 MINIMUM_FREE_BYTES = 100 * 1024**3
 MINIMUM_FREE_INODES = 1_000_000
+SPECIALIST_EXPECTED_VERSIONS = {
+    "transformers": "4.47.1",
+    "tokenizers": "0.21.0",
+    "huggingface_hub": "0.27.1",
+}
+SPECIALIST_DEPENDENCY_RELATIVES = (
+    Path(".tools/foundir-tokenizers-0.21.0"),
+    Path(".tools/foundir-huggingface-hub-0.27.1"),
+    Path(".tools/foundir-transformers-4.47.1-v2"),
+    Path(".tools/foundir-runtime"),
+)
+SPECIALIST_PROBE_MARKER = "FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS "
 
 
 def sha256(path: Path) -> str:
@@ -116,6 +128,89 @@ def verify_metric_cache() -> None:
     del metric
 
 
+def specialist_probe_environment() -> dict[str, str]:
+    """Build a clean import path for the released specialist subprocess.
+
+    FLUX.2 requires transformers 4.56.1, while the released FoundIR specialist
+    is pinned to 4.47.1.  They cannot be identity-checked reliably after one of
+    those versions has already entered ``sys.modules`` in the parent process.
+    """
+    dependencies = [workspace_path(relative) for relative in SPECIALIST_DEPENDENCY_RELATIVES]
+    for dependency in dependencies:
+        if not dependency.is_dir():
+            raise RuntimeError(f"missing FoundIR specialist dependency: {dependency}")
+    inherited = [
+        item
+        for item in os.environ.get("PYTHONPATH", "").split(os.pathsep)
+        if item and item not in {str(path) for path in dependencies} and item != str(ROOT)
+    ]
+    environment = os.environ.copy()
+    environment["PYTHONPATH"] = os.pathsep.join(
+        [*(str(path) for path in dependencies), str(ROOT), *inherited]
+    )
+    return environment
+
+
+def verify_specialist_runtime() -> dict[str, object]:
+    """Verify the incompatible specialist stack in a fresh Python process."""
+    probe = r'''
+import json
+import sys
+from pathlib import Path
+
+import huggingface_hub
+import tokenizers
+import torch
+import transformers
+
+root = Path(sys.argv[1]).resolve()
+expected = json.loads(sys.argv[2])
+versions = {
+    "transformers": transformers.__version__,
+    "tokenizers": tokenizers.__version__,
+    "huggingface_hub": huggingface_hub.__version__,
+}
+if versions != expected:
+    raise RuntimeError(f"FoundIR specialist dependency versions changed: {versions}")
+if not torch.cuda.is_available():
+    raise RuntimeError("FoundIR specialist runtime probe requires CUDA")
+torch.cuda.set_device(0)
+from smoke.run_foundir_lowlight_gate2_teachers import import_specialist_architecture
+specialist = import_specialist_architecture(root / "third_party/foundir/specialist_model")
+if specialist.__name__ != "WaveMamba":
+    raise RuntimeError("released specialist architecture identity changed")
+print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
+    "versions": versions,
+    "architecture": specialist.__name__,
+}, sort_keys=True), flush=True)
+'''
+    completed = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            probe,
+            str(ROOT),
+            json.dumps(SPECIALIST_EXPECTED_VERSIONS, sort_keys=True),
+        ],
+        env=specialist_probe_environment(),
+        capture_output=True,
+        text=True,
+        timeout=300,
+    )
+    if completed.returncode != 0:
+        detail = (completed.stderr or completed.stdout).strip()
+        raise RuntimeError(f"FoundIR specialist isolated runtime probe failed: {detail}")
+    for line in completed.stdout.splitlines():
+        if line.startswith(SPECIALIST_PROBE_MARKER):
+            payload = json.loads(line.removeprefix(SPECIALIST_PROBE_MARKER))
+            if payload.get("versions") != SPECIALIST_EXPECTED_VERSIONS:
+                raise RuntimeError(f"FoundIR specialist probe reported wrong versions: {payload}")
+            if payload.get("architecture") != "WaveMamba":
+                raise RuntimeError(f"FoundIR specialist probe reported wrong architecture: {payload}")
+            return payload
+    raise RuntimeError("FoundIR specialist isolated runtime probe emitted no pass marker")
+
+
 def verify_imports(*, require_cuda: bool) -> dict[str, object]:
     modules = (
         "smoke.evaluate_foundir_five_type_vae_ceiling_ddp",
@@ -160,38 +255,11 @@ def verify_imports(*, require_cuda: bool) -> dict[str, object]:
         if len(set(families)) != 1:
             raise RuntimeError(f"GPU family is not homogeneous: {families}")
 
-        # The released specialist imports Triton/CUDA extensions at module load.
-        # Do this on the actual GPU host before the long run, not days later.
-        torch.cuda.set_device(0)
-        extra = workspace_path(".tools/foundir-runtime")
-        if str(extra) not in sys.path:
-            sys.path.insert(0, str(extra))
-        from smoke.run_foundir_lowlight_gate2_teachers import (
-            SPECIALIST_DEPENDENCY_DIRECTORIES,
-            import_specialist_architecture,
-        )
-
-        for dependency in reversed(SPECIALIST_DEPENDENCY_DIRECTORIES):
-            if not dependency.is_dir():
-                raise RuntimeError(f"missing FoundIR specialist dependency: {dependency}")
-            if str(dependency) not in sys.path:
-                sys.path.insert(0, str(dependency))
-        versions = {
-            name: importlib.import_module(name).__version__
-            for name in ("transformers", "tokenizers", "huggingface_hub")
-        }
-        expected = {
-            "transformers": "4.47.1",
-            "tokenizers": "0.21.0",
-            "huggingface_hub": "0.27.1",
-        }
-        if versions != expected:
-            raise RuntimeError(f"FoundIR specialist dependency versions changed: {versions}")
-        specialist = import_specialist_architecture(
-            workspace_path("third_party/foundir/specialist_model")
-        )
-        if specialist.__name__ != "WaveMamba":
-            raise RuntimeError("released specialist architecture identity changed")
+        # FLUX.2 and the released specialist require mutually incompatible
+        # transformers versions.  Probe the specialist in a fresh child
+        # process so already-imported FLUX/Qwen modules cannot shadow its
+        # workspace-local pinned dependencies.
+        specialist_runtime = verify_specialist_runtime()
 
     revision = subprocess.run(
         ["git", "-C", str(workspace_path("third_party/flux2")), "rev-parse", "HEAD"],
@@ -201,7 +269,13 @@ def verify_imports(*, require_cuda: bool) -> dict[str, object]:
     ).stdout.strip()
     if revision != "50fe5162777813d869182b139e83b10743caef15":
         raise RuntimeError(f"FLUX.2 source revision changed: {revision}")
-    return {"gpu_inventory": inventory, "flux2_revision": revision}
+    result: dict[str, object] = {
+        "gpu_inventory": inventory,
+        "flux2_revision": revision,
+    }
+    if require_cuda:
+        result["specialist_runtime"] = specialist_runtime
+    return result
 
 
 def verify_artifact_deserialization(config_path: Path, *, full: bool) -> dict[str, object]:
