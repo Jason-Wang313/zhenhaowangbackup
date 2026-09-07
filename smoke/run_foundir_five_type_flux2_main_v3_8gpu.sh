@@ -45,6 +45,10 @@ flock -n 9 || { echo "ERROR: another five-type v3 pipeline holds $LOCK" >&2; exi
 export TORCH_HOME="$ROOT/models/torch"
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1
 export TOKENIZERS_PARALLELISM=false PYTHONUNBUFFERED=1
+export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
+export TORCH_NCCL_TRACE_BUFFER_SIZE=1048576
+export TORCH_NCCL_DUMP_ON_TIMEOUT=1
+export TORCH_NCCL_DESYNC_DEBUG=1
 export TRITON_CACHE_DIR="$ROOT/.cache/triton/foundir_five_type_v3"
 export TORCH_EXTENSIONS_DIR="$ROOT/.cache/torch_extensions/foundir_five_type_v3"
 export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4
@@ -85,10 +89,32 @@ fi
   --config "$CONFIG" --conditions "$CONDITIONS" \
   --output-csv "$CONTRACT_CSV" --output-json "$CONTRACT_JSON"
 
+"$FLUX_PYTHON" smoke/preflight_foundir_flux2_training_geometry.py --config "$CONFIG"
+
 TRAINING_SUMMARY="$OUTPUT/full_curriculum/training_summary.json"
 if [[ ! -f "$TRAINING_SUMMARY" ]]; then
+  mapfile -t training_gpu_names < <(nvidia-smi --query-gpu=name --format=csv,noheader)
+  [[ ${#training_gpu_names[@]} -eq 8 ]] || { echo "ERROR: expected eight training GPUs" >&2; exit 1; }
+  case "${training_gpu_names[0]}" in
+    *H200*) training_family=H200 ;;
+    *H100*) training_family=H100 ;;
+    *) echo "ERROR: unsupported training GPU ${training_gpu_names[0]}" >&2; exit 1 ;;
+  esac
+  for training_gpu_name in "${training_gpu_names[@]}"; do
+    [[ "$training_gpu_name" == "${training_gpu_names[0]}" ]] || {
+      echo "ERROR: training GPUs are not homogeneous" >&2; exit 1;
+    }
+  done
+  training_args=(--config "$CONFIG")
+  speed_selection="$OUTPUT/speed_benchmark_selection_${training_family}.json"
+  if [[ -f "$speed_selection" ]]; then
+    training_args+=(--approved-speed-selection "$speed_selection")
+    echo "FOUNDIR_FLUX_SPEED_SELECTION_APPLY path=$speed_selection"
+  else
+    echo "FOUNDIR_FLUX_SPEED_SELECTION_DEFAULT family=$training_family"
+  fi
   "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
-    smoke/train_foundir_five_type_flux2_full_ddp.py --config "$CONFIG"
+    smoke/train_foundir_five_type_flux2_full_ddp.py "${training_args[@]}"
 else
   "$FLUX_PYTHON" - "$CONFIG" "$TRAINING_SUMMARY" <<'PY'
 import hashlib,json,pathlib,sys

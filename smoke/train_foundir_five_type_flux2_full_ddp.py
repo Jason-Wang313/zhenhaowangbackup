@@ -11,6 +11,7 @@ import json
 import math
 import os
 import random
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -46,6 +47,9 @@ from lowlight_restoration.pixel_refinement import (  # noqa: E402
     pixel_refiner_parameter_count,
 )
 from smoke.train_foundir_five_type_flux2_overfit_ddp import unpack_tokens  # noqa: E402
+
+
+TRAINING_UNDERSIZED_PAIR_POLICY = "bicubic_short_side_to_512_then_aligned_crop_v1"
 
 
 def write_once(path: Path, payload: Mapping[str, object]) -> None:
@@ -100,8 +104,7 @@ class PresentationDataset(Dataset[dict[str, object]]):
             lq = np.asarray(handle.convert("RGB"), dtype=np.uint8).copy()
         with Image.open(ROOT / row["gt_path"]) as handle:
             gt = np.asarray(handle.convert("RGB"), dtype=np.uint8).copy()
-        if lq.shape != gt.shape or min(gt.shape[:2]) < self.crop_size:
-            raise RuntimeError(f"unaligned or undersized FoundIR pair: {row['record_id']}")
+        lq, gt = prepare_aligned_pair(lq, gt, self.crop_size, str(row["record_id"]))
         height, width = gt.shape[:2]
         digest = bytes.fromhex(stable_digest(self.seed, row["record_id"], presentation_index, "crop"))
         y = int.from_bytes(digest[:8], "big") % (height - self.crop_size + 1)
@@ -127,6 +130,56 @@ class PresentationDataset(Dataset[dict[str, object]]):
             "identity": identity,
             "generic_dropout": generic and not identity,
         }
+
+
+def resized_pair_dimensions(width: int, height: int, crop_size: int) -> tuple[int, int]:
+    """Upscale only undersized pairs while preserving their aspect ratio."""
+
+    if width < 1 or height < 1 or crop_size < 1:
+        raise ValueError("image and crop dimensions must be positive")
+    short_side = min(width, height)
+    if short_side >= crop_size:
+        return width, height
+    return (
+        max(crop_size, (width * crop_size + short_side - 1) // short_side),
+        max(crop_size, (height * crop_size + short_side - 1) // short_side),
+    )
+
+
+def prepare_aligned_pair(
+    lq: np.ndarray,
+    gt: np.ndarray,
+    crop_size: int,
+    record_id: str,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Make a valid aligned crop source without changing normal-size pairs.
+
+    FoundIR contains a very small number of legitimate panoramic Rain pairs
+    whose short side is below the 512-pixel training crop.  Upscaling LQ and
+    GT with the exact same deterministic geometry retains their alignment and
+    avoids silently dropping a frozen-manifest record.
+    """
+
+    if lq.ndim != 3 or gt.ndim != 3 or lq.shape[2:] != (3,) or gt.shape[2:] != (3,):
+        raise RuntimeError(f"non-RGB FoundIR pair: {record_id}")
+    if lq.shape != gt.shape:
+        raise RuntimeError(
+            f"unaligned FoundIR pair: {record_id}: lq={lq.shape} gt={gt.shape}"
+        )
+    height, width = gt.shape[:2]
+    resized_width, resized_height = resized_pair_dimensions(width, height, crop_size)
+    if (resized_width, resized_height) == (width, height):
+        return lq, gt
+    size = (resized_width, resized_height)
+    lq = np.asarray(
+        Image.fromarray(lq, mode="RGB").resize(size, Image.Resampling.BICUBIC),
+        dtype=np.uint8,
+    ).copy()
+    gt = np.asarray(
+        Image.fromarray(gt, mode="RGB").resize(size, Image.Resampling.BICUBIC),
+        dtype=np.uint8,
+    ).copy()
+    return lq, gt
 
 
 class CurriculumSampler(Sampler[tuple[int, int]]):
@@ -184,6 +237,77 @@ def collate(items: Sequence[Mapping[str, object]]) -> dict[str, object]:
 def contexts_for(cache: PromptContextCache, prompts: Sequence[str], device: torch.device) -> tuple[torch.Tensor, torch.Tensor]:
     values = [cache.get(prompt, device) for prompt in prompts]
     return torch.cat([value[0] for value in values]), torch.cat([value[1] for value in values])
+
+
+def flow_random_inputs(
+    latent_shape: Sequence[int],
+    presentation_indices: Sequence[int],
+    *,
+    seed: int,
+    device: torch.device,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Generate per-presentation randomness independent of microbatch grouping."""
+
+    if len(latent_shape) < 1 or int(latent_shape[0]) != len(presentation_indices):
+        raise ValueError("latent batch and presentation indices differ")
+    sample_shape = tuple(int(value) for value in latent_shape[1:])
+    noises = []
+    timesteps = []
+    for presentation_index in presentation_indices:
+        generator = torch.Generator(device=device).manual_seed(
+            seed + int(presentation_index) * 1000003
+        )
+        noises.append(
+            torch.randn(sample_shape, device=device, dtype=torch.bfloat16, generator=generator)
+        )
+        timesteps.append(
+            torch.rand((), device=device, dtype=torch.bfloat16, generator=generator)
+        )
+    return torch.stack(noises), torch.stack(timesteps).clamp_(1e-4, 1 - 1e-4)
+
+
+def synchronized_loader_batches(
+    iterator,
+    count: int,
+    *,
+    device: torch.device,
+) -> tuple[list[Mapping[str, object]], float]:
+    """Load a whole optimizer step on every rank before entering DDP forward.
+
+    A worker exception on one rank must be reported by all ranks before any of
+    them launches gradient collectives.  Otherwise healthy ranks can sit in a
+    NCCL all-reduce until the watchdog expires, obscuring the actual data error.
+    """
+
+    started = time.perf_counter()
+    batches: list[Mapping[str, object]] = []
+    error: str | None = None
+    try:
+        for _ in range(count):
+            batches.append(next(iterator))
+    except Exception as exc:  # propagated collectively below
+        error = f"{type(exc).__name__}: {exc}"
+    synchronized_rank_error(error, device=device, label="DataLoader failure before DDP forward")
+    return batches, time.perf_counter() - started
+
+
+def synchronized_rank_error(
+    error: str | None,
+    *,
+    device: torch.device,
+    label: str,
+) -> None:
+    """Raise the same diagnostic on every rank before entering model collectives."""
+
+    ready = torch.tensor([0 if error else 1], device=device, dtype=torch.int32)
+    dist.all_reduce(ready, op=dist.ReduceOp.MIN)
+    if int(ready.item()) != 1:
+        errors: list[object | None] = [None] * dist.get_world_size()
+        dist.all_gather_object(errors, error)
+        details = "; ".join(
+            f"rank {rank}: {message}" for rank, message in enumerate(errors) if message
+        )
+        raise RuntimeError(f"synchronized {label}: {details}")
 
 
 def learning_rate_scale(step: int, total: int, warmup: int, minimum: float) -> float:
@@ -293,10 +417,57 @@ def save_checkpoint(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
+    parser.add_argument("--benchmark-output", type=Path)
+    parser.add_argument("--benchmark-name")
+    parser.add_argument("--benchmark-steps", type=int, default=0)
+    parser.add_argument("--benchmark-warmup-steps", type=int, default=5)
+    parser.add_argument("--micro-batch-size-per-rank", type=int)
+    parser.add_argument("--gradient-accumulation-steps", type=int)
+    parser.add_argument("--data-loader-workers", type=int)
+    parser.add_argument("--data-loader-timeout-seconds", type=int, default=120)
+    parser.add_argument("--approved-speed-selection", type=Path)
     args = parser.parse_args()
+    benchmark = args.benchmark_output is not None
+    if benchmark != (args.benchmark_steps > 0):
+        parser.error("--benchmark-output and a positive --benchmark-steps are required together")
+    if benchmark != bool(args.benchmark_name):
+        parser.error("--benchmark-name is required exactly in benchmark mode")
+    if not benchmark and any(
+        value is not None
+        for value in (
+            args.micro_batch_size_per_rank,
+            args.gradient_accumulation_steps,
+            args.data_loader_workers,
+        )
+    ):
+        parser.error("runtime schedule overrides are benchmark-only")
+    if benchmark and args.approved_speed_selection is not None:
+        parser.error("an approved speed selection is full-training-only")
+    if args.benchmark_warmup_steps < 0 or (
+        benchmark and args.benchmark_warmup_steps >= args.benchmark_steps
+    ):
+        parser.error("benchmark warmup must be non-negative and smaller than benchmark steps")
+    if args.data_loader_timeout_seconds < 1:
+        parser.error("DataLoader timeout must be positive")
     args.config = resolve_workspace_path(ROOT, args.config)
+    if args.benchmark_output is not None:
+        args.benchmark_output = resolve_workspace_path(ROOT, args.benchmark_output)
+    if args.approved_speed_selection is not None:
+        args.approved_speed_selection = resolve_workspace_path(ROOT, args.approved_speed_selection)
     config = json.loads(args.config.read_text())
     config_sha = file_sha256(args.config)
+    current_git_revision = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=ROOT,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout.strip()
+    speed_selection = (
+        json.loads(args.approved_speed_selection.read_text())
+        if args.approved_speed_selection is not None
+        else None
+    )
     full = config["full_training"]
     flow = config["flow_training"]
     refinement = config["pixel_refinement"]
@@ -317,10 +488,13 @@ def main() -> None:
         or prompt_identity.get("protected_foundir_test_accessed") is not False
     ):
         raise RuntimeError("frozen FLUX prompt cache belongs to another run")
-    required_prompt_hashes = {
-        hashlib.sha256(row[key].encode()).hexdigest()
+    required_prompts = {
+        row[key]
         for row in rows
         for key in ("qwen_text", "generic_text")
+    }
+    required_prompt_hashes = {
+        hashlib.sha256(prompt.encode()).hexdigest() for prompt in required_prompts
     }
     if not required_prompt_hashes.issubset(prompt_identity.get("entries", {})):
         raise RuntimeError("frozen prompt cache is missing a full-training condition")
@@ -361,10 +535,58 @@ def main() -> None:
         if family is None or set(inventory) != {family}:
             raise RuntimeError(f"full training requires homogeneous H100 or H200 GPUs: {inventory}")
         hardware = full["hardware_schedule"][family]
-        micro_batch = int(hardware["micro_batch_size_per_rank"])
-        accumulation = int(hardware["gradient_accumulation_steps"])
+        if speed_selection is not None:
+            comparisons = {
+                str(value["benchmark_name"]): value
+                for value in speed_selection.get("comparisons", [])
+                if isinstance(value, dict) and "benchmark_name" in value
+            }
+            selected_comparison = comparisons.get(str(speed_selection.get("selected")))
+            if (
+                speed_selection.get("status") != "speed_benchmark_selection_complete"
+                or speed_selection.get("config_sha256") != config_sha
+                or speed_selection.get("git_revision") != current_git_revision
+                or speed_selection.get("gpu_family") != family
+                or int(speed_selection.get("world_size", -1)) != world
+                or int(speed_selection.get("global_batch_size", -1))
+                != int(distributed_config["global_batch_size"])
+                or speed_selection.get("protected_foundir_test_accessed") is not False
+                or not isinstance(selected_comparison, dict)
+                or selected_comparison.get("short_run_loss_trajectory_equivalent") is not True
+                or int(speed_selection.get("selected_micro_batch_size_per_rank", -1))
+                != int(selected_comparison.get("micro_batch_size_per_rank", -2))
+                or int(speed_selection.get("selected_gradient_accumulation_steps", -1))
+                != int(selected_comparison.get("gradient_accumulation_steps", -2))
+                or int(speed_selection.get("selected_data_loader_workers_per_rank", -1))
+                != int(selected_comparison.get("data_loader_workers_per_rank", -2))
+                or float(selected_comparison.get("maximum_peak_memory_fraction", 2.0)) > 0.9
+            ):
+                raise RuntimeError("approved speed benchmark does not match this full run")
+        micro_batch = int(
+            args.micro_batch_size_per_rank
+            if args.micro_batch_size_per_rank is not None
+            else speed_selection["selected_micro_batch_size_per_rank"]
+            if speed_selection is not None
+            else hardware["micro_batch_size_per_rank"]
+        )
+        accumulation = int(
+            args.gradient_accumulation_steps
+            if args.gradient_accumulation_steps is not None
+            else speed_selection["selected_gradient_accumulation_steps"]
+            if speed_selection is not None
+            else hardware["gradient_accumulation_steps"]
+        )
+        loader_workers = int(
+            args.data_loader_workers
+            if args.data_loader_workers is not None
+            else speed_selection["selected_data_loader_workers_per_rank"]
+            if speed_selection is not None
+            else 4
+        )
+        if micro_batch < 1 or accumulation < 1 or loader_workers < 1:
+            raise RuntimeError("microbatch, accumulation, and DataLoader workers must be positive")
         global_batch = micro_batch * accumulation * world
-        if global_batch != int(distributed_config["global_batch_size"]):
+        if not benchmark and global_batch != int(distributed_config["global_batch_size"]):
             raise RuntimeError("hardware schedule changed the scientific global batch")
         seed = int(flow["seed"])
         random.seed(seed + rank)
@@ -381,6 +603,22 @@ def main() -> None:
             prompt_index,
             maximum_resident=int(config["prompt_cache"]["maximum_resident_contexts_per_rank"]),
         )
+        prompt_preload_error: str | None = None
+        try:
+            for prompt in sorted(required_prompts):
+                prompt_cache.get(prompt, torch.device("cpu"))
+        except Exception as exc:
+            prompt_preload_error = f"{type(exc).__name__}: {exc}"
+        synchronized_rank_error(
+            prompt_preload_error,
+            device=device,
+            label="prompt-cache preload failure before DDP construction",
+        )
+        if rank == 0:
+            print(
+                f"FOUNDIR_FLUX_PROMPT_CACHE_PRELOAD_PASS prompts={len(required_prompts)}",
+                flush=True,
+            )
         from flux2.sampling import batched_prc_img
         from flux2.util import load_ae, load_flow_model
 
@@ -443,14 +681,17 @@ def main() -> None:
             fused=True,
         )
         output = ROOT / config["runtime"]["output_dir"] / "full_curriculum"
-        output.mkdir(parents=True, exist_ok=True)
-        global_step, presentations_completed, stage_history, resumed_stage_progress = resume(
-            wrapped.module,
-            wrapped_refiner.module,
-            optimizer,
-            output,
-            config_sha,
-        )
+        if benchmark:
+            global_step, presentations_completed, stage_history, resumed_stage_progress = 0, 0, [], None
+        else:
+            output.mkdir(parents=True, exist_ok=True)
+            global_step, presentations_completed, stage_history, resumed_stage_progress = resume(
+                wrapped.module,
+                wrapped_refiner.module,
+                optimizer,
+                output,
+                config_sha,
+            )
         total_presentations = sum(int(stage["presentations"]) for stage in full["curriculum"])
         total_steps = total_presentations // global_batch
         expected_step = presentations_completed // global_batch
@@ -465,6 +706,11 @@ def main() -> None:
         )
         stage_offset = 0
         loss_config = full["loss"]
+        benchmark_rank_step_seconds: list[float] = []
+        benchmark_rank_data_seconds: list[float] = []
+        benchmark_mean_losses: list[float] = []
+        benchmark_done = False
+        torch.cuda.reset_peak_memory_stats(device)
         for stage in full["curriculum"]:
             stage_presentations = int(stage["presentations"])
             stage_end = stage_offset + stage_presentations
@@ -501,12 +747,13 @@ def main() -> None:
                 dataset,
                 batch_size=micro_batch,
                 sampler=sampler,
-                num_workers=4,
+                num_workers=loader_workers,
                 prefetch_factor=3,
                 persistent_workers=True,
                 pin_memory=True,
                 collate_fn=collate,
                 drop_last=True,
+                timeout=args.data_loader_timeout_seconds,
             )
             iterator = iter(loader)
             optimizer.zero_grad(set_to_none=True)
@@ -525,19 +772,25 @@ def main() -> None:
             for _ in range(steps_this_stage):
                 optimizer_step = global_step + 1
                 accumulated = 0.0
-                for micro in range(accumulation):
-                    batch = next(iterator)
+                torch.cuda.synchronize(device)
+                optimizer_step_started = time.perf_counter()
+                step_batches, data_seconds = synchronized_loader_batches(
+                    iterator,
+                    accumulation,
+                    device=device,
+                )
+                for micro, batch in enumerate(step_batches):
                     gt = batch["gt"].to(device, non_blocking=True)
                     lq = batch["lq"].to(device, non_blocking=True)
                     context, context_ids = contexts_for(prompt_cache, batch["prompt"], device)
                     with torch.no_grad():
                         clean_latent, degraded_latent = autoencoder.encode(torch.cat([gt, lq])).chunk(2)
-                    presentation_seed = int(batch["presentation_index"][0])
-                    generator = torch.Generator(device=device).manual_seed(seed + presentation_seed * 1000003)
-                    noise = torch.randn(clean_latent.shape, device=device, dtype=torch.bfloat16, generator=generator)
-                    timesteps = torch.rand(
-                        (micro_batch,), device=device, dtype=torch.bfloat16, generator=generator
-                    ).clamp_(1e-4, 1 - 1e-4)
+                    noise, timesteps = flow_random_inputs(
+                        clean_latent.shape,
+                        batch["presentation_index"],
+                        seed=seed,
+                        device=device,
+                    )
                     flow_batch = build_degraded_anchored_flow_batch(
                         clean_latent.to(torch.bfloat16),
                         degraded_latent.to(torch.bfloat16),
@@ -613,14 +866,26 @@ def main() -> None:
                 value = torch.tensor([accumulated / accumulation], device=device)
                 dist.all_reduce(value)
                 mean_loss = float(value.item() / world)
+                torch.cuda.synchronize(device)
+                step_seconds = time.perf_counter() - optimizer_step_started
                 stage_loss_sum += mean_loss
                 stage_steps += 1
-                if rank == 0 and (global_step % 25 == 0 or stage_steps == 1):
+                if benchmark:
+                    benchmark_rank_step_seconds.append(step_seconds)
+                    benchmark_rank_data_seconds.append(data_seconds)
+                    benchmark_mean_losses.append(mean_loss)
+                if rank == 0 and (
+                    benchmark or global_step % 25 == 0 or stage_steps == 1
+                ):
                     print(
                         f"FOUNDIR_FLUX_FULL stage={stage['name']} step={global_step}/{total_steps} "
-                        f"loss={mean_loss:.8f} lr={optimizer.param_groups[0]['lr']:.8g}",
+                        f"loss={mean_loss:.8f} lr={optimizer.param_groups[0]['lr']:.8g} "
+                        f"step_seconds={step_seconds:.6f} data_seconds={data_seconds:.6f}",
                         flush=True,
                     )
+                if benchmark and global_step >= args.benchmark_steps:
+                    benchmark_done = True
+                    break
                 checkpoint_due = (
                     global_step % int(full["checkpoint_every_steps"]) == 0
                     or presentations_completed == stage_end
@@ -649,6 +914,11 @@ def main() -> None:
                             trainable_parameters=trainable_count,
                         )
                     dist.barrier()
+            if benchmark_done:
+                if hasattr(iterator, "_shutdown_workers"):
+                    iterator._shutdown_workers()
+                del iterator, loader
+                break
             stage_history.append(
                 {
                     "stage": stage["name"],
@@ -661,6 +931,77 @@ def main() -> None:
                 iterator._shutdown_workers()
             del iterator, loader
             stage_offset = stage_end
+        if benchmark:
+            if not benchmark_done or len(benchmark_rank_step_seconds) != args.benchmark_steps:
+                raise RuntimeError("benchmark did not execute the requested optimizer steps")
+            rank_result = {
+                "rank": rank,
+                "step_seconds": benchmark_rank_step_seconds,
+                "data_seconds": benchmark_rank_data_seconds,
+                "peak_memory_allocated_bytes": int(torch.cuda.max_memory_allocated(device)),
+                "peak_memory_reserved_bytes": int(torch.cuda.max_memory_reserved(device)),
+                "total_memory_bytes": int(properties.total_memory),
+            }
+            rank_results: list[object | None] = [None] * world
+            dist.all_gather_object(rank_results, rank_result)
+            if rank == 0:
+                concrete = [dict(value) for value in rank_results if isinstance(value, dict)]
+                if len(concrete) != world:
+                    raise RuntimeError("benchmark rank results are incomplete")
+                global_step_seconds = [
+                    max(float(value["step_seconds"][index]) for value in concrete)
+                    for index in range(args.benchmark_steps)
+                ]
+                global_data_seconds = [
+                    max(float(value["data_seconds"][index]) for value in concrete)
+                    for index in range(args.benchmark_steps)
+                ]
+                measured_step_seconds = global_step_seconds[args.benchmark_warmup_steps :]
+                measured_seconds = sum(measured_step_seconds)
+                measured_steps = len(measured_step_seconds)
+                payload = {
+                    "schema_version": 1,
+                    "status": "speed_benchmark_complete",
+                    "benchmark_name": args.benchmark_name,
+                    "config": args.config.relative_to(ROOT).as_posix(),
+                    "config_sha256": config_sha,
+                    "git_revision": current_git_revision,
+                    "gpu_family": family,
+                    "world_size": world,
+                    "global_batch_size": global_batch,
+                    "micro_batch_size_per_rank": micro_batch,
+                    "gradient_accumulation_steps": accumulation,
+                    "data_loader_workers_per_rank": loader_workers,
+                    "data_loader_timeout_seconds": args.data_loader_timeout_seconds,
+                    "optimizer_steps": args.benchmark_steps,
+                    "warmup_steps_excluded": args.benchmark_warmup_steps,
+                    "measured_steps": measured_steps,
+                    "measured_seconds": measured_seconds,
+                    "mean_seconds_per_step": measured_seconds / measured_steps,
+                    "global_samples_per_second": global_batch * measured_steps / measured_seconds,
+                    "step_seconds": global_step_seconds,
+                    "data_seconds": global_data_seconds,
+                    "mean_losses": benchmark_mean_losses,
+                    "peak_memory_allocated_bytes_per_rank": [
+                        int(value["peak_memory_allocated_bytes"]) for value in concrete
+                    ],
+                    "peak_memory_reserved_bytes_per_rank": [
+                        int(value["peak_memory_reserved_bytes"]) for value in concrete
+                    ],
+                    "total_memory_bytes_per_rank": [
+                        int(value["total_memory_bytes"]) for value in concrete
+                    ],
+                    "training_undersized_pair_policy": TRAINING_UNDERSIZED_PAIR_POLICY,
+                    "per_presentation_randomness_independent_of_microbatch_grouping": True,
+                    "checkpoint_written": False,
+                    "protected_foundir_test_accessed": False,
+                }
+                if not all(math.isfinite(float(value)) for value in benchmark_mean_losses):
+                    raise RuntimeError("benchmark produced a non-finite loss")
+                write_once(args.benchmark_output, payload)
+                print("FOUNDIR_FLUX_SPEED_BENCHMARK_COMPLETE " + json.dumps(payload, sort_keys=True), flush=True)
+            dist.barrier()
+            return
         if resumed_stage_progress is not None:
             raise RuntimeError("checkpoint stage progress was not consumed by the curriculum")
         if rank == 0:
@@ -674,6 +1015,18 @@ def main() -> None:
                 "global_batch_size": global_batch,
                 "micro_batch_size_per_rank": micro_batch,
                 "gradient_accumulation_steps": accumulation,
+                "speed_benchmark_selection": (
+                    args.approved_speed_selection.relative_to(ROOT).as_posix()
+                    if args.approved_speed_selection is not None
+                    else None
+                ),
+                "speed_benchmark_selection_sha256": (
+                    file_sha256(args.approved_speed_selection)
+                    if args.approved_speed_selection is not None
+                    else None
+                ),
+                "training_undersized_pair_policy": TRAINING_UNDERSIZED_PAIR_POLICY,
+                "per_presentation_randomness_independent_of_microbatch_grouping": True,
                 "completed_steps": global_step,
                 "presentations_completed": presentations_completed,
                 "trainable_parameters": trainable_count,

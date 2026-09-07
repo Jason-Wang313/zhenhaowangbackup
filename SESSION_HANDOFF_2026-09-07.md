@@ -6,6 +6,47 @@ next task**, but it does not override the advisor-authoritative architecture,
 workspace restrictions, destructive-change confirmation rule, or FoundIR-test
 protection policy in `agents.md`.
 
+## Continuation update — 2026-09-07 after first FLUX full-run failure
+
+This section supersedes the earlier statement below that no full training had
+started. The H200 pipeline launched at `2026-09-07T12:04:43Z`, passed every
+completed CPU/Qwen/prompt/evaluation-contract gate, and printed step 1. It then
+failed at `2026-09-07T12:20:15Z`; no full-training checkpoint was written.
+
+The primary failure was not NCCL or a bad GPU. Rank 6's DataLoader selected
+`foundir_train_0395700`, an aligned `1920x494` Rain LQ/GT pair that is valid for
+the earlier 448 Qwen crop but shorter than the 512 FLUX training crop. Rank 6
+raised the data error before the next backward pass, while the other seven
+ranks waited in DDP gradient all-reduce until the 600-second NCCL watchdog
+expired. GPU 6's persistent 0% utilization was therefore a real stalled-rank
+signal. The complete manifest contains 37 such short-side-under-512 Rain pairs:
+35 train, one validation, and one internal-test record.
+
+The correction and independent speed-benchmark route are implemented. The
+trainer deterministically applies the same aspect-ratio-preserving bicubic
+resize to LQ and GT only for those undersized pairs, then uses the existing
+aligned deterministic crop. A preflight scans all 685,495 manifest geometries
+and opens all 37 affected LQ/GT files before model loading. Per-step batch
+loading is synchronized across ranks before DDP forward/backward, DataLoader
+wait is bounded, and NCCL desynchronization diagnostics are enabled. The actual
+preflight passed and bound the affected record set by SHA-256
+`a0dc992fb2fa4c9a7191ac01a81584d5bca32bc4b035a1cb14bb4cee4576de8c`.
+
+The speed benchmark writes no checkpoint and does not access the official
+FoundIR test. It compares, on H200, `2x2/w4`, `4x1/w4`, and `4x1/w8`; on H100,
+`1x4/w4`, `2x2/w4`, and `2x2/w8`. Each runs 20 real optimizer steps, excludes
+five warmup steps, records loss/throughput/data wait/peak HBM, and preserves
+global batch 32 plus the full scientific schedule. Per-presentation noise and
+timestep draws are now independent of microbatch grouping. Automatic selection
+requires finite loss, at most 5% mean trajectory deviation, and at least 5%
+speedup. A selected schedule is bound to the exact config, Git revision, and
+GPU family before the full trainer accepts it.
+
+The exact next task is to commit/push the validated fix and launch
+`smoke/launch_foundir_flux2_speed_benchmark_8gpu.sh` on the user's independent
+eight-H100/H200 instance. Do not restart full training until the benchmark
+selection is inspected. The official FoundIR test remains protected.
+
 ## Continuation update — 2026-09-07 11:53 UTC
 
 This section supersedes the older executive status, immediate blocker, and
