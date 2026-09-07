@@ -938,10 +938,12 @@ COMMAND CONSTRUCTION AND PREFLIGHT
   Python compilation, launcher shell syntax, config parsing, and the relevant
   CPU preflight first. Never assume that a utility on the coding-agent PATH is
   also on the GPU-shell PATH.
-- Resolve `tmux` in the shared workspace before launch. The current verified
-  fallback is `.tools/tmux-env/bin/tmux`; check that it is executable and run
-  `<path>/tmux -V`. Do not give bare `tmux` when its presence in the user's GPU
-  shell has not been demonstrated.
+- Resolve `tmux` before launch, check that it is executable, and run
+  `<path>/tmux -V`. As of 2026-09-07, this coding terminal has verified
+  `/usr/bin/tmux` version 3.4. The path `.tools/tmux-env/bin/tmux` is currently
+  a socket rather than an executable and must not be presented as a fallback.
+  Do not give bare `tmux` when its presence in the user's GPU shell has not
+  been demonstrated.
 - Prefer a checked-in launcher over a long inline training command. Commands
   shown to the user must be short, literal, and safe to paste one line at a
   time. Use `cd` and short shell variables on separate lines when necessary.
