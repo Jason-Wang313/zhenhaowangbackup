@@ -23,6 +23,7 @@ fi
 for relative in \
   agents.md \
   smoke/export_foundir_five_type_physical_v8_conditions_ddp.py \
+  smoke/train_qwen_multidegradation_lora_ddp.py \
   smoke/run_foundir_qwen_export_partition_group_h200.sh \
   smoke/launch_foundir_qwen_export_partition_group_h200.sh \
   smoke/stop_foundir_five_type_flux2_main_v3_for_partition.sh \

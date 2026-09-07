@@ -46,6 +46,7 @@ from smoke.train_qwen_multidegradation_lora_ddp import (  # noqa: E402
 
 
 OPTIMIZED_EXPORT_ENGINE = "record_sharded_per_type_batch_v1"
+UNDERSIZED_INPUT_POLICY = "bicubic_short_side_to_448_then_center_crop_v1"
 
 
 def workspace_path(value: str | Path) -> Path:
@@ -54,20 +55,73 @@ def workspace_path(value: str | Path) -> Path:
     return path
 
 
+def resized_dimensions(width: int, height: int, crop_size: int) -> tuple[int, int]:
+    """Upscale the short side to ``crop_size`` without changing aspect ratio."""
+
+    if width < 1 or height < 1 or crop_size < 1:
+        raise ValueError("image and crop dimensions must be positive")
+    short_side = min(width, height)
+    if short_side >= crop_size:
+        return width, height
+    # Integer ceiling ensures that rounding can never leave the long side below
+    # the requested crop size.  PIL bicubic is the Qwen processor's native
+    # resampling family and is deterministic for a fixed Pillow version.
+    return (
+        max(crop_size, (width * crop_size + short_side - 1) // short_side),
+        max(crop_size, (height * crop_size + short_side - 1) // short_side),
+    )
+
+
+def generation_geometry_summary(
+    rows: Sequence[Mapping[str, str]], crop_size: int
+) -> dict[str, object]:
+    """Validate every manifest dimension before model loading."""
+
+    undersized: list[str] = []
+    minimum_width: int | None = None
+    minimum_height: int | None = None
+    for row in rows:
+        try:
+            width, height = int(row["width"]), int(row["height"])
+        except (KeyError, TypeError, ValueError) as exc:
+            raise RuntimeError(
+                f"invalid manifest dimensions for {row.get('record_id', '<unknown>')}"
+            ) from exc
+        if width < 1 or height < 1:
+            raise RuntimeError(
+                f"non-positive manifest dimensions for {row.get('record_id', '<unknown>')}: "
+                f"{width}x{height}"
+            )
+        minimum_width = width if minimum_width is None else min(minimum_width, width)
+        minimum_height = height if minimum_height is None else min(minimum_height, height)
+        if min(width, height) < crop_size:
+            undersized.append(row["record_id"])
+    return {
+        "records": len(rows),
+        "crop_size": crop_size,
+        "minimum_width": minimum_width,
+        "minimum_height": minimum_height,
+        "undersized_records": len(undersized),
+        "undersized_input_policy": UNDERSIZED_INPUT_POLICY,
+        "status": "pass",
+    }
+
+
 def center_generation_records(rows: Sequence[Mapping[str, str]], crop_size: int) -> list[dict[str, object]]:
     output: list[dict[str, object]] = []
     for row in rows:
         width, height = int(row["width"]), int(row["height"])
-        if min(width, height) < crop_size:
-            raise RuntimeError(f"Qwen center crop is larger than {row['record_id']}: {width}x{height}")
-        left, top = (width - crop_size) // 2, (height - crop_size) // 2
-        output.append(
-            {
-                **row,
-                "output_path": row["lq_path"],
-                "crop_box": [left, top, left + crop_size, top + crop_size],
-            }
-        )
+        resized_width, resized_height = resized_dimensions(width, height, crop_size)
+        left, top = (resized_width - crop_size) // 2, (resized_height - crop_size) // 2
+        record: dict[str, object] = {
+            **row,
+            "output_path": row["lq_path"],
+            "crop_box": [left, top, left + crop_size, top + crop_size],
+        }
+        if (resized_width, resized_height) != (width, height):
+            record["resize_size"] = [resized_width, resized_height]
+            record["undersized_input_policy"] = UNDERSIZED_INPUT_POLICY
+        output.append(record)
     return output
 
 
@@ -258,7 +312,7 @@ def chunk_identity(
         digest.update(
             f"{row['record_id']}\0{row['lq_sha256']}\0{row['gt_sha256']}\n".encode()
         )
-    return {
+    identity = {
         "schema_version": 1,
         "status": "complete_physical_v8_qwen_condition_chunk",
         "config_sha256": config_sha,
@@ -273,6 +327,17 @@ def chunk_identity(
         "jpeg_included": False,
         "protected_foundir_test_accessed": False,
     }
+    undersized = [
+        row["record_id"]
+        for row in rows
+        if "width" in row
+        and "height" in row
+        and min(int(row["width"]), int(row["height"])) < 448
+    ]
+    if undersized:
+        identity["undersized_input_policy"] = UNDERSIZED_INPUT_POLICY
+        identity["undersized_record_ids"] = undersized
+    return identity
 
 
 def verify_chunk(path: Path, identity: Mapping[str, object], rows: Sequence[Mapping[str, str]]) -> list[dict[str, str]]:
@@ -367,6 +432,10 @@ def publish_csv(
         "conditions_csv_sha256": sha256(output_csv),
         "qwen_method": "per_type_dialogue_center_crop_448",
         "query_count_per_image": 5,
+        "undersized_input_policy": UNDERSIZED_INPUT_POLICY,
+        "undersized_records": sum(
+            min(int(row["width"]), int(row["height"])) < 448 for row in rows
+        ),
         "condition_arms": ["qwen"],
         "jpeg_included": False,
         "protected_foundir_test_accessed": False,
@@ -418,6 +487,13 @@ def main() -> None:
     rows = load_manifest(manifest_path)
     if len(rows) != int(config["data"]["expected_five_type_records"]):
         raise RuntimeError("full FoundIR five-type manifest cardinality changed")
+    geometry = generation_geometry_summary(rows, int(qwen["crop_size"]))
+    if int(os.environ.get("LOCAL_RANK", "0")) == 0:
+        print(
+            "FOUNDIR_PHYSICAL_V8_GEOMETRY_PREFLIGHT_PASS "
+            + json.dumps(geometry, sort_keys=True),
+            flush=True,
+        )
 
     if args.verify_existing:
         payload = publish_csv(

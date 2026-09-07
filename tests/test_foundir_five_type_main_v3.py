@@ -8,14 +8,19 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
+from PIL import Image
+
 from smoke import foundir_five_type_runtime_preflight as runtime_preflight
 from smoke.export_foundir_five_type_physical_v8_conditions_ddp import (
     OPTIMIZED_EXPORT_ENGINE,
+    UNDERSIZED_INPUT_POLICY,
     center_generation_records,
     chunk_belongs_to_partition,
     chunk_identity,
+    generation_geometry_summary,
     optimized_batch_size,
     record_indices_for_rank,
+    resized_dimensions,
 )
 from smoke.train_foundir_five_type_flux2_overfit_ddp import (
     aggregate_sow_overfit_metrics,
@@ -23,6 +28,7 @@ from smoke.train_foundir_five_type_flux2_overfit_ddp import (
     evaluate_arms,
     sow_overfit_checks,
 )
+from smoke.train_qwen_multidegradation_lora_ddp import open_images
 from smoke.recheck_foundir_five_type_flux2_overfit_sow_ddp import (
     validate_historical_source,
 )
@@ -60,6 +66,56 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         result = center_generation_records([row], 448)[0]
         self.assertEqual(result["crop_box"], [736, 316, 1184, 764])
         self.assertEqual(result["output_path"], "image.png")
+        self.assertNotIn("resize_size", result)
+
+    def test_undersized_input_is_resized_before_exact_center_crop(self) -> None:
+        row = {
+            "record_id": "narrow",
+            "lq_path": "image.png",
+            "width": "1534",
+            "height": "406",
+        }
+        result = center_generation_records([row], 448)[0]
+        self.assertEqual(resized_dimensions(1534, 406, 448), (1693, 448))
+        self.assertEqual(result["resize_size"], [1693, 448])
+        self.assertEqual(result["crop_box"], [622, 0, 1070, 448])
+        self.assertEqual(result["undersized_input_policy"], UNDERSIZED_INPUT_POLICY)
+
+    def test_geometry_preflight_scans_all_dimensions(self) -> None:
+        rows = [
+            {"record_id": "regular", "width": "1920", "height": "1080"},
+            {"record_id": "narrow", "width": "674", "height": "266"},
+        ]
+        summary = generation_geometry_summary(rows, 448)
+        self.assertEqual(summary["records"], 2)
+        self.assertEqual(summary["undersized_records"], 1)
+        self.assertEqual(summary["minimum_width"], 674)
+        self.assertEqual(summary["minimum_height"], 266)
+        self.assertEqual(summary["undersized_input_policy"], UNDERSIZED_INPUT_POLICY)
+        with self.assertRaisesRegex(RuntimeError, "non-positive manifest dimensions"):
+            generation_geometry_summary(
+                [{"record_id": "invalid", "width": "0", "height": "448"}], 448
+            )
+
+    def test_qwen_loader_resizes_before_crop(self) -> None:
+        source = Image.new("RGB", (1534, 406), (32, 64, 96))
+        record = {
+            "record_id": "narrow",
+            "output_path": "unused.png",
+            "resize_size": [1693, 448],
+            "crop_box": [622, 0, 1070, 448],
+        }
+        with patch(
+            "smoke.train_qwen_multidegradation_lora_ddp.workspace_path",
+            return_value=Path("unused.png"),
+        ), patch(
+            "smoke.train_qwen_multidegradation_lora_ddp.Image.open",
+            return_value=source,
+        ):
+            images = open_images([record])
+        self.assertEqual(len(images), 1)
+        self.assertEqual(images[0].size, (448, 448))
+        self.assertEqual(images[0].getpixel((0, 0)), (32, 64, 96))
 
     def test_chunk_identity_binds_inputs_and_excludes_jpeg(self) -> None:
         rows = [
@@ -67,6 +123,8 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
                 "record_id": "r1",
                 "lq_sha256": "1" * 64,
                 "gt_sha256": "2" * 64,
+                "width": "1920",
+                "height": "1080",
             }
         ]
         identity = chunk_identity(
@@ -75,6 +133,26 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertEqual(identity["query_count_per_image"], 5)
         self.assertFalse(identity["jpeg_included"])
         self.assertFalse(identity["protected_foundir_test_accessed"])
+
+    def test_undersized_chunk_identity_binds_fallback_policy(self) -> None:
+        rows = [
+            {
+                "record_id": "narrow",
+                "lq_sha256": "1" * 64,
+                "gt_sha256": "2" * 64,
+                "width": "1534",
+                "height": "406",
+            }
+        ]
+        identity = chunk_identity(
+            rows, config_sha="3" * 64, qwen_config_sha="4" * 64, adapter_sha="5" * 64
+        )
+        self.assertEqual(identity["undersized_input_policy"], UNDERSIZED_INPUT_POLICY)
+        self.assertEqual(identity["undersized_record_ids"], ["narrow"])
+
+    def test_partition_launcher_binds_shared_qwen_image_loader(self) -> None:
+        launcher = (ROOT / "smoke/launch_foundir_qwen_export_partition_group_h200.sh").read_text()
+        self.assertIn("smoke/train_qwen_multidegradation_lora_ddp.py", launcher)
 
     def test_optimized_export_shards_records_once_across_eight_ranks(self) -> None:
         assignments = [record_indices_for_rank(512, rank, 8) for rank in range(8)]

@@ -169,6 +169,19 @@ def open_images(records: Sequence[Mapping[str, object]]) -> list[Image.Image]:
         path = workspace_path(record["output_path"])
         with Image.open(path) as handle:
             image = handle.convert("RGB")
+            resize_size = record.get("resize_size")
+            if resize_size is not None:
+                if (
+                    not isinstance(resize_size, Sequence)
+                    or isinstance(resize_size, (str, bytes))
+                    or len(resize_size) != 2
+                    or any(
+                        isinstance(value, bool) or not isinstance(value, int) or value < 1
+                        for value in resize_size
+                    )
+                ):
+                    raise ValueError(f"invalid resize_size for {record.get('record_id')}")
+                image = image.resize(tuple(resize_size), resample=Image.Resampling.BICUBIC)
             crop_box = record.get("crop_box")
             if crop_box is not None:
                 if (
