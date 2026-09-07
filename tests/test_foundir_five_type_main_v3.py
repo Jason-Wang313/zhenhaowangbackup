@@ -166,6 +166,8 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertNotIn("MillionIRData/Test", runner)
         exporter = (ROOT / "smoke/export_foundir_five_type_physical_v8_conditions_ddp.py").read_text()
         self.assertIn("FOUNDIR_PHYSICAL_V8_OPTIMIZATION_VALIDATION", exporter)
+        self.assertIn("--benchmark-only", exporter)
+        self.assertIn("FOUNDIR_PHYSICAL_V8_OPTIMIZATION_BENCHMARK_PASS", exporter)
         self.assertIn("exact_condition_equivalence", exporter)
         self.assertIn("generate_outputs_record_sharded", exporter)
         for relative in (

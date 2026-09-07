@@ -1251,6 +1251,9 @@ FOUNDIR QWEN CONDITION-EXPORT OPTIMIZATION — 2026-09-07
 - The exporter optimization is not yet GPU-validated merely because CPU tests
   pass. Treat the first `FOUNDIR_PHYSICAL_V8_OPTIMIZATION_VALIDATION` marker as
   the runtime gate, and report its exact equivalence and measured throughput.
+  The `--benchmark-only` mode performs this gate without writing a new chunk,
+  so it may run on a separate eight-GPU instance while the legacy exporter
+  continues; only its explicit benchmark-pass marker authorizes a switchover.
 - The active legacy process that started before this source change is
   unaffected and may continue producing valid chunks. Never discard or
   overwrite those chunks. The official FoundIR test remains inaccessible.

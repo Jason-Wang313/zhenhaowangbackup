@@ -380,7 +380,10 @@ def main() -> None:
     parser.add_argument("--manifest", type=Path, required=True)
     parser.add_argument("--chunk-records", type=int, default=512)
     parser.add_argument("--verify-existing", action="store_true")
+    parser.add_argument("--benchmark-only", action="store_true")
     args = parser.parse_args()
+    if args.verify_existing and args.benchmark_only:
+        parser.error("--verify-existing and --benchmark-only are mutually exclusive")
     config_path, manifest_path = workspace_path(args.config), workspace_path(args.manifest)
     config = json.loads(config_path.read_text())
     qwen = config["qwen_condition"]
@@ -439,7 +442,7 @@ def main() -> None:
                 missing.append(start)
         model = processor = None
         use_optimized_engine = False
-        if missing:
+        if missing or args.benchmark_only:
             seed_everything(int(config["flow_training"]["seed"]))
             model, processor, _ = load_model(qwen_config, variant="merger_trainable", device=device)
             load_qwen_adapter(model, adapter)
@@ -493,6 +496,14 @@ def main() -> None:
                     "no_immutable_reference_chunk",
                     flush=True,
                 )
+            if args.benchmark_only:
+                if not use_optimized_engine:
+                    raise RuntimeError(
+                        "optimized export benchmark did not prove exact condition equivalence"
+                    )
+                if rank == 0:
+                    print("FOUNDIR_PHYSICAL_V8_OPTIMIZATION_BENCHMARK_PASS", flush=True)
+                return
         for start in missing:
             selected = rows[start : start + args.chunk_records]
             generation_records = center_generation_records(selected, int(qwen["crop_size"]))
