@@ -226,6 +226,7 @@ def verify_imports(*, require_cuda: bool) -> dict[str, object]:
         "smoke.evaluate_foundir_five_type_released_baselines_ddp",
         "smoke.freeze_foundir_five_type_flux2_final_report",
         "smoke.freeze_foundir_five_type_flux2_main_v2_report",
+        "smoke.freeze_foundir_five_type_flux2_main_v3_report",
     )
     for name in modules:
         importlib.import_module(name)

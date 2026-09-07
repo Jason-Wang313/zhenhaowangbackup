@@ -1161,3 +1161,43 @@ PAIRED-REAL GATE-A EXECUTION UPDATE — 2026-08-21
 - The VAE result must decide latent-only versus pixel-frequency bypass before
   the restoration bridge is implemented. Do not start official FoundIR test
   inference from VAE readiness or from the photometric oracle.
+
+FOUNDIR FIVE-TYPE FLUX.2 VAE DECISION AND V3 ROUTE — 2026-09-07
+
+- Current scope is the advisor-approved five-type FoundIR training route:
+  Blur, Noise, Rain, Haze, and Low-light, including admitted mixtures. JPEG is
+  prohibited. Qwen stays frozen. The current mainline contains no
+  oracle/generic/shuffled-wrong Qwen-condition ablations. The official FoundIR
+  test remains protected and must not be accessed without explicit user
+  approval after the internal protocol is frozen.
+- The corrected eight-GPU v2 runtime preflight passed. Its 44-record
+  FoundIR-training-only VAE ceiling finished at `2026-09-07T00:50:35Z` and
+  returned `pixel_refinement_required`, not a crash. Exact result:
+  `checkpoints/foundir_five_type_flux2_dit_v2/vae_ceiling_result.json`, SHA-256
+  `1702e40a8938fcbf659f0442a6bce51e2d87d69aa261e6c335da3dffa866eba9`.
+  Failures were Noise HF correlation `0.89056 < 0.90000`, Low-light HF
+  correlation `0.86160 < 0.90000`, and Low-light+Haze PSNR
+  `34.72370 < 35.00000` plus HF correlation `0.82381 < 0.90000`. No FLUX
+  optimizer step started in v2.
+- V3 keeps FLUX.2 Klein 4B as the restoration backbone, with frozen VAE,
+  frozen native Qwen3 text encoder, native reference-image tokens, and DiT
+  LoRA rank/alpha 32/32. It adds only a zero-initialized, bounded, 33,251-
+  parameter local pixel refiner after VAE decode. The refiner receives decoded
+  RGB, aligned LQ RGB, and their difference; its per-channel correction is
+  bounded to `0.25` in normalized `[-1,1]` space. It is part of the single
+  deployed restoration checkpoint, not an independent generator.
+- V3 reuses the frozen v2 VAE measurement rather than wasting eight GPUs on
+  the identical calculation. Reuse is allowed only when exact source-config,
+  result, manifest, VAE-weight, selection-seed, thresholds, category coverage,
+  failure status, and protected-test identities pass.
+- The v3 overfit trains FLUX LoRA and the pixel refiner jointly. Its 32-pair
+  evaluation is balanced across all 11 admitted categories and all composition
+  sizes. In addition to overall loss and restoration gain, the refiner itself
+  must improve PSNR and must improve high-frequency correlation on Noise,
+  Low-light, and Low-light+Haze before full training can start.
+- The v3 launch route is
+  `smoke/launch_foundir_five_type_flux2_main_v3_8gpu.sh`. It requires exactly
+  eight homogeneous H100 or H200 GPUs and literal devices
+  `0,1,2,3,4,5,6,7`. Inspect the v3 stage-0 result before treating the route as
+  scientifically viable. Never call CPU readiness or launch success a training
+  pass.

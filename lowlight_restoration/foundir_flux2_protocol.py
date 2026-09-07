@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from collections import defaultdict
 from dataclasses import dataclass
 from typing import Mapping, Sequence
@@ -29,6 +30,71 @@ def resolve_workspace_path(root: Path, value: str | Path) -> Path:
     path = path.resolve()
     path.relative_to(root.resolve())
     return path
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(16 * 1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def validate_pixel_refinement_vae_evidence(
+    root: Path,
+    config: Mapping[str, object],
+    manifest_path: Path,
+) -> dict[str, object]:
+    """Validate the frozen v2 VAE result that admitted pixel refinement.
+
+    The VAE, target-selection contract, and manifest are unchanged in v3, so
+    the measured v2 ceiling is reused by exact identity instead of spending
+    eight GPUs to reproduce the same 44 round trips.
+    """
+
+    refinement = config.get("pixel_refinement")
+    if not isinstance(refinement, Mapping) or refinement.get("enabled") is not True:
+        raise RuntimeError("pixel refinement is not enabled")
+    evidence = refinement.get("source_vae_ceiling")
+    if not isinstance(evidence, Mapping):
+        raise RuntimeError("pixel refinement has no frozen source VAE evidence")
+    source_config_path = resolve_workspace_path(root, str(evidence["config"]))
+    result_path = resolve_workspace_path(root, str(evidence["result"]))
+    if file_sha256(source_config_path) != evidence.get("config_sha256"):
+        raise RuntimeError("source VAE config identity changed")
+    if file_sha256(result_path) != evidence.get("result_sha256"):
+        raise RuntimeError("source VAE result identity changed")
+    source_config = json.loads(source_config_path.read_text())
+    result = json.loads(result_path.read_text())
+    if (
+        result.get("status") != "pixel_refinement_required"
+        or result.get("config_sha256") != evidence.get("config_sha256")
+        or result.get("manifest_sha256") != file_sha256(manifest_path)
+        or result.get("protected_foundir_test_accessed") is not False
+        or not result.get("failures")
+    ):
+        raise RuntimeError("source VAE result does not admit pixel refinement")
+    if (
+        source_config.get("vae_ceiling") != config.get("vae_ceiling")
+        or source_config.get("scope", {}).get("degradations")
+        != config.get("scope", {}).get("degradations")
+        or source_config.get("scope", {}).get("exclude_jpeg") is not True
+        or source_config.get("model", {}).get("name") != config.get("model", {}).get("name")
+        or source_config.get("model", {}).get("autoencoder_weights")
+        != config.get("model", {}).get("autoencoder_weights")
+        or source_config.get("model", {}).get("autoencoder_weights_sha256")
+        != config.get("model", {}).get("autoencoder_weights_sha256")
+        or source_config.get("data", {}).get("split_seed")
+        != config.get("data", {}).get("split_seed")
+    ):
+        raise RuntimeError("v3 changed a VAE-ceiling input relative to its frozen evidence")
+    expected_records = len(FIVE_TYPE_CATEGORIES) * int(config["vae_ceiling"]["records_per_category"])
+    if (
+        int(result.get("records", -1)) != expected_records
+        or set(result.get("categories", {})) != set(FIVE_TYPE_CATEGORIES)
+    ):
+        raise RuntimeError("source VAE evidence is incomplete")
+    return result
 
 
 def evaluation_artifact_stem(record_id: str) -> str:

@@ -14,6 +14,8 @@ sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.foundir_five_type import category_counts, load_five_type_metadata
 from lowlight_restoration.foundir_flux2_protocol import SOW_STAGE2_THRESHOLDS
+from lowlight_restoration.foundir_flux2_protocol import validate_pixel_refinement_vae_evidence
+from lowlight_restoration.pixel_refinement import BoundedPixelRefiner, pixel_refiner_parameter_count
 
 
 def sha256(path: Path) -> str:
@@ -32,7 +34,11 @@ def workspace_path(value: str) -> Path:
 
 def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> dict[str, object]:
     config = json.loads(config_path.read_text())
-    if config.get("status") != "advisor_approved_five_type_foundir_dit_readiness":
+    allowed_statuses = {
+        "advisor_approved_five_type_foundir_dit_readiness",
+        "advisor_approved_five_type_foundir_dit_pixel_refinement_v3",
+    }
+    if config.get("status") not in allowed_statuses:
         raise RuntimeError("five-type DiT config is not approved")
     data = config["data"]
     metadata = workspace_path(data["official_metadata"])
@@ -107,8 +113,8 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
         cumulative_presentations += int(stage.get("presentations", 0))
         stage_end_steps.append(cumulative_presentations // int(distributed["global_batch_size"]))
     candidate_steps = config["evaluation"].get("candidate_steps")
-    no_ablation_v2 = config["qwen_condition"].get("method") == "per_type_dialogue_center_crop_448"
-    if no_ablation_v2 and (
+    physical_v8 = config["qwen_condition"].get("method") == "per_type_dialogue_center_crop_448"
+    if physical_v8 and (
         config["scope"].get("exclude_jpeg") is not True
         or config["evaluation"].get("condition_arms") != ["qwen"]
         or float(full.get("generic_condition_probability", -1)) != 0.0
@@ -140,6 +146,32 @@ def run(config_path: Path, *, require_data: bool, skip_large_hashes: bool) -> di
         )
     ):
         raise RuntimeError("full curriculum/evaluation contract changed")
+
+    if config.get("status") == "advisor_approved_five_type_foundir_dit_pixel_refinement_v3":
+        refinement = config.get("pixel_refinement", {})
+        refiner = BoundedPixelRefiner(
+            width=int(refinement.get("width", -1)),
+            blocks=int(refinement.get("blocks", -1)),
+            maximum_residual_m11=float(refinement.get("maximum_residual_m11", -1)),
+        )
+        if (
+            refinement.get("architecture") != "bounded_local_naf_residual_v1"
+            or refinement.get("input") != "decoded_flux_rgb_plus_aligned_lq"
+            or refinement.get("initialization") != "exact_identity_zero_output"
+            or pixel_refiner_parameter_count(refiner)
+            != int(refinement.get("expected_trainable_parameters", -1))
+            or int(refinement.get("training_every_steps", -1))
+            != int(full["loss"]["rgb_auxiliary_every_steps"])
+            or not 0.0 < float(refinement.get("maximum_residual_m11", -1)) <= 0.5
+            or config["model"].get("restoration_adapter")
+            != "bounded_pixel_refinement_after_vae_decode"
+        ):
+            raise RuntimeError("v3 bounded pixel-refinement contract changed")
+        validate_pixel_refinement_vae_evidence(
+            ROOT,
+            config,
+            workspace_path(config["runtime"]["manifest"]),
+        )
 
     training_root = workspace_path(data["training_root"])
     missing_examples: list[str] = []

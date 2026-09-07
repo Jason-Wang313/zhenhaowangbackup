@@ -31,8 +31,14 @@ from lowlight_restoration.flow import build_degraded_anchored_flow_batch  # noqa
 from lowlight_restoration.foundir_five_type import FIVE_TYPE_CATEGORIES  # noqa: E402
 from lowlight_restoration.lora import (  # noqa: E402
     inject_lora,
-    load_lora_checkpoint,
-    save_lora_checkpoint,
+    load_restoration_checkpoint,
+    save_restoration_checkpoint,
+)
+from lowlight_restoration.pixel_refinement import (  # noqa: E402
+    BoundedPixelRefiner,
+    pixel_refinement_losses,
+    pixel_refiner_parameter_count,
+    spatial_highpass,
 )
 
 
@@ -58,7 +64,13 @@ def write_once(path: Path, content: bytes) -> None:
         handle.write(content)
 
 
-def resume_checkpoint(model, optimizer, output_dir: Path, config_sha: str) -> tuple[int, list[float]]:
+def resume_checkpoint(
+    model,
+    pixel_refiner,
+    optimizer,
+    output_dir: Path,
+    config_sha: str,
+) -> tuple[int, list[float]]:
     candidates: list[tuple[int, Path]] = []
     for checkpoint in output_dir.glob("step_*.safetensors"):
         try:
@@ -76,7 +88,7 @@ def resume_checkpoint(model, optimizer, output_dir: Path, config_sha: str) -> tu
     if not candidates:
         return 0, []
     step, checkpoint = max(candidates)
-    load_lora_checkpoint(model, checkpoint)
+    load_restoration_checkpoint(model, pixel_refiner, checkpoint)
     payload = torch.load(checkpoint.with_suffix(".optimizer.pt"), map_location="cpu", weights_only=False)
     if payload.get("config_sha256") != config_sha or int(payload.get("step", -1)) != step:
         raise RuntimeError("overfit optimizer checkpoint contract changed")
@@ -171,6 +183,40 @@ def scheduled_index(position: int, length: int, seed: int) -> int:
     return int(torch.randperm(length, generator=generator)[offset])
 
 
+def balanced_overfit_evaluation_records(
+    records: Sequence[Mapping[str, object]], count: int, seed: int
+) -> list[Mapping[str, object]]:
+    """Select an interleaved subset that represents every FoundIR category."""
+
+    if count <= 0 or count > len(records):
+        raise ValueError("invalid overfit evaluation count")
+    buckets: dict[str, list[Mapping[str, object]]] = {}
+    for category in sorted(FIVE_TYPE_CATEGORIES):
+        candidates = [record for record in records if record["category"] == category]
+        candidates.sort(key=lambda row: stable_int(seed, "overfit-eval", row["record_id"]))
+        if not candidates:
+            raise RuntimeError(f"overfit evaluation has no {category} record")
+        buckets[category] = candidates
+    if count < len(buckets):
+        raise RuntimeError("overfit evaluation count cannot cover every category")
+    selected: list[Mapping[str, object]] = []
+    offset = 0
+    while len(selected) < count:
+        added = False
+        for category in sorted(buckets):
+            if offset < len(buckets[category]):
+                selected.append(buckets[category][offset])
+                added = True
+                if len(selected) == count:
+                    break
+        if not added:
+            raise RuntimeError("overfit evaluation records are exhausted")
+        offset += 1
+    if set(record["category"] for record in selected) != set(FIVE_TYPE_CATEGORIES):
+        raise RuntimeError("balanced overfit subset lost a category")
+    return selected
+
+
 def fixed_probe(
     model,
     autoencoder,
@@ -229,7 +275,9 @@ def restore(
     steps: int,
     noise_scale: float,
     reference_time: int,
-) -> torch.Tensor:
+    pixel_refiner=None,
+    return_decoded: bool = False,
+):
     device = lq.device
     with torch.inference_mode():
         degraded = autoencoder.encode(lq)
@@ -251,12 +299,31 @@ def restore(
                 )[:, : current_tokens.shape[1]]
             delta = float(schedule[index + 1] - schedule[index])
             current = current + delta * unpack_tokens(velocity, current.shape)
-        return autoencoder.decode(current).float().clamp(-1.0, 1.0)
+        decoded = autoencoder.decode(current).float().clamp(-1.0, 1.0)
+        refined = decoded
+        if pixel_refiner is not None:
+            with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+                refined = pixel_refiner(decoded, lq)
+        refined = refined.float().clamp(-1.0, 1.0)
+        if return_decoded:
+            return decoded, refined
+        return refined
 
 
 def psnr(reference: torch.Tensor, prediction: torch.Tensor) -> float:
     mse = float(torch.mean(((reference.float() - prediction.float()) * 0.5) ** 2))
     return 100.0 if mse <= 1e-12 else -10.0 * math.log10(mse)
+
+
+def high_frequency_correlation(reference: torch.Tensor, prediction: torch.Tensor) -> float:
+    reference_hf = spatial_highpass(reference.float()).flatten()
+    prediction_hf = spatial_highpass(prediction.float()).flatten()
+    reference_hf = reference_hf - reference_hf.mean()
+    prediction_hf = prediction_hf - prediction_hf.mean()
+    denominator = torch.linalg.vector_norm(reference_hf) * torch.linalg.vector_norm(prediction_hf)
+    if float(denominator) <= 1e-12:
+        return 1.0 if torch.equal(reference_hf, prediction_hf) else 0.0
+    return float(torch.dot(reference_hf, prediction_hf) / denominator)
 
 
 def evaluate_arms(
@@ -270,11 +337,14 @@ def evaluate_arms(
     rank: int,
     world: int,
     device: torch.device,
+    pixel_refiner=None,
 ) -> list[dict[str, object]]:
     count = int(config["overfit"]["evaluation_records"])
     if count % world:
         raise RuntimeError("overfit evaluation count must divide world size")
-    selected = list(records[:count])
+    selected = balanced_overfit_evaluation_records(
+        records, count, int(config["flow_training"]["seed"])
+    )
     shift = max(1, len(records) // 2)
     flow = config["flow_training"]
     configured_arms = tuple(config["evaluation"].get("condition_arms", ("qwen",)))
@@ -296,12 +366,14 @@ def evaluate_arms(
         for arm in configured_arms:
             prompt = prompts[arm]
             context, ids = batch_context(contexts, prompt, device)
-            prediction = restore(
+            decoded, prediction = restore(
                 model, autoencoder, lq, context, ids, pack_image,
                 seed=int(flow["seed"]) + index * 10007,
                 steps=int(flow["inference_steps"]),
                 noise_scale=float(flow["anchor_noise_scale"]),
                 reference_time=int(flow["reference_time_coordinate"]),
+                pixel_refiner=pixel_refiner,
+                return_decoded=True,
             )
             results.append(
                 {
@@ -309,7 +381,10 @@ def evaluate_arms(
                     "category": record["category"],
                     "arm": arm,
                     "input_psnr": input_psnr,
+                    "decoded_psnr": psnr(gt, decoded),
                     "restored_psnr": psnr(gt, prediction),
+                    "decoded_high_frequency_correlation": high_frequency_correlation(gt, decoded),
+                    "restored_high_frequency_correlation": high_frequency_correlation(gt, prediction),
                 }
             )
     return results
@@ -323,6 +398,9 @@ def main() -> int:
     distributed = config["distributed"]
     overfit = config["overfit"]
     flow = config["flow_training"]
+    refinement = config["pixel_refinement"]
+    if refinement.get("enabled") is not True:
+        raise RuntimeError("pixel refinement must be enabled after the VAE ceiling failure")
     output_dir = ROOT / config["runtime"]["output_dir"] / "native_reference_overfit"
     conditions_path = ROOT / overfit["conditions_csv"]
     conditions_summary = ROOT / overfit["conditions_json"]
@@ -384,18 +462,37 @@ def main() -> int:
         )
         if len(names) != int(config["lora"]["expected_module_count"]):
             raise RuntimeError("FLUX LoRA target count changed")
-        trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
+        pixel_refiner = BoundedPixelRefiner(
+            width=int(refinement["width"]),
+            blocks=int(refinement["blocks"]),
+            maximum_residual_m11=float(refinement["maximum_residual_m11"]),
+        ).to(device=device, dtype=torch.bfloat16)
+        refiner_count = pixel_refiner_parameter_count(pixel_refiner)
+        if refiner_count != int(refinement["expected_trainable_parameters"]):
+            raise RuntimeError(
+                f"pixel-refiner parameter count changed: {refiner_count}"
+            )
+        flux_trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
+        refiner_trainable = list(pixel_refiner.parameters())
+        trainable = [*flux_trainable, *refiner_trainable]
         trainable_count = sum(parameter.numel() for parameter in trainable)
         wrapped = DistributedDataParallel(
             model, device_ids=[local_rank], broadcast_buffers=False,
             find_unused_parameters=False, gradient_as_bucket_view=True,
+        )
+        wrapped_refiner = DistributedDataParallel(
+            pixel_refiner,
+            device_ids=[local_rank],
+            broadcast_buffers=False,
+            find_unused_parameters=False,
+            gradient_as_bucket_view=True,
         )
         optimizer = torch.optim.AdamW(
             trainable, lr=float(flow["learning_rate"]), weight_decay=float(flow["weight_decay"]), fused=True,
         )
         config_sha = sha256(args.config)
         start_step, losses = resume_checkpoint(
-            wrapped.module, optimizer, output_dir, config_sha
+            wrapped.module, wrapped_refiner.module, optimizer, output_dir, config_sha
         )
         baseline_path = output_dir / "baseline_probe.json"
         if baseline_path.is_file():
@@ -440,14 +537,41 @@ def main() -> int:
                     batched_prc_img, anchor_noise_scale=float(flow["anchor_noise_scale"]),
                     reference_time_coordinate=int(flow["reference_time_coordinate"]),
                 )
-                sync = contextlib.nullcontext() if micro + 1 == accumulation else wrapped.no_sync()
-                with sync:
+                sync_model = contextlib.nullcontext() if micro + 1 == accumulation else wrapped.no_sync()
+                sync_refiner = (
+                    contextlib.nullcontext()
+                    if micro + 1 == accumulation
+                    else wrapped_refiner.no_sync()
+                )
+                with sync_model, sync_refiner:
                     with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
                         prediction = wrapped(
                             x=batch.model_tokens, x_ids=batch.model_ids, timesteps=batch.timesteps,
                             ctx=context, ctx_ids=context_ids, guidance=None,
                         )[:, : batch.target_token_count]
-                        loss = torch.nn.functional.mse_loss(prediction.float(), batch.target_velocity.float())
+                        flow_loss = torch.nn.functional.mse_loss(
+                            prediction.float(), batch.target_velocity.float()
+                        )
+                        velocity_latent = unpack_tokens(prediction, clean_latent.shape)
+                        source_latent = degraded_latent + float(flow["anchor_noise_scale"]) * noise
+                        predicted_clean = source_latent - velocity_latent
+                        decoded = autoencoder.decode(predicted_clean).float().clamp(-1, 1)
+                        refined = wrapped_refiner(decoded, lq)
+                        refinement_terms = pixel_refinement_losses(
+                            refined,
+                            decoded,
+                            gt,
+                            charbonnier_epsilon=float(refinement["charbonnier_epsilon"]),
+                        )
+                        loss = (
+                            flow_loss
+                            + float(refinement["overfit_rgb_weight"])
+                            * refinement_terms["charbonnier"]
+                            + float(refinement["edge_loss_weight"])
+                            * refinement_terms["edge"]
+                            + float(refinement["residual_penalty_weight"])
+                            * refinement_terms["residual"]
+                        )
                     (loss / accumulation).backward()
                 step_loss += float(loss.detach())
             torch.nn.utils.clip_grad_norm_(trainable, float(flow["max_grad_norm"]))
@@ -465,9 +589,16 @@ def main() -> int:
                     checkpoint = output_dir / f"step_{step+1:06d}.safetensors"
                     if checkpoint.exists():
                         raise RuntimeError(f"refusing to overwrite checkpoint: {checkpoint}")
-                    save_lora_checkpoint(
-                        wrapped.module, checkpoint,
-                        {"step": step + 1, "config_sha256": config_sha, "trainable_parameters": trainable_count},
+                    save_restoration_checkpoint(
+                        wrapped.module,
+                        wrapped_refiner.module,
+                        checkpoint,
+                        {
+                            "step": step + 1,
+                            "config_sha256": config_sha,
+                            "trainable_parameters": trainable_count,
+                            "pixel_refiner_parameters": refiner_count,
+                        },
                     )
                     optimizer_path = checkpoint.with_suffix(".optimizer.pt")
                     with optimizer_path.open("xb") as handle:
@@ -488,7 +619,7 @@ def main() -> int:
         )
         local_results = evaluate_arms(
             wrapped, autoencoder, records, contexts, batched_prc_img, config,
-            rank=rank, world=world, device=device,
+            rank=rank, world=world, device=device, pixel_refiner=wrapped_refiner,
         )
         gathered: list[object | None] = [None] * world
         dist.all_gather_object(gathered, local_results)
@@ -502,11 +633,35 @@ def main() -> int:
                     "input_psnr": float(np.mean([row["input_psnr"] for row in values])),
                     "restored_psnr": float(np.mean([row["restored_psnr"] for row in values])),
                     "psnr_gain": float(np.mean([row["restored_psnr"] - row["input_psnr"] for row in values])),
+                    "refiner_psnr_gain": float(np.mean([row["restored_psnr"] - row["decoded_psnr"] for row in values])),
                 }
+            gate_categories = set(overfit["refiner_gate_categories"])
+            if not gate_categories.issubset(FIVE_TYPE_CATEGORIES):
+                raise RuntimeError("unknown pixel-refiner gate category")
+            refiner_gate_rows = [
+                row
+                for row in result_rows
+                if row["arm"] == "qwen" and row["category"] in gate_categories
+            ]
+            if set(row["category"] for row in refiner_gate_rows) != gate_categories:
+                raise RuntimeError("pixel-refiner gate does not cover every VAE failure category")
+            refiner_hf_gain = float(
+                np.mean(
+                    [
+                        row["restored_high_frequency_correlation"]
+                        - row["decoded_high_frequency_correlation"]
+                        for row in refiner_gate_rows
+                    ]
+                )
+            )
             ratio = final_probe / initial_probe
             checks = {
                 "loss_ratio": ratio <= float(overfit["require_loss_ratio_at_most"]),
                 "qwen_restoration_gain": arm_metrics["qwen"]["psnr_gain"] >= float(overfit["minimum_restored_psnr_gain_db"]),
+                "pixel_refiner_psnr_gain": arm_metrics["qwen"]["refiner_psnr_gain"]
+                >= float(overfit["minimum_refiner_psnr_gain_db"]),
+                "pixel_refiner_hf_gain_on_vae_failures": refiner_hf_gain
+                >= float(overfit["minimum_refiner_hf_correlation_gain"]),
             }
             payload = {
                 "schema_version": 1,
@@ -518,10 +673,14 @@ def main() -> int:
                 "world_size": world,
                 "gpu_family": properties.name,
                 "trainable_parameters": trainable_count,
+                "pixel_refiner_parameters": refiner_count,
+                "maximum_pixel_residual_m11": float(refinement["maximum_residual_m11"]),
                 "initial_probe_loss": initial_probe,
                 "final_probe_loss": final_probe,
                 "probe_loss_ratio": ratio,
                 "arm_metrics": arm_metrics,
+                "pixel_refiner_gate_categories": sorted(gate_categories),
+                "pixel_refiner_hf_correlation_gain": refiner_hf_gain,
                 "evaluation_rows": result_rows,
                 "training_losses": losses,
                 "wall_seconds": time.monotonic() - started,

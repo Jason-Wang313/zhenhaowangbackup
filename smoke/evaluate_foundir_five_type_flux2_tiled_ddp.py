@@ -28,7 +28,11 @@ from lowlight_restoration.foundir_flux2_protocol import (  # noqa: E402
     resolve_workspace_path,
     stable_digest,
 )
-from lowlight_restoration.lora import inject_lora, load_lora_checkpoint  # noqa: E402
+from lowlight_restoration.lora import inject_lora, load_restoration_checkpoint  # noqa: E402
+from lowlight_restoration.pixel_refinement import (  # noqa: E402
+    BoundedPixelRefiner,
+    pixel_refiner_parameter_count,
+)
 from lowlight_restoration.paired_development import rgb_structural_similarity  # noqa: E402
 from smoke.evaluate_foundir_five_type_flux2_ddp import (  # noqa: E402
     aggregate,
@@ -211,7 +215,19 @@ def main() -> None:
         names = inject_lora(model, list(config["lora"]["target_patterns"]), rank=32, alpha=32.0, dropout=0.0)
         if len(names) != int(config["lora"]["expected_module_count"]):
             raise RuntimeError("native-resolution LoRA module count changed")
-        load_lora_checkpoint(model, args.checkpoint)
+        refinement = config["pixel_refinement"]
+        if refinement.get("enabled") is not True:
+            raise RuntimeError("native evaluation requires the admitted pixel-refinement path")
+        pixel_refiner = BoundedPixelRefiner(
+            width=int(refinement["width"]),
+            blocks=int(refinement["blocks"]),
+            maximum_residual_m11=float(refinement["maximum_residual_m11"]),
+        ).to(device=device, dtype=torch.bfloat16).eval().requires_grad_(False)
+        if pixel_refiner_parameter_count(pixel_refiner) != int(
+            refinement["expected_trainable_parameters"]
+        ):
+            raise RuntimeError("native pixel-refiner parameter count changed")
+        load_restoration_checkpoint(model, pixel_refiner, args.checkpoint)
         lpips_metric = LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True).to(device).eval()
         images = args.output / "images"
         sidecars = args.output / "per_record"
@@ -255,6 +271,7 @@ def main() -> None:
                     steps=int(config["evaluation"]["inference_steps"]),
                     noise_scale=float(config["flow_training"]["anchor_noise_scale"]),
                     reference_time=int(config["flow_training"]["reference_time_coordinate"]),
+                    pixel_refiner=pixel_refiner,
                 )[:, :, :height, :width]
                 return (
                     ((prediction[0].detach().float().cpu() + 1.0) * 127.5)

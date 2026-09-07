@@ -34,8 +34,18 @@ from lowlight_restoration.foundir_flux2_protocol import (  # noqa: E402
     curriculum_record_index,
     resolve_workspace_path,
     stable_digest,
+    validate_pixel_refinement_vae_evidence,
 )
-from lowlight_restoration.lora import inject_lora, load_lora_checkpoint, save_lora_checkpoint  # noqa: E402
+from lowlight_restoration.lora import (  # noqa: E402
+    inject_lora,
+    load_restoration_checkpoint,
+    save_restoration_checkpoint,
+)
+from lowlight_restoration.pixel_refinement import (  # noqa: E402
+    BoundedPixelRefiner,
+    pixel_refinement_losses,
+    pixel_refiner_parameter_count,
+)
 from smoke.train_foundir_five_type_flux2_overfit_ddp import unpack_tokens  # noqa: E402
 
 
@@ -196,7 +206,13 @@ def move_optimizer_state_to_device(optimizer: torch.optim.Optimizer) -> None:
                 state[key] = value.to(optimizer.param_groups[0]["params"][0].device)
 
 
-def resume(model, optimizer, output: Path, config_sha: str) -> tuple[int, int, list[dict[str, object]], dict[str, object] | None]:
+def resume(
+    model,
+    pixel_refiner,
+    optimizer,
+    output: Path,
+    config_sha: str,
+) -> tuple[int, int, list[dict[str, object]], dict[str, object] | None]:
     candidates = []
     for path in output.glob("step_*.safetensors"):
         try:
@@ -214,7 +230,7 @@ def resume(model, optimizer, output: Path, config_sha: str) -> tuple[int, int, l
     if not candidates:
         return 0, 0, [], None
     step, path = max(candidates)
-    load_lora_checkpoint(model, path)
+    load_restoration_checkpoint(model, pixel_refiner, path)
     payload = torch.load(path.with_suffix(".optimizer.pt"), map_location="cpu", weights_only=False)
     if (
         payload.get("config_sha256") != config_sha
@@ -234,6 +250,7 @@ def resume(model, optimizer, output: Path, config_sha: str) -> tuple[int, int, l
 
 def save_checkpoint(
     model,
+    pixel_refiner,
     optimizer,
     output: Path,
     *,
@@ -247,8 +264,9 @@ def save_checkpoint(
     checkpoint, optimizer_path = checkpoint_paths(output, step)
     if checkpoint.exists() or optimizer_path.exists():
         raise RuntimeError(f"refusing to overwrite full checkpoint: {checkpoint}")
-    save_lora_checkpoint(
+    save_restoration_checkpoint(
         model,
+        pixel_refiner,
         checkpoint,
         {
             "step": step,
@@ -282,6 +300,9 @@ def main() -> None:
     config_sha = file_sha256(args.config)
     full = config["full_training"]
     flow = config["flow_training"]
+    refinement = config["pixel_refinement"]
+    if refinement.get("enabled") is not True:
+        raise RuntimeError("pixel refinement must be enabled after the VAE ceiling failure")
     distributed_config = config["distributed"]
     conditions_path = ROOT / config["full_conditions"]["csv"]
     conditions_summary = ROOT / config["full_conditions"]["summary"]
@@ -313,16 +334,13 @@ def main() -> None:
     ):
         raise RuntimeError("evaluation protocol was not frozen before full training")
     stage0 = ROOT / config["runtime"]["output_dir"] / "native_reference_overfit" / "result.json"
-    vae = ROOT / config["runtime"]["output_dir"] / "vae_ceiling_result.json"
     stage0_payload = json.loads(stage0.read_text())
-    vae_payload = json.loads(vae.read_text())
     if (
         stage0_payload.get("automatic_gate_pass") is not True
         or stage0_payload.get("config_sha256") != config_sha
     ):
         raise RuntimeError("full training is forbidden before native-reference overfit passes")
-    if vae_payload.get("status") != "latent_ceiling_clear" or vae_payload.get("config_sha256") != config_sha:
-        raise RuntimeError("VAE ceiling requires a pixel refinement decision before full training")
+    validate_pixel_refinement_vae_evidence(ROOT, config, ROOT / config["runtime"]["manifest"])
 
     dist.init_process_group(backend=str(distributed_config["backend"]))
     started = time.monotonic()
@@ -389,10 +407,28 @@ def main() -> None:
         )
         if len(names) != int(config["lora"]["expected_module_count"]):
             raise RuntimeError("FLUX LoRA module count changed")
-        trainable = [parameter for parameter in model.parameters() if parameter.requires_grad]
+        pixel_refiner = BoundedPixelRefiner(
+            width=int(refinement["width"]),
+            blocks=int(refinement["blocks"]),
+            maximum_residual_m11=float(refinement["maximum_residual_m11"]),
+        ).to(device=device, dtype=torch.bfloat16)
+        refiner_count = pixel_refiner_parameter_count(pixel_refiner)
+        if refiner_count != int(refinement["expected_trainable_parameters"]):
+            raise RuntimeError(f"pixel-refiner parameter count changed: {refiner_count}")
+        trainable = [
+            *(parameter for parameter in model.parameters() if parameter.requires_grad),
+            *pixel_refiner.parameters(),
+        ]
         trainable_count = sum(parameter.numel() for parameter in trainable)
         wrapped = DistributedDataParallel(
             model,
+            device_ids=[local_rank],
+            broadcast_buffers=False,
+            find_unused_parameters=False,
+            gradient_as_bucket_view=True,
+        )
+        wrapped_refiner = DistributedDataParallel(
+            pixel_refiner,
             device_ids=[local_rank],
             broadcast_buffers=False,
             find_unused_parameters=False,
@@ -407,7 +443,11 @@ def main() -> None:
         output = ROOT / config["runtime"]["output_dir"] / "full_curriculum"
         output.mkdir(parents=True, exist_ok=True)
         global_step, presentations_completed, stage_history, resumed_stage_progress = resume(
-            wrapped.module, optimizer, output, config_sha
+            wrapped.module,
+            wrapped_refiner.module,
+            optimizer,
+            output,
+            config_sha,
         )
         total_presentations = sum(int(stage["presentations"]) for stage in full["curriculum"])
         total_steps = total_presentations // global_batch
@@ -505,8 +545,14 @@ def main() -> None:
                         anchor_noise_scale=float(flow["anchor_noise_scale"]),
                         reference_time_coordinate=int(flow["reference_time_coordinate"]),
                     )
-                    sync = contextlib.nullcontext() if micro + 1 == accumulation else wrapped.no_sync()
-                    with sync:
+                    rgb_auxiliary = optimizer_step % int(loss_config["rgb_auxiliary_every_steps"]) == 0
+                    sync_model = contextlib.nullcontext() if micro + 1 == accumulation else wrapped.no_sync()
+                    sync_refiner = (
+                        contextlib.nullcontext()
+                        if micro + 1 == accumulation or not rgb_auxiliary
+                        else wrapped_refiner.no_sync()
+                    )
+                    with sync_model, sync_refiner:
                         with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
                             prediction = wrapped(
                                 x=flow_batch.model_tokens,
@@ -529,13 +575,24 @@ def main() -> None:
                                 float(loss_config["flow_mse_weight"]) * flow_loss
                                 + float(loss_config["predicted_clean_latent_l1_weight"]) * latent_loss
                             )
-                            if optimizer_step % int(loss_config["rgb_auxiliary_every_steps"]) == 0:
-                                restored = autoencoder.decode(predicted_clean).float().clamp(-1, 1)
-                                difference = restored - gt
-                                charbonnier = torch.sqrt(
-                                    difference.square() + float(loss_config["charbonnier_epsilon"]) ** 2
-                                ).mean()
-                                loss = loss + float(loss_config["rgb_charbonnier_weight"]) * charbonnier
+                            if rgb_auxiliary:
+                                decoded = autoencoder.decode(predicted_clean).float().clamp(-1, 1)
+                                refined = wrapped_refiner(decoded, lq)
+                                refinement_terms = pixel_refinement_losses(
+                                    refined,
+                                    decoded,
+                                    gt,
+                                    charbonnier_epsilon=float(refinement["charbonnier_epsilon"]),
+                                )
+                                loss = (
+                                    loss
+                                    + float(loss_config["rgb_charbonnier_weight"])
+                                    * refinement_terms["charbonnier"]
+                                    + float(refinement["edge_loss_weight"])
+                                    * refinement_terms["edge"]
+                                    + float(refinement["residual_penalty_weight"])
+                                    * refinement_terms["residual"]
+                                )
                         (loss / accumulation).backward()
                     accumulated += float(loss.detach())
                 torch.nn.utils.clip_grad_norm_(trainable, float(full["max_grad_norm"]))
@@ -579,6 +636,7 @@ def main() -> None:
                         }
                         save_checkpoint(
                             wrapped.module,
+                            wrapped_refiner.module,
                             optimizer,
                             output,
                             step=global_step,
@@ -617,6 +675,9 @@ def main() -> None:
                 "completed_steps": global_step,
                 "presentations_completed": presentations_completed,
                 "trainable_parameters": trainable_count,
+                "pixel_refiner_parameters": refiner_count,
+                "pixel_refinement_every_steps": int(loss_config["rgb_auxiliary_every_steps"]),
+                "maximum_pixel_residual_m11": float(refinement["maximum_residual_m11"]),
                 "rgb_memory_canary_peak_bytes_per_rank": canary_peak_bytes,
                 "stage_history": stage_history,
                 "final_checkpoint": checkpoint.relative_to(ROOT).as_posix(),

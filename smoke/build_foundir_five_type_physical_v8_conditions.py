@@ -39,7 +39,7 @@ def build(config_path: Path) -> dict[str, object]:
         or qwen.get("method") != "per_type_dialogue_center_crop_448"
         or qwen.get("inference_view") != "center"
     ):
-        raise RuntimeError("the v2 no-JPEG/no-ablation condition contract changed")
+        raise RuntimeError("the physical-v8 no-JPEG/no-ablation condition contract changed")
 
     manifest_path = workspace_path(config["runtime"]["manifest"])
     raw_path = workspace_path(qwen["foundir_training_views"])

@@ -32,7 +32,11 @@ from lowlight_restoration.foundir_flux2_protocol import (  # noqa: E402
     stable_digest,
     worst_normalized_margin,
 )
-from lowlight_restoration.lora import inject_lora, load_lora_checkpoint  # noqa: E402
+from lowlight_restoration.lora import inject_lora, load_restoration_checkpoint  # noqa: E402
+from lowlight_restoration.pixel_refinement import (  # noqa: E402
+    BoundedPixelRefiner,
+    pixel_refiner_parameter_count,
+)
 from lowlight_restoration.paired_development import rgb_structural_similarity  # noqa: E402
 from smoke.train_foundir_five_type_flux2_overfit_ddp import psnr, restore  # noqa: E402
 from smoke.train_foundir_five_type_flux2_full_ddp import contexts_for, load_rows  # noqa: E402
@@ -314,7 +318,19 @@ def main() -> None:
         )
         if len(names) != int(config["lora"]["expected_module_count"]):
             raise RuntimeError("evaluation LoRA module count changed")
-        load_lora_checkpoint(model, args.checkpoint)
+        refinement = config["pixel_refinement"]
+        if refinement.get("enabled") is not True:
+            raise RuntimeError("evaluation requires the admitted pixel-refinement path")
+        pixel_refiner = BoundedPixelRefiner(
+            width=int(refinement["width"]),
+            blocks=int(refinement["blocks"]),
+            maximum_residual_m11=float(refinement["maximum_residual_m11"]),
+        ).to(device=device, dtype=torch.bfloat16).eval().requires_grad_(False)
+        if pixel_refiner_parameter_count(pixel_refiner) != int(
+            refinement["expected_trainable_parameters"]
+        ):
+            raise RuntimeError("evaluation pixel-refiner parameter count changed")
+        load_restoration_checkpoint(model, pixel_refiner, args.checkpoint)
         metric = LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True).to(device).eval()
         sidecars = args.output / "per_record"
         images = args.output / "images"
@@ -361,6 +377,7 @@ def main() -> None:
                 steps=int(evaluation["inference_steps"]),
                 noise_scale=float(config["flow_training"]["anchor_noise_scale"]),
                 reference_time=int(config["flow_training"]["reference_time_coordinate"]),
+                pixel_refiner=pixel_refiner,
             )
             output_array = quantized_rgb(prediction)
             output_path = images / f"{stem}.png"
