@@ -2,6 +2,13 @@ No interference with any other folders at all.
 
 Before every work session, explicitly tell the user: "I am working in zhenhaowang, which is the correct workspace."
 
+USER COMMUNICATION LANGUAGE
+
+Communicate with the user in Mandarin Chinese in commentary and final messages.
+Keep necessary technical terminology in English when that is clearer or more
+precise. Repository code and existing technical documents may continue using
+their established language and style.
+
 FRESH-SESSION CONTINUATION — 2026-08-21
 
 - Read this entire `agents.md` file first. Then read
