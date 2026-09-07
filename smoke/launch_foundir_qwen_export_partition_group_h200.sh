@@ -17,11 +17,15 @@ cd "$ROOT"
   exit 1
 }
 bash -n "$RUNNER" "$0"
+if [[ "$GROUP" == "0" ]]; then
+  bash "$ROOT/smoke/stop_foundir_five_type_flux2_main_v3_for_partition.sh"
+fi
 for relative in \
   agents.md \
   smoke/export_foundir_five_type_physical_v8_conditions_ddp.py \
   smoke/run_foundir_qwen_export_partition_group_h200.sh \
   smoke/launch_foundir_qwen_export_partition_group_h200.sh \
+  smoke/stop_foundir_five_type_flux2_main_v3_for_partition.sh \
   tests/test_foundir_five_type_main_v3.py; do
   git ls-files --error-unmatch "$relative" >/dev/null 2>&1 || {
     echo "ERROR: required file is not committed: $relative" >&2

@@ -185,10 +185,15 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertIn("FOUNDIR_PHYSICAL_V8_PARTITION_PASS", exporter)
         partition_runner = (ROOT / "smoke/run_foundir_qwen_export_partition_group_h200.sh").read_text()
         partition_launcher = (ROOT / "smoke/launch_foundir_qwen_export_partition_group_h200.sh").read_text()
+        partition_stopper = (ROOT / "smoke/stop_foundir_five_type_flux2_main_v3_for_partition.sh").read_text()
         self.assertIn("PARTITIONS=8", partition_runner)
         self.assertIn("WORKERS_PER_INSTANCE=4", partition_runner)
         self.assertIn("--partition-index", partition_runner)
         self.assertIn("NVIDIA\\ H200", partition_runner)
+        self.assertIn("STOPPED_FOR_PARTITION", partition_stopper)
+        self.assertIn("refusing to signal unrelated PID", partition_stopper)
+        self.assertNotIn("kill -KILL", partition_stopper)
+        self.assertIn("stop_foundir_five_type_flux2_main_v3_for_partition.sh", partition_launcher)
         self.assertNotIn("MillionIRData/Test", partition_runner + partition_launcher)
         for relative in (
             "smoke/train_foundir_five_type_flux2_overfit_ddp.py",
