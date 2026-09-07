@@ -10,17 +10,24 @@ import json
 import os
 import sys
 import tempfile
+import time
 from collections import Counter
 from pathlib import Path
 from typing import Mapping, Sequence
 
+import torch
 import torch.distributed as dist
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from lowlight_restoration.qwen_lora import load_qwen_adapter  # noqa: E402
-from lowlight_restoration.qwen_multidegradation import PER_TYPE_DIALOGUE_SCHEMA  # noqa: E402
+from lowlight_restoration.qwen_multidegradation import (  # noqa: E402
+    DEGRADATIONS,
+    PER_TYPE_DIALOGUE_SCHEMA,
+    aggregate_per_type_responses,
+    per_type_prompt_text,
+)
 from smoke.export_foundir_five_type_qwen_conditions import (  # noqa: E402
     condition_row,
     load_manifest,
@@ -29,11 +36,16 @@ from smoke.export_foundir_five_type_qwen_conditions import (  # noqa: E402
 from smoke.train_qwen_multidegradation_lora_ddp import (  # noqa: E402
     broadcast_rank0,
     generate_outputs,
+    left_padded_generation,
     load_model,
+    open_images,
     seed_everything,
     setup_distributed,
     validate_runtime,
 )
+
+
+OPTIMIZED_EXPORT_ENGINE = "record_sharded_per_type_batch_v1"
 
 
 def workspace_path(value: str | Path) -> Path:
@@ -57,6 +69,179 @@ def center_generation_records(rows: Sequence[Mapping[str, str]], crop_size: int)
             }
         )
     return output
+
+
+def optimized_batch_size(device: torch.device, local_records: int) -> int:
+    """Use the largest useful batch while remaining safe on 80 GiB H100s.
+
+    A 512-record export chunk assigns at most 64 images to each of eight
+    ranks. H200 uses all 64 in one call; 80 GiB H100 conservatively uses 32 in
+    two calls. This avoids speculative OOM recovery inside a distributed
+    collective while still eliminating most legacy launch and image-I/O
+    overhead.
+    """
+
+    if local_records < 1:
+        return 1
+    properties = torch.cuda.get_device_properties(device)
+    minimum_h100_bytes = 75 * 1024**3
+    if properties.total_memory < minimum_h100_bytes:
+        raise RuntimeError("optimized Qwen export requires at least 75 GiB per GPU")
+    cap = 64 if properties.total_memory >= 100 * 1024**3 else 32
+    return min(cap, local_records)
+
+
+def record_indices_for_rank(total: int, rank: int, world: int) -> list[int]:
+    if total < 0 or world < 1 or rank < 0 or rank >= world:
+        raise ValueError("invalid record-sharding dimensions")
+    return list(range(rank, total, world))
+
+
+def generate_outputs_record_sharded(
+    model: torch.nn.Module,
+    processor: object,
+    records: Sequence[Mapping[str, object]],
+    config: Mapping[str, object],
+    *,
+    rank: int,
+    world: int,
+    device: torch.device,
+) -> list[str]:
+    """Run the same five dialogues while decoding every source image once.
+
+    The legacy implementation shards the flattened image/question Cartesian
+    product.  Consequently each image is opened and decoded five times and a
+    512-image chunk needs 20 small generation calls per rank.  This version
+    shards images first, opens each local image once, and evaluates one large
+    batch for each of the same five prompts.  Model weights, crops, prompts,
+    greedy decoding, and aggregation are unchanged.
+    """
+
+    generation = config["generation"]
+    if not isinstance(generation, Mapping):
+        raise ValueError("Qwen generation contract is malformed")
+    model.eval()
+    model.gradient_checkpointing_disable()
+    model.config.use_cache = True
+    indexed = [(index, records[index]) for index in record_indices_for_rank(len(records), rank, world)]
+    batch_size = optimized_batch_size(device, len(indexed))
+    local: list[tuple[int, str, str]] = []
+    images = open_images([record for _, record in indexed]) if indexed else []
+    try:
+        with left_padded_generation(processor), torch.inference_mode():
+            for degradation in DEGRADATIONS:
+                prompt = per_type_prompt_text(processor, degradation)
+                for offset in range(0, len(indexed), batch_size):
+                    chunk = indexed[offset : offset + batch_size]
+                    chunk_images = images[offset : offset + len(chunk)]
+                    encoded = processor(
+                        text=[prompt] * len(chunk),
+                        images=chunk_images,
+                        padding=True,
+                        return_tensors="pt",
+                    )
+                    inputs = {
+                        key: value.to(device)
+                        for key, value in encoded.items()
+                        if isinstance(value, torch.Tensor)
+                    }
+                    input_length = int(inputs["input_ids"].shape[1])
+                    generated = model.generate(
+                        **inputs,
+                        do_sample=False,
+                        max_new_tokens=int(generation["max_new_tokens"]),
+                        use_cache=True,
+                    )
+                    decoded = processor.tokenizer.batch_decode(
+                        generated[:, input_length:],
+                        skip_special_tokens=True,
+                        clean_up_tokenization_spaces=False,
+                    )
+                    local.extend(
+                        (record_index, degradation, raw.strip())
+                        for (record_index, _), raw in zip(chunk, decoded, strict=True)
+                    )
+                print(
+                    f"FOUNDIR_PHYSICAL_V8_OPTIMIZED_GENERATE rank={rank} "
+                    f"type={degradation} completed={len(indexed)}/{len(indexed)} "
+                    f"batch_size={batch_size}",
+                    flush=True,
+                )
+    finally:
+        for image in images:
+            image.close()
+
+    gathered: list[object | None] = [None] * world
+    dist.all_gather_object(gathered, local)
+    flattened = [
+        item
+        for rank_items in gathered
+        if isinstance(rank_items, list)
+        for item in rank_items
+    ]
+    expected = {(index, degradation) for index in range(len(records)) for degradation in DEGRADATIONS}
+    identities = {(index, degradation) for index, degradation, _ in flattened}
+    if len(flattened) != len(expected) or identities != expected:
+        raise RuntimeError("optimized distributed Qwen generation is incomplete")
+    lookup = {(index, degradation): raw for index, degradation, raw in flattened}
+    outputs: list[str] = []
+    for index in range(len(records)):
+        raw_by_type = {degradation: lookup[(index, degradation)] for degradation in DEGRADATIONS}
+        serialized, _ = aggregate_per_type_responses(raw_by_type)
+        outputs.append(serialized if serialized is not None else "INVALID_PER_TYPE_DIALOGUE")
+    return outputs
+
+
+def validate_optimized_engine(
+    *,
+    model: torch.nn.Module,
+    processor: object,
+    rows: Sequence[Mapping[str, str]],
+    generation_records: Sequence[Mapping[str, object]],
+    existing_conditions: Sequence[Mapping[str, str]],
+    config: Mapping[str, object],
+    rank: int,
+    world: int,
+    device: torch.device,
+) -> dict[str, object]:
+    """Prove exact condition equivalence against an immutable existing chunk."""
+
+    started = time.monotonic()
+    outputs = generate_outputs_record_sharded(
+        model,
+        processor,
+        generation_records,
+        config,
+        rank=rank,
+        world=world,
+        device=device,
+    )
+    elapsed = time.monotonic() - started
+
+    def verify() -> dict[str, object]:
+        candidate = [condition_row(row, raw) for row, raw in zip(rows, outputs, strict=True)]
+        exact = candidate == list(existing_conditions)
+        payload = {
+            "schema_version": 1,
+            "status": "pass" if exact else "failed_exact_condition_equivalence",
+            "engine": OPTIMIZED_EXPORT_ENGINE,
+            "records": len(rows),
+            "queries": len(rows) * len(DEGRADATIONS),
+            "exact_condition_equivalence": exact,
+            "elapsed_seconds": elapsed,
+            "images_per_second": len(rows) / elapsed,
+            "protected_foundir_test_accessed": False,
+        }
+        if not exact:
+            mismatch = next(
+                index
+                for index, (left, right) in enumerate(zip(candidate, existing_conditions, strict=True))
+                if left != right
+            )
+            payload["first_mismatch_record_id"] = rows[mismatch]["record_id"]
+        return payload
+
+    return broadcast_rank0(rank, verify)
 
 
 def chunk_identity(
@@ -243,22 +428,76 @@ def main() -> None:
         validate_runtime(qwen_config, local_rank)
         config_sha, qwen_sha, adapter_sha = sha256(config_path), sha256(qwen_config_path), sha256(adapter)
         missing = []
+        complete = []
         for start in range(0, len(rows), args.chunk_records):
             selected = rows[start : start + args.chunk_records]
             path = chunk_dir / f"chunk_{start:07d}_{start+len(selected):07d}.json"
             if path.exists():
                 verify_chunk(path, chunk_identity(selected, config_sha=config_sha, qwen_config_sha=qwen_sha, adapter_sha=adapter_sha), selected)
+                complete.append(start)
             else:
                 missing.append(start)
         model = processor = None
+        use_optimized_engine = False
         if missing:
             seed_everything(int(config["flow_training"]["seed"]))
             model, processor, _ = load_model(qwen_config, variant="merger_trainable", device=device)
             load_qwen_adapter(model, adapter)
+            if complete:
+                reference_start = complete[0]
+                reference_rows = rows[reference_start : reference_start + args.chunk_records]
+                reference_path = (
+                    chunk_dir
+                    / f"chunk_{reference_start:07d}_{reference_start+len(reference_rows):07d}.json"
+                )
+                reference_identity = chunk_identity(
+                    reference_rows,
+                    config_sha=config_sha,
+                    qwen_config_sha=qwen_sha,
+                    adapter_sha=adapter_sha,
+                )
+                reference_conditions = verify_chunk(
+                    reference_path, reference_identity, reference_rows
+                )
+                optimization = validate_optimized_engine(
+                    model=model,
+                    processor=processor,
+                    rows=reference_rows,
+                    generation_records=center_generation_records(
+                        reference_rows, int(qwen["crop_size"])
+                    ),
+                    existing_conditions=reference_conditions,
+                    config=qwen_config,
+                    rank=rank,
+                    world=world,
+                    device=device,
+                )
+                use_optimized_engine = bool(
+                    isinstance(optimization, Mapping)
+                    and optimization.get("exact_condition_equivalence") is True
+                )
+                if rank == 0:
+                    print(
+                        "FOUNDIR_PHYSICAL_V8_OPTIMIZATION_VALIDATION "
+                        + json.dumps(optimization, sort_keys=True),
+                        flush=True,
+                    )
+                    if not use_optimized_engine:
+                        print(
+                            "FOUNDIR_PHYSICAL_V8_OPTIMIZATION_FALLBACK legacy_engine",
+                            flush=True,
+                        )
+            elif rank == 0:
+                print(
+                    "FOUNDIR_PHYSICAL_V8_OPTIMIZATION_FALLBACK "
+                    "no_immutable_reference_chunk",
+                    flush=True,
+                )
         for start in missing:
             selected = rows[start : start + args.chunk_records]
             generation_records = center_generation_records(selected, int(qwen["crop_size"]))
-            outputs = generate_outputs(
+            engine = generate_outputs_record_sharded if use_optimized_engine else generate_outputs
+            outputs = engine(
                 model, processor, generation_records, qwen_config,
                 rank=rank, world=world, device=device,
             )

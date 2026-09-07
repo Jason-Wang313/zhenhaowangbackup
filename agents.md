@@ -1232,3 +1232,25 @@ FOUNDIR SOW METRIC CORRECTION — 2026-09-07 (SUPERSEDES THE V3 HF GATE)
   checkpoint, and inference protocol are frozen may the user explicitly
   authorize one final official-test evaluation. Only that result can establish
   the contractual FoundIR PSNR/LPIPS outcome.
+
+FOUNDIR QWEN CONDITION-EXPORT OPTIMIZATION — 2026-09-07
+
+- The frozen physical-v8 Qwen condition semantics do not change: every LQ
+  center crop is still evaluated through five independent dialogues for Blur,
+  Noise, Rain, Haze, and Low-light, using the same model, adapter, prompts,
+  greedy decoding, and canonical condition conversion.
+- The optimized exporter shards complete image records across eight ranks,
+  opens each local image once rather than once per dialogue, and evaluates up
+  to 64 same-type dialogues per GPU call. It does not combine the five
+  questions or replace Qwen decoder decisions with a classifier.
+- Existing 512-record condition chunks are immutable and resume-compatible.
+  Before the optimized engine may write any new chunk, it must regenerate one
+  complete existing chunk and obtain exact row-for-row equality, including raw
+  Qwen output and canonical restoration text. If exact equality fails, the
+  exporter automatically uses the legacy engine.
+- The exporter optimization is not yet GPU-validated merely because CPU tests
+  pass. Treat the first `FOUNDIR_PHYSICAL_V8_OPTIMIZATION_VALIDATION` marker as
+  the runtime gate, and report its exact equivalence and measured throughput.
+- The active legacy process that started before this source change is
+  unaffected and may continue producing valid chunks. Never discard or
+  overwrite those chunks. The official FoundIR test remains inaccessible.

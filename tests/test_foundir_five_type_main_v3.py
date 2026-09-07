@@ -10,8 +10,11 @@ from unittest.mock import patch
 
 from smoke import foundir_five_type_runtime_preflight as runtime_preflight
 from smoke.export_foundir_five_type_physical_v8_conditions_ddp import (
+    OPTIMIZED_EXPORT_ENGINE,
     center_generation_records,
     chunk_identity,
+    optimized_batch_size,
+    record_indices_for_rank,
 )
 from smoke.train_foundir_five_type_flux2_overfit_ddp import (
     aggregate_sow_overfit_metrics,
@@ -71,6 +74,27 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertEqual(identity["query_count_per_image"], 5)
         self.assertFalse(identity["jpeg_included"])
         self.assertFalse(identity["protected_foundir_test_accessed"])
+
+    def test_optimized_export_shards_records_once_across_eight_ranks(self) -> None:
+        assignments = [record_indices_for_rank(512, rank, 8) for rank in range(8)]
+        self.assertEqual([len(values) for values in assignments], [64] * 8)
+        self.assertEqual(sorted(value for values in assignments for value in values), list(range(512)))
+        self.assertEqual(len({value for values in assignments for value in values}), 512)
+        self.assertEqual(OPTIMIZED_EXPORT_ENGINE, "record_sharded_per_type_batch_v1")
+
+    def test_optimized_batch_uses_one_call_per_type_for_a_full_chunk(self) -> None:
+        h100 = SimpleNamespace(total_memory=80 * 1024**3)
+        with patch("torch.cuda.get_device_properties", return_value=h100):
+            self.assertEqual(optimized_batch_size(SimpleNamespace(), 64), 32)
+            self.assertEqual(optimized_batch_size(SimpleNamespace(), 17), 17)
+        h200 = SimpleNamespace(total_memory=140 * 1024**3)
+        with patch("torch.cuda.get_device_properties", return_value=h200):
+            self.assertEqual(optimized_batch_size(SimpleNamespace(), 64), 64)
+        too_small = SimpleNamespace(total_memory=74 * 1024**3)
+        with patch("torch.cuda.get_device_properties", return_value=too_small), self.assertRaisesRegex(
+            RuntimeError, "at least 75 GiB"
+        ):
+            optimized_batch_size(SimpleNamespace(), 64)
 
     def test_overfit_uses_configured_arms(self) -> None:
         source = inspect.getsource(evaluate_arms)
@@ -140,6 +164,10 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertNotIn("--arm type_oracle", runner)
         self.assertNotIn("postcodec", runner.lower())
         self.assertNotIn("MillionIRData/Test", runner)
+        exporter = (ROOT / "smoke/export_foundir_five_type_physical_v8_conditions_ddp.py").read_text()
+        self.assertIn("FOUNDIR_PHYSICAL_V8_OPTIMIZATION_VALIDATION", exporter)
+        self.assertIn("exact_condition_equivalence", exporter)
+        self.assertIn("generate_outputs_record_sharded", exporter)
         for relative in (
             "smoke/train_foundir_five_type_flux2_overfit_ddp.py",
             "smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py",
