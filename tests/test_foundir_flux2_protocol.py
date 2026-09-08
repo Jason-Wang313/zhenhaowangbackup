@@ -6,6 +6,9 @@ import json
 import tempfile
 from pathlib import Path
 from collections import Counter
+from unittest.mock import patch
+
+import torch
 
 from lowlight_restoration.foundir_five_type import FIVE_TYPE_CATEGORIES
 from lowlight_restoration.foundir_flux2_protocol import (
@@ -20,6 +23,10 @@ from lowlight_restoration.foundir_flux2_protocol import (
     worst_normalized_margin,
 )
 from smoke.evaluate_foundir_five_type_flux2_tiled_ddp import tiled_restore, tile_starts
+from smoke.evaluate_foundir_five_type_flux2_ddp import (
+    aggregate as aggregate_evaluation_metrics,
+    synchronize_rank_zero_finalization,
+)
 from smoke.train_foundir_five_type_flux2_full_ddp import CurriculumSampler
 from smoke.freeze_foundir_five_type_evaluation_contract import (
     contract_rows,
@@ -45,6 +52,62 @@ def synthetic_rows(split: str, groups_per_category: int = 12) -> list[dict[str, 
 
 
 class FoundIRFlux2ProtocolTests(unittest.TestCase):
+    def test_rank_zero_finalization_failure_is_broadcast_before_reraise(self) -> None:
+        def fail() -> None:
+            raise ValueError("finalization failed")
+
+        with patch("smoke.evaluate_foundir_five_type_flux2_ddp.dist.broadcast") as broadcast:
+            with self.assertRaisesRegex(ValueError, "finalization failed"):
+                synchronize_rank_zero_finalization(
+                    fail,
+                    rank=0,
+                    device=torch.device("cpu"),
+                    phase="test",
+                )
+        self.assertEqual(broadcast.call_args.args[0].item(), 1)
+
+    def test_nonzero_rank_receives_rank_zero_finalization_failure(self) -> None:
+        def receive_failure(status: torch.Tensor, *, src: int) -> None:
+            self.assertEqual(src, 0)
+            status.fill_(1)
+
+        with patch(
+            "smoke.evaluate_foundir_five_type_flux2_ddp.dist.broadcast",
+            side_effect=receive_failure,
+        ):
+            with self.assertRaisesRegex(RuntimeError, "rank-zero test failed"):
+                synchronize_rank_zero_finalization(
+                    lambda: None,
+                    rank=1,
+                    device=torch.device("cpu"),
+                    phase="test",
+                )
+
+    def test_native_aggregate_allows_incomplete_per_fold_task_coverage(self) -> None:
+        rows = [
+            {
+                "category": category,
+                "evaluation_fold": 1 if category == "10Rain" else 0,
+                "psnr": 30.0,
+                "lpips": 0.1,
+                "ssim": 0.9,
+            }
+            for category in FIVE_TYPE_CATEGORIES
+        ]
+        config = {"evaluation": {"folds": 2}}
+
+        with self.assertRaisesRegex(RuntimeError, "all five restoration tasks"):
+            aggregate_evaluation_metrics(rows, config=config)
+
+        summary = aggregate_evaluation_metrics(
+            rows,
+            config=config,
+            include_fold_metrics=False,
+        )
+        self.assertEqual(summary["records"], len(FIVE_TYPE_CATEGORIES))
+        self.assertEqual(set(summary["task_metrics"]), set(SOW_STAGE2_THRESHOLDS))
+        self.assertNotIn("fold_metrics", summary)
+
     def test_native_tiling_covers_and_blends_identity_exactly(self) -> None:
         import numpy as np
 

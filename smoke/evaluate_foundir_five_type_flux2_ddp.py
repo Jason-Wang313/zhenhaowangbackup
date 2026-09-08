@@ -12,7 +12,7 @@ import os
 import sys
 from collections import defaultdict
 from pathlib import Path
-from typing import Mapping, Sequence
+from typing import Callable, Mapping, Sequence
 
 import numpy as np
 import torch
@@ -188,7 +188,12 @@ def verify_sidecar(path: Path, identity: Mapping[str, object]) -> dict[str, obje
     return payload
 
 
-def aggregate(rows: Sequence[Mapping[str, object]], *, config: Mapping[str, object]) -> dict[str, object]:
+def aggregate(
+    rows: Sequence[Mapping[str, object]],
+    *,
+    config: Mapping[str, object],
+    include_fold_metrics: bool = True,
+) -> dict[str, object]:
     tasks = aggregate_task_metrics(rows)
     categories = {}
     folds = {}
@@ -200,19 +205,44 @@ def aggregate(rows: Sequence[Mapping[str, object]], *, config: Mapping[str, obje
             "lpips": float(np.mean([row["lpips"] for row in values])),
             "ssim": float(np.mean([row["ssim"] for row in values])),
         }
-    for fold in range(int(config["evaluation"]["folds"])):
-        values = [row for row in rows if int(row["evaluation_fold"]) == fold]
-        folds[str(fold)] = {
-            "records": len(values),
-            "task_metrics": aggregate_task_metrics(values),
-        }
-    return {
+    if include_fold_metrics:
+        for fold in range(int(config["evaluation"]["folds"])):
+            values = [row for row in rows if int(row["evaluation_fold"]) == fold]
+            folds[str(fold)] = {
+                "records": len(values),
+                "task_metrics": aggregate_task_metrics(values),
+            }
+    summary = {
         "records": len(rows),
         "task_metrics": tasks,
         "category_metrics": categories,
-        "fold_metrics": folds,
         "worst_normalized_margin": worst_normalized_margin(tasks),
     }
+    if include_fold_metrics:
+        summary["fold_metrics"] = folds
+    return summary
+
+
+def synchronize_rank_zero_finalization(
+    finalize: Callable[[], None],
+    *,
+    rank: int,
+    device: torch.device,
+    phase: str,
+) -> None:
+    """Run rank-zero finalization and propagate Python failures without a barrier hang."""
+    error: Exception | None = None
+    if rank == 0:
+        try:
+            finalize()
+        except Exception as exc:
+            error = exc
+    failed = torch.tensor([error is not None], dtype=torch.uint8, device=device)
+    dist.broadcast(failed, src=0)
+    if failed.item():
+        if error is not None:
+            raise error
+        raise RuntimeError(f"rank-zero {phase} failed; inspect the rank-zero traceback")
 
 
 def main() -> None:
@@ -417,7 +447,7 @@ def main() -> None:
                 flush=True,
             )
         dist.barrier()
-        if rank == 0:
+        def finalize_result() -> None:
             result_rows = []
             for record in selected:
                 identity = sidecar_identity(
@@ -450,7 +480,13 @@ def main() -> None:
                     (json.dumps(intended_consumption, indent=2, sort_keys=True) + "\n").encode(),
                 )
             print("FOUNDIR_FLUX_EVALUATION_PASS " + json.dumps(payload, sort_keys=True), flush=True)
-        dist.barrier()
+
+        synchronize_rank_zero_finalization(
+            finalize_result,
+            rank=rank,
+            device=device,
+            phase="evaluation finalization",
+        )
     finally:
         if dist.is_initialized():
             dist.destroy_process_group()

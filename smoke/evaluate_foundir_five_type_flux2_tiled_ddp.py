@@ -39,6 +39,7 @@ from smoke.evaluate_foundir_five_type_flux2_ddp import (  # noqa: E402
     lpips_value,
     quantized_rgb,
     selected_from_contract,
+    synchronize_rank_zero_finalization,
     write_once,
 )
 from smoke.train_foundir_five_type_flux2_full_ddp import load_rows  # noqa: E402
@@ -326,7 +327,7 @@ def main() -> None:
             write_once(sidecar, (json.dumps(result, indent=2, sort_keys=True) + "\n").encode())
             print(f"FOUNDIR_FLUX_NATIVE rank={rank} record={index+1}/{len(selected)} tiles={metadata['tile_count']}", flush=True)
         dist.barrier()
-        if rank == 0:
+        def finalize_result() -> None:
             result_rows = [
                 verify_sidecar(
                     sidecars / f"{evaluation_artifact_stem(row['record_id'])}.json",
@@ -344,14 +345,27 @@ def main() -> None:
                 "checkpoint_sha256": checkpoint_sha,
                 "tile_size": tile_size,
                 "tile_overlap": overlap,
-                "summary": aggregate(result_rows, config=config),
+                # The fixed native subset is sampled per category, not per fold.
+                # Its overall rows cover all five tasks, but an individual fold
+                # is not required to do so.
+                "summary": aggregate(
+                    result_rows,
+                    config=config,
+                    include_fold_metrics=False,
+                ),
                 "mean_seam_error_ratio": float(np.mean([row["seam_error_ratio"] for row in result_rows])),
                 "records": len(result_rows),
                 "protected_foundir_test_accessed": False,
             }
             write_once(args.output / "result.json", (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
             print("FOUNDIR_FLUX_NATIVE_PASS " + json.dumps(payload, sort_keys=True), flush=True)
-        dist.barrier()
+
+        synchronize_rank_zero_finalization(
+            finalize_result,
+            rank=rank,
+            device=device,
+            phase="native-resolution finalization",
+        )
     finally:
         if dist.is_initialized():
             dist.destroy_process_group()
