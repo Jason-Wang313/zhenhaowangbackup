@@ -140,7 +140,8 @@ for step in "${candidate_steps[@]}"; do
   result_dir=$(printf '%s/development/step_%06d/qwen' "$OUTPUT" "$step")
   [[ -f "$checkpoint" ]] || { echo "ERROR: missing candidate $checkpoint" >&2; exit 1; }
   if [[ ! -f "$result_dir/result.json" ]]; then
-    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+    FOUNDIR_EVALUATION_COORDINATION_TOKEN="development-${step}-$(date +%s%N)-$$" \
+      "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
       smoke/evaluate_foundir_five_type_flux2_ddp.py --config "$CONFIG" \
       --checkpoint "$checkpoint" --split validation --arm qwen --output "$result_dir"
   fi
@@ -156,7 +157,8 @@ PY
 SELECTED_CHECKPOINT="$ROOT/${selected_identity[0]}"
 
 if [[ ! -f "$OUTPUT/native_resolution/result.json" ]]; then
-  "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+  FOUNDIR_EVALUATION_COORDINATION_TOKEN="native-$(date +%s%N)-$$" \
+    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
     smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py --config "$CONFIG" \
     --checkpoint "$SELECTED_CHECKPOINT" --selection "$SELECTION" \
     --output "$OUTPUT/native_resolution"
@@ -167,14 +169,16 @@ if [[ ! -f "$OUTPUT/released_baselines/development/result.json" ]]; then
     --output "$OUTPUT/released_baselines/development" \
     --finalize-existing-if-complete
   if [[ ! -f "$OUTPUT/released_baselines/development/result.json" ]]; then
-    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+    FOUNDIR_EVALUATION_COORDINATION_TOKEN="development-baseline-$(date +%s%N)-$$" \
+      "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
       smoke/evaluate_foundir_five_type_released_baselines_ddp.py --config "$CONFIG" \
       --split validation --output "$OUTPUT/released_baselines/development"
   fi
 fi
 if [[ ! -f "$OUTPUT/sealed_internal/qwen/result.json" \
       || ! -f "$OUTPUT/sealed_internal_consumption.json" ]]; then
-  "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+  FOUNDIR_EVALUATION_COORDINATION_TOKEN="sealed-qwen-$(date +%s%N)-$$" \
+    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
     smoke/evaluate_foundir_five_type_flux2_ddp.py --config "$CONFIG" \
     --checkpoint "$SELECTED_CHECKPOINT" --selection "$SELECTION" \
     --split internal_test --arm qwen --output "$OUTPUT/sealed_internal/qwen"
@@ -185,7 +189,8 @@ if [[ ! -f "$OUTPUT/released_baselines/sealed_internal/result.json" ]]; then
     --output "$OUTPUT/released_baselines/sealed_internal" \
     --finalize-existing-if-complete
   if [[ ! -f "$OUTPUT/released_baselines/sealed_internal/result.json" ]]; then
-    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+    FOUNDIR_EVALUATION_COORDINATION_TOKEN="sealed-baseline-$(date +%s%N)-$$" \
+      "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
       smoke/evaluate_foundir_five_type_released_baselines_ddp.py --config "$CONFIG" \
       --split internal_test --output "$OUTPUT/released_baselines/sealed_internal"
   fi

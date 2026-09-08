@@ -13,7 +13,6 @@ from pathlib import Path
 
 import numpy as np
 import torch
-import torch.distributed as dist
 import torch.nn.functional as functional
 from PIL import Image
 
@@ -40,6 +39,7 @@ from smoke.evaluate_foundir_five_type_flux2_ddp import (  # noqa: E402
     quantized_rgb,
     selected_from_contract,
     synchronize_rank_zero_finalization,
+    torchrun_worker_identity,
     write_once,
 )
 from smoke.train_foundir_five_type_flux2_full_ddp import load_rows  # noqa: E402
@@ -188,12 +188,10 @@ def main() -> None:
     if len(selected) != quota * len(FIVE_TYPE_CATEGORIES):
         raise RuntimeError("native-resolution development subset cardinality changed")
 
-    local_rank = int(os.environ["LOCAL_RANK"])
+    rank, world, local_rank = torchrun_worker_identity()
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
-    dist.init_process_group(backend="nccl", device_id=device)
     try:
-        rank, world = dist.get_rank(), dist.get_world_size()
         if world != 8 or torch.cuda.device_count() != 8:
             raise RuntimeError("native-resolution FLUX evaluation requires exactly eight GPUs")
         if not any(name in torch.cuda.get_device_properties(device).name for name in ("H100", "H200")):
@@ -327,7 +325,6 @@ def main() -> None:
             }
             write_once(sidecar, (json.dumps(result, indent=2, sort_keys=True) + "\n").encode())
             print(f"FOUNDIR_FLUX_NATIVE rank={rank} record={index+1}/{len(selected)} tiles={metadata['tile_count']}", flush=True)
-        dist.barrier()
         def finalize_result() -> None:
             result_rows = [
                 verify_sidecar(
@@ -364,12 +361,18 @@ def main() -> None:
         synchronize_rank_zero_finalization(
             finalize_result,
             rank=rank,
-            device=device,
+            world=world,
+            output=args.output,
+            identity={
+                "config_sha256": config_sha,
+                "checkpoint_sha256": checkpoint_sha,
+                "conditions_sha256": conditions_sha,
+            },
             phase="native-resolution finalization",
+            timeout_seconds=float(config["distributed"]["timeout_minutes"]) * 60,
         )
     finally:
-        if dist.is_initialized():
-            dist.destroy_process_group()
+        torch.cuda.empty_cache()
 
 
 if __name__ == "__main__":

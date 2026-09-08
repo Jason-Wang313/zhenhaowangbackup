@@ -3,12 +3,11 @@ from __future__ import annotations
 import unittest
 import hashlib
 import json
+import os
 import tempfile
 from pathlib import Path
 from collections import Counter
 from unittest.mock import patch
-
-import torch
 
 from lowlight_restoration.foundir_five_type import FIVE_TYPE_CATEGORIES
 from lowlight_restoration.foundir_flux2_protocol import (
@@ -52,36 +51,46 @@ def synthetic_rows(split: str, groups_per_category: int = 12) -> list[dict[str, 
 
 
 class FoundIRFlux2ProtocolTests(unittest.TestCase):
-    def test_rank_zero_finalization_failure_is_broadcast_before_reraise(self) -> None:
+    def test_rank_zero_filesystem_finalization_failure_is_reraised(self) -> None:
         def fail() -> None:
             raise ValueError("finalization failed")
 
-        with patch("smoke.evaluate_foundir_five_type_flux2_ddp.dist.broadcast") as broadcast:
+        with tempfile.TemporaryDirectory(dir=WORKSPACE_ROOT) as directory, patch.dict(
+            os.environ,
+            {"FOUNDIR_EVALUATION_COORDINATION_TOKEN": "rank-zero-failure"},
+            clear=False,
+        ):
             with self.assertRaisesRegex(ValueError, "finalization failed"):
                 synchronize_rank_zero_finalization(
                     fail,
                     rank=0,
-                    device=torch.device("cpu"),
+                    world=1,
+                    output=Path(directory),
+                    identity={"contract": "test"},
                     phase="test",
                 )
-        self.assertEqual(broadcast.call_args.args[0].item(), 1)
 
-    def test_nonzero_rank_receives_rank_zero_finalization_failure(self) -> None:
-        def receive_failure(status: torch.Tensor, *, src: int) -> None:
-            self.assertEqual(src, 0)
-            status.fill_(1)
-
-        with patch(
-            "smoke.evaluate_foundir_five_type_flux2_ddp.dist.broadcast",
-            side_effect=receive_failure,
+    def test_nonzero_rank_publishes_completion_without_finalizing(self) -> None:
+        with tempfile.TemporaryDirectory(dir=WORKSPACE_ROOT) as directory, patch.dict(
+            os.environ,
+            {"FOUNDIR_EVALUATION_COORDINATION_TOKEN": "nonzero-complete"},
+            clear=False,
         ):
-            with self.assertRaisesRegex(RuntimeError, "rank-zero test failed"):
-                synchronize_rank_zero_finalization(
-                    lambda: None,
-                    rank=1,
-                    device=torch.device("cpu"),
-                    phase="test",
-                )
+            finalized = []
+            synchronize_rank_zero_finalization(
+                lambda: finalized.append(True),
+                rank=1,
+                world=2,
+                output=Path(directory),
+                identity={"contract": "test"},
+                phase="test",
+            )
+            self.assertEqual(finalized, [])
+            marker = (
+                Path(directory)
+                / ".coordination/nonzero-complete/rank_01.json"
+            )
+            self.assertEqual(json.loads(marker.read_text())["status"], "worker_complete")
 
     def test_native_aggregate_allows_incomplete_per_fold_task_coverage(self) -> None:
         rows = [

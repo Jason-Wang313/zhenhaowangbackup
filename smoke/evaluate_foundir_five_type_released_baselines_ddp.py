@@ -15,7 +15,6 @@ from typing import Mapping, Sequence
 
 import numpy as np
 import torch
-import torch.distributed as dist
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -34,6 +33,7 @@ from smoke.evaluate_foundir_five_type_flux2_ddp import (  # noqa: E402
     lpips_value,
     selected_from_contract,
     synchronize_rank_zero_finalization,
+    torchrun_worker_identity,
     write_once,
     write_or_verify_png,
 )
@@ -330,12 +330,10 @@ def main() -> None:
             raise RuntimeError(f"missing released specialist dependency: {dependency}")
         sys.path.insert(0, str(dependency))
 
-    local_rank = int(os.environ["LOCAL_RANK"])
+    rank, world, local_rank = torchrun_worker_identity()
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
-    dist.init_process_group(backend="nccl", device_id=device)
     try:
-        rank, world = dist.get_rank(), dist.get_world_size()
         if world != 8 or torch.cuda.device_count() != 8:
             raise RuntimeError("released baseline comparison requires exactly eight GPUs")
         if not any(name in torch.cuda.get_device_properties(device).name for name in ("H100", "H200")):
@@ -434,7 +432,6 @@ def main() -> None:
             }
             write_once(sidecar, (json.dumps(result, indent=2, sort_keys=True) + "\n").encode())
             print(f"FOUNDIR_RELEASED_BASELINE rank={rank} record={index+1}/{len(selected)}", flush=True)
-        dist.barrier(device_ids=[local_rank])
         def finalize_result() -> None:
             if not finalize_existing_sidecars(
                 output=args.output,
@@ -451,12 +448,19 @@ def main() -> None:
         synchronize_rank_zero_finalization(
             finalize_result,
             rank=rank,
-            device=device,
+            world=world,
+            output=args.output,
+            identity={
+                "config_sha256": config_sha,
+                "conditions_sha256": conditions_sha,
+                "split": args.split,
+                "sealed_internal_consumption_sha256": sealed_consumption_sha,
+            },
             phase="released-baseline finalization",
+            timeout_seconds=float(config["distributed"]["timeout_minutes"]) * 60,
         )
     finally:
-        if dist.is_initialized():
-            dist.destroy_process_group()
+        torch.cuda.empty_cache()
 
 
 if __name__ == "__main__":

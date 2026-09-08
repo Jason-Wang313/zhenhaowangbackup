@@ -17,7 +17,11 @@ from smoke import foundir_five_type_runtime_preflight as runtime_preflight
 from smoke import evaluate_foundir_five_type_released_baselines_ddp as released_baseline
 from smoke.freeze_foundir_five_type_flux2_main_v3_report import validate_released_baseline
 from smoke.preflight_foundir_flux2_training_geometry import verify_evaluation_pairs
-from smoke.evaluate_foundir_five_type_flux2_ddp import write_or_verify_png
+from smoke.evaluate_foundir_five_type_flux2_ddp import (
+    synchronize_rank_zero_finalization,
+    torchrun_worker_identity,
+    write_or_verify_png,
+)
 from smoke.export_foundir_five_type_physical_v8_conditions_ddp import (
     OPTIMIZED_EXPORT_ENGINE,
     UNDERSIZED_INPUT_POLICY,
@@ -310,15 +314,12 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
             source,
         )
 
-    def test_v3_ddp_entrypoints_bind_cuda_device_before_nccl(self) -> None:
+    def test_v3_collective_entrypoints_bind_cuda_device_before_nccl(self) -> None:
         for relative in (
             "smoke/build_foundir_flux_qwen3_prompt_cache_ddp.py",
             "smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py",
             "smoke/train_foundir_five_type_flux2_overfit_ddp.py",
             "smoke/train_foundir_five_type_flux2_full_ddp.py",
-            "smoke/evaluate_foundir_five_type_flux2_ddp.py",
-            "smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py",
-            "smoke/evaluate_foundir_five_type_released_baselines_ddp.py",
             "smoke/train_qwen_multidegradation_lora_ddp.py",
         ):
             source = (ROOT / relative).read_text()
@@ -328,6 +329,58 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
                 relative,
             )
             self.assertIn("device_id=device", source, relative)
+
+    def test_sharded_evaluators_do_not_initialize_nccl(self) -> None:
+        for relative in (
+            "smoke/evaluate_foundir_five_type_flux2_ddp.py",
+            "smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py",
+            "smoke/evaluate_foundir_five_type_released_baselines_ddp.py",
+        ):
+            source = (ROOT / relative).read_text()
+            self.assertNotIn("dist.init_process_group(", source, relative)
+            self.assertNotIn("torch.distributed", source, relative)
+            self.assertIn("torchrun_worker_identity", source, relative)
+            self.assertIn("synchronize_rank_zero_finalization", source, relative)
+        runner = (ROOT / "smoke/run_foundir_five_type_flux2_main_v3_8gpu.sh").read_text()
+        self.assertGreaterEqual(
+            runner.count("FOUNDIR_EVALUATION_COORDINATION_TOKEN="), 5
+        )
+
+    def test_filesystem_evaluation_coordination_finalizes_without_nccl(self) -> None:
+        environment = {
+            "RANK": "0",
+            "WORLD_SIZE": "1",
+            "LOCAL_RANK": "0",
+            "LOCAL_WORLD_SIZE": "1",
+            "FOUNDIR_EVALUATION_COORDINATION_TOKEN": "unit-test-token",
+        }
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory, patch.dict(
+            os.environ, environment, clear=False
+        ):
+            self.assertEqual(torchrun_worker_identity(required_world=1), (0, 1, 0))
+            finalized = []
+            synchronize_rank_zero_finalization(
+                lambda: finalized.append(True),
+                rank=1,
+                world=2,
+                output=Path(directory),
+                identity={"contract": "unit-test"},
+                phase="unit-test finalization",
+                timeout_seconds=1.0,
+            )
+            self.assertEqual(finalized, [])
+            synchronize_rank_zero_finalization(
+                lambda: finalized.append(True),
+                rank=0,
+                world=2,
+                output=Path(directory),
+                identity={"contract": "unit-test"},
+                phase="unit-test finalization",
+                timeout_seconds=1.0,
+            )
+            self.assertEqual(finalized, [True])
+            markers = list((Path(directory) / ".coordination").rglob("rank_*.json"))
+            self.assertEqual(len(markers), 2)
 
     def test_released_baseline_has_complete_sidecar_recovery(self) -> None:
         evaluator = (

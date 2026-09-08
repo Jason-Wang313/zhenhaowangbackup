@@ -10,13 +10,13 @@ import json
 import math
 import os
 import sys
+import time
 from collections import defaultdict
 from pathlib import Path
 from typing import Callable, Mapping, Sequence
 
 import numpy as np
 import torch
-import torch.distributed as dist
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -252,22 +252,82 @@ def synchronize_rank_zero_finalization(
     finalize: Callable[[], None],
     *,
     rank: int,
-    device: torch.device,
+    world: int,
+    output: Path,
+    identity: Mapping[str, object],
     phase: str,
+    timeout_seconds: float = 600.0,
 ) -> None:
-    """Run rank-zero finalization and propagate Python failures without a barrier hang."""
-    error: Exception | None = None
-    if rank == 0:
-        try:
-            finalize()
-        except Exception as exc:
-            error = exc
-    failed = torch.tensor([error is not None], dtype=torch.uint8, device=device)
-    dist.broadcast(failed, src=0)
-    if failed.item():
-        if error is not None:
-            raise error
-        raise RuntimeError(f"rank-zero {phase} failed; inspect the rank-zero traceback")
+    """Coordinate embarrassingly parallel evaluators without a CUDA collective."""
+    token = os.environ.get("FOUNDIR_EVALUATION_COORDINATION_TOKEN", "")
+    if not token or len(token) > 128 or any(
+        character not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-"
+        for character in token
+    ):
+        raise RuntimeError("missing or invalid evaluation coordination token")
+    completion_dir = output / ".coordination" / token
+
+    def expected_marker(worker_rank: int) -> dict[str, object]:
+        return {
+            "schema_version": 1,
+            "status": "worker_complete",
+            "phase": phase,
+            "rank": worker_rank,
+            "world_size": world,
+            "identity": dict(identity),
+            "protected_foundir_test_accessed": False,
+        }
+
+    marker = completion_dir / f"rank_{rank:02d}.json"
+    write_once(
+        marker,
+        (json.dumps(expected_marker(rank), indent=2, sort_keys=True) + "\n").encode(),
+    )
+    if rank != 0:
+        return
+    deadline = time.monotonic() + timeout_seconds
+    while True:
+        missing = []
+        for worker_rank in range(world):
+            worker_marker = completion_dir / f"rank_{worker_rank:02d}.json"
+            if not worker_marker.is_file():
+                missing.append(worker_rank)
+                continue
+            if json.loads(worker_marker.read_text()) != expected_marker(worker_rank):
+                raise RuntimeError(
+                    f"filesystem coordination identity changed: {worker_marker}"
+                )
+        if not missing:
+            break
+        if time.monotonic() >= deadline:
+            raise TimeoutError(
+                f"timed out waiting for {phase} workers: missing ranks {missing}"
+            )
+        time.sleep(0.2)
+    finalize()
+    print(
+        f"FOUNDIR_FILESYSTEM_COORDINATION_PASS phase={phase} workers={world}",
+        flush=True,
+    )
+
+
+def torchrun_worker_identity(required_world: int = 8) -> tuple[int, int, int]:
+    required = ("RANK", "WORLD_SIZE", "LOCAL_RANK", "LOCAL_WORLD_SIZE")
+    missing = [name for name in required if name not in os.environ]
+    if missing:
+        raise RuntimeError(f"torchrun worker environment is incomplete: {missing}")
+    rank = int(os.environ["RANK"])
+    world = int(os.environ["WORLD_SIZE"])
+    local_rank = int(os.environ["LOCAL_RANK"])
+    local_world = int(os.environ["LOCAL_WORLD_SIZE"])
+    if world != required_world or local_world != required_world:
+        raise RuntimeError(
+            f"evaluation requires exactly {required_world} local workers: "
+            f"world={world} local_world={local_world}"
+        )
+    if rank != local_rank:
+        raise RuntimeError("evaluation supports one local eight-GPU node only")
+    return rank, world, local_rank
 
 
 def main() -> None:
@@ -336,13 +396,10 @@ def main() -> None:
             print("FOUNDIR_SEALED_INTERNAL_ALREADY_COMPLETE", flush=True)
             return
 
-    local_rank = int(os.environ["LOCAL_RANK"])
+    rank, world, local_rank = torchrun_worker_identity()
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
-    dist.init_process_group(backend="nccl", device_id=device)
     try:
-        rank = dist.get_rank()
-        world = dist.get_world_size()
         if world != 8 or torch.cuda.device_count() != 8:
             raise RuntimeError("five-type evaluation requires exactly eight GPUs")
         properties = torch.cuda.get_device_properties(device)
@@ -467,7 +524,6 @@ def main() -> None:
                 f"record={index+1}/{len(selected)} psnr={row['psnr']:.4f} lpips={row['lpips']:.6f}",
                 flush=True,
             )
-        dist.barrier()
         def finalize_result() -> None:
             result_rows = []
             for record in selected:
@@ -505,12 +561,20 @@ def main() -> None:
         synchronize_rank_zero_finalization(
             finalize_result,
             rank=rank,
-            device=device,
+            world=world,
+            output=args.output,
+            identity={
+                "config_sha256": config_sha,
+                "checkpoint_sha256": checkpoint_sha,
+                "conditions_sha256": conditions_sha,
+                "split": args.split,
+                "arm": args.arm,
+            },
             phase="evaluation finalization",
+            timeout_seconds=float(config["distributed"]["timeout_minutes"]) * 60,
         )
     finally:
-        if dist.is_initialized():
-            dist.destroy_process_group()
+        torch.cuda.empty_cache()
 
 
 if __name__ == "__main__":
