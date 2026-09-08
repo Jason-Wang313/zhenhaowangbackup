@@ -483,6 +483,7 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
     def test_specialist_probe_accepts_only_verified_child_marker(self) -> None:
         payload = {
             "versions": runtime_preflight.SPECIALIST_EXPECTED_VERSIONS,
+            "generalist_architecture": "ResidualDiffusion",
             "architecture": "WaveMamba",
             "weather_architecture": "Restormer",
             "strict_checkpoint_load": True,

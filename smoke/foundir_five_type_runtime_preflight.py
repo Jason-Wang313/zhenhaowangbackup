@@ -179,6 +179,7 @@ if not torch.cuda.is_available():
     raise RuntimeError("FoundIR specialist runtime probe requires CUDA")
 torch.cuda.set_device(0)
 from smoke.run_foundir_lowlight_gate2_teachers import (
+    build_generalist,
     build_specialist,
     build_weather_specialist,
     import_specialist_architecture,
@@ -191,6 +192,17 @@ if specialist_architecture.__name__ != "WaveMamba":
 weather_architecture = import_weather_specialist_architecture(repository)
 if weather_architecture.__name__ != "Restormer":
     raise RuntimeError("released weather architecture identity changed")
+generalist_config = {
+    "generalist": {
+        "repository": "third_party/foundir",
+        "checkpoint": config["released_baseline"]["generalist"],
+        "delta_end": 0.0014,
+        "sampling_steps": 4,
+        "ddim_eta": 0.0,
+        "sum_scale": 0.01,
+    }
+}
+generalist = build_generalist(generalist_config, torch.device("cuda", 0))
 base = {
     "specialist": {
         "repository": "third_party/foundir/specialist_model",
@@ -214,6 +226,7 @@ if weather_output.shape != (1, 3, 32, 32) or not torch.isfinite(weather_output).
     raise RuntimeError("released weather specialist wrapper forward failed")
 print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
     "versions": versions,
+    "generalist_architecture": type(generalist).__name__,
     "architecture": specialist_architecture.__name__,
     "weather_architecture": weather_architecture.__name__,
     "strict_checkpoint_load": True,
@@ -242,6 +255,8 @@ print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
             payload = json.loads(line.removeprefix(SPECIALIST_PROBE_MARKER))
             if payload.get("versions") != SPECIALIST_EXPECTED_VERSIONS:
                 raise RuntimeError(f"FoundIR specialist probe reported wrong versions: {payload}")
+            if payload.get("generalist_architecture") != "ResidualDiffusion":
+                raise RuntimeError(f"FoundIR generalist probe reported wrong architecture: {payload}")
             if payload.get("architecture") != "WaveMamba":
                 raise RuntimeError(f"FoundIR specialist probe reported wrong architecture: {payload}")
             if payload.get("weather_architecture") != "Restormer":
