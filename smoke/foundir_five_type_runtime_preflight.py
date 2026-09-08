@@ -151,8 +151,10 @@ def specialist_probe_environment() -> dict[str, str]:
     return environment
 
 
-def verify_specialist_runtime() -> dict[str, object]:
-    """Verify the incompatible specialist stack in a fresh Python process."""
+def verify_specialist_runtime(config_path: Path | None = None) -> dict[str, object]:
+    """Strict-load and forward-probe both incompatible specialist architectures."""
+    if config_path is None:
+        config_path = workspace_path("configs/foundir_five_type_flux2_dit_v3.json")
     probe = r'''
 import json
 import sys
@@ -165,6 +167,7 @@ import transformers
 
 root = Path(sys.argv[1]).resolve()
 expected = json.loads(sys.argv[2])
+config = json.loads(Path(sys.argv[3]).read_text())
 versions = {
     "transformers": transformers.__version__,
     "tokenizers": tokenizers.__version__,
@@ -176,19 +179,45 @@ if not torch.cuda.is_available():
     raise RuntimeError("FoundIR specialist runtime probe requires CUDA")
 torch.cuda.set_device(0)
 from smoke.run_foundir_lowlight_gate2_teachers import (
+    build_specialist,
+    build_weather_specialist,
     import_specialist_architecture,
     import_weather_specialist_architecture,
 )
-specialist = import_specialist_architecture(root / "third_party/foundir/specialist_model")
-if specialist.__name__ != "WaveMamba":
+repository = root / "third_party/foundir/specialist_model"
+specialist_architecture = import_specialist_architecture(repository)
+if specialist_architecture.__name__ != "WaveMamba":
     raise RuntimeError("released specialist architecture identity changed")
-weather = import_weather_specialist_architecture(root / "third_party/foundir/specialist_model")
-if weather.__name__ != "Restormer":
+weather_architecture = import_weather_specialist_architecture(repository)
+if weather_architecture.__name__ != "Restormer":
     raise RuntimeError("released weather architecture identity changed")
+base = {
+    "specialist": {
+        "repository": "third_party/foundir/specialist_model",
+        "checkpoint": config["released_baseline"]["lowlight_specialist"],
+    }
+}
+lowlight = build_specialist(base, torch.device("cuda", 0))
+weather_config = {
+    "specialist": {
+        **base["specialist"],
+        "checkpoint": config["released_baseline"]["weather_specialist"],
+    }
+}
+weather = build_weather_specialist(weather_config, torch.device("cuda", 0))
+with torch.inference_mode():
+    lowlight_output = lowlight.restoration_network(torch.zeros(1, 3, 128, 128, device="cuda"))
+    weather_output = weather(torch.zeros(1, 3, 32, 32, device="cuda"))
+if lowlight_output.shape != (1, 3, 128, 128) or not torch.isfinite(lowlight_output).all():
+    raise RuntimeError("released lowlight specialist wrapper forward failed")
+if weather_output.shape != (1, 3, 32, 32) or not torch.isfinite(weather_output).all():
+    raise RuntimeError("released weather specialist wrapper forward failed")
 print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
     "versions": versions,
-    "architecture": specialist.__name__,
-    "weather_architecture": weather.__name__,
+    "architecture": specialist_architecture.__name__,
+    "weather_architecture": weather_architecture.__name__,
+    "strict_checkpoint_load": True,
+    "wrapper_forward": True,
 }, sort_keys=True), flush=True)
 '''
     completed = subprocess.run(
@@ -198,6 +227,7 @@ print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
             probe,
             str(ROOT),
             json.dumps(SPECIALIST_EXPECTED_VERSIONS, sort_keys=True),
+            str(workspace_path(config_path)),
         ],
         env=specialist_probe_environment(),
         capture_output=True,
@@ -218,6 +248,8 @@ print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
                 raise RuntimeError(
                     f"FoundIR specialist probe reported wrong weather architecture: {payload}"
                 )
+            if payload.get("strict_checkpoint_load") is not True or payload.get("wrapper_forward") is not True:
+                raise RuntimeError(f"FoundIR specialist probe skipped strict runtime checks: {payload}")
             return payload
     raise RuntimeError("FoundIR specialist isolated runtime probe emitted no pass marker")
 

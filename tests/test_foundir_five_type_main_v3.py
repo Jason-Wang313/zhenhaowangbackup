@@ -1,16 +1,23 @@
 from __future__ import annotations
 
 import inspect
+import hashlib
 import json
 import os
+import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
+import numpy as np
 from PIL import Image
 
 from smoke import foundir_five_type_runtime_preflight as runtime_preflight
+from smoke import evaluate_foundir_five_type_released_baselines_ddp as released_baseline
+from smoke.freeze_foundir_five_type_flux2_main_v3_report import validate_released_baseline
+from smoke.preflight_foundir_flux2_training_geometry import verify_evaluation_pairs
+from smoke.evaluate_foundir_five_type_flux2_ddp import write_or_verify_png
 from smoke.export_foundir_five_type_physical_v8_conditions_ddp import (
     OPTIMIZED_EXPORT_ENGINE,
     UNDERSIZED_INPUT_POLICY,
@@ -254,6 +261,7 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         self.assertNotIn("--arm type_oracle", runner)
         self.assertNotIn("postcodec", runner.lower())
         self.assertNotIn("MillionIRData/Test", runner)
+        self.assertIn('! -f "$OUTPUT/sealed_internal_consumption.json"', runner)
         exporter = (ROOT / "smoke/export_foundir_five_type_physical_v8_conditions_ddp.py").read_text()
         self.assertIn("FOUNDIR_PHYSICAL_V8_OPTIMIZATION_VALIDATION", exporter)
         self.assertIn("--benchmark-only", exporter)
@@ -302,6 +310,164 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
             source,
         )
 
+    def test_released_baseline_producer_matches_final_freezer_schema(self) -> None:
+        rows = []
+        for index, category in enumerate(
+            json.loads(CONFIG.read_text())["data"]["expected_categories"]
+        ):
+            row = {
+                "record_id": f"record-{index}",
+                "source_group": f"group-{index}",
+                "category": category,
+                "composition_size": len(category.split("_")),
+                "evaluation_fold": 0,
+                "candidates": {},
+            }
+            for candidate in released_baseline.expected_candidate_names(row):
+                row["candidates"][candidate] = {
+                    "category": category,
+                    "psnr": 30.0,
+                    "lpips": 0.1,
+                    "ssim": 0.9,
+                    "output_path": f"unused/{candidate}-{index}.png",
+                    "output_sha256": "a" * 64,
+                }
+            rows.append(row)
+        payload = released_baseline.build_result_payload(
+            rows,
+            config_sha="b" * 64,
+            conditions_sha="c" * 64,
+            split="validation",
+        )
+        self.assertEqual(payload["summary"], payload["candidate_summaries"]["generalist"])
+        self.assertEqual(payload["summary"]["records"], len(rows))
+        task_metrics = validate_released_baseline(
+            payload,
+            label="synthetic baseline",
+            split="validation",
+            expected_records=len(rows),
+            conditions_sha="c" * 64,
+        )
+        self.assertEqual(set(task_metrics), {"blur", "noise", "rain", "haze", "low_light"})
+        payload_without_summary = dict(payload)
+        payload_without_summary.pop("summary")
+        with self.assertRaisesRegex(RuntimeError, "generalist summary contract"):
+            validate_released_baseline(
+                payload_without_summary,
+                label="synthetic baseline",
+                split="validation",
+                expected_records=len(rows),
+                conditions_sha="c" * 64,
+            )
+
+    def test_released_baseline_rejects_nonfinite_aggregate(self) -> None:
+        rows = [
+            {
+                "category": category,
+                "candidates": {
+                    "generalist": {
+                        "category": category,
+                        "psnr": float("nan") if index == 0 else 30.0,
+                        "lpips": 0.1,
+                        "ssim": 0.9,
+                    }
+                },
+            }
+            for index, category in enumerate(
+                json.loads(CONFIG.read_text())["data"]["expected_categories"]
+            )
+        ]
+        with self.assertRaisesRegex(RuntimeError, "non-finite"):
+            released_baseline.build_result_payload(
+                rows,
+                config_sha="b" * 64,
+                conditions_sha="c" * 64,
+                split="validation",
+            )
+
+    def test_released_sealed_baseline_requires_exact_consumption_chain(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            temporary_root = Path(directory)
+            output = temporary_root / "output"
+            sealed_dir = output / "sealed_internal/qwen"
+            sealed_dir.mkdir(parents=True)
+            selection_path = output / "checkpoint_selection.json"
+            selection = {
+                "status": "frozen_development_selected_checkpoint",
+                "config_sha256": "a" * 64,
+                "checkpoint_sha256": "b" * 64,
+                "checkpoint": "checkpoint.safetensors",
+                "sealed_internal_test_accessed": False,
+                "protected_foundir_test_accessed": False,
+            }
+            selection_path.write_text(json.dumps(selection))
+            sealed = {
+                "status": "sealed_internal_test_complete",
+                "config_sha256": "a" * 64,
+                "checkpoint_sha256": "b" * 64,
+                "checkpoint": "checkpoint.safetensors",
+                "conditions_sha256": "c" * 64,
+                "split": "internal_test",
+                "arm": "qwen",
+                "protected_foundir_test_accessed": False,
+            }
+            (sealed_dir / "result.json").write_text(json.dumps(sealed))
+            consumption = {
+                "status": "sealed_internal_test_consumed",
+                "config_sha256": "a" * 64,
+                "checkpoint_sha256": "b" * 64,
+                "selection_sha256": hashlib.sha256(selection_path.read_bytes()).hexdigest(),
+                "output": "output/sealed_internal/qwen",
+                "protected_foundir_test_accessed": False,
+            }
+            consumption_path = output / "sealed_internal_consumption.json"
+            consumption_path.write_text(json.dumps(consumption))
+            with patch.object(released_baseline, "ROOT", temporary_root):
+                digest = released_baseline.verify_sealed_release_order(
+                    {"runtime": {"output_dir": "output"}}, "a" * 64, "c" * 64
+                )
+                self.assertEqual(digest, hashlib.sha256(consumption_path.read_bytes()).hexdigest())
+                consumption["selection_sha256"] = "0" * 64
+                consumption_path.write_text(json.dumps(consumption))
+                with self.assertRaisesRegex(RuntimeError, "consumption identity changed"):
+                    released_baseline.verify_sealed_release_order(
+                        {"runtime": {"output_dir": "output"}}, "a" * 64, "c" * 64
+                    )
+
+    def test_evaluation_geometry_is_checked_before_gpu_inference(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            root = Path(directory)
+            Image.new("RGB", (20, 18), (1, 2, 3)).save(root / "lq.png")
+            Image.new("RGB", (20, 18), (4, 5, 6)).save(root / "gt.png")
+            rows = [
+                {
+                    "evaluation_role": role,
+                    "record_id": role,
+                    "lq_path": "lq.png",
+                    "gt_path": "gt.png",
+                }
+                for role in ("development", "sealed_internal_test")
+            ]
+            summary = verify_evaluation_pairs(rows, 16, root=root)
+            self.assertEqual(summary["evaluation_records"], 2)
+            self.assertEqual(
+                summary["evaluation_minimum_side_by_role"],
+                {"development": 18, "sealed_internal_test": 18},
+            )
+            with self.assertRaisesRegex(RuntimeError, "unaligned or undersized"):
+                verify_evaluation_pairs(rows, 19, root=root)
+
+    def test_exact_orphan_png_is_resume_safe_but_differing_png_fails(self) -> None:
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            path = Path(directory) / "partial.png"
+            pixels = np.zeros((8, 8, 3), dtype=np.uint8)
+            write_or_verify_png(path, pixels, label="test")
+            write_or_verify_png(path, pixels.copy(), label="test")
+            differing = pixels.copy()
+            differing[0, 0, 0] = 1
+            with self.assertRaisesRegex(RuntimeError, "differing orphan"):
+                write_or_verify_png(path, differing, label="test")
+
     def test_specialist_probe_uses_an_isolated_pinned_import_path(self) -> None:
         with patch.dict(os.environ, {"PYTHONPATH": "/existing/path"}, clear=False):
             environment = runtime_preflight.specialist_probe_environment()
@@ -319,6 +485,8 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
             "versions": runtime_preflight.SPECIALIST_EXPECTED_VERSIONS,
             "architecture": "WaveMamba",
             "weather_architecture": "Restormer",
+            "strict_checkpoint_load": True,
+            "wrapper_forward": True,
         }
         completed = SimpleNamespace(
             returncode=0,

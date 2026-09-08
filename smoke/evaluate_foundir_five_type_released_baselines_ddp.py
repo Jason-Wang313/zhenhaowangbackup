@@ -5,16 +5,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import random
 import sys
 from collections import defaultdict
 from pathlib import Path
+from typing import Mapping, Sequence
 
 import numpy as np
 import torch
 import torch.distributed as dist
-from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -34,6 +35,7 @@ from smoke.evaluate_foundir_five_type_flux2_ddp import (  # noqa: E402
     selected_from_contract,
     synchronize_rank_zero_finalization,
     write_once,
+    write_or_verify_png,
 )
 from smoke.run_foundir_lowlight_gate2_teachers import (  # noqa: E402
     SPECIALIST_DEPENDENCY_DIRECTORIES,
@@ -86,21 +88,148 @@ def run_weather_specialist(model, source: torch.Tensor) -> torch.Tensor:
     return output[:, :, :height, :width].float().clamp(0, 1)
 
 
-def verify_sidecar(path: Path, *, row: dict[str, str], config_sha: str, conditions_sha: str) -> dict[str, object]:
+def expected_candidate_names(row: Mapping[str, str]) -> set[str]:
+    names = {"generalist"}
+    types = set(FIVE_TYPE_CATEGORIES[row["category"]])
+    if "low_light" in types:
+        names.add("generalist_lowlight_specialist")
+    if types & {"rain", "haze"}:
+        names.add("generalist_weather_specialist")
+    return names
+
+
+def finite_metric(value: object) -> bool:
+    return not isinstance(value, bool) and isinstance(value, (int, float)) and math.isfinite(float(value))
+
+
+def verify_sidecar(
+    path: Path,
+    *,
+    row: Mapping[str, str],
+    split: str,
+    config_sha: str,
+    conditions_sha: str,
+) -> dict[str, object]:
     payload = json.loads(path.read_text())
     if (
         payload.get("status") != "complete"
         or payload.get("record_id") != row["record_id"]
+        or payload.get("source_group") != row["source_group"]
+        or payload.get("category") != row["category"]
+        or payload.get("composition_size") != int(row["composition_size"])
+        or payload.get("evaluation_fold") != int(row["evaluation_fold"])
+        or payload.get("split") != split
         or payload.get("config_sha256") != config_sha
         or payload.get("conditions_sha256") != conditions_sha
         or payload.get("protected_foundir_test_accessed") is not False
     ):
         raise RuntimeError(f"released baseline sidecar identity changed: {path}")
-    for candidate in payload.get("candidates", {}).values():
+    candidates = payload.get("candidates")
+    if not isinstance(candidates, dict) or set(candidates) != expected_candidate_names(row):
+        raise RuntimeError(f"released baseline candidate set changed: {path}")
+    for candidate in candidates.values():
+        if candidate.get("category") != row["category"] or not all(
+            finite_metric(candidate.get(key)) for key in ("psnr", "lpips", "ssim")
+        ):
+            raise RuntimeError(f"released baseline metrics are invalid: {path}")
         output = resolve_workspace_path(ROOT, candidate["output_path"])
         if file_sha256(output) != candidate["output_sha256"]:
             raise RuntimeError(f"released baseline output changed: {output}")
     return payload
+
+
+def build_result_payload(
+    result_rows: Sequence[Mapping[str, object]],
+    *,
+    config_sha: str,
+    conditions_sha: str,
+    split: str,
+    sealed_consumption_sha: str | None = None,
+) -> dict[str, object]:
+    if not result_rows:
+        raise RuntimeError("released baseline result has no records")
+    by_candidate: dict[str, list[dict[str, object]]] = defaultdict(list)
+    for row in result_rows:
+        for name, metrics in row["candidates"].items():
+            by_candidate[name].append({"category": row["category"], **metrics})
+    if len(by_candidate.get("generalist", [])) != len(result_rows):
+        raise RuntimeError("released generalist does not cover every evaluation record")
+    summaries: dict[str, dict[str, object]] = {}
+    for name, candidate_rows in sorted(by_candidate.items()):
+        summary: dict[str, object] = {
+            "records": len(candidate_rows),
+            "mean_psnr": float(np.mean([row["psnr"] for row in candidate_rows])),
+            "mean_lpips": float(np.mean([row["lpips"] for row in candidate_rows])),
+        }
+        if not finite_metric(summary["mean_psnr"]) or not finite_metric(summary["mean_lpips"]):
+            raise RuntimeError(f"released baseline {name} aggregate is non-finite")
+        if name == "generalist":
+            task_metrics = aggregate_task_metrics(candidate_rows)
+            if set(task_metrics) != {"blur", "noise", "rain", "haze", "low_light"}:
+                raise RuntimeError("released generalist task coverage changed")
+            if not all(
+                finite_metric(metrics.get(metric))
+                for metrics in task_metrics.values()
+                for metric in ("psnr", "lpips")
+            ):
+                raise RuntimeError("released generalist task metrics are non-finite")
+            summary["task_metrics"] = task_metrics
+        summaries[name] = summary
+    payload: dict[str, object] = {
+        "schema_version": 1,
+        "status": "released_foundir_baseline_comparison_complete",
+        "config_sha256": config_sha,
+        "conditions_sha256": conditions_sha,
+        "split": split,
+        "records": len(result_rows),
+        # ``summary`` is the deployable released generalist contract consumed
+        # by every final-report freezer.  Specialist summaries remain separate
+        # evidence because they cover only applicable categories.
+        "summary": summaries["generalist"],
+        "candidate_summaries": summaries,
+        "specialist_scope": "lowlight only for low_light categories; weather only for rain/haze categories",
+        "protected_foundir_test_accessed": False,
+    }
+    if sealed_consumption_sha is not None:
+        payload["sealed_internal_consumption_sha256"] = sealed_consumption_sha
+    return payload
+
+
+def verify_sealed_release_order(
+    config: Mapping[str, object], config_sha: str, conditions_sha: str
+) -> str:
+    output_root = resolve_workspace_path(ROOT, config["runtime"]["output_dir"])
+    consumption_path = output_root / "sealed_internal_consumption.json"
+    selection_path = output_root / "checkpoint_selection.json"
+    sealed_path = output_root / "sealed_internal/qwen/result.json"
+    if not all(path.is_file() for path in (consumption_path, selection_path, sealed_path)):
+        raise RuntimeError("released sealed baseline may run only after the selected system consumes sealed data")
+    consumption = json.loads(consumption_path.read_text())
+    selection = json.loads(selection_path.read_text())
+    sealed = json.loads(sealed_path.read_text())
+    expected_output = (output_root / "sealed_internal/qwen").relative_to(ROOT).as_posix()
+    if (
+        consumption.get("status") != "sealed_internal_test_consumed"
+        or consumption.get("config_sha256") != config_sha
+        or consumption.get("selection_sha256") != file_sha256(selection_path)
+        or consumption.get("checkpoint_sha256") != selection.get("checkpoint_sha256")
+        or consumption.get("output") != expected_output
+        or consumption.get("protected_foundir_test_accessed") is not False
+        or selection.get("status") != "frozen_development_selected_checkpoint"
+        or selection.get("config_sha256") != config_sha
+        or selection.get("sealed_internal_test_accessed") is not False
+        or selection.get("protected_foundir_test_accessed") is not False
+        or sealed.get("status") != "sealed_internal_test_complete"
+        or sealed.get("config_sha256") != config_sha
+        or sealed.get("checkpoint_sha256") != selection.get("checkpoint_sha256")
+        or sealed.get("checkpoint") != selection.get("checkpoint")
+        or sealed.get("conditions_sha256") != conditions_sha
+        or sealed.get("split") != "internal_test"
+        or sealed.get("arm") != "qwen"
+        or sealed.get("protected_foundir_test_accessed") is not False
+    ):
+        raise RuntimeError("sealed internal consumption identity changed before released baseline")
+    return file_sha256(consumption_path)
 
 
 def main() -> None:
@@ -122,14 +251,13 @@ def main() -> None:
         path = resolve_workspace_path(ROOT, baseline[path_key])
         if file_sha256(path) != baseline[hash_key]:
             raise RuntimeError(f"released baseline changed: {path}")
-    if args.split == "internal_test":
-        consumption = resolve_workspace_path(
-            ROOT, Path(config["runtime"]["output_dir"]) / "sealed_internal_consumption.json"
-        )
-        if not consumption.is_file():
-            raise RuntimeError("released sealed baseline may run only after the selected system consumes sealed data")
     conditions = resolve_workspace_path(ROOT, config["full_conditions"]["csv"])
     conditions_sha = file_sha256(conditions)
+    sealed_consumption_sha = None
+    if args.split == "internal_test":
+        sealed_consumption_sha = verify_sealed_release_order(
+            config, config_sha, conditions_sha
+        )
     rows = load_rows(conditions, int(config["data"]["expected_five_type_records"]))
     selected = selected_from_contract(
         config, rows, split=args.split, config_sha=config_sha, conditions_sha=conditions_sha
@@ -173,7 +301,13 @@ def main() -> None:
             stem = evaluation_artifact_stem(row["record_id"])
             sidecar = sidecars / f"{stem}.json"
             if sidecar.exists():
-                verify_sidecar(sidecar, row=row, config_sha=config_sha, conditions_sha=conditions_sha)
+                verify_sidecar(
+                    sidecar,
+                    row=row,
+                    split=args.split,
+                    config_sha=config_sha,
+                    conditions_sha=conditions_sha,
+                )
                 continue
             lq_m11, gt_m11, crop_xy = load_aligned_crop(
                 row,
@@ -197,23 +331,33 @@ def main() -> None:
                 )
             candidate_rows = {}
             for name, output_01 in candidates.items():
-                output_m11 = output_01 * 2 - 1
                 array = output_01[0].detach().cpu().permute(1, 2, 0).mul(255).round().byte().numpy()
+                output_q_m11 = (
+                    torch.from_numpy(array.copy())
+                    .permute(2, 0, 1)
+                    .float()
+                    .div_(127.5)
+                    .sub_(1.0)
+                    .unsqueeze(0)
+                )
                 output_path = images / f"{stem}_{name}.png"
-                if output_path.exists():
-                    raise RuntimeError(f"orphan released baseline output exists: {output_path}")
-                Image.fromarray(array).save(output_path)
-                candidate_rows[name] = {
+                candidate = {
                     "category": row["category"],
-                    "psnr": psnr(target.to(device), output_m11),
-                    "lpips": lpips_value(metric, target, output_m11.cpu(), device),
+                    "psnr": psnr(target.to(device), output_q_m11.to(device)),
+                    "lpips": lpips_value(metric, target, output_q_m11, device),
                     "ssim": rgb_structural_similarity(
                         ((gt_m11.numpy().transpose(1, 2, 0) + 1) * 0.5).clip(0, 1),
                         array.astype(np.float32) / 255,
                     ),
-                    "output_path": output_path.relative_to(ROOT).as_posix(),
-                    "output_sha256": file_sha256(output_path),
                 }
+                if not all(finite_metric(candidate[key]) for key in ("psnr", "lpips", "ssim")):
+                    raise RuntimeError(f"released baseline produced non-finite metrics for {row['record_id']}")
+                write_or_verify_png(output_path, array, label="released baseline")
+                candidate.update(
+                    output_path=output_path.relative_to(ROOT).as_posix(),
+                    output_sha256=file_sha256(output_path),
+                )
+                candidate_rows[name] = candidate
             result = {
                 "status": "complete",
                 "record_id": row["record_id"],
@@ -221,6 +365,7 @@ def main() -> None:
                 "category": row["category"],
                 "composition_size": int(row["composition_size"]),
                 "evaluation_fold": int(row["evaluation_fold"]),
+                "split": args.split,
                 "crop_xy": crop_xy,
                 "candidates": candidate_rows,
                 "config_sha256": config_sha,
@@ -235,34 +380,19 @@ def main() -> None:
                 verify_sidecar(
                     sidecars / f"{evaluation_artifact_stem(row['record_id'])}.json",
                     row=row,
+                    split=args.split,
                     config_sha=config_sha,
                     conditions_sha=conditions_sha,
                 )
                 for row in selected
             ]
-            by_candidate: dict[str, list[dict[str, object]]] = defaultdict(list)
-            for row in result_rows:
-                for name, metrics in row["candidates"].items():
-                    by_candidate[name].append({"category": row["category"], **metrics})
-            summaries = {}
-            for name, candidate_rows in sorted(by_candidate.items()):
-                summaries[name] = {
-                    "records": len(candidate_rows),
-                    "mean_psnr": float(np.mean([row["psnr"] for row in candidate_rows])),
-                    "mean_lpips": float(np.mean([row["lpips"] for row in candidate_rows])),
-                }
-                if name == "generalist":
-                    summaries[name]["task_metrics"] = aggregate_task_metrics(candidate_rows)
-            payload = {
-                "schema_version": 1,
-                "status": "released_foundir_baseline_comparison_complete",
-                "config_sha256": config_sha,
-                "split": args.split,
-                "records": len(result_rows),
-                "candidate_summaries": summaries,
-                "specialist_scope": "lowlight only for low_light categories; weather only for rain/haze categories",
-                "protected_foundir_test_accessed": False,
-            }
+            payload = build_result_payload(
+                result_rows,
+                config_sha=config_sha,
+                conditions_sha=conditions_sha,
+                split=args.split,
+                sealed_consumption_sha=sealed_consumption_sha,
+            )
             write_once(args.output / "result.json", (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
             print("FOUNDIR_RELEASED_BASELINE_PASS " + json.dumps(payload, sort_keys=True), flush=True)
 

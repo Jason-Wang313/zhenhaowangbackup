@@ -166,7 +166,8 @@ if [[ ! -f "$OUTPUT/released_baselines/development/result.json" ]]; then
     smoke/evaluate_foundir_five_type_released_baselines_ddp.py --config "$CONFIG" \
     --split validation --output "$OUTPUT/released_baselines/development"
 fi
-if [[ ! -f "$OUTPUT/sealed_internal/qwen/result.json" ]]; then
+if [[ ! -f "$OUTPUT/sealed_internal/qwen/result.json" \
+      || ! -f "$OUTPUT/sealed_internal_consumption.json" ]]; then
   "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
     smoke/evaluate_foundir_five_type_flux2_ddp.py --config "$CONFIG" \
     --checkpoint "$SELECTED_CHECKPOINT" --selection "$SELECTION" \

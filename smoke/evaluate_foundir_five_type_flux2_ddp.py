@@ -55,6 +55,20 @@ def write_once(path: Path, content: bytes) -> None:
         handle.write(content)
 
 
+def write_or_verify_png(path: Path, pixels: np.ndarray, *, label: str) -> None:
+    if path.exists():
+        with Image.open(path) as handle:
+            existing = np.asarray(handle.convert("RGB"), dtype=np.uint8)
+        if not np.array_equal(existing, pixels):
+            raise RuntimeError(f"differing orphan {label} output exists: {path}")
+        return
+    Image.fromarray(pixels).save(path)
+    with Image.open(path) as handle:
+        reloaded = np.asarray(handle.convert("RGB"), dtype=np.uint8)
+    if not np.array_equal(reloaded, pixels):
+        raise RuntimeError(f"{label} PNG round trip changed pixels")
+
+
 def selected_from_contract(
     config: Mapping[str, object],
     rows: Sequence[Mapping[str, str]],
@@ -173,6 +187,10 @@ def sidecar_identity(
         "split": split,
         "arm": arm,
         "record_id": record["record_id"],
+        "source_group": record["source_group"],
+        "category": record["category"],
+        "composition_size": int(record["composition_size"]),
+        "evaluation_fold": int(record["evaluation_fold"]),
         "lq_sha256": record["lq_sha256"],
         "gt_sha256": record["gt_sha256"],
     }
@@ -182,6 +200,13 @@ def verify_sidecar(path: Path, identity: Mapping[str, object]) -> dict[str, obje
     payload = json.loads(path.read_text())
     if payload.get("status") != "complete" or any(payload.get(key) != value for key, value in identity.items()):
         raise RuntimeError(f"evaluation sidecar identity changed: {path}")
+    if not all(
+        not isinstance(payload.get(key), bool)
+        and isinstance(payload.get(key), (int, float))
+        and math.isfinite(float(payload[key]))
+        for key in ("input_psnr", "psnr", "ssim", "lpips")
+    ):
+        raise RuntimeError(f"evaluation sidecar metrics are invalid: {path}")
     output = resolve_workspace_path(ROOT, str(payload["output_path"]))
     if file_sha256(output) != payload["output_sha256"]:
         raise RuntimeError(f"evaluation output changed: {output}")
@@ -410,15 +435,7 @@ def main() -> None:
                 pixel_refiner=pixel_refiner,
             )
             output_array = quantized_rgb(prediction)
-            output_path = images / f"{stem}.png"
-            if output_path.exists():
-                raise RuntimeError(f"orphan evaluation output exists: {output_path}")
-            Image.fromarray(output_array).save(output_path)
-            with Image.open(output_path) as handle:
-                reloaded = np.asarray(handle.convert("RGB"), dtype=np.uint8)
-            if not np.array_equal(reloaded, output_array):
-                raise RuntimeError("evaluation PNG round trip changed pixels")
-            prediction_q = torch.from_numpy(reloaded.copy()).permute(2, 0, 1).float().div_(127.5).sub_(1.0).unsqueeze(0)
+            prediction_q = torch.from_numpy(output_array.copy()).permute(2, 0, 1).float().div_(127.5).sub_(1.0).unsqueeze(0)
             row = {
                 "status": "complete",
                 **identity,
@@ -432,14 +449,18 @@ def main() -> None:
                 "psnr": psnr(gt_batch, prediction_q.to(device)),
                 "ssim": rgb_structural_similarity(
                     ((gt.numpy().transpose(1, 2, 0) + 1) * 0.5).clip(0, 1),
-                    reloaded.astype(np.float32) / 255.0,
+                    output_array.astype(np.float32) / 255.0,
                 ),
                 "lpips": lpips_value(metric, gt_batch, prediction_q, device),
-                "output_path": output_path.relative_to(ROOT).as_posix(),
-                "output_sha256": file_sha256(output_path),
             }
             if any(isinstance(value, float) and not math.isfinite(value) for value in row.values()):
                 raise RuntimeError("non-finite evaluation metric")
+            output_path = images / f"{stem}.png"
+            write_or_verify_png(output_path, output_array, label="evaluation")
+            row.update(
+                output_path=output_path.relative_to(ROOT).as_posix(),
+                output_sha256=file_sha256(output_path),
+            )
             write_once(sidecar, (json.dumps(row, indent=2, sort_keys=True) + "\n").encode())
             print(
                 f"FOUNDIR_FLUX_EVAL rank={rank} split={args.split} arm={args.arm} "

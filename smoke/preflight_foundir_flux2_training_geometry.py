@@ -98,6 +98,43 @@ def verify_undersized_pairs(
     return verified
 
 
+def verify_evaluation_pairs(
+    rows: Sequence[Mapping[str, str]],
+    crop_size: int,
+    *,
+    root: Path = ROOT,
+) -> dict[str, object]:
+    role_counts: Counter[str] = Counter()
+    minimum_side: dict[str, int] = {}
+    seen: set[str] = set()
+    for row in rows:
+        record_id = str(row.get("record_id", ""))
+        role = str(row.get("evaluation_role", ""))
+        if not record_id or record_id in seen or role not in {"development", "sealed_internal_test"}:
+            raise RuntimeError(f"invalid evaluation geometry identity: {role!r}/{record_id!r}")
+        seen.add(record_id)
+        sizes = []
+        for key in ("lq_path", "gt_path"):
+            path = (root / str(row[key])).resolve()
+            path.relative_to(root.resolve())
+            with Image.open(path) as image:
+                size = image.size
+                image.verify()
+            sizes.append(size)
+        if sizes[0] != sizes[1] or min(sizes[0]) < crop_size:
+            raise RuntimeError(
+                f"evaluation pair is unaligned or undersized before GPU inference: "
+                f"{record_id}: {sizes}"
+            )
+        role_counts[role] += 1
+        minimum_side[role] = min(minimum_side.get(role, min(sizes[0])), min(sizes[0]))
+    return {
+        "evaluation_records": len(rows),
+        "evaluation_role_counts": dict(sorted(role_counts.items())),
+        "evaluation_minimum_side_by_role": dict(sorted(minimum_side.items())),
+    }
+
+
 def run(config_path: Path) -> dict[str, object]:
     config_path = config_path.resolve()
     config_path.relative_to(ROOT.resolve())
@@ -125,6 +162,23 @@ def run(config_path: Path) -> dict[str, object]:
     if len(rows) != expected:
         raise RuntimeError(f"training manifest cardinality changed: {len(rows)} != {expected}")
     payload = geometry_summary(rows, int(config["data"]["crop_size"]))
+    contract_path = (ROOT / config["evaluation"]["contract_csv"]).resolve()
+    contract_path.relative_to(ROOT.resolve())
+    with contract_path.open(newline="") as handle:
+        contract_rows = list(csv.DictReader(handle))
+    expected_per_role = (
+        int(config["evaluation"]["folds"])
+        * int(config["evaluation"]["records_per_category_per_fold"])
+        * len(config["data"]["expected_categories"])
+    )
+    evaluation_geometry = verify_evaluation_pairs(
+        contract_rows, int(config["data"]["crop_size"])
+    )
+    if evaluation_geometry["evaluation_role_counts"] != {
+        "development": expected_per_role,
+        "sealed_internal_test": expected_per_role,
+    }:
+        raise RuntimeError("evaluation contract geometry cardinality changed")
     payload.update(
         schema_version=1,
         status="pass",
@@ -133,6 +187,7 @@ def run(config_path: Path) -> dict[str, object]:
         actual_undersized_pairs_verified=verify_undersized_pairs(
             rows, int(config["data"]["crop_size"])
         ),
+        **evaluation_geometry,
         protected_foundir_test_accessed=False,
     )
     print("FOUNDIR_FLUX_TRAINING_GEOMETRY_PREFLIGHT_PASS " + json.dumps(payload, sort_keys=True))

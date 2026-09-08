@@ -5,8 +5,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
+from typing import Mapping
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -27,6 +29,51 @@ def load(path: Path, status: str, config_sha: str) -> dict[str, object]:
     ):
         raise RuntimeError(f"invalid v3 final evidence: {path}")
     return payload
+
+
+def finite_number(value: object) -> bool:
+    return not isinstance(value, bool) and isinstance(value, (int, float)) and math.isfinite(float(value))
+
+
+def validate_task_metrics(payload: Mapping[str, object], *, label: str) -> Mapping[str, object]:
+    summary = payload.get("summary")
+    if not isinstance(summary, dict):
+        raise RuntimeError(f"{label} has no summary contract")
+    task_metrics = summary.get("task_metrics")
+    if not isinstance(task_metrics, dict) or set(task_metrics) != set(SOW_STAGE2_THRESHOLDS):
+        raise RuntimeError(f"{label} does not cover all five restoration tasks")
+    for task, metrics in task_metrics.items():
+        if not isinstance(metrics, dict) or not all(
+            finite_number(metrics.get(name)) for name in ("psnr", "lpips")
+        ):
+            raise RuntimeError(f"{label} has invalid metrics for {task}")
+    return task_metrics
+
+
+def validate_released_baseline(
+    payload: Mapping[str, object],
+    *,
+    label: str,
+    split: str,
+    expected_records: int,
+    conditions_sha: str,
+) -> Mapping[str, object]:
+    if (
+        payload.get("split") != split
+        or payload.get("records") != expected_records
+        or payload.get("conditions_sha256") != conditions_sha
+    ):
+        raise RuntimeError(f"{label} identity/cardinality changed")
+    candidate_summaries = payload.get("candidate_summaries")
+    if (
+        not isinstance(payload.get("summary"), dict)
+        or not isinstance(candidate_summaries, dict)
+        or candidate_summaries.get("generalist") != payload.get("summary")
+    ):
+        raise RuntimeError(f"{label} generalist summary contract changed")
+    if payload["summary"].get("records") != expected_records:
+        raise RuntimeError(f"{label} generalist coverage changed")
+    return validate_task_metrics(payload, label=label)
 
 
 def main() -> None:
@@ -55,10 +102,23 @@ def main() -> None:
     if (
         selection.get("status") != "frozen_development_selected_checkpoint"
         or selection.get("config_sha256") != config_sha
+        or selection.get("sealed_internal_test_accessed") is not False
         or selection.get("protected_foundir_test_accessed") is not False
     ):
         raise RuntimeError("v3 checkpoint selection identity changed")
+    checkpoint_path = resolve_workspace_path(ROOT, selection["checkpoint"])
+    if file_sha256(checkpoint_path) != selection.get("checkpoint_sha256"):
+        raise RuntimeError("v3 selected checkpoint changed")
     qwen_path = resolve_workspace_path(ROOT, selection["selected_development_result"])
+    if file_sha256(qwen_path) != next(
+        (
+            candidate["result_sha256"]
+            for candidate in selection.get("candidates", [])
+            if candidate.get("result") == selection["selected_development_result"]
+        ),
+        None,
+    ):
+        raise RuntimeError("v3 selected development result changed")
     development = load(qwen_path, "development_evaluation_complete", config_sha)
     native = load(args.native, "native_resolution_development_complete", config_sha)
     development_baseline = load(
@@ -76,8 +136,54 @@ def main() -> None:
         raise RuntimeError("v3 development result is not the deployed Qwen condition")
     if sealed.get("split") != "internal_test" or sealed.get("arm") != "qwen":
         raise RuntimeError("v3 sealed result is not the deployed Qwen condition")
-    if development_baseline.get("split") != "validation" or sealed_baseline.get("split") != "internal_test":
-        raise RuntimeError("released baseline split identity changed")
+    conditions_path = resolve_workspace_path(ROOT, config["full_conditions"]["csv"])
+    conditions_sha = file_sha256(conditions_path)
+    expected_records = (
+        int(config["evaluation"]["folds"])
+        * int(config["evaluation"]["records_per_category_per_fold"])
+        * len(config["data"]["expected_categories"])
+    )
+    for label, result in (("development", development), ("sealed", sealed)):
+        if (
+            result.get("checkpoint_sha256") != selection["checkpoint_sha256"]
+            or result.get("conditions_sha256") != conditions_sha
+            or result.get("summary", {}).get("records") != expected_records
+        ):
+            raise RuntimeError(f"v3 {label} selected-system identity/cardinality changed")
+        validate_task_metrics(result, label=f"v3 {label}")
+    native_expected_records = (
+        int(config["evaluation"]["full_resolution_records_per_category"])
+        * len(config["data"]["expected_categories"])
+    )
+    if (
+        native.get("checkpoint_sha256") != selection["checkpoint_sha256"]
+        or native.get("records") != native_expected_records
+        or not finite_number(native.get("mean_seam_error_ratio"))
+    ):
+        raise RuntimeError("v3 native-resolution identity/cardinality changed")
+    validate_task_metrics(native, label="v3 native-resolution")
+    validate_released_baseline(
+        development_baseline,
+        label="released development baseline",
+        split="validation",
+        expected_records=expected_records,
+        conditions_sha=conditions_sha,
+    )
+    released_metrics = validate_released_baseline(
+        sealed_baseline,
+        label="released sealed baseline",
+        split="internal_test",
+        expected_records=expected_records,
+        conditions_sha=conditions_sha,
+    )
+    consumption_path = resolve_workspace_path(
+        ROOT, Path(config["runtime"]["output_dir"]) / "sealed_internal_consumption.json"
+    )
+    if (
+        not consumption_path.is_file()
+        or sealed_baseline.get("sealed_internal_consumption_sha256") != file_sha256(consumption_path)
+    ):
+        raise RuntimeError("released sealed baseline is not bound to sealed-system consumption")
 
     sealed_metrics = sealed["summary"]["task_metrics"]
     threshold_checks = {
@@ -88,7 +194,6 @@ def main() -> None:
         for task, threshold in SOW_STAGE2_THRESHOLDS.items()
     }
     threshold_pass = all(all(values.values()) for values in threshold_checks.values())
-    released_metrics = sealed_baseline["summary"]["task_metrics"]
     released_deltas = {
         task: {
             "psnr": float(sealed_metrics[task]["psnr"]) - float(released_metrics[task]["psnr"]),

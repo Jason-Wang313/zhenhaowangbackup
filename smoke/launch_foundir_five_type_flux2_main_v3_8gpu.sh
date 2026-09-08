@@ -69,6 +69,7 @@ python_files=(
   smoke/preflight_foundir_flux2_training_geometry.py
   smoke/evaluate_foundir_five_type_flux2_ddp.py
   smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py
+  smoke/evaluate_foundir_five_type_released_baselines_ddp.py
   smoke/freeze_foundir_five_type_flux2_main_v3_report.py
   tests/test_foundir_flux2_protocol.py
   tests/test_foundir_five_type_main_v3.py
