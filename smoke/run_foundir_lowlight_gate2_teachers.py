@@ -194,7 +194,7 @@ def run_generalist(config: dict, rows: list[dict[str, str]], device) -> tuple[li
     return results, {"total_seconds": total_seconds, "mean_seconds": total_seconds / len(rows), "peak_memory_bytes": peak}
 
 
-def build_specialist(config: Mapping[str, object], device):
+def verify_specialist_dependency_versions() -> None:
     import torch
     import huggingface_hub
     import tokenizers
@@ -215,6 +215,12 @@ def build_specialist(config: Mapping[str, object], device):
             f"FoundIR specialist dependency versions changed: {actual_versions}"
         )
 
+
+def build_specialist(config: Mapping[str, object], device):
+    import torch
+
+    verify_specialist_dependency_versions()
+
     repository = workspace_path(config["specialist"]["repository"])
     WaveMamba = import_specialist_architecture(repository)
 
@@ -224,8 +230,28 @@ def build_specialist(config: Mapping[str, object], device):
     return model.eval().requires_grad_(False)
 
 
-def import_specialist_architecture(repository: Path):
-    """Load WaveMamba without BasicSR's unrelated training-time imports."""
+def build_weather_specialist(config: Mapping[str, object], device):
+    import torch
+
+    verify_specialist_dependency_versions()
+    repository = workspace_path(config["specialist"]["repository"])
+    Restormer = import_weather_specialist_architecture(repository)
+    model = Restormer().to(device)
+    checkpoint = torch.load(
+        workspace_path(config["specialist"]["checkpoint"]),
+        map_location="cpu",
+        weights_only=False,
+    )
+    parameters = {
+        key.removeprefix("restoration_network."): value
+        for key, value in checkpoint["params"].items()
+    }
+    model.load_state_dict(parameters, strict=True)
+    return model.eval().requires_grad_(False)
+
+
+def prepare_specialist_package(repository: Path) -> None:
+    """Create only the BasicSR namespaces needed by released architectures."""
     basicsr = repository / "basicsr"
     package_paths = {
         "basicsr": basicsr,
@@ -243,8 +269,20 @@ def import_specialist_architecture(repository: Path):
         package.__package__ = name
         package.__path__ = [str(path)]
         sys.modules[name] = package
+
+
+def import_specialist_architecture(repository: Path):
+    """Load WaveMamba without BasicSR's unrelated training-time imports."""
+    prepare_specialist_package(repository)
     module = importlib.import_module("basicsr.archs.wavemamba_arch")
     return module.WaveMamba
+
+
+def import_weather_specialist_architecture(repository: Path):
+    """Load the released weather Restormer through the isolated BasicSR package."""
+    prepare_specialist_package(repository)
+    module = importlib.import_module("basicsr.archs.Restormer_arch")
+    return module.Restormer
 
 
 def run_specialist(config: dict, rows: list[dict[str, str]], device) -> tuple[list[dict], dict]:

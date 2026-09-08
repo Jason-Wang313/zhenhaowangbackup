@@ -175,13 +175,20 @@ if versions != expected:
 if not torch.cuda.is_available():
     raise RuntimeError("FoundIR specialist runtime probe requires CUDA")
 torch.cuda.set_device(0)
-from smoke.run_foundir_lowlight_gate2_teachers import import_specialist_architecture
+from smoke.run_foundir_lowlight_gate2_teachers import (
+    import_specialist_architecture,
+    import_weather_specialist_architecture,
+)
 specialist = import_specialist_architecture(root / "third_party/foundir/specialist_model")
 if specialist.__name__ != "WaveMamba":
     raise RuntimeError("released specialist architecture identity changed")
+weather = import_weather_specialist_architecture(root / "third_party/foundir/specialist_model")
+if weather.__name__ != "Restormer":
+    raise RuntimeError("released weather architecture identity changed")
 print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
     "versions": versions,
     "architecture": specialist.__name__,
+    "weather_architecture": weather.__name__,
 }, sort_keys=True), flush=True)
 '''
     completed = subprocess.run(
@@ -207,6 +214,10 @@ print("FOUNDIR_SPECIALIST_RUNTIME_PROBE_PASS " + json.dumps({
                 raise RuntimeError(f"FoundIR specialist probe reported wrong versions: {payload}")
             if payload.get("architecture") != "WaveMamba":
                 raise RuntimeError(f"FoundIR specialist probe reported wrong architecture: {payload}")
+            if payload.get("weather_architecture") != "Restormer":
+                raise RuntimeError(
+                    f"FoundIR specialist probe reported wrong weather architecture: {payload}"
+                )
             return payload
     raise RuntimeError("FoundIR specialist isolated runtime probe emitted no pass marker")
 
@@ -313,6 +324,16 @@ def verify_artifact_deserialization(config_path: Path, *, full: bool) -> dict[st
             payload = torch.load(path, map_location="cpu", weights_only=False)
             if not isinstance(payload, dict) or not payload:
                 raise RuntimeError(f"released checkpoint cannot be deserialized: {path}")
+            if key in {"lowlight_specialist", "weather_specialist"}:
+                parameters = payload.get("params")
+                required = {
+                    "lowlight_specialist": "restoration_network.ps_down1.1.weight",
+                    "weather_specialist": "restoration_network.patch_embed.proj.weight",
+                }[key]
+                if not isinstance(parameters, dict) or required not in parameters:
+                    raise RuntimeError(
+                        f"released {key} architecture signature changed: {path}"
+                    )
             checked[key] = {
                 "path": str(path.relative_to(ROOT)),
                 "sha256": actual,

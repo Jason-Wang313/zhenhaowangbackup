@@ -39,6 +39,7 @@ from smoke.run_foundir_lowlight_gate2_teachers import (  # noqa: E402
     SPECIALIST_DEPENDENCY_DIRECTORIES,
     build_generalist,
     build_specialist,
+    build_weather_specialist,
     pad_tensor,
 )
 from smoke.train_foundir_five_type_flux2_full_ddp import load_rows  # noqa: E402
@@ -74,6 +75,14 @@ def run_specialist(model, source: torch.Tensor) -> torch.Tensor:
     tensor, height, width = pad_tensor(source, 128)
     with torch.inference_mode():
         output = model.restoration_network(tensor)
+    return output[:, :, :height, :width].float().clamp(0, 1)
+
+
+def run_weather_specialist(model, source: torch.Tensor) -> torch.Tensor:
+    # The released weather inference pads to and processes 512-pixel patches.
+    tensor, height, width = pad_tensor(source, 512)
+    with torch.inference_mode():
+        output = model(tensor)
     return output[:, :, :height, :width].float().clamp(0, 1)
 
 
@@ -151,7 +160,7 @@ def main() -> None:
         generalist = build_generalist(released_config(config), device)
         lowlight = build_specialist(released_config(config), device)
         weather_path = resolve_workspace_path(ROOT, baseline["weather_specialist"])
-        weather = build_specialist(released_config(config, weather_path), device)
+        weather = build_weather_specialist(released_config(config, weather_path), device)
         from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
 
         metric = LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True).to(device).eval()
@@ -183,7 +192,9 @@ def main() -> None:
             if "low_light" in types:
                 candidates["generalist_lowlight_specialist"] = run_specialist(lowlight, candidates["generalist"])
             if types & {"rain", "haze"}:
-                candidates["generalist_weather_specialist"] = run_specialist(weather, candidates["generalist"])
+                candidates["generalist_weather_specialist"] = run_weather_specialist(
+                    weather, candidates["generalist"]
+                )
             candidate_rows = {}
             for name, output_01 in candidates.items():
                 output_m11 = output_01 * 2 - 1

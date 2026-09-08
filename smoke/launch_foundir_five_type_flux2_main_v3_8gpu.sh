@@ -32,6 +32,7 @@ required=(
   smoke/export_foundir_five_type_physical_v8_conditions_ddp.py
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
+  smoke/run_foundir_lowlight_gate2_teachers.py
   smoke/build_foundir_flux_qwen3_prompt_cache_ddp.py
   smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py
   smoke/train_foundir_five_type_flux2_overfit_ddp.py
@@ -49,6 +50,7 @@ required=(
   smoke/launch_foundir_five_type_flux2_main_v3_8gpu.sh
   tests/test_foundir_flux2_protocol.py
   tests/test_foundir_five_type_main_v3.py
+  tests/test_foundir_lowlight_gate2_teachers.py
   tests/test_pixel_refinement.py
 )
 python_files=(
@@ -59,6 +61,7 @@ python_files=(
   smoke/export_foundir_five_type_physical_v8_conditions_ddp.py
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
+  smoke/run_foundir_lowlight_gate2_teachers.py
   smoke/build_foundir_flux_qwen3_prompt_cache_ddp.py
   smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py
   smoke/train_foundir_five_type_flux2_overfit_ddp.py
@@ -69,6 +72,7 @@ python_files=(
   smoke/freeze_foundir_five_type_flux2_main_v3_report.py
   tests/test_foundir_flux2_protocol.py
   tests/test_foundir_five_type_main_v3.py
+  tests/test_foundir_lowlight_gate2_teachers.py
   tests/test_pixel_refinement.py
 )
 "$PYTHON" -m py_compile "${python_files[@]}"
@@ -84,6 +88,7 @@ bash -n "$RUNNER" "$ROOT/smoke/run_foundir_five_type_stage0_v3_8gpu.sh" "$0"
 "$PYTHON" -m unittest \
   tests.test_foundir_flux2_protocol \
   tests.test_foundir_five_type_main_v3 \
+  tests.test_foundir_lowlight_gate2_teachers \
   tests.test_pixel_refinement
 
 for relative in "${required[@]}"; do

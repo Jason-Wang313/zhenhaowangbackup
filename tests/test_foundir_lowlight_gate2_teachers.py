@@ -2,8 +2,11 @@ import json
 import unittest
 from pathlib import Path
 
+import torch
+
 from smoke.run_foundir_lowlight_gate2_teachers import (
     SPECIALIST_DEPENDENCY_DIRECTORIES,
+    import_weather_specialist_architecture,
     output_stem,
     read_config,
 )
@@ -75,8 +78,27 @@ class Gate2TeacherTests(unittest.TestCase):
         runner = (ROOT / "smoke/run_foundir_lowlight_gate2_teachers.py").read_text()
         self.assertIn('types.ModuleType(name)', runner)
         self.assertIn('importlib.import_module("basicsr.archs.wavemamba_arch")', runner)
+        self.assertIn('importlib.import_module("basicsr.archs.Restormer_arch")', runner)
         self.assertNotIn("from basicsr.archs.wavemamba_arch import WaveMamba", runner)
         self.assertNotIn("basicsr.losses", runner)
+
+    def test_released_weather_checkpoint_strictly_matches_restormer(self):
+        Restormer = import_weather_specialist_architecture(
+            ROOT / "third_party/foundir/specialist_model"
+        )
+        model = Restormer()
+        checkpoint = torch.load(
+            ROOT / "third_party/foundir/specialist_model/ckpt/weather.pth",
+            map_location="cpu",
+            weights_only=False,
+        )
+        parameters = {
+            key.removeprefix("restoration_network."): value
+            for key, value in checkpoint["params"].items()
+        }
+        model.load_state_dict(parameters, strict=True)
+        self.assertEqual(model.__class__.__name__, "Restormer")
+        self.assertEqual(len(model.state_dict()), 494)
 
 
 if __name__ == "__main__":

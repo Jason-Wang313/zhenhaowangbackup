@@ -293,6 +293,15 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         source = (ROOT / "smoke/evaluate_foundir_five_type_flux2_ddp.py").read_text()
         self.assertIn("condition arm {args.arm!r} is disabled", source)
 
+    def test_released_weather_checkpoint_uses_restormer(self) -> None:
+        source = (ROOT / "smoke/evaluate_foundir_five_type_released_baselines_ddp.py").read_text()
+        self.assertIn("build_weather_specialist", source)
+        self.assertIn("run_weather_specialist", source)
+        self.assertNotIn(
+            "weather = build_specialist(released_config(config, weather_path), device)",
+            source,
+        )
+
     def test_specialist_probe_uses_an_isolated_pinned_import_path(self) -> None:
         with patch.dict(os.environ, {"PYTHONPATH": "/existing/path"}, clear=False):
             environment = runtime_preflight.specialist_probe_environment()
@@ -309,6 +318,7 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
         payload = {
             "versions": runtime_preflight.SPECIALIST_EXPECTED_VERSIONS,
             "architecture": "WaveMamba",
+            "weather_architecture": "Restormer",
         }
         completed = SimpleNamespace(
             returncode=0,

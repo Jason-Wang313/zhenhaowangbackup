@@ -91,6 +91,7 @@ class FoundIRFiveTypeMainV2Tests(unittest.TestCase):
         payload = {
             "versions": runtime_preflight.SPECIALIST_EXPECTED_VERSIONS,
             "architecture": "WaveMamba",
+            "weather_architecture": "Restormer",
         }
         completed = SimpleNamespace(
             returncode=0,
