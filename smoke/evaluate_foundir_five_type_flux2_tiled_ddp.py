@@ -188,13 +188,14 @@ def main() -> None:
     if len(selected) != quota * len(FIVE_TYPE_CATEGORIES):
         raise RuntimeError("native-resolution development subset cardinality changed")
 
-    dist.init_process_group(backend="nccl")
+    local_rank = int(os.environ["LOCAL_RANK"])
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+    dist.init_process_group(backend="nccl", device_id=device)
     try:
-        rank, world, local_rank = dist.get_rank(), dist.get_world_size(), int(os.environ["LOCAL_RANK"])
+        rank, world = dist.get_rank(), dist.get_world_size()
         if world != 8 or torch.cuda.device_count() != 8:
             raise RuntimeError("native-resolution FLUX evaluation requires exactly eight GPUs")
-        torch.cuda.set_device(local_rank)
-        device = torch.device("cuda", local_rank)
         if not any(name in torch.cuda.get_device_properties(device).name for name in ("H100", "H200")):
             raise RuntimeError("native-resolution evaluator requires H100 or H200")
         os.environ.update(

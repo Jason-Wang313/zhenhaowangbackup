@@ -83,15 +83,15 @@ def main() -> int:
         ROOT / str(config["runtime"]["output_dir"]) / str(overfit["output_subdirectory"])
     )
 
-    dist.init_process_group(backend=str(distributed["backend"]))
+    local_rank = int(os.environ["LOCAL_RANK"])
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+    dist.init_process_group(backend=str(distributed["backend"]), device_id=device)
     try:
         rank = dist.get_rank()
         world = dist.get_world_size()
-        local_rank = int(os.environ["LOCAL_RANK"])
         if world != int(distributed["required_world_size"]) or torch.cuda.device_count() != world:
             raise RuntimeError("SOW overfit recheck requires exactly eight visible GPUs")
-        torch.cuda.set_device(local_rank)
-        device = torch.device("cuda", local_rank)
         properties = torch.cuda.get_device_properties(device)
         if properties.total_memory < int(distributed["minimum_memory_gib"]) * 1024**3:
             raise RuntimeError("GPU memory is below the H100/H200 contract")

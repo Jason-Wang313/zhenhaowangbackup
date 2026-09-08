@@ -232,11 +232,60 @@ def verify_sealed_release_order(
     return file_sha256(consumption_path)
 
 
+def finalize_existing_sidecars(
+    *,
+    output: Path,
+    selected: Sequence[Mapping[str, str]],
+    split: str,
+    config_sha: str,
+    conditions_sha: str,
+    sealed_consumption_sha: str | None,
+) -> bool:
+    """Publish an aggregate only when every immutable per-record result exists."""
+    sidecars = output / "per_record"
+    paths = [
+        sidecars / f"{evaluation_artifact_stem(row['record_id'])}.json"
+        for row in selected
+    ]
+    present = sum(path.is_file() for path in paths)
+    if present != len(paths):
+        print(
+            f"FOUNDIR_RELEASED_BASELINE_RESUME_PENDING "
+            f"present={present} expected={len(paths)}",
+            flush=True,
+        )
+        return False
+    result_rows = [
+        verify_sidecar(
+            path,
+            row=row,
+            split=split,
+            config_sha=config_sha,
+            conditions_sha=conditions_sha,
+        )
+        for path, row in zip(paths, selected, strict=True)
+    ]
+    payload = build_result_payload(
+        result_rows,
+        config_sha=config_sha,
+        conditions_sha=conditions_sha,
+        split=split,
+        sealed_consumption_sha=sealed_consumption_sha,
+    )
+    write_once(
+        output / "result.json",
+        (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode(),
+    )
+    print("FOUNDIR_RELEASED_BASELINE_PASS " + json.dumps(payload, sort_keys=True), flush=True)
+    return True
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--split", choices=("validation", "internal_test"), required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--finalize-existing-if-complete", action="store_true")
     args = parser.parse_args()
     args.config = resolve_workspace_path(ROOT, args.config)
     args.output = resolve_workspace_path(ROOT, args.output)
@@ -262,6 +311,16 @@ def main() -> None:
     selected = selected_from_contract(
         config, rows, split=args.split, config_sha=config_sha, conditions_sha=conditions_sha
     )
+    if args.finalize_existing_if_complete:
+        finalize_existing_sidecars(
+            output=args.output,
+            selected=selected,
+            split=args.split,
+            config_sha=config_sha,
+            conditions_sha=conditions_sha,
+            sealed_consumption_sha=sealed_consumption_sha,
+        )
+        return
     extra = ROOT / ".tools/foundir-runtime"
     if not extra.is_dir():
         raise RuntimeError(f"missing released FoundIR runtime: {extra}")
@@ -271,13 +330,14 @@ def main() -> None:
             raise RuntimeError(f"missing released specialist dependency: {dependency}")
         sys.path.insert(0, str(dependency))
 
-    dist.init_process_group(backend="nccl")
+    local_rank = int(os.environ["LOCAL_RANK"])
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+    dist.init_process_group(backend="nccl", device_id=device)
     try:
-        rank, world, local_rank = dist.get_rank(), dist.get_world_size(), int(os.environ["LOCAL_RANK"])
+        rank, world = dist.get_rank(), dist.get_world_size()
         if world != 8 or torch.cuda.device_count() != 8:
             raise RuntimeError("released baseline comparison requires exactly eight GPUs")
-        torch.cuda.set_device(local_rank)
-        device = torch.device("cuda", local_rank)
         if not any(name in torch.cuda.get_device_properties(device).name for name in ("H100", "H200")):
             raise RuntimeError("released baseline comparison requires H100 or H200")
         seed = int(config["flow_training"]["seed"])
@@ -374,27 +434,19 @@ def main() -> None:
             }
             write_once(sidecar, (json.dumps(result, indent=2, sort_keys=True) + "\n").encode())
             print(f"FOUNDIR_RELEASED_BASELINE rank={rank} record={index+1}/{len(selected)}", flush=True)
-        dist.barrier()
+        dist.barrier(device_ids=[local_rank])
         def finalize_result() -> None:
-            result_rows = [
-                verify_sidecar(
-                    sidecars / f"{evaluation_artifact_stem(row['record_id'])}.json",
-                    row=row,
-                    split=args.split,
-                    config_sha=config_sha,
-                    conditions_sha=conditions_sha,
-                )
-                for row in selected
-            ]
-            payload = build_result_payload(
-                result_rows,
+            if not finalize_existing_sidecars(
+                output=args.output,
+                selected=selected,
+                split=args.split,
                 config_sha=config_sha,
                 conditions_sha=conditions_sha,
-                split=args.split,
                 sealed_consumption_sha=sealed_consumption_sha,
-            )
-            write_once(args.output / "result.json", (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
-            print("FOUNDIR_RELEASED_BASELINE_PASS " + json.dumps(payload, sort_keys=True), flush=True)
+            ):
+                raise RuntimeError(
+                    "released-baseline finalization reached with incomplete sidecars"
+                )
 
         synchronize_rank_zero_finalization(
             finalize_result,

@@ -518,16 +518,18 @@ def main() -> None:
         or stage0_payload.get("config_sha256") != config_sha
     ):
         raise RuntimeError("full training is forbidden before native-reference overfit passes")
-    dist.init_process_group(backend=str(distributed_config["backend"]))
+    local_rank = int(os.environ["LOCAL_RANK"])
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+    dist.init_process_group(
+        backend=str(distributed_config["backend"]), device_id=device
+    )
     started = time.monotonic()
     try:
         rank = dist.get_rank()
         world = dist.get_world_size()
-        local_rank = int(os.environ["LOCAL_RANK"])
         if world != 8 or torch.cuda.device_count() != 8:
             raise RuntimeError("full FLUX training requires exactly eight visible GPUs")
-        torch.cuda.set_device(local_rank)
-        device = torch.device("cuda", local_rank)
         properties = torch.cuda.get_device_properties(device)
         family = "H200" if "H200" in properties.name else "H100" if "H100" in properties.name else None
         inventory: list[object | None] = [None] * world

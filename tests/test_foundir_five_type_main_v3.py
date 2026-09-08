@@ -310,6 +310,35 @@ class FoundIRFiveTypeMainV3Tests(unittest.TestCase):
             source,
         )
 
+    def test_v3_ddp_entrypoints_bind_cuda_device_before_nccl(self) -> None:
+        for relative in (
+            "smoke/build_foundir_flux_qwen3_prompt_cache_ddp.py",
+            "smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py",
+            "smoke/train_foundir_five_type_flux2_overfit_ddp.py",
+            "smoke/train_foundir_five_type_flux2_full_ddp.py",
+            "smoke/evaluate_foundir_five_type_flux2_ddp.py",
+            "smoke/evaluate_foundir_five_type_flux2_tiled_ddp.py",
+            "smoke/evaluate_foundir_five_type_released_baselines_ddp.py",
+            "smoke/train_qwen_multidegradation_lora_ddp.py",
+        ):
+            source = (ROOT / relative).read_text()
+            self.assertLess(
+                source.index("torch.cuda.set_device(local_rank)"),
+                source.index("dist.init_process_group("),
+                relative,
+            )
+            self.assertIn("device_id=device", source, relative)
+
+    def test_released_baseline_has_complete_sidecar_recovery(self) -> None:
+        evaluator = (
+            ROOT / "smoke/evaluate_foundir_five_type_released_baselines_ddp.py"
+        ).read_text()
+        runner = (ROOT / "smoke/run_foundir_five_type_flux2_main_v3_8gpu.sh").read_text()
+        self.assertIn("finalize_existing_sidecars", evaluator)
+        self.assertIn("--finalize-existing-if-complete", evaluator)
+        self.assertGreaterEqual(runner.count("--finalize-existing-if-complete"), 2)
+        self.assertIn("FOUNDIR_RELEASED_BASELINE_RESUME_PENDING", evaluator)
+
     def test_released_baseline_producer_matches_final_freezer_schema(self) -> None:
         rows = []
         for index, category in enumerate(

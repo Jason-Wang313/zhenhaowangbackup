@@ -118,6 +118,7 @@ def setup_distributed(config: Mapping[str, object]) -> tuple[int, int, int, torc
     dist.init_process_group(
         backend=str(distributed["backend"]),
         timeout=timedelta(minutes=int(distributed["timeout_minutes"])),
+        device_id=device,
     )
     return rank, world, local_rank, device
 

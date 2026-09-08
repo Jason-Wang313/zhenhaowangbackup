@@ -183,15 +183,15 @@ def main() -> None:
         print("FOUNDIR_QWEN3_PROMPT_CACHE_VERIFY_PASS " + json.dumps(payload, sort_keys=True))
         return
 
-    dist.init_process_group(backend="nccl")
+    local_rank = int(os.environ["LOCAL_RANK"])
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+    dist.init_process_group(backend="nccl", device_id=device)
     try:
         rank = dist.get_rank()
         world = dist.get_world_size()
-        local_rank = int(os.environ["LOCAL_RANK"])
         if world != int(config["distributed"]["required_world_size"]):
             raise RuntimeError("prompt cache requires exactly eight GPUs")
-        torch.cuda.set_device(local_rank)
-        device = torch.device("cuda", local_rank)
         properties = torch.cuda.get_device_properties(device)
         if properties.total_memory < int(config["distributed"]["minimum_memory_gib"]) * 1024**3:
             raise RuntimeError("prompt-cache GPU has insufficient memory")

@@ -336,15 +336,15 @@ def main() -> None:
             print("FOUNDIR_SEALED_INTERNAL_ALREADY_COMPLETE", flush=True)
             return
 
-    dist.init_process_group(backend="nccl")
+    local_rank = int(os.environ["LOCAL_RANK"])
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+    dist.init_process_group(backend="nccl", device_id=device)
     try:
         rank = dist.get_rank()
         world = dist.get_world_size()
-        local_rank = int(os.environ["LOCAL_RANK"])
         if world != 8 or torch.cuda.device_count() != 8:
             raise RuntimeError("five-type evaluation requires exactly eight GPUs")
-        torch.cuda.set_device(local_rank)
-        device = torch.device("cuda", local_rank)
         properties = torch.cuda.get_device_properties(device)
         if not any(name in properties.name for name in ("H100", "H200")):
             raise RuntimeError(f"unsupported GPU: {properties.name}")

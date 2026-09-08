@@ -37,6 +37,7 @@ required=(
   smoke/recheck_foundir_five_type_flux2_overfit_sow_ddp.py
   smoke/train_foundir_five_type_flux2_overfit_ddp.py
   smoke/train_foundir_five_type_flux2_full_ddp.py
+  smoke/train_qwen_multidegradation_lora_ddp.py
   smoke/preflight_foundir_flux2_training_geometry.py
   smoke/train_qwen_multidegradation_lora_ddp.py
   smoke/evaluate_foundir_five_type_flux2_ddp.py

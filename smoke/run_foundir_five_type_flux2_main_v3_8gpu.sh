@@ -162,9 +162,15 @@ if [[ ! -f "$OUTPUT/native_resolution/result.json" ]]; then
     --output "$OUTPUT/native_resolution"
 fi
 if [[ ! -f "$OUTPUT/released_baselines/development/result.json" ]]; then
-  "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
-    smoke/evaluate_foundir_five_type_released_baselines_ddp.py --config "$CONFIG" \
-    --split validation --output "$OUTPUT/released_baselines/development"
+  "$FLUX_PYTHON" smoke/evaluate_foundir_five_type_released_baselines_ddp.py \
+    --config "$CONFIG" --split validation \
+    --output "$OUTPUT/released_baselines/development" \
+    --finalize-existing-if-complete
+  if [[ ! -f "$OUTPUT/released_baselines/development/result.json" ]]; then
+    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+      smoke/evaluate_foundir_five_type_released_baselines_ddp.py --config "$CONFIG" \
+      --split validation --output "$OUTPUT/released_baselines/development"
+  fi
 fi
 if [[ ! -f "$OUTPUT/sealed_internal/qwen/result.json" \
       || ! -f "$OUTPUT/sealed_internal_consumption.json" ]]; then
@@ -174,9 +180,15 @@ if [[ ! -f "$OUTPUT/sealed_internal/qwen/result.json" \
     --split internal_test --arm qwen --output "$OUTPUT/sealed_internal/qwen"
 fi
 if [[ ! -f "$OUTPUT/released_baselines/sealed_internal/result.json" ]]; then
-  "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
-    smoke/evaluate_foundir_five_type_released_baselines_ddp.py --config "$CONFIG" \
-    --split internal_test --output "$OUTPUT/released_baselines/sealed_internal"
+  "$FLUX_PYTHON" smoke/evaluate_foundir_five_type_released_baselines_ddp.py \
+    --config "$CONFIG" --split internal_test \
+    --output "$OUTPUT/released_baselines/sealed_internal" \
+    --finalize-existing-if-complete
+  if [[ ! -f "$OUTPUT/released_baselines/sealed_internal/result.json" ]]; then
+    "$FLUX_PYTHON" -m torch.distributed.run --standalone --nproc_per_node=8 \
+      smoke/evaluate_foundir_five_type_released_baselines_ddp.py --config "$CONFIG" \
+      --split internal_test --output "$OUTPUT/released_baselines/sealed_internal"
+  fi
 fi
 
 set +e
