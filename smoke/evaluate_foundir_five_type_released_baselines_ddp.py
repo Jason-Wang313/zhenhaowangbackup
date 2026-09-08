@@ -32,6 +32,7 @@ from smoke.evaluate_foundir_five_type_flux2_ddp import (  # noqa: E402
     load_aligned_crop,
     lpips_value,
     selected_from_contract,
+    synchronize_rank_zero_finalization,
     write_once,
 )
 from smoke.run_foundir_lowlight_gate2_teachers import (  # noqa: E402
@@ -218,7 +219,7 @@ def main() -> None:
             write_once(sidecar, (json.dumps(result, indent=2, sort_keys=True) + "\n").encode())
             print(f"FOUNDIR_RELEASED_BASELINE rank={rank} record={index+1}/{len(selected)}", flush=True)
         dist.barrier()
-        if rank == 0:
+        def finalize_result() -> None:
             result_rows = [
                 verify_sidecar(
                     sidecars / f"{evaluation_artifact_stem(row['record_id'])}.json",
@@ -253,7 +254,13 @@ def main() -> None:
             }
             write_once(args.output / "result.json", (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
             print("FOUNDIR_RELEASED_BASELINE_PASS " + json.dumps(payload, sort_keys=True), flush=True)
-        dist.barrier()
+
+        synchronize_rank_zero_finalization(
+            finalize_result,
+            rank=rank,
+            device=device,
+            phase="released-baseline finalization",
+        )
     finally:
         if dist.is_initialized():
             dist.destroy_process_group()
