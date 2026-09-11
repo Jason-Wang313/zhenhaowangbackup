@@ -1,0 +1,18 @@
+{
+  "category": "01Blur",
+  "config": "configs/foundir_blur_only_flux2_sanity_v1.json",
+  "config_sha256": "89a89dbc9303c8443760c9b999187370d85ff93b8d93b2d663cceedf5003cd36",
+  "frozen_manifest": "manifests/foundir_blur_only_sanity_v1.csv",
+  "frozen_manifest_sha256": "7114dab36b3978f28657f366e9a961462c3dbfb06927c9262754cced0d8c8e6f",
+  "future_validation_records": 16,
+  "future_validation_unique_source_groups": 16,
+  "protected_foundir_test_accessed": false,
+  "schema_version": 1,
+  "sealed_internal_accessed": false,
+  "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+  "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "status": "frozen_blur_only_sanity_manifest",
+  "tiny_overfit_records": 16,
+  "tiny_overfit_unique_source_groups": 16,
+  "train_validation_source_group_overlap": 0
+}
