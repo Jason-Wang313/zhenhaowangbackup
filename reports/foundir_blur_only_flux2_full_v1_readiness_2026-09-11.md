@@ -42,7 +42,8 @@ prediction, mixed degradation, and pixel refiner disabled, and official
   (`ce0813d13bac13077c21fd785047640add4fb30f693057ff5d75c31420d866b8`)
 - Launcher: `smoke/launch_foundir_blur_only_flux2_full_v1_8gpu.sh`
   (`eaf82f1d31c552905dba93847b106383167e7f65e6c3cd841a0276f281acc90a`)
-- Code revision: `1ca05787498def612114eef697f382562580aafc`, equal to `origin/main`.
+- Implementation code revision: `1ca05787498def612114eef697f382562580aafc`;
+  this exact commit is preserved in the current `origin/main` history.
 - CPU verification: Python compilation passed; shell syntax passed; `9/9`
   focused tests passed; integrated launcher `--check` passed.
 - Full preflight: config/model/manifest/image identities passed; exact training
