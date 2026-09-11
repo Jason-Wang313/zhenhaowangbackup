@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-11T09:43:30Z",
+  "created_at": "2026-09-11T11:59:12Z",
   "evidence": {
-    "path": "reports/advisor_governance/runtime_evidence/blur_only_full_training_runtime_failure-570a30bef20d33a6.json",
-    "sha256": "9ffce1e41c53d4912f397b2ec3fac652a3752083495556a696e78dce2dd210d2"
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/training_summary.json",
+    "sha256": "c5f93d191b219174ee80d0751687d47f188b7d0efdacc4ef22e0947c6735d62e"
   },
-  "hold_id": "blur_only_full_training_runtime_failure-e55e9b9a848ef6f9",
-  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
-  "report": "reports/advisor_governance/reports/blur_only_full_training_runtime_failure-e55e9b9a848ef6f9.md",
-  "report_sha256": "a7a2ffb980ce6a81556b9dc08c8a92c2c2967e1aff9d10a2d9f25b2d1b9ff575",
+  "hold_id": "blur_only_full_training_completion-1c1a1897c39b4044",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/blur_only_full_training_completion-1c1a1897c39b4044.md",
+  "report_sha256": "d807a24edebfd10c02ff90974363411dadb5eb4c9278192010f49e3f16b3e185",
   "schema_version": 1
 }

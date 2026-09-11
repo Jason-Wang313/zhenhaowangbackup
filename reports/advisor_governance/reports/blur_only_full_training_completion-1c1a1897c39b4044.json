@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请先肉眼检查每个 candidate 的固定 Input|Output|GT；确认 visually valid candidates 后，是否授权仅在这些 candidates 上比较完整 source-group-disjoint Blur development PSNR/LPIPS？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_full_v1.json",
+    "sha256": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "source_group_disjoint_development_fixed_visual_subset",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/training_summary.json",
+    "sha256": "c5f93d191b219174ee80d0751687d47f188b7d0efdacc4ef22e0947c6735d62e"
+  },
+  "gate": "blur_only_full_training_completion",
+  "generated_at": "2026-09-11T11:59:12Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B DiT LoRA rank32 isolated-Blur-only",
+  "outcome": "information",
+  "report_id": "blur_only_full_training_completion-1c1a1897c39b4044",
+  "root_cause_or_status": "Blur-only full training completed; every candidate has fixed development triptychs; checkpoint selection is intentionally paused before metrics for human visual screening.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
