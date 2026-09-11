@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请决定是否接受 restoration+visual evidence 已证明 Blur learnability并授权 Blur-only full training，或因 flow-loss ratio 未过而继续 FLUX code/optimization diagnosis。",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_flux2_sanity_v1/step_000400.safetensors",
+    "sha256": "694b7bb89d9b9a9c3e7c4902d79f2800ffad54b9f04d98336121d2955c105d5c"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_sanity_v1.json",
+    "sha256": "89a89dbc9303c8443760c9b999187370d85ff93b8d93b2d663cceedf5003cd36"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "foundir_training_archive_same_crop_tiny_overfit_16; frozen_validation_not_accessed",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_flux2_sanity_v1/result.json",
+    "sha256": "9e7acbe57618bd207dbdce8bd6846a5a534ae59a395a9fcce8dd6714686f5e9d"
+  },
+  "gate": "blur_only_tiny_overfit",
+  "generated_at": "2026-09-11T05:13:44Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B DiT LoRA rank32 blur-only",
+  "outcome": "failure",
+  "report_id": "blur_only_tiny_overfit-184f61640dde957e",
+  "root_cause_or_status": "Restoration learned: PSNR +3.6892 dB and LPIPS -0.22332 on 16 training crops; formal preregistered gate failed only fixed flow-loss ratio 0.75556 > 0.35; 3/16 easy crops regressed in PSNR.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
