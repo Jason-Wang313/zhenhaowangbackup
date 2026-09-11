@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "hold_id": "blur_only_full_training_runtime_failure-fdf0202b78b0d8fd",
+  "hold_sha256": "d7c6efe474ba59de387981e64224b59d586049b74ea67c0d3eab4a05a45fdbb7",
+  "decided_by": "user_after_advisor_response",
+  "decision": "resume_same_mainline",
+  "statement": "Advisor 已明确回复‘可以试试’并授权同一 FLUX.2 Blur-only mainline。首次 full launch 仅因错误的 H200-only hardware guard 在 optimizer step 0 前停止；用户要求修正为 H100/H200 均支持并恢复同一实验，不改变 model、data、global batch、optimizer steps、LR、loss、checkpoint 或 evaluation protocol。",
+  "recorded_at": "2026-09-11T09:35:43Z"
+}

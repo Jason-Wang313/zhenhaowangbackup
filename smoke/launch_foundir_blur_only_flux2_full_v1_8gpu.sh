@@ -21,22 +21,18 @@ cd "$ROOT"
 "$PYTHON" -m py_compile smoke/train_foundir_blur_only_flux2_full_ddp.py \
   tests/test_foundir_blur_only_flux2_full.py
 bash -n "$RUNNER" "$0"
-"$PYTHON" -m pytest -q tests/test_foundir_blur_only_flux2_full.py
 
 if [[ "${1:-}" == "--check" ]]; then
+  "$PYTHON" -m pytest -q tests/test_foundir_blur_only_flux2_full.py
   "$PYTHON" smoke/train_foundir_blur_only_flux2_full_ddp.py --config "$CONFIG" --preflight
   echo "FOUNDIR_BLUR_ONLY_FULL_LAUNCHER_CHECK_PASS"
   exit 0
 fi
 
 mkdir -p "$ROOT/logs"
-if [[ -f "$PID_FILE" ]]; then
-  old_pid=$(tr -dc '0-9' <"$PID_FILE")
-  if [[ -n "$old_pid" ]] && kill -0 "$old_pid" 2>/dev/null; then
-    echo "ERROR: Blur-only full process already active as PID $old_pid" >&2
-    exit 1
-  fi
-fi
+# PID namespaces differ across GPU instances, so a shared stale PID must never
+# be used as a cross-node duplicate detector. The runner's shared flock is the
+# authoritative single-run guard.
 nohup env CUDA_VISIBLE_DEVICES="$CUDA_VISIBLE_DEVICES" bash "$RUNNER" >/dev/null 2>&1 </dev/null &
 pid=$!
 printf '%s\n' "$pid" >"$PID_FILE"

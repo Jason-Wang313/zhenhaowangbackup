@@ -35,9 +35,11 @@ def test_config_locks_advisor_authorized_scope() -> None:
     }
     assert config["lora"]["initialization"] == "fresh_zero_lora"
     assert config["training"]["global_batch_size"] == 32
-    assert config["training"]["micro_batch_size_per_rank"] == 4
-    assert config["training"]["gradient_accumulation_steps"] == 1
-    assert config["distributed"]["allowed_gpu_name_fragments"] == ["H200"]
+    assert config["distributed"]["allowed_gpu_name_fragments"] == ["H100", "H200"]
+    assert config["distributed"]["hardware_profiles"] == {
+        "H100": {"micro_batch_size_per_rank": 2, "gradient_accumulation_steps": 2},
+        "H200": {"micro_batch_size_per_rank": 4, "gradient_accumulation_steps": 1},
+    }
     assert config["inference"]["automatic_checkpoint_selection"] is False
 
 

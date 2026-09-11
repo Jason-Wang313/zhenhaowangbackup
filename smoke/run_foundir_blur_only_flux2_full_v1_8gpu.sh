@@ -50,7 +50,6 @@ export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4
 
 echo "FOUNDIR_BLUR_ONLY_FULL_START utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 echo "SCOPE FLUX.2_4B isolated_Blur_only DiT_LoRA_only no_Qwen_degradation no_mixed no_pixel_refiner no_sealed no_official_test"
-"$PYTHON" smoke/train_foundir_blur_only_flux2_full_ddp.py --config "$CONFIG" --preflight
 
 nvidia-smi --query-gpu=timestamp,index,name,utilization.gpu,memory.used,memory.total,power.draw \
   --format=csv -l 5 >"$GPU_LOG" 2>&1 &

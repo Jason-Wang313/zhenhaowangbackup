@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请判断应修复并恢复同一 FLUX.2 mainline，还是停止/修改路线。",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_full_v1.json",
+    "sha256": "01b00df153f3dd9279f63c039857d0989ca88f331c32b1e02e9c734d895bd0ae"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "runtime_before_gate_completion",
+  "evidence": {
+    "path": "reports/advisor_governance/runtime_evidence/blur_only_full_training_runtime_failure-2c5a0acf8b5757d5.json",
+    "sha256": "cc3e57976c60697ba3ef7aa72d74fc023672ab093fc54f3047cd7ff993d9429f"
+  },
+  "gate": "blur_only_full_training_runtime_failure",
+  "generated_at": "2026-09-11T09:29:57Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B DiT LoRA rank32 isolated-Blur-only",
+  "outcome": "failure",
+  "report_id": "blur_only_full_training_runtime_failure-fdf0202b78b0d8fd",
+  "root_cause_or_status": "workflow exit status 1; inspect /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang/logs/foundir_blur_only_flux2_full_v1.log",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

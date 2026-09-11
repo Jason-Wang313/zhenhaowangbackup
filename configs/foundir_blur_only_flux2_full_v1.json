@@ -11,7 +11,7 @@
     "sealed_internal_accessed": false
   },
   "authorization": {
-    "decision": "reports/advisor_governance/advisor_decision.json",
+    "decision": "reports/advisor_decision_blur_only_tiny_overfit_2026-09-11.json",
     "hold_id": "blur_only_tiny_overfit-184f61640dde957e",
     "advisor_statement": "可以试试"
   },
@@ -59,8 +59,6 @@
     "objective": "pure_noise_to_clean_rectified_flow_with_native_reference",
     "seed": 2026091112,
     "max_steps": 10000,
-    "micro_batch_size_per_rank": 4,
-    "gradient_accumulation_steps": 1,
     "global_batch_size": 32,
     "learning_rate": 0.00005,
     "weight_decay": 0.0,
@@ -85,7 +83,17 @@
     "backend": "nccl",
     "required_world_size": 8,
     "minimum_memory_gib": 75,
-    "allowed_gpu_name_fragments": ["H200"]
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "hardware_profiles": {
+      "H100": {
+        "micro_batch_size_per_rank": 2,
+        "gradient_accumulation_steps": 2
+      },
+      "H200": {
+        "micro_batch_size_per_rank": 4,
+        "gradient_accumulation_steps": 1
+      }
+    }
   },
   "runtime": {
     "output_dir": "checkpoints/foundir_blur_only_flux2_full_v1",

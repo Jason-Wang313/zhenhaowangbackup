@@ -1,0 +1,9 @@
+{
+  "automatic_gate_pass": false,
+  "config_sha256": "01b00df153f3dd9279f63c039857d0989ca88f331c32b1e02e9c734d895bd0ae",
+  "log": "/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang/logs/foundir_blur_only_flux2_full_v1.log",
+  "protected_foundir_test_accessed": false,
+  "runner_exit_status": 1,
+  "schema_version": 1,
+  "status": "workflow_runtime_failure"
+}

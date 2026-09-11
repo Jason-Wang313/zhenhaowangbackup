@@ -84,15 +84,21 @@ def validate_config(config: Mapping[str, object]) -> None:
     distributed = config["distributed"]
     if int(distributed["required_world_size"]) != 8:
         raise RuntimeError("Blur-only full training requires eight ranks")
-    if distributed.get("allowed_gpu_name_fragments") != ["H200"]:
-        raise RuntimeError("this full-training route is frozen to eight H200 GPUs")
-    expected_batch = (
-        int(distributed["required_world_size"])
-        * int(training["micro_batch_size_per_rank"])
-        * int(training["gradient_accumulation_steps"])
-    )
-    if int(training["global_batch_size"]) != expected_batch:
-        raise RuntimeError("global batch arithmetic changed")
+    if distributed.get("allowed_gpu_name_fragments") != ["H100", "H200"]:
+        raise RuntimeError("this full-training route must support both H100 and H200")
+    profiles = distributed.get("hardware_profiles")
+    if not isinstance(profiles, dict) or set(profiles) != {"H100", "H200"}:
+        raise RuntimeError("H100/H200 hardware profiles changed")
+    expected_profiles = {"H100": (2, 2), "H200": (4, 1)}
+    for hardware, (micro_batch, accumulation) in expected_profiles.items():
+        profile = profiles[hardware]
+        if (
+            int(profile.get("micro_batch_size_per_rank", -1)) != micro_batch
+            or int(profile.get("gradient_accumulation_steps", -1)) != accumulation
+            or int(training["global_batch_size"])
+            != int(distributed["required_world_size"]) * micro_batch * accumulation
+        ):
+            raise RuntimeError(f"{hardware} profile does not preserve global batch 32")
     checkpoints = [int(value) for value in training["checkpoint_steps"]]
     if checkpoints != sorted(set(checkpoints)) or checkpoints[-1] != int(training["max_steps"]):
         raise RuntimeError("checkpoint schedule must be unique, sorted, and end at max_steps")
@@ -250,7 +256,9 @@ def checkpoint_paths(output: Path, step: int) -> tuple[Path, Path]:
     return checkpoint, checkpoint.with_suffix(".optimizer.pt")
 
 
-def save_checkpoint(model, optimizer, output: Path, *, step: int, config_sha: str) -> Path:
+def save_checkpoint(
+    model, optimizer, output: Path, *, step: int, config_sha: str, hardware_profile: str
+) -> Path:
     checkpoint, optimizer_path = checkpoint_paths(output, step)
     if checkpoint.exists() or optimizer_path.exists():
         raise RuntimeError(f"refusing to overwrite checkpoint: {checkpoint}")
@@ -264,12 +272,13 @@ def save_checkpoint(model, optimizer, output: Path, *, step: int, config_sha: st
             "step": step,
             "config_sha256": config_sha,
             "checkpoint_sha256": sha256(checkpoint),
+            "hardware_profile": hardware_profile,
             "optimizer": optimizer.state_dict(),
         }, handle)
     return checkpoint
 
 
-def resume(model, optimizer, output: Path, *, config_sha: str) -> int:
+def resume(model, optimizer, output: Path, *, config_sha: str) -> tuple[int, str | None]:
     candidates: list[tuple[int, Path]] = []
     for checkpoint in output.glob("step_*.safetensors"):
         try:
@@ -281,7 +290,7 @@ def resume(model, optimizer, output: Path, *, config_sha: str) -> int:
             raise RuntimeError(f"partial Blur-only checkpoint: {checkpoint}")
         candidates.append((step, checkpoint))
     if not candidates:
-        return 0
+        return 0, None
     step, checkpoint = max(candidates)
     load_lora_checkpoint(model, checkpoint)
     payload = torch.load(checkpoint.with_suffix(".optimizer.pt"), map_location="cpu", weights_only=False)
@@ -296,7 +305,10 @@ def resume(model, optimizer, output: Path, *, config_sha: str) -> int:
         for key, value in state.items():
             if isinstance(value, torch.Tensor):
                 state[key] = value.to(next(model.parameters()).device)
-    return step
+    previous_profile = payload.get("hardware_profile")
+    if previous_profile not in {"H100", "H200"}:
+        raise RuntimeError("resume checkpoint lacks a valid H100/H200 profile")
+    return step, str(previous_profile)
 
 
 def snapshot_complete(output: Path, step: int, records: int) -> bool:
@@ -332,6 +344,7 @@ def preflight(config_path: Path) -> None:
     if (
         decision.get("hold_id") != config["authorization"]["hold_id"]
         or decision.get("decision") != "approve_documented_change"
+        or decision.get("decided_by") != "advisor"
         or "可以试试" not in str(decision.get("statement", ""))
     ):
         raise RuntimeError("matching advisor authorization is absent")
@@ -380,8 +393,18 @@ def main() -> int:
         properties = torch.cuda.get_device_properties(device)
         if properties.total_memory < int(config["distributed"]["minimum_memory_gib"]) * 1024**3:
             raise RuntimeError("GPU memory is below contract")
-        if not any(fragment in properties.name for fragment in config["distributed"]["allowed_gpu_name_fragments"]):
+        matching_profiles = [
+            fragment
+            for fragment in config["distributed"]["allowed_gpu_name_fragments"]
+            if fragment in properties.name
+        ]
+        if len(matching_profiles) != 1:
             raise RuntimeError(f"unsupported GPU: {properties.name}")
+        hardware_profile = matching_profiles[0]
+        gathered_profiles: list[object | None] = [None] * world
+        dist.all_gather_object(gathered_profiles, hardware_profile)
+        if set(gathered_profiles) != {hardware_profile}:
+            raise RuntimeError(f"mixed GPU hardware is forbidden: {gathered_profiles}")
         seed = int(config["training"]["seed"])
         random.seed(seed + rank)
         np.random.seed(seed + rank)
@@ -420,7 +443,15 @@ def main() -> int:
             weight_decay=float(training["weight_decay"]), fused=True,
         )
         config_sha = sha256(config_path)
-        start_step = resume(wrapped.module, optimizer, output, config_sha=config_sha)
+        start_step, previous_profile = resume(
+            wrapped.module, optimizer, output, config_sha=config_sha
+        )
+        if rank == 0:
+            print(
+                f"FOUNDIR_BLUR_ONLY_HARDWARE profile={hardware_profile} name={properties.name} "
+                f"resume_from_profile={previous_profile or 'none'}",
+                flush=True,
+            )
         candidates = {int(value) for value in training["checkpoint_steps"]}
         if start_step not in {0, *candidates}:
             raise RuntimeError("resume step is not a frozen candidate checkpoint")
@@ -438,8 +469,9 @@ def main() -> int:
             )
 
         max_steps = int(training["max_steps"])
-        micro_batch = int(training["micro_batch_size_per_rank"])
-        accumulation = int(training["gradient_accumulation_steps"])
+        runtime_profile = config["distributed"]["hardware_profiles"][hardware_profile]
+        micro_batch = int(runtime_profile["micro_batch_size_per_rank"])
+        accumulation = int(runtime_profile["gradient_accumulation_steps"])
         global_batch = int(training["global_batch_size"])
         start_position = start_step * global_batch
         stop_position = max_steps * global_batch
@@ -505,7 +537,14 @@ def main() -> int:
                 if completed in candidates:
                     dist.barrier()
                     if rank == 0:
-                        save_checkpoint(wrapped.module, optimizer, output, step=completed, config_sha=config_sha)
+                        save_checkpoint(
+                            wrapped.module,
+                            optimizer,
+                            output,
+                            step=completed,
+                            config_sha=config_sha,
+                            hardware_profile=hardware_profile,
+                        )
                     dist.barrier()
                     run_snapshot(
                         wrapped, autoencoder, fixed_records, cfg_context, cfg_ids, batched_prc_img, metric,
@@ -534,6 +573,10 @@ def main() -> int:
                 "training_presentations": max_steps * global_batch,
                 "optimizer_steps": max_steps,
                 "global_batch_size": global_batch,
+                "hardware_profile": hardware_profile,
+                "gpu_name": properties.name,
+                "micro_batch_size_per_rank": micro_batch,
+                "gradient_accumulation_steps": accumulation,
                 "mean_loss_this_process_segment": float(np.mean(losses)) if losses else None,
                 "final_checkpoint": final_checkpoint.relative_to(ROOT).as_posix(),
                 "final_checkpoint_sha256": sha256(final_checkpoint),

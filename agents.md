@@ -9,6 +9,106 @@ Keep necessary technical terminology in English when that is clearer or more
 precise. Repository code and existing technical documents may continue using
 their established language and style.
 
+GOAL LOCK AND MANDATORY ADVISOR REPORT GATES — 2026-09-11
+
+- The active main goal is the advisor-approved VLM-guided FLUX.2 All-in-One
+  restoration system for Blur, Noise, Haze, Rain, and Low-light. Released
+  FoundIR generalists, specialists, Restormer, routing experiments, and other
+  reference systems are diagnostic/comparison evidence only. They must never
+  replace the FLUX.2 mainline or be reported as its result.
+- Before changing the model family, restoration backbone, architecture,
+  evaluation target, data split, checkpoint-selection rule, or acceptance
+  protocol, stop and obtain an explicit advisor/user decision. A promising
+  diagnostic result is not authorization to change the goal.
+- Generate an advisor-ready report artifact immediately after each of these
+  gates: Stage-0/overfit; full-training completion; development checkpoint
+  selection; sealed evaluation; any runtime or scientific failure; and every
+  proposed model-family or architecture switch. Do not rely on chat memory.
+- A terminal scientific failure or runtime failure is a hard stop. Only
+  read-only audit and advisor-report preparation are allowed until the advisor
+  response is recorded. Do not launch another training, evaluation,
+  specialization, routing, or diagnostic branch during this hold.
+- Every advisor report must state the exact model, config path and SHA-256,
+  checkpoint path and SHA-256, evaluation split, metrics versus SOW with
+  pass/fail, sealed/official-test access state, known root cause or uncertainty,
+  and the exact decision requested from the advisor.
+- Every diagnostic/reference report must display `DIAGNOSTIC ONLY / 非主线` and
+  explicitly state that it is not a FLUX.2 mainline or SOW final result.
+- Machine enforcement is authoritative: `smoke/advisor_governance.py` writes
+  immutable gate reports plus `reports/advisor_governance/advisor_hold.json`.
+  Every FoundIR experimental launcher must run its `check` command and fail
+  closed while the hold is unresolved. Work may resume only when
+  `reports/advisor_governance/advisor_decision.json` records a matching hold
+  ID/hash, advisor authority, exact decision, statement, and timestamp. Never
+  fabricate this file or infer approval from silence.
+- A proposed model-family/architecture change must be registered with
+  `advisor_governance.py emit --require-decision` before any implementation or
+  GPU launch. This creates the hold even though no experiment has run yet.
+- The sealed internal split consumed by FLUX.2 v3 remains consumed. Do not run
+  it again, and never access the official FoundIR test, unless the advisor
+  explicitly changes the frozen protocol and the user records that decision.
+
+CURRENT AUTHORITATIVE FLUX.2 STATUS AND HOLD — 2026-09-11
+
+- FLUX.2 v3 full training completed `56,250/56,250` steps on 2026-09-08.
+  Development selected
+  `checkpoints/foundir_five_type_flux2_dit_v3/full_curriculum/step_042500.safetensors`
+  with SHA-256
+  `8e7b30710fa78d297c27a78c96063052561d4200d31806daac4b0c8a3a867766`.
+- Its one-time sealed internal evaluation ended in
+  `internal_protocol_scientific_failure`: only Low-light LPIPS passed, so the
+  frozen SOW gate passed `1/10` metric checks. The official FoundIR test was
+  not accessed and is not authorized.
+- The released FoundIR + Qwen routing work performed afterward is diagnostic
+  evidence, not FLUX.2. It was a goal drift and must not be continued or used
+  as the mainline result.
+- The active report/hold is
+  `reports/advisor_governance/advisor_hold.json`. Send its bound Markdown
+  report to the advisor now. Until the matching advisor response is recorded,
+  do not run another FoundIR experiment or propose a self-selected recovery
+  route. This status supersedes stale next-task instructions in earlier
+  session handoffs.
+
+ADVISOR-AUTHORIZED BLUR-ONLY SANITY SCOPE — 2026-09-11
+
+- The advisor response recorded in
+  `reports/advisor_governance/advisor_decision.json` authorizes exactly one
+  bounded diagnostic: train FLUX.2 on isolated Blur only to determine whether
+  the current training/inference implementation can learn restoration.
+- Disable Qwen degradation predictions and all mixed degradations. Retaining
+  FLUX.2's frozen native text encoder with one fixed deblurring prompt is not
+  Qwen degradation conditioning.
+- First audit the code and run a 16--32-pair tiny overfit. If tiny overfit
+  fails, stop at code diagnosis. Do not start Blur-only full training.
+- Only if tiny overfit passes may Blur-only full training start. Freeze the
+  source-group-disjoint validation examples before training. At every
+  candidate checkpoint, infer the same fixed validation examples and save
+  `Input | Output | Ground Truth` triptychs. Reject visually broken
+  checkpoints before metric comparison; never select by PSNR/LPIPS alone.
+- Whether FLUX.2 Blur-only succeeds or fails, stop and prepare the advisor
+  report. Do not proceed to Z-Image, reintroduce Qwen predictions, add mixed
+  degradations, reuse sealed internal, or access official FoundIR test without
+  a new explicit advisor decision.
+
+H100/H200 PORTABILITY REQUIREMENT — 2026-09-11
+
+- All subsequent substantial GPU training and evaluation launchers in this
+  workspace must support both homogeneous eight-GPU `NVIDIA H100 80GB HBM3`
+  and homogeneous eight-GPU `NVIDIA H200` instances unless a required hardware
+  feature is proven unavailable and the user/advisor explicitly approves the
+  narrower hardware scope. Never infer GPU type from an instance hostname;
+  detect the actual CUDA device properties at runtime.
+- Hardware-specific microbatch and gradient-accumulation profiles are allowed
+  for memory safety and speed only when they preserve the frozen global batch,
+  optimizer-step count, sample/presentation order, LR semantics, loss,
+  checkpoint schedule, seeds, and evaluation protocol. Record the selected
+  hardware, microbatch, accumulation, and any cross-hardware resume in the
+  training artifact.
+- CPU preflight and focused tests must validate both profiles. A launcher must
+  reject mixed H100/H200 ranks, unsupported memory sizes, and profile arithmetic
+  that changes the global batch. Do not repeat the 2026-09-11 mistake where an
+  H200-only guard blocked an otherwise valid H100 run before optimizer step 1.
+
 FRESH-SESSION CONTINUATION — 2026-08-21
 
 - Read this entire `agents.md` file first. Then read

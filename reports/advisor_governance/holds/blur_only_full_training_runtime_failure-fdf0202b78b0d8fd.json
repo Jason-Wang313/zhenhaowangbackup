@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-11T09:29:57Z",
+  "evidence": {
+    "path": "reports/advisor_governance/runtime_evidence/blur_only_full_training_runtime_failure-2c5a0acf8b5757d5.json",
+    "sha256": "cc3e57976c60697ba3ef7aa72d74fc023672ab093fc54f3047cd7ff993d9429f"
+  },
+  "hold_id": "blur_only_full_training_runtime_failure-fdf0202b78b0d8fd",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/blur_only_full_training_runtime_failure-fdf0202b78b0d8fd.md",
+  "report_sha256": "6fb6f64d70c761ffae2dcbe98f5ef0aa92ac9c98b6c1a2e754142f68ca834742",
+  "schema_version": 1
+}

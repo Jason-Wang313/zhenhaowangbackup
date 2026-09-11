@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "blur_only_tiny_overfit-184f61640dde957e",
-  "hold_sha256": "34d4efa787a8c8a632b464350a620c652199e873df1f501623cf90969c0af197",
-  "decided_by": "advisor",
-  "decision": "approve_documented_change",
-  "statement": "在确认主体仍为原 FLUX.2 训练代码、关闭 Qwen degradation prediction、多退化和 pixel refiner、单独训练 Blur，并采用 FLUX.2 官方 50-step inference 后，advisor 回复：可以试试。授权按该设置扩大 Blur 数据训练；不授权 Qwen、多退化、pixel refiner 或 Z-Image。",
-  "recorded_at": "2026-09-11T08:56:56Z"
+  "hold_id": "blur_only_full_training_runtime_failure-e55e9b9a848ef6f9",
+  "hold_sha256": "4dde413f984276d33924966124a1ec08ed9678d4add19b81f2776e501243fc47",
+  "decided_by": "user_after_advisor_response",
+  "decision": "resume_same_mainline",
+  "statement": "Advisor 已授权同一 FLUX.2 Blur-only mainline，用户已要求直接修复并恢复。第二次 launch 仅因 preflight 错误地把 immutable 原始授权绑定到会滚动更新的 active advisor_decision pointer，在 optimizer step 0 前停止。授权改为引用已归档的原始 advisor decision，并恢复完全相同的 model、data、global batch、optimizer steps、LR、loss、checkpoint 和 evaluation protocol。",
+  "recorded_at": "2026-09-11T09:45:22Z"
 }
