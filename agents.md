@@ -9,6 +9,26 @@ Keep necessary technical terminology in English when that is clearer or more
 precise. Repository code and existing technical documents may continue using
 their established language and style.
 
+FRESH-SESSION CONTINUATION — 2026-09-12 (LATEST OPERATIONAL AUTHORITY)
+
+- Read this entire `agents.md` first, then read
+  `SESSION_HANDOFF_2026-09-12.md` completely before inspecting, editing,
+  launching, stopping, or restarting project work.
+- `SESSION_HANDOFF_2026-09-12.md` is the latest authority for live runtime
+  state and the exact next task. It supersedes the stale operational status
+  and next-task statements in the 2026-09-11 sections below and all older
+  handoffs. It does not override the mainline goal lock, advisor governance,
+  workspace boundary, destructive-action rule, H100/H200 portability rule, or
+  protected-test restrictions in this file.
+- The current authorized work is the already-running FLUX.2 isolated-Blur
+  full development evaluation requested by the advisor. Monitor that same job
+  to completion. Do not restart it merely because its remote PID is invisible
+  from the Codex shell; use its advancing telemetry, log, and immutable
+  per-record sidecars as authoritative liveness evidence.
+- At each completed checkpoint, and at any terminal success or failure, update
+  `SESSION_HANDOFF_2026-09-12.md` with the verified timestamp, counts, metrics,
+  and exact next action before ending the work session.
+
 GOAL LOCK AND MANDATORY ADVISOR REPORT GATES — 2026-09-11
 
 - The active main goal is the advisor-approved VLM-guided FLUX.2 All-in-One
