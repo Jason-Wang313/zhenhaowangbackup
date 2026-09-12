@@ -40,7 +40,7 @@ question is needed before finishing it.
 
 ## Live job — authoritative snapshot
 
-Snapshot time: `2026-09-12T04:14:53Z`.
+Snapshot time: `2026-09-12T04:40:14Z`.
 
 - Start marker: `2026-09-12T02:25:15Z`.
 - Git revision: `25ff5216d700dab4960571df0570adf3c9ffd223`.
@@ -50,7 +50,7 @@ Snapshot time: `2026-09-12T04:14:53Z`.
   inference batch.
 - Observed utilization: normally 100% on all eight GPUs during inference.
 - Observed memory: about 19,944 MiB/GPU, with no OOM.
-- Completed checkpoints: steps 2,000, 4,000, and 6,000. Each has exactly
+- Completed checkpoints: steps 2,000, 4,000, 6,000, and 8,000. Each has exactly
   `2,595 / 2,595` immutable sidecars and a verified aggregate.
 - Step-2,000 record-mean metrics: PSNR `24.962659 dB` (fails SOW 25.9),
   LPIPS `0.156851` (passes SOW 0.18). Input baseline on the same crops is
@@ -75,11 +75,20 @@ Snapshot time: `2026-09-12T04:14:53Z`.
   `0.907514`. Its source-group-balanced mean is PSNR `22.004194 dB` / LPIPS
   `0.225940`, with 95% intervals PSNR `[21.378480, 22.605865]` and LPIPS
   `[0.211827, 0.240397]`.
-- Current checkpoint: step 8,000, with 640 sidecars at snapshot time.
-- Step 10,000 has not started.
+- Step-8,000 record-mean metrics: PSNR `25.635764 dB` (fails SOW 25.9 by
+  `0.264236 dB`), LPIPS `0.144837` (passes SOW 0.18). It improves both metrics
+  over steps 4,000 and 6,000; the step-6,000 PSNR dip was therefore an
+  intermediate fluctuation rather than sustained overfitting through step
+  8,000.
+- Step-8,000 improved fractions versus input: PSNR `0.443545`, LPIPS
+  `0.910597`. Its source-group-balanced mean is PSNR `22.171110 dB` / LPIPS
+  `0.222588`, with 95% intervals PSNR `[21.505189, 22.809813]` and LPIPS
+  `[0.208230, 0.237342]`.
+- Current and final checkpoint: step 10,000, with 20 sidecars at snapshot
+  time.
 - No traceback, error, or terminal end marker was present at snapshot time.
 - Each completed checkpoint required about 33 minutes. The expected remaining
-  time at this snapshot is roughly 0.9--1.1 hours, subject to
+  time at this snapshot is roughly 0.5--0.6 hours, subject to
   checkpoint-boundary aggregation and storage variability.
 
 The PID file contains a PID from the remote GPU instance. The Codex shell is a
