@@ -1,0 +1,524 @@
+{
+  "automatic_gate_pass": false,
+  "batch_size_per_rank": 4,
+  "candidate_bundle": "reports/foundir_blur_only_flux2_candidate_bundle_v1.json",
+  "candidate_bundle_sha256": "243ea85048b8c7f8bf3ad29212e497f97fbbb3043ac6b36974fce047991ebf19",
+  "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+  "checkpoint_curve": [
+    {
+      "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_002000.safetensors",
+      "checkpoint_sha256": "0dac2f8f68949a8f9d017815e3aadf2d7826599c3447254530b36d0ce0ed8f53",
+      "checkpoint_step": 2000,
+      "config_sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9",
+      "metrics": {
+        "input_lpips": 0.29110622298011024,
+        "input_psnr": 25.849544630192135,
+        "lpips": 0.15685088788868,
+        "lpips_improved_fraction": 0.8967244701348748,
+        "lpips_improvement": 0.1342553350914302,
+        "psnr": 24.962659241557713,
+        "psnr_gain_db": -0.8868853886344285,
+        "psnr_improved_fraction": 0.40578034682080927,
+        "records": 2595,
+        "source_groups": 165
+      },
+      "protected_foundir_test_accessed": false,
+      "schema_version": 1,
+      "sealed_internal_accessed": false,
+      "source_group_bootstrap": {
+        "confidence": 0.95,
+        "group_balanced_mean": {
+          "lpips": 0.2405233501202947,
+          "psnr": 21.40998488876408
+        },
+        "lower": {
+          "lpips": 0.22590005057444712,
+          "psnr": 20.7926302220351
+        },
+        "resamples": 5000,
+        "source_groups": 165,
+        "unit": "source_group_equal_weight",
+        "upper": {
+          "lpips": 0.2552221888747501,
+          "psnr": 22.065141771313094
+        }
+      },
+      "sow_checks": {
+        "lpips": true,
+        "psnr": false
+      },
+      "sow_stage2": {
+        "lpips_maximum": 0.18,
+        "psnr_minimum": 25.9
+      },
+      "split": "validation",
+      "status": "checkpoint_full_development_complete",
+      "worst_record_ids": {
+        "lpips": [
+          "foundir_train_0004959",
+          "foundir_train_0107744",
+          "foundir_train_0002220",
+          "foundir_train_0088859",
+          "foundir_train_0107746",
+          "foundir_train_0108898",
+          "foundir_train_0000907",
+          "foundir_train_0001686",
+          "foundir_train_0000006",
+          "foundir_train_0006463",
+          "foundir_train_0003303",
+          "foundir_train_0107231",
+          "foundir_train_0099116",
+          "foundir_train_0107098",
+          "foundir_train_0003564",
+          "foundir_train_0008441",
+          "foundir_train_0099119",
+          "foundir_train_0107097",
+          "foundir_train_0099111",
+          "foundir_train_0108034"
+        ],
+        "psnr": [
+          "foundir_train_0099111",
+          "foundir_train_0099117",
+          "foundir_train_0099107",
+          "foundir_train_0000680",
+          "foundir_train_0099119",
+          "foundir_train_0099120",
+          "foundir_train_0099108",
+          "foundir_train_0099112",
+          "foundir_train_0067555",
+          "foundir_train_0099113",
+          "foundir_train_0099116",
+          "foundir_train_0099118",
+          "foundir_train_0099109",
+          "foundir_train_0099121",
+          "foundir_train_0099106",
+          "foundir_train_0099110",
+          "foundir_train_0072296",
+          "foundir_train_0004787",
+          "foundir_train_0099122",
+          "foundir_train_0020805"
+        ]
+      }
+    },
+    {
+      "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_004000.safetensors",
+      "checkpoint_sha256": "013d30ccfbec62301b307276ed7858e2a546d2235e55d4ed68229f1979726c41",
+      "checkpoint_step": 4000,
+      "config_sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9",
+      "metrics": {
+        "input_lpips": 0.29110622298011024,
+        "input_psnr": 25.849544630192135,
+        "lpips": 0.14858877354827288,
+        "lpips_improved_fraction": 0.9140655105973025,
+        "lpips_improvement": 0.14251744943183733,
+        "psnr": 25.477848486082834,
+        "psnr_gain_db": -0.3716961441092993,
+        "psnr_improved_fraction": 0.423121387283237,
+        "records": 2595,
+        "source_groups": 165
+      },
+      "protected_foundir_test_accessed": false,
+      "schema_version": 1,
+      "sealed_internal_accessed": false,
+      "source_group_bootstrap": {
+        "confidence": 0.95,
+        "group_balanced_mean": {
+          "lpips": 0.22895459634836143,
+          "psnr": 21.873010318302256
+        },
+        "lower": {
+          "lpips": 0.21410741279086817,
+          "psnr": 21.2303702238077
+        },
+        "resamples": 5000,
+        "source_groups": 165,
+        "unit": "source_group_equal_weight",
+        "upper": {
+          "lpips": 0.2438069829804553,
+          "psnr": 22.546758480291487
+        }
+      },
+      "sow_checks": {
+        "lpips": true,
+        "psnr": false
+      },
+      "sow_stage2": {
+        "lpips_maximum": 0.18,
+        "psnr_minimum": 25.9
+      },
+      "split": "validation",
+      "status": "checkpoint_full_development_complete",
+      "worst_record_ids": {
+        "lpips": [
+          "foundir_train_0002220",
+          "foundir_train_0107744",
+          "foundir_train_0004959",
+          "foundir_train_0088859",
+          "foundir_train_0108898",
+          "foundir_train_0107746",
+          "foundir_train_0001686",
+          "foundir_train_0000907",
+          "foundir_train_0000006",
+          "foundir_train_0107097",
+          "foundir_train_0008441",
+          "foundir_train_0107231",
+          "foundir_train_0001449",
+          "foundir_train_0099116",
+          "foundir_train_0003564",
+          "foundir_train_0108034",
+          "foundir_train_0107169",
+          "foundir_train_0006463",
+          "foundir_train_0107098",
+          "foundir_train_0108897"
+        ],
+        "psnr": [
+          "foundir_train_0000680",
+          "foundir_train_0099111",
+          "foundir_train_0099117",
+          "foundir_train_0099107",
+          "foundir_train_0099119",
+          "foundir_train_0067555",
+          "foundir_train_0099108",
+          "foundir_train_0099120",
+          "foundir_train_0099112",
+          "foundir_train_0099109",
+          "foundir_train_0099113",
+          "foundir_train_0099116",
+          "foundir_train_0099121",
+          "foundir_train_0099118",
+          "foundir_train_0099106",
+          "foundir_train_0099110",
+          "foundir_train_0004787",
+          "foundir_train_0072296",
+          "foundir_train_0099122",
+          "foundir_train_0001686"
+        ]
+      }
+    },
+    {
+      "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_006000.safetensors",
+      "checkpoint_sha256": "bfb9ef17f905dc62e20fd03964b2e8c264d8c8c843c21cb725611b266c2c5c18",
+      "checkpoint_step": 6000,
+      "config_sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9",
+      "metrics": {
+        "input_lpips": 0.29110622298011024,
+        "input_psnr": 25.849544630192135,
+        "lpips": 0.147846442163179,
+        "lpips_improved_fraction": 0.9075144508670521,
+        "lpips_improvement": 0.14325978081693122,
+        "psnr": 25.349482286435904,
+        "psnr_gain_db": -0.5000623437562338,
+        "psnr_improved_fraction": 0.4138728323699422,
+        "records": 2595,
+        "source_groups": 165
+      },
+      "protected_foundir_test_accessed": false,
+      "schema_version": 1,
+      "sealed_internal_accessed": false,
+      "source_group_bootstrap": {
+        "confidence": 0.95,
+        "group_balanced_mean": {
+          "lpips": 0.22593961244274086,
+          "psnr": 22.004194241876114
+        },
+        "lower": {
+          "lpips": 0.21182743704733412,
+          "psnr": 21.378480257582275
+        },
+        "resamples": 5000,
+        "source_groups": 165,
+        "unit": "source_group_equal_weight",
+        "upper": {
+          "lpips": 0.24039662521092253,
+          "psnr": 22.60586546804589
+        }
+      },
+      "sow_checks": {
+        "lpips": true,
+        "psnr": false
+      },
+      "sow_stage2": {
+        "lpips_maximum": 0.18,
+        "psnr_minimum": 25.9
+      },
+      "split": "validation",
+      "status": "checkpoint_full_development_complete",
+      "worst_record_ids": {
+        "lpips": [
+          "foundir_train_0004959",
+          "foundir_train_0002220",
+          "foundir_train_0107744",
+          "foundir_train_0108898",
+          "foundir_train_0000907",
+          "foundir_train_0107097",
+          "foundir_train_0107746",
+          "foundir_train_0001686",
+          "foundir_train_0088859",
+          "foundir_train_0000006",
+          "foundir_train_0006463",
+          "foundir_train_0008441",
+          "foundir_train_0107231",
+          "foundir_train_0003564",
+          "foundir_train_0108034",
+          "foundir_train_0099111",
+          "foundir_train_0107169",
+          "foundir_train_0099116",
+          "foundir_train_0099119",
+          "foundir_train_0002092"
+        ],
+        "psnr": [
+          "foundir_train_0099111",
+          "foundir_train_0099117",
+          "foundir_train_0099119",
+          "foundir_train_0067555",
+          "foundir_train_0099107",
+          "foundir_train_0000680",
+          "foundir_train_0099120",
+          "foundir_train_0099108",
+          "foundir_train_0099112",
+          "foundir_train_0099113",
+          "foundir_train_0099116",
+          "foundir_train_0099121",
+          "foundir_train_0099109",
+          "foundir_train_0099118",
+          "foundir_train_0099106",
+          "foundir_train_0099110",
+          "foundir_train_0072296",
+          "foundir_train_0004787",
+          "foundir_train_0099122",
+          "foundir_train_0020805"
+        ]
+      }
+    },
+    {
+      "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_008000.safetensors",
+      "checkpoint_sha256": "f29c1b4a8fe683db7ffaec6cd906820776dddbf4cae49ef1f3c96486422c3822",
+      "checkpoint_step": 8000,
+      "config_sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9",
+      "metrics": {
+        "input_lpips": 0.29110622298011024,
+        "input_psnr": 25.849544630192135,
+        "lpips": 0.1448365893104582,
+        "lpips_improved_fraction": 0.910597302504817,
+        "lpips_improvement": 0.146269633669652,
+        "psnr": 25.635763607281085,
+        "psnr_gain_db": -0.21378102291105475,
+        "psnr_improved_fraction": 0.4435452793834297,
+        "records": 2595,
+        "source_groups": 165
+      },
+      "protected_foundir_test_accessed": false,
+      "schema_version": 1,
+      "sealed_internal_accessed": false,
+      "source_group_bootstrap": {
+        "confidence": 0.95,
+        "group_balanced_mean": {
+          "lpips": 0.22258813863198787,
+          "psnr": 22.171109962295834
+        },
+        "lower": {
+          "lpips": 0.2082302854845481,
+          "psnr": 21.505189365456932
+        },
+        "resamples": 5000,
+        "source_groups": 165,
+        "unit": "source_group_equal_weight",
+        "upper": {
+          "lpips": 0.2373417264725947,
+          "psnr": 22.809812935991218
+        }
+      },
+      "sow_checks": {
+        "lpips": true,
+        "psnr": false
+      },
+      "sow_stage2": {
+        "lpips_maximum": 0.18,
+        "psnr_minimum": 25.9
+      },
+      "split": "validation",
+      "status": "checkpoint_full_development_complete",
+      "worst_record_ids": {
+        "lpips": [
+          "foundir_train_0002220",
+          "foundir_train_0004959",
+          "foundir_train_0107744",
+          "foundir_train_0108898",
+          "foundir_train_0107746",
+          "foundir_train_0001686",
+          "foundir_train_0000907",
+          "foundir_train_0107097",
+          "foundir_train_0088859",
+          "foundir_train_0008441",
+          "foundir_train_0000006",
+          "foundir_train_0006463",
+          "foundir_train_0003564",
+          "foundir_train_0107169",
+          "foundir_train_0108034",
+          "foundir_train_0108896",
+          "foundir_train_0107231",
+          "foundir_train_0099116",
+          "foundir_train_0099119",
+          "foundir_train_0099111"
+        ],
+        "psnr": [
+          "foundir_train_0099111",
+          "foundir_train_0099117",
+          "foundir_train_0067555",
+          "foundir_train_0099119",
+          "foundir_train_0099107",
+          "foundir_train_0099108",
+          "foundir_train_0099120",
+          "foundir_train_0000680",
+          "foundir_train_0099112",
+          "foundir_train_0099113",
+          "foundir_train_0099121",
+          "foundir_train_0099116",
+          "foundir_train_0099109",
+          "foundir_train_0099118",
+          "foundir_train_0099106",
+          "foundir_train_0099110",
+          "foundir_train_0072296",
+          "foundir_train_0004787",
+          "foundir_train_0099122",
+          "foundir_train_0020805"
+        ]
+      }
+    },
+    {
+      "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+      "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+      "checkpoint_step": 10000,
+      "config_sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9",
+      "metrics": {
+        "input_lpips": 0.29110622298011024,
+        "input_psnr": 25.849544630192135,
+        "lpips": 0.14540626912122961,
+        "lpips_improved_fraction": 0.9179190751445087,
+        "lpips_improvement": 0.1456999538588806,
+        "psnr": 25.734235766996726,
+        "psnr_gain_db": -0.11530886319541277,
+        "psnr_improved_fraction": 0.45433526011560693,
+        "records": 2595,
+        "source_groups": 165
+      },
+      "protected_foundir_test_accessed": false,
+      "schema_version": 1,
+      "sealed_internal_accessed": false,
+      "source_group_bootstrap": {
+        "confidence": 0.95,
+        "group_balanced_mean": {
+          "lpips": 0.22183000798762526,
+          "psnr": 22.24945881565316
+        },
+        "lower": {
+          "lpips": 0.20737329285549486,
+          "psnr": 21.58038439272461
+        },
+        "resamples": 5000,
+        "source_groups": 165,
+        "unit": "source_group_equal_weight",
+        "upper": {
+          "lpips": 0.23691075517643778,
+          "psnr": 22.92705804415319
+        }
+      },
+      "sow_checks": {
+        "lpips": true,
+        "psnr": false
+      },
+      "sow_stage2": {
+        "lpips_maximum": 0.18,
+        "psnr_minimum": 25.9
+      },
+      "split": "validation",
+      "status": "checkpoint_full_development_complete",
+      "worst_record_ids": {
+        "lpips": [
+          "foundir_train_0002220",
+          "foundir_train_0004959",
+          "foundir_train_0107744",
+          "foundir_train_0108898",
+          "foundir_train_0107746",
+          "foundir_train_0001686",
+          "foundir_train_0000907",
+          "foundir_train_0107097",
+          "foundir_train_0000006",
+          "foundir_train_0008441",
+          "foundir_train_0088859",
+          "foundir_train_0006463",
+          "foundir_train_0003564",
+          "foundir_train_0107169",
+          "foundir_train_0108034",
+          "foundir_train_0108896",
+          "foundir_train_0099116",
+          "foundir_train_0107231",
+          "foundir_train_0099119",
+          "foundir_train_0099111"
+        ],
+        "psnr": [
+          "foundir_train_0099111",
+          "foundir_train_0099117",
+          "foundir_train_0099119",
+          "foundir_train_0067555",
+          "foundir_train_0099107",
+          "foundir_train_0099108",
+          "foundir_train_0099120",
+          "foundir_train_0000680",
+          "foundir_train_0099112",
+          "foundir_train_0099113",
+          "foundir_train_0099109",
+          "foundir_train_0099116",
+          "foundir_train_0099121",
+          "foundir_train_0099118",
+          "foundir_train_0099106",
+          "foundir_train_0099110",
+          "foundir_train_0072296",
+          "foundir_train_0004787",
+          "foundir_train_0099122",
+          "foundir_train_0020805"
+        ]
+      }
+    }
+  ],
+  "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+  "config": "configs/foundir_blur_only_flux2_full_development_v1.json",
+  "config_sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9",
+  "gpu_name": "NVIDIA H200",
+  "hardware_profile": "H200",
+  "mixed_degradations": false,
+  "model": "FLUX.2 Klein Base 4B isolated-Blur DiT LoRA rank/alpha 32/32",
+  "overfitting_diagnosis": {
+    "any_metric_overfitting_signal": true,
+    "best_lpips": 0.1448365893104582,
+    "best_lpips_step": 8000,
+    "best_psnr": 25.734235766996726,
+    "best_psnr_step": 10000,
+    "definition": "late_overfitting_if_an_earlier_checkpoint_pareto_dominates_step_10000",
+    "earlier_steps_dominating_final": [],
+    "final_lpips_gap_from_best": 0.0005696798107714118,
+    "final_psnr_gap_from_best": 0.0,
+    "late_overfitting_detected": false,
+    "lpips_overfitting_signal": true,
+    "psnr_overfitting_signal": false
+  },
+  "pixel_refiner": false,
+  "protected_foundir_test_accessed": false,
+  "qwen_degradation_conditioning": false,
+  "records": 2595,
+  "schema_version": 1,
+  "sealed_internal_accessed": false,
+  "source_groups": 165,
+  "split": "source-group-disjoint development validation",
+  "status": "blur_only_full_development_evaluation_complete",
+  "summary": {
+    "reported_checkpoint_step": 10000,
+    "task_metrics": {
+      "blur": {
+        "lpips": 0.14540626912122961,
+        "psnr": 25.734235766996726
+      }
+    }
+  },
+  "wall_seconds": 10037.367699414026
+}

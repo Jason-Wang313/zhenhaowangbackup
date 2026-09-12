@@ -1,0 +1,95 @@
+{
+  "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+  "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+  "checkpoint_step": 10000,
+  "config_sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9",
+  "metrics": {
+    "input_lpips": 0.29110622298011024,
+    "input_psnr": 25.849544630192135,
+    "lpips": 0.14540626912122961,
+    "lpips_improved_fraction": 0.9179190751445087,
+    "lpips_improvement": 0.1456999538588806,
+    "psnr": 25.734235766996726,
+    "psnr_gain_db": -0.11530886319541277,
+    "psnr_improved_fraction": 0.45433526011560693,
+    "records": 2595,
+    "source_groups": 165
+  },
+  "protected_foundir_test_accessed": false,
+  "schema_version": 1,
+  "sealed_internal_accessed": false,
+  "source_group_bootstrap": {
+    "confidence": 0.95,
+    "group_balanced_mean": {
+      "lpips": 0.22183000798762526,
+      "psnr": 22.24945881565316
+    },
+    "lower": {
+      "lpips": 0.20737329285549486,
+      "psnr": 21.58038439272461
+    },
+    "resamples": 5000,
+    "source_groups": 165,
+    "unit": "source_group_equal_weight",
+    "upper": {
+      "lpips": 0.23691075517643778,
+      "psnr": 22.92705804415319
+    }
+  },
+  "sow_checks": {
+    "lpips": true,
+    "psnr": false
+  },
+  "sow_stage2": {
+    "lpips_maximum": 0.18,
+    "psnr_minimum": 25.9
+  },
+  "split": "validation",
+  "status": "checkpoint_full_development_complete",
+  "worst_record_ids": {
+    "lpips": [
+      "foundir_train_0002220",
+      "foundir_train_0004959",
+      "foundir_train_0107744",
+      "foundir_train_0108898",
+      "foundir_train_0107746",
+      "foundir_train_0001686",
+      "foundir_train_0000907",
+      "foundir_train_0107097",
+      "foundir_train_0000006",
+      "foundir_train_0008441",
+      "foundir_train_0088859",
+      "foundir_train_0006463",
+      "foundir_train_0003564",
+      "foundir_train_0107169",
+      "foundir_train_0108034",
+      "foundir_train_0108896",
+      "foundir_train_0099116",
+      "foundir_train_0107231",
+      "foundir_train_0099119",
+      "foundir_train_0099111"
+    ],
+    "psnr": [
+      "foundir_train_0099111",
+      "foundir_train_0099117",
+      "foundir_train_0099119",
+      "foundir_train_0067555",
+      "foundir_train_0099107",
+      "foundir_train_0099108",
+      "foundir_train_0099120",
+      "foundir_train_0000680",
+      "foundir_train_0099112",
+      "foundir_train_0099113",
+      "foundir_train_0099109",
+      "foundir_train_0099116",
+      "foundir_train_0099121",
+      "foundir_train_0099118",
+      "foundir_train_0099106",
+      "foundir_train_0099110",
+      "foundir_train_0072296",
+      "foundir_train_0004787",
+      "foundir_train_0099122",
+      "foundir_train_0020805"
+    ]
+  }
+}

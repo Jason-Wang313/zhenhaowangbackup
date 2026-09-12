@@ -38,6 +38,55 @@ Latest advisor statement, recorded in
 This explicitly authorizes the current full development evaluation. No further
 question is needed before finishing it.
 
+## Terminal completion — 2026-09-12 (LATEST AUTHORITY)
+
+The advisor-authorized FLUX.2 Blur-only full development evaluation completed
+successfully at `2026-09-12T05:12:58Z` with terminal status `0`. The independent
+completion audit passed (`FULL_COMPLETION_AUDIT_PASS`): all five checkpoints
+contain exactly 2,595 immutable sidecars, all 12,975 sidecars match the frozen
+config/checkpoint identities and protected-test constraints, all metrics are
+finite, and independently recomputed aggregates exactly match each
+`metrics.json`.
+
+Complete record-mean curve:
+
+| Step | PSNR (dB) | LPIPS | PSNR >=25.9 | LPIPS <=0.18 |
+|---:|---:|---:|:---:|:---:|
+| 2,000 | 24.962659 | 0.156851 | fail | pass |
+| 4,000 | 25.477848 | 0.148589 | fail | pass |
+| 6,000 | 25.349482 | 0.147846 | fail | pass |
+| 8,000 | 25.635764 | **0.144837** | fail | pass |
+| 10,000 | **25.734236** | 0.145406 | fail | pass |
+
+- Best PSNR is step 10,000; it misses the SOW Stage-2 Blur threshold by
+  `0.165764 dB`.
+- Best LPIPS is step 8,000; every checkpoint passes the `<=0.18` threshold.
+- No earlier checkpoint Pareto-dominates step 10,000, so there is no clear
+  Pareto overfitting. LPIPS worsens only `0.000570` from step 8,000 to 10,000;
+  the step-6,000 PSNR dip later recovers.
+- Sealed internal and official FoundIR test were not accessed; all protected
+  flags are false.
+
+Terminal artifact SHA-256 values:
+
+- `result.json`: `e08491f2def20de010231fa59b138efd965675bc00706362db61e55ddcaec464`
+- local `advisor_report.md`: `dc8b9588f4f2fbc849599ddb1b83820cc1d981d56e27754f40afea093b1ea260`
+- immutable governance report JSON: `299faa172bd8aaeec3d59cd8f81888c3ee05a7a30b05d19816d7ecada8d3cf06`
+- immutable governance report Markdown: `92e82d042d533db2cdcf70230dec3fe6df25a6eb0b07408d7d91a1e91258bbaa`
+- hold event and active `advisor_hold.json`:
+  `44a38ff4a3332eab3c902e2e50509bd64c20c73f3ea1f87b907a61a0071b6bb9`
+- step 2,000/4,000/6,000/8,000/10,000 `metrics.json` respectively:
+  `a8d340f4e769946e0292dff50752f8761cc42f689c0949fad84c9577a1e30e8a`,
+  `8ea06743f851b162c10f4829160b6380d25969deac675aba9d2ee5526b7ee3d0`,
+  `d81711b3604b90294fece4b93d48aea73da0a874fa5a7e0d7e21efcdadd0f08b`,
+  `050ec21c229193bb258f37af4f618b4a54aab8ea1f68d5d0b6a60ffdf24b98a1`,
+  and `26009847cb26d6c0a60a2a03369e798a14526dc9a861f2baf20c07d63e561646`.
+
+Exact next action: send the advisor-ready report and stop. A new advisor hold
+is active; do not launch training, evaluation, Z-Image, Qwen conditioning,
+mixed degradation, or any other experiment until a matching explicit advisor
+decision is recorded.
+
 ## Live job — authoritative snapshot
 
 Snapshot time: `2026-09-12T04:40:14Z`.

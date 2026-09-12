@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-12T05:12:58Z",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/full_development_evaluation_v1/result.json",
+    "sha256": "e08491f2def20de010231fa59b138efd965675bc00706362db61e55ddcaec464"
+  },
+  "hold_id": "blur_only_full_development_evaluation-d2f43558352e4365",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/blur_only_full_development_evaluation-d2f43558352e4365.md",
+  "report_sha256": "92e82d042d533db2cdcf70230dec3fe6df25a6eb0b07408d7d91a1e91258bbaa",
+  "schema_version": 1
+}

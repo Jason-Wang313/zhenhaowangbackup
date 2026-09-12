@@ -1,0 +1,46 @@
+{
+  "advisor_decision_question": "请根据全量 curve 与视觉结果判断：继续调整 Blur-only，还是先审计 hallucination/training-inference code？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_full_development_v1.json",
+    "sha256": "42556934cfed99660916c11de14fb09508b5d628bef5dec7c8a070d8cc39bac9"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "source_group_disjoint_blur_development_2595",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/full_development_evaluation_v1/result.json",
+    "sha256": "e08491f2def20de010231fa59b138efd965675bc00706362db61e55ddcaec464"
+  },
+  "gate": "blur_only_full_development_evaluation",
+  "generated_at": "2026-09-12T05:12:58Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {
+    "blur": {
+      "metrics": {
+        "lpips": 0.14540626912122961,
+        "psnr": 25.734235766996726
+      },
+      "pass": {
+        "lpips": true,
+        "psnr": false
+      },
+      "sow": {
+        "lpips": 0.18,
+        "psnr": 25.9
+      }
+    }
+  },
+  "model": "FLUX.2 Klein Base 4B isolated-Blur DiT LoRA rank/alpha 32/32",
+  "outcome": "information",
+  "report_id": "blur_only_full_development_evaluation-d2f43558352e4365",
+  "root_cause_or_status": "Five-checkpoint full Blur development curve completed; use the curve and fixed visual outputs to judge overfitting.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
