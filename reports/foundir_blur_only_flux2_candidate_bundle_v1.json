@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "status": "frozen_blur_only_flux2_candidate_bundle",
+  "model": "FLUX.2 Klein Base 4B with isolated-Blur DiT LoRA rank/alpha 32/32",
+  "training_config": "configs/foundir_blur_only_flux2_full_v1.json",
+  "training_config_sha256": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c",
+  "checkpoints": [
+    {"step": 2000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_002000.safetensors", "sha256": "0dac2f8f68949a8f9d017815e3aadf2d7826599c3447254530b36d0ce0ed8f53"},
+    {"step": 4000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_004000.safetensors", "sha256": "013d30ccfbec62301b307276ed7858e2a546d2235e55d4ed68229f1979726c41"},
+    {"step": 6000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_006000.safetensors", "sha256": "bfb9ef17f905dc62e20fd03964b2e8c264d8c8c843c21cb725611b266c2c5c18"},
+    {"step": 8000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_008000.safetensors", "sha256": "f29c1b4a8fe683db7ffaec6cd906820776dddbf4cae49ef1f3c96486422c3822"},
+    {"step": 10000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors", "sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439"}
+  ],
+  "sealed_internal_accessed": false,
+  "protected_foundir_test_accessed": false
+}

@@ -12,7 +12,7 @@ LOCK="$ROOT/logs/foundir_blur_only_flux2_full_v1.lock"
 MODEL="FLUX.2 Klein Base 4B DiT LoRA rank32 isolated-Blur-only"
 
 cd "$ROOT"
-/usr/bin/python3 smoke/advisor_governance.py check
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 mkdir -p "$ROOT/logs" "$OUTPUT" "$ROOT/.cache/triton/foundir_blur_only_full_v1"
 exec > >(tee -a "$LOG") 2>&1
 

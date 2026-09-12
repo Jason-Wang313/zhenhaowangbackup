@@ -9,7 +9,7 @@ LOG="$ROOT/logs/foundir_blur_only_flux2_sanity_v1.log"
 PID_FILE="$ROOT/logs/foundir_blur_only_flux2_sanity_v1.pid"
 
 cd "$ROOT"
-/usr/bin/python3 smoke/advisor_governance.py check
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 [[ $# -le 1 && ( $# -eq 0 || "$1" == "--check" ) ]] || {
   echo "ERROR: only optional --check is supported" >&2; exit 1;
 }

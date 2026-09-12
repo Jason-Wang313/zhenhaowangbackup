@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_blur_only_flux2_full_development_v1",
+  "status": "advisor_authorized_full_blur_development_evaluation",
+  "authorization": {
+    "hold_id": "blur_only_full_training_completion-1c1a1897c39b4044",
+    "hold_sha256": "2bb5e855e9936a0e0c8561efda0908af8574e528a9c52f9e493158a429fbf31b",
+    "advisor_statement": "全跑了看。肉眼还行，但是没用。现在应该过拟合了。"
+  },
+  "scope": {
+    "category": "01Blur",
+    "split": "validation",
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "parent_training_config": "configs/foundir_blur_only_flux2_full_v1.json",
+  "parent_training_config_sha256": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c",
+  "candidate_bundle": "reports/foundir_blur_only_flux2_candidate_bundle_v1.json",
+  "candidate_bundle_sha256": "243ea85048b8c7f8bf3ad29212e497f97fbbb3043ac6b36974fce047991ebf19",
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "expected_records": 2595,
+    "expected_source_groups": 165,
+    "crop_size": 512,
+    "crop_seed": 2026091111,
+    "crop_policy": "one_deterministic_aligned_512_crop_per_record_shared_across_checkpoints"
+  },
+  "checkpoints": [
+    {"step": 2000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_002000.safetensors", "sha256": "0dac2f8f68949a8f9d017815e3aadf2d7826599c3447254530b36d0ce0ed8f53"},
+    {"step": 4000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_004000.safetensors", "sha256": "013d30ccfbec62301b307276ed7858e2a546d2235e55d4ed68229f1979726c41"},
+    {"step": 6000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_006000.safetensors", "sha256": "bfb9ef17f905dc62e20fd03964b2e8c264d8c8c843c21cb725611b266c2c5c18"},
+    {"step": 8000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_008000.safetensors", "sha256": "f29c1b4a8fe683db7ffaec6cd906820776dddbf4cae49ef1f3c96486422c3822"},
+    {"step": 10000, "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors", "sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439"}
+  ],
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091113,
+    "reference_time_coordinate": 10,
+    "quantization": "round_clip_uint8_png_equivalent_before_metrics"
+  },
+  "metrics": {
+    "names": ["psnr", "lpips"],
+    "bootstrap_unit": "source_group_equal_weight",
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 2026091201,
+    "worst_records_per_checkpoint": 20,
+    "sow_stage2": {"psnr_minimum": 25.9, "lpips_maximum": 0.18}
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "evaluation_batch_size_per_rank": {"H100": 2, "H200": 4},
+    "data_loader_workers_per_rank": 2
+  },
+  "runtime": {
+    "output_dir": "checkpoints/foundir_blur_only_flux2_full_v1/full_development_evaluation_v1",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

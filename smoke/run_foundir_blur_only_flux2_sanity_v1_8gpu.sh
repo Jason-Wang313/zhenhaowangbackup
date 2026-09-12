@@ -10,7 +10,7 @@ GPU_LOG="$ROOT/logs/foundir_blur_only_flux2_sanity_v1_gpu.csv"
 LOCK="$ROOT/logs/foundir_blur_only_flux2_sanity_v1.lock"
 
 cd "$ROOT"
-/usr/bin/python3 smoke/advisor_governance.py check
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 mkdir -p "$ROOT/logs" "$OUTPUT" "$ROOT/.cache/triton/foundir_blur_only_v1"
 exec > >(tee -a "$LOG") 2>&1
 

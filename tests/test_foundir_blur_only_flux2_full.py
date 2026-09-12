@@ -97,7 +97,7 @@ def test_snapshot_requires_metrics_and_every_triptych(tmp_path: Path) -> None:
 def test_launchers_enforce_governance_and_stop_for_visual_review() -> None:
     runner = (ROOT / "smoke/run_foundir_blur_only_flux2_full_v1_8gpu.sh").read_text()
     launcher = (ROOT / "smoke/launch_foundir_blur_only_flux2_full_v1_8gpu.sh").read_text()
-    assert "advisor_governance.py check" in runner
+    assert "advisor_governance.py\" check" in runner
     assert "--require-decision" in runner
     assert "STOP_FOR_ADVISOR_VISUAL_REVIEW" in runner
     assert "CUDA_VISIBLE_DEVICES exactly to 0,1,2,3,4,5,6,7" in launcher
