@@ -40,7 +40,7 @@ question is needed before finishing it.
 
 ## Live job — authoritative snapshot
 
-Snapshot time: `2026-09-12T03:00:31Z`.
+Snapshot time: `2026-09-12T03:33:58Z`.
 
 - Start marker: `2026-09-12T02:25:15Z`.
 - Git revision: `25ff5216d700dab4960571df0570adf3c9ffd223`.
@@ -50,8 +50,8 @@ Snapshot time: `2026-09-12T03:00:31Z`.
   inference batch.
 - Observed utilization: normally 100% on all eight GPUs during inference.
 - Observed memory: about 19,944 MiB/GPU, with no OOM.
-- Completed checkpoint: step 2,000, with exactly `2,595 / 2,595`
-  immutable sidecars and a verified aggregate.
+- Completed checkpoints: steps 2,000 and 4,000. Each has exactly
+  `2,595 / 2,595` immutable sidecars and a verified aggregate.
 - Step-2,000 record-mean metrics: PSNR `24.962659 dB` (fails SOW 25.9),
   LPIPS `0.156851` (passes SOW 0.18). Input baseline on the same crops is
   PSNR `25.849545 dB` / LPIPS `0.291106`.
@@ -59,13 +59,20 @@ Snapshot time: `2026-09-12T03:00:31Z`.
 - Step-2,000 source-group-balanced mean: PSNR `21.409985 dB`, LPIPS
   `0.240523`; 95% source-group bootstrap intervals are PSNR
   `[20.792630, 22.065142]` and LPIPS `[0.225900, 0.255222]`.
-- Current checkpoint: step 4,000, which had zero sidecars at snapshot time and
-  was about to begin after the checkpoint-boundary synchronization.
-- Steps 6,000, 8,000, and 10,000 have not started.
+- Step-4,000 record-mean metrics: PSNR `25.477848 dB` (fails SOW 25.9),
+  LPIPS `0.148589` (passes SOW 0.18). PSNR improved `+0.515189 dB` and LPIPS
+  improved `0.008262` versus step 2,000, so there is no overfitting signal
+  through step 4,000.
+- Step-4,000 improved fractions versus input: PSNR `0.423121`, LPIPS
+  `0.914066`. Its source-group-balanced mean is PSNR `21.873010 dB` / LPIPS
+  `0.228955`, with 95% intervals PSNR `[21.230370, 22.546758]` and LPIPS
+  `[0.214107, 0.243807]`.
+- Current checkpoint: step 6,000, with 4 sidecars at snapshot time.
+- Steps 8,000 and 10,000 have not started.
 - No traceback, error, or terminal end marker was present at snapshot time.
-- Step 2,000 required about 33 minutes of steady inference after model load.
-  The expected remaining time at this snapshot is roughly 2.2--2.4 hours,
-  subject to checkpoint-boundary aggregation and storage variability.
+- Each completed checkpoint required about 33 minutes. The expected remaining
+  time at this snapshot is roughly 1.7--1.9 hours, subject to
+  checkpoint-boundary aggregation and storage variability.
 
 The PID file contains a PID from the remote GPU instance. The Codex shell is a
 different PID namespace, so `ps`/`pgrep` here cannot prove remote liveness.
