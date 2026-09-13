@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "blur_only_full_training_completion-1c1a1897c39b4044",
-  "hold_sha256": "2bb5e855e9936a0e0c8561efda0908af8574e528a9c52f9e493158a429fbf31b",
+  "hold_id": "blur_only_full_development_evaluation-d2f43558352e4365",
+  "hold_sha256": "44a38ff4a3332eab3c902e2e50509bd64c20c73f3ea1f87b907a61a0071b6bb9",
   "decided_by": "advisor",
-  "decision": "resume_same_mainline",
-  "statement": "全跑了看。肉眼还行，但是没用。现在应该过拟合了。",
-  "recorded_at": "2026-09-12T01:53:10Z"
+  "decision": "approve_documented_change",
+  "statement": "换换Z Image吧。先训teacher，然后蒸馏一下，少步/单步。如果点还是不行，微调一下decoder。",
+  "recorded_at": "2026-09-13T11:35:56Z"
 }

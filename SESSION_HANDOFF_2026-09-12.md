@@ -6,6 +6,38 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Advisor-authorized Z-Image continuation — 2026-09-13 (LATEST AUTHORITY)
+
+The advisor has reviewed the completed FLUX.2 Blur-only development result and
+explicitly authorized a model-family change. Exact statement:
+
+> 换换Z Image吧。先训teacher，然后蒸馏一下，少步/单步。如果点还是不行，微调一下decoder。
+
+The response is recorded in
+`reports/advisor_governance/advisor_decision.json` and resolves hold
+`blur_only_full_development_evaluation-d2f43558352e4365` as
+`approve_documented_change`.
+
+Current route and ordering are locked as follows:
+
+1. Continue with isolated Blur only. Audit and implement an undistilled
+   multi-step Z-Image restoration teacher first.
+2. Prove teacher learnability with a bounded tiny-overfit and fixed
+   `Input | Output | Ground Truth` visual evidence before full teacher
+   training/evaluation.
+3. Only after the teacher is valid, distill it to few-step and then evaluate a
+   single-step candidate. Preserve the teacher as the quality reference.
+4. Decoder fine-tuning is conditional: perform it only if the distilled
+   output remains inadequate and after diagnosing a decoder/latent ceiling.
+
+Do not reintroduce Qwen degradation conditioning, mixed degradation, sealed
+internal, or official FoundIR test. Do not report Z-Image diagnostic results
+as the five-type FLUX.2 mainline result. The exact next task is a read-only
+architecture/checkpoint/license/interface audit of the released Z-Image
+foundation model and available training/distillation implementations, followed
+by the smallest reproducible teacher gate. No Z-Image weights were present in
+the workspace at the start of this audit.
+
 ## Mandatory fresh-session startup
 
 1. Work only in:
