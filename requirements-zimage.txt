@@ -1,0 +1,6 @@
+# Runtime additions layered over .conda/gpu-train-stable.
+# Z-Image and DiffSynth source revisions are frozen in the experiment config.
+modelscope==1.40.0
+modelscope-hub==0.4.2
+peft==0.20.0
+lpips==0.1.4

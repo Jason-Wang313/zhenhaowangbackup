@@ -38,6 +38,45 @@ foundation model and available training/distillation implementations, followed
 by the smallest reproducible teacher gate. No Z-Image weights were present in
 the workspace at the start of this audit.
 
+## Z-Image teacher preflight checkpoint — 2026-09-13T16:16:24Z
+
+The Blur-only undistilled Z-Image teacher tiny-overfit implementation and all
+required runtime weights are now present and verified. The complete artifact
+preflight (without `--skip-model-artifacts` or `--skip-large-hashes`) passed:
+
+- config SHA-256:
+  `faba42a614a033b1b53a675555baec7962760ca8cce182083a219a71f59bf94c`;
+- two DiT shards:
+  `ecd5df7768856215812af84d5cc785ba9d84c6d8c84e6939c7ccf30a2e0d2425`
+  and
+  `e2d5fb75ca504b2d669a33af9380b68e0c1632ecddbfca85f82631958a4b81b1`;
+- three Qwen3 text-encoder shards:
+  `328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223`,
+  `6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5`,
+  and
+  `7ca841ee75b9c61267c0c6148fd8d096d3d21b6d3e161256a9b878154f91fc52`;
+- VAE:
+  `f5b59a26851551b67ae1fe58d32e76486e1e812def4696a4bea97f16604d40a3`;
+- frozen ControlNet:
+  `7f611e6d52b133f64b84bef2549fcb84589a766b8255954f96ea34684f52b633`;
+- 16 tiny-overfit crops and 16 source-disjoint visual-development crops;
+  train/visual source-group overlap is zero;
+- official Z-Image source revision
+  `26f23eda626ffadda020b04ff79488e1d72004cd` and DiffSynth revision
+  `32ef37e4fc38400f9fe14b1affd335dad9cdf50d`;
+- sealed internal and official FoundIR test access flags remain false.
+
+Runtime imports, offline LPIPS initialization, Python compilation, shell
+syntax, focused tests (`7 passed`), and the launcher `--check` path all pass.
+The current Codex shell has no `nvidia-smi` and no exposed CUDA devices, so no
+training was started here. The exact next action is to launch
+`smoke/launch_foundir_blur_only_zimage_teacher_overfit_v1_8gpu.sh` on one
+homogeneous 8xH100/H200 node with
+`CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7`. After training/evaluation completes,
+stop and inspect the fixed step-0/step-400 triptychs plus PSNR/LPIPS before
+authorizing full teacher training. Do not proceed directly to full training,
+distillation, or decoder tuning.
+
 ## Mandatory fresh-session startup
 
 1. Work only in:

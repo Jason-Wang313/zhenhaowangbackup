@@ -7,6 +7,7 @@
 !SESSION_HANDOFF_2026-08-21.md
 !advisor_vlm_guided_all_in_one_main_route.jpg
 !README.md
+!requirements-zimage.txt
 !/generate_low_light_pilot.py
 !/train_flux2_lowlight.py
 !/evaluate_flux2_lowlight_split.py
