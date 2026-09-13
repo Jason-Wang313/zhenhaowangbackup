@@ -104,14 +104,15 @@ def main() -> None:
     args = parser.parse_args()
     config_path = args.config.resolve()
     config = load_config(config_path)
-    verify_model_artifacts(config, large_hashes=True)
-    train_rows, visual_rows = load_frozen_rows(config, verify_images=True)
 
     dist.init_process_group("nccl")
     rank, world = dist.get_rank(), dist.get_world_size()
     local_rank = int(os.environ["LOCAL_RANK"])
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
+    verify_model_artifacts(config, large_hashes=rank == 0)
+    dist.barrier()
+    train_rows, visual_rows = load_frozen_rows(config, verify_images=True)
     names = [torch.cuda.get_device_properties(index).name for index in range(torch.cuda.device_count())]
     memory = [torch.cuda.get_device_properties(index).total_memory // (1024 * 1024) for index in range(torch.cuda.device_count())]
     validate_gpu_inventory(names, memory, config)

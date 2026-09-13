@@ -11,6 +11,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "third_party/diffsynth-studio"))
 
 from lowlight_restoration.foundir_zimage import (  # noqa: E402
     load_config,
@@ -24,6 +25,20 @@ from lowlight_restoration.foundir_zimage import (  # noqa: E402
 
 def git_revision(path: Path) -> str:
     return subprocess.check_output(["git", "-C", str(path), "rev-parse", "HEAD"], text=True).strip()
+
+
+def validate_cuda_attention(torch) -> str:
+    from diffsynth.core.attention.attention import ATTENTION_IMPLEMENTATION, attention_forward
+
+    for index in range(torch.cuda.device_count()):
+        device = torch.device("cuda", index)
+        query = torch.randn((1, 4, 16, 128), device=device, dtype=torch.bfloat16)
+        with torch.inference_mode():
+            output = attention_forward(query, query, query)
+        if output.shape != query.shape or not torch.isfinite(output).all():
+            raise RuntimeError(f"CUDA attention smoke failed on visible GPU {index}")
+        torch.cuda.synchronize(device)
+    return ATTENTION_IMPLEMENTATION
 
 
 def main() -> None:
@@ -52,6 +67,7 @@ def main() -> None:
         artifacts = verify_model_artifacts(config, large_hashes=not args.skip_large_hashes)
 
     hardware = None
+    attention_backend = None
     if args.require_cuda:
         import torch
 
@@ -60,6 +76,7 @@ def main() -> None:
         names = [torch.cuda.get_device_properties(index).name for index in range(torch.cuda.device_count())]
         memory = [torch.cuda.get_device_properties(index).total_memory // (1024 * 1024) for index in range(torch.cuda.device_count())]
         hardware = validate_gpu_inventory(names, memory, config)
+        attention_backend = validate_cuda_attention(torch)
 
     result = {
         "schema_version": 1,
@@ -72,6 +89,7 @@ def main() -> None:
         "revisions": revisions,
         "model_artifacts": artifacts,
         "hardware_profile": hardware,
+        "attention_backend": attention_backend,
         "sealed_internal_accessed": False,
         "official_foundir_test_accessed": False,
     }

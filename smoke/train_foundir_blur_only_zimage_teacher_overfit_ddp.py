@@ -127,8 +127,6 @@ def main() -> None:
     args = parser.parse_args()
     config_path = args.config.resolve()
     config = load_config(config_path)
-    verify_model_artifacts(config, large_hashes=True)
-    train_rows, _ = load_frozen_rows(config, verify_images=True)
 
     accelerator = Accelerator(
         gradient_accumulation_steps=int(config["training"]["gradient_accumulation_steps"]),
@@ -136,6 +134,9 @@ def main() -> None:
     )
     if accelerator.num_processes != int(config["distributed"]["required_world_size"]):
         raise RuntimeError("torchrun world size does not match the frozen eight-GPU contract")
+    verify_model_artifacts(config, large_hashes=accelerator.is_main_process)
+    accelerator.wait_for_everyone()
+    train_rows, _ = load_frozen_rows(config, verify_images=True)
     names = [torch.cuda.get_device_properties(index).name for index in range(torch.cuda.device_count())]
     memory = [torch.cuda.get_device_properties(index).total_memory // (1024 * 1024) for index in range(torch.cuda.device_count())]
     hardware = validate_gpu_inventory(names, memory, config)

@@ -101,6 +101,23 @@ action is unchanged: run the tiny-overfit on a homogeneous 8xH100/H200 node,
 then stop for fixed-triptych and PSNR/LPIPS review before any full teacher,
 distillation, or decoder work.
 
+## Z-Image launch-hardening checkpoint — 2026-09-13T17:05:59Z
+
+The tiny-overfit startup path was hardened after the real-constructor audit.
+The CUDA preflight now runs a finite BF16 attention operation on every visible
+GPU using DiffSynth's selected attention backend and records that backend in
+`preflight.json`. This catches a missing or ABI-incompatible FlashAttention
+kernel before model construction or optimizer step 1.
+
+The trainer and evaluator no longer make all eight ranks independently hash
+the complete roughly 29 GB model set. Each distributed phase still performs
+one complete SHA-256 verification on rank 0; the other ranks verify the file
+set and wait at a barrier. This preserves fail-closed artifact identity while
+avoiding approximately 16 redundant full-model reads across training and
+evaluation. Python compilation, focused tests (`7 passed`), and the launcher
+`--check` path passed after the change. No GPU job was present or started in
+this shell, so the exact next action remains the authorized 8-GPU tiny-overfit.
+
 ## Mandatory fresh-session startup
 
 1. Work only in:

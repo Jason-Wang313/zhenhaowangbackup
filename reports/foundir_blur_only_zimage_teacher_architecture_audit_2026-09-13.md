@@ -62,6 +62,13 @@ steps on the fixed train/development crops. CUDA FlashAttention, DDP, optimizer
 updates, and quality behavior still require the authorized 8-GPU tiny-overfit
 run.
 
+The production CUDA preflight additionally executes a finite BF16 attention
+operation on every visible GPU with DiffSynth's selected backend and records
+the backend name. Distributed trainer/evaluator artifact verification performs
+one complete SHA-256 pass on rank 0 per phase while all other ranks verify the
+required file set and synchronize, preventing redundant multi-rank reads
+without weakening model-identity enforcement.
+
 ## Scientific boundary
 
 This is a Blur-only development diagnostic, not a five-type final system and
