@@ -33,6 +33,35 @@ rank 32. Do not start distillation or decoder fine-tuning during this gate.
   the first gate; it supplies the LQ image path while DiT LoRA learns the
   Blur-only restoration mapping.
 
+## Local runtime verification
+
+The complete pinned artifacts were loaded through the actual training and
+evaluation constructors on CPU on 2026-09-13. This verified the runtime tensor
+schemas rather than only filenames and hashes:
+
+- the loaded classes were `ZImageDiT`, `ZImageTextEncoder`,
+  `FluxVAEEncoder`, `FluxVAEDecoder`, and `ZImageControlNet`;
+- the training pipeline included `ZImageUnit_PAIControlNet`, so the aligned LQ
+  image reached the ControlNet path;
+- rank-32 LoRA injection produced 476 trainable tensors / 79,380,480 trainable
+  parameters, all under the DiT and all LoRA-only;
+- a structural 64x64 CPU run using PyTorch SDPA and fixed seed 0 produced a
+  finite flow-matching loss of `2.9709219932556152`; backward produced finite
+  gradients for all 476 trainable tensors and nonzero first-step gradients for
+  the expected 238 `lora_B` tensors;
+- the exact checkpoint export naming used by the trainer hot-loaded into all
+  238 evaluator LoRA targets with zero mismatches, and `clear_lora()` removed
+  them cleanly;
+- a two-step CPU evaluator-interface smoke exercised CFG 4.0, the LQ
+  ControlNet path, VAE decoding, PIL conversion, PSNR, and LPIPS and returned a
+  64x64 RGB image.
+
+The 64x64/two-step values are interface diagnostics only and are deliberately
+not quality evidence. The frozen quality protocol remains 512x512 and 50
+steps on the fixed train/development crops. CUDA FlashAttention, DDP, optimizer
+updates, and quality behavior still require the authorized 8-GPU tiny-overfit
+run.
+
 ## Scientific boundary
 
 This is a Blur-only development diagnostic, not a five-type final system and

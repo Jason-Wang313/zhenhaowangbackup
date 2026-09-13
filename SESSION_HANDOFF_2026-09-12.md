@@ -77,6 +77,30 @@ stop and inspect the fixed step-0/step-400 triptychs plus PSNR/LPIPS before
 authorizing full teacher training. Do not proceed directly to full training,
 distillation, or decoder tuning.
 
+## Z-Image real-constructor checkpoint — 2026-09-13T17:00:41Z
+
+After the artifact preflight, the pinned weights were loaded through the real
+trainer and evaluator constructors on CPU. The runtime identified
+`ZImageDiT`, `ZImageTextEncoder`, both Flux VAE halves, and
+`ZImageControlNet`; the training unit chain included
+`ZImageUnit_PAIControlNet`. Rank-32 DiT LoRA injection produced 476 trainable
+tensors / 79,380,480 parameters, all LoRA-only.
+
+A 64x64 structural forward/backward smoke used
+`DIFFSYNTH_ATTENTION_IMPLEMENTATION=torch` only because this shell has no CUDA.
+With fixed seed 0 it produced finite flow loss `2.9709219932556152`, finite
+gradients for all 476 trainable tensors, and the expected 238 nonzero
+first-step `lora_B` gradients. The trainer's exact exported state naming then
+hot-loaded into all 238 evaluator LoRA targets with zero mismatches and cleared
+successfully. A separate two-step evaluator smoke exercised CFG 4.0,
+ControlNet, VAE decode, RGB conversion, PSNR, and offline LPIPS end to end.
+
+These reduced CPU runs are interface evidence only, not image-quality evidence
+and not a substitute for the frozen 512x512 / 50-step gate. The remaining next
+action is unchanged: run the tiny-overfit on a homogeneous 8xH100/H200 node,
+then stop for fixed-triptych and PSNR/LPIPS review before any full teacher,
+distillation, or decoder work.
+
 ## Mandatory fresh-session startup
 
 1. Work only in:
