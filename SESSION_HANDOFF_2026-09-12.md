@@ -61,6 +61,19 @@ teacher and inadequate distilled model establish a decoder/latent ceiling.
 Qwen degradation conditioning, mixed degradation, sealed internal, and the
 official FoundIR test remain prohibited.
 
+V3 is now CPU-ready. Config
+`configs/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3.json`
+has SHA-256
+`6909e7fcf2397fb4b911870076a74544b1f111edb3e0a895309490e804eaf438`.
+Twenty-six focused tests, compilation/imports, shell syntax, full six-artifact
+hashes, launcher `--check`, and governance passed. A real 6B CPU constructor
+loaded all 476 parent LoRA tensors exactly; a 64x64 sigma-1 forward/backward
+returned finite loss `0.2126598209142685`, finite gradients for all 476
+trainable tensors, and nonzero gradients for all 238 LoRA-B tensors. No v3 GPU
+job has been launched from this CPU-only Codex shell. The exact GPU action is
+`smoke/launch_foundir_blur_only_zimage_teacher_paired_flow_v3_8gpu.sh` with
+literal `CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7` on homogeneous H100/H200.
+
 ## Z-Image paired-flow teacher v2 CPU-ready — 2026-09-14T04:16:52Z (LATEST AUTHORITY)
 
 The user explicitly resolved hold

@@ -1,0 +1,116 @@
+{
+  "schema_version": 3,
+  "run_name": "foundir_blur_only_zimage_teacher_paired_flow_continuation_v3",
+  "status": "advisor_authorized_zimage_blur_teacher_paired_flow_continuation_v3",
+  "scope": {
+    "category": "01Blur",
+    "teacher_only": true,
+    "distillation": false,
+    "decoder_finetuning": false,
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "authorization": {
+    "decision": "reports/advisor_governance/advisor_decision.json",
+    "hold_id": "zimage_blur_teacher_paired_flow_tiny_overfit_v2-ea895f0c24c75257",
+    "user_statement": "换Z Image吧。先训teacher，然后蒸馏一下，少步/单步。如果点还是不行，微调一下decoder。无需再次询问 advisor；best effort 完成同一 Blur-only Z-Image 路线。v2 teacher gate 未通过后继续同一主线，不再询问 advisor。"
+  },
+  "implementation": {
+    "z_image_revision": "26f23eda626ffadda020b04ff79488e1d72004cd",
+    "diffsynth_revision": "32ef37e4fc38400f9fe14b1affd335dad9cdf50d",
+    "conditioning": "base_native_paired_lq_to_gt_latent_rectified_flow",
+    "controlnet": "disabled",
+    "path": "x_sigma=(1-sigma)*gt_latent+sigma*lq_latent",
+    "velocity_target": "lq_latent-gt_latent",
+    "change_from_v2": "Initialize the exact v2 step-400 LoRA, reset optimizer state, sample only the deployed 50-step shift-6 solver grid, and use plain velocity MSE without the empirical T2I timestep weight."
+  },
+  "model": {
+    "name": "Tongyi-MAI/Z-Image",
+    "revision": "04cc4abb7c5069926f75c9bfde9ef43d49423021",
+    "license": "apache-2.0",
+    "dtype": "bfloat16",
+    "root": "models/z-image-base",
+    "transformer_glob": "transformer/diffusion_pytorch_model-*.safetensors",
+    "text_encoder_glob": "text_encoder/model-*.safetensors",
+    "vae": "vae/diffusion_pytorch_model.safetensors",
+    "tokenizer": "tokenizer",
+    "expected_blob_sha256": {
+      "transformer/diffusion_pytorch_model-00001-of-00002.safetensors": "ecd5df7768856215812af84d5cc785ba9d84c6d8c84e6939c7ccf30a2e0d2425",
+      "transformer/diffusion_pytorch_model-00002-of-00002.safetensors": "e2d5fb75ca504b2d669a33af9380b68e0c1632ecddbfca85f82631958a4b81b1",
+      "text_encoder/model-00001-of-00003.safetensors": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223",
+      "text_encoder/model-00002-of-00003.safetensors": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5",
+      "text_encoder/model-00003-of-00003.safetensors": "7ca841ee75b9c61267c0c6148fd8d096d3d21b6d3e161256a9b878154f91fc52",
+      "vae/diffusion_pytorch_model.safetensors": "f5b59a26851551b67ae1fe58d32e76486e1e812def4696a4bea97f16604d40a3"
+    },
+    "prompt": "Remove motion blur and restore a sharp clean image. Preserve the exact content, geometry, identity, text, color, and texture."
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "frozen_manifest": "manifests/foundir_blur_only_sanity_v1.csv",
+    "frozen_manifest_sha256": "7114dab36b3978f28657f366e9a961462c3dbfb06927c9262754cced0d8c8e6f",
+    "tiny_role": "tiny_overfit_train",
+    "tiny_records": 16,
+    "tiny_source_groups": 16,
+    "visual_role": "future_blur_validation",
+    "visual_records": 16,
+    "visual_source_groups": 16,
+    "crop_size": 512
+  },
+  "lora": {
+    "base_model": "dit",
+    "rank": 32,
+    "alpha": 32,
+    "target_modules": ["to_q", "to_k", "to_v", "to_out.0", "w1", "w2", "w3"]
+  },
+  "training": {
+    "objective": "paired_lq_to_gt_latent_rectified_flow",
+    "scheduler_shift": 6.0,
+    "inference_grid_steps": 50,
+    "timestep_sampling": "uniform_exact_50_step_shift_6_inference_grid",
+    "loss_weighting": "plain_unweighted_velocity_mse",
+    "seed": 2026091403,
+    "initial_checkpoint": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2/step_000400.safetensors",
+    "initial_checkpoint_sha256": "2a3e9b3392dfea20f9e6e869febce1ff99bcaa751e317e247c908f683a4ecd39",
+    "initial_step": 400,
+    "optimizer_resume": false,
+    "additional_steps": 800,
+    "final_cumulative_step": 1200,
+    "global_batch_size": 8,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 1,
+    "learning_rate": 0.00005,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "save_cumulative_steps": [800, 1200]
+  },
+  "inference": {
+    "teacher_steps": 50,
+    "cfg_scale": 1.0,
+    "scheduler_shift": 6.0,
+    "initialization": "exact_lq_vae_latent_at_sigma_1",
+    "seed": 2026091404,
+    "evaluate_cumulative_steps": [400, 800, 1200]
+  },
+  "gate": {
+    "require_psnr_improvement_over_input": true,
+    "require_lpips_improvement_over_input": true,
+    "require_fixed_visual_triptychs": true,
+    "require_human_visual_review": true
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"]
+  },
+  "runtime": {
+    "python": ".conda/gpu-train-stable/bin/python",
+    "dependency_path": ".deps/zimage",
+    "diffsynth_path": "third_party/diffsynth-studio",
+    "output_dir": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3",
+    "offline": true
+  }
+}
