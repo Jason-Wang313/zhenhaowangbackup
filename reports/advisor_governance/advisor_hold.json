@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-14T10:15:23Z",
+  "created_at": "2026-09-14T11:49:13Z",
   "evidence": {
-    "path": "reports/advisor_governance/runtime_evidence/zimage_latent_first_runtime-2fe5180322be6e36.json",
-    "sha256": "3064081492a0ec593f36356dc24e61f4388a45bd933764926d5941dd5c6f93e7"
+    "path": "configs/foundir_blur_only_zimage_conditional_teacher_v1.json",
+    "sha256": "c8bbf5d7dc85c2436f554a7e01e38b9d44d3f554686e001566c248d278da94db"
   },
-  "hold_id": "zimage_latent_first_runtime-36be52b1efd75072",
-  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
-  "report": "reports/advisor_governance/reports/zimage_latent_first_runtime-36be52b1efd75072.md",
-  "report_sha256": "776401370bd75b9c10dc8c66f5bf70b6658a1518bde0abb90ecaa92ddab68e2c",
+  "hold_id": "zimage_conditional_teacher_design-09530a53c2f3fd6e",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/zimage_conditional_teacher_design-09530a53c2f3fd6e.md",
+  "report_sha256": "9fa2bec67981e03d985d5612e2fe3b6a466732d95534905b2989370e45fdfe73",
   "schema_version": 1
 }

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "zimage_latent_first_runtime-36be52b1efd75072",
-  "hold_sha256": "28f33684bfbc173fe010967110ba063eb51f17ff70a3108dfd94fb5d82c2f5a1",
+  "hold_id": "zimage_conditional_teacher_design-09530a53c2f3fd6e",
+  "hold_sha256": "05a8187be1d5a589b72012411348c9a2404520e29daa476249964f4e07d6f46a",
   "decided_by": "user_after_advisor_response",
-  "decision": "resume_same_mainline",
-  "statement": "记录已有 advisor 授权及用户本轮明确 execute，不是新的 advisor 回复：修复 latent-first v1 在 optimizer step 之前未保存 baseline 差异的诊断缺口；保留 v1 全部失败证据，在新的 v2 输出目录完整保存两次 strict-deterministic baseline，要求当前 latent/RGB/指标逐样本精确重复、权重和所有输入身份一致，并在预声明漂移上限内才继续原定同一 1200 步 Blur-only Z-Image 修正。不得直接放宽阈值、改变目标、访问 protected data 或另开实验 sweep。",
-  "recorded_at": "2026-09-14T10:51:17Z"
+  "decision": "approve_documented_change",
+  "statement": "记录已有 advisor 的 Blur-only Z-Image teacher -> distillation -> conditional decoder 路线，以及用户本轮原文 execute, first principles, jump outside of the box, first principles, u can do it, u can push everything well above the original goal。这是明确 USER 授权，不是新的 advisor 回复。授权实施 reports/zimage_conditional_teacher_design_2026-09-14.md：原生 noise-to-GT flow、每步空间对齐 LQ 条件、全新 FP32 LoRA；tiny learnability 通过指标和视觉审查后才进入多源 pilot。保留旧失败及原判据；禁止 Qwen degradation conditioning、mixed degradation、sealed internal、official FoundIR test 和 development-GT optimization。无需再次询问 advisor。",
+  "recorded_at": "2026-09-14T11:49:13Z"
 }

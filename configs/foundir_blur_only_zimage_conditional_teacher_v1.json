@@ -1,0 +1,50 @@
+{
+  "status": "authorized_blur_only_zimage_conditional_teacher_v1",
+  "base_config": "configs/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2.json",
+  "base_config_sha256": "d6f5946fcd75050a17d96c093f7590552f89d14caaf7dce0c659fe35fcb2fbb8",
+  "initialization": "fresh_base_fresh_fp32_lora_zero_lq_projection",
+  "objective": "conditional_noise_to_gt_rectified_flow",
+  "conditioning": "aligned_lq_patch_projection_added_at_every_model_call",
+  "seed": 2026091417,
+  "crop_size": 512,
+  "lora_rank": 32,
+  "learning_rate": 0.00005,
+  "condition_learning_rate": 0.0001,
+  "warmup_steps": 100,
+  "max_grad_norm": 1.0,
+  "weight_decay": 0.0,
+  "trainable_dtype": "float32",
+  "sigma_sampling": "uniform_0_1",
+  "teacher_steps": 50,
+  "inference_shift": 6.0,
+  "cfg_scale": 1.0,
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "decoder_finetuning": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "development_gt_optimization": false,
+  "stages": {
+    "tiny": {
+      "steps": 1200,
+      "global_batch": 8,
+      "snapshot_steps": [0, 400, 1200],
+      "output_dir": "checkpoints/foundir_blur_only_zimage_conditional_teacher_v1_tiny",
+      "gate": {"train_psnr_gain_db": 1.0, "train_lpips_improvement": 0.03, "probe_loss_ratio_max": 0.8},
+      "development_is_descriptive": true
+    },
+    "pilot": {
+      "steps": 2000,
+      "global_batch": 32,
+      "train_source_groups": 2048,
+      "development_source_groups": 128,
+      "snapshot_steps": [0, 1000, 2000],
+      "output_dir": "checkpoints/foundir_blur_only_zimage_conditional_teacher_v1_pilot",
+      "gate": {"development_psnr_gain_db": 0.0, "development_lpips_improvement": 0.0},
+      "requires_tiny_metric_and_visual_pass": true
+    }
+  },
+  "pilot_manifest": "manifests/foundir_blur_only_zimage_conditional_pilot_v1.csv",
+  "pilot_manifest_metadata": "manifests/foundir_blur_only_zimage_conditional_pilot_v1.json",
+  "authorization_statement": "User explicitly said execute, first principles, jump outside of the box after the model-switch decision. This authorizes a concrete Z-Image restoration redesign and implementation under the existing Blur-only teacher -> distillation -> conditional decoder route; no further advisor round."
+}

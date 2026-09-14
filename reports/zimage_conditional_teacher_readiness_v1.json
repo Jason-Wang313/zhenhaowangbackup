@@ -1,0 +1,22 @@
+{
+  "status": "conditional_teacher_cpu_ready_gpu_not_started",
+  "config_sha256": "c8bbf5d7dc85c2436f554a7e01e38b9d44d3f554686e001566c248d278da94db",
+  "recorded_at": "2026-09-14T12:11:47Z",
+  "preflight_log": "logs/zimage_conditional_teacher_preflight_parallel_v1.log",
+  "preflight_log_sha256": "64c193d13d77a06ce70d5e7ccdec66da96049a77cc9eee69d9ba6d29c9454a46",
+  "full_model_hashes_pass": true,
+  "pilot_pairs_verified": 2176,
+  "pilot_manifest_sha256": "19309079bd2a64e253527ff1b637fc3bd2a17522cde8c47fbd3a60283315e11f",
+  "hardware_profiles_validated": ["H100", "H200"],
+  "real_6b_cpu_training_rehearsal_pass": true,
+  "real_6b_cpu_inference_decode_metrics_pass": true,
+  "distinct_focused_tests_passed": 28,
+  "cuda_training_started": false,
+  "restoration_quality_established": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "development_gt_optimization": false,
+  "decoder_finetuning": false
+}

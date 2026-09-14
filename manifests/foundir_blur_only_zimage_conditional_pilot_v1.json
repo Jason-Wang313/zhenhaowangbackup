@@ -1,0 +1,11 @@
+{
+  "config_sha256": "c8bbf5d7dc85c2436f554a7e01e38b9d44d3f554686e001566c248d278da94db",
+  "development_records": 128,
+  "manifest_sha256": "19309079bd2a64e253527ff1b637fc3bd2a17522cde8c47fbd3a60283315e11f",
+  "official_foundir_test_accessed": false,
+  "original_fixed_16_train_and_16_development_preserved": true,
+  "sealed_internal_accessed": false,
+  "source_group_overlap": 0,
+  "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "train_records": 2048
+}

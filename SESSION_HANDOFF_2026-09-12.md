@@ -6,7 +6,102 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Round-2 v2 terminal scientific failure — 2026-09-14T11:21:43Z (LATEST AUTHORITY)
+## Conditional teacher CPU-ready — 2026-09-14T12:11:47Z (LATEST AUTHORITY)
+
+The user-authorized first-principles redesign is implemented and verified.
+No new GPU job has started; CUDA is unavailable in the coding shell. Do not
+resume any old teacher/endpoint/decoder/LR experiment. No model-switch pause
+or new advisor question is required; the user switched and authorized this.
+
+New model: original Z-Image Base 6B, native Gaussian-noise-to-GT flow, persistent
+aligned LQ projection at EVERY model call, fresh FP32 LoRA/AdamW, original
+frozen VAE and native fixed-prompt text encoder. This repairs identified
+pretraining/conditioning mismatches but is NOT a proven quality improvement.
+477 trainable tensors / 79,626,240 parameters. Do not inherit failed adapters.
+
+Config: `configs/foundir_blur_only_zimage_conditional_teacher_v1.json`, SHA256
+`c8bbf5d7dc85c2436f554a7e01e38b9d44d3f554686e001566c248d278da94db`.
+Design and verified readiness:
+`reports/zimage_conditional_teacher_design_2026-09-14.md` and
+`reports/zimage_conditional_teacher_readiness_2026-09-14.md`.
+28 distinct focused tests pass (27 prior-suite plus one added crop-cache test).
+Real 6B CPU native forward/LoRA-gradient equality, repeated FP32 updates,
+LQ sensitivity, checkpoint reload/reset, repeated two-step inference, VAE
+decode and PSNR/LPIPS pass. These were 64px CPU checks, not CUDA quality gates.
+Final full preflight PASSED status0: six model hashes, both H100/H200 profiles,
+and all 2176 pilot image pairs. Log:
+`logs/zimage_conditional_teacher_preflight_parallel_v1.log`. The old serial
+preflight was intentionally interrupted; it is preserved and is NOT a pass.
+
+Exact next action in the user's GPU shell, from this workspace:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_zimage_conditional_teacher_8gpu.sh
+```
+
+Monitor:
+`tail -f logs/foundir_blur_only_zimage_conditional_teacher_v1_tiny.log`.
+Tmux session: `zimage-conditional-tiny`, with verified nohup fallback.
+Output: `checkpoints/foundir_blur_only_zimage_conditional_teacher_v1_tiny/`.
+One command runs all 1200 tiny steps and evaluations at 0/400/1200. Before
+formal training, all eight CUDA ranks must pass native equality and repeated
+synchronized updates. Expected 1200 training rows, 2 formal checkpoints,
+6 aggregates, 96 triptychs/sidecars and terminal result. Inspect metrics AND
+fixed images after completion, then update this handoff.
+
+Tiny tests TRAIN learnability; its 16-development results are descriptive.
+Only after prospective train metric + visual pass may the prepared pilot run:
+2048 source groups for training, 128 for development, one crop/group,
+2000 steps/global batch32. Tiny global batch8. Both hardware families use
+microbatch1, accumulation1 (tiny) /4 (pilot). RGB crops are cached per rank;
+paired D4 transforms occur BEFORE VAE encoding. Pilot manifest is pinned at
+`19309079bd2a64e253527ff1b637fc3bd2a17522cde8c47fbd3a60283315e11f`.
+All original 16+16 exact crops are retained and parent split membership stays
+fixed. Pilot requires `reports/zimage_conditional_teacher_tiny_visual_review_v1.json`
+bound to the tiny config/result/checkpoint and actual reviewed images; this
+review does NOT exist yet. Never fabricate it or chain pilot automatically.
+Pilot final development must improve both PSNR and LPIPS and pass visuals;
+its reported train snapshots concern only 16 fixed training examples.
+
+Full training/all-2595 development evaluation, successful teacher quality,
+distillation and any conditional decoder tuning remain unfinished dependent
+stages. Old failures retain their original labels and criteria. Qwen
+degradation conditioning, mixed degradation, sealed internal, official FoundIR
+test and development-GT optimization remain prohibited.
+
+## First-principles redesign authorized — 2026-09-14T11:49:13Z (historical)
+
+User switched model and explicitly said execute / first principles. The prior
+model-switch pause is satisfied; do not ask for another switch or advisor round.
+Design: `reports/zimage_conditional_teacher_design_2026-09-14.md`; config:
+`configs/foundir_blur_only_zimage_conditional_teacher_v1.json`.
+The new architecture restores native Gaussian-noise-to-GT flow and adds a
+zero-initialized aligned LQ patch projection at every DiT call. Fresh FP32
+LoRA/AdamW; original frozen VAE/text encoder; no inherited failed adapter.
+The design is registered as `zimage_conditional_teacher_design-09530a53c2f3fd6e`
+and its hold is resolved with the explicit user instruction, not a fabricated
+advisor reply. Implementation is complete; final image preflight is still
+running, so this paragraph alone is not GPU-readiness evidence.
+
+Scientific correction: poor development from 16 training crops is not enough
+to reject full-data generalization. Separate tiny training learnability from
+a prospective 2048-source training / 128-source development pilot, with
+fixed metrics and visual review at each boundary. All historical failures
+remain failures under their original criteria. Do not rerun those jobs.
+No GPU is exposed here. No new GPU training has started. Protected scope is
+unchanged. 27 tests passed, including native equality and two-process gradient
+accumulation. Real 6B CPU native forward/LoRA-gradient equality, two repeated
+FP32 updates, active LQ dependence and checkpoint reload/reset all passed;
+separate repeated two-step inference/VAE/PSNR/LPIPS also passed. Details:
+`reports/zimage_conditional_teacher_readiness_2026-09-14.md`.
+Pilot CSV is frozen at SHA256
+`19309079bd2a64e253527ff1b637fc3bd2a17522cde8c47fbd3a60283315e11f`.
+The initial serial CPU image scan was intentionally interrupted for bounded
+eight-worker parallel decoding; no GPU job was affected. Preserve that partial
+log. Next: verify `logs/zimage_conditional_teacher_preflight_parallel_v1.log` terminal pass,
+commit/push exact scoped source, then provide the single tiny GPU launch.
+
+## Round-2 v2 terminal scientific failure — 2026-09-14T11:21:43Z (historical)
 
 V2 completed all 1200/1200 steps normally at 11:17:51Z, terminal status0,
 8xH100. This is a SCIENTIFIC QUALITY FAILURE, not a runtime failure. Independent
