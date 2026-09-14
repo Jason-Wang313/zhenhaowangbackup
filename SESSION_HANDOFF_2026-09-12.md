@@ -6,6 +6,57 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Decoder-tail CPU-ready — 2026-09-14T06:47:54Z (LATEST AUTHORITY)
+
+The user switched to Astra and said `execute`; the previous model-switch pause
+is resolved. The next authorized experiment is documented in
+`reports/zimage_decoder_tail_design_2026-09-14.md`: freeze endpoint step 400,
+train only decoder blocks 15--17 and the output norm/convolution, with FP32
+trainable parameters/AdamW, RGB MSE + .05 LPIPS and .1 training-GT latent
+reconstruction anchoring. Same fixed 16 train/16 development crops, 400 steps,
+global batch 8, LR 1e-5, snapshots at frozen baseline and 0/200/400.
+
+The source is `smoke/train_foundir_blur_only_zimage_decoder_tail_ddp.py`;
+config is `configs/foundir_blur_only_zimage_decoder_tail_v1.json`, SHA-256
+`d6f29a5ee41d60a02651a1e8a775551e5b913ebdd0f943fadaf033876df01984`.
+This tests off-manifold decoder sensitivity; existing evidence does not prove
+that decoder tuning will solve the learned restoration mapping. A 16-pair
+experiment cannot establish full-data generalization.
+
+The loader explicitly restores exact FP32 student LoRA after the inherited
+constructor's BF16 conversion. Frozen baseline must reproduce the previous
+endpoint step-400 per-record metrics within .02 dB/.002 LPIPS before training.
+Separate frozen and promoted-tail step-0 images expose precision effects.
+The new automatic gate requires train gains over input, development gains over
+both input and step 0, and development GT roundtrip >=35 dB and <=.02 LPIPS.
+Visual review remains required. The deployed bundle needs both the immutable
+endpoint LoRA and the new decoder-tail weights, with pinned base weights.
+
+Design hold `zimage_decoder_tail_design-aca9906895c90c6d` is resolved by the
+existing explicit conditional-decoder authorization and the user's `execute`.
+No new advisor response was requested or invented. Three focused tests passed;
+full model hash and both H100/H200 inventory preflights passed. Real 6B CPU
+64x64 forward/backward/AdamW smoke passed: loss .0394539163, gradient norm
+.507023752, 1,071,363 trainable decoder-tail parameters. All trainable gradients
+are finite, FP32 AdamW updates weights, and DiT/decoder-prefix parameters have
+no gradients. Log: `logs/zimage_decoder_tail_cpu_smoke_v1.log`. These reduced
+CPU checks establish interface correctness, not 512x512 GPU quality or memory
+results. The final launcher `--check` passed against the config hash above.
+This shell has no exposed GPU; no decoder GPU job has been launched.
+
+Exact next action on the GPU shell is:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_decoder_tail_v1_8gpu.sh
+```
+
+Log: `logs/foundir_blur_only_zimage_decoder_tail_v1.log`.
+Output: `checkpoints/foundir_blur_only_zimage_decoder_tail_v1/`.
+Inspect existing evidence before any launch; never duplicate a job. Sol medium
+can monitor this frozen experiment; Sol high can fix implementation issues.
+Use Astra medium again if the result demands a new scientific design. All
+protected-data/degradation restrictions remain in force.
+
 ## Model-selection and escalation contract — 2026-09-14T06:35:15Z (LATEST AUTHORITY)
 
 The user reports that the active agent is currently **GPT-5.6 Sol medium**.

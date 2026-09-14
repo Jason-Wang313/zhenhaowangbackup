@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Record existing explicit user authorization for conditional decoder tuning; no new advisor round.",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/step_000400.safetensors",
+    "sha256": "d979af50f3013cc5e02d4c36943f32c4b512a75ee26c0aab20a37728b9c15d7e"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_endpoint_distill_v1.json",
+    "sha256": "1d98854ec7dc40e3d678879d849955180d652cbfcd86ec77596912214c956f50"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_train_16_development",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/result.json",
+    "sha256": "b5934dc34bd4ac67ba030de67504af3fc0e517f66e650dcfc4e6ad9677adc680"
+  },
+  "gate": "zimage_decoder_tail_design",
+  "generated_at": "2026-09-14T06:41:01Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image frozen endpoint student with trainable decoder tail",
+  "outcome": "information",
+  "report_id": "zimage_decoder_tail_design-aca9906895c90c6d",
+  "root_cause_or_status": "Design: reports/zimage_decoder_tail_design_2026-09-14.md. Endpoint quality remains inadequate; bounded decoder tail experiment under existing user authorization.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

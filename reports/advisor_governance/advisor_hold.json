@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-14T06:14:54Z",
+  "created_at": "2026-09-14T06:41:01Z",
   "evidence": {
-    "path": "reports/zimage_endpoint_distillation_proposal_2026-09-14.json",
-    "sha256": "0e01bf25339f03d1a903d27122d22727797ec59325ce3728fe00bc92bb27f1a4"
+    "path": "checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/result.json",
+    "sha256": "b5934dc34bd4ac67ba030de67504af3fc0e517f66e650dcfc4e6ad9677adc680"
   },
-  "hold_id": "zimage_endpoint_distillation_design-8fb09bd13e721f1a",
+  "hold_id": "zimage_decoder_tail_design-aca9906895c90c6d",
   "reason": "proposed route/architecture change requires advisor decision before experiments",
-  "report": "reports/advisor_governance/reports/zimage_endpoint_distillation_design-8fb09bd13e721f1a.md",
-  "report_sha256": "d705e0c778d749f101867a976ad33b6f4329efe62db472c174b30dd1873b4481",
+  "report": "reports/advisor_governance/reports/zimage_decoder_tail_design-aca9906895c90c6d.md",
+  "report_sha256": "edc8f3afcad29c229c001e9af8f65a19aab322c90393e802cd53d6272c19e3d5",
   "schema_version": 1
 }

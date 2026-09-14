@@ -1,0 +1,20 @@
+{
+  "endpoint_config": "configs/foundir_blur_only_zimage_endpoint_distill_v1.json",
+  "endpoint_config_sha256": "1d98854ec7dc40e3d678879d849955180d652cbfcd86ec77596912214c956f50",
+  "student_checkpoint": "checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/step_000400.safetensors",
+  "student_checkpoint_sha256": "d979af50f3013cc5e02d4c36943f32c4b512a75ee26c0aab20a37728b9c15d7e",
+  "student_result": "checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/result.json",
+  "student_result_sha256": "b5934dc34bd4ac67ba030de67504af3fc0e517f66e650dcfc4e6ad9677adc680",
+  "output_dir": "checkpoints/foundir_blur_only_zimage_decoder_tail_v1",
+  "steps": 400,
+  "save_steps": [0, 200, 400],
+  "learning_rate": 0.00001,
+  "lpips_weight": 0.05,
+  "gt_anchor_weight": 0.1,
+  "seed": 2026091406,
+  "decoder_finetuning": true,
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}

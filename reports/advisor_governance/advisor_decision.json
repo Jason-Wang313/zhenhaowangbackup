@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "zimage_endpoint_distillation_design-8fb09bd13e721f1a",
-  "hold_sha256": "b2cbed21366dc3edeb531187dd9de9e6e1075ae6bd4e61b702a2526d1142318f",
+  "hold_id": "zimage_decoder_tail_design-aca9906895c90c6d",
+  "hold_sha256": "634b36f9ceb4a2b53e18de419be780a40705d272907024f0e2ec2f7e397c4859",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "记录已有明确授权，不是新的 advisor 回复：用户要求换 Z-Image，先训 teacher，再少步/单步蒸馏，效果仍不足时微调 decoder，并明确无需再询问 advisor；用户在完整 sweep 后切换模型并说 continue。依此执行同一 Blur-only 路线下已记录的 GT-anchored endpoint distillation 方案。",
-  "recorded_at": "2026-09-14T06:15:02Z"
+  "statement": "记录已有明确授权，不是新的 advisor 回复：用户已授权 teacher、少步/单步蒸馏后效果仍不足时微调 decoder，明确无需再询问 advisor，并在 endpoint 终态质量不足和切换建议后说 execute。依此执行 reports/zimage_decoder_tail_design_2026-09-14.md 中固定 student、仅训练 decoder tail 的有界实验。",
+  "recorded_at": "2026-09-14T06:41:01Z"
 }
