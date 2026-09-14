@@ -38,6 +38,9 @@ the initial/gradient/update digests exactly match prior CPU evidence. Evidence:
 `logs/zimage_latent_first_cpu_i1_du9il/rehearsal_rank_0.json` (SHA-256
 `c315b5feb4e33d078d0bcc67f6ce254cff37733c0a721a47c87a93f0a0b5bda9`).
 This CPU evidence does not establish CUDA baseline agreement or quality.
+V2 recovery implementation and scoped governance evidence were committed and
+pushed as `c7f6be0ef10bc8507fa6a1637b44d18dd5ec834c`; remote main was verified at
+the same revision.
 
 No v2 GPU job/log/output exists. After final commit/push, exact next GPU-shell
 action is:
