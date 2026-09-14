@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_blur_only_zimage_vae_ceiling_v1",
+  "status": "advisor_authorized_zimage_blur_teacher_vae_ceiling_and_solver_sweep",
+  "scope": {
+    "category": "01Blur",
+    "diagnostic_only": true,
+    "training": false,
+    "distillation": false,
+    "decoder_finetuning": false,
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "authorization": {
+    "decision": "reports/advisor_governance/advisor_decision.json",
+    "hold_id": "zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e",
+    "user_statement": "无需再次询问 advisor；best effort 完成同一 Blur-only Z-Image 路线。v3 teacher gate 未通过后继续同一主线诊断。"
+  },
+  "model": {
+    "name": "Tongyi-MAI/Z-Image",
+    "dtype": "bfloat16",
+    "root": "models/z-image-base",
+    "transformer_glob": "transformer/diffusion_pytorch_model-*.safetensors",
+    "text_encoder_glob": "text_encoder/model-*.safetensors",
+    "vae": "vae/diffusion_pytorch_model.safetensors",
+    "tokenizer": "tokenizer",
+    "expected_blob_sha256": {
+      "transformer/diffusion_pytorch_model-00001-of-00002.safetensors": "ecd5df7768856215812af84d5cc785ba9d84c6d8c84e6939c7ccf30a2e0d2425",
+      "transformer/diffusion_pytorch_model-00002-of-00002.safetensors": "e2d5fb75ca504b2d669a33af9380b68e0c1632ecddbfca85f82631958a4b81b1",
+      "text_encoder/model-00001-of-00003.safetensors": "328a91d3122359d5547f9d79521205bc0a46e1f79a792dfe650e99fc2d651223",
+      "text_encoder/model-00002-of-00003.safetensors": "6cd087b316306a68c562436b5492edbcf6e16c6dba3a1308279caa5a58e21ca5",
+      "text_encoder/model-00003-of-00003.safetensors": "7ca841ee75b9c61267c0c6148fd8d096d3d21b6d3e161256a9b878154f91fc52",
+      "vae/diffusion_pytorch_model.safetensors": "f5b59a26851551b67ae1fe58d32e76486e1e812def4696a4bea97f16604d40a3"
+    },
+    "prompt": "Remove motion blur and restore a sharp clean image. Preserve the exact content, geometry, identity, text, color, and texture."
+  },
+  "teacher": {
+    "checkpoint": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3/step_001200.safetensors",
+    "checkpoint_sha256": "e583e4871d8c498da655e4350e4931662f9310bc197d3d089f9c4241e6625323",
+    "cumulative_step": 1200,
+    "initialization": "exact_lq_vae_latent_at_sigma_1",
+    "scheduler_shift": 6.0,
+    "cfg_scale": 1.0
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "frozen_manifest": "manifests/foundir_blur_only_sanity_v1.csv",
+    "frozen_manifest_sha256": "7114dab36b3978f28657f366e9a961462c3dbfb06927c9262754cced0d8c8e6f",
+    "tiny_role": "tiny_overfit_train",
+    "tiny_records": 16,
+    "tiny_source_groups": 16,
+    "visual_role": "future_blur_validation",
+    "visual_records": 16,
+    "visual_source_groups": 16,
+    "crop_size": 512
+  },
+  "evaluation": {
+    "measure_lq_roundtrip": true,
+    "measure_gt_roundtrip": true,
+    "teacher_inference_steps": [1, 2, 4, 8, 16, 50],
+    "require_gt_roundtrip_psnr_above_input": true,
+    "require_gt_roundtrip_lpips_below_input": true,
+    "save_fixed_triptychs": true
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"]
+  },
+  "runtime": {
+    "python": ".conda/gpu-train-stable/bin/python",
+    "dependency_path": ".deps/zimage",
+    "diffsynth_path": "third_party/diffsynth-studio",
+    "output_dir": "checkpoints/foundir_blur_only_zimage_vae_ceiling_v1",
+    "offline": true
+  }
+}

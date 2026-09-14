@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-14T05:37:30Z",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3/evaluation/result.json",
+    "sha256": "393cc6427aa0b3d8aaf70db8dc90ca750e67388e6e9a2de475751dfebd414d12"
+  },
+  "hold_id": "zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e.md",
+  "report_sha256": "c25fa55f437be741dbab82354f09ac90e420002a0c55eb40c9f1010667892f72",
+  "schema_version": 1
+}

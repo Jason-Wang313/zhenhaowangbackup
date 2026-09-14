@@ -6,6 +6,87 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Z-Image v3 terminal result and authorized post-v3 route — 2026-09-14T05:51:36Z (LATEST AUTHORITY)
+
+The solver-aligned Blur-only Z-Image paired-flow v3 continuation completed
+normally at `2026-09-14T05:37:31Z` on homogeneous 8x
+`NVIDIA H100 80GB HBM3` with `flash_attention_2`. It initialized exactly from
+the immutable v2 step-400 LoRA, reset the optimizer, and completed all 800
+additional optimizer steps (`1200` cumulative) in `798.6471 s`. It trained
+only on the deployed 50-step static-shift-6 grid with plain unweighted
+velocity MSE. Terminal status was 0; there was no OOM, NCCL, runtime, or
+protected-data failure.
+
+Immutable identities:
+
+- config SHA-256:
+  `6909e7fcf2397fb4b911870076a74544b1f111edb3e0a895309490e804eaf438`;
+- step-800 checkpoint SHA-256:
+  `c37cc2211b7c80a610af6f2b1547f1aaa2055d852ea71f10aae77c753a5bbcb5`;
+- step-1200 checkpoint SHA-256:
+  `e583e4871d8c498da655e4350e4931662f9310bc197d3d089f9c4241e6625323`;
+- training result SHA-256:
+  `17def3137a126e57b3acd79c6d2767d250a2b35d15ceecaf65ca59787be3fd34`;
+- evaluation result SHA-256:
+  `393cc6427aa0b3d8aaf70db8dc90ca750e67388e6e9a2de475751dfebd414d12`.
+
+| Split | Step | Input PSNR / LPIPS | Output PSNR / LPIPS |
+|---|---:|---:|---:|
+| train | 400 | 24.7232 / 0.3085 | 23.2828 / 0.2415 |
+| train | 800 | 24.7232 / 0.3085 | 23.4878 / 0.2223 |
+| train | 1200 | 24.7232 / 0.3085 | 23.5666 / 0.2007 |
+| development | 400 | 23.9045 / 0.3263 | 22.6414 / 0.2692 |
+| development | 800 | 23.9045 / 0.3263 | 22.5367 / 0.2640 |
+| development | 1200 | 23.9045 / 0.3263 | 21.9002 / 0.2536 |
+
+The v3 automatic gate is false. Additional optimization monotonically improved
+train LPIPS and slightly improved train PSNR, but development PSNR worsened by
+step 1200. Final output versus input is `-1.1566 dB / +0.1078 LPIPS
+improvement` on train and `-2.0043 dB / +0.0727 LPIPS improvement` on
+development. Fixed-triptych review shows content and geometry remain intact,
+but outputs add fine grain/web texture, overprocess near-clean inputs, and do
+not recover strongly blurred detail to GT quality. This is a scientific
+teacher failure, not a runtime failure.
+
+The emitted hold is
+`zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e`, SHA-256
+`616244388727264984cb45e3abd287d1946e546c1a9be07f7513985f97a67898`.
+The matching recorded user-after-advisor decision at
+`2026-09-14T05:40:33Z` resolves it as `resume_same_mainline` and explicitly
+states that no additional advisor question is required. Governance check
+passes. Distillation and conditional decoder fine-tuning are authorized; old
+text below saying they are categorically prohibited after a failed teacher is
+superseded. The intended ordering remains teacher evidence, then
+few-step/single-step work, then decoder tuning if quality remains inadequate,
+but a failed teacher gate must not create a permanent deadlock.
+
+Current exact task: finish and validate the already-partially-implemented
+read-only VAE ceiling plus frozen v3 step-1200 solver sweep on the same fixed 16
+train and 16 source-disjoint development crops. It measures LQ and GT VAE
+roundtrips and evaluates `[1, 2, 4, 8, 16, 50]` steps, saving fixed
+`Input | Output | Ground Truth` triptychs and PSNR/LPIPS. After that evidence,
+proceed directly to few-step/single-step distillation; if results remain
+inadequate or the VAE/latent ceiling is limiting, proceed directly to decoder
+tuning without another advisor request. Continue to prohibit Qwen degradation
+conditioning, mixed degradation, sealed internal, and official FoundIR test.
+
+CPU readiness was completed at `2026-09-14T05:59:30Z`. The diagnostic config
+SHA-256 is
+`062d697b9a0e29728affd983212c27fcff2325a6764099bfca7b4f36b9953292`.
+The launcher and runner executable bits are set. Python compilation/import,
+shell syntax, 12 focused tests, the launcher `--check`, governance resolution,
+`git diff --check`, all six roughly 29GB model-artifact hashes, and the v3
+step-1200 checkpoint hash passed. The evaluator additionally rejects empty,
+non-finite, duplicated, missing, or unexpected distributed records and reports
+the best PSNR and LPIPS step for each split. This CPU-only shell exposes no
+`nvidia-smi` or CUDA device, and no diagnostic runtime log/output exists yet;
+therefore the sweep has not started. Exact next GPU action on a homogeneous
+8xH100/H200 node is:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_vae_ceiling_solver_sweep_8gpu.sh
+```
+
 ## Z-Image paired-flow teacher v2 terminal result and authorized v3 continuation — 2026-09-14T04:43:55Z (LATEST AUTHORITY)
 
 The corrected v2 job completed successfully at `2026-09-14T04:39:37Z` on

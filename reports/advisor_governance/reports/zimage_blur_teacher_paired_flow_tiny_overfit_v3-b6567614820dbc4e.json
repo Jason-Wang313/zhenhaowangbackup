@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "The user already authorized best-effort same-mainline continuation without another advisor round. Continue only according to the frozen teacher/distillation/decoder ordering.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3.json",
+    "sha256": "6909e7fcf2397fb4b911870076a74544b1f111edb3e0a895309490e804eaf438"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_training_pairs_plus_16_source_disjoint_visual_development_pairs",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3/evaluation/result.json",
+    "sha256": "393cc6427aa0b3d8aaf70db8dc90ca750e67388e6e9a2de475751dfebd414d12"
+  },
+  "gate": "zimage_blur_teacher_paired_flow_tiny_overfit_v3",
+  "generated_at": "2026-09-14T05:37:30Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image 6B undistilled 50-step Blur-only solver-aligned paired-flow teacher v3 with DiT LoRA rank32",
+  "outcome": "failure",
+  "report_id": "zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e",
+  "root_cause_or_status": "Solver-aligned v3 continuation from immutable v2 step 400 completed; automatic PSNR/LPIPS and fixed visuals determine whether full teacher training may begin.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
