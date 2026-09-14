@@ -128,6 +128,65 @@ def test_pilot_requires_review_before_training():
         validate_review(s, "unused", None)
 
 
+def test_admission_exception_is_pilot_only():
+    from smoke.train_zimage_conditional_teacher import validate_admission
+    s, _ = load_settings(CONFIG)
+    assert validate_admission(s, "unused", "tiny") == (None, {"mode": "fresh_tiny"})
+    with pytest.raises(ValueError, match="pilot only"):
+        validate_admission(s, "unused", "tiny", scale_path=Path("unused"))
+    with pytest.raises(ValueError, match="not both"):
+        validate_admission(s, "unused", "pilot", Path("review"), Path("authorization"))
+    with pytest.raises(ValueError, match="requires"):
+        validate_admission(s, "unused", "pilot")
+
+
+@pytest.mark.parametrize("tamper", [None, "authorization", "config", "result", "checkpoint", "manifest", "steps"])
+def test_explicit_scale_admission_bound_to_failure_and_protocol(tmp_path, monkeypatch, tamper):
+    import smoke.train_zimage_conditional_teacher as runner
+    s, _ = load_settings(CONFIG)
+    checkpoint = tmp_path / s["stages"]["tiny"]["output_dir"] / "step_001200.safetensors"
+    checkpoint.parent.mkdir(parents=True)
+    checkpoint.write_bytes(b"unit-test-only-checkpoint")
+    result_path = checkpoint.parent / "result.json"
+    result = dict(config_sha256="test-config", stage="tiny", steps=1200,
+                  final_checkpoint=str(checkpoint.relative_to(tmp_path)),
+                  final_checkpoint_sha256=runner.sha256(checkpoint), automatic_metric_gate_pass=False,
+                  **{k: False for k in runner.PROTECTED})
+    result_path.write_text(json.dumps(result))
+    authorization = json.loads((ROOT / "reports/zimage_conditional_teacher_scale_authorization_v1.json").read_text())
+    authorization.update(config_sha256="test-config", result_sha256=runner.sha256(result_path),
+                         checkpoint_sha256=runner.sha256(checkpoint))
+    auth_path = tmp_path / "authorization.json"
+    auth_path.write_text(json.dumps(authorization))
+    monkeypatch.setattr(runner, "ROOT", tmp_path)
+    monkeypatch.setattr(runner, "SCALE_AUTHORIZATION_SHA256", runner.sha256(auth_path))
+    digest = "test-config"
+    if tamper == "authorization":
+        auth_path.write_text("{}")
+    elif tamper == "config":
+        digest = "wrong"
+    elif tamper == "result":
+        result["automatic_metric_gate_pass"] = True
+        result_path.write_text(json.dumps(result))
+    elif tamper == "checkpoint":
+        checkpoint.write_bytes(b"changed")
+    elif tamper == "manifest":
+        monkeypatch.setattr(runner, "PILOT_MANIFEST_SHA256", "wrong")
+    elif tamper == "steps":
+        s["stages"]["pilot"]["steps"] += 1
+    if tamper:
+        with pytest.raises(ValueError):
+            runner.validate_admission(s, digest, "pilot", scale_path=auth_path)
+    else:
+        path, admission = runner.validate_admission(s, digest, "pilot", scale_path=auth_path)
+        assert path == checkpoint
+        assert admission["optimizer_reset"] is True
+        assert admission["authorization"]["tiny_visual_pass"] is False
+        assert admission["authorization"]["pilot_quality_gate_unchanged"] is True
+        with pytest.raises(ValueError, match="requires"):
+            runner.validate_admission(s, digest, "pilot")
+
+
 def _accumulation_worker(rank, rendezvous):
     import torch.distributed as dist
     from lowlight_restoration.zimage_latent_first import average_gradients

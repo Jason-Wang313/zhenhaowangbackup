@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-14T12:56:33Z",
+  "evidence": {
+    "path": "reports/zimage_conditional_teacher_scale_authorization_v1.json",
+    "sha256": "21c6cc9b8f20e37fde16fad5799e4fa701118c4730ba5defc4fca6d1e6365460"
+  },
+  "hold_id": "zimage_conditional_teacher_scale_pilot_authorization-260d83120dd1a2d4",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/zimage_conditional_teacher_scale_pilot_authorization-260d83120dd1a2d4.md",
+  "report_sha256": "a22cd9e617545cb9bdc8e5eabfd0454b72272ab5a8e24602ce6ce331c7cd70b7",
+  "schema_version": 1
+}

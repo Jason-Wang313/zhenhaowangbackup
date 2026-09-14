@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Complete visual review before the next authorized stage; no new advisor request.",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_zimage_conditional_teacher_v1_tiny/step_001200.safetensors",
+    "sha256": "52a61cd9412f494c2141d5f34ffd9cbb2dc66911755e008f2828a63071ea93a7"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_conditional_teacher_v1.json",
+    "sha256": "c8bbf5d7dc85c2436f554a7e01e38b9d44d3f554686e001566c248d278da94db"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "tiny_training_archive_source_disjoint_development",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_conditional_teacher_v1_tiny/result.json",
+    "sha256": "ed945a012bd39ac6d08cc3d08f5f9ce0ce4e662f229405ecc21fe06d4281359d"
+  },
+  "gate": "zimage_conditional_teacher_tiny",
+  "generated_at": "2026-09-14T12:36:44Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image Base 6B conditional noise-to-GT teacher, persistent LQ, FP32 LoRA",
+  "outcome": "failure",
+  "report_id": "zimage_conditional_teacher_tiny-00140bbcd7f61c87",
+  "root_cause_or_status": "Conditional teacher stage finished. Review fixed images and metrics; tiny measures learnability, diverse pilot measures generalization.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

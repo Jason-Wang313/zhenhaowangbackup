@@ -6,7 +6,95 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Conditional teacher CPU-ready — 2026-09-14T12:11:47Z (LATEST AUTHORITY)
+## User-authorized scaling after failed tiny — 2026-09-14T12:56:33Z (LATEST AUTHORITY)
+
+User explicitly said: “最新训练曲线仍在改善(if so, why don't we just proceed,
+and don't ovethink it, scale”, AFTER the failed metrics/visual report. Execute
+the already-prepared diverse pilot. This supersedes the prior no-pilot directive;
+it does NOT relabel tiny as passing or authorize protected data. No additional
+advisor question/model-switch ceremony is needed. Do not keep redesigning tiny.
+
+Design: `reports/zimage_conditional_teacher_scale_pilot_2026-09-14.md`.
+Pinned explicit admission exception:
+`reports/zimage_conditional_teacher_scale_authorization_v1.json`, SHA256
+`21c6cc9b8f20e37fde16fad5799e4fa701118c4730ba5defc4fca6d1e6365460`.
+Governance hold `zimage_conditional_teacher_scale_pilot_authorization-260d83120dd1a2d4`
+is resolved using this exact user instruction, NOT a fabricated advisor reply.
+
+Same architecture/config/objective/LRs/50-step inference. Initialize exact tiny
+step1200 (52a61cd9...), reset optimizer/warmup; 2048 training sources,128 source-
+disjoint development sources,2000 ADDITIONAL steps,global batch32, paired D4.
+Original16+16 fixed crops retained. Pilot metric AND visual criteria unchanged.
+Tiny remains failed. No automatic full training/distillation/decoder continuation.
+No development-GT optimization, Qwen degradation condition, mixed degradation,
+sealed internal or official FoundIR test. This is not an official SOW result.
+
+Implementation adds explicit `--scale-pilot` launcher / hash-bound trainer
+admission. Default pilot launch still requires passing tiny review. Runtime and
+result embed admission provenance, source initialization and optimizer reset.
+36 focused tests pass including exception scope and identity/budget tampering.
+Full preflight PASSED (`CONDITIONAL_PREFLIGHT_PASS`, exit0): exact six model
+artifact hashes, tiny checkpoint/authorization identity, all2176 pilot pairs,
+both H100/H200 hardware profiles. Log:
+`logs/zimage_conditional_teacher_scale_preflight_v1.log`.
+No GPU is exposed here. No pilot log/output exists; no GPU job started.
+
+After preflight, single GPU-shell launch:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_zimage_conditional_teacher_8gpu.sh --scale-pilot
+```
+
+Monitor: `tail -f logs/foundir_blur_only_zimage_conditional_teacher_v1_pilot.log`.
+Output: `checkpoints/foundir_blur_only_zimage_conditional_teacher_v1_pilot/`.
+Tmux session `zimage-conditional-pilot` if available; verified nohup fallback.
+Expected:2000 training rows,2 checkpoints,6 aggregates,432 triptychs/sidecars,
+eight CUDA rehearsals and terminal result. Step0/1000/2000 snapshots contain
+16 training +128 development images. Review final metrics/images and fixed16
+development subset separately; never compare differing sample means as a curve.
+
+## Conditional teacher tiny terminal failure — 2026-09-14T12:42:25Z (historical)
+
+The user launched the new conditional teacher; it finished 1200/1200 normally
+on 8xH100 at 12:36:45Z, status0, launch revision e2d2c3c. This is a scientific
+learnability/fidelity failure, not a runtime failure. No job remains to monitor.
+Independent audit passed 1200 ordered finite rows, two exact FP32 checkpoints
+(477 finite tensors each), six recomputed aggregates, 96 hash-matching
+triptych/sidecar pairs and all eight native/reproducibility CUDA rehearsals.
+Config SHA remains c8bbf5d7dc85c2436f554a7e01e38b9d44d3f554686e001566c248d278da94db.
+Result SHA: ed945a012bd39ac6d08cc3d08f5f9ce0ce4e662f229405ecc21fe06d4281359d.
+Step1200 SHA: 52a61cd9412f494c2141d5f34ffd9cbb2dc66911755e008f2828a63071ea93a7.
+
+Train input24.7232/.3085 -> output21.6206/.2783: PSNR loses3.1026dB;
+LPIPS improvement .030242 just passes its >.03 criterion. Fixed training
+probe .464905 ->.399082, ratio .858417, fails <.8. Thus 2/3 TRAIN criteria
+fail; descriptive development is not the reason for refusal. Development
+input23.9045/.3264 ->19.9942/.4420, zero of16 improves PSNR.
+
+Visual review FAILS: statue0042483 recovers rough form but repaints pattern;
+near-clean train0091486 falls36.8832 ->22.1782dB and changes grass/rock/stem
+content; dev0055608 bus structure is painted/distorted; dev0092666 rearranges
+leaves. There is no passing visual-review artifact. DO NOT launch the prepared
+pilot, full training, distillation, decoder tuning, or rerun this tiny job.
+
+Important interpretation: both train AND development improve from step400
+to1200 (train18.1619/.5004 ->21.6206/.2783; dev17.1693/.5604 ->19.9942/.4420).
+This sampled curve does NOT show late overfitting. Native semantics plus a
+functioning persistent LQ path were insufficient within this fixed budget;
+the unique cause remains unresolved. Do not call the route proven impossible,
+promise more steps will fix it, or silently change gates. The next decision
+requires evidence about conditional reconstruction/content preservation and
+sampling error, informed by healthy VAE/oracle results, before another run.
+
+Detailed audit: `reports/zimage_conditional_teacher_tiny_terminal_audit_2026-09-14.md`;
+machine audit: `reports/zimage_conditional_teacher_tiny_terminal_audit_v1.json`.
+Launcher governance report: `zimage_conditional_teacher_tiny-00140bbcd7f61c87`.
+No new advisor round or model-switch ceremony is requested. This check turn
+only audited and documented; no training code, threshold or job changed.
+All protected degradation/test/development-GT optimization flags remain false.
+The overall teacher -> distillation -> conditional decoder goal is unfinished.
+
+## Conditional teacher CPU-ready — 2026-09-14T12:11:47Z (historical)
 
 The user-authorized first-principles redesign is implemented and verified.
 No new GPU job has started; CUDA is unavailable in the coding shell. Do not

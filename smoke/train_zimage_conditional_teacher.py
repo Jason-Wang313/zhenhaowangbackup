@@ -37,6 +37,7 @@ from smoke.evaluate_foundir_blur_only_zimage_teacher_paired_flow_ddp import psnr
 from smoke.prepare_zimage_conditional_pilot import freeze
 
 PILOT_MANIFEST_SHA256 = "19309079bd2a64e253527ff1b637fc3bd2a17522cde8c47fbd3a60283315e11f"
+SCALE_AUTHORIZATION_SHA256 = "21c6cc9b8f20e37fde16fad5799e4fa701118c4730ba5defc4fca6d1e6365460"
 
 
 def write_json(path, obj):
@@ -111,6 +112,44 @@ def exact_load(model, path):
             p.copy_(state[n].to(p.device))
     if tensor_digest(named.items()) != tensor_digest(state.items()):
         raise ValueError("checkpoint reload mismatch")
+
+
+def validate_admission(s, digest, stage, review_path=None, scale_path=None):
+    """A prospective user exception is not a passing tiny visual review."""
+    if review_path is not None and scale_path is not None:
+        raise ValueError("choose review or explicit scale authorization, not both")
+    if stage != "pilot":
+        if review_path is not None or scale_path is not None:
+            raise ValueError("admission artifacts apply to pilot only")
+        return None, dict(mode="fresh_tiny")
+    if scale_path is None:
+        path = validate_review(s, digest, review_path)
+        return path, dict(mode="tiny_metric_and_visual_pass", review_sha256=sha256(review_path))
+    if sha256(scale_path) != SCALE_AUTHORIZATION_SHA256:
+        raise ValueError("scale authorization changed")
+    authorization = json.loads(scale_path.read_text())
+    result_path = ROOT / s["stages"]["tiny"]["output_dir"] / "result.json"
+    result = json.loads(result_path.read_text())
+    c = s["stages"]["pilot"]
+    expected = dict(config_sha256=digest, result_sha256=sha256(result_path),
+                    checkpoint_sha256=result["final_checkpoint_sha256"],
+                    pilot_manifest_sha256=PILOT_MANIFEST_SHA256,
+                    pilot_steps=c["steps"], pilot_global_batch=c["global_batch"],
+                    train_source_groups=c["train_source_groups"],
+                    development_source_groups=c["development_source_groups"],
+                    snapshot_steps=c["snapshot_steps"])
+    if any(authorization.get(k) != v for k, v in expected.items()):
+        raise ValueError("scale authorization config/result/protocol mismatch")
+    if result["config_sha256"] != digest or result["stage"] != "tiny" or result["steps"] != 1200:
+        raise ValueError("unexpected tiny initialization")
+    if result["automatic_metric_gate_pass"] is not False or any(result.get(k) is not False for k in PROTECTED):
+        raise ValueError("tiny failure/protected scope changed")
+    path = ROOT / s["stages"]["tiny"]["output_dir"] / "step_001200.safetensors"
+    if result["final_checkpoint"] != str(path.relative_to(ROOT)) or sha256(path) != authorization["checkpoint_sha256"]:
+        raise ValueError("scale initialization checkpoint changed")
+    return path, dict(mode=authorization["decision"], authorization_sha256=sha256(scale_path),
+                      authorization=authorization, initial_checkpoint=str(path.relative_to(ROOT)),
+                      initial_checkpoint_sha256=authorization["checkpoint_sha256"], optimizer_reset=True)
 
 
 @torch.no_grad()
@@ -246,6 +285,8 @@ def main():
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--stage", choices=("tiny", "pilot"), default="tiny")
     parser.add_argument("--tiny-review", type=Path)
+    parser.add_argument("--scale-authorization", type=Path)
+    parser.add_argument("--admission-check", action="store_true")
     parser.add_argument("--preflight", action="store_true")
     parser.add_argument("--cpu-smoke", action="store_true")
     parser.add_argument("--cpu-inference-smoke", action="store_true")
@@ -255,6 +296,10 @@ def main():
     digest = sha256(args.config)
     c = s["stages"][args.stage]
     rank, world = int(os.getenv("RANK", "0")), int(os.getenv("WORLD_SIZE", "1"))
+    checkpoint_path, admission = validate_admission(s, digest, args.stage, args.tiny_review, args.scale_authorization)
+    if args.admission_check:
+        print("CONDITIONAL_ADMISSION_PASS", json.dumps(admission), flush=True)
+        return
     if args.preflight:
         freeze(args.config)
     train, train_eval, dev = load_rows(s, base, args.stage)
@@ -274,7 +319,6 @@ def main():
         raise ValueError("CPU smoke requires one rank; training requires eight")
     if args.cpu_smoke and args.stage != "tiny":
         raise ValueError("CPU smoke starts fresh Base only")
-    checkpoint_path = validate_review(s, digest, args.tiny_review) if args.stage == "pilot" else None
     device = torch.device("cpu" if args.cpu_smoke else f"cuda:{int(os.environ['LOCAL_RANK'])}")
     torch.set_num_threads(4)
     if not args.cpu_smoke:
@@ -307,6 +351,7 @@ def main():
         dist.barrier()
     if rank == 0:
         write_json(root / "runtime.json", dict(config_sha256=digest, hardware=hardware, world=world,
+                   admission=admission,
                    global_batch=c["global_batch"], microbatch=1, accumulation=c["global_batch"] // 8,
                    torch=str(torch.__version__), cuda=torch.version.cuda, padding=padding,
                    source_sha256=sha256(Path(__file__)), helper_sha256=sha256(ROOT / "lowlight_restoration/zimage_conditional_teacher.py"),
@@ -463,6 +508,7 @@ def main():
         metrics = next(x["metrics"] for x in snapshots if x["step"] == c["steps"] and x["role"] == ("train" if args.stage == "tiny" else "development"))
         gate = stage_gate(args.stage, metrics, initial_probe, final_probe, s)
         result = dict(status="conditional_teacher_stage_complete", stage=args.stage, config_sha256=digest,
+                      admission=admission,
                       final_checkpoint=str(path.relative_to(ROOT)), final_checkpoint_sha256=sha256(path),
                       steps=c["steps"], snapshots=snapshots, initial_probe=initial_probe, final_probe=final_probe,
                       **gate, **{k: False for k in PROTECTED})
