@@ -6,7 +6,7 @@ RUNNER="$ROOT/smoke/run_foundir_blur_only_zimage_teacher_paired_flow_v2_8gpu.sh"
 CONFIG="$ROOT/configs/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2.json"
 PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 LOG="$ROOT/logs/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2.log"
-TMUX=/usr/bin/tmux
+PID_FILE="$ROOT/logs/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2.pid"
 SESSION=foundir-zimage-paired-flow-v2
 
 cd "$ROOT"
@@ -18,8 +18,13 @@ cd "$ROOT"
   echo "ERROR: set CUDA_VISIBLE_DEVICES exactly to 0,1,2,3,4,5,6,7" >&2; exit 1;
 }
 [[ -x "$PYTHON" ]] || { echo "ERROR: missing $PYTHON" >&2; exit 1; }
-[[ -x "$TMUX" ]] || { echo "ERROR: missing executable $TMUX" >&2; exit 1; }
-"$TMUX" -V
+TMUX=$(command -v tmux 2>/dev/null || true)
+if [[ -n "$TMUX" && -x "$TMUX" ]]; then
+  "$TMUX" -V
+else
+  TMUX=
+  echo "FOUNDIR_ZIMAGE_PAIRED_FLOW_TMUX_UNAVAILABLE using=nohup_pid_log_fallback"
+fi
 
 export PYTHONPATH="$ROOT/.deps/zimage:$ROOT/third_party/diffsynth-studio:$ROOT"
 "$PYTHON" -m py_compile \
@@ -40,22 +45,35 @@ if [[ "${1:-}" == "--check" ]]; then
 fi
 
 mkdir -p "$ROOT/logs"
-if "$TMUX" has-session -t "$SESSION" 2>/dev/null; then
-  echo "ERROR: tmux session $SESSION already exists; attach and inspect it" >&2
-  exit 1
+if [[ -n "$TMUX" ]]; then
+  if "$TMUX" has-session -t "$SESSION" 2>/dev/null; then
+    echo "ERROR: tmux session $SESSION already exists; attach and inspect it" >&2
+    exit 1
+  fi
+  "$TMUX" new-session -d -s "$SESSION" -c "$ROOT"
+  "$TMUX" set-option -t "$SESSION" remain-on-exit on
+  "$TMUX" send-keys -t "$SESSION":0.0 \
+    "export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7; bash '$RUNNER'" C-m
+  sleep 3
+  pane_state=$("$TMUX" display-message -p -t "$SESSION":0.0 '#{pane_dead}:#{pane_dead_status}')
+  if [[ "$pane_state" != "0:" ]]; then
+    echo "ERROR: launcher exited during startup; inspect $LOG" >&2
+    tail -100 "$LOG" >&2 || true
+    exit 1
+  fi
+  echo "FOUNDIR_ZIMAGE_PAIRED_FLOW_TMUX_STARTED session=$SESSION"
+  echo "Attach: $TMUX attach -t $SESSION"
+else
+  nohup env CUDA_VISIBLE_DEVICES="$CUDA_VISIBLE_DEVICES" bash "$RUNNER" >/dev/null 2>&1 </dev/null &
+  pid=$!
+  printf '%s\n' "$pid" >"$PID_FILE"
+  sleep 3
+  if ! kill -0 "$pid" 2>/dev/null; then
+    echo "ERROR: launcher exited during startup; inspect $LOG" >&2
+    tail -100 "$LOG" >&2 || true
+    exit 1
+  fi
+  echo "FOUNDIR_ZIMAGE_PAIRED_FLOW_NOHUP_STARTED pid=$pid pid_file=$PID_FILE"
 fi
-"$TMUX" new-session -d -s "$SESSION" -c "$ROOT"
-"$TMUX" set-option -t "$SESSION" remain-on-exit on
-"$TMUX" send-keys -t "$SESSION":0.0 \
-  "export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7; bash '$RUNNER'" C-m
-sleep 3
-pane_state=$("$TMUX" display-message -p -t "$SESSION":0.0 '#{pane_dead}:#{pane_dead_status}')
-if [[ "$pane_state" != "0:" ]]; then
-  echo "ERROR: launcher exited during startup; inspect $LOG" >&2
-  tail -100 "$LOG" >&2 || true
-  exit 1
-fi
-echo "FOUNDIR_ZIMAGE_PAIRED_FLOW_TMUX_STARTED session=$SESSION"
-echo "Attach: $TMUX attach -t $SESSION"
 echo "Persistent log: $LOG"
 echo "Monitor: tail -f $LOG"

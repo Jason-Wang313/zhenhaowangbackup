@@ -45,8 +45,9 @@ This Codex shell has PyTorch 2.7.0+cu128 but no visible CUDA device, so v2 has
 not trained and has no quality result yet. Exact next action: on one
 homogeneous 8xH100/H200 GPU shell, set literal
 `CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7` and run
-`smoke/launch_foundir_blur_only_zimage_teacher_paired_flow_v2_8gpu.sh` inside
-a retained tmux session. Then inspect the fixed step-0/step-400 triptychs and
+`smoke/launch_foundir_blur_only_zimage_teacher_paired_flow_v2_8gpu.sh`. The
+launcher uses a retained tmux session when available and a verified
+`nohup + PID + persistent log` fallback on GPU shells without tmux. Then inspect the fixed step-0/step-400 triptychs and
 PSNR/LPIPS. Do not begin full teacher training, distillation, or decoder tuning
 until this teacher gate passes. Sealed internal and official FoundIR test
 remain untouched.

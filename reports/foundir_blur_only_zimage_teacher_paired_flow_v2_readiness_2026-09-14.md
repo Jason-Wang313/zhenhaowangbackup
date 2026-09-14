@@ -53,7 +53,8 @@ SHA-256 `d6f5946fcd75050a17d96c093f7590552f89d14caaf7dce0c659fe35fcb2fbb8`.
 - Real 6B CPU constructor/64x64 forward/backward passed with finite loss
   `3.0448391437530518`, finite gradients for all 476 trainable tensors, and
   nonzero gradients for the expected 238 LoRA-B tensors.
-- Python compilation, runtime imports, launcher shell syntax, retained-tmux launcher
+- Python compilation, runtime imports, launcher shell syntax, adaptive retained-tmux
+  or `nohup + PID + persistent log` launcher
   `--check`, governance check, and `git diff --check` passed.
 - This shell reports PyTorch 2.7.0+cu128 but CUDA unavailable/device count 0;
   therefore no v2 training or image-quality evaluation has been claimed here.
