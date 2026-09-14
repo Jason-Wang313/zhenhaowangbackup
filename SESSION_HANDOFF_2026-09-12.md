@@ -32,8 +32,10 @@ SHA-256 `d6f5946fcd75050a17d96c093f7590552f89d14caaf7dce0c659fe35fcb2fbb8`.
 Readiness report:
 `reports/foundir_blur_only_zimage_teacher_paired_flow_v2_readiness_2026-09-14.md`.
 
-Verification completed: 13 focused tests passed; full hashes passed for the
-six Base/VAE/text artifacts with no ControlNet; Python compile, imports, shell
+Verification completed: 14 focused tests passed, including numerical agreement
+within float32 linspace rounding tolerance between the DiffSynth and official
+Base 50-step shift-6 schedules; full hashes
+passed for the six Base/VAE/text artifacts with no ControlNet; Python compile, imports, shell
 syntax, launcher `--check`, governance, and `git diff --check` passed. A real
 6B 64x64 CPU forward/backward returned finite loss `3.0448391437530518`, all
 476 trainable tensors had finite gradients, and the expected 238 LoRA-B

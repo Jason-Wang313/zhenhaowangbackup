@@ -41,8 +41,10 @@ SHA-256 `d6f5946fcd75050a17d96c093f7590552f89d14caaf7dce0c659fe35fcb2fbb8`.
 - Governance: hold `zimage_blur_teacher_tiny_overfit-a6becc1eff058fec` is
   resolved by the user's explicit continuation decision; decision SHA-256 is
   `48f62ed9fc5efb05063b86be8d15615c2b7d43cd848f92e2daee73005b7c036f`.
-- Focused unit/contract tests: 13 passed. They cover path endpoints, exact
-  Euler recovery, shift-6 schedule, exact-LQ evaluator initialization,
+- Focused unit/contract tests: 14 passed. They cover path endpoints, exact
+  Euler recovery, numerical agreement between the 50-step DiffSynth shift-6
+  schedule and the official Base scheduler (within the NumPy/Torch linspace
+  float32 rounding tolerance), exact-LQ evaluator initialization,
   forbidden scope, no-ControlNet artifacts, fixed crop identities,
   H100/H200 portability, and global-batch arithmetic.
 - Complete artifact verification passed for both DiT shards, all three text
@@ -51,7 +53,7 @@ SHA-256 `d6f5946fcd75050a17d96c093f7590552f89d14caaf7dce0c659fe35fcb2fbb8`.
 - Real 6B CPU constructor/64x64 forward/backward passed with finite loss
   `3.0448391437530518`, finite gradients for all 476 trainable tensors, and
   nonzero gradients for the expected 238 LoRA-B tensors.
-- Python compilation, runtime imports, launcher shell syntax, launcher
+- Python compilation, runtime imports, launcher shell syntax, retained-tmux launcher
   `--check`, governance check, and `git diff --check` passed.
 - This shell reports PyTorch 2.7.0+cu128 but CUDA unavailable/device count 0;
   therefore no v2 training or image-quality evaluation has been claimed here.

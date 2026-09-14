@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import copy
+import importlib.util
 import json
 import sys
 from pathlib import Path
@@ -13,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / ".deps/zimage"))
 sys.path.insert(0, str(ROOT / "third_party/diffsynth-studio"))
+sys.path.insert(0, str(ROOT / "third_party/z-image/src"))
 
 from lowlight_restoration.foundir_zimage_paired_flow import (
     load_config,
@@ -26,6 +28,16 @@ from lowlight_restoration.foundir_zimage_paired_flow import (
 )
 from diffsynth.diffusion.flow_match import FlowMatchScheduler
 from smoke.evaluate_foundir_blur_only_zimage_teacher_paired_flow_ddp import restore_from_exact_lq_latent
+
+_OFFICIAL_SCHEDULER_SPEC = importlib.util.spec_from_file_location(
+    "_official_zimage_scheduler",
+    ROOT / "third_party/z-image/src/zimage/scheduler.py",
+)
+assert _OFFICIAL_SCHEDULER_SPEC is not None and _OFFICIAL_SCHEDULER_SPEC.loader is not None
+_OFFICIAL_SCHEDULER_MODULE = importlib.util.module_from_spec(_OFFICIAL_SCHEDULER_SPEC)
+sys.modules[_OFFICIAL_SCHEDULER_SPEC.name] = _OFFICIAL_SCHEDULER_MODULE
+_OFFICIAL_SCHEDULER_SPEC.loader.exec_module(_OFFICIAL_SCHEDULER_MODULE)
+FlowMatchEulerDiscreteScheduler = _OFFICIAL_SCHEDULER_MODULE.FlowMatchEulerDiscreteScheduler
 
 
 CONFIG = ROOT / "configs/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2.json"
@@ -60,6 +72,23 @@ def test_shift_six_schedule_starts_at_exact_lq_endpoint_and_ends_via_euler_at_ze
         torch.ones(1), torch.ones(1), scheduler.sigmas[-1], torch.tensor(0.0)
     )
     assert torch.isfinite(final).all()
+
+
+def test_diffsynth_shift_six_schedule_matches_official_base_scheduler() -> None:
+    diffsynth = FlowMatchScheduler("Z-Image")
+    diffsynth.set_timesteps(50, shift=6.0)
+    official = FlowMatchEulerDiscreteScheduler(
+        num_train_timesteps=1000,
+        shift=6.0,
+        use_dynamic_shifting=False,
+    )
+    # The official pipeline sets sigma_min to zero immediately before calling
+    # set_timesteps; reproduce that exact public inference path.
+    official.sigma_min = 0.0
+    official.set_timesteps(50, device="cpu")
+    assert torch.allclose(diffsynth.timesteps, official.timesteps, rtol=0.0, atol=1e-4)
+    assert torch.allclose(diffsynth.sigmas, official.sigmas[:-1], rtol=0.0, atol=1e-7)
+    assert float(official.sigmas[-1]) == 0.0
 
 
 def test_evaluator_initializes_model_from_exact_lq_latent() -> None:
