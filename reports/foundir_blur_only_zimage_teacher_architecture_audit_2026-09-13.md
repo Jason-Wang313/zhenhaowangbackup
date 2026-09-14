@@ -81,11 +81,83 @@ The tiny-overfit gate asks only whether PSNR and LPIPS improve over the input
 on the memorized 16 training crops and whether fixed triptychs are visually
 valid. It does not claim generalization and does not use SOW thresholds.
 
-## Ordered next gates
+## Tiny-overfit terminal result — 2026-09-14
 
-1. Run the 16-pair teacher tiny-overfit and inspect fixed triptychs.
-2. If learnability and visuals pass, train the full Blur-only teacher and
-   evaluate its frozen development curve.
-3. Distill the accepted teacher to few-step, then test single-step.
-4. Consider decoder fine-tuning only if distilled outputs remain inadequate
-   and a decoder/latent ceiling audit identifies the decoder as a bottleneck.
+The authorized 8-GPU run completed all 400 optimizer steps and all four fixed
+evaluation snapshots. Training ran on eight `NVIDIA H100 80GB HBM3` devices
+with `flash_attention_2`, global batch 8, and 79,380,480 trainable LoRA
+parameters. The 400-step training wall time was `433.1167 s`; telemetry reached
+98--100% peak utilization and 40,400--41,014 MiB peak GPU memory use on each
+GPU. The launcher returned status 3 only after training and evaluation because
+the then-current advisor emitter recognized only
+`protected_foundir_test_accessed`, while this result correctly recorded
+`official_foundir_test_accessed: false`.
+
+- step-200 checkpoint SHA-256:
+  `8412dfd3da2dec67d56bbec94556edb4fa38276c007c8a3b8aaebf27e6a18a38`;
+- step-400 checkpoint SHA-256:
+  `2505c79fd554e76297eaaaa6be0d6e5aabbd75a702a2c11666c19df87697177b`;
+- immutable evaluation result SHA-256:
+  `5e9b8b4a715382bb4d8d5a3e233314da9c34b7b3d7e4c4031663160dbea0e651`;
+- training loss was `1.770904` at step 1 and `0.413092` at step 400, but the
+  image-restoration gate failed both metrics.
+
+| Role / state | Input PSNR | Output PSNR | Input LPIPS | Output LPIPS | Improved records |
+|---|---:|---:|---:|---:|---:|
+| memorized train / step 0 | 24.7232 | 7.6775 | 0.3085 | 0.8538 | 0/16 PSNR, 0/16 LPIPS |
+| memorized train / step 400 | 24.7232 | 9.3654 | 0.3085 | 0.8408 | 0/16 PSNR, 0/16 LPIPS |
+| source-disjoint visual / step 0 | 23.9045 | 8.1023 | 0.3263 | 0.8460 | 0/16 PSNR, 0/16 LPIPS |
+| source-disjoint visual / step 400 | 23.9045 | 9.0932 | 0.3263 | 0.8949 | 0/16 PSNR, 0/16 LPIPS |
+
+All 64 expected fixed triptychs are present: 16 train plus 16 source-disjoint
+development images at both step 0 and step 400. Direct visual inspection found
+step 0 to be blue-grey noise. Step 400 recovered some coarse spatial layout,
+which shows that the LQ path is not wholly disconnected, but outputs retain
+severe green/yellow casts, incorrect content, low-frequency blocks, and
+collapsed texture. This is not Blur restoration, so the human visual gate also
+fails. Full teacher training is prohibited by the predeclared ordering.
+
+## Read-only failure diagnosis
+
+The available evidence narrows the fault domain but does not prove one root
+cause:
+
+- The released ControlNet is explicitly trained for `Z-Image-Turbo`; the
+  current experiment attaches it to the undistilled Base because their tensor
+  shapes match. DiffSynth's own reference example pairs this ControlNet with
+  Turbo. Shape compatibility does not establish feature or trajectory
+  compatibility, making this the strongest architectural incompatibility
+  candidate.
+- The pinned official Base scheduler config uses static shift `6.0`
+  (`use_dynamic_shifting: false`), whereas DiffSynth's `Z-Image` scheduler uses
+  static shift `3.0` when `sigma_shift` is omitted. Training and evaluation in
+  this gate therefore used shift 3 rather than the checkpoint's published
+  shift 6 trajectory.
+- The native Base implementation and DiffSynth both negate the raw transformer
+  output before Euler integration, and their normalized timestep-to-embedding
+  scaling is equivalent. The audit found no direct prediction-sign or
+  timestep-scale inversion.
+- Native CFG computes `positive + scale * (positive - negative)`, while
+  DiffSynth computes `negative + scale * (positive - negative)`. At configured
+  scale 4 these are not identical. Training used the positive path only
+  (`cfg_scale=1`), while evaluation used DiffSynth CFG 4.
+- Step 0 already collapses before any trained LoRA is loaded. Step 400's coarse
+  geometry and the verified 238-target LoRA hot-load exclude a simple claim
+  that the condition path or checkpoint reload was entirely absent, but they
+  cannot distinguish ControlNet semantics, scheduler trajectory, CFG, or their
+  interaction.
+
+Resolving these candidates requires new bounded inference/training controls;
+those are a new diagnostic experiment and are not authorized under the active
+failure hold.
+
+## Gate disposition and exact next action
+
+The automatic metric gate and visual gate both fail. Do not start full teacher
+training, few-step/single-step distillation, or decoder tuning. The active
+governance hold is
+`zimage_blur_teacher_tiny_overfit-a6becc1eff058fec`. Send the failure report to
+the advisor and request authorization for one bounded corrected tiny diagnostic
+that isolates Base/ControlNet compatibility, scheduler shift, CFG, and
+prediction trajectory. Decoder work remains behind both the teacher and
+distillation gates.

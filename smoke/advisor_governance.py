@@ -96,14 +96,36 @@ def _metric_checks(metrics: Mapping[str, Any]) -> dict[str, Any]:
 
 def infer_outcome(evidence: Mapping[str, Any]) -> str:
     gate = evidence.get("automatic_gate_pass")
+    metric_gate = evidence.get("automatic_metric_gate_pass")
+    if gate is False or metric_gate is False:
+        return "failure"
     if gate is True:
         return "pass"
-    if gate is False:
-        return "failure"
+    if metric_gate is True:
+        if (
+            evidence.get("human_visual_review_required") is True
+            and evidence.get("human_visual_review_complete") is not True
+        ):
+            return "information"
+        return "pass"
     status = str(evidence.get("status", ""))
     if "failure" in status or "failed" in status or "error" in status:
         return "failure"
     return "information"
+
+
+def _validate_official_test_protection(evidence: Mapping[str, Any]) -> None:
+    """Require every declared official-test access flag to be explicitly false."""
+
+    flag_names = (
+        "protected_foundir_test_accessed",
+        "official_foundir_test_accessed",
+    )
+    declared = {name: evidence[name] for name in flag_names if name in evidence}
+    if not declared or any(value is not False for value in declared.values()):
+        raise RuntimeError(
+            "advisor reporting refuses evidence without explicit official-test protection"
+        )
 
 
 def validate_decision(
@@ -247,9 +269,7 @@ def emit_report(
         or evidence.get("checkpoint_sha256")
         or "not_applicable"
     )
-    official_access = evidence.get("protected_foundir_test_accessed")
-    if official_access is not False:
-        raise RuntimeError("advisor reporting refuses evidence without explicit official-test protection")
+    _validate_official_test_protection(evidence)
     sealed_access = evaluation_split in {"sealed_internal", "internal_test"} or str(evidence.get("status", "")).startswith("internal_protocol")
     event_key = "\0".join(
         (

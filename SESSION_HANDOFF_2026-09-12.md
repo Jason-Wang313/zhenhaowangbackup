@@ -38,6 +38,60 @@ foundation model and available training/distillation implementations, followed
 by the smallest reproducible teacher gate. No Z-Image weights were present in
 the workspace at the start of this audit.
 
+## Z-Image teacher tiny-overfit terminal failure — 2026-09-14 (LATEST AUTHORITY)
+
+The authorized tiny-overfit job is complete and must not be restarted. It ran
+400/400 optimizer steps on homogeneous 8x `NVIDIA H100 80GB HBM3` with
+`flash_attention_2`, then generated all 64 fixed triptychs and all PSNR/LPIPS
+aggregates. Training wall time was `433.1167 s`. The launcher ended with status
+3 only because the old advisor emitter did not accept the evaluator's explicit
+`official_foundir_test_accessed: false`; training and evaluation had already
+completed successfully.
+
+- config SHA-256:
+  `faba42a614a033b1b53a675555baec7962760ca8cce182083a219a71f59bf94c`;
+- step-200 checkpoint SHA-256:
+  `8412dfd3da2dec67d56bbec94556edb4fa38276c007c8a3b8aaebf27e6a18a38`;
+- step-400 checkpoint SHA-256:
+  `2505c79fd554e76297eaaaa6be0d6e5aabbd75a702a2c11666c19df87697177b`;
+- immutable evaluation result SHA-256:
+  `5e9b8b4a715382bb4d8d5a3e233314da9c34b7b3d7e4c4031663160dbea0e651`.
+
+| Role / state | PSNR input -> output | LPIPS input -> output | Improved |
+|---|---:|---:|---:|
+| train / step 0 | 24.7232 -> 7.6775 | 0.3085 -> 0.8538 | 0/16, 0/16 |
+| train / step 400 | 24.7232 -> 9.3654 | 0.3085 -> 0.8408 | 0/16, 0/16 |
+| visual development / step 0 | 23.9045 -> 8.1023 | 0.3263 -> 0.8460 | 0/16, 0/16 |
+| visual development / step 400 | 23.9045 -> 9.0932 | 0.3263 -> 0.8949 | 0/16, 0/16 |
+
+The fixed visual gate fails: step 0 is blue-grey noise; step 400 recovers some
+coarse layout but has severe green/yellow cast, incorrect content,
+low-frequency blocks, and collapsed texture. This is not restoration. The
+teacher gate therefore fails and full teacher training, distillation, and
+decoder tuning are prohibited.
+
+Read-only code comparison found two strong but unproven incompatibility risks:
+the ControlNet is Turbo-trained but attached to undistilled Base, and the
+published Base scheduler uses static shift 6 while the current DiffSynth path
+used static shift 3. Native and DiffSynth prediction sign/timestep scaling
+match; their CFG formulas differ at scale 4. Do not claim a proven root cause
+until a controlled diagnostic isolates these factors.
+
+The governance emitter now fail-closed accepts either official-test protection
+field (and requires both to be false if both exist), infers failure from
+`automatic_metric_gate_pass: false`, and the runner uses
+`--outcome auto --diagnostic-only --hold-on-failure`. Focused tests pass.
+The immutable result was not changed.
+
+Active hold:
+`zimage_blur_teacher_tiny_overfit-a6becc1eff058fec`. Advisor-ready report:
+`reports/foundir_blur_only_zimage_teacher_tiny_overfit_failure_2026-09-14.md`.
+Exact next action: send that report and request authorization for one bounded
+corrected tiny diagnostic that isolates ControlNet/Base compatibility,
+scheduler trajectory, CFG, and prediction sign. Before a matching recorded
+advisor decision, only read-only audit and report preparation are allowed; do
+not run any new inference or GPU job.
+
 ## Z-Image teacher preflight checkpoint — 2026-09-13T16:16:24Z
 
 The Blur-only undistilled Z-Image teacher tiny-overfit implementation and all

@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Z-Image teacher tiny-overfit 未学会 Blur restoration。是否授权一个有界的 corrected tiny diagnostic，以隔离 ControlNet、scheduler/trajectory、CFG 或 prediction-sign 不兼容？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_teacher_overfit_v1.json",
+    "sha256": "faba42a614a033b1b53a675555baec7962760ca8cce182083a219a71f59bf94c"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_training_pairs_plus_16_source_disjoint_visual_development_pairs",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_teacher_overfit_v1/evaluation/result.json",
+    "sha256": "5e9b8b4a715382bb4d8d5a3e233314da9c34b7b3d7e4c4031663160dbea0e651"
+  },
+  "gate": "zimage_blur_teacher_tiny_overfit",
+  "generated_at": "2026-09-14T03:40:36Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image 6B undistilled 50-step Blur-only teacher with frozen LQ ControlNet and DiT LoRA rank32",
+  "outcome": "failure",
+  "report_id": "zimage_blur_teacher_tiny_overfit-a6becc1eff058fec",
+  "root_cause_or_status": "Z-Image teacher tiny-overfit automatic restoration gate failed; fixed visuals require inspection and the implementation/root cause remains uncertain.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

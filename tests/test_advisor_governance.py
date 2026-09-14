@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from smoke.advisor_governance import check_hold, emit_report, sha256
+from smoke.advisor_governance import check_hold, emit_report, infer_outcome, sha256
 
 
 def write_json(path: Path, payload: dict) -> None:
@@ -144,3 +144,113 @@ def test_proposed_architecture_change_creates_hold_before_experiment(tmp_path: P
     )
     assert hold["hold_id"] == report["report_id"]
     assert "proposed route/architecture change" in hold["reason"]
+
+
+def test_metric_gate_failure_takes_precedence_over_non_failure_status() -> None:
+    assert (
+        infer_outcome(
+            {
+                "status": "zimage_blur_teacher_tiny_overfit_evaluation_complete",
+                "automatic_metric_gate_pass": False,
+                "human_visual_review_required": True,
+                "human_visual_review_complete": False,
+            }
+        )
+        == "failure"
+    )
+    assert (
+        infer_outcome(
+            {
+                "automatic_gate_pass": True,
+                "automatic_metric_gate_pass": False,
+            }
+        )
+        == "failure"
+    )
+
+
+def test_passing_metric_gate_awaits_required_human_visual_review() -> None:
+    evidence = {
+        "automatic_metric_gate_pass": True,
+        "human_visual_review_required": True,
+        "human_visual_review_complete": False,
+    }
+    assert infer_outcome(evidence) == "information"
+    evidence["human_visual_review_complete"] = True
+    assert infer_outcome(evidence) == "pass"
+
+
+@pytest.mark.parametrize(
+    "access_flags",
+    [
+        {"protected_foundir_test_accessed": False},
+        {"official_foundir_test_accessed": False},
+        {
+            "protected_foundir_test_accessed": False,
+            "official_foundir_test_accessed": False,
+        },
+    ],
+)
+def test_report_accepts_each_explicit_official_test_protection_name(
+    tmp_path: Path, access_flags: dict
+) -> None:
+    config, evidence = fixture_files(tmp_path)
+    payload = json.loads(evidence.read_text())
+    payload.pop("protected_foundir_test_accessed")
+    payload.update(access_flags)
+    write_json(evidence, payload)
+    report = emit_report(
+        root=tmp_path,
+        governance_dir=tmp_path / "reports/advisor_governance",
+        gate="protection_alias",
+        evidence_path=evidence,
+        config_path=config,
+        model="diagnostic model",
+        evaluation_split="development",
+        outcome="auto",
+        root_cause_or_status="test evidence",
+        advisor_decision_question="none",
+        diagnostic_only=True,
+        hold_on_failure=False,
+    )
+    assert report["test_access"]["official_foundir_test_accessed"] is False
+
+
+@pytest.mark.parametrize(
+    "access_flags",
+    [
+        {},
+        {"official_foundir_test_accessed": True},
+        {
+            "protected_foundir_test_accessed": False,
+            "official_foundir_test_accessed": True,
+        },
+        {
+            "protected_foundir_test_accessed": True,
+            "official_foundir_test_accessed": False,
+        },
+    ],
+)
+def test_report_rejects_missing_or_conflicting_official_test_protection(
+    tmp_path: Path, access_flags: dict
+) -> None:
+    config, evidence = fixture_files(tmp_path)
+    payload = json.loads(evidence.read_text())
+    payload.pop("protected_foundir_test_accessed")
+    payload.update(access_flags)
+    write_json(evidence, payload)
+    with pytest.raises(RuntimeError, match="official-test protection"):
+        emit_report(
+            root=tmp_path,
+            governance_dir=tmp_path / "reports/advisor_governance",
+            gate="protection_alias",
+            evidence_path=evidence,
+            config_path=config,
+            model="diagnostic model",
+            evaluation_split="development",
+            outcome="auto",
+            root_cause_or_status="test evidence",
+            advisor_decision_question="none",
+            diagnostic_only=True,
+            hold_on_failure=False,
+        )

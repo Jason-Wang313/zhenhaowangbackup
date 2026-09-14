@@ -12,7 +12,7 @@ LOCK="$ROOT/logs/foundir_blur_only_zimage_teacher_overfit_v1.lock"
 MODEL="Z-Image 6B undistilled 50-step Blur-only teacher with frozen LQ ControlNet and DiT LoRA rank32"
 
 cd "$ROOT"
-/usr/bin/python3 smoke/advisor_governance.py check
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 mkdir -p "$ROOT/logs" "$OUTPUT" "$ROOT/.cache/triton/foundir_blur_only_zimage_teacher_v1"
 exec > >(tee -a "$LOG") 2>&1
 
@@ -24,7 +24,7 @@ finish_run() {
     wait "$telemetry_pid" 2>/dev/null || true
   fi
   if [[ "$status" -ne 0 && ! -f "$RESULT" ]]; then
-    /usr/bin/python3 smoke/advisor_governance.py runtime-failure \
+    /usr/bin/python3 "$ROOT/smoke/advisor_governance.py" runtime-failure \
       --gate zimage_blur_teacher_tiny_overfit_runtime_failure --evidence "$CONFIG" \
       --config "$CONFIG" --model "$MODEL" --status "$status" --log "$LOG" || true
   fi
@@ -76,11 +76,11 @@ assert p["human_visual_review_complete"] is False
 print("FOUNDIR_ZIMAGE_TEACHER_RESULT_VERIFY_PASS")
 PY
 
-/usr/bin/python3 smoke/advisor_governance.py emit \
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" emit \
   --gate zimage_blur_teacher_tiny_overfit --evidence "$RESULT" --config "$CONFIG" \
   --model "$MODEL" --split fixed_16_training_pairs_plus_16_source_disjoint_visual_development_pairs \
-  --outcome information \
-  --root-cause-or-status "Z-Image teacher tiny-overfit metrics and fixed visual triptychs are complete; full teacher training remains stopped until the visual result is inspected." \
-  --advisor-decision-question "请肉眼确认 Z-Image teacher 是否真正学会 Blur restoration；若视觉有效，继续完整 Blur-only teacher training。"
+  --outcome auto --diagnostic-only --hold-on-failure \
+  --root-cause-or-status "Z-Image teacher tiny-overfit automatic restoration gate failed; fixed visuals require inspection and the implementation/root cause remains uncertain." \
+  --advisor-decision-question "Z-Image teacher tiny-overfit 未学会 Blur restoration。是否授权一个有界的 corrected tiny diagnostic，以隔离 ControlNet、scheduler/trajectory、CFG 或 prediction-sign 不兼容？"
 
 echo "FOUNDIR_ZIMAGE_TEACHER_OVERFIT_COMPLETE_STOP_FOR_VISUAL_REVIEW"
