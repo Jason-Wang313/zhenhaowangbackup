@@ -6,7 +6,77 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Deterministic padding repair CPU-ready — 2026-09-14T09:26:26Z (LATEST AUTHORITY)
+## Round-1 reproducibility terminal pass — 2026-09-14T09:42:45Z (LATEST AUTHORITY)
+
+Supplement finished normally at `2026-09-14T09:38:26Z`, status 0. All 12 new
+strict-deterministic fits completed, and all 12 immutable ordinary fits were
+reused: combined 24/24. Root result SHA-256 independently verified:
+`9d85b92bc4cfc25d7843379b17e7221875e6b87ee9303a85e976609ff11438d3`.
+Root: `checkpoints/foundir_blur_only_zimage_repro_repair_v1/`.
+Governance report: `zimage_repro_repair_v1-5c5e584b89148a99`.
+
+ALL 8 strict same-GPU repeat/instrumentation comparisons pass EXACT first
+gradient, first-update, final-weight and every snapshot-latent equality. Both
+strict cross-device replicate comparisons also pass all these exact checks.
+This establishes a reproducible execution route for the tested controls.
+The repaired CUDA padding path passes its operator and full-model equivalence
+checks. Ordinary execution was non-repeatable; this controlled execution
+bundle resolves that measured issue, but does not isolate a unique responsible
+kernel or prove the cause of every historical training collapse.
+
+Final off_b matches off_a/on exactly: strong-blur RGB 26.6786/.4183,
+near-clean mixed 34.7077/.0381. Quality still FAILS; near-clean PSNR is below
+36.883 dB input, strong-blur perceptual fidelity remains poor, and near-clean
+preclip gradient peaks at 1.342907. Determinism is not a cure for all optimization
+instability and is not evidence of full-data generalization. No decoder tuning,
+development-GT optimization or protected-test access occurred in this batch.
+
+Exact next task: round 1 is complete; do NOT run more reproducibility/LR sweeps
+or rerun this supplement. Review the fixed visuals and collected layer/loss
+evidence, then freeze ONE evidence-supported round-2 correction/learnability
+gate on the existing 16 train/16 source-disjoint development crops, using the
+verified deterministic execution and padding repair. No full teacher training
+or successful restoration model is established yet. Overall teacher/student
+goal remains open; existing user authority permits continuation without a new
+advisor round. This `finished?` turn only audited results and updated handoff.
+
+## Padding repair GPU live evidence — 2026-09-14T09:37:09Z (historical)
+
+Supplement launched 09:28:24Z on H100, revision 842d528. Workers 2/3/6/7
+are alive per advancing shared logs/telemetry; GPUs 0/1/4/5 are deliberately
+idle because ordinary controls are reused. No terminal marker or root result
+yet. Do not restart the supplement or rerun completed ordinary controls.
+
+All four workers passed actual CUDA padding-operator and full 512x512 model
+forward/backward repair gates. Within each worker, original/patched/strict_a/
+strict_b outputs and ALL trainable-gradient hashes match exactly. The original
+indexing error is absent and strict determinism remains enabled. This now
+establishes GPU compatibility for the tested path, not just CPU readiness.
+
+Eight of 12 new fits completed: off_a and on at 200 steps on all four workers.
+For EVERY off_a/on pair, first gradients, first updated weights, final weights
+and all 14 snapshot rows are exactly identical. Both device replicates also
+give identical reported final results. Final off_b repetition is running at
+step >=100/200 on all four workers; wait for it and unified artifact validation
+before declaring the entire same-GPU repeat gate complete.
+
+| Objective / record | off_a = on PSNR / LPIPS | Maximum preclip gradient |
+|---|---:|---:|
+| Strong blur RGB / 0042483 (ranks 2,6) | 26.6786/.4183 | .174144 |
+| Near-clean mixed / 0091486 (ranks 3,7) | 34.7077/.0381 | 1.342907 |
+
+Reproducibility is improving, but image-quality failure is not repaired by
+this evidence: near-clean PSNR remains below its 36.883 dB input, strong-blur
+RGB LPIPS remains poor, and near-clean gradient clipping still activates.
+These are two training-image fits, not generalization. Keep the runtime
+repair conclusion separate from quality, stability and unique-kernel causality.
+
+Exact next task: finish monitoring remaining four off_b phases, audit merged
+12-reused + 12-new result/report and identities, then interpret the round-1
+controls before designing the single agreed round-2 correction/learnability
+gate. User asked only `check` this turn; no code or new job was launched.
+
+## Deterministic padding repair CPU-ready — 2026-09-14T09:26:26Z (historical)
 
 User explicitly said `execute` after the failed CUDA controls. Implemented a
 bounded round-1 runtime repair, NOT a new experimental sweep or round-2 gate.

@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Continue within the existing user-authorized two-round decision budget; no additional advisor round.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_repro_repair_v1.json",
+    "sha256": "806f60d6d8a92363c5c9a5a29039e21b9cb895c70e8a1e1804c5219bd674b840"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "two_existing_training_crops_only",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_repro_repair_v1/result.json",
+    "sha256": "9d85b92bc4cfc25d7843379b17e7221875e6b87ee9303a85e976609ff11438d3"
+  },
+  "gate": "zimage_repro_repair_v1",
+  "generated_at": "2026-09-14T09:38:25Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image repaired deterministic controls with immutable ordinary-fit reuse",
+  "outcome": "information",
+  "report_id": "zimage_repro_repair_v1-5c5e584b89148a99",
+  "root_cause_or_status": "Deterministic padding repair supplement finished; inspect CUDA equivalence gates and combined controls. No automatic quality pass.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
