@@ -6,6 +6,71 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Scale pilot terminal result — 2026-09-14T14:29:28Z (LATEST AUTHORITY)
+
+The user-authorized conditional-teacher pilot finished normally:2000/2000
+additional steps on8xH100, terminal status0, revision57b268b. No process remains
+to monitor. This is a quality-gate failure, not a runtime failure. Result SHA
+`45b74d23629f6fe7a5f3d73d6f28891f29f044e86461ee9df220f5a49a984097`;
+step1000/2000 SHAs `aa66339f3d61db0e5977e44014eafc1346799ff977503561f7e78d1231675f69` /
+`cf4a9b0f710f4026816df2898e10d299624139aa5472eec0610297540b465c54`.
+Governance report `zimage_conditional_teacher_pilot-67b107f92398174c`.
+
+Expanded128-development curve (input23.341954/.388808): step0
+19.780816/.472593; step1000 19.643882/.432670; step2000 20.493551/.398754.
+Thus final improves over initialization by+.712735dB and.073839 LPIPS, and
+over step1000 by+.849670dB and.033916 LPIPS. Scaling yielded real late pilot
+improvement, but final remains worse than input by2.848403dB and.009946 LPIPS;
+only8/128 improve PSNR and66/128 improve LPIPS. BOTH unchanged pilot metric
+checks fail. Do not report SOW/teacher success or start distillation from it.
+
+Fixed16 training outputs: step0 21.620630/.278305; step1000
+19.982077/.331859; step2000 20.746601/.300373, versus input24.723185/.308547.
+They recover after step1000 but remain3.976583dB below input. This set is only
+a fixed qualitative anchor, not representative of all2048 pilot sources.
+
+Artifact audit:2000 ordered finite rows,batch32, all2048 records presented,
+maximum preclip norm.782465 (<clip1),8/8 rehearsal artifacts pass,2 exact
+formal checkpoints,6 aggregates,432 triptychs plus432 sidecars. No error/OOM/
+nonfinite/protected access. Visual spot-check of development0000008,0067975,
+0091379,0109426 shows increased apparent sharpness in some outputs, but altered
+textures/edges/content; three of four worsen both metrics, while0109426 improves
+LPIPS only. Visual quality therefore does not rescue the failed metric gate.
+
+Important interpretation: the result validates the user's concern that it was
+premature to infer scaling could not help. Development improves materially by
+the final checkpoint, and the sampled curve has not plateaued. It does NOT prove
+that more steps/full scale will cross input or SOW, nor prove it will not. The
+next action should explicitly decide between extending this same diverse-data
+trajectory with another predeclared checkpoint and changing the fidelity
+objective/interface; do not silently call the failed pilot a teacher and distill.
+No training/code/threshold change was made during this terminal check. Tiny and
+pilot failures remain honestly labeled. Protected scope remains unchanged.
+
+## Scale pilot live check — 2026-09-14T13:45Z (historical)
+
+The authorized pilot IS running; do not restart it. Started13:05:49Z on8xH100,
+revision57b268b. Latest read898/2000 ordered finite training rows, each batch32;
+all2048 training records have been presented. Eight rehearsal artifacts say pass.
+Runtime records the explicit user-authorized scaling exception. Step0 fixed
+train metrics exactly reproduce tiny step1200:21.620630/.278305. Expanded128-dev
+baseline is19.780816/.472593 vs input23.341954/.388808; this is initialization,
+not post-scaling quality. Only step0 evaluations exist so far.
+
+Recent200-step speed2.182s/step. First100 vs latest100 stochastic mean loss
+.472793 ->.456824: modest reduction, NOT a PSNR/LPIPS improvement claim.
+All logged gradients finite; maximum preclip norm.453973 (<clip1). Recent GPU
+snapshot shows all8 active49--86%,24034MiB each; no crash/OOM/terminal marker.
+Approximate remaining45--50min including1000/final evaluations; revise with live
+timing. Next quality evidence is step1000, then complete the fixed2000-step run.
+
+User challenged repeated reluctance to scale despite improving tiny curves.
+Explanation: prior tiny-pass prerequisite and historical failure/advisor holds
+were applied too rigidly. Latest explicit scaling authority already supersedes
+that admission restriction. Preserve honest failed-tiny labels, but do not
+interpret them as proof scaling cannot work or recreate an advisor/model-switch
+pause. No training code, thresholds or jobs changed in this status turn.
+
 ## User-authorized scaling after failed tiny — 2026-09-14T12:56:33Z (LATEST AUTHORITY)
 
 User explicitly said: “最新训练曲线仍在改善(if so, why don't we just proceed,
