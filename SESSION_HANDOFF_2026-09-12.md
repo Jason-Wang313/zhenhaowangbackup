@@ -6,7 +6,61 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Optimization root-cause audit CPU-ready — 2026-09-14T07:08:32Z (LATEST AUTHORITY)
+## Optimization audit terminal evidence — 2026-09-14T07:17:44Z (LATEST AUTHORITY)
+
+All eight independent 200-step probes completed on homogeneous 8x H100, status
+0. This is diagnostic completion, not restoration success. The audit verified
+8 unique arm/record results, all 8 saved checkpoint hashes, 40 finite snapshots,
+40 triptychs, nonzero actual first-step updates, and false protected-test and
+development-GT-optimization flags. Immutable result SHA-256:
+`7d9eac4a76675190fb1202e30e937fb3762167c81e1a8fb4d03fa6b91eb96ddf`.
+Report ID: `zimage_optimization_audit_v1-124563377f0b169d`.
+
+| Arm | Strong-blur 0042483 final PSNR/LPIPS | Near-clean 0091486 final PSNR/LPIPS |
+|---|---:|---:|
+| frozen endpoint start | 21.3415/.4797 | 32.6514/.0981 |
+| latent RGB oracle | 38.2553/.0240 | 45.5702/.0064 |
+| latent mixed oracle | 37.2272/.0038 | 43.6378/.0013 |
+| LoRA RGB | 13.8618/.6822 | 36.7289/.0500 |
+| LoRA mixed | 25.4717/.1975 | 29.2787/.0762 |
+
+Direct latent optimization from the SAME initial predictions converges well
+through the original frozen decoder for both objectives. Visual review of the
+strong-blur latent-mixed oracle is close to GT. This supports decoder/latent
+optimization feasibility for these examples, not a deployable restoration
+method: the oracle optimizes against each training GT. A free latent can even
+beat encoder-produced GT roundtrip PSNR; the roundtrip is not a strict bound on
+all possible optimized latents.
+
+LoRA behavior reveals important instability. Strong-blur LoRA RGB loss decreases
+to .0094127 at step 180 but reaches .1507502 at step 200, with pre-clipping
+gradient norm 134,864.390625; the post-update step-200 image collapses to
+13.8618 dB with severe artifacts. Gradient clipping at norm 1 was active.
+Near-clean LoRA mixed reaches 34.2864/.0349 at step 100, then degrades to
+29.2787/.0762 at step 200 (pre-clipping gradient norm 1.88874). Strong-blur
+LoRA mixed continues learning but remains substantially worse than the oracle.
+No NaN/OOM/NCCL occurred; these are finite optimization/scientific failures.
+The sparse log cannot establish the exact first unstable step between 180 and
+200 for strong-blur LoRA RGB.
+
+Initial 512x512 weighted LPIPS gradient is 2.38x RGB for strong blur and 6.79x
+for near clean; pixel/LPIPS cosines are .0032 and .1664. Thus LPIPS gradients
+are large but not strongly opposed at initialization. Both latent objectives
+succeed, while one LoRA RGB and one LoRA mixed arm deteriorate. The hypothesis
+that simply deleting LPIPS fixes the system is NOT supported.
+
+Exact next task: investigate DiT/LoRA optimization stability at LR 5e-5,
+including module-wise activation/gradient behavior and actual update sizes,
+with a lower-step-size controlled comparison and dense pre-failure checkpoints
+before scaling data or training duration. Distinguish optimizer instability,
+BF16 activation/normalization sensitivity, and inherited adapter conditioning;
+the current evidence does not isolate a unique cause. Preserve all eight probes;
+do not rerun or adopt the fitted oracle as a model. Keep VAE frozen and retain
+both metrics. User already authorized continuation without another advisor
+round; scientific interpretation/design merits Astra high, execution Sol high,
+monitoring Sol medium. Overall teacher/student restoration goal remains open.
+
+## Optimization root-cause audit CPU-ready — 2026-09-14T07:08:32Z (historical)
 
 After the decoder failure, the user requested deeper reasoning, received an
 Astra-high recommendation, and said `execute`. The current task is a controlled

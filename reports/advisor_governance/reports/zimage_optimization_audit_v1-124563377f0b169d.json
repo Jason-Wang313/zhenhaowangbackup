@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Continue under existing user authorization without another advisor round.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_optimization_audit_v1.json",
+    "sha256": "a28ca0c20214f649a0ef2e22f7772fceb737154e80050e1c63214823e2d81c31"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "two_existing_training_crops_only",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_optimization_audit_v1/result.json",
+    "sha256": "7d9eac4a76675190fb1202e30e937fb3762167c81e1a8fb4d03fa6b91eb96ddf"
+  },
+  "gate": "zimage_optimization_audit_v1",
+  "generated_at": "2026-09-14T07:17:43Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image training-only latent/LoRA objective probes",
+  "outcome": "information",
+  "report_id": "zimage_optimization_audit_v1-124563377f0b169d",
+  "root_cause_or_status": "Eight independent probes complete; interpret latent vs LoRA and RGB vs mixed before next design.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
