@@ -6,7 +6,57 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Decoder-tail CPU-ready — 2026-09-14T06:47:54Z (LATEST AUTHORITY)
+## Decoder-tail terminal failure — 2026-09-14T06:55:09Z (LATEST AUTHORITY)
+
+The user launched the decoder gate; it completed 400/400 steps normally on
+8x H100 with status 0, FlashAttention 2, global batch 8 and 45.0741 seconds
+for optimization plus in-loop snapshots. Observed training GPU utilization
+was 95--97%, memory 25,916 MiB/GPU. No runtime failure occurred. The frozen
+student baseline exactly reproduced the previous endpoint result.
+
+| Split | Input PSNR/LPIPS | Frozen student | Decoder step 200 | Decoder step 400 |
+|---|---:|---:|---:|---:|
+| train | 24.7232/.3085 | 25.4045/.2550 | 25.6140/.2136 | 25.9623/.1930 |
+| development | 23.9045/.3263 | 22.8776/.3520 | 22.8318/.3170 | 22.6640/.3094 |
+
+Automatic gate is false. The decoder improves perceptual metrics but loses
+development PSNR, and training-GT reconstruction anchoring at weight .1 does
+not preserve the original decoder. Development GT roundtrip degrades from
+40.7184/.0076 to 37.6282/.0323 at step 200 and 34.8313/.0487 at step 400;
+both trained snapshots violate the .02 LPIPS retention threshold. Step 400
+also violates the 35 dB retention threshold. Do not adopt either decoder as
+a passing candidate or launch full training from this result.
+
+Review of two fixed development triptychs (0055608 bus and 0092666 leaves)
+shows reduced fine grain but remaining smeared/artificial texture, ringing,
+and insufficient recovery of blurred geometry/detail. This intervention
+establishes that the decoder can alter perceptual artifacts, while this
+bounded tail/anchor recipe does not solve restoration fidelity. It does not
+prove that a different decoder intervention could never work. The small
+16-training-crop experiment also cannot establish full-data generalization.
+
+Audit verified 8 snapshots of 16 unique records, 128 PNG triptychs, independently
+recomputed output PSNR/LPIPS aggregates, terminal marker, checkpoint/result
+hashes, and false sealed/official-test flags. Immutable identities:
+
+- result `checkpoints/foundir_blur_only_zimage_decoder_tail_v1/result.json`:
+  `cf6d7f0e6db7b72432fed03b76e1446f6d9bbbd771604a8b80a2cd65682ede46`;
+- step 200: `04fb194b6a4af94f9017c5841e2611dba245e9aa0988fa53bf754e773f5bf673`;
+- step 400: `b755b0834b802c85f8f2c6bb9719158c68ce1be0107a5dc8cda280cd26574ce2`;
+- report JSON: `ab3c3e0329e710be3941c8d5cf7b0cf8e714f1a77b128cdf33af9a7613afccc5`;
+- report Markdown: `f11b50a309ccbe19222c7084fdfa4c9c5663cb4ec29c38edededc1849303caf8`.
+
+Report ID: `zimage_decoder_tail_v1-779bf2f253c8387e`. No new advisor round is
+required under the user's existing authorization. The current agent already
+is Astra; do not create a redundant model-switch pause. Exact next scientific
+task is to address the upstream restoration mapping and the inadequacy of
+learning from 16 fixed crops before committing substantial GPU training.
+Keep the original frozen VAE as the reference; do not blindly extend this
+failed decoder run. Freeze a concrete fidelity-focused next design and its
+learnability/development checks before launch. Teacher/full-training quality
+remains unresolved; the overall restoration objective is not complete.
+
+## Decoder-tail CPU-ready — 2026-09-14T06:47:54Z (historical)
 
 The user switched to Astra and said `execute`; the previous model-switch pause
 is resolved. The next authorized experiment is documented in
