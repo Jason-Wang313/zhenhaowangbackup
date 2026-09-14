@@ -78,7 +78,7 @@ PY
 /usr/bin/python3 "$ROOT/smoke/advisor_governance.py" emit \
   --gate zimage_blur_vae_ceiling_solver_sweep_v1 --evidence "$RESULT" --config "$CONFIG" \
   --model "$MODEL" --split fixed_16_training_pairs_plus_16_source_disjoint_visual_development_pairs \
-  --outcome success --diagnostic-only \
+  --outcome information --diagnostic-only \
   --root-cause-or-status "Frozen v3 teacher VAE ceiling and solver-step sweep completed; use the measured ceiling and best step count to choose distillation and decoder fine-tuning." \
   --advisor-decision-question "No new advisor decision is required; teacher distillation and conditional decoder tuning were already explicitly authorized by the advisor and user."
 

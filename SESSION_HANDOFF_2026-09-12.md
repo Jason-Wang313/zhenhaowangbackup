@@ -6,6 +6,80 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Z-Image VAE ceiling and solver sweep terminal result — 2026-09-14T06:09:50Z (LATEST AUTHORITY)
+
+The frozen-v3 diagnostic started at `2026-09-14T06:04:18Z` and completed all
+scientific computation on homogeneous 8x `NVIDIA H100 80GB HBM3` with
+`flash_attention_2`. Each rank used approximately 22.9GB. It produced 14
+aggregate snapshots, 224 finite per-image metric rows, and all 224 fixed
+triptychs. An independent terminal audit passed exact config/checkpoint,
+record-count, record-identity, aggregate, artifact-count, and protected-data
+checks.
+
+The runner ended at `2026-09-14T06:07:41Z` with status 2 only after the
+complete immutable `result.json` had been written and verified: its final
+advisor-report command used unsupported outcome spelling `success` instead of
+`information`. This was a post-result reporting bug, not a model, CUDA, NCCL,
+or evaluation failure. The runner is corrected, and the information report was
+emitted manually without rerunning any inference.
+
+Immutable result identities:
+
+- config SHA-256:
+  `062d697b9a0e29728affd983212c27fcff2325a6764099bfca7b4f36b9953292`;
+- frozen v3 step-1200 teacher SHA-256:
+  `e583e4871d8c498da655e4350e4931662f9310bc197d3d089f9c4241e6625323`;
+- result:
+  `checkpoints/foundir_blur_only_zimage_vae_ceiling_v1/result.json`, SHA-256
+  `b33eac791bd03a61783e0ad5ca288de75ed7e273fd832865de0c423b8a3cc431`;
+- governance report JSON SHA-256:
+  `9b3d52bb8f7b7ce6a1ae8cd1aa025a817d9e4c0d7c5232a8d1239fd2d329fbe4`;
+- governance report Markdown SHA-256:
+  `062dedf4bae46e5c7afa9939590f7d7699dc5790cb0bebab224f5f963bb02522`.
+
+VAE ceiling:
+
+| Split | Input PSNR / LPIPS | GT VAE roundtrip PSNR / LPIPS |
+|---|---:|---:|
+| train | 24.7232 / 0.3085 | 41.3357 / 0.0073 |
+| development | 23.9045 / 0.3263 | 40.7184 / 0.0076 |
+
+All four VAE ceiling checks pass with approximately 16.6--16.8dB PSNR
+headroom. The frozen VAE can represent the GT crops accurately; it is not the
+current dominant quality bottleneck. LQ VAE roundtrip stays close to input,
+confirming that ordinary encode/decode distortion also does not explain the
+teacher failure.
+
+Frozen v3 solver curve:
+
+| Steps | Train PSNR / LPIPS | Development PSNR / LPIPS |
+|---:|---:|---:|
+| input | 24.7232 / 0.3085 | 23.9045 / 0.3263 |
+| 1 | 23.1627 / 0.3718 | 22.5707 / 0.4108 |
+| 2 | **24.0993** / 0.3139 | **22.7699** / 0.3607 |
+| 4 | 23.8649 / 0.2650 | 22.1956 / 0.3140 |
+| 8 | 23.8768 / 0.2194 | 22.0329 / 0.2732 |
+| 16 | 23.7494 / 0.2050 | 21.9650 / 0.2591 |
+| 50 | 23.5666 / **0.2007** | 21.9002 / **0.2536** |
+
+Two steps maximize PSNR and 50 steps minimize LPIPS on both splits, but no
+step simultaneously improves aggregate PSNR and LPIPS over input;
+`teacher_metric_candidate_steps` is empty and `solver_candidate_exists` is
+false. Fixed visual review confirms the tradeoff: 2-step outputs preserve more
+of the input but still add grain/web texture and recover too little blur;
+50-step outputs sharpen more aggressively but visibly overprocess edges and
+textures, while strong-blur examples remain far from GT. Distilling this v3
+teacher naively would compress a known failure rather than repair it.
+
+This is the explicit model-strategy decision point requested by the user.
+Stop Sol here and ask the user to resume with **GPT-6 Astra medium** before
+selecting and implementing the authorized few-step/single-step distillation
+and/or decoder/restoration-interface correction. Distillation and decoder
+tuning remain authorized without another advisor request, but the next design
+must account for the evidence that the VAE ceiling is healthy and the learned
+flow/teacher is the bottleneck. Continue to prohibit Qwen degradation
+conditioning, mixed degradation, sealed internal, and official FoundIR test.
+
 ## Z-Image v3 terminal result and authorized post-v3 route — 2026-09-14T05:51:36Z (LATEST AUTHORITY)
 
 The solver-aligned Blur-only Z-Image paired-flow v3 continuation completed

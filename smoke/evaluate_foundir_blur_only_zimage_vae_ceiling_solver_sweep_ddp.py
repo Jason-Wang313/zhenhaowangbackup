@@ -165,7 +165,7 @@ def main() -> None:
     local_rank = int(os.environ["LOCAL_RANK"])
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
-    dist.init_process_group("nccl")
+    dist.init_process_group("nccl", device_id=device)
     rank, world = dist.get_rank(), dist.get_world_size()
     if world != int(config["distributed"]["required_world_size"]):
         raise RuntimeError("diagnostic world size changed")
