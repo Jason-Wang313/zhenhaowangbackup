@@ -1,0 +1,46 @@
+{
+  "advisor_decision_question": "Close the agreed two-round decision budget after visual review; no additional advisor request was required for this authorized recovery.",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_zimage_latent_first_v2/step_001200.safetensors",
+    "sha256": "b90f5782e1ffa5db3c78ed53295472a5b3aac307d423ac03c067c3a00e23db92"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_latent_first_v2.json",
+    "sha256": "6c6cfc24febcaae8d94b2ffbac188d6f09abff67421fd38a4b08d3723edc884d"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_train_16_source_disjoint_development_crops",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_latent_first_v2/result.json",
+    "sha256": "f2924d157f9fe9c2814122ec96f1e1cb5fa543016df0b61cdbfa84f303b8800f"
+  },
+  "gate": "zimage_latent_first_v2",
+  "generated_at": "2026-09-14T11:17:50Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {
+    "blur": {
+      "metrics": {
+        "lpips": 0.4634617902338505,
+        "psnr": 21.42928180213223
+      },
+      "pass": {
+        "lpips": false,
+        "psnr": false
+      },
+      "sow": {
+        "lpips": 0.18,
+        "psnr": 25.9
+      }
+    }
+  },
+  "model": "Z-Image latent-first supervised endpoint repair v2, original frozen VAE",
+  "outcome": "failure",
+  "report_id": "zimage_latent_first_v2-69d1a4923524a7cd",
+  "root_cause_or_status": "Bounded round-2 recipe finished after exact strict baseline replay. Review both metrics and visuals; no successful teacher distillation or automatic full-data admission.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

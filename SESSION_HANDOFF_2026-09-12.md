@@ -6,7 +6,60 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Round-2 v2 GPU live — 2026-09-14T11:11:17Z (LATEST AUTHORITY)
+## Round-2 v2 terminal scientific failure — 2026-09-14T11:21:43Z (LATEST AUTHORITY)
+
+V2 completed all 1200/1200 steps normally at 11:17:51Z, terminal status0,
+8xH100. This is a SCIENTIFIC QUALITY FAILURE, not a runtime failure. Independent
+audit passed 1200 ordered finite training rows, six exact FP32 checkpoints
+(476 tensors each), 14 complete aggregates, 224 triptychs, 224 hash-matching
+sidecars, eight exact rehearsals, config/result identities and false protected
+flags. Result SHA:
+`f2924d157f9fe9c2814122ec96f1e1cb5fa543016df0b61cdbfa84f303b8800f`.
+Final checkpoint SHA:
+`b90f5782e1ffa5db3c78ed53295472a5b3aac307d423ac03c067c3a00e23db92`.
+
+Final train succeeds locally: input 24.7232/.3085 -> 29.2780/.1247, latent
+MSE .186149 -> .094283. Development decisively fails: input 23.9045/.3264 ->
+21.4293/.4635; PSNR gain -2.4753dB, LPIPS worsens .1371, zero of16 improves
+PSNR, latent MSE rises .235011 -> .287624. The joint phase improves training
+but not development. One finite gradient spike at joint step891 reaches
+2543.121 preclip and is clipped; development had already worsened by step800,
+so it cannot alone explain failure.
+
+Human fixed-image review is complete and FAILS. Training statue 0042483 shows
+memorized sharpening but retains artificial smear/web texture; near-clean
+0091486 is unnecessarily degraded (36.883 ->31.757dB, .047 ->.085 LPIPS).
+Development 0092666 gains heavy grain/ghosting; 0100870 text is distorted;
+0055608 bus geometry has severe blocks/warping; 0060122 retains blur plus web
+texture. These outputs are not credible restoration.
+
+Do not select an earlier checkpoint: none passes development and step1200 was
+predeclared. Do not launch full training, label this teacher/distillation,
+tune decoder from this failed model, or start another LR/step sweep. The agreed
+two-round decision budget is complete. The evidence supports a formulation/
+generalization problem: 79M LoRA parameters memorize 16 crops but do not
+generalize to source-disjoint crops.
+
+Detailed audit:
+`reports/zimage_latent_first_v2_terminal_audit_2026-09-14.md`, SHA
+`3983d70be38dd6ca1e0c7e479f3b9c3fcb7828ad367ad7b25ce9f9b98b2adb76`.
+Machine audit JSON SHA:
+`5898bafc056174826c0da93180241082c0585f7b30e460a778db3dcb9180ea00`.
+Governance report: `zimage_latent_first_v2_terminal_audit-2c4419999557a6e2`,
+JSON/Markdown SHAs `9bf8ea827dbfa6babdc051c3fc5d2e1c779b07bbd6bd343ffa02b198288e903a` /
+`d17d1d4a804d720d5e4ba064b69d0fbe2596784eaa1db00c846e90db5a9f3d1b`.
+No new hold/advisor round is requested.
+
+MANDATORY next action under the recorded model contract: stop GPU execution
+and tell the user to switch to Astra medium before choosing a materially new
+scientific formulation/data regime. Sol monitoring/implementation is no longer
+the bottleneck. Astra must reason from all teacher/endpoint/decoder/oracle/
+repro evidence and avoid another cosmetic objective sweep. Do not implement
+or launch the redesign during this status turn. Qwen degradation conditioning,
+mixed degradation, sealed internal, official FoundIR test and development-GT
+optimization remain prohibited.
+
+## Round-2 v2 GPU live — 2026-09-14T11:11:17Z (historical)
 
 User launched v2 on homogeneous 8x H100 at 11:04:50Z, revision 3902381.
 The shared log and telemetry prove it is live; do not restart or duplicate.

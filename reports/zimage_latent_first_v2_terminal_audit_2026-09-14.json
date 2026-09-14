@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "zimage_latent_first_v2_scientific_failure",
+  "classification": "supervised_endpoint_repair_not_teacher_distillation",
+  "config": "configs/foundir_blur_only_zimage_latent_first_v2.json",
+  "config_sha256": "6c6cfc24febcaae8d94b2ffbac188d6f09abff67421fd38a4b08d3723edc884d",
+  "checkpoint": "checkpoints/foundir_blur_only_zimage_latent_first_v2/step_001200.safetensors",
+  "checkpoint_sha256": "b90f5782e1ffa5db3c78ed53295472a5b3aac307d423ac03c067c3a00e23db92",
+  "result": "checkpoints/foundir_blur_only_zimage_latent_first_v2/result.json",
+  "result_sha256": "f2924d157f9fe9c2814122ec96f1e1cb5fa543016df0b61cdbfa84f303b8800f",
+  "automatic_metric_gate_pass": false,
+  "human_visual_review_required": true,
+  "human_visual_review_complete": true,
+  "human_visual_gate_pass": false,
+  "quality_gate_pass": false,
+  "full_training_started": false,
+  "summary": {
+    "task_metrics": {
+      "blur": {
+        "psnr": 21.42928180213223,
+        "lpips": 0.4634617902338505
+      }
+    },
+    "training_final": {
+      "input_psnr": 24.72318473823548,
+      "output_psnr": 29.278012580940334,
+      "input_lpips": 0.3085470166988671,
+      "output_lpips": 0.12473371624946594,
+      "latent_mse_start": 0.18614855455234647,
+      "latent_mse_final": 0.09428334981203079
+    },
+    "development_final": {
+      "input_psnr": 23.904540711119104,
+      "output_psnr": 21.42928180213223,
+      "input_lpips": 0.3263567185495049,
+      "output_lpips": 0.4634617902338505,
+      "latent_mse_start": 0.23501055035740137,
+      "latent_mse_final": 0.28762444388121367
+    }
+  },
+  "artifact_audit": {
+    "passed": true,
+    "training_rows": 1200,
+    "checkpoints": 6,
+    "checkpoint_tensors": 476,
+    "checkpoint_dtype": "float32",
+    "aggregate_snapshots": 14,
+    "triptychs": 224,
+    "sidecars": 224,
+    "cuda_rehearsals": 8,
+    "maximum_preclip_gradient": 2543.12109375,
+    "clipped_steps": 1,
+    "clipped_step": 891
+  },
+  "visual_findings": [
+    "Training examples can be memorized and sharpened, but retain artificial smearing and web or block texture relative to GT.",
+    "Development outputs contain severe grain, grid or block artifacts, ghosting and distorted geometry or text.",
+    "The near-clean training record 0091486 is unnecessarily degraded from 36.883 to 31.757 dB and from .047 to .085 LPIPS.",
+    "The strongest development regression 0092666 changes from 30.097 to 23.778 dB and .152 to .392 LPIPS."
+  ],
+  "next_action": "stop_two_round_budget_and_use_astra_medium_for_new_scientific_formulation",
+  "decoder_finetuned": false,
+  "teacher_imitation": false,
+  "development_gt_optimized": false,
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}
