@@ -6,7 +6,32 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Round-2 v2 recovery verification — 2026-09-14T10:56:00Z (LATEST AUTHORITY)
+## Round-2 v2 GPU live — 2026-09-14T11:11:17Z (LATEST AUTHORITY)
+
+User launched v2 on homogeneous 8x H100 at 11:04:50Z, revision 3902381.
+The shared log and telemetry prove it is live; do not restart or duplicate.
+All eight CUDA rehearsals pass. Complete 16+16 strict baseline replay passes
+all five checks: current repeats are exact, initial weights have the common
+expected digest, historical maximum per-record drift is .036730dB/.001476
+LPIPS, and maximum role-aggregate drift is .001960dB/.0001103 LPIPS. Thus v1's
+missing rows reflect bounded historical/current execution drift, not a wrong
+checkpoint/input. Baseline report is preserved in v2 output.
+
+At 11:11:17Z training is live at 616/1200, latent-only phase, no error or
+terminal result. Checkpoints/snapshots 200/400/600 are complete. Step600 train
+improves versus input to 27.6990/.2821 and latent MSE .114695, but development
+worsens to 21.5719/.4651 and latent MSE .262173. This shows substantial early
+overfit during latent-only training. Do NOT stop/cherry-pick: the frozen design
+requires finishing step800 then evaluating the joint RGB/LPIPS phase through
+predeclared final step1200. This is intermediate evidence, not a final gate.
+Eight GPUs show advancing telemetry around 26.3GiB each. No OOM/traceback.
+
+Exact monitor: `tail -f logs/foundir_blur_only_zimage_latent_first_v2.log`.
+Wait for step800/1000/1200, result/report and terminal marker. After completion,
+audit hashes/counts/metrics and visually inspect fixed train/development images
+before judging quality or taking another action. No protected data accessed.
+
+## Round-2 v2 recovery verification — 2026-09-14T10:56:00Z (historical)
 
 User said `execute`. The current v1 runtime hold is explicitly resolved as
 `resume_same_mainline` by the existing advisor authorization plus this user
