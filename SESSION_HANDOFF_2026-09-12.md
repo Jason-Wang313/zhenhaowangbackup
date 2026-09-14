@@ -6,7 +6,98 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Round-2 latent-first CPU-ready — 2026-09-14T10:04:08Z (LATEST AUTHORITY)
+## Round-2 v2 recovery verification — 2026-09-14T10:56:00Z (LATEST AUTHORITY)
+
+User said `execute`. The current v1 runtime hold is explicitly resolved as
+`resume_same_mainline` by the existing advisor authorization plus this user
+instruction; decision SHA-256
+`5f5edd222ebb56bf86f5bc2656d2f6647930d6725153d0cb4a67f4a995acfb44`.
+This records the user's instruction and does NOT fabricate a new advisor reply.
+
+V2 preserves all v1 failure evidence and uses a new output root. Scientific
+training recipe/schedule/data/model are unchanged. Before step1, it saves all
+32 baseline rows and repeats the complete baseline twice. It requires exact
+current repeat latent/RGB/image/metric equality and exact restored checkpoint
+weights across ranks. It then fully reports historical endpoint deltas and
+requires predeclared maxima: per-record .05dB/.005 LPIPS and role-aggregate
+.02dB/.002 LPIPS. These limits were frozen before the two missing v1 rows were
+observed and do not substitute for exact current replay. Any failure writes
+complete evidence and stops before training.
+
+Config: `configs/foundir_blur_only_zimage_latent_first_v2.json`, SHA-256
+`6c6cfc24febcaae8d94b2ffbac188d6f09abff67421fd38a4b08d3723edc884d`.
+Design: `reports/zimage_latent_first_v2_recovery_design_2026-09-14.md`.
+Governance design report: `zimage_latent_first_v2_recovery_design-e775e8893c6f6c02`.
+Sixty-one focused tests pass. Full six-weight/parent/failure-evidence hashes,
+both H100/H200 inventory profiles, Python compilation and shell syntax pass.
+Real 6B 64x64 CPU rehearsal passes both stages, exact repeats and initial reset;
+the initial/gradient/update digests exactly match prior CPU evidence. Evidence:
+`logs/zimage_latent_first_v2_tests.log`,
+`logs/zimage_latent_first_v2_preflight.log`,
+`logs/zimage_latent_first_v2_cpu_smoke.log`, and
+`logs/zimage_latent_first_cpu_i1_du9il/rehearsal_rank_0.json` (SHA-256
+`c315b5feb4e33d078d0bcc67f6ce254cff37733c0a721a47c87a93f0a0b5bda9`).
+This CPU evidence does not establish CUDA baseline agreement or quality.
+
+No v2 GPU job/log/output exists. After final commit/push, exact next GPU-shell
+action is:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_latent_first_v2_8gpu.sh
+```
+
+Monitor: `tail -f logs/foundir_blur_only_zimage_latent_first_v2.log`.
+Output root: `checkpoints/foundir_blur_only_zimage_latent_first_v2/`.
+Tmux session: `foundir-zimage-latent-first-v2`, with nohup fallback if tmux is
+unavailable. Do not run v1 again. No protected data or development training.
+
+## Round-2 startup terminal failure — 2026-09-14T10:37:26Z (historical)
+
+User asked `check`. The job launched at 10:13:31Z on homogeneous 8x H100,
+revision 7e2e074, and exited at 10:15:24Z with status1. Formal training is
+0/1200 steps: no training.jsonl, checkpoint or result.json exists. Do NOT
+restart v1 or describe this as training divergence/quality failure.
+
+All eight full-resolution CUDA two-stage rehearsals passed. Independently
+verified every rehearsal artifact: exact same-rank repeats, one common initial
+parameter digest, and one common updated-parameter AND post-clipping averaged-
+gradient digest across all eight ranks for each of the two updates. Initial
+FP32 weights were restored before evaluation. This supports the tested
+distributed repeatability but does not establish agreement with historical
+ordinary execution or restoration quality.
+
+The failure is the inherited endpoint baseline check in evaluate(0), on
+development ranks2 and7: `inherited endpoint reproduction mismatch`.
+Thresholds are abs PSNR delta <=.02dB and abs LPIPS delta <=.002 versus the
+immutable endpoint step400. All16 train records passed; aggregate step0 is
+25.40651dB/.2551265. Only12 development records were saved, all within those
+tolerances. No full development aggregate exists.
+
+The failing rows/values were NOT saved because the assertion precedes image
+and sidecar writing. From exact frozen manifest order and missing sidecars,
+the first development item on rank2 is 0092666, and on rank7 is 0055120;
+their second items 0021020 and0055608 were never reached. Exact failing
+metric deltas and whether PSNR or LPIPS triggered are unavailable. Do not
+invent their magnitude or declare the threshold too strict. A deterministic
+versus historical ordinary-path numerical difference is a hypothesis only;
+the current evidence does not isolate the source.
+
+Runtime report: `zimage_latent_first_runtime-36be52b1efd75072`, JSON SHA
+`b99e84b92eed68cac7498faca743fb6fd8c13365d47caffd152fcacd4f60e971`.
+The launcher generated a new unresolved machine hold of that ID. Existing
+user authority still says no additional advisor round; record its binding
+when authorized recovery is executed, never fabricate a new advisor reply.
+This check turn changed no training code, thresholds, jobs or authorization.
+All prior output remains preserved; protected-data restrictions are unchanged.
+
+Next repair task: persist complete baseline failure evidence before asserting,
+then compare inherited endpoint inference under matched execution, exact
+weights, prompts, encoded inputs and decoder settings. Determine the source
+of baseline drift before deciding recovery; do not simply relax tolerances
+or repeat the entire scientific gate. Reuse passed rehearsal evidence where
+scientifically valid. The single round-2 quality recipe has NOT yet been tested.
+
+## Round-2 latent-first CPU-ready — 2026-09-14T10:04:08Z (historical)
 
 User said `execute`. Round 1 is complete; do not rerun it. The single bounded
 round-2 recipe is now in `configs/foundir_blur_only_zimage_latent_first_v1.json`

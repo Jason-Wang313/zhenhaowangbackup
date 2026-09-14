@@ -32,7 +32,8 @@ def average_gradients(params,world):
 
 
 def validate_settings(s):
-    if s.get('status') != 'authorized_round2_latent_first_endpoint_repair':
+    if s.get('status') not in ('authorized_round2_latent_first_endpoint_repair',
+                               'authorized_round2_latent_first_endpoint_repair_v2'):
         raise ValueError('unexpected round-2 experiment')
     if any(s.get(key) is not False for key in (*PROTECTED,'teacher_imitation')):
         raise ValueError('forbidden round-2 scope')
@@ -42,6 +43,60 @@ def validate_settings(s):
                     seed=2026091405)
     if any(s.get(key) != value for key,value in expected.items()):
         raise ValueError('frozen round-2 schedule/objective changed')
+    if s.get('status').endswith('_v2'):
+        replay=s.get('baseline_replay',{})
+        expected_replay=dict(strict_repeats=2,require_exact_current_latent_rgb_metrics=True,
+            historical_per_record_max_abs_psnr_delta_db=.05,
+            historical_per_record_max_abs_lpips_delta=.005,
+            historical_aggregate_max_abs_psnr_delta_db=.02,
+            historical_aggregate_max_abs_lpips_delta=.002)
+        if replay != expected_replay or s.get('authorization_hold_id') != 'zimage_latent_first_runtime-36be52b1efd75072':
+            raise ValueError('frozen v2 baseline-recovery contract changed')
+
+
+def baseline_replay_gate(current_a,current_b,historical,settings):
+    """Require exact current replay and bounded, fully reported historical drift."""
+    keys=('record_id','role')
+    def index(rows):
+        result={(row['record_id'],row['role']):row for row in rows}
+        if len(result)!=len(rows):
+            raise ValueError('duplicate baseline record')
+        return result
+    a,b,h=index(current_a),index(current_b),index(historical)
+    if set(a)!=set(b) or set(a)!=set(h) or len(a)!=32:
+        raise ValueError('baseline record coverage mismatch')
+    exact_fields=('latent_digest','rgb_digest','image_sha256','input_psnr','input_lpips',
+                  'output_psnr','output_lpips','latent_mse','raw_rgb_mse','clipped_fraction')
+    rows=[]
+    for key in sorted(a):
+        if any(a[key][field]!=b[key][field] for field in exact_fields):
+            raise ValueError(f'current deterministic baseline replay differs: {key}')
+        delta_psnr=a[key]['output_psnr']-h[key]['output_psnr']
+        delta_lpips=a[key]['output_lpips']-h[key]['output_lpips']
+        rows.append(dict(record_id=key[0],role=key[1],historical_output_psnr=h[key]['output_psnr'],
+                         current_output_psnr=a[key]['output_psnr'],psnr_delta_db=delta_psnr,
+                         historical_output_lpips=h[key]['output_lpips'],current_output_lpips=a[key]['output_lpips'],
+                         lpips_delta=delta_lpips,latent_digest=a[key]['latent_digest'],rgb_digest=a[key]['rgb_digest'],
+                         image_sha256=a[key]['image_sha256']))
+    per_psnr=max(abs(row['psnr_delta_db']) for row in rows)
+    per_lpips=max(abs(row['lpips_delta']) for row in rows)
+    aggregate={}
+    for role in ('tiny_overfit_train','visual_development'):
+        selected=[row for row in rows if row['role']==role]
+        aggregate[role]=dict(psnr_delta_db=sum(row['psnr_delta_db'] for row in selected)/len(selected),
+                             lpips_delta=sum(row['lpips_delta'] for row in selected)/len(selected))
+    agg_psnr=max(abs(value['psnr_delta_db']) for value in aggregate.values())
+    agg_lpips=max(abs(value['lpips_delta']) for value in aggregate.values())
+    cfg=settings['baseline_replay']
+    checks=dict(current_strict_replay_exact=True,
+        historical_per_record_psnr_bounded=per_psnr<=cfg['historical_per_record_max_abs_psnr_delta_db'],
+        historical_per_record_lpips_bounded=per_lpips<=cfg['historical_per_record_max_abs_lpips_delta'],
+        historical_aggregate_psnr_bounded=agg_psnr<=cfg['historical_aggregate_max_abs_psnr_delta_db'],
+        historical_aggregate_lpips_bounded=agg_lpips<=cfg['historical_aggregate_max_abs_lpips_delta'])
+    return dict(status='pass' if all(checks.values()) else 'failure',checks=checks,
+                maxima=dict(per_record_abs_psnr_delta_db=per_psnr,per_record_abs_lpips_delta=per_lpips,
+                            aggregate_abs_psnr_delta_db=agg_psnr,aggregate_abs_lpips_delta=agg_lpips),
+                aggregates=aggregate,rows=rows)
 
 
 def joint_phase(step,s):

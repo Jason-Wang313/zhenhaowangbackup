@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "zimage_lora_stability_design-013d68aa7d35a2a6",
-  "hold_sha256": "4a95c4b18332f3cfa5c73f110eb88e117413635c38085bb385881e73b978181d",
+  "hold_id": "zimage_latent_first_runtime-36be52b1efd75072",
+  "hold_sha256": "28f33684bfbc173fe010967110ba063eb51f17ff70a3108dfd94fb5d82c2f5a1",
   "decided_by": "user_after_advisor_response",
-  "decision": "approve_documented_change",
-  "statement": "记录已有明确授权，不是新的 advisor 回复：用户在优化审计发现 LoRA 失稳、提出检查学习率与逐层梯度后明确 next；依照此前无需再次询问 advisor 的同一 Blur-only 授权，执行 reports/zimage_lora_stability_design_2026-09-14.md 中固定两个失败组合、仅改变 learning rate 的有界稳定性对照。",
-  "recorded_at": "2026-09-14T07:26:00Z"
+  "decision": "resume_same_mainline",
+  "statement": "记录已有 advisor 授权及用户本轮明确 execute，不是新的 advisor 回复：修复 latent-first v1 在 optimizer step 之前未保存 baseline 差异的诊断缺口；保留 v1 全部失败证据，在新的 v2 输出目录完整保存两次 strict-deterministic baseline，要求当前 latent/RGB/指标逐样本精确重复、权重和所有输入身份一致，并在预声明漂移上限内才继续原定同一 1200 步 Blur-only Z-Image 修正。不得直接放宽阈值、改变目标、访问 protected data 或另开实验 sweep。",
+  "recorded_at": "2026-09-14T10:51:17Z"
 }

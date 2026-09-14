@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import os
@@ -18,7 +19,7 @@ from torch.utils.checkpoint import checkpoint
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
-from lowlight_restoration.zimage_latent_first import average_gradients,joint_phase,loss_terms,metric_gate,render_report,validate_settings
+from lowlight_restoration.zimage_latent_first import average_gradients,baseline_replay_gate,joint_phase,loss_terms,metric_gate,render_report,validate_settings
 from lowlight_restoration.zimage_repro_batch import seed_everything,install_flash_control,tensor_digest
 from lowlight_restoration.zimage_padding_compat import build_padding_function,padding_operator_probe
 from smoke.train_foundir_blur_only_zimage_endpoint_distill_ddp import (
@@ -46,11 +47,20 @@ def load_config(path):
     for field in ('parent_endpoint_config','initial_checkpoint','parent_result','repro_result'):
         if sha256(ROOT/s[field]) != s[field+'_sha256']:
             raise ValueError(f'round-2 parent identity mismatch: {field}')
+    if s['status'].endswith('_v2'):
+        for field in ('parent_recipe_config','failed_v1_log','failed_v1_runtime','failed_v1_hold','authorization_decision'):
+            if sha256(ROOT/s[field]) != s[field+'_sha256']:
+                raise ValueError(f'v2 recovery identity mismatch: {field}')
+        decision=json.loads((ROOT/s['authorization_decision']).read_text())
+        if (decision.get('hold_id')!=s['authorization_hold_id'] or
+                decision.get('decision') not in ('resume_same_mainline','approve_documented_change')):
+            raise ValueError('v2 recovery authorization mismatch')
     e,c=load_settings(ROOT/s['parent_endpoint_config'])
     repro=json.loads((ROOT/s['repro_result']).read_text())
     if repro['decision']['deterministic_same_gpu_control_exact'] is not True or repro['completed_fits'] != 24:
         raise ValueError('round-1 reproducibility not passed')
-    if (ROOT/s['output_dir']).resolve() != ROOT/'checkpoints/foundir_blur_only_zimage_latent_first_v1':
+    expected_root='foundir_blur_only_zimage_latent_first_v2' if s['status'].endswith('_v2') else 'foundir_blur_only_zimage_latent_first_v1'
+    if (ROOT/s['output_dir']).resolve() != ROOT/'checkpoints'/expected_root:
         raise ValueError('unexpected output root')
     return s,e,c
 
@@ -217,6 +227,74 @@ def main():
     previous=json.loads((ROOT/s['parent_result']).read_text())
     baselines={(x['role'],r['record_id']):r for x in previous['snapshots'] if x['step']==400 for r in x['rows']}
     snapshots=[]
+    baseline_replay=None
+    if s['status'].endswith('_v2'):
+        def baseline_rows(repeat,save):
+            with torch.no_grad():
+                local=[]
+                for role,items in cached.items():
+                    for item in items:
+                        latent,rgb=model(item,prompt,decode=True)
+                        image=model.pipe.vae_output_to_image(rgb).convert('RGB')
+                        row=dict(record_id=item['record_id'],role=role,input_psnr=psnr(item['gt'],item['lq']),
+                                 input_lpips=lpips_value(metric,item['gt'],item['lq'],device),
+                                 output_psnr=psnr(item['gt'],image),output_lpips=lpips_value(metric,item['gt'],image,device),
+                                 latent_mse=float((latent-item['gt_latent'].float()).square().mean()),
+                                 raw_rgb_mse=float((rgb.float()-item['gt_rgb'].float()).square().mean()),
+                                 clipped_fraction=float((rgb.abs()>1).float().mean()),
+                                 latent_digest=tensor_digest([('latent',latent)]),rgb_digest=tensor_digest([('rgb',rgb)]),
+                                 image_sha256=hashlib.sha256(str((image.mode,image.size)).encode()+image.tobytes()).hexdigest())
+                        if not all(math.isfinite(v) for k,v in row.items() if k not in ('record_id','role','latent_digest','rgb_digest','image_sha256')):
+                            raise RuntimeError('nonfinite baseline replay')
+                        if save:
+                            folder=root/'step_000000'/role
+                            save_triptych(folder/(item['record_id']+'.png'),item['record_id'],item['lq'],image,item['gt'])
+                            write_json(folder/(item['record_id']+'.json'),dict(row,step=0,config_sha256=digest,
+                                       triptych_sha256=sha256(folder/(item['record_id']+'.png'))))
+                        local.append(row)
+                        metric.reset()
+            rows=sorted(gather(local,world),key=lambda row:(row['role'],row['record_id']))
+            if len(rows)!=32:
+                raise RuntimeError('incomplete baseline replay')
+            return rows
+        current_a=baseline_rows('a',True)
+        current_b=baseline_rows('b',False)
+        parameter_digest=tensor_digest(named)
+        parameter_digests=[None]*world
+        dist.all_gather_object(parameter_digests,parameter_digest)
+        historical=[dict(row,role=x['role']) for x in previous['snapshots'] if x['step']==400 for row in x['rows']]
+        try:
+            baseline_replay=baseline_replay_gate(current_a,current_b,historical,s)
+            if len(set(parameter_digests))!=1 or parameter_digest!=rehearsal['restored_initial_digest']:
+                raise RuntimeError('baseline weights do not match synchronized restored initialization')
+            baseline_replay['parameter_digest']=parameter_digest
+            baseline_replay['parameters_exact_across_ranks']=True
+        except Exception as exc:
+            baseline_replay=dict(status='failure',error=f'{type(exc).__name__}: {exc}',
+                                 current_repeat_a=current_a,current_repeat_b=current_b,historical=historical)
+        if rank==0:
+            write_json(root/'baseline_replay.json',dict(config_sha256=digest,**baseline_replay))
+            for role in ('tiny_overfit_train','visual_development'):
+                rows=[row for row in current_a if row['role']==role]
+                metrics=aggregate(rows)
+                metrics.update({key:sum(row[key] for row in rows)/16 for key in ('latent_mse','raw_rgb_mse','clipped_fraction')})
+                near=[row for row in rows if row['input_psnr']>=30]
+                metrics['near_clean_records']=len(near)
+                metrics['near_clean_psnr_gain']=sum(row['output_psnr']-row['input_psnr'] for row in near)/len(near) if near else None
+                metrics['worst_psnr_gain']=min(row['output_psnr']-row['input_psnr'] for row in rows)
+                payload=dict(step=0,role=role,metrics=metrics,rows=rows,config_sha256=digest)
+                write_json(root/'step_000000'/role/'metrics.json',payload)
+                snapshots.append(payload)
+                print('LATENT_FIRST_SNAPSHOT',json.dumps(dict(step=0,role=role,metrics=metrics)),flush=True)
+            print('LATENT_FIRST_BASELINE_REPLAY',json.dumps({k:v for k,v in baseline_replay.items() if k!='rows'}),flush=True)
+        dist.barrier()
+        if baseline_replay.get('status')!='pass':
+            if rank==0:
+                write_json(root/'startup_failure.json',dict(status='baseline_replay_failure',config_sha256=digest,
+                           baseline_replay_sha256=sha256(root/'baseline_replay.json'),sealed_internal_accessed=False,
+                           official_foundir_test_accessed=False,development_gt_optimized=False))
+            dist.barrier()
+            raise RuntimeError('complete baseline replay gate failed; inspect baseline_replay.json')
     def evaluate(step):
         with torch.no_grad():
             for role,items in cached.items():
@@ -232,7 +310,7 @@ def main():
                              clipped_fraction=float((rgb.abs()>1).float().mean()))
                     if not all(math.isfinite(v) for k,v in row.items() if k!='record_id'):
                         raise RuntimeError('nonfinite evaluation')
-                    if step==0:
+                    if step==0 and not s['status'].endswith('_v2'):
                         expected=baselines[(role,item['record_id'])]
                         if abs(row['output_psnr']-expected['output_psnr'])>.02 or abs(row['output_lpips']-expected['output_lpips'])>.002:
                             raise RuntimeError('inherited endpoint reproduction mismatch')
@@ -258,7 +336,8 @@ def main():
                     print('LATENT_FIRST_SNAPSHOT',json.dumps(dict(step=step,role=role,metrics=metrics)),flush=True)
                 metric.reset()
         dist.barrier()
-    evaluate(0)
+    if not s['status'].endswith('_v2'):
+        evaluate(0)
     optimizer=torch.optim.AdamW(params,lr=s['learning_rate'],weight_decay=0)
     start=time.monotonic()
     saved=[]
@@ -303,6 +382,7 @@ def main():
                     execution='strict_deterministic_fixed_order_gradient_allreduce',padding_patch=patch,
                     attention_calls_rank0=counters,training_log_sha256=sha256(root/'training.jsonl'),
                     runtime=provenance,runtime_sha256=sha256(root/'runtime.json'),
+                    baseline_replay=baseline_replay,baseline_replay_sha256=sha256(root/'baseline_replay.json') if baseline_replay else None,
                     rehearsal_sha256={str(r):sha256(root/f'rehearsal_rank_{r}.json') for r in range(world)},
                     qwen_degradation_conditioning=False,mixed_degradations=False,teacher_imitation=False,
                     summary=dict(task_metrics=dict(blur=dict(psnr=final_dev['output_psnr'],lpips=final_dev['output_lpips'])),

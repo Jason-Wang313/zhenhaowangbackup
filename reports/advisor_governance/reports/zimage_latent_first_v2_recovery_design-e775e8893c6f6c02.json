@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "No new advisor response requested: user explicitly said execute under existing Blur-only Z-Image authority; preserve v1 and execute bounded recovery.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_latent_first_v2.json",
+    "sha256": "6c6cfc24febcaae8d94b2ffbac188d6f09abff67421fd38a4b08d3723edc884d"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_train_16_source_disjoint_development_crops",
+  "evidence": {
+    "path": "configs/foundir_blur_only_zimage_latent_first_v2.json",
+    "sha256": "6c6cfc24febcaae8d94b2ffbac188d6f09abff67421fd38a4b08d3723edc884d"
+  },
+  "gate": "zimage_latent_first_v2_recovery_design",
+  "generated_at": "2026-09-14T10:56:12Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image Base latent-first supervised endpoint repair v2; exact endpoint step400 FP32 LoRA; original frozen VAE",
+  "outcome": "information",
+  "report_id": "zimage_latent_first_v2_recovery_design-e775e8893c6f6c02",
+  "root_cause_or_status": "v1 stopped at step0 because incomplete historical baseline mismatch evidence. v2 freezes exact two-repeat strict baseline plus bounded fully reported historical drift before unchanged 1200-step recipe.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -9,7 +9,7 @@ import torch.distributed as dist
 import torch.multiprocessing as mp
 
 from lowlight_restoration.zimage_latent_first import (
-    SNAPSHOTS, average_gradients, joint_phase, loss_terms, metric_gate, render_report, validate_settings,
+    SNAPSHOTS, average_gradients, baseline_replay_gate, joint_phase, loss_terms, metric_gate, render_report, validate_settings,
 )
 from smoke.train_foundir_blur_only_zimage_latent_first_ddp import (
     LatentFirstStudent, distributed_rehearsal, update,
@@ -20,6 +20,10 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def settings():
     return json.loads((ROOT/'configs/foundir_blur_only_zimage_latent_first_v1.json').read_text())
+
+
+def settings_v2():
+    return json.loads((ROOT/'configs/foundir_blur_only_zimage_latent_first_v2.json').read_text())
 
 
 class Metric(torch.nn.Module):
@@ -61,6 +65,35 @@ def test_frozen_scope_and_schedule():
     assert joint_phase(801,s) and joint_phase(1200,s)
     for step in (0,1201):
         with pytest.raises(ValueError): joint_phase(step,s)
+    validate_settings(settings_v2())
+    bad=copy.deepcopy(settings_v2())
+    bad['baseline_replay']['historical_per_record_max_abs_psnr_delta_db']=.051
+    with pytest.raises(ValueError): validate_settings(bad)
+
+
+def baseline_rows(psnr_offset=0.,lpips_offset=0.,digest='same'):
+    rows=[]
+    for role in ('tiny_overfit_train','visual_development'):
+        for i in range(16):
+            rows.append(dict(record_id=f'{role}_{i}',role=role,input_psnr=20.,input_lpips=.3,
+                output_psnr=21.+psnr_offset,output_lpips=.2+lpips_offset,latent_mse=.1,raw_rgb_mse=.2,
+                clipped_fraction=.01,latent_digest=digest,rgb_digest=digest,image_sha256=digest))
+    return rows
+
+
+def test_baseline_replay_exactness_and_bounded_historical_drift():
+    current=baseline_rows()
+    historical=baseline_rows(psnr_offset=.01,lpips_offset=.001)
+    result=baseline_replay_gate(current,copy.deepcopy(current),historical,settings_v2())
+    assert result['status']=='pass' and all(result['checks'].values())
+    assert result['maxima']['per_record_abs_psnr_delta_db']==pytest.approx(.01)
+    changed=copy.deepcopy(current)
+    changed[3]['rgb_digest']='different'
+    with pytest.raises(ValueError,match='replay differs'):
+        baseline_replay_gate(current,changed,historical,settings_v2())
+    historical[0]['output_psnr']-=.1
+    result=baseline_replay_gate(current,copy.deepcopy(current),historical,settings_v2())
+    assert result['status']=='failure' and not result['checks']['historical_per_record_psnr_bounded']
 
 
 def test_latent_only_skips_decoder_and_metric():

@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请判断应修复并恢复同一 FLUX.2 mainline，还是停止/修改路线。",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_latent_first_v1.json",
+    "sha256": "cc4cb5e26803fa20a4ea92fc91ae2b6185619685b1e04e0a071e908aa89da904"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "runtime_before_gate_completion",
+  "evidence": {
+    "path": "reports/advisor_governance/runtime_evidence/zimage_latent_first_runtime-2fe5180322be6e36.json",
+    "sha256": "3064081492a0ec593f36356dc24e61f4388a45bd933764926d5941dd5c6f93e7"
+  },
+  "gate": "zimage_latent_first_runtime",
+  "generated_at": "2026-09-14T10:15:23Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image latent-first supervised endpoint repair",
+  "outcome": "failure",
+  "report_id": "zimage_latent_first_runtime-36be52b1efd75072",
+  "root_cause_or_status": "workflow exit status 1; inspect logs/foundir_blur_only_zimage_latent_first_v1.log",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
