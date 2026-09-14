@@ -6,7 +6,89 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## LoRA stability terminal audit — 2026-09-14T07:50:02Z (LATEST AUTHORITY)
+## Consolidated reproducibility batch CPU-ready — 2026-09-14T08:13:33Z (LATEST AUTHORITY)
+
+The user challenged the inefficient serial diagnostic cadence, accepted a
+consolidated diagnostic plus one corrected learnability gate, then explicitly
+said: "sure, aiminng for the best quality, don't afraid of extra work, execute
+now". This is a TWO-ROUND DECISION BUDGET, not a promise to finish restoration
+in two rounds. Do not ask the advisor again. No open-ended extra LR sweeps.
+
+Round 1 is implemented in
+`smoke/audit_foundir_blur_only_zimage_repro_batch.py`, with pure control and
+comparison helpers in `lowlight_restoration/zimage_repro_batch.py`.
+Design/interpretation: `reports/zimage_repro_batch_design_2026-09-14.md`.
+Config: `configs/foundir_blur_only_zimage_repro_batch_v1.json`, SHA-256
+`9aef9ebef30487e8657a6df506e0914ef55cd77765c37e39ff420211a95c7046`.
+Informational authorization/design report:
+`zimage_repro_batch_design-53bd9122ccbf5eed`. No model-family/architecture
+change or newly invented advisor response is involved.
+
+Eight independent workers cover two prior failed record/loss combinations x
+ordinary/deterministic execution x two device replicates. EACH worker runs
+off_a/on/off_b sequentially on the SAME GPU; exact initial FP32 LoRA, fresh
+FP32 AdamW and RNG seed are restored every phase. No DDP gradient averaging.
+Every phase uses LR 5e-5, clip 1, batch 1, 200 steps, identical 14-snapshot
+schedule and original frozen BF16 base/VAE. Thus one user launch runs 24 fits,
+4,800 independent steps, 336 triptychs and 24 final checkpoints. Instrumented
+phases record 49 module traces each. All phases record exact initial weights,
+first gradient, first-updated weights, final weights and snapshot latent hashes.
+
+Deterministic mode enables explicit FlashAttention-2 deterministic backward,
+strict PyTorch deterministic algorithms and deterministic cuDNN. Both modes
+disable TF32/cuDNN benchmarking and use CUBLAS_WORKSPACE_CONFIG=:4096:8.
+This compares execution BUNDLES, not FlashAttention alone. Record actual
+Flash/SDPA calls, GPU UUID, package versions and source hashes. Unsupported
+deterministic operators produce preserved failed controls, not silent fallback.
+Common hash/evaluation instrumentation changes timing versus historical runs;
+these are matched NEW references, not guaranteed exact historical replays.
+
+Each worker has a separate persistent log; independent failures are retained
+while other workers finish. The supervisor validates artifact hashes, images,
+snapshot sidecars, optimizer-step counts and traces before comparisons. It
+emits both result.json and report.md even for missing/failed workers. Exact
+same-GPU repeat/instrumentation controls and metric-tolerance comparisons are
+reported separately. There is NEVER an automatic quality/full-training pass.
+
+Verification: 21 focused tests pass, including the complete 24-fit aggregator,
+missing-worker handling, artifact tampering, control assignments and exactness
+versus metric-tolerance logic. Real 6B CPU 64x64 RGB and mixed-loss off/on/off controls both
+completed all three two-update runs. Within each record/objective, initial,
+first-gradient, first-update and final hashes are identical across all phases;
+all snapshot latent hashes also match. Mixed CPU control enables strict
+PyTorch deterministic algorithms. Full model/parent hashes and both H100/H200
+profiles passed the launcher check. FlashAttention's installed function
+signature supports explicit deterministic backward; GPU execution remains
+unverified until the real batch. A complete-batch aggregation test is also
+included alongside missing-worker and artifact-tampering rejection tests.
+Logs: `logs/zimage_repro_batch_cpu_smoke_v1.log`,
+`logs/zimage_repro_batch_cpu_mixed_smoke_v1.log`,
+`logs/zimage_repro_batch_preflight_v1.log`.
+
+No GPU is exposed in this coding shell; no GPU batch has started. Once CPU
+readiness is verified, exact single GPU-shell launch is:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_repro_batch_v1_8gpu.sh
+```
+
+Master log: `logs/foundir_blur_only_zimage_repro_batch_v1.log`.
+Output and per-worker logs:
+`checkpoints/foundir_blur_only_zimage_repro_batch_v1/worker_0.log` through
+`worker_7.log`. Launcher retains tmux session `foundir-zimage-repro-v1` when
+available; otherwise verified nohup/log fallback. It rejects prior evidence
+and concurrent launches. Do not rerun completed stability or optimization v1.
+
+Round 2 is NOT implemented/launched: after round-1 controls and visual/quality
+review, freeze one evidence-supported correction and its 16-train/16-dev gate.
+If reproducibility remains unresolved, isolate the recorded first divergence;
+do not select a LR or pretend full-data training is justified. If round 2 still
+cannot learn reliably, revisit the training formulation rather than indefinitely
+extending tiny probes. Full teacher training/evaluation, quality-valid student
+distillation and conditional decoder work remain unfinished dependent stages.
+All protected-test/degradation restrictions and model-escalation rules remain.
+
+## LoRA stability terminal audit — 2026-09-14T07:50:02Z (historical)
 
 User asked `check the log`. The already-launched stability audit completed
 normally at `2026-09-14T07:41:42Z`, status 0, homogeneous 8x H100, 200 steps
