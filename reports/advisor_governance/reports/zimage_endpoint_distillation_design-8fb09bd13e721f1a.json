@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Execute the already explicitly authorized single-step distillation/recovery under the user instruction to continue without another advisor request.",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3/step_001200.safetensors",
+    "sha256": "e583e4871d8c498da655e4350e4931662f9310bc197d3d089f9c4241e6625323"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_endpoint_distill_v1.json",
+    "sha256": "1d98854ec7dc40e3d678879d849955180d652cbfcd86ec77596912214c956f50"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_training_pairs_plus_16_source_disjoint_visual_development_pairs",
+  "evidence": {
+    "path": "reports/zimage_endpoint_distillation_proposal_2026-09-14.json",
+    "sha256": "0e01bf25339f03d1a903d27122d22727797ec59325ce3728fe00bc92bb27f1a4"
+  },
+  "gate": "zimage_endpoint_distillation_design",
+  "generated_at": "2026-09-14T06:14:54Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image Base 6B GT-anchored single-step LoRA student with frozen VAE",
+  "outcome": "information",
+  "report_id": "zimage_endpoint_distillation_design-8fb09bd13e721f1a",
+  "root_cause_or_status": "Healthy GT VAE roundtrip; weak v3 teacher; BF16 optimization quantization and training/deployment trajectory mismatch identified as risks. Add FP32 LoRA optimization and endpoint RGB fidelity supervision.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e",
-  "hold_sha256": "616244388727264984cb45e3abd287d1946e546c1a9be07f7513985f97a67898",
+  "hold_id": "zimage_endpoint_distillation_design-8fb09bd13e721f1a",
+  "hold_sha256": "b2cbed21366dc3edeb531187dd9de9e6e1075ae6bd4e61b702a2526d1142318f",
   "decided_by": "user_after_advisor_response",
-  "decision": "resume_same_mainline",
-  "statement": "换Z Image吧。先训teacher，然后蒸馏一下，少步/单步。如果点还是不行，微调一下decoder。无需再次询问 advisor；best effort 完成同一 Blur-only Z-Image 路线。v3 teacher gate 未通过后继续同一主线诊断，不再询问 advisor。",
-  "recorded_at": "2026-09-14T05:40:33Z"
+  "decision": "approve_documented_change",
+  "statement": "记录已有明确授权，不是新的 advisor 回复：用户要求换 Z-Image，先训 teacher，再少步/单步蒸馏，效果仍不足时微调 decoder，并明确无需再询问 advisor；用户在完整 sweep 后切换模型并说 continue。依此执行同一 Blur-only 路线下已记录的 GT-anchored endpoint distillation 方案。",
+  "recorded_at": "2026-09-14T06:15:02Z"
 }

@@ -1,0 +1,8 @@
+{
+  "status": "authorized_endpoint_distillation_design",
+  "checkpoint": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3/step_001200.safetensors",
+  "checkpoint_sha256": "e583e4871d8c498da655e4350e4931662f9310bc197d3d089f9c4241e6625323",
+  "official_foundir_test_accessed": false,
+  "sealed_internal_accessed": false,
+  "statement": "User explicitly authorized teacher then few/single-step distillation and conditional decoder tuning without another advisor request. Implement a bounded GT-anchored single-step student initialized from v3, FP32 trainable LoRA and AdamW state, differentiable frozen VAE decode, RGB MSE/LPIPS plus GT latent loss. Teacher latent imitation is enabled only on training pairs where teacher improves both PSNR and LPIPS over LQ. If no pair qualifies, label the experiment supervised single-step recovery, not successful distillation. Same frozen 16 train/16 development crops."
+}

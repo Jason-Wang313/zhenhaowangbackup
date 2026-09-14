@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-14T06:14:54Z",
+  "evidence": {
+    "path": "reports/zimage_endpoint_distillation_proposal_2026-09-14.json",
+    "sha256": "0e01bf25339f03d1a903d27122d22727797ec59325ce3728fe00bc92bb27f1a4"
+  },
+  "hold_id": "zimage_endpoint_distillation_design-8fb09bd13e721f1a",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/zimage_endpoint_distillation_design-8fb09bd13e721f1a.md",
+  "report_sha256": "d705e0c778d749f101867a976ad33b6f4329efe62db472c174b30dd1873b4481",
+  "schema_version": 1
+}

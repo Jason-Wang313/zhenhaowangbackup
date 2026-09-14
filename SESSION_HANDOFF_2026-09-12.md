@@ -6,7 +6,66 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Z-Image VAE ceiling and solver sweep terminal result — 2026-09-14T06:09:50Z (LATEST AUTHORITY)
+## Endpoint student CPU-ready — 2026-09-14T06:22:00Z (LATEST AUTHORITY)
+
+The user switched to Astra and said `continue`; the earlier Sol-to-Astra pause
+is resolved. The next bounded experiment is implemented in
+`configs/foundir_blur_only_zimage_endpoint_distill_v1.json` and
+`smoke/train_foundir_blur_only_zimage_endpoint_distill_ddp.py`.
+It initializes from immutable v3 step 1200 and trains a single-step endpoint
+with RGB MSE (weight 1), GT latent MSE (0.1), LPIPS (0.05), and filtered
+teacher latent MSE (0.01). Teacher imitation is enabled only for training
+pairs where the frozen 50-step teacher beats input on BOTH PSNR and LPIPS.
+No development GT enters training or teacher filtering. If no training pair
+qualifies, label the run supervised single-step recovery, not distillation.
+The fixed 16 train/16 development crops remain unchanged; 400 optimizer
+steps, global batch 8, checkpoints/evaluations at 0/200/400. Trainable LoRA
+and AdamW state are FP32; frozen DiT/VAE/text weights remain BF16. The frozen
+decoder is differentiated through, with activation checkpointing.
+
+Code inspection verified v3 stores LoRA parameters and AdamW moments in BF16.
+A scalar AdamW reproduction at weight 0.0300293 and LR 5e-5 made no parameter
+change in 100 constant-gradient steps. Actual v3 checkpoints DO change, so
+this is a proven numerical hazard, not a proven complete explanation of the
+quality failure. V3 also trains on GT-interpolated states without endpoint
+RGB supervision or a persistent LQ condition. The endpoint experiment
+directly trains its deployed input/output mapping. Healthy GT roundtrips
+establish VAE reconstruction capacity but do not rule out decoder sensitivity
+to off-manifold predicted latents. Decoder tuning remains authorized later.
+
+Design report/hold `zimage_endpoint_distillation_design-8fb09bd13e721f1a`
+is resolved by recording the user's existing explicit authorization; no new
+advisor response is invented or requested. Four focused tests, compilation,
+shell syntax, launcher preflight, full artifact hashes, and H100/H200 inventory
+checks pass. Real 6B CPU forward/backward/optimizer smoke passed at 64x64:
+loss 0.5259563; all 476 trainable tensors have finite gradients; decoder
+parameters have no gradients; an actual FP32 optimizer update changes weights
+and all AdamW first moments are FP32. Log:
+`logs/zimage_endpoint_cpu_smoke_v1.log`. This verifies interfaces, not quality.
+Config SHA-256:
+`1d98854ec7dc40e3d678879d849955180d652cbfcd86ec77596912214c956f50`.
+Prior sweep identifies 3/16 training pairs with both metrics better than LQ
+(`0073349`, `0080250`, `0102666`); the new run recomputes teacher targets and
+filter decisions before training, without assuming bitwise equivalence between
+PEFT and hotloaded LoRA arithmetic. Frozen teacher references and student
+0/200/400 outputs will all be saved.
+
+No endpoint GPU training has started; this shell is CPU-only. Exact next action
+on the GPU shell (same workspace):
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_endpoint_distill_v1_8gpu.sh
+```
+
+Persistent log: `logs/foundir_blur_only_zimage_endpoint_distill_v1.log`.
+Output: `checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/`.
+Inspect advancing telemetry and step-0/200/400 fixed images, then review both
+training learnability and development generalization. This experiment changes
+precision and objective together; a gain would not isolate their individual
+causal contributions. Do not rerun the completed sweep. No full teacher
+training or decoder fine-tuning is claimed complete.
+
+## Z-Image VAE ceiling and solver sweep terminal result — 2026-09-14T06:09:50Z (historical terminal evidence)
 
 The frozen-v3 diagnostic started at `2026-09-14T06:04:18Z` and completed all
 scientific computation on homogeneous 8x `NVIDIA H100 80GB HBM3` with

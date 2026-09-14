@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-14T05:37:30Z",
+  "created_at": "2026-09-14T06:14:54Z",
   "evidence": {
-    "path": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_continuation_v3/evaluation/result.json",
-    "sha256": "393cc6427aa0b3d8aaf70db8dc90ca750e67388e6e9a2de475751dfebd414d12"
+    "path": "reports/zimage_endpoint_distillation_proposal_2026-09-14.json",
+    "sha256": "0e01bf25339f03d1a903d27122d22727797ec59325ce3728fe00bc92bb27f1a4"
   },
-  "hold_id": "zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e",
-  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
-  "report": "reports/advisor_governance/reports/zimage_blur_teacher_paired_flow_tiny_overfit_v3-b6567614820dbc4e.md",
-  "report_sha256": "c25fa55f437be741dbab82354f09ac90e420002a0c55eb40c9f1010667892f72",
+  "hold_id": "zimage_endpoint_distillation_design-8fb09bd13e721f1a",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/zimage_endpoint_distillation_design-8fb09bd13e721f1a.md",
+  "report_sha256": "d705e0c778d749f101867a976ad33b6f4329efe62db472c174b30dd1873b4481",
   "schema_version": 1
 }
