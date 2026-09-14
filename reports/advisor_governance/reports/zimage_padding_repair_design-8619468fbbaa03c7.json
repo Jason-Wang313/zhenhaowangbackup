@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Execute the existing authorized round-1 runtime repair; no new advisor request or quality-pass claim.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_repro_repair_v1.json",
+    "sha256": "806f60d6d8a92363c5c9a5a29039e21b9cb895c70e8a1e1804c5219bd674b840"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "two_existing_training_crops_only",
+  "evidence": {
+    "path": "configs/foundir_blur_only_zimage_repro_repair_v1.json",
+    "sha256": "806f60d6d8a92363c5c9a5a29039e21b9cb895c70e8a1e1804c5219bd674b840"
+  },
+  "gate": "zimage_padding_repair_design",
+  "generated_at": "2026-09-14T09:22:44Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image deterministic padding compatibility repair; unchanged restoration model",
+  "outcome": "information",
+  "report_id": "zimage_padding_repair_design-8619468fbbaa03c7",
+  "root_cause_or_status": "User explicitly authorized execution after deterministic CUDA indexing failure. Replace only two frozen-token padding assignments, require CUDA operator/full-model equivalence gates, reuse 12 completed ordinary fits and supplement only failed controls. See reports/zimage_padding_repair_design_2026-09-14.md.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

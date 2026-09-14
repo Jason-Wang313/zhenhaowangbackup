@@ -1,0 +1,16 @@
+{
+  "parent_config": "configs/foundir_blur_only_zimage_repro_batch_v1.json",
+  "parent_config_sha256": "9aef9ebef30487e8657a6df506e0914ef55cd77765c37e39ff420211a95c7046",
+  "parent_result": "checkpoints/foundir_blur_only_zimage_repro_batch_v1/result.json",
+  "parent_result_sha256": "97c3d855f447d3e24667401466cc1bff985efe1ad4304f954ac171e78474ca23",
+  "upstream_pipeline_sha256": "ace84d674ea8356ffc0ebfeafefc4ceadba40590f52908071adb1e2e3a98a5e2",
+  "output_dir": "checkpoints/foundir_blur_only_zimage_repro_repair_v1",
+  "worker_ranks": [2, 3, 6, 7],
+  "reuse_ranks": [0, 1, 4, 5],
+  "decoder_finetuning": false,
+  "development_gt_optimized": false,
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}

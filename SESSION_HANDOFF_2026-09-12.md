@@ -6,7 +6,156 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Consolidated reproducibility batch CPU-ready — 2026-09-14T08:13:33Z (LATEST AUTHORITY)
+## Deterministic padding repair CPU-ready — 2026-09-14T09:26:26Z (LATEST AUTHORITY)
+
+User explicitly said `execute` after the failed CUDA controls. Implemented a
+bounded round-1 runtime repair, NOT a new experimental sweep or round-2 gate.
+The two pinned Base-pipeline boolean-index padding assignments are replaced
+process-locally with torch.where; strict determinism stays enabled. Upstream
+source is hash-guarded and the ignored checkout is untouched. Only frozen pad
+tokens and the exact existing tensor shapes/dtypes are supported.
+
+Design: `reports/zimage_padding_repair_design_2026-09-14.md`.
+Compatibility code: `lowlight_restoration/zimage_padding_compat.py`.
+Supplement runner: `smoke/repair_foundir_blur_only_zimage_repro_batch.py`.
+Config: `configs/foundir_blur_only_zimage_repro_repair_v1.json`, SHA-256
+`806f60d6d8a92363c5c9a5a29039e21b9cb895c70e8a1e1804c5219bd674b840`.
+Transformed function SHA-256:
+`87849924eb0b6da807c6b4f4540d5c6ba113e7b2670665bf4d4ca02d3640cf3f`.
+Design report: `zimage_padding_repair_design-8619468fbbaa03c7`; records existing
+user authority, not a fabricated advisor response or new approval request.
+
+Only failed original worker/rank IDs 2/3/6/7 are launched (12 new fits).
+Ordinary workers 0/1/4/5 (12 fits) are reused after full parent config/result,
+checkpoint, log and image checks; merged results retain their original config
+identities and mark them reused. No copying, overwrite or full-batch rerun.
+Same-GPU off/on/off sequence remains intact. Eight-GPU H100/H200 inventory
+is required, but only four GPUs perform training in this supplement.
+
+New safeguards before ANY optimizer step on each CUDA worker:
+
+1. Exact padding output/input-gradient equivalence at width 3840, FP32/BF16,
+   no/partial/all masks, ordinary original vs strict replacement.
+2. Full actual 512x512 model/loss/backward: original, patched, patched-strict
+   twice; require exact output and all trainable-gradient hashes. FlashAttention
+   deterministic backward and deterministic cuDNN remain enabled throughout.
+3. Only passing workers enter training. Aggregate additionally requires the
+   saved CUDA operator/model gate artifacts and strict-deterministic flags;
+   CPU evidence cannot substitute for CUDA validation.
+
+CPU verification complete: 31 focused tests passed, including refusal to
+accept supplemental workers without saved CUDA repair gates. Full artifact
+and H100/H200 launcher preflight passed. BOTH real 6B 64x64 RGB and mixed-loss
+equivalence gates passed: original/patched/strict_a/strict_b outputs and all
+trainable-gradient hashes are exact within each record/objective. Mixed probe
+loss is .0318890028. Both records then completed off_a/on/off_b two-update
+CPU smokes with identical first-gradient, first-update and final-weight hashes
+across their three phases. These are CPU interface/equivalence results only;
+the mandatory full-resolution CUDA gates remain pending the GPU launch.
+Logs: `logs/zimage_padding_repair_cpu_mixed_v1.log`,
+`logs/zimage_padding_repair_cpu_rgb_v1.log`,
+`logs/zimage_padding_repair_preflight_v1.log`.
+
+No GPU is exposed here and no supplement GPU job has started. After completed
+CPU checks, the exact single GPU-shell command is:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_repro_repair_v1_8gpu.sh
+```
+
+Master log: `logs/foundir_blur_only_zimage_repro_repair_v1.log`.
+Output: `checkpoints/foundir_blur_only_zimage_repro_repair_v1/` with separate
+worker_2/3/6/7.log. Retained tmux session: `foundir-zimage-repro-repair-v1`;
+launcher uses verified nohup fallback if tmux is absent. Existing evidence and
+concurrent launches fail closed. Never call this repair GPU-validated before
+its runtime gates pass. Round-2/full training remain dependent on the combined
+control/quality interpretation; all protected-data restrictions remain.
+
+## Consolidated batch terminal partial failure — 2026-09-14T09:12:52Z (historical)
+
+The batch ended at `2026-09-14T09:04:59Z`, status 2, with a complete partial-
+failure aggregate and governance report `zimage_repro_batch_v1-ea2c28ad8b5e6f56`.
+All ordinary workers 0/1/4/5 finished off_a/on/off_b: 12 successful 200-step
+fits, 168 PNGs and 12 final checkpoints. Deterministic workers 2/3/6/7 failed
+all 12 phases before training on the same text-padding CUDA indexing assertion
+documented below. No worker remains to monitor in this batch. Do not rerun it.
+Independently verified result SHA-256:
+`97c3d855f447d3e24667401466cc1bff985efe1ad4304f954ac171e78474ca23`.
+Root: `checkpoints/foundir_blur_only_zimage_repro_batch_v1/`.
+
+Important new evidence: ordinary same-GPU off_a/off_b repeats ALL differ from
+the first gradient onward, despite restored initial weights/seed and identical
+evaluation schedule. Maximum common-snapshot PSNR differences by rank 0/1/4/5
+are .202929/.701574/.175568/2.739633 dB. These are trajectory maxima, NOT
+all final-step differences. Thus cross-device assignment or enabling the
+optional tracer is not necessary for divergence. The evidence establishes
+ordinary-path non-repeatability under these controls, not a unique responsible
+kernel or proof that every historical collapse shares that cause.
+
+Final ordinary strong-blur RGB outputs range 26.5660--26.8700 dB /
+.4062--.4232 LPIPS; near-clean mixed outputs 33.8293--34.9161 dB /
+.0305--.0438 LPIPS. Near-clean input remains better in PSNR (36.883 dB).
+Ranks 1 on/off_b still show preclip gradient peaks 1.8540/1.2397; all strong-
+blur gradients stay below .176. None of this is a quality/generalization pass.
+
+Exact next task: repair/validate the deterministic text-padding assignment
+compatibility, retain strict deterministic execution, then supplement missing
+controls while preserving/reusing the 12 successful ordinary fits. Verify
+replacement forward AND backward equivalence and actual CUDA behavior before
+calling that repair successful. Do not switch off determinism to manufacture
+a pass, repeat completed ordinary fits without need, or start round-2/full
+training from an incomplete control matrix. This remains round-1 runtime
+repair under existing user authorization, not a new scientific sweep.
+This turn only checked logs and updated handoff; no code or GPU job changed.
+
+## Consolidated batch live partial failure — 2026-09-14T09:01:35Z (historical)
+
+User launched the batch at 08:56:58Z on 8x H100, revision d85896a, and asked
+`check the log`. Master log has no terminal marker yet. DO NOT restart or
+interrupt the surviving workers; this coding shell cannot infer remote
+liveness from local PIDs. Advancing worker logs and GPU telemetry confirm
+ordinary workers 0/1/4/5 remain active.
+
+All four strict-deterministic workers (2/3/6/7) exited status 2. Their off_a,
+on and off_b phases ALL fail at evaluate(0), before any optimizer step, with
+the same PyTorch CUDA Indexing.cu:699 internal assertion:
+`number of flattened indices did not match number of elements in the value
+tensor: 115200 vs 14745600`. Exact failing source is the broadcasted masked
+text-padding assignment in
+`third_party/diffsynth-studio/diffsynth/pipelines/z_image.py:633`:
+`cap_feats[torch.cat(patch_metadata.get("cap_pad_mask"))] = dit.cap_pad_token.to(...)`.
+This is a deterministic-execution runtime incompatibility, NOT an observed
+training collapse or proof that FlashAttention backward is at fault. Both
+real-model CPU smokes passed but did not exercise this CUDA-only indexing path.
+The 12 failure artifacts/tracebacks are retained under rank_2/3/6/7. Do not
+silently disable deterministic mode or relabel these failed controls.
+
+Ordinary workers 0/1/4/5 completed off_a (200 steps each) and were running
+instrumented on at step >=20 at this snapshot. Their first-phase metrics:
+
+| Rank / record | PSNR / LPIPS | Maximum preclip gradient |
+|---|---:|---:|
+| 0 / strong blur RGB | 26.8700/.4110 | .173525 |
+| 4 / strong blur RGB replicate | 26.7858/.4147 | .174331 |
+| 1 / near-clean mixed | 34.9161/.0325 | .356129 |
+| 5 / near-clean mixed replicate | 34.0046/.0305 | .097114 |
+
+Thus current count is 4 completed fits, 12 failed before training, 4 running
+and 4 off_b phases pending. No complete root result/report exists yet; the
+batch cannot pass the full deterministic-control check even if all ordinary
+phases finish. Ordinary cross-device replicates already differ, but same-GPU
+off_a/off_b comparison is still pending. Do not infer a unique numerical cause
+or generalization from these intermediate two-image results.
+
+Next action: allow all ordinary phases to finish and audit their unified
+partial-failure report. Then isolate the exact masked-assignment CUDA behavior
+and verify a mathematically equivalent deterministic implementation before
+repairing missing controls. This is a runtime repair within round 1, not a
+new hyperparameter sweep or the round-2 quality gate. No training code was
+changed and no new GPU job was launched during this log-check turn. Existing
+user continuation authority and all protected-data restrictions remain.
+
+## Consolidated reproducibility batch CPU-ready — 2026-09-14T08:13:33Z (historical)
 
 The user challenged the inefficient serial diagnostic cadence, accepted a
 consolidated diagnostic plus one corrected learnability gate, then explicitly

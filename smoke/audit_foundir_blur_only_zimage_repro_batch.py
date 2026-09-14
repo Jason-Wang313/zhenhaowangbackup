@@ -183,6 +183,10 @@ def worker(args, s, old, e, c):
         torch.backends.cudnn.allow_tf32 = False
         torch.use_deterministic_algorithms(spec['deterministic'], warn_only=False)
         counters = dict(cpu_smoke=True) if args.cpu_smoke else install_flash_control(spec['deterministic'])
+        if s.get('padding_repair'):
+            from lowlight_restoration.zimage_padding_compat import padding_operator_probe
+            spec['padding_operator_gate'] = padding_operator_probe(device)
+            write_json(folder/'padding_operator_gate.json',spec['padding_operator_gate'])
         seed_everything(old['seed'])
         model = EndpointStudent(c, device, ROOT/old['student_checkpoint'])
         restore_student_fp32(model, ROOT/old['student_checkpoint'])
@@ -221,6 +225,10 @@ def worker(args, s, old, e, c):
             props = torch.cuda.get_device_properties(device)
             spec['environment'].update(gpu=props.name, uuid=str(getattr(props, 'uuid', 'unavailable')),
                                        flash_attention=importlib.metadata.version('flash_attn'))
+        if s.get('padding_repair'):
+            from lowlight_restoration.zimage_padding_compat import validate_model_repair
+            spec['padding_model_gate'] = validate_model_repair(model,item,prompt,metric,e,
+                                                              spec['arm'],old['seed'],folder)
         write_json(folder/'identity.json', spec)
         for phase in PHASES:
             try:
@@ -276,14 +284,22 @@ def verify_run_artifacts(run, settings):
         raise ValueError('trace steps incomplete')
 
 
-def aggregate(output, settings, config_digest, exit_codes):
+def aggregate(output, settings, config_digest, exit_codes, reused=None):
+    # Only the supplemental runner supplies hash-validated parent workers.
+    reused = {} if reused is None else reused
     workers = []
     for rank in range(8):
         path = output/f'rank_{rank}'/'result.json'
-        value = json.loads(path.read_text()) if path.exists() else dict(rank=rank, status='missing_result', runs=[])
+        artifact_settings, expected_digest = settings, config_digest
+        if rank in reused:
+            value,artifact_settings,expected_digest = reused[rank]
+            value = json.loads(json.dumps(value))
+            value['reused_from_parent'] = True
+        else:
+            value = json.loads(path.read_text()) if path.exists() else dict(rank=rank, status='missing_result', runs=[])
         if value['rank'] != rank:
             raise RuntimeError('worker rank mismatch')
-        if path.exists() and value['config_sha256'] != config_digest:
+        if (path.exists() or rank in reused) and value['config_sha256'] != expected_digest:
             raise RuntimeError('worker config mismatch')
         try:
             if value['status']=='complete':
@@ -292,9 +308,19 @@ def aggregate(output, settings, config_digest, exit_codes):
                     raise ValueError('worker assignment/phases mismatch')
                 if exit_codes[rank] != 0:
                     raise ValueError('nonzero worker exit despite complete result')
+                if settings.get('padding_repair') and rank not in reused:
+                    for key in ('padding_operator_gate','padding_model_gate'):
+                        if value.get(key,{}).get('status') != 'pass':
+                            raise ValueError(f'missing successful CUDA repair gate: {key}')
+                        if json.loads((path.parent/(key+'.json')).read_text()) != value[key]:
+                            raise ValueError(f'repair gate artifact mismatch: {key}')
+                    if not value['padding_operator_gate']['device'].startswith('cuda:'):
+                        raise ValueError('CPU gate cannot stand in for CUDA repair validation')
+                    if value['environment']['strict_deterministic'] is not True:
+                        raise ValueError('strict determinism disabled in repair worker')
             for run in value['runs']:
                 if run['status']=='complete':
-                    verify_run_artifacts(run, settings)
+                    verify_run_artifacts(run, artifact_settings)
         except Exception as error:
             value.update(status='artifact_validation_failure', validation_error=repr(error))
             for run in value['runs']:
@@ -325,29 +351,33 @@ def aggregate(output, settings, config_digest, exit_codes):
                 comparisons.append(dict(kind='execution_bundle', rank=rank,
                                         **compare_runs(a['runs'][0], b['runs'][0], settings)))
     complete = sum(r['status']=='complete' for w in workers for r in w['runs'])
+    reused_fits = sum(r['status']=='complete' for w in workers if w['rank'] in reused for r in w['runs'])
     healthy_workers = all(w['status']=='complete' for w in workers) and all(c==0 for c in exit_codes)
     decision = summarize_comparisons(comparisons, complete)
     if not healthy_workers:
         decision.update(next_action='investigate_incomplete_controls_no_scaling')
     result = dict(status='repro_batch_complete' if complete==24 and healthy_workers else 'repro_batch_partial_failure',
                   config_sha256=config_digest, completed_fits=complete, expected_fits=24,
+                  completed_new_fits=complete-reused_fits, completed_reused_fits=reused_fits,
                   workers=workers, worker_exit_codes=exit_codes, comparisons=comparisons,
+                  reused_worker_ranks=sorted(reused),
                   decision=decision, diagnostic_only=True,
                   independent_optimizers=True, sealed_internal_accessed=False,
                   official_foundir_test_accessed=False, development_gt_optimized=False, decoder_finetuned=False)
     write_json(output/'result.json', result)
     lines = ['# Consolidated reproducibility batch', '', 'DIAGNOSTIC ONLY / 非主线.', '',
              f'Completed fits: {complete}/24. Result SHA-256: `{sha256(output / "result.json")}`.', '',
+             f'New completed fits: {complete-reused_fits}; reused completed fits: {reused_fits}.', '',
              f'Next action: `{result["decision"]["next_action"]}`. No automatic quality or full-training pass.', '',
-             '| Rank | Execution | Phase | Final PSNR / LPIPS | Max preclip gradient |',
-             '|---:|---|---|---|---:|']
+             '| Rank | Source | Execution | Phase | Final PSNR / LPIPS | Max preclip gradient |',
+             '|---:|---|---|---|---|---:|']
     for w in workers:
         for r in w['runs']:
             if r['status']=='complete':
                 last = r['snapshots'][-1]
-                lines.append(f'| {w["rank"]} | {w["deterministic"]} | {r["phase"]} | {last["psnr"]:.4f} / {last["lpips"]:.4f} | {r["max_gradient"]:.6g} |')
+                lines.append(f'| {w["rank"]} | {"reused" if w["rank"] in reused else "new"} | {w["deterministic"]} | {r["phase"]} | {last["psnr"]:.4f} / {last["lpips"]:.4f} | {r["max_gradient"]:.6g} |')
             else:
-                lines.append(f'| {w["rank"]} | {w.get("deterministic")} | {r["phase"]} | FAILED | n/a |')
+                lines.append(f'| {w["rank"]} | {"reused" if w["rank"] in reused else "new"} | {w.get("deterministic")} | {r["phase"]} | FAILED | n/a |')
     lines += ['', 'See result.json for exact first-gradient/update/final equality, matched trajectories,',
               'cross-device controls, branch errors, identities and artifact hashes. Inspect fixed images.',
               'Both records are training-only fits; no generalization or SOW claim.']

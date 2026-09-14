@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Continue within the existing user-authorized two-round decision budget; no additional advisor round.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_repro_batch_v1.json",
+    "sha256": "9aef9ebef30487e8657a6df506e0914ef55cd77765c37e39ff420211a95c7046"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "two_existing_training_crops_only",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_repro_batch_v1/result.json",
+    "sha256": "97c3d855f447d3e24667401466cc1bff985efe1ad4304f954ac171e78474ca23"
+  },
+  "gate": "zimage_repro_batch_v1",
+  "generated_at": "2026-09-14T09:04:58Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image matched off/on/off ordinary/deterministic controls",
+  "outcome": "information",
+  "report_id": "zimage_repro_batch_v1-ea2c28ad8b5e6f56",
+  "root_cause_or_status": "Consolidated batch finished; inspect complete and failed controls, numerical equality, trajectories and fixed visuals. No automatic quality pass.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
