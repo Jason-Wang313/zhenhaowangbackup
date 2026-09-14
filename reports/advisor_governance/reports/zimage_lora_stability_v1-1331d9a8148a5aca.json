@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Continue under existing user authorization without another advisor round.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_lora_stability_v1.json",
+    "sha256": "73fa6baf6a081103bbd23268480e39618238acfc96a9e835777c8af0955a52e2"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "two_existing_training_crops_only",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_lora_stability_v1/result.json",
+    "sha256": "defa6076114ba0b21b545af83c6bf66980be21779dfdbe621e63ac51b510d4b3"
+  },
+  "gate": "zimage_lora_stability_v1",
+  "generated_at": "2026-09-14T07:41:41Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image controlled LoRA LR stability probes",
+  "outcome": "information",
+  "report_id": "zimage_lora_stability_v1-1331d9a8148a5aca",
+  "root_cause_or_status": "LR comparison complete; inspect module traces, stability and convergence before next design.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

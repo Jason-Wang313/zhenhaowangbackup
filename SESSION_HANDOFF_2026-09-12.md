@@ -6,7 +6,67 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## LoRA stability audit CPU-ready — 2026-09-14 (LATEST AUTHORITY)
+## LoRA stability terminal audit — 2026-09-14T07:50:02Z (LATEST AUTHORITY)
+
+User asked `check the log`. The already-launched stability audit completed
+normally at `2026-09-14T07:41:42Z`, status 0, homogeneous 8x H100, 200 steps
+per independent optimizer. No new experiment was launched during this audit.
+Verified result SHA-256:
+`defa6076114ba0b21b545af83c6bf66980be21779dfdbe621e63ac51b510d4b3`.
+Result: `checkpoints/foundir_blur_only_zimage_lora_stability_v1/result.json`.
+Log: `logs/foundir_blur_only_zimage_lora_stability_v1.log`.
+Governance report: `zimage_lora_stability_v1-1331d9a8148a5aca`.
+
+Audit verified 8 unique record/objective/LR combinations, 1,600 training log
+rows, 112 finite metric snapshots and 112 PNGs/sidecars, 16 checkpoint hashes
+(8 final plus 8 reference snapshots), and all 8 optimizer-trace hashes.
+Each trace has 49 finite rows. Protected-test and development-GT-optimization
+flags are false; original decoder stays frozen. These are two training-image
+fits, not development evaluation or a deployable restoration success.
+
+| LR | Strong blur RGB PSNR/LPIPS | Near-clean mixed PSNR/LPIPS |
+|---:|---:|---:|
+| 5e-5 | 26.8247/.4114 | 33.3981/.0393 |
+| 2e-5 | 25.1227/.4819 | 33.8761/.0316 |
+| 1e-5 | 24.1468/.5082 | 34.3268/.0377 |
+| 5e-6 | 23.3246/.5233 | 34.3602/.0500 |
+
+CRITICAL: both reference-reproduction checks are false. The previous 5e-5
+strong-blur collapse (13.8618 dB at 200) did NOT recur (now 26.8247 dB).
+Near-clean mixed ends at 33.3981 rather than 29.2787. Do not claim lower LR
+fixed the original failure: reference LR itself changed trajectory and gives
+the best strong-blur PSNR in this sweep. All near-clean candidates still lose
+PSNR against their 36.883 dB input; strong-blur RGB LPIPS remains poor.
+
+The old/new step-0 PSNR/LPIPS match exactly, but actual first updates already
+differ: strong RGB update L2 .3722290871 vs .3722108480; near-clean mixed
+.3375445214 vs .3375542356. New-minus-old PSNR at steps 1/20/100/200:
+strong RGB -.000126/+.001325/+.032361/+12.962954 dB; near-clean mixed
++.008828/+.000977/+.323802/+4.119382 dB. The later extra evaluation schedule
+cannot alone explain this first-update difference. GPU backward numerical
+nondeterminism, instrumentation/allocation/timing effects and changed rank/device
+assignment are hypotheses, not established causes. No deterministic GPU control
+was enforced; CPU hook equality does not establish GPU trajectory equality.
+
+Strong RGB reference gradient norm never exceeds .172463 this run; near-clean
+mixed still spikes to 2.406561 at step 160 (clip 1 active), despite recovering
+to .007469 at step 200. Therefore do not call all trajectories fully stable.
+Across recorded normalization inputs, denominator minimum is .110420, while
+noise_refiner.0.ffn_norm2 input absmax reaches 1,073,741,824 for near-clean
+reference at 200. Large pre-normalization activations deserve comparison to
+initial/base traces but do not by themselves prove overflow or a causal bug.
+
+Exact next task: isolate reproducibility before LR-based design/scaling:
+compare identical initialization and first-step gradients/updates with and
+without instrumentation on the same GPU/backend, then control deterministic
+backward and repeat the reference trajectory with matched evaluation schedule.
+This is a proposed next diagnostic, not an implemented or launched job. Preserve
+all completed artifacts; do not rerun v1 or extend the failed decoder blindly.
+Existing user authorization allows continuation without another advisor round;
+the overall teacher/student restoration objective remains incomplete. Follow
+the existing task/model escalation contract for consequential next design.
+
+## LoRA stability audit CPU-ready — 2026-09-14 (historical)
 
 The user said `next` after the eight optimization probes identified late LoRA
 instability. The next diagnostic freezes each previously failing record/loss
