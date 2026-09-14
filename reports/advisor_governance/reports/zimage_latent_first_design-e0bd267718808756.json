@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "No additional advisor response requested: execute existing user-authorized bounded correction; review final visuals and both metrics before any further training.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_latent_first_v1.json",
+    "sha256": "cc4cb5e26803fa20a4ea92fc91ae2b6185619685b1e04e0a071e908aa89da904"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_train_16_source_disjoint_development_crops",
+  "evidence": {
+    "path": "configs/foundir_blur_only_zimage_latent_first_v1.json",
+    "sha256": "cc4cb5e26803fa20a4ea92fc91ae2b6185619685b1e04e0a071e908aa89da904"
+  },
+  "gate": "zimage_latent_first_design",
+  "generated_at": "2026-09-14T10:02:44Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image Base latent-first supervised endpoint repair; original frozen VAE; initialization endpoint step400 SHA d979af50f3013cc5e02d4c36943f32c4b512a75ee26c0aab20a37728b9c15d7e",
+  "outcome": "information",
+  "report_id": "zimage_latent_first_design-e0bd267718808756",
+  "root_cause_or_status": "User execute authorizes the single round-2 recipe after completed reproducibility controls. Design reports/zimage_latent_first_design_2026-09-14.md; latent-only800 then joint400; fixed final1200; no new model family, decoder training, teacher imitation or protected data. Quality remains unverified.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -6,7 +6,74 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Round-1 reproducibility terminal pass — 2026-09-14T09:42:45Z (LATEST AUTHORITY)
+## Round-2 latent-first CPU-ready — 2026-09-14T10:04:08Z (LATEST AUTHORITY)
+
+User said `execute`. Round 1 is complete; do not rerun it. The single bounded
+round-2 recipe is now in `configs/foundir_blur_only_zimage_latent_first_v1.json`
+and `reports/zimage_latent_first_design_2026-09-14.md`: exact endpoint step-400
+FP32 LoRA initialization, original frozen VAE, same 16 train/16 source-disjoint
+development 512x512 crops, LR 5e-5/global batch 8/clip 1. Steps 1--800 use GT
+latent MSE only; 801--1200 use latent MSE 1 + RGB MSE 1 + LPIPS .05. No weak
+teacher imitation and no decoder tuning. This is supervised endpoint repair,
+NOT successful teacher distillation. All protected-data restrictions remain.
+
+New trainer/helper/tests/launcher are implemented and CPU-verified. Sixty
+focused tests passed (including two-process Gloo synchronization versus a
+single-process global-batch reference for both objectives), compilation and
+shell syntax passed, and the full six-model-artifact/parent/image hash
+preflight passed with both H100/H200 profiles. Real 6B 64x64 CPU two-stage
+rehearsal completed with exact repeats, nonzero FP32 updates, FP32 AdamW,
+frozen-gradient exclusion and exact initial-state reset. These CPU tests do
+NOT establish full-resolution CUDA memory, reproducibility or image quality.
+
+Config SHA-256:
+`cc4cb5e26803fa20a4ea92fc91ae2b6185619685b1e04e0a071e908aa89da904`.
+Design/governance report: `zimage_latent_first_design-e0bd267718808756`.
+It records existing user `execute`; no additional advisor response or hold.
+Verification logs: `logs/zimage_latent_first_tests_v1.log` (60 passed),
+`logs/zimage_latent_first_preflight_v1.log`,
+`logs/zimage_latent_first_cpu_smoke_v1.log`.
+CPU evidence: `logs/zimage_latent_first_cpu_9f9hciau/rehearsal_rank_0.json`, SHA
+`58da013637862fb29272f68aa42fcb57922a684b686f270aca2129b29557d076`.
+Rehearsal latent/joint losses 5.0682168/.2708406 come from DIFFERENT training
+records; do not call that a learning curve. Preclip norms 10.3766603/.8073046.
+
+One real launch will include deterministic padding/Flash controls and a
+two-repeat, two-stage synchronized rehearsal before resetting all state for
+actual training. Fixed-layout FP32 allreduce, NCCL Ring/Simple. Rehearsal hashes
+POST-clipping averaged gradients, outputs and updated parameters; all ranks
+must retain identical weights. Fixed snapshots 0/200/400/600/800/1000/1200;
+candidate is predeclared final step1200, no checkpoint cherry-picking. Gate
+requires lower training latent MSE and both PSNR/LPIPS improvements over input
+on train AND development, followed by visual review; no automatic full launch.
+If this recipe fails, end the agreed two-round decision budget and reconsider
+formulation, not another open-ended sweep.
+
+CUDA rechecked here: unavailable, zero devices. No round-2 GPU log/output
+exists and no GPU work has started. Exact next action, on the user's shared
+homogeneous 8xH100/H200 GPU shell in this workspace:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_latent_first_v1_8gpu.sh
+```
+
+Monitor: `tail -f logs/foundir_blur_only_zimage_latent_first_v1.log`.
+Output: `checkpoints/foundir_blur_only_zimage_latent_first_v1/`.
+Retained tmux session: `foundir-zimage-latent-first-v1`; launcher resolves the
+executable or uses verified nohup fallback, never requires /usr/bin/tmux.
+It rejects prior evidence/concurrent launches and logs UTC start/end, status,
+runtime environment, eight-GPU telemetry and governance terminal results.
+One job runs all stages; no manual launch at step800. Eight rehearsal-pass
+markers and inherited step0 per-record metric agreement precede training.
+Expect 6 new FP32 checkpoints, 14 aggregates, 224 triptychs/sidecars,
+1,200 training rows, result.json and report.md. Final checkpoint hashes are
+roundtrip-verified; ranks must have identical weights at every saved snapshot.
+Review both training and development plus fixed visuals before further work.
+Monitoring remains routine; follow existing escalation contract only when a
+new consequential scientific design is actually needed, not for model-tier
+ceremony. No quality-valid overall teacher/student result exists yet.
+
+## Round-1 reproducibility terminal pass — 2026-09-14T09:42:45Z (historical)
 
 Supplement finished normally at `2026-09-14T09:38:26Z`, status 0. All 12 new
 strict-deterministic fits completed, and all 12 immutable ordinary fits were
