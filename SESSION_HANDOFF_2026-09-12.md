@@ -6,6 +6,108 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Model-selection and escalation contract — 2026-09-14T06:35:15Z (LATEST AUTHORITY)
+
+The user reports that the active agent is currently **GPT-5.6 Sol medium**.
+That is the appropriate model for monitoring this already-designed endpoint
+run, auditing logs/artifacts, maintaining this handoff, and handling routine,
+localized implementation or runtime fixes. Do not interrupt healthy execution
+merely to change models.
+
+Use the following task-to-model policy for future sessions:
+
+- **Sol medium**: live monitoring, telemetry/log parsing, artifact counts and
+  hashes, status reporting, documentation, rerunning established tests, and
+  small obvious fixes with no scientific-design consequence.
+- **Sol high**: substantial but well-scoped coding, DDP/runtime debugging,
+  test construction, launcher hardening, performance profiling, and
+  optimization whose intended algorithm and acceptance criteria are already
+  fixed. This should be the default for most implementation work in this
+  repository.
+- **Astra medium**: pivotal scientific interpretation or design, including
+  explaining unexpected metric/visual disagreement, deciding the next
+  distillation objective or architecture after a failed gate, deciding whether
+  and how to fine-tune the decoder, or making a choice likely to materially
+  affect restoration quality, code architecture, training stability, GPU
+  efficiency, or optimization performance.
+- **Astra high**: reserve for a genuinely high-stakes redesign with several
+  interacting unresolved causes where Astra medium has not produced a
+  defensible design. It is not warranted for ordinary monitoring or routine
+  coding. Astra low is not preferred here: use Sol high for execution work or
+  Astra medium for consequential scientific reasoning.
+
+Mandatory communication rule: before beginning a task where using the current
+model instead of the recommended model is reasonably likely to materially
+reduce code quality or optimization/scientific performance, explicitly tell
+the user to switch, name the exact recommended model/reasoning level, and state
+the concrete decision that requires it. Keep this handoff current before the
+switch so Sol and Astra can be alternated safely. Model switching does not
+authorize a new experiment, change scope, or relax protected-data rules.
+
+Official OpenAI documentation was queried for this update but returned
+`Forbidden` in the current environment. The quality-first Astra role comes
+from the bundled OpenAI-docs fallback and may be outdated; the Sol-specific
+division above additionally uses the model descriptions exposed in this Codex
+session and project experience, not a claim about current public pricing or
+availability.
+
+## Endpoint student terminal result — 2026-09-14T06:35:28Z (LATEST AUTHORITY)
+
+The endpoint GPU job completed normally with terminal status 0 on homogeneous
+8x `NVIDIA H100 80GB HBM3`. It ran all 400 optimizer steps in 179.4340 seconds
+with global batch 8, FP32 trainable LoRA/AdamW state, and frozen BF16 base
+weights. There was no OOM, NCCL, traceback, non-finite, or protected-data
+failure. `ENDPOINT_TARGETS_READY teacher_usable=3/16` exactly matches the prior
+sweep; this is correctly classified as `gt_anchored_filtered_distillation`.
+
+| Split | Input PSNR / LPIPS | Step-200 output | Step-400 output |
+|---|---:|---:|---:|
+| tiny-overfit train | 24.7232 / 0.3085 | 25.3647 / 0.2542 | 25.4045 / 0.2550 |
+| visual development | 23.9045 / 0.3263 | 23.0691 / 0.3584 | 22.8776 / 0.3520 |
+
+The machine `automatic_metric_gate_pass: true` means only that the predeclared
+bounded train learnability gate passed: at step 400 train gains are +0.6814 dB
+PSNR and +0.0535 LPIPS improvement. It is not evidence of development
+generalization. Development remains worse than input by 1.0270 dB PSNR and
+0.0257 LPIPS, only 3/16 records improve PSNR, and step-400 development PSNR is
+0.1915 dB worse than step 200. Do not scale this endpoint student or call it a
+quality-successful distilled model.
+
+Fixed-triptych review agrees with the metrics. The endpoint mapping can recover
+coarse sharp structure on some hard training examples, but retains prominent
+web/grain texture and imperfect detail. Near-clean training inputs are
+unnecessarily altered, and development examples show artificial sharpening,
+grain/texture changes, color or contrast shifts, and inadequate recovery of
+strong motion blur. The output remains materially below GT quality.
+
+Immutable terminal identities:
+
+- config SHA-256:
+  `1d98854ec7dc40e3d678879d849955180d652cbfcd86ec77596912214c956f50`;
+- step-400 checkpoint SHA-256:
+  `d979af50f3013cc5e02d4c36943f32c4b512a75ee26c0aab20a37728b9c15d7e`;
+- result SHA-256:
+  `b5934dc34bd4ac67ba030de67504af3fc0e517f66e650dcfc4e6ad9677adc680`;
+- governance report JSON SHA-256:
+  `f083f4da3f61061291dcaf3499ca4e16c932c2390586474c2f5d80babe13cb0f`;
+- governance report Markdown SHA-256:
+  `3b95e5488ba8f3628a1f57e0581381d86878b426fb811d6a15b73ba95a094ed7`.
+
+Both `sealed_internal_accessed` and `official_foundir_test_accessed` are false;
+the decoder was not fine-tuned. The advisor-authorized route still permits a
+decoder intervention without another advisor request, but the evidence does
+not yet identify whether the best next move is endpoint regularization/data
+scaling, a better teacher/student objective, or conditional decoder tuning.
+
+This is now a mandatory **GPT-6 Astra medium** decision point under the model
+contract above. Stop Sol medium after completing the terminal audit and tell
+the user to switch before selecting or implementing the next scientific
+design. Astra should first decide whether the next bounded gate targets
+generalization in the restoration mapping or off-manifold decoder sensitivity;
+only after that design is frozen should execution return to Sol high. No new
+advisor round is required. Continue to prohibit Qwen degradation conditioning,
+mixed degradation, sealed internal, and official FoundIR test.
+
 ## Endpoint student CPU-ready — 2026-09-14T06:22:00Z (LATEST AUTHORITY)
 
 The user switched to Astra and said `continue`; the earlier Sol-to-Astra pause

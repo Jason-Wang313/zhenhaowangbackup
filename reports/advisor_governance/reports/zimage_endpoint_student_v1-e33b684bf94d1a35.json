@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Continue within existing user authorization; no new advisor round requested.",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/step_000400.safetensors",
+    "sha256": "d979af50f3013cc5e02d4c36943f32c4b512a75ee26c0aab20a37728b9c15d7e"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_endpoint_distill_v1.json",
+    "sha256": "1d98854ec7dc40e3d678879d849955180d652cbfcd86ec77596912214c956f50"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed_16_training_pairs_plus_16_source_disjoint_visual_development_pairs",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_endpoint_distill_v1/result.json",
+    "sha256": "b5934dc34bd4ac67ba030de67504af3fc0e517f66e650dcfc4e6ad9677adc680"
+  },
+  "gate": "zimage_endpoint_student_v1",
+  "generated_at": "2026-09-14T06:35:27Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image Base 6B GT-anchored single-step student FP32 LoRA frozen VAE",
+  "outcome": "pass",
+  "report_id": "zimage_endpoint_student_v1-e33b684bf94d1a35",
+  "root_cause_or_status": "Bounded endpoint student finished; inspect fixed visuals and both metrics before scaling. Teacher acceptance filter uses only training pairs.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
