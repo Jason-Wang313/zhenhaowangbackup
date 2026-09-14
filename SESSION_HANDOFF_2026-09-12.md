@@ -6,6 +6,49 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Z-Image paired-flow teacher v2 CPU-ready — 2026-09-14T04:16:52Z (LATEST AUTHORITY)
+
+The user explicitly resolved hold
+`zimage_blur_teacher_tiny_overfit-a6becc1eff058fec` and directed execution of
+the same Blur-only Z-Image route without another advisor round. The matching
+decision SHA-256 is
+`48f62ed9fc5efb05063b86be8d15615c2b7d43cd848f92e2daee73005b7c036f`;
+`advisor_governance.py check` passes.
+
+The failed v1 artifacts remain immutable. Corrected v2 removes the
+Turbo-trained ControlNet and implements a Base-native paired latent flow:
+
+- `x_sigma=(1-sigma)*GT_latent+sigma*LQ_latent`;
+- velocity target `LQ_latent-GT_latent`;
+- exact LQ VAE latent initialization at sigma 1;
+- 50-step descending-sigma Euler inference to sigma 0;
+- published Base static shift 6 for training and inference;
+- CFG 1; frozen VAE/text encoder; DiT LoRA rank 32;
+- unchanged fixed 16 train plus 16 source-disjoint visual-development crops.
+
+Config:
+`configs/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2.json`,
+SHA-256 `d6f5946fcd75050a17d96c093f7590552f89d14caaf7dce0c659fe35fcb2fbb8`.
+Readiness report:
+`reports/foundir_blur_only_zimage_teacher_paired_flow_v2_readiness_2026-09-14.md`.
+
+Verification completed: 13 focused tests passed; full hashes passed for the
+six Base/VAE/text artifacts with no ControlNet; Python compile, imports, shell
+syntax, launcher `--check`, governance, and `git diff --check` passed. A real
+6B 64x64 CPU forward/backward returned finite loss `3.0448391437530518`, all
+476 trainable tensors had finite gradients, and the expected 238 LoRA-B
+tensors had nonzero gradients. Trainable count remains 79,380,480.
+
+This Codex shell has PyTorch 2.7.0+cu128 but no visible CUDA device, so v2 has
+not trained and has no quality result yet. Exact next action: on one
+homogeneous 8xH100/H200 GPU shell, set literal
+`CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7` and run
+`smoke/launch_foundir_blur_only_zimage_teacher_paired_flow_v2_8gpu.sh` inside
+a retained tmux session. Then inspect the fixed step-0/step-400 triptychs and
+PSNR/LPIPS. Do not begin full teacher training, distillation, or decoder tuning
+until this teacher gate passes. Sealed internal and official FoundIR test
+remain untouched.
+
 ## Advisor-authorized Z-Image continuation — 2026-09-13 (LATEST AUTHORITY)
 
 The advisor has reviewed the completed FLUX.2 Blur-only development result and
