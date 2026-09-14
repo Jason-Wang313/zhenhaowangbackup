@@ -6,6 +6,61 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Z-Image paired-flow teacher v2 terminal result and authorized v3 continuation — 2026-09-14T04:43:55Z (LATEST AUTHORITY)
+
+The corrected v2 job completed successfully at `2026-09-14T04:39:37Z` on
+homogeneous 8x `NVIDIA H100 80GB HBM3` with `flash_attention_2`, 400/400
+optimizer steps, and terminal status 0. Training took `384.0424 s`; no OOM,
+NCCL, protected-data, or runtime failure occurred. Immutable identities:
+
+- config SHA-256
+  `d6f5946fcd75050a17d96c093f7590552f89d14caaf7dce0c659fe35fcb2fbb8`;
+- step-200 SHA-256
+  `95844e51228046664b2647f2a3f34800f9455f1b171bbd79f0627c9e2e7c73c5`;
+- step-400 SHA-256
+  `2a3e9b3392dfea20f9e6e869febce1ff99bcaa751e317e247c908f683a4ecd39`;
+- training result SHA-256
+  `b941e313b15f233ad7bc938ab9f558f83da2ed35c8e784c142c8abf4cc39d2c2`;
+- evaluation result SHA-256
+  `1c1bdf59c03dfd29773fd122cfb1a101bc6b45542816de2b9c7b6b053d9bd890`.
+
+| Role / state | PSNR input -> output | LPIPS input -> output | Improved fractions |
+|---|---:|---:|---:|
+| train / step 0 | 24.7232 -> 14.5875 | 0.3085 -> 0.6186 | 0.0000 / 0.0625 |
+| development / step 0 | 23.9045 -> 13.0060 | 0.3263 -> 0.6930 | 0.0000 / 0.0625 |
+| train / step 400 | 24.7232 -> 23.2828 | 0.3085 -> 0.2415 | 0.1250 / 0.8125 |
+| development / step 400 | 23.9045 -> 22.6414 | 0.3263 -> 0.2692 | 0.0625 / 0.8125 |
+
+Visual review of fixed train/development triptychs found that v2 repaired the
+v1 noise/content collapse: scene content, geometry, and text are substantially
+preserved and many outputs are sharper. It still fails the teacher gate because
+train PSNR loses `1.4404 dB` and development PSNR loses `1.2632 dB`; outputs
+remain below GT sharpness and sometimes add grain, over-sharpening, or luminance
+changes. Near-clean records are unnecessarily altered, including train
+`foundir_train_0091486` (`36.883 -> 26.250 dB`) and development
+`foundir_train_0062371` (`27.230 -> 21.971 dB`). Full teacher training,
+distillation, and decoder tuning therefore have not started.
+
+The emitted hold is
+`zimage_blur_teacher_paired_flow_tiny_overfit_v2-ea895f0c24c75257`, SHA-256
+`c749f28a843c718fd474d714fa293a1ab77639a718d2d970116f51a1152abcd7`.
+The user explicitly directed best-effort continuation of the same Blur-only
+Z-Image route without another advisor round. The matching recorded decision is
+`resume_same_mainline`, SHA-256
+`515e869861d305acb0a747c9b15c26dd1fb2abd4a5c1934ada035fdc0758809a`;
+`advisor_governance.py check` passes.
+
+Exact next action: implement an isolated v3 continuation initialized from the
+immutable v2 step-400 LoRA. Reset the optimizer explicitly, train only on the
+actual 50-step shift-6 inference grid with plain unweighted velocity MSE, save
+cumulative steps 800 and 1200 under a new output root, and reevaluate the same
+fixed 16 train plus 16 source-disjoint development crops. Do not start full
+teacher training until both PSNR and LPIPS improve over input and the fixed
+visual gate passes. Decoder tuning remains prohibited until after a valid
+teacher and inadequate distilled model establish a decoder/latent ceiling.
+Qwen degradation conditioning, mixed degradation, sealed internal, and the
+official FoundIR test remain prohibited.
+
 ## Z-Image paired-flow teacher v2 CPU-ready — 2026-09-14T04:16:52Z (LATEST AUTHORITY)
 
 The user explicitly resolved hold

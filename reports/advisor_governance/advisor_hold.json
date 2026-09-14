@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-14T03:40:36Z",
+  "created_at": "2026-09-14T04:39:36Z",
   "evidence": {
-    "path": "checkpoints/foundir_blur_only_zimage_teacher_overfit_v1/evaluation/result.json",
-    "sha256": "5e9b8b4a715382bb4d8d5a3e233314da9c34b7b3d7e4c4031663160dbea0e651"
+    "path": "checkpoints/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2/evaluation/result.json",
+    "sha256": "1c1bdf59c03dfd29773fd122cfb1a101bc6b45542816de2b9c7b6b053d9bd890"
   },
-  "hold_id": "zimage_blur_teacher_tiny_overfit-a6becc1eff058fec",
+  "hold_id": "zimage_blur_teacher_paired_flow_tiny_overfit_v2-ea895f0c24c75257",
   "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
-  "report": "reports/advisor_governance/reports/zimage_blur_teacher_tiny_overfit-a6becc1eff058fec.md",
-  "report_sha256": "6cb809a52f0411286f6da0be6849ce150b8997c994778b2562243fdc36ea05ff",
+  "report": "reports/advisor_governance/reports/zimage_blur_teacher_paired_flow_tiny_overfit_v2-ea895f0c24c75257.md",
+  "report_sha256": "a564f1e8d907662bcbd71539d7e1175fa736c09215c84ed34e942e9f05085f4f",
   "schema_version": 1
 }

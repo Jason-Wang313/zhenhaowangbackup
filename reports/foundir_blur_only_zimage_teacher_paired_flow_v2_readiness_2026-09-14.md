@@ -3,7 +3,31 @@
 > **DIAGNOSTIC ONLY / 非主线。** This is a Blur-only teacher learnability gate,
 > not the five-type FLUX.2 result and not an official FoundIR-test result.
 
-## Current outcome
+## Terminal update — 2026-09-14T04:43:55Z
+
+This file began as the CPU-readiness snapshot below. The v2 GPU gate has now
+completed 400/400 steps on 8x H100 with terminal status 0. Its immutable
+evaluation result is
+`checkpoints/foundir_blur_only_zimage_teacher_paired_flow_overfit_v2/evaluation/result.json`,
+SHA-256 `1c1bdf59c03dfd29773fd122cfb1a101bc6b45542816de2b9c7b6b053d9bd890`.
+
+At step 400, fixed-train PSNR changed `24.7232 -> 23.2828 dB` and LPIPS
+changed `0.3085 -> 0.2415`; source-disjoint development changed
+`23.9045 -> 22.6414 dB` and `0.3263 -> 0.2692`. Visual review confirms that
+v2 repaired v1's content/noise collapse and provides useful sharpening, but it
+does not reach GT detail consistently and damages some near-clean inputs. The
+teacher gate fails because PSNR does not improve. Full teacher training,
+distillation, and decoder fine-tuning have not started.
+
+The user explicitly authorized same-mainline best-effort continuation without
+another advisor request. Decision SHA-256 is
+`515e869861d305acb0a747c9b15c26dd1fb2abd4a5c1934ada035fdc0758809a` and
+resolves hold `zimage_blur_teacher_paired_flow_tiny_overfit_v2-ea895f0c24c75257`.
+The bounded next gate is a new v3 output initialized from immutable v2
+step 400, with optimizer reset, exact 50-step shift-6 grid sampling, plain MSE,
+and cumulative step-800/1200 evaluation on the unchanged fixed crops.
+
+## CPU-readiness snapshot (historical)
 
 The first Z-Image teacher was scientifically invalid for restoration: its
 frozen Turbo-only ControlNet was attached to undistilled Base, inference used
