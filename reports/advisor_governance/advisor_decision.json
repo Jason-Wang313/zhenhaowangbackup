@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "zimage_optimization_audit_design-32f359c3991e638b",
-  "hold_sha256": "612d4380be3a1d0c268faa5576d9216eb0338e043441cff9b8bf422b85d103d5",
+  "hold_id": "zimage_lora_stability_design-013d68aa7d35a2a6",
+  "hold_sha256": "4a95c4b18332f3cfa5c73f110eb88e117413635c38085bb385881e73b978181d",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "记录已有明确授权，不是新的 advisor 回复：用户要求在 teacher、student、decoder 效果不足后进行深入科学与代码审查，明确 execute；依照此前无需再次询问 advisor 的同一 Blur-only 授权，执行 reports/zimage_optimization_audit_design_2026-09-14.md 中两张已有训练图的 latent/LoRA 与 RGB/mixed 四组有界优化诊断。",
-  "recorded_at": "2026-09-14T07:01:21Z"
+  "statement": "记录已有明确授权，不是新的 advisor 回复：用户在优化审计发现 LoRA 失稳、提出检查学习率与逐层梯度后明确 next；依照此前无需再次询问 advisor 的同一 Blur-only 授权，执行 reports/zimage_lora_stability_design_2026-09-14.md 中固定两个失败组合、仅改变 learning rate 的有界稳定性对照。",
+  "recorded_at": "2026-09-14T07:26:00Z"
 }

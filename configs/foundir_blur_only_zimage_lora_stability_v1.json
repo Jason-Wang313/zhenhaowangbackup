@@ -1,0 +1,18 @@
+{
+  "parent_audit_config": "configs/foundir_blur_only_zimage_optimization_audit_v1.json",
+  "parent_audit_config_sha256": "a28ca0c20214f649a0ef2e22f7772fceb737154e80050e1c63214823e2d81c31",
+  "parent_audit_result": "checkpoints/foundir_blur_only_zimage_optimization_audit_v1/result.json",
+  "parent_audit_result_sha256": "7d9eac4a76675190fb1202e30e937fb3762167c81e1a8fb4d03fa6b91eb96ddf",
+  "learning_rates": [0.00005, 0.00002, 0.00001, 0.000005],
+  "record_objectives": ["lora_rgb", "lora_mixed"],
+  "steps": 200,
+  "snapshot_steps": [0, 1, 20, 40, 60, 80, 100, 120, 140, 160, 180, 190, 195, 200],
+  "reference_checkpoint_steps": [180, 190, 195, 200],
+  "output_dir": "checkpoints/foundir_blur_only_zimage_lora_stability_v1",
+  "decoder_finetuning": false,
+  "development_gt_optimized": false,
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}

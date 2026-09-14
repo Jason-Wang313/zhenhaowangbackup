@@ -6,7 +6,61 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Optimization audit terminal evidence — 2026-09-14T07:17:44Z (LATEST AUTHORITY)
+## LoRA stability audit CPU-ready — 2026-09-14 (LATEST AUTHORITY)
+
+The user said `next` after the eight optimization probes identified late LoRA
+instability. The next diagnostic freezes each previously failing record/loss
+combination and changes only LR: [5e-5,2e-5,1e-5,5e-6]. For every rate, one
+rank fits strong-blur 0042483 with RGB loss and one rank fits near-clean 0091486
+with the existing mixed loss. This gives eight independent optimizers. Exact
+FP32 endpoint initialization, frozen BF16 base/VAE, AdamW settings, clipping 1,
+seed, single-image batch and 200 steps are unchanged within each comparison.
+
+Design: `reports/zimage_lora_stability_design_2026-09-14.md`.
+Config: `configs/foundir_blur_only_zimage_lora_stability_v1.json`, SHA-256
+`73fa6baf6a081103bbd23268480e39618238acfc96a9e835777c8af0955a52e2`.
+Implementation extends `smoke/audit_foundir_blur_only_zimage_optimization.py`
+with explicit `--stability`; instrumentation is in
+`lowlight_restoration/zimage_optimizer_trace.py`. Original diagnostic artifacts
+remain immutable; the old config still selects its original four-arm behavior.
+
+Every step logs loss and pre-clipping gradient norm. At step 1, multiples of 20,
+and every step >=160 it records per-module gradient norms, normalization input
+denominator ranges/absmax, and actual LoRA update/parameter norms. Hooks capture
+original forward only, not backward checkpoint recomputation. Fixed snapshots
+are 0/1/20/40/60/80/100/120/140/160/180/190/195/200 (112 triptychs total).
+Reference-rate ranks save 180/190/195/200 checkpoints; all ranks save final
+weights. Trace and checkpoint hashes enter each result. Lower-rate fits may
+progress more slowly in 200 steps; stability alone is not a quality win.
+The result compares reference-rate PSNR/LPIPS at common snapshots to the prior
+immutable audit (tolerances .05 dB/.005), reporting `reference_reproduction`.
+If false, investigate trajectory differences before causal LR conclusions.
+
+Six focused tests passed, including exact forward/gradient equality with hooks
+enabled. Real 6B CPU 64x64 two-step instrumented smoke passed:
+`logs/zimage_lora_stability_cpu_smoke_v1.log`. It captures 235 normalization
+layers and 238 gradient modules. First-step relative update L2 is .00558038;
+77,364,194 parameters change, and loss/gradient/output match the prior
+uninstrumented CPU smoke exactly. This is not full-resolution GPU evidence.
+Final launcher `--check` passed against the config hash above, including six
+focused tests, full artifact hashes, and both H100/H200 inventory profiles.
+
+Design hold `zimage_lora_stability_design-013d68aa7d35a2a6` is resolved by the
+existing user authorization plus `next`; no new advisor round. This shell has
+no exposed GPU and no stability GPU job has started. Exact GPU command is:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_lora_stability_v1_8gpu.sh
+```
+
+Log: `logs/foundir_blur_only_zimage_lora_stability_v1.log`.
+Output: `checkpoints/foundir_blur_only_zimage_lora_stability_v1/`.
+Inspect existing evidence before launching. Monitor with Sol medium; interpret
+stability and layer traces with Astra high. No decoder changes or protected
+test access; do not claim a successful deployable restoration model from fits
+to these two training images.
+
+## Optimization audit terminal evidence — 2026-09-14T07:17:44Z (historical)
 
 All eight independent 200-step probes completed on homogeneous 8x H100, status
 0. This is diagnostic completion, not restoration success. The audit verified

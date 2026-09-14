@@ -57,6 +57,28 @@ def assignment(rank, s):
     return s['arms'][rank // 2], s['record_ids'][rank % 2]
 
 
+def load_stability(path):
+    new = json.loads(path.read_text())
+    for key in ('decoder_finetuning','development_gt_optimized','qwen_degradation_conditioning',
+                'mixed_degradations','sealed_internal_accessed','official_foundir_test_accessed'):
+        if new.get(key) is not False:
+            raise ValueError(f'forbidden stability scope: {key}')
+    parent = ROOT/new['parent_audit_config']
+    if sha256(parent)!=new['parent_audit_config_sha256']:
+        raise ValueError('parent audit identity changed')
+    if sha256(ROOT/new['parent_audit_result'])!=new['parent_audit_result_sha256']:
+        raise ValueError('parent audit result changed')
+    if new['learning_rates'] != [5e-5,2e-5,1e-5,5e-6] or new['record_objectives'] != ['lora_rgb','lora_mixed']:
+        raise ValueError('stability assignment changed')
+    if new['steps'] != 200 or new['snapshot_steps'] != [0,1,20,40,60,80,100,120,140,160,180,190,195,200]:
+        raise ValueError('stability schedule changed')
+    if new['reference_checkpoint_steps'] != [180,190,195,200]:
+        raise ValueError('reference checkpoint schedule changed')
+    s,e,c = load_audit(parent)
+    s.update(output_dir=new['output_dir'],steps=new['steps'],snapshot_steps=new['snapshot_steps'],stability=new)
+    return s,e,c
+
+
 def objective(terms, arm, e):
     if arm.endswith('_rgb'):
         return terms['pixel_mse']
@@ -86,8 +108,9 @@ def main():
     p.add_argument('--preflight', action='store_true')
     p.add_argument('--cpu-smoke', action='store_true')
     p.add_argument('--arm-index', type=int, default=4)
+    p.add_argument('--stability', action='store_true')
     a = p.parse_args()
-    s, e, c = load_audit(a.config)
+    s, e, c = load_stability(a.config) if a.stability else load_audit(a.config)
     train, _ = load_frozen_rows(c, verify_images=True)
     selected = {r['record_id']: r for r in train if r['record_id'] in s['record_ids']}
     assert set(selected) == set(s['record_ids'])
@@ -100,6 +123,9 @@ def main():
     rank, world = int(os.getenv('RANK',0)), int(os.getenv('WORLD_SIZE',1))
     probe_rank = a.arm_index if a.cpu_smoke else rank
     arm, record_id = assignment(probe_rank, s)
+    if a.stability:
+        arm = s['stability']['record_objectives'][probe_rank % 2]
+        s['lora_learning_rate'] = s['stability']['learning_rates'][probe_rank // 2]
     torch.set_num_threads(4)
     torch.manual_seed(s['seed'])
     if a.cpu_smoke:
@@ -120,6 +146,8 @@ def main():
             root.mkdir(parents=True, exist_ok=False)
         dist.barrier()
     folder = root / arm / record_id
+    if a.stability:
+        folder = root / f"lr_{s['lora_learning_rate']:.0e}" / arm / record_id
     model = EndpointStudent(c, device, ROOT / s['student_checkpoint'])
     restore_student_fp32(model, ROOT / s['student_checkpoint'])
     from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
@@ -156,7 +184,13 @@ def main():
         def forward(grad):
             return model(item, prompt)
     optimizer = torch.optim.AdamW(params, lr=lr, weight_decay=0)
+    tracer = None
+    if a.stability:
+        from lowlight_restoration.zimage_optimizer_trace import OptimizerTrace, update_statistics, trace_step
+        tracer = OptimizerTrace(model)
+    named_params = [(n,p) for n,p in model.named_parameters() if p.requires_grad]
     snapshots = []
+    reference_checkpoints = []
     def evaluate(step):
         with torch.no_grad():
             z, rgb = forward(False)
@@ -176,12 +210,15 @@ def main():
                 save_triptych(folder/f'step_{step:06d}.png', record_id + ' | ' + arm + ' TRAIN-GT DIAGNOSTIC', lq,image,gt)
                 write_json(folder/f'step_{step:06d}.json', row)
             snapshots.append(row)
-            print('OPT_AUDIT_SNAPSHOT', json.dumps(dict(rank=probe_rank,arm=arm,record_id=record_id,**row)),flush=True)
+            print('OPT_AUDIT_SNAPSHOT', json.dumps(dict(rank=probe_rank,arm=arm,record_id=record_id,learning_rate=lr,**row)),flush=True)
     evaluate(0)
     start = time.monotonic()
     first_update = None
     for step in range(1, (2 if a.cpu_smoke else s['steps'])+1):
         optimizer.zero_grad(set_to_none=True)
+        tracing = tracer is not None and trace_step(step)
+        if tracing:
+            tracer.start()
         z, rgb = forward(True)
         if arm.endswith('_rgb'):
             loss = (rgb.float()-gt_rgb.float()).square().mean()
@@ -190,14 +227,25 @@ def main():
             loss = objective(terms,arm,e)
         if not torch.isfinite(loss):
             raise RuntimeError('nonfinite probe loss')
+        if tracer is not None:
+            tracer.stop_forward()
         loss.backward()
+        trace = tracer.collect_gradients(named_params) if tracing else None
         norm = torch.nn.utils.clip_grad_norm_(params,1.,error_if_nonfinite=True)
-        if step == 1:
+        if step == 1 or tracing:
             if not all(p.grad is not None and torch.isfinite(p.grad).all() for p in params):
                 raise RuntimeError('missing/nonfinite probe gradients')
             before = [p.detach().clone() for p in params]
         optimizer.step()
         metric.reset()
+        if tracing:
+            trace.update(step=step,pre_update_loss=float(loss.detach()),pre_clipping_grad_norm=float(norm),**update_statistics(params,before))
+            if step == 1:
+                assert trace['normalization_inputs']
+                print('LORA_STABILITY_TRACE_READY',json.dumps(dict(rank=probe_rank,normalization_layers=len(trace['normalization_inputs']),gradient_modules=len(trace['module_gradient_norms']),relative_update_l2=trace['relative_update_l2'])),flush=True)
+            if not a.cpu_smoke:
+                with (folder/'optimizer_trace.jsonl').open('a') as handle:
+                    handle.write(json.dumps(trace,allow_nan=False)+'\n')
         if step == 1:
             changed = sum(int(torch.count_nonzero(p.detach()!=b)) for p,b in zip(params,before))
             delta_sq = sum(float((p.detach()-b).square().sum()) for p,b in zip(params,before))
@@ -205,10 +253,20 @@ def main():
             del before
             assert changed > 0 and all(optimizer.state[p]['exp_avg'].dtype==torch.float32 for p in params)
             assert all(p.grad is None for p in model.pipe.vae_decoder.parameters())
-        if step == 1 or step % 20 == 0:
+        elif tracing:
+            del before
+        if step == 1 or step % 20 == 0 or a.stability:
             print('OPT_AUDIT_TRAIN',json.dumps(dict(rank=probe_rank,arm=arm,record_id=record_id,step=step,loss=float(loss.detach()),grad_norm=float(norm),elapsed=time.monotonic()-start)),flush=True)
         if step in s['snapshot_steps']:
             evaluate(step)
+        if a.stability and not a.cpu_smoke and probe_rank < 2 and step in s['stability']['reference_checkpoint_steps']:
+            reference = {n.removeprefix('pipe.dit.'):p.detach().cpu().contiguous() for n,p in named_params}
+            ref_path = folder/f'reference_step_{step:06d}.safetensors'
+            save_file(reference,ref_path,metadata=dict(config_sha256=sha256(a.config),step=str(step)))
+            reference_checkpoints.append(dict(step=step,path=str(ref_path.relative_to(ROOT)),sha256=sha256(ref_path)))
+            del reference
+    if tracer is not None:
+        tracer.close()
     if a.cpu_smoke:
         print('OPT_AUDIT_REAL_CPU_SMOKE_PASS',arm,json.dumps(dict(first_update=first_update,gradients=gradients)),flush=True)
         return
@@ -222,14 +280,29 @@ def main():
         checkpoint=str(path.relative_to(ROOT)),checkpoint_sha256=sha256(path),config_sha256=sha256(a.config),student_checkpoint_sha256=s['student_checkpoint_sha256'],
         input_psnr=psnr(gt,lq),input_lpips=lpips_value(metric,gt,lq,device),ceiling_psnr=psnr(gt,ceiling),ceiling_lpips=lpips_value(metric,gt,ceiling,device),
         gradients=gradients,first_update=first_update,snapshots=snapshots,learning_rate=lr,steps=s['steps'],batch_size=1,wall_seconds=time.monotonic()-start)
+    if a.stability:
+        result.update(reference_checkpoints=reference_checkpoints,optimizer_trace=str((folder/'optimizer_trace.jsonl').relative_to(ROOT)),optimizer_trace_sha256=sha256(folder/'optimizer_trace.jsonl'))
     write_json(folder/'result.json',result)
     all_results=[None]*world
     dist.all_gather_object(all_results,result)
     if rank==0:
-        assert len(all_results)==8 and {(r['arm'],r['record_id']) for r in all_results}=={assignment(i,s) for i in range(8)}
-        write_json(root/'result.json',dict(status='optimization_audit_complete',config_sha256=sha256(a.config),
+        reference_reproduction = []
+        if a.stability:
+            expected = {(s['stability']['record_objectives'][i%2],s['record_ids'][i%2],s['stability']['learning_rates'][i//2]) for i in range(8)}
+            assert len(all_results)==8 and {(r['arm'],r['record_id'],r['learning_rate']) for r in all_results}==expected
+            previous = json.loads((ROOT/s['stability']['parent_audit_result']).read_text())
+            for current in all_results[:2]:
+                old = next(r for r in previous['probes'] if (r['arm'],r['record_id'])==(current['arm'],current['record_id']))
+                by_step = {r['step']:r for r in current['snapshots']}
+                psnr_delta = max(abs(r['psnr']-by_step[r['step']]['psnr']) for r in old['snapshots'])
+                lpips_delta = max(abs(r['lpips']-by_step[r['step']]['lpips']) for r in old['snapshots'])
+                reference_reproduction.append(dict(arm=current['arm'],record_id=current['record_id'],max_psnr_delta=psnr_delta,max_lpips_delta=lpips_delta,within_tolerance=psnr_delta<=.05 and lpips_delta<=.005))
+        else:
+            assert len(all_results)==8 and {(r['arm'],r['record_id']) for r in all_results}=={assignment(i,s) for i in range(8)}
+        write_json(root/'result.json',dict(status='lora_stability_audit_complete' if a.stability else 'optimization_audit_complete',config_sha256=sha256(a.config),
             student_checkpoint=s['student_checkpoint'],student_checkpoint_sha256=s['student_checkpoint_sha256'],
             probes=all_results,diagnostic_only=True,independent_optimizers=True,world_size=8,hardware_name=torch.cuda.get_device_properties(device).name,
+            reference_reproduction=reference_reproduction,
             sealed_internal_accessed=False,official_foundir_test_accessed=False,development_gt_optimized=False,decoder_finetuned=False))
         print('OPT_AUDIT_COMPLETE',sha256(root/'result.json'),flush=True)
     dist.barrier()

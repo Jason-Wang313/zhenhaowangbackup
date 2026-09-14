@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-14T07:01:21Z",
+  "created_at": "2026-09-14T07:26:16Z",
   "evidence": {
-    "path": "checkpoints/foundir_blur_only_zimage_decoder_tail_v1/result.json",
-    "sha256": "cf6d7f0e6db7b72432fed03b76e1446f6d9bbbd771604a8b80a2cd65682ede46"
+    "path": "checkpoints/foundir_blur_only_zimage_optimization_audit_v1/result.json",
+    "sha256": "7d9eac4a76675190fb1202e30e937fb3762167c81e1a8fb4d03fa6b91eb96ddf"
   },
-  "hold_id": "zimage_optimization_audit_design-32f359c3991e638b",
+  "hold_id": "zimage_lora_stability_design-013d68aa7d35a2a6",
   "reason": "proposed route/architecture change requires advisor decision before experiments",
-  "report": "reports/advisor_governance/reports/zimage_optimization_audit_design-32f359c3991e638b.md",
-  "report_sha256": "c76d29c4bf9dba6a5bcf0d0e3a3738aab15c05aeaa71f1a86a6e2e9b2ec0c320",
+  "report": "reports/advisor_governance/reports/zimage_lora_stability_design-013d68aa7d35a2a6.md",
+  "report_sha256": "d135a57cfa0b3f9fa55feae258edd2a07074f1d69490bb1f0b91af9daff9a3e3",
   "schema_version": 1
 }

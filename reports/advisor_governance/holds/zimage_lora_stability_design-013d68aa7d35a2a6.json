@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-14T07:26:16Z",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_optimization_audit_v1/result.json",
+    "sha256": "7d9eac4a76675190fb1202e30e937fb3762167c81e1a8fb4d03fa6b91eb96ddf"
+  },
+  "hold_id": "zimage_lora_stability_design-013d68aa7d35a2a6",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/zimage_lora_stability_design-013d68aa7d35a2a6.md",
+  "report_sha256": "d135a57cfa0b3f9fa55feae258edd2a07074f1d69490bb1f0b91af9daff9a3e3",
+  "schema_version": 1
+}
