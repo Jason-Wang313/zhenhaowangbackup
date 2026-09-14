@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "zimage_decoder_tail_design-aca9906895c90c6d",
-  "hold_sha256": "634b36f9ceb4a2b53e18de419be780a40705d272907024f0e2ec2f7e397c4859",
+  "hold_id": "zimage_optimization_audit_design-32f359c3991e638b",
+  "hold_sha256": "612d4380be3a1d0c268faa5576d9216eb0338e043441cff9b8bf422b85d103d5",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "记录已有明确授权，不是新的 advisor 回复：用户已授权 teacher、少步/单步蒸馏后效果仍不足时微调 decoder，明确无需再询问 advisor，并在 endpoint 终态质量不足和切换建议后说 execute。依此执行 reports/zimage_decoder_tail_design_2026-09-14.md 中固定 student、仅训练 decoder tail 的有界实验。",
-  "recorded_at": "2026-09-14T06:41:01Z"
+  "statement": "记录已有明确授权，不是新的 advisor 回复：用户要求在 teacher、student、decoder 效果不足后进行深入科学与代码审查，明确 execute；依照此前无需再次询问 advisor 的同一 Blur-only 授权，执行 reports/zimage_optimization_audit_design_2026-09-14.md 中两张已有训练图的 latent/LoRA 与 RGB/mixed 四组有界优化诊断。",
+  "recorded_at": "2026-09-14T07:01:21Z"
 }

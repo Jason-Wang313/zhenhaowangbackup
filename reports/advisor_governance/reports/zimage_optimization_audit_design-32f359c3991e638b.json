@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Record existing user execute authorization for bounded Blur-only optimization audit; no new advisor round.",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_zimage_decoder_tail_v1/step_000400.safetensors",
+    "sha256": "b755b0834b802c85f8f2c6bb9719158c68ce1be0107a5dc8cda280cd26574ce2"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_decoder_tail_v1.json",
+    "sha256": "d6f29a5ee41d60a02651a1e8a775551e5b913ebdd0f943fadaf033876df01984"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "two_existing_training_crops_only",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_zimage_decoder_tail_v1/result.json",
+    "sha256": "cf6d7f0e6db7b72432fed03b76e1446f6d9bbbd771604a8b80a2cd65682ede46"
+  },
+  "gate": "zimage_optimization_audit_design",
+  "generated_at": "2026-09-14T07:01:21Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image endpoint optimization diagnostic",
+  "outcome": "information",
+  "report_id": "zimage_optimization_audit_design-32f359c3991e638b",
+  "root_cause_or_status": "Root-cause audit and frozen four-arm design in reports/zimage_optimization_audit_design_2026-09-14.md.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

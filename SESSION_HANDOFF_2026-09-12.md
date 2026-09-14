@@ -6,7 +6,69 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Decoder-tail terminal failure — 2026-09-14T06:55:09Z (LATEST AUTHORITY)
+## Optimization root-cause audit CPU-ready — 2026-09-14T07:08:32Z (LATEST AUTHORITY)
+
+After the decoder failure, the user requested deeper reasoning, received an
+Astra-high recommendation, and said `execute`. The current task is a controlled
+optimization audit, not another decoder continuation. Findings and frozen
+interpretation rules are in `reports/zimage_optimization_audit_design_2026-09-14.md`.
+
+Code audit verified paired crop coordinates, derivative/integration signs,
+endpoint train/deploy mapping, native VAE scaling, LPIPS normalization, and
+nonreentrant checkpointing. BF16 teacher update quantization remains a proven
+hazard but not the complete established cause. Base model dispatch to the local
+function named `model_fn_z_image_turbo` is structural (`siglip_embedder is None`),
+not evidence of Turbo weights. Poor tiny-development metrics do not independently
+prove failed learnability; train artifacts still justify an optimization probe.
+
+The next frozen experiment compares four arms on the SAME two existing training
+records (0042483 strong blur, 0091486 near clean): `latent_rgb`, `latent_mixed`,
+`lora_rgb`, `lora_mixed`. Eight ranks each own one independent arm/record; there
+is no DDP gradient averaging. Every arm initializes from exact FP32 endpoint
+step 400 with the original frozen VAE. Latent LR .01, LoRA LR 5e-5, AdamW FP32,
+200 steps, snapshots 0/1/20/100/200, one image per optimizer. The two records
+have rejected teacher targets, so mixed loss is exactly RGB + .1 latent MSE +
+.05 LPIPS. Teacher-target rejection and all parent hashes are validated.
+
+It records initial weighted latent-gradient norms/cosines, actual first-step
+parameter updates, quantized PSNR/LPIPS, raw RGB MSE, latent MSE, clipping,
+GT roundtrip ceiling, fixed triptychs, and hashed final trainable tensors.
+Direct latent optimization is a training-GT oracle, NEVER a deployable result.
+Single-image LoRA learning also does not establish generalization. This probe
+distinguishes loss conflict from latent optimization versus DiT parameter
+optimization; two examples and fixed learning rates cannot prove a unique cause.
+
+Config: `configs/foundir_blur_only_zimage_optimization_audit_v1.json`, SHA-256
+`a28ca0c20214f649a0ef2e22f7772fceb737154e80050e1c63214823e2d81c31`.
+Implementation: `smoke/audit_foundir_blur_only_zimage_optimization.py`.
+Three focused tests, exact model-artifact hashes, and H100/H200 preflights pass.
+Two real 6B CPU 64x64 two-update smokes passed (LoRA RGB and latent mixed):
+`logs/zimage_optimization_audit_cpu_lora_rgb_v1.log` and
+`logs/zimage_optimization_audit_cpu_latent_mixed_v1.log`.
+LoRA first update changes 77,364,194/79,380,480 parameters (L2 .416281);
+free latent changes 1024/1024 values. Decoder remains frozen and FP32 optimizer
+state/finite gradients are verified. On this reduced crop, initial weighted
+gradient norms are RGB .005552, latent .002975, LPIPS .015705; pixel/LPIPS
+cosine is -.01389 (approximately orthogonal, not strong antagonism). Pure RGB
+LoRA step 1 increases crop PSNR 23.4144 -> 25.0655. This is a local smoke clue,
+not a 512x512 convergence result or proof of the dominant failure cause.
+Design hold `zimage_optimization_audit_design-32f359c3991e638b` is resolved by
+the user's existing authorization plus `execute`; no new advisor round.
+
+Exact next action on the GPU shell (this agent has no exposed GPU):
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_foundir_blur_only_zimage_optimization_audit_v1_8gpu.sh
+```
+
+Log: `logs/foundir_blur_only_zimage_optimization_audit_v1.log`.
+Output: `checkpoints/foundir_blur_only_zimage_optimization_audit_v1/`.
+Before launch inspect existing evidence; never duplicate. Sol medium can monitor
+the frozen probes; interpretation and the next design warrant Astra high under
+the user's latest model preference. Do not infer that a model tier guarantees
+metric gains. Protected-data/degradation restrictions remain unchanged.
+
+## Decoder-tail terminal failure — 2026-09-14T06:55:09Z (historical)
 
 The user launched the decoder gate; it completed 400/400 steps normally on
 8x H100 with status 0, FlashAttention 2, global batch 8 and 45.0741 seconds
