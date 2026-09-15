@@ -6,7 +6,36 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Pure Z-Image Layer-1 IMPLEMENTED / READY TO LAUNCH — 2026-09-15 (LATEST AUTHORITY)
+## Pure Z-Image Layer-1 TINY TERMINAL FAILURE — 2026-09-15T13:17:54Z (LATEST AUTHORITY)
+
+The 8xH100 Layer-1 tiny run completed all 1,000 steps normally at
+`2026-09-15T13:17:54Z`, terminal status 0. No process remains to monitor. This
+is a scientific/quality failure, not a runtime failure. Formal report:
+`reports/zimage_deterministic_bridge_tiny_result_2026-09-15.md`.
+
+Config SHA is `5a14b71e...e141cb`; result SHA is `bee7290a...aa403`;
+step-250/500/1000 checkpoint SHAs are `799196fd...0fbff`,
+`6321393c...321d`, and `5196fa78...138c`. Every one of the eight
+step/split directories has 16 PNG triptychs, 16 per-image sidecars, and one
+metrics JSON (128 fixed images and 128 sidecars total).
+
+Train input is 24.723185/.308547. The step0/250/500/1000 outputs are
+24.642070/.311363, 22.793417/.277640, 24.485403/.287398, and
+25.807990/.294316. Final beats input by +1.084805dB/.014231 LPIPS, proving the
+bridge can learn restoration, but fails the 26.4/.16 gate by .592010dB/.134316.
+Only 11/16 train images improve PSNR and 10/16 improve LPIPS.
+
+Descriptive development input is 23.904541/.326357; final output is
+22.186115/.343677, worse by 1.718426dB/.017320 LPIPS. Only 2/16 improve PSNR.
+Development GT was never optimized.
+
+Human visual review also fails: outputs broadly show granular/checker-like
+false texture, edge echoes, and local structural distortion; near-clean inputs
+are often damaged. Do not full-scale, distill, or decoder-tune this checkpoint.
+Preserve all evidence. A new formulation requires an explicit next decision;
+do not infer authorization for an independent restoration branch.
+
+## Pure Z-Image Layer-1 implementation/readiness — 2026-09-15 (HISTORICAL)
 
 The user externally stopped the old 20,000-step conditional noise-to-GT GPU
 instance and explicitly instructed: set the new goal and execute Layer-1. The
