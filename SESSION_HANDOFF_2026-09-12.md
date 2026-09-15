@@ -6,7 +6,72 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Maximum single-instance full scale LIVE — 2026-09-15T12:14Z (LATEST AUTHORITY)
+## Pure Z-Image Layer-1 IMPLEMENTED / READY TO LAUNCH — 2026-09-15 (LATEST AUTHORITY)
+
+The user externally stopped the old 20,000-step conditional noise-to-GT GPU
+instance and explicitly instructed: set the new goal and execute Layer-1. The
+old run stopped after training row 12,503 with immutable step-12,000 weights;
+there was no traceback/OOM/NCCL failure, but no normal terminal marker because
+the instance itself was stopped. Do not resume or extend that formulation.
+The older section below saying that job is LIVE is historical and superseded.
+
+The active goal is pure Z-Image Base 6B Layer-1: deterministic
+`LQ latent -> GT latent` residual/bridge flow, exact LQ-latent solver start,
+zero-initialized identity/residual gate, three-scale LQ conditioning at input
+and DiT depths 0/5/10/15/20/25, rank-64 FP32 LoRA, and latent/RGB/LPIPS
+fidelity losses with the original VAE frozen. This is explicitly **not** an
+independent restoration branch. Blur-only tiny gate first; do not distill or
+tune the decoder until this teacher passes. No Qwen degradation conditioning,
+mixed degradation, sealed internal, official FoundIR test, or development-GT
+optimization.
+
+New exact implementation:
+
+```text
+configs/foundir_blur_only_zimage_deterministic_bridge_tiny_v1.json
+lowlight_restoration/zimage_deterministic_bridge.py
+smoke/train_zimage_deterministic_bridge_tiny.py
+smoke/launch_zimage_deterministic_bridge_tiny_8gpu.sh
+tests/test_zimage_deterministic_bridge.py
+reports/zimage_deterministic_bridge_layer1_readiness_2026-09-15.md
+```
+
+Focused tests pass (`4 passed`), including native padded token geometry,
+bridge endpoints, exact zero-gate output, first-update gradient routing, and
+scope locks. The trainer uses manual synchronized gradient averaging across
+eight ranks, FP32 AdamW state, 16 fixed train plus 16 source-disjoint
+descriptive development crops, and snapshots at 0/250/500/1000. Each snapshot
+saves fixed Input|Output|GT images, PSNR/LPIPS, latent error, parameter identity,
+and checkpoint hashes. Train gate: PSNR >=26.4, LPIPS <=.16, both better than
+input, then visual review. There is no automatic scale/distillation/decoder
+action.
+
+Launch only on one fresh homogeneous 8xH100/H200 host:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_zimage_deterministic_bridge_tiny_8gpu.sh
+```
+
+Monitor:
+
+```bash
+tail -f logs/foundir_blur_only_zimage_deterministic_bridge_tiny_v1.log
+```
+
+The launcher has tmux plus nohup fallback, unique launch/runtime locks,
+no-overwrite guards, five-second telemetry, and a terminal marker. Expected
+result: `checkpoints/foundir_blur_only_zimage_deterministic_bridge_tiny_v1/result.json`.
+Full hash/data/hardware preflight passed with config SHA-256
+`5a14b71e60ef8400cf87281b4991b15b897dad32828841638c24c0cb96e141cb`.
+A real Base-6B CPU smoke also passed: pinned DiT/text/VAE loaded, zero-gate
+two-step restore was exact LQ-latent identity, frozen-decoder RGB/LPIPS
+forward/backward completed, and the velocity-gate gradient was finite/nonzero.
+Evidence: `logs/zimage_bridge_cpu_khcxgpk5/`. The coding shell has no GPU, so
+it cannot launch the eight-rank quality run itself.
+
+## Maximum single-instance full scale — 2026-09-15T12:14Z (HISTORICAL; INSTANCE STOPPED)
 
 The one authorized 8xH100 job is live past step12422/20000. Training JSONL and GPU
 telemetry remain current; all eight GPUs hold24228MiB and are doing work. There
