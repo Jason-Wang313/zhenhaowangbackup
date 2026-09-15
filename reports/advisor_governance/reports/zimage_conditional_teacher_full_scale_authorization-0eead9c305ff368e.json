@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Record this exact explicit user instruction as authorization; no new advisor reply requested.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_zimage_conditional_teacher_full_v1.json",
+    "sha256": "d3fd35437abd6239c450f42bbb9674133aeb84f8d929dce00ced000f5b9ec8d7"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "105057 Blur training records / 7339 groups; 2595 source-disjoint development records / 165 groups",
+  "evidence": {
+    "path": "reports/zimage_conditional_teacher_full_scale_authorization_v1.json",
+    "sha256": "56257204db0239315301e0b45db1469a7dcb7e3aea8d13eeb1805847f3ca4eb8"
+  },
+  "gate": "zimage_conditional_teacher_full_scale_authorization",
+  "generated_at": "2026-09-15T00:47:33Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "Z-Image Base 6B conditional teacher, full Blur scale continuation",
+  "outcome": "information",
+  "report_id": "zimage_conditional_teacher_full_scale_authorization-0eead9c305ff368e",
+  "root_cause_or_status": "User explicitly authorizes the maximum single-instance scaling plan after reviewing the failed but improving 2048-source pilot: exact pilot step2000 initialization, one homogeneous 8xH100/H200 instance, 20000 additional optimizer steps, full Blur training archive, protected tests untouched.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

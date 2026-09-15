@@ -20,6 +20,7 @@ from lowlight_restoration.zimage_padding_compat import build_padding_function
 from smoke.prepare_zimage_conditional_pilot import select_groups
 
 CONFIG = ROOT / "configs/foundir_blur_only_zimage_conditional_teacher_v1.json"
+FULL_CONFIG = ROOT / "configs/foundir_blur_only_zimage_conditional_teacher_full_v1.json"
 
 
 def test_gaussian_flow_endpoints_and_solver_sign():
@@ -132,9 +133,9 @@ def test_admission_exception_is_pilot_only():
     from smoke.train_zimage_conditional_teacher import validate_admission
     s, _ = load_settings(CONFIG)
     assert validate_admission(s, "unused", "tiny") == (None, {"mode": "fresh_tiny"})
-    with pytest.raises(ValueError, match="pilot only"):
+    with pytest.raises(ValueError, match="pilot/full only"):
         validate_admission(s, "unused", "tiny", scale_path=Path("unused"))
-    with pytest.raises(ValueError, match="not both"):
+    with pytest.raises(ValueError, match="exactly one"):
         validate_admission(s, "unused", "pilot", Path("review"), Path("authorization"))
     with pytest.raises(ValueError, match="requires"):
         validate_admission(s, "unused", "pilot")
@@ -185,6 +186,58 @@ def test_explicit_scale_admission_bound_to_failure_and_protocol(tmp_path, monkey
         assert admission["authorization"]["pilot_quality_gate_unchanged"] is True
         with pytest.raises(ValueError, match="requires"):
             runner.validate_admission(s, digest, "pilot")
+
+
+def test_full_scale_budget_and_real_admission():
+    from lowlight_restoration.foundir_zimage import sha256
+    from smoke.train_zimage_conditional_teacher import validate_admission
+    s, _ = load_settings(FULL_CONFIG)
+    c = s["stages"]["full"]
+    assert c["steps"] == 20000 and c["global_batch"] == 32
+    assert c["train_records"] == 105057 and c["train_source_groups"] == 7339
+    assert c["snapshot_steps"] == list(range(0, 20001, 2000))
+    checkpoint, admission = validate_admission(
+        s, sha256(FULL_CONFIG), "full",
+        full_path=ROOT / "reports/zimage_conditional_teacher_full_scale_authorization_v1.json")
+    assert checkpoint == ROOT / s["parent_pilot"]["checkpoint"]
+    assert admission["optimizer_reset"] is True
+    assert admission["authorization"]["total_presentations"] == 640000
+    with pytest.raises(ValueError, match="requires explicit"):
+        validate_admission(s, sha256(FULL_CONFIG), "full")
+
+
+def test_full_rows_cover_all_records_and_preserve_source_disjoint_monitor():
+    from smoke.train_zimage_conditional_teacher import load_full_development, load_rows
+    s, base = load_settings(FULL_CONFIG)
+    train, fixed_train, monitor = load_rows(s, base, "full")
+    development = load_full_development(s, base)
+    assert (len(train), len({x["source_group"] for x in train})) == (105057, 7339)
+    assert len(fixed_train) == 16
+    assert (len(monitor), len({x["source_group"] for x in monitor})) == (165, 165)
+    assert (len(development), len({x["source_group"] for x in development})) == (2595, 165)
+    assert {x["source_group"] for x in train}.isdisjoint({x["source_group"] for x in development})
+    assert all(x["category"] == "01Blur" and int(x["composition_size"]) == 1 for x in train + development)
+
+
+def test_full_candidate_selection_is_bounded_and_prospective():
+    from smoke.train_zimage_conditional_teacher import select_full_candidates
+    snapshots = []
+    for step, p, l in ((2000, 20.0, .4), (4000, 21.0, .5), (6000, 20.5, .3), (8000, 20.4, .31)):
+        snapshots.append(dict(step=step, role="development", metrics=dict(output_psnr=p, output_lpips=l)))
+        snapshots.append(dict(step=step, role="train", metrics=dict(output_psnr=99, output_lpips=0)))
+    assert select_full_candidates(snapshots, 8000) == [4000, 6000, 8000]
+
+
+def test_full_candidate_gate_requires_sow_and_input_gains():
+    from smoke.evaluate_zimage_conditional_teacher_full_ddp import candidate_gate
+    s, _ = load_settings(FULL_CONFIG)
+    passing = dict(output_psnr=26.0, output_lpips=.17, psnr_gain_db=.1, lpips_improvement=.01)
+    checks, gate = candidate_gate(passing, s)
+    assert gate and all(checks.values())
+    for key, value in (("output_psnr", 25.8), ("output_lpips", .181),
+                       ("psnr_gain_db", 0.0), ("lpips_improvement", 0.0)):
+        failed = dict(passing, **{key: value})
+        assert candidate_gate(failed, s)[1] is False
 
 
 def _accumulation_worker(rank, rendezvous):

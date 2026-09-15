@@ -46,6 +46,17 @@ def load_settings(path):
             raise ValueError("incomplete snapshot schedule")
         if c["output_dir"] != f"checkpoints/foundir_blur_only_zimage_conditional_teacher_v1_{stage}":
             raise ValueError("unexpected output directory")
+    if "full" in s["stages"]:
+        c = s["stages"]["full"]
+        if c["steps"] != 20000 or c["global_batch"] != 32:
+            raise ValueError("full scaling budget changed")
+        if c["snapshot_steps"] != list(range(0, 20001, 2000)):
+            raise ValueError("full snapshot schedule changed")
+        if c["output_dir"] != "checkpoints/foundir_blur_only_zimage_conditional_teacher_full_v1":
+            raise ValueError("unexpected full output directory")
+        if (c["train_records"], c["train_source_groups"], c["monitor_records"],
+                c["full_development_records"], c["full_development_source_groups"]) != (105057, 7339, 165, 2595, 165):
+            raise ValueError("full data coverage changed")
     parent = ROOT / s["base_config"]
     if sha256(parent) != s["base_config_sha256"]:
         raise ValueError("base artifact config changed")
@@ -170,7 +181,14 @@ def stage_gate(stage, metrics, initial_probe, final_probe, settings):
         checks = dict(train_psnr=metrics["psnr_gain_db"] > c["train_psnr_gain_db"],
                       train_lpips=metrics["lpips_improvement"] > c["train_lpips_improvement"],
                       fixed_probe=final_probe < c["probe_loss_ratio_max"] * initial_probe)
-    else:
+    elif stage == "pilot":
         checks = dict(development_psnr=metrics["psnr_gain_db"] > c["development_psnr_gain_db"],
                       development_lpips=metrics["lpips_improvement"] > c["development_lpips_improvement"])
+    else:
+        checks = dict(monitor_psnr_gain=metrics["psnr_gain_db"] > c["development_psnr_gain_db"],
+                      monitor_lpips_gain=metrics["lpips_improvement"] > c["development_lpips_improvement"],
+                      monitor_psnr_sow=metrics["output_psnr"] >= c["sow_psnr_min"],
+                      monitor_lpips_sow=metrics["output_lpips"] <= c["sow_lpips_max"])
+        return dict(checks=checks, automatic_metric_gate_pass=False, monitor_only=True,
+                    visual_review_required=True)
     return dict(checks=checks, automatic_metric_gate_pass=all(checks.values()), visual_review_required=True)

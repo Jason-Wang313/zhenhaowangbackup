@@ -6,7 +6,46 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Scale pilot terminal result — 2026-09-14T14:29:28Z (LATEST AUTHORITY)
+## Maximum single-instance full scale CPU-ready — 2026-09-15T00:55Z (LATEST AUTHORITY)
+
+User explicitly authorized execution on ONE homogeneous 8xH100/H200 instance of
+the maximum scaling plan after discussing teacher/distillation ordering. Do not
+ask advisor/model-switch again. Full config SHA:
+`d3fd35437abd6239c450f42bbb9674133aeb84f8d929dce00ced000f5b9ec8d7`.
+Readiness: `reports/zimage_conditional_teacher_full_scale_readiness_2026-09-15.md`.
+Governance hold `zimage_conditional_teacher_full_scale_authorization-0eead9c305ff368e`
+is resolved using the exact latest USER instruction, not a fabricated advisor reply.
+
+Exact run: initialize immutable pilot step2000 `cf4a9b0f...`, reset optimizer,
+then train ALL 105057 isolated-Blur records/7339 source groups for 20000 additional
+optimizer steps, global batch32 (640000 presentations/6.0919 epochs). Same
+Z-Image Base6B, FP32 rank32 LoRA+aligned LQ projection, noise-to-GT flow, LRs,
+frozen VAE/text encoder and 50-step shift6 CFG1. Save fixed monitor at0/every2000.
+After training automatically freeze monitor-best PSNR, best LPIPS and final
+(maximum3), then evaluate each over all2595 source-disjoint development records.
+Gate requires gains over input AND SOW-proxy25.9/.18 plus visual review.
+
+40 focused tests and full launcher check passed exit0. Preflight verified all
+107652 pair paths, 105057/7339 training coverage, 2595/165 development coverage,
+source disjointness, all six large model hashes, parent identities, both H100/H200
+profiles, compilation/shell syntax and candidate/gate logic. Log:
+`logs/zimage_conditional_teacher_full_preflight_v1.log`. CPU readiness is not
+GPU quality. No full log/output exists and no GPU job has started here.
+
+Exact next GPU-shell action:
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_zimage_conditional_teacher_full_8gpu.sh
+```
+
+Monitor: `tail -f logs/foundir_blur_only_zimage_conditional_teacher_full_v1.log`.
+Tmux session: `zimage-conditional-full`; verified nohup fallback. Expected14--18h
+based on pilot speed; update from first2000-step telemetry. Do not start a second
+copy. No distillation or decoder training is automatic. Protected prohibitions
+remain unchanged. If training completes but candidate evaluation fails, preserve
+checkpoints and repair/resume evaluation only; never rerun 20000 steps blindly.
+
+## Scale pilot terminal result — 2026-09-14T14:29:28Z (historical)
 
 The user-authorized conditional-teacher pilot finished normally:2000/2000
 additional steps on8xH100, terminal status0, revision57b268b. No process remains

@@ -35,9 +35,12 @@ from lowlight_restoration.zimage_padding_compat import build_padding_function
 from lowlight_restoration.zimage_latent_first import average_gradients
 from smoke.evaluate_foundir_blur_only_zimage_teacher_paired_flow_ddp import psnr, lpips_value, aggregate
 from smoke.prepare_zimage_conditional_pilot import freeze
+from smoke.prepare_zimage_conditional_pilot import select_groups
+from smoke.build_foundir_blur_only_sanity_manifest import frozen_row
 
 PILOT_MANIFEST_SHA256 = "19309079bd2a64e253527ff1b637fc3bd2a17522cde8c47fbd3a60283315e11f"
 SCALE_AUTHORIZATION_SHA256 = "21c6cc9b8f20e37fde16fad5799e4fa701118c4730ba5defc4fca6d1e6365460"
+FULL_AUTHORIZATION_SHA256 = "56257204db0239315301e0b45db1469a7dcb7e3aea8d13eeb1805847f3ca4eb8"
 
 
 def write_json(path, obj):
@@ -56,6 +59,31 @@ def load_rows(s, base, stage):
     tiny, visual = load_frozen_rows(base, verify_images=True)
     if stage == "tiny":
         return tiny, tiny, visual
+    if stage == "full":
+        source = ROOT / base["data"]["source_manifest"]
+        if sha256(source) != base["data"]["source_manifest_sha256"]:
+            raise ValueError("full source manifest changed")
+        with source.open(newline="") as f:
+            source_rows = [r for r in csv.DictReader(f) if r["category"] == "01Blur"
+                           and r["composition_size"] == "1" and r["split"] in ("train", "validation")]
+        train_raw = [r for r in source_rows if r["split"] == "train"]
+        dev_raw = [r for r in source_rows if r["split"] == "validation"]
+        c = s["stages"]["full"]
+        if (len(train_raw), len({r["source_group"] for r in train_raw}), len(dev_raw),
+                len({r["source_group"] for r in dev_raw})) != (
+                    c["train_records"], c["train_source_groups"], c["full_development_records"],
+                    c["full_development_source_groups"]):
+            raise ValueError("full Blur coverage changed")
+        if sha256(ROOT / s["pilot_manifest"]) != PILOT_MANIFEST_SHA256:
+            raise ValueError("pilot manifest changed before full scaling")
+        with (ROOT / s["pilot_manifest"]).open(newline="") as f:
+            pilot_dev = [r for r in csv.DictReader(f) if r["role"] == "pilot_development"]
+        monitor = select_groups(dev_raw, pilot_dev, c["monitor_records"], "full_monitor", s["seed"])
+        train = [frozen_row(r, role="full_train", crop_size=s["crop_size"], crop_seed=s["seed"])
+                 for r in train_raw]
+        if {r["source_group"] for r in train} & {r["source_group"] for r in monitor}:
+            raise ValueError("full train/development leakage")
+        return train, tiny, monitor
     meta = json.loads((ROOT / s["pilot_manifest_metadata"]).read_text())
     if meta["manifest_sha256"] != PILOT_MANIFEST_SHA256 or sha256(ROOT / s["pilot_manifest"]) != PILOT_MANIFEST_SHA256:
         raise ValueError("pilot manifest hash mismatch")
@@ -71,6 +99,29 @@ def load_rows(s, base, stage):
            for split, selected in (("train", train), ("validation", dev)) for r in selected):
         raise ValueError("protected/non-Blur row")
     return train, tiny, dev
+
+
+def load_full_development(s, base):
+    source = ROOT / base["data"]["source_manifest"]
+    if sha256(source) != base["data"]["source_manifest_sha256"]:
+        raise ValueError("full source manifest changed")
+    with source.open(newline="") as f:
+        rows = [frozen_row(r, role="full_development", crop_size=s["crop_size"], crop_seed=s["seed"])
+                for r in csv.DictReader(f) if r["category"] == "01Blur" and r["composition_size"] == "1"
+                and r["split"] == "validation"]
+    c = s["stages"]["full"]
+    if len(rows) != c["full_development_records"] or len({r["source_group"] for r in rows}) != c["full_development_source_groups"]:
+        raise ValueError("full development coverage changed")
+    return rows
+
+
+def select_full_candidates(snapshots, final_step):
+    rows = [x for x in snapshots if x["role"] == "development" and x["step"] > 0]
+    if not rows or rows[-1]["step"] != final_step:
+        raise ValueError("full monitor curve incomplete")
+    best_psnr = max(rows, key=lambda x: (x["metrics"]["output_psnr"], x["step"]))["step"]
+    best_lpips = min(rows, key=lambda x: (x["metrics"]["output_lpips"], -x["step"]))["step"]
+    return sorted({best_psnr, best_lpips, final_step})
 
 
 def validate_pilot_pair(row):
@@ -114,13 +165,42 @@ def exact_load(model, path):
         raise ValueError("checkpoint reload mismatch")
 
 
-def validate_admission(s, digest, stage, review_path=None, scale_path=None):
+def validate_admission(s, digest, stage, review_path=None, scale_path=None, full_path=None):
     """A prospective user exception is not a passing tiny visual review."""
-    if review_path is not None and scale_path is not None:
-        raise ValueError("choose review or explicit scale authorization, not both")
+    if sum(x is not None for x in (review_path, scale_path, full_path)) > 1:
+        raise ValueError("choose exactly one admission artifact")
+    if stage == "full":
+        if full_path is None:
+            raise ValueError("full scaling requires explicit authorization")
+        if sha256(full_path) != FULL_AUTHORIZATION_SHA256:
+            raise ValueError("full authorization changed")
+        authorization = json.loads(full_path.read_text())
+        c, parent = s["stages"]["full"], s["parent_pilot"]
+        result_path, checkpoint = ROOT / parent["result"], ROOT / parent["checkpoint"]
+        result = json.loads(result_path.read_text())
+        expected = dict(config_sha256=digest, parent_result_sha256=sha256(result_path),
+                        parent_checkpoint_sha256=sha256(checkpoint), required_world_size=8,
+                        train_records=c["train_records"], train_source_groups=c["train_source_groups"],
+                        additional_optimizer_steps=c["steps"], global_batch=c["global_batch"],
+                        snapshot_steps=c["snapshot_steps"], monitor_source_groups=c["monitor_source_groups"],
+                        full_development_records=c["full_development_records"],
+                        full_development_source_groups=c["full_development_source_groups"],
+                        sow_psnr_min=c["gate"]["sow_psnr_min"], sow_lpips_max=c["gate"]["sow_lpips_max"],
+                        candidate_selection=c["candidate_selection"])
+        if any(authorization.get(k) != v for k, v in expected.items()):
+            raise ValueError("full authorization config/parent/budget mismatch")
+        if parent["result_sha256"] != expected["parent_result_sha256"] or parent["checkpoint_sha256"] != expected["parent_checkpoint_sha256"]:
+            raise ValueError("full parent identity changed")
+        if result["stage"] != "pilot" or result["steps"] != 2000 or result["automatic_metric_gate_pass"] is not False:
+            raise ValueError("unexpected full parent result")
+        if any(result.get(k) is not False for k in PROTECTED):
+            raise ValueError("full parent protected scope changed")
+        return checkpoint, dict(mode=authorization["decision"], authorization_sha256=sha256(full_path),
+                                authorization=authorization, initial_checkpoint=parent["checkpoint"],
+                                initial_checkpoint_sha256=parent["checkpoint_sha256"], optimizer_reset=True)
     if stage != "pilot":
-        if review_path is not None or scale_path is not None:
-            raise ValueError("admission artifacts apply to pilot only")
+        if review_path is not None or scale_path is not None or full_path is not None:
+            raise ValueError("admission artifacts apply to pilot/full only")
         return None, dict(mode="fresh_tiny")
     if scale_path is None:
         path = validate_review(s, digest, review_path)
@@ -283,9 +363,10 @@ def triptych(path, item, image):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=Path, required=True)
-    parser.add_argument("--stage", choices=("tiny", "pilot"), default="tiny")
+    parser.add_argument("--stage", choices=("tiny", "pilot", "full"), default="tiny")
     parser.add_argument("--tiny-review", type=Path)
     parser.add_argument("--scale-authorization", type=Path)
+    parser.add_argument("--full-authorization", type=Path)
     parser.add_argument("--admission-check", action="store_true")
     parser.add_argument("--preflight", action="store_true")
     parser.add_argument("--cpu-smoke", action="store_true")
@@ -296,24 +377,38 @@ def main():
     digest = sha256(args.config)
     c = s["stages"][args.stage]
     rank, world = int(os.getenv("RANK", "0")), int(os.getenv("WORLD_SIZE", "1"))
-    checkpoint_path, admission = validate_admission(s, digest, args.stage, args.tiny_review, args.scale_authorization)
+    checkpoint_path, admission = validate_admission(s, digest, args.stage, args.tiny_review,
+                                                    args.scale_authorization, args.full_authorization)
     if args.admission_check:
         print("CONDITIONAL_ADMISSION_PASS", json.dumps(admission), flush=True)
         return
     if args.preflight:
-        freeze(args.config)
+        if args.stage != "full":
+            freeze(args.config)
     train, train_eval, dev = load_rows(s, base, args.stage)
     if args.preflight:
         verify_model_artifacts(base, large_hashes=True)
         for name, mem in (("NVIDIA H100 80GB HBM3", 81920), ("NVIDIA H200", 143000)):
             validate_gpu_inventory([name] * 8, [mem] * 8, base)
-        # Validate every selected pilot image before presenting its launcher.
-        pilot, _, pilot_dev = load_rows(s, base, "pilot")
-        with ThreadPoolExecutor(max_workers=8) as pool:
-            for count, _ in enumerate(pool.map(validate_pilot_pair, pilot + pilot_dev), 1):
-                if count % 128 == 0 or count == len(pilot) + len(pilot_dev):
-                    print("CONDITIONAL_IMAGE_PREFLIGHT", f"{count}/{len(pilot) + len(pilot_dev)}", flush=True)
-        print("CONDITIONAL_PREFLIGHT_PASS", digest, "pilot=2048+128 both_hardware_profiles", flush=True)
+        if args.stage == "full":
+            full_dev = load_full_development(s, base)
+            checked = 0
+            for row in train + full_dev:
+                for field in ("lq_path", "gt_path"):
+                    path = (ROOT / row[field]).resolve()
+                    if not path.is_relative_to(ROOT / "data/foundir/MillionIRData/Train/01Blur") or not path.is_file():
+                        raise ValueError("full image path missing/outside Blur training archive")
+                checked += 1
+            print("CONDITIONAL_FULL_PATH_PREFLIGHT", checked, "pairs", flush=True)
+            print("CONDITIONAL_PREFLIGHT_PASS", digest, "full=105057+2595 both_hardware_profiles", flush=True)
+        else:
+            # Validate every selected pilot image before presenting its launcher.
+            pilot, _, pilot_dev = load_rows(s, base, "pilot")
+            with ThreadPoolExecutor(max_workers=8) as pool:
+                for count, _ in enumerate(pool.map(validate_pilot_pair, pilot + pilot_dev), 1):
+                    if count % 128 == 0 or count == len(pilot) + len(pilot_dev):
+                        print("CONDITIONAL_IMAGE_PREFLIGHT", f"{count}/{len(pilot) + len(pilot_dev)}", flush=True)
+            print("CONDITIONAL_PREFLIGHT_PASS", digest, "pilot=2048+128 both_hardware_profiles", flush=True)
         return
     if (args.cpu_smoke and world != 1) or (not args.cpu_smoke and world != 8):
         raise ValueError("CPU smoke requires one rank; training requires eight")
@@ -389,7 +484,7 @@ def main():
     if args.cpu_smoke:
         print("CONDITIONAL_REAL_CPU_SMOKE_PASS", root.relative_to(ROOT), flush=True)
         return
-    if args.stage == "pilot":
+    if args.stage in ("pilot", "full"):
         exact_load(model, checkpoint_path)
         check_rank_weights(named, world)
     from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
@@ -464,7 +559,7 @@ def main():
                 random.Random(fixed_seed(s["seed"], "order", rank, epoch)).shuffle(order)
                 permutations = {epoch: order}
             row = local_rows[permutations[epoch][offset]]
-            transform = fixed_seed(s["seed"], "augment", row["record_id"], epoch) % 8 if args.stage == "pilot" else 0
+            transform = fixed_seed(s["seed"], "augment", row["record_id"], epoch) % 8 if args.stage in ("pilot", "full") else 0
             key = (row["record_id"], transform)
             if key not in cache:
                 # Decode a full-resolution PNG pair only once per rank. Cache
@@ -507,11 +602,18 @@ def main():
     if rank == 0:
         metrics = next(x["metrics"] for x in snapshots if x["step"] == c["steps"] and x["role"] == ("train" if args.stage == "tiny" else "development"))
         gate = stage_gate(args.stage, metrics, initial_probe, final_probe, s)
+        candidates = None
+        if args.stage == "full":
+            candidates = []
+            for step in select_full_candidates(snapshots, c["steps"]):
+                candidate_path = root / f"step_{step:06d}.safetensors"
+                candidates.append(dict(step=step, checkpoint=str(candidate_path.relative_to(ROOT)),
+                                       checkpoint_sha256=sha256(candidate_path)))
         result = dict(status="conditional_teacher_stage_complete", stage=args.stage, config_sha256=digest,
                       admission=admission,
                       final_checkpoint=str(path.relative_to(ROOT)), final_checkpoint_sha256=sha256(path),
                       steps=c["steps"], snapshots=snapshots, initial_probe=initial_probe, final_probe=final_probe,
-                      **gate, **{k: False for k in PROTECTED})
+                      full_development_candidates=candidates, **gate, **{k: False for k in PROTECTED})
         write_json(root / "result.json", result)
         print("CONDITIONAL_STAGE_COMPLETE", args.stage, json.dumps(gate), flush=True)
     dist.barrier()
