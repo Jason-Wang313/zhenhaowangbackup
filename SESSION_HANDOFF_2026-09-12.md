@@ -6,23 +6,25 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Maximum single-instance full scale LIVE — 2026-09-15T08:02Z (LATEST AUTHORITY)
+## Maximum single-instance full scale LIVE — 2026-09-15T08:10Z (LATEST AUTHORITY)
 
-The one authorized 8xH100 job is live at step6910/20000. Training JSONL and GPU
+The one authorized 8xH100 job is live past step8013/20000. Training JSONL and GPU
 telemetry remain current; all eight GPUs hold24228MiB and are doing work. There
 is no traceback, nonfinite value, OOM, NCCL failure or terminal marker. Host
 memory is111GiB used/1.5TiB with1.4TiB available; disk has762TiB available. Do
 NOT launch a second copy.
 
 Fixed development input is23.352583/.387579. Output curve at steps0/2000/4000/
-6000 is PSNR20.572305/21.440730/21.794941/22.295062 and LPIPS.396505/.318107/
-.277995/.262554. Both metrics improve, but gains are decelerating and step6000
-still trails input PSNR by1.057520dB and the25.9/.18 proxy by3.604938dB/.082554.
-Current rough confidence in simultaneously reaching the ideal proxy by step20000
-is only10--20%; confidence in exceeding input PSNR is about65--75%. These are
-forecasts, not gates. Continue the authorized run and do not distill yet.
+6000/8000 is PSNR20.572305/21.440730/21.794941/22.295062/22.026320 and LPIPS
+.396505/.318107/.277995/.262554/.258587. Step8000 improves LPIPS only.003967
+but regresses PSNR.268743dB versus step6000. It remains1.326263dB below input
+and3.873680dB/.078587 short of the25.9/.18 proxy. This is now a quality plateau/
+tradeoff, not evidence supporting linear extrapolation. Confidence in reaching
+the proxy by step20000 is below5%; the26.4--26.9/.14--.16 teacher margin is still
+less likely. Continue the authorized20k run for prospective best-checkpoint
+selection, but do not extend this same recipe to30k/40k and do not distill it.
 
-Cache-warm optimization from step6001--6910 is roughly2.62s/step; each165-record
+Cache-warm optimization is roughly2.62s/step; each165-record
 monitor costs about148s. A conservative remaining estimate at this check is
 roughly11--13h including checkpoint monitors and up to three full candidate
 evaluations. Measured later telemetry is authoritative. Monitor with
