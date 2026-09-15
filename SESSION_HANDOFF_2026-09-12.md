@@ -6,7 +6,28 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Maximum single-instance full scale CPU-ready — 2026-09-15T00:55Z (LATEST AUTHORITY)
+## Maximum single-instance full scale LIVE — 2026-09-15T05:17Z (LATEST AUTHORITY)
+
+The one authorized 8xH100 job is live. It had advanced from step3192 to3196
+during the latest check; training JSONL remained current, all eight GPUs held
+24228MiB, and there was no traceback, nonfinite value, OOM, NCCL failure or
+terminal marker. Host memory was119GiB used/1.5TiB with1.4TiB available; disk
+had763TiB available. Do NOT launch a second copy.
+
+The first fixed monitor is directionally positive but still fails the target.
+Development input is23.352583/.387579. Step0 output was20.572305/.396505;
+step2000 output is21.440730/.318107. Thus full-scale training gained+.868425dB
+and.078398 LPIPS versus initialization, but remains-1.911853dB below input PSNR
+and is not near the25.9/.18 SOW proxy. Continue training; do not distill yet.
+
+Observed optimization speed through step3196 is roughly4.2s/step after startup;
+each165-record monitor costs about145s. The original14--18h total estimate was
+optimistic for this cold full-data path. A conservative remaining estimate at
+this check is roughly20--22h including checkpoint monitors and up to three full
+candidate evaluations; later cache-warm speed is authoritative. Monitor with
+`tail -f logs/foundir_blur_only_zimage_conditional_teacher_full_v1.log`.
+
+## Full-scale authorization/readiness — 2026-09-15T00:55Z (historical setup)
 
 User explicitly authorized execution on ONE homogeneous 8xH100/H200 instance of
 the maximum scaling plan after discussing teacher/distillation ordering. Do not
@@ -29,18 +50,18 @@ Gate requires gains over input AND SOW-proxy25.9/.18 plus visual review.
 107652 pair paths, 105057/7339 training coverage, 2595/165 development coverage,
 source disjointness, all six large model hashes, parent identities, both H100/H200
 profiles, compilation/shell syntax and candidate/gate logic. Log:
-`logs/zimage_conditional_teacher_full_preflight_v1.log`. CPU readiness is not
-GPU quality. No full log/output exists and no GPU job has started here.
+`logs/zimage_conditional_teacher_full_preflight_v1.log`. CPU readiness was not
+GPU quality; the live status above supersedes this prelaunch state.
 
-Exact next GPU-shell action:
+Historical launch command (DO NOT repeat while the live job exists):
 
 ```bash
 CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 smoke/launch_zimage_conditional_teacher_full_8gpu.sh
 ```
 
 Monitor: `tail -f logs/foundir_blur_only_zimage_conditional_teacher_full_v1.log`.
-Tmux session: `zimage-conditional-full`; verified nohup fallback. Expected14--18h
-based on pilot speed; update from first2000-step telemetry. Do not start a second
+Tmux session: `zimage-conditional-full`; verified nohup fallback. The historical
+14--18h estimate was based on pilot speed; use the live estimate above. Do not start a second
 copy. No distillation or decoder training is automatic. Protected prohibitions
 remain unchanged. If training completes but candidate evaluation fails, preserve
 checkpoints and repair/resume evaluation only; never rerun 20000 steps blindly.
