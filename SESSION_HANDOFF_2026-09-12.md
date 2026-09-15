@@ -67,9 +67,12 @@ Full hash/data/hardware preflight passed with config SHA-256
 `5a14b71e60ef8400cf87281b4991b15b897dad32828841638c24c0cb96e141cb`.
 A real Base-6B CPU smoke also passed: pinned DiT/text/VAE loaded, zero-gate
 two-step restore was exact LQ-latent identity, frozen-decoder RGB/LPIPS
-forward/backward completed, and the velocity-gate gradient was finite/nonzero.
-Evidence: `logs/zimage_bridge_cpu_khcxgpk5/`. The coding shell has no GPU, so
-it cannot launch the eight-rank quality run itself.
+forward/backward completed, and a real two-update FP32 AdamW sequence showed
+nonzero gradients in multi-depth projections (`2.049e-3`) and DiT LoRA
+(`2.609e-5`). Evidence: `logs/zimage_bridge_cpu_23ufvxax/`. The coding shell
+has no GPU, so it cannot launch the eight-rank quality run itself. As of
+2026-09-15T12:33:30Z, the Layer-1 training log, GPU telemetry, and output root
+were all absent: the external 8-GPU tiny run had not yet been launched.
 
 ## Maximum single-instance full scale — 2026-09-15T12:14Z (HISTORICAL; INSTANCE STOPPED)
 

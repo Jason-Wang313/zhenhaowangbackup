@@ -235,12 +235,30 @@ def main() -> None:
         restored = model.restore(item["lq_latent"], prompt, steps=2, shift=settings["inference_shift"])
         if not torch.equal(restored, item["lq_latent"]):
             raise RuntimeError("zero-gate solver is not exact latent identity")
+        optimizer = optimizer_for(model, settings)
+        optimizer.zero_grad(set_to_none=True)
         loss, terms, _, _, rgb = loss_for(model, item, prompt, .5, metric, settings)
         loss.backward()
         if model.velocity_gate.grad is None or not torch.isfinite(model.velocity_gate.grad).all():
             raise RuntimeError("velocity gate has no finite first-update gradient")
+        average_gradients(parameters, 1)
+        torch.nn.utils.clip_grad_norm_(parameters, settings["max_grad_norm"], error_if_nonfinite=True)
+        optimizer.step()
+        if any(optimizer.state[p][key].dtype != torch.float32 for p in parameters
+               for key in ("exp_avg", "exp_avg_sq")):
+            raise RuntimeError("CPU smoke AdamW state is not FP32")
+        optimizer.zero_grad(set_to_none=True)
+        second_loss, _, _, _, _ = loss_for(model, item, prompt, .75, metric, settings)
+        second_loss.backward()
+        average_gradients(parameters, 1)
+        projection_grad = max(float(p.grad.abs().max()) for p in model.lq_projections.parameters())
+        lora_grad = max(float(p.grad.abs().max()) for n, p in named
+                        if n.startswith("pipe.dit.") and "lora_" in n)
+        if projection_grad <= 0 or lora_grad <= 0:
+            raise RuntimeError("second real update did not reach Layer-1 projections and DiT LoRA")
         print("DETERMINISTIC_BRIDGE_REAL_CPU_SMOKE_PASS", output.relative_to(ROOT),
-              {k: float(v.detach()) for k, v in terms.items()}, flush=True)
+              {**{k: float(v.detach()) for k, v in terms.items()},
+               "projection_grad_max": projection_grad, "lora_grad_max": lora_grad}, flush=True)
         return
 
     snapshots = []

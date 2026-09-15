@@ -43,7 +43,10 @@ Focused tests pass (`4 passed`), full model/data hash preflight passes, and a
 real Base-6B CPU smoke passes. The latter loaded the pinned DiT, text encoder,
 and frozen VAE, verified exact zero-gate LQ-latent identity, and completed a
 frozen-decoder RGB/LPIPS forward/backward with a finite nonzero velocity-gate
-gradient. Evidence is under `logs/zimage_bridge_cpu_khcxgpk5/`.
+gradient. An expanded two-update smoke additionally verified FP32 AdamW state
+and nonzero second-update gradients in both multi-depth projections
+(`2.049e-3`) and DiT LoRA (`2.609e-5`). Evidence is under
+`logs/zimage_bridge_cpu_23ufvxax/`.
 
 ## Launch and monitoring
 
