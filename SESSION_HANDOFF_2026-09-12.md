@@ -6,25 +6,26 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Maximum single-instance full scale LIVE — 2026-09-15T05:17Z (LATEST AUTHORITY)
+## Maximum single-instance full scale LIVE — 2026-09-15T08:02Z (LATEST AUTHORITY)
 
-The one authorized 8xH100 job is live. It had advanced from step3192 to3196
-during the latest check; training JSONL remained current, all eight GPUs held
-24228MiB, and there was no traceback, nonfinite value, OOM, NCCL failure or
-terminal marker. Host memory was119GiB used/1.5TiB with1.4TiB available; disk
-had763TiB available. Do NOT launch a second copy.
+The one authorized 8xH100 job is live at step6910/20000. Training JSONL and GPU
+telemetry remain current; all eight GPUs hold24228MiB and are doing work. There
+is no traceback, nonfinite value, OOM, NCCL failure or terminal marker. Host
+memory is111GiB used/1.5TiB with1.4TiB available; disk has762TiB available. Do
+NOT launch a second copy.
 
-The first fixed monitor is directionally positive but still fails the target.
-Development input is23.352583/.387579. Step0 output was20.572305/.396505;
-step2000 output is21.440730/.318107. Thus full-scale training gained+.868425dB
-and.078398 LPIPS versus initialization, but remains-1.911853dB below input PSNR
-and is not near the25.9/.18 SOW proxy. Continue training; do not distill yet.
+Fixed development input is23.352583/.387579. Output curve at steps0/2000/4000/
+6000 is PSNR20.572305/21.440730/21.794941/22.295062 and LPIPS.396505/.318107/
+.277995/.262554. Both metrics improve, but gains are decelerating and step6000
+still trails input PSNR by1.057520dB and the25.9/.18 proxy by3.604938dB/.082554.
+Current rough confidence in simultaneously reaching the ideal proxy by step20000
+is only10--20%; confidence in exceeding input PSNR is about65--75%. These are
+forecasts, not gates. Continue the authorized run and do not distill yet.
 
-Observed optimization speed through step3196 is roughly4.2s/step after startup;
-each165-record monitor costs about145s. The original14--18h total estimate was
-optimistic for this cold full-data path. A conservative remaining estimate at
-this check is roughly20--22h including checkpoint monitors and up to three full
-candidate evaluations; later cache-warm speed is authoritative. Monitor with
+Cache-warm optimization from step6001--6910 is roughly2.62s/step; each165-record
+monitor costs about148s. A conservative remaining estimate at this check is
+roughly11--13h including checkpoint monitors and up to three full candidate
+evaluations. Measured later telemetry is authoritative. Monitor with
 `tail -f logs/foundir_blur_only_zimage_conditional_teacher_full_v1.log`.
 
 ## Full-scale authorization/readiness — 2026-09-15T00:55Z (historical setup)
