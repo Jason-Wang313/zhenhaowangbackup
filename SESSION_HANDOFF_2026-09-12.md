@@ -6,28 +6,35 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Maximum single-instance full scale LIVE — 2026-09-15T08:10Z (LATEST AUTHORITY)
+## Maximum single-instance full scale LIVE — 2026-09-15T12:14Z (LATEST AUTHORITY)
 
-The one authorized 8xH100 job is live past step8013/20000. Training JSONL and GPU
+The one authorized 8xH100 job is live past step12422/20000. Training JSONL and GPU
 telemetry remain current; all eight GPUs hold24228MiB and are doing work. There
 is no traceback, nonfinite value, OOM, NCCL failure or terminal marker. Host
 memory is111GiB used/1.5TiB with1.4TiB available; disk has762TiB available. Do
 NOT launch a second copy.
 
 Fixed development input is23.352583/.387579. Output curve at steps0/2000/4000/
-6000/8000 is PSNR20.572305/21.440730/21.794941/22.295062/22.026320 and LPIPS
-.396505/.318107/.277995/.262554/.258587. Step8000 improves LPIPS only.003967
-but regresses PSNR.268743dB versus step6000. It remains1.326263dB below input
-and3.873680dB/.078587 short of the25.9/.18 proxy. This is now a quality plateau/
-tradeoff, not evidence supporting linear extrapolation. Confidence in reaching
-the proxy by step20000 is below5%; the26.4--26.9/.14--.16 teacher margin is still
-less likely. Continue the authorized20k run for prospective best-checkpoint
-selection, but do not extend this same recipe to30k/40k and do not distill it.
+6000/8000/10000/12000 is PSNR20.572305/21.440730/21.794941/22.295062/
+22.026320/22.933888/22.869581 and LPIPS.396505/.318107/.277995/.262554/
+.258587/.237901/.236092. Step10000 rebounds, but step12000 then regresses
+.064306dB PSNR while LPIPS improves only.001809. Best observed step10000 still
+trails input by.418695dB and the25.9/.18 proxy by2.966112dB/.057901. The current
+recipe has supplied enough evidence of a quality plateau/tradeoff; confidence
+in reaching the proxy by step20000 remains below5% and the desired teacher
+margin is less likely. Do not extend this recipe to30k/40k or distill it.
 
-Cache-warm optimization is roughly2.62s/step; each165-record
-monitor costs about148s. A conservative remaining estimate at this check is
-roughly11--13h including checkpoint monitors and up to three full candidate
-evaluations. Measured later telemetry is authoritative. Monitor with
+Stopping is now scientifically defensible: six nonzero checkpoints through
+step12000 are immutable and the remaining7578 steps have low information value.
+However, stopping forfeits exact optimizer-state continuation because snapshots
+contain trainable weights only, and skips the automatic2595-image final
+evaluation. If the GPU is not yet needed, it may continue while the replacement
+deterministic LQ-latent-to-GT-latent tiny gate is prepared in separate files. If
+the GPU is needed immediately, terminate gracefully and preserve all artifacts;
+do not delete/relaunch this output.
+
+Cache-warm optimization is roughly2.62s/step; each165-record monitor costs
+about148s. Monitor with
 `tail -f logs/foundir_blur_only_zimage_conditional_teacher_full_v1.log`.
 
 ## Full-scale authorization/readiness — 2026-09-15T00:55Z (historical setup)
