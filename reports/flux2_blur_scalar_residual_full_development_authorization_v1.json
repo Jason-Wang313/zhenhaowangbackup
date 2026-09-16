@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_frozen_alpha_confirmation_pending_governance_binding",
+  "authorized_at": "2026-09-16T10:38:00Z",
+  "authorized_by": "user",
+  "exact_user_instruction": "lets do this xiuzheng now",
+  "authorized_context": "The user was explicitly told that the corrected relative feasibility gate passes but final SOW success is not guaranteed, and authorized one frozen-alpha full-development confirmation with failure as a terminal stop.",
+  "config": "configs/foundir_blur_only_flux2_scalar_residual_full_development_v1.json",
+  "config_sha256": "b756c7b223d8aed8e2a7018eec8e2e395042f772e477584b79ba2a98c7a12da5",
+  "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+  "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+  "frozen_alpha": 0.75,
+  "split": "all 2595 source-group-disjoint Blur development records using the original frozen crop/seed protocol",
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "model_weight_updates": false,
+  "decoder_tuning": false,
+  "distillation": false,
+  "development_gt_optimization": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}

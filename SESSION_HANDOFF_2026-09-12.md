@@ -6,7 +6,46 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## FLUX.2 scalar-residual feasibility TERMINAL GATE FAILURE — 2026-09-16T10:29Z (LATEST AUTHORITY)
+## FLUX.2 frozen alpha=.75 full-development confirmation GPU-ready — 2026-09-16T10:40Z (LATEST AUTHORITY)
+
+The user explicitly replied `lets do this xiuzheng now` after being told that
+the corrected relative feasibility gate passes but final SOW success is not
+guaranteed. The prior result hold was resolved, then design hold
+`flux2_blur_scalar_residual_full_development_design_v1-b7acbb005eabca98`
+(SHA `b87947c2369d6ef5d12417daedd8650878f869113f0e9d6b65ed5f244518bcdc`)
+was emitted and resolved against that exact USER authorization. This does not
+represent or fabricate an advisor reply.
+
+The one-shot confirmation freezes alpha at `.75`; it cannot tune alpha from
+development. It evaluates all 2,595 source-group-disjoint Blur development
+records using the exact original crop seed `2026091111`, inference seed
+`2026091113`, seed namespace `blur_full_development`, official 50-step solver,
+and step-10k parent. Alpha=1 is recomputed in the same batches and must replay
+`25.734236/.145406` within `.01/.002`. The alpha=.75 candidate must meet SOW
+`>=25.9/<=.18`, gain >=.1 dB, regress LPIPS <=.01, win PSNR on >=60%, and
+avoid any >2 dB per-record regression. Sixteen fixed visuals are saved. No
+automatic training or follow-on is allowed.
+
+Config SHA is
+`b756c7b223d8aed8e2a7018eec8e2e395042f772e477584b79ba2a98c7a12da5`.
+Python compilation, four focused tests, shell syntax, complete 2,595-record
+LQ/GT hash preflight, governance, and launcher `--check` pass. No GPU job has
+started. Launch on one homogeneous 8xH100/H200 host:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_foundir_blur_only_flux2_scalar_residual_full_development_v1_8gpu.sh
+```
+
+Monitor
+`tail -f logs/foundir_blur_only_flux2_scalar_residual_full_development_v1.log`.
+Expected runtime is approximately 30--45 minutes. Do not run a second instance.
+Continue to prohibit alpha tuning, model-weight updates, Qwen degradation
+conditioning, mixed degradation, distillation, decoder tuning, sealed internal,
+and official FoundIR test.
+
+## FLUX.2 scalar-residual feasibility TERMINAL GATE FAILURE — 2026-09-16T10:29Z (HISTORICAL)
 
 The homogeneous 8xH100 inference run completed all 512 records in `439.5092 s`.
 All 512 sidecars and 128 validation base PNGs are complete. There was no OOM,

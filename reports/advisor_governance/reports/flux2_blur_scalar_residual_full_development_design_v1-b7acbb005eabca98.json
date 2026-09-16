@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否批准执行该一次性冻结 alpha=.75 的 full-development confirmation，失败即停止？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_scalar_residual_full_development_v1.json",
+    "sha256": "b756c7b223d8aed8e2a7018eec8e2e395042f772e477584b79ba2a98c7a12da5"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "all 2595 source-group-disjoint Blur development records under original crop/seed protocol; no protected split",
+  "evidence": {
+    "path": "reports/flux2_blur_scalar_residual_full_development_authorization_v1.json",
+    "sha256": "c9ddd0d6953649ce00d429693981ba65d03b9ee12cebb0a80ba07fab95c7ec46"
+  },
+  "gate": "flux2_blur_scalar_residual_full_development_design_v1",
+  "generated_at": "2026-09-16T10:35:07Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B step-10000 plus frozen alpha=0.75 scalar residual",
+  "outcome": "information",
+  "report_id": "flux2_blur_scalar_residual_full_development_design_v1-b7acbb005eabca98",
+  "root_cause_or_status": "Relative feasibility evidence freezes alpha=.75 before this one-shot full-development confirmation. No alpha tuning, weight update, or automatic follow-on is allowed.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

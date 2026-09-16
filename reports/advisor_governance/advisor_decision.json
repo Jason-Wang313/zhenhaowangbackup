@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "flux2_blur_scalar_residual_feasibility_design_v1-4d5e6851f0efc5e0",
-  "hold_sha256": "984e1b16f20968904857aaa7e78ebcec30d175be2733702055aef0cd6cc8e9be",
+  "hold_id": "flux2_blur_scalar_residual_full_development_design_v1-b7acbb005eabca98",
+  "hold_sha256": "b87947c2369d6ef5d12417daedd8650878f869113f0e9d6b65ed5f244518bcdc",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "用户在完整获知无法保证成功、过去 refiner 失败证据、两轮止损边界以及先执行 no-weight-update deterministic blend feasibility 的具体方案后明确回复‘execute’。现批准执行 hash-bound config configs/foundir_blur_only_flux2_scalar_residual_feasibility_v1.json：exact FLUX step-10k；512 个既有 isolated-Blur training source groups 固定为 selection_rank 0–383 calibration 与 384–511 validation；仅 calibration 按预声明 grid/rule 选择 alpha，validation 单次 gate；严禁 development GT 调参或访问、模型权重更新、自动 full-development、自动 residual-network training、Qwen degradation conditioning、mixed degradation、distillation、decoder tuning、sealed internal 和 official FoundIR test。该记录只绑定本次 USER 明确授权‘execute’，是 USER authorization，不代表或捏造 advisor 回复。",
-  "recorded_at": "2026-09-16T10:04:20Z"
+  "statement": "用户在获知 corrected relative feasibility gate 会冻结 alpha=.75 且独立 128-record validation 四项 relative checks 全部通过，但最终 2595-record SOW 仍无法保证后，明确回复‘lets do this xiuzheng now’。现批准执行 hash-bound config configs/foundir_blur_only_flux2_scalar_residual_full_development_v1.json：exact step-10k parent、alpha 永久冻结为 .75、原 full-development crop seed 2026091111、inference seed 2026091113 与 namespace blur_full_development、全部 2595 source-disjoint development records；同时 paired replay alpha=1 以验证可比性。严禁用 development GT 调 alpha、模型权重更新、自动后续训练、Qwen degradation conditioning、mixed degradation、distillation、decoder tuning、sealed internal 和 official FoundIR test；失败即停止。该记录是 USER authorization，不代表或捏造 advisor 回复。",
+  "recorded_at": "2026-09-16T10:35:20Z"
 }
