@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "status": "human_visual_review_complete",
+  "reviewed_at": "2026-09-16T23:56:48Z",
+  "config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+  "aggregate_result_sha256": "94e7740268d8aff9328b177042e68329c82c48bdfcde3ad20cf40ee7db580fbe",
+  "review_scope": {
+    "checkpoint_step": 400,
+    "tasks": 4,
+    "train_triptychs_per_task": 16,
+    "validation_triptychs_per_task": 16,
+    "total_triptychs_reviewed": 128,
+    "layout": "Input | FLUX.2 Output | Ground Truth"
+  },
+  "overall_visual_gate_pass": false,
+  "tasks": {
+    "05Noise": {
+      "visual_gate_pass": false,
+      "finding": "Noise and perceptual roughness are often reduced, but many inputs are already near-clean. The output introduces avoidable tone/color shifts and smoothing, matching the large PSNR regression and failure to preserve identity on mild cases.",
+      "representative_failure": "foundir_train_0187477",
+      "representative_better_case": "foundir_train_0186769"
+    },
+    "08Haze": {
+      "visual_gate_pass": false,
+      "finding": "Most images are coherently dehazed with preserved geometry and large contrast recovery. However, several source-disjoint examples are materially too dark, over-contrasted, or photometrically mismatched to GT; the visual set is promising but not uniformly valid.",
+      "representative_failure": "foundir_train_0213312",
+      "representative_better_case": "foundir_train_0215097"
+    },
+    "10Rain": {
+      "visual_gate_pass": false,
+      "finding": "Strong visible rain is frequently removed while structure is preserved. Mild or already-clean-looking inputs can be over-smoothed or photometrically altered, producing severe tail regressions despite strong average LPIPS improvement.",
+      "representative_failure": "foundir_train_0370694",
+      "representative_better_case": "foundir_train_0377571"
+    },
+    "14Lowlight": {
+      "visual_gate_pass": false,
+      "finding": "Severely dark images receive substantial exposure and visibility recovery with coherent content. Some outputs are over-bright, desaturated, or white-balance/exposure mismatched to GT, and mild cases can regress substantially.",
+      "representative_failure": "foundir_train_0494919",
+      "representative_better_case": "foundir_train_0510167"
+    }
+  },
+  "contact_sheet_sha256": {
+    "noise_training": "7376ef765714cf4b9d8ffa9113a39806763e9a2748f9f6be61a0e5f9af3112e6",
+    "noise_validation": "73fa91cc8feb915fbb061b2bdc96654755b0cef8e2471c7e63e251ef66846609",
+    "haze_training": "59c136c22d5cb6aae03048ab205013dfeadc716e5cf2882edeb93ee2c11d692d",
+    "haze_validation": "52ac591232a1f1d73e470d640392f039e887b33ed4df9f892c85d4a690460087",
+    "rain_training": "7891e4f197617eff2e0ab02eb793dbffb3be777d17293bc7c79fc3e006328ebf",
+    "rain_validation": "bdabea74f79ef3d70b6cea145515bee44ce6e3a97363393d3ff992c3428fbb63",
+    "lowlight_training": "8297d3b0342512535078fe4718032a75bad6914aa02240d37153c8e780475fd1",
+    "lowlight_validation": "bbd16648c93edfc55299652fd7f44d3efbd5987018979000a018d2ee91c17d8b"
+  },
+  "protected_foundir_test_accessed": false,
+  "official_foundir_test_accessed": false,
+  "sealed_internal_accessed": false
+}

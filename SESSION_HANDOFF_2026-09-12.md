@@ -6,6 +6,68 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Mandatory GPU total-time disclosure rule (USER REQUIRED, 2026-09-16)
+
+For every future GPU-running command, before the user launches it, explicitly
+state the estimated **total end-to-end wall-clock time for the whole command**,
+not merely time per step, checkpoint, task, or sub-stage. The disclosure must:
+
+1. give a best-estimate range and central estimate when evidence permits;
+2. include preflight/model loading, training, all scheduled evaluations,
+   aggregation/reporting, and sequential stages launched by that command;
+3. state the concurrency plan and number of GPU instances/GPUs assumed;
+4. distinguish total wall time from aggregate GPU-hours;
+5. identify the main uncertainty and never omit the estimate merely because it
+   is uncertain; use `unknown pending first live measurement` only when no
+   defensible prior exists;
+6. after launch, update the total ETA from observed throughput; and
+7. after completion, record actual start/end and total wall time in this
+   handoff and terminal report.
+
+Never give another GPU launch command without this overall-time disclosure.
+
+## Four-task FLUX.2 capacity sanity TERMINAL FAILURE — 2026-09-16T23:56Z (LATEST AUTHORITY)
+
+The one-command four-arm run completed at `2026-09-16T13:30:07Z` after
+starting at `13:12:08Z`: actual complete wall time was **17m59s** on homogeneous
+8xH100. All four arms reached 400/400 and wrote complete results. There was no
+OOM, NCCL, NaN, runtime, or artifact failure; torchrun status1 only propagated
+each intentional scientific-failure exit. Every task has four checkpoints,
+four optimizer states, 192 triptychs, 12 metrics JSONs, and a terminal result.
+
+Step-400 train / descriptive validation outputs:
+
+| Task | Train PSNR / LPIPS | Validation PSNR / LPIPS | Formal gate |
+|---|---:|---:|:---:|
+| Noise | 37.655 / .0251 | 34.358 / .0512 | fail |
+| Haze | 29.104 / .0497 | 19.956 / .1381 | fail |
+| Rain | 33.483 / .0438 | 30.716 / .0815 | fail |
+| Low-light | 26.352 / .0548 | 17.483 / .1925 | fail |
+
+All formal gates are false and must not be relabeled. Haze and Low-light pass
+four of five capacity checks and both train SOW proxies; only the very strict
+probe-loss-ratio check fails. They show strong restoration capacity but their
+descriptive validation PSNR remains below SOW. Rain is promising but nonuniform:
+train PSNR is .717dB short of 34.2, validation LPIPS is close at .0815, and
+mild cases regress. Noise is the substantive failure: its input PSNR already
+exceeds target (40.458 train / 40.346 validation), while FLUX loses 2.803/5.988
+dB despite improving LPIPS, showing inadequate identity/strength preservation.
+
+All 128 final train/validation triptychs were reviewed. Overall visual gate
+fails: Haze/Low-light strongly restore severe examples but have exposure/color
+outliers; Rain removes strong rain but damages some mild inputs; Noise often
+smooths or shifts already-good inputs. Aggregate result SHA is
+`94e7740268d8aff9328b177042e68329c82c48bdfcde3ad20cf40ee7db580fbe`.
+Formal audit:
+`reports/foundir_four_task_flux2_capacity_sanity_terminal_audit_2026-09-16.md`.
+Visual review:
+`reports/foundir_four_task_flux2_capacity_sanity_visual_review_v1.json`.
+
+Active hold: `flux2_four_task_capacity_sanity_result-323541cca1c3b528`.
+Balanced joint training has NOT started. Until a matching decision is recorded,
+only read-only audit/report preparation is allowed. Do not automatically rerun,
+relax the gate post hoc, add Qwen/mixed, or access protected splits.
+
 ## Four-task FLUX.2 capacity sanity GPU-ready — 2026-09-16T13:03Z (LATEST AUTHORITY)
 
 The advisor directed: `下一步应该把所有的退化联合训练，看一下效果`. The user confirmed the
