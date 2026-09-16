@@ -1,0 +1,46 @@
+{
+  "config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+  "config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+  "frozen_manifest": "manifests/foundir_four_task_flux2_capacity_sanity_v1.csv",
+  "frozen_manifest_sha256": "3abbaad9bb7a476d9fd673f76542a984471c72f265a5914170efe8151e30ec98",
+  "mixed_degradations": false,
+  "official_foundir_test_accessed": false,
+  "protected_foundir_test_accessed": false,
+  "qwen_degradation_conditioning": false,
+  "records": 128,
+  "schema_version": 1,
+  "sealed_internal_accessed": false,
+  "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+  "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "status": "frozen_four_task_capacity_sanity_manifest",
+  "tasks": {
+    "05Noise": {
+      "train_records": 16,
+      "train_source_groups": 16,
+      "train_validation_source_group_overlap": 0,
+      "validation_records": 16,
+      "validation_source_groups": 16
+    },
+    "08Haze": {
+      "train_records": 16,
+      "train_source_groups": 16,
+      "train_validation_source_group_overlap": 0,
+      "validation_records": 16,
+      "validation_source_groups": 16
+    },
+    "10Rain": {
+      "train_records": 16,
+      "train_source_groups": 16,
+      "train_validation_source_group_overlap": 0,
+      "validation_records": 16,
+      "validation_source_groups": 16
+    },
+    "14Lowlight": {
+      "train_records": 16,
+      "train_source_groups": 16,
+      "train_validation_source_group_overlap": 0,
+      "validation_records": 16,
+      "validation_source_groups": 16
+    }
+  }
+}

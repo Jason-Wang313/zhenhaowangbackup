@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Advisor-authorized eight-GPU FLUX.2 DiT-LoRA-only Blur overfit gate."""
+"""FLUX.2 DiT-LoRA single-task capacity gate (legacy Blur or four-task suite)."""
 
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import gc
 import hashlib
@@ -52,16 +53,87 @@ def stable_int(*values: object) -> int:
     return int.from_bytes(hashlib.sha256(":".join(map(str, values)).encode()).digest()[:8], "big")
 
 
+def materialize_task_config(raw: Mapping[str, object], task: str | None) -> dict[str, object]:
+    """Turn the frozen four-task suite into one independent task-arm config."""
+    config = copy.deepcopy(dict(raw))
+    if task is None:
+        return config
+    if raw.get("status") != "user_authorized_four_task_fail_fast_capacity_design":
+        raise RuntimeError("--task is only valid for the frozen four-task capacity suite")
+    tasks = raw.get("tasks")
+    if not isinstance(tasks, dict) or task not in tasks:
+        raise RuntimeError(f"unsupported suite task: {task}")
+    task_config = tasks[task]
+    scope = raw["scope"]
+    if task not in scope["categories"]:
+        raise RuntimeError("task is outside the frozen suite scope")
+    config["status"] = "user_authorized_single_task_capacity_sanity"
+    config["scope"] = {
+        "category": task,
+        "qwen_degradation_conditioning": scope["qwen_degradation_conditioning"],
+        "mixed_degradations": scope["mixed_degradations"],
+        "pixel_refiner": scope["pixel_refiner"],
+        "official_foundir_test_accessed": scope["official_foundir_test_accessed"],
+        "sealed_internal_accessed": scope["sealed_internal_accessed"],
+    }
+    config["model"]["prompt"] = task_config["prompt"]
+    data = raw["data"]
+    config["data"] = {
+        "source_manifest": data["source_manifest"],
+        "source_manifest_sha256": data["source_manifest_sha256"],
+        "frozen_manifest": data["frozen_manifest"],
+        "frozen_manifest_metadata": data["frozen_manifest_metadata"],
+        "category": task,
+        "train_role": "tiny_overfit_train",
+        "validation_role": "descriptive_validation",
+        "tiny_overfit_split": data["tiny_overfit_split"],
+        "tiny_overfit_records": data["tiny_overfit_records_per_task"],
+        "tiny_overfit_unique_source_groups": data["tiny_overfit_records_per_task"],
+        "frozen_validation_split": data["frozen_validation_split"],
+        "frozen_validation_records": data["frozen_validation_records_per_task"],
+        "frozen_validation_unique_source_groups": data["frozen_validation_records_per_task"],
+        "crop_size": data["crop_size"],
+        "selection_seed": data["selection_seed"],
+        "crop_seed": data["crop_seed"],
+    }
+    training = config["training"]
+    training["global_batch_size"] = training.pop("global_batch_size_per_task")
+    task_index = list(raw["tasks"]).index(task)
+    training["seed"] = int(training["seed"]) + task_index * 10_000
+    inference = config["inference"]
+    inference["visual_records"] = inference["train_visual_records"]
+    inference["seed"] = int(inference["seed"]) + task_index * 10_000
+    config["gate"] = {
+        **raw["gate"]["capacity_checks"],
+        "require_human_visual_review": raw["gate"]["require_human_visual_review"],
+    }
+    distributed = config["distributed"]
+    distributed["required_world_size"] = distributed["independent_task_world_size"]
+    config["runtime"] = {
+        "output_dir": f"{raw['runtime']['output_root']}/{task_config['slug']}",
+        "torch_home": raw["runtime"]["torch_home"],
+        "offline": raw["runtime"]["offline"],
+    }
+    config["_suite_task"] = task
+    config["_sow_stage2"] = copy.deepcopy(task_config["sow_stage2"])
+    return config
+
+
 def validate_config(config: Mapping[str, object]) -> None:
-    if config.get("status") != "advisor_authorized_blur_only_tiny_overfit":
-        raise RuntimeError("config is not authorized for the Blur-only tiny overfit")
+    allowed_status = {
+        "advisor_authorized_blur_only_tiny_overfit",
+        "user_authorized_single_task_capacity_sanity",
+    }
+    if config.get("status") not in allowed_status:
+        raise RuntimeError("config is not authorized for a single-task tiny-overfit gate")
     scope = config["scope"]
     required_false = (
         "qwen_degradation_conditioning", "mixed_degradations", "pixel_refiner",
         "official_foundir_test_accessed", "sealed_internal_accessed",
     )
-    if scope.get("category") != "01Blur" or any(scope.get(key) is not False for key in required_false):
-        raise RuntimeError("Blur-only scope contract changed")
+    allowed_categories = {"01Blur", "05Noise", "08Haze", "10Rain", "14Lowlight"}
+    if scope.get("category") not in allowed_categories or any(scope.get(key) is not False for key in required_false):
+        raise RuntimeError("single-task scope contract changed")
     if config["model"].get("name") != "flux.2-klein-base-4b":
         raise RuntimeError("model family changed")
     if config["training"].get("objective") != "pure_noise_to_clean_rectified_flow_with_native_reference":
@@ -73,8 +145,8 @@ def validate_config(config: Mapping[str, object]) -> None:
         raise RuntimeError("guidance 1.0 must match the conditional training branch")
     distributed = config["distributed"]
     training = config["training"]
-    if int(distributed["required_world_size"]) != 8:
-        raise RuntimeError("this gate requires exactly eight workers")
+    if int(distributed["required_world_size"]) not in {2, 8}:
+        raise RuntimeError("this gate requires exactly two or eight workers")
     if int(training["global_batch_size"]) != (
         int(distributed["required_world_size"])
         * int(training["micro_batch_size_per_rank"])
@@ -104,26 +176,29 @@ def load_manifest(config: Mapping[str, object], *, verify_images: bool) -> tuple
         raise RuntimeError("frozen Blur-only manifest identity changed")
     with manifest.open(newline="") as handle:
         rows = list(csv.DictReader(handle))
-    train = [row for row in rows if row["role"] == "tiny_overfit_train"]
-    validation = [row for row in rows if row["role"] == "future_blur_validation"]
+    category = str(data["category"])
+    train_role = str(data.get("train_role", "tiny_overfit_train"))
+    validation_role = str(data.get("validation_role", "future_blur_validation"))
+    train = [row for row in rows if row["category"] == category and row["role"] == train_role]
+    validation = [row for row in rows if row["category"] == category and row["role"] == validation_role]
     if len(train) != int(data["tiny_overfit_records"]) or len(validation) != int(data["frozen_validation_records"]):
-        raise RuntimeError("frozen Blur-only manifest cardinality changed")
+        raise RuntimeError("frozen single-task manifest cardinality changed")
     for role, selected, split in (
         ("train", train, data["tiny_overfit_split"]),
         ("validation", validation, data["frozen_validation_split"]),
     ):
-        if any(row["category"] != "01Blur" or row["composition_size"] != "1" or row["split"] != split for row in selected):
-            raise RuntimeError(f"{role} contains a non-isolated-Blur record")
+        if any(row["category"] != category or row["composition_size"] != "1" or row["split"] != split for row in selected):
+            raise RuntimeError(f"{role} contains a record outside the isolated task")
         if len({row["source_group"] for row in selected}) != len(selected):
             raise RuntimeError(f"{role} source groups are not unique")
     if {row["source_group"] for row in train} & {row["source_group"] for row in validation}:
-        raise RuntimeError("Blur train/validation source-group leakage")
+        raise RuntimeError("train/validation source-group leakage")
     if verify_images:
         for row in rows:
             for field, hash_field in (("lq_path", "lq_sha256"), ("gt_path", "gt_sha256")):
                 path = ROOT / row[field]
                 if not path.is_file() or sha256(path) != row[hash_field]:
-                    raise RuntimeError(f"Blur pair identity changed: {row['record_id']} {field}")
+                    raise RuntimeError(f"pair identity changed: {row['record_id']} {field}")
     return train, validation
 
 
@@ -134,7 +209,7 @@ def load_crop(row: Mapping[str, str], crop_size: int) -> tuple[torch.Tensor, tor
         with Image.open(ROOT / row[field]) as image:
             rgb = image.convert("RGB")
             if rgb.size != (int(row["width"]), int(row["height"])):
-                raise RuntimeError(f"Blur pair dimensions changed: {row['record_id']}")
+                raise RuntimeError(f"pair dimensions changed: {row['record_id']}")
             crop = np.asarray(rgb.crop((x, y, x + crop_size, y + crop_size)), dtype=np.uint8).copy()
         tensors.append(torch.from_numpy(crop).permute(2, 0, 1).float().div_(127.5).sub_(1.0))
     return tensors[0], tensors[1]
@@ -245,10 +320,10 @@ def restore(model, autoencoder, lq, cfg_context, cfg_ids, pack_image, *, seed: i
         return autoencoder.decode(latent).float().clamp(-1, 1)
 
 
-def evaluate_snapshot(model, autoencoder, records, cfg_context, cfg_ids, pack_image, metric, *, step: int, limit: int, config, output_dir: Path, rank: int, world: int, device: torch.device) -> dict[str, object] | None:
+def evaluate_snapshot(model, autoencoder, records, cfg_context, cfg_ids, pack_image, metric, *, step: int, limit: int, config, output_dir: Path, rank: int, world: int, device: torch.device, role: str = "training") -> dict[str, object] | None:
     selected = records[:limit]
     local = []
-    snapshot_dir = output_dir / "training_triptychs" / f"step_{step:06d}"
+    snapshot_dir = output_dir / f"{role}_triptychs" / f"step_{step:06d}"
     for index in range(rank, len(selected), world):
         record = selected[index]
         lq = record["lq"].unsqueeze(0).to(device)
@@ -262,7 +337,8 @@ def evaluate_snapshot(model, autoencoder, records, cfg_context, cfg_ids, pack_im
         # Gate exactly what is saved: quantize to PNG precision before metrics.
         output_q = torch.from_numpy(np.asarray(tensor_image(output[0]), dtype=np.uint8).copy()).permute(2, 0, 1).float().div_(127.5).sub_(1).unsqueeze(0).to(device)
         row = {
-            "record_id": record["record_id"], "step": step,
+            "record_id": record["record_id"], "source_group": record["source_group"],
+            "category": record["category"], "role": role, "step": step,
             "input_psnr": psnr(gt, lq), "output_psnr": psnr(gt, output_q),
             "input_lpips": lpips_value(metric, gt, lq), "output_lpips": lpips_value(metric, gt, output_q),
         }
@@ -292,26 +368,29 @@ def evaluate_snapshot(model, autoencoder, records, cfg_context, cfg_ids, pack_im
         "protected_foundir_test_accessed": False, "sealed_internal_accessed": False,
     }
     write_once(snapshot_dir / "metrics.json", (json.dumps(aggregate, indent=2, sort_keys=True) + "\n").encode())
-    print("FOUNDIR_BLUR_ONLY_SNAPSHOT " + json.dumps({key: value for key, value in aggregate.items() if key != "rows"}, sort_keys=True), flush=True)
+    print("FOUNDIR_SINGLE_TASK_SNAPSHOT " + json.dumps({key: value for key, value in aggregate.items() if key != "rows"}, sort_keys=True), flush=True)
     return aggregate
 
 
-def preflight(config_path: Path) -> None:
-    config = json.loads(config_path.read_text())
+def preflight(config_path: Path, task: str | None = None, *, verify_model_hashes: bool = True) -> None:
+    config = materialize_task_config(json.loads(config_path.read_text()), task)
     config["_config_path"] = str(config_path.resolve())
     validate_config(config)
     train, validation = load_manifest(config, verify_images=True)
-    for key, hash_key in (("flow_weights", "flow_weights_sha256"), ("autoencoder_weights", "autoencoder_weights_sha256")):
-        path = ROOT / config["model"][key]
-        if sha256(path) != config["model"][hash_key]:
-            raise RuntimeError(f"model artifact identity changed: {path}")
+    if verify_model_hashes:
+        for key, hash_key in (("flow_weights", "flow_weights_sha256"), ("autoencoder_weights", "autoencoder_weights_sha256")):
+            path = ROOT / config["model"][key]
+            if sha256(path) != config["model"][hash_key]:
+                raise RuntimeError(f"model artifact identity changed: {path}")
     crop = int(config["data"]["crop_size"])
     for row in [*train, *validation]:
         load_crop(row, crop)
     print(json.dumps({
-        "status": "FOUNDIR_BLUR_ONLY_PREFLIGHT_PASS", "config_sha256": sha256(config_path),
+        "status": "FOUNDIR_SINGLE_TASK_PREFLIGHT_PASS", "task": config["scope"]["category"],
+        "config_sha256": sha256(config_path),
         "tiny_overfit_records": len(train), "future_validation_records": len(validation),
-        "future_validation_not_inferred": True, "protected_foundir_test_accessed": False,
+        "descriptive_validation_frozen": True, "model_hashes_verified": verify_model_hashes,
+        "protected_foundir_test_accessed": False,
         "sealed_internal_accessed": False,
     }, sort_keys=True))
 
@@ -319,22 +398,25 @@ def preflight(config_path: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
+    parser.add_argument("--task", choices=("05Noise", "08Haze", "10Rain", "14Lowlight"))
     parser.add_argument("--preflight", action="store_true")
+    parser.add_argument("--skip-model-hashes", action="store_true")
     parser.add_argument("--resume", action="store_true")
     args = parser.parse_args()
     config_path = args.config.resolve()
     if args.preflight:
-        preflight(config_path)
+        preflight(config_path, args.task, verify_model_hashes=not args.skip_model_hashes)
         return 0
-    config = json.loads(config_path.read_text())
+    config = materialize_task_config(json.loads(config_path.read_text()), args.task)
     config["_config_path"] = str(config_path)
     validate_config(config)
-    train_rows, _ = load_manifest(config, verify_images=False)
+    train_rows, validation_rows = load_manifest(config, verify_images=False)
     records = prepare_records(train_rows, int(config["data"]["crop_size"]))
+    validation_records = prepare_records(validation_rows, int(config["data"]["crop_size"]))
     output_dir = ROOT / config["runtime"]["output_dir"]
     output_dir.mkdir(parents=True, exist_ok=True)
     if (output_dir / "result.json").exists():
-        raise RuntimeError("Blur-only sanity result already exists; refusing rerun")
+        raise RuntimeError("single-task sanity result already exists; refusing rerun")
     local_rank = int(os.environ["LOCAL_RANK"])
     torch.cuda.set_device(local_rank)
     device = torch.device("cuda", local_rank)
@@ -342,8 +424,9 @@ def main() -> int:
     started = time.monotonic()
     try:
         rank, world = dist.get_rank(), dist.get_world_size()
-        if world != 8 or torch.cuda.device_count() != 8:
-            raise RuntimeError("Blur-only sanity gate requires exactly eight visible GPUs")
+        required_world = int(config["distributed"]["required_world_size"])
+        if world != required_world or torch.cuda.device_count() != required_world:
+            raise RuntimeError(f"single-task sanity gate requires exactly {required_world} visible GPUs")
         properties = torch.cuda.get_device_properties(device)
         if properties.total_memory < int(config["distributed"]["minimum_memory_gib"]) * 1024**3:
             raise RuntimeError("GPU memory is below contract")
@@ -415,6 +498,12 @@ def main() -> int:
                 step=0, limit=int(config["inference"]["visual_records"]), config=config,
                 output_dir=output_dir, rank=rank, world=world, device=device,
             )
+            evaluate_snapshot(
+                wrapped, autoencoder, validation_records, cfg_context, cfg_ids, batched_prc_img, metric,
+                step=0, limit=int(config["inference"].get("validation_visual_records", len(validation_records))),
+                config=config, output_dir=output_dir, rank=rank, world=world, device=device,
+                role="validation",
+            )
         training = config["training"]
         accumulation = int(training["gradient_accumulation_steps"])
         optimizer.zero_grad(set_to_none=True)
@@ -450,7 +539,7 @@ def main() -> int:
             mean_loss = float(value.item() / world)
             completed = step + 1
             if rank == 0 and (completed == 1 or completed % 10 == 0):
-                print(f"FOUNDIR_BLUR_ONLY_TRAIN step={completed}/{training['max_steps']} loss={mean_loss:.8f} grad_norm={float(grad_norm):.6f}", flush=True)
+                print(f"FOUNDIR_SINGLE_TASK_TRAIN task={config['scope']['category']} step={completed}/{training['max_steps']} loss={mean_loss:.8f} grad_norm={float(grad_norm):.6f}", flush=True)
             if completed in set(int(value) for value in training["checkpoint_steps"]):
                 dist.barrier()
                 if rank == 0:
@@ -459,7 +548,7 @@ def main() -> int:
                         raise RuntimeError(f"refusing to overwrite checkpoint: {checkpoint}")
                     save_lora_checkpoint(wrapped.module, checkpoint, {
                         "step": completed, "config_sha256": sha256(config_path),
-                        "scope": "advisor_authorized_blur_only_dit_lora_only",
+                        "scope": f"user_authorized_{config['scope']['category']}_dit_lora_capacity_only",
                     })
                     with checkpoint.with_suffix(".optimizer.pt").open("xb") as handle:
                         torch.save({"step": completed, "config_sha256": sha256(config_path), "optimizer": optimizer.state_dict()}, handle)
@@ -468,6 +557,12 @@ def main() -> int:
                     wrapped, autoencoder, records, cfg_context, cfg_ids, batched_prc_img, metric,
                     step=completed, limit=int(config["inference"]["visual_records"]), config=config,
                     output_dir=output_dir, rank=rank, world=world, device=device,
+                )
+                evaluate_snapshot(
+                    wrapped, autoencoder, validation_records, cfg_context, cfg_ids, batched_prc_img, metric,
+                    step=completed, limit=int(config["inference"].get("validation_visual_records", len(validation_records))),
+                    config=config, output_dir=output_dir, rank=rank, world=world, device=device,
+                    role="validation",
                 )
         final_probe = probe_loss(
             wrapped, autoencoder, records[rank % len(records)], context, context_ids, batched_prc_img,
@@ -478,8 +573,14 @@ def main() -> int:
             step=int(training["max_steps"]), limit=len(records), config=config,
             output_dir=output_dir / "final_all_16", rank=rank, world=world, device=device,
         )
+        final_validation_metrics = evaluate_snapshot(
+            wrapped, autoencoder, validation_records, cfg_context, cfg_ids, batched_prc_img, metric,
+            step=int(training["max_steps"]), limit=len(validation_records), config=config,
+            output_dir=output_dir / "final_all_16", rank=rank, world=world, device=device,
+            role="validation",
+        )
         if rank == 0:
-            assert final_metrics is not None
+            assert final_metrics is not None and final_validation_metrics is not None
             gate = config["gate"]
             loss_ratio = final_probe / initial_probe
             checks = {
@@ -490,24 +591,33 @@ def main() -> int:
                 "lpips_improved_fraction": final_metrics["lpips_improved_fraction"] >= float(gate["minimum_lpips_improved_fraction"]),
             }
             automatic_pass = all(checks.values())
+            sow = config.get("_sow_stage2")
+            sow_proxy = None if not isinstance(sow, dict) else {
+                "psnr": final_metrics["mean_output_psnr"] >= float(sow["psnr"]),
+                "lpips": final_metrics["mean_output_lpips"] <= float(sow["lpips"]),
+                "thresholds": sow,
+            }
             checkpoint = output_dir / f"step_{int(training['max_steps']):06d}.safetensors"
             payload = {
                 "schema_version": 1,
                 "status": "awaiting_human_visual_review" if automatic_pass else "failed",
                 "automatic_gate_pass": automatic_pass, "human_visual_review": "pending",
                 "checks": checks, "initial_probe_loss": initial_probe, "final_probe_loss": final_probe,
+                "task": config["scope"]["category"],
                 "probe_loss_ratio": loss_ratio, "final_metrics": final_metrics,
+                "descriptive_validation_metrics": final_validation_metrics,
+                "train_sow_proxy": sow_proxy,
                 "config": config_path.relative_to(ROOT).as_posix(), "config_sha256": sha256(config_path),
                 "checkpoint": checkpoint.relative_to(ROOT).as_posix(), "checkpoint_sha256": sha256(checkpoint),
                 "flow_objective": training["objective"], "inference_schedule": config["inference"]["schedule"],
                 "inference_steps": int(config["inference"]["num_steps"]), "guidance": 1.0,
                 "qwen_degradation_conditioning": False, "mixed_degradations": False,
-                "pixel_refiner": False, "future_validation_not_inferred": True,
+                "pixel_refiner": False, "development_gt_optimization": False,
                 "protected_foundir_test_accessed": False, "sealed_internal_accessed": False,
                 "wall_seconds": time.monotonic() - started,
             }
             write_once(output_dir / "result.json", (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
-            print("FOUNDIR_BLUR_ONLY_AUTOMATIC_PASS_AWAITING_VISUAL_REVIEW" if automatic_pass else "FOUNDIR_BLUR_ONLY_AUTOMATIC_GATE_FAILED", flush=True)
+            print("FOUNDIR_SINGLE_TASK_AUTOMATIC_PASS_AWAITING_VISUAL_REVIEW" if automatic_pass else "FOUNDIR_SINGLE_TASK_AUTOMATIC_GATE_FAILED", flush=True)
             exit_value = 0 if automatic_pass else 2
         else:
             exit_value = 0

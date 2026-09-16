@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "status": "proposed_phase1_design_awaiting_hash_bound_user_decision",
+  "config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+  "config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+  "advisor_statement": "下一步应该把所有的退化联合训练，看一下效果",
+  "user_statement": "ur understnaing is correct ... we can start this now, the 1-5 u mentioned",
+  "phase_authorized": "four_independent_single_degradation_capacity_sanity_arms_only",
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "pixel_refiner": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

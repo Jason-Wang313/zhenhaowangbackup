@@ -6,6 +6,53 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## Four-task FLUX.2 capacity sanity GPU-ready — 2026-09-16T13:03Z (LATEST AUTHORITY)
+
+The advisor directed: `下一步应该把所有的退化联合训练，看一下效果`. The user confirmed the
+agreed 1→5 ordering and explicitly said to start it. Phase 1 is now CPU-ready:
+four independent isolated-degradation FLUX.2 Klein Base 4B capacity arms for
+Noise, Haze, Rain, and Low-light. Do not jump directly to historical five-type
+v3, Qwen degradation predictions, or mixed degradation.
+
+Frozen config SHA is
+`995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c`.
+Frozen 128-record manifest SHA is
+`3abbaad9bb7a476d9fd673f76542a984471c72f265a5914170efe8151e30ec98`:
+each task has 16 unique train source groups plus 16 unique source-disjoint
+validation groups and deterministic 512 crops. Validation is descriptive and
+cannot tune the experiment.
+
+Each task receives a fresh rank-32 LoRA, fixed task prompt, 400 steps, global
+batch 8, checkpoints 50/100/200/400, official 50-step inference, and fixed
+train/validation Input|Output|GT plus PSNR/LPIPS at every checkpoint. One
+homogeneous 8xH100/H200 host runs the four arms concurrently as independent
+two-GPU jobs on `0,1`; `2,3`; `4,5`; and `6,7`. There is no weight or gradient
+sharing and no automatic joint launch.
+
+The hash-bound design hold
+`flux2_four_task_capacity_sanity_design_v1-37a4459ff7574823`, SHA
+`1d6d2812fb89df95553eaae7e6b48a1cd96fa431cca1c04c603e31511a4edf0e`,
+is resolved using the exact USER authorization, not a fabricated advisor reply.
+Governance check passes. Ten new focused tests and sixteen combined new/legacy
+tests pass; compilation, shell syntax, model hashes, all 128 image hashes and
+crops, H100/H200 scope, and launcher `--check` pass. Readiness report:
+`reports/foundir_four_task_flux2_capacity_sanity_readiness_2026-09-16.md`.
+
+No GPU job has started. Exact next action in the GPU shell:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_foundir_four_task_flux2_capacity_sanity_v1_8gpu.sh
+```
+
+Monitor `tail -f logs/foundir_four_task_flux2_capacity_sanity_v1.log`; per-task
+logs end in `_noise.log`, `_haze.log`, `_rain.log`, and `_lowlight.log`.
+All four arms finish independently even if one scientific gate fails. The suite
+then emits a terminal hold and stops for joint metric/visual audit. Only after
+all four results are audited may the balanced five-single-degradation joint
+baseline be designed. Continue to prohibit sealed internal and official test.
+
 ## FLUX.2 frozen alpha=.75 full-development: SOW PASS / TAIL GATE FAIL — 2026-09-16T11:40Z (LATEST AUTHORITY)
 
 The one-shot 8xH100 run completed all 2,595 source-disjoint development records

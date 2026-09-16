@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_four_task_flux2_capacity_sanity_v1",
+  "status": "user_authorized_four_task_fail_fast_capacity_design",
+  "scope": {
+    "categories": ["05Noise", "08Haze", "10Rain", "14Lowlight"],
+    "single_degradation_only": true,
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "authorization": {
+    "advisor_statement": "下一步应该把所有的退化联合训练，看一下效果",
+    "user_statement": "ur understnaing is correct ... we can start this now, the 1-5 u mentioned",
+    "phase": "phase_1_only_four_independent_capacity_sanity_arms"
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "dtype": "bfloat16",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "text_encoder": "models/qwen3-4b-fp8"
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "frozen_manifest": "manifests/foundir_four_task_flux2_capacity_sanity_v1.csv",
+    "frozen_manifest_metadata": "manifests/foundir_four_task_flux2_capacity_sanity_v1.json",
+    "tiny_overfit_split": "train",
+    "tiny_overfit_records_per_task": 16,
+    "frozen_validation_split": "validation",
+    "frozen_validation_records_per_task": 16,
+    "require_unique_source_group_per_record": true,
+    "crop_size": 512,
+    "selection_seed": 2026091601,
+    "crop_seed": 2026091602
+  },
+  "tasks": {
+    "05Noise": {
+      "slug": "noise",
+      "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "sow_stage2": {"psnr": 38.9, "lpips": 0.1}
+    },
+    "08Haze": {
+      "slug": "haze",
+      "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "sow_stage2": {"psnr": 22.1, "lpips": 0.19}
+    },
+    "10Rain": {
+      "slug": "rain",
+      "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "sow_stage2": {"psnr": 34.2, "lpips": 0.08}
+    },
+    "14Lowlight": {
+      "slug": "lowlight",
+      "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "sow_stage2": {"psnr": 18.9, "lpips": 0.28}
+    }
+  },
+  "lora": {
+    "initialization": "fresh_zero_lora_per_task",
+    "rank": 32,
+    "alpha": 32.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "objective": "pure_noise_to_clean_rectified_flow_with_native_reference",
+    "seed": 2026091603,
+    "max_steps": 400,
+    "global_batch_size_per_task": 8,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "timestep_sampling": "uniform",
+    "reference_time_coordinate": 10,
+    "checkpoint_steps": [50, 100, 200, 400]
+  },
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091604,
+    "evaluate_steps": [0, 50, 100, 200, 400],
+    "train_visual_records": 16,
+    "validation_visual_records": 16,
+    "automatic_joint_launch": false
+  },
+  "gate": {
+    "capacity_checks": {
+      "maximum_probe_loss_ratio": 0.35,
+      "minimum_mean_psnr_gain_db": 2.0,
+      "minimum_mean_lpips_improvement": 0.05,
+      "minimum_psnr_improved_fraction": 0.75,
+      "minimum_lpips_improved_fraction": 0.75
+    },
+    "report_train_sow_proxy_separately": true,
+    "development_is_descriptive_not_selective": true,
+    "require_human_visual_review": true,
+    "require_all_four_audited_before_joint_design": true
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_total_world_size": 8,
+    "independent_task_world_size": 2,
+    "parallel_task_arms": 4,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "gpu_partitions": {
+      "05Noise": "0,1",
+      "08Haze": "2,3",
+      "10Rain": "4,5",
+      "14Lowlight": "6,7"
+    }
+  },
+  "runtime": {
+    "output_root": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

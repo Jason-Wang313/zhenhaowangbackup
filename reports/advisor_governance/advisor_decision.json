@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "flux2_blur_scalar_residual_full_development_design_v1-b7acbb005eabca98",
-  "hold_sha256": "b87947c2369d6ef5d12417daedd8650878f869113f0e9d6b65ed5f244518bcdc",
+  "hold_id": "flux2_four_task_capacity_sanity_design_v1-37a4459ff7574823",
+  "hold_sha256": "1d6d2812fb89df95553eaae7e6b48a1cd96fa431cca1c04c603e31511a4edf0e",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "用户在获知 corrected relative feasibility gate 会冻结 alpha=.75 且独立 128-record validation 四项 relative checks 全部通过，但最终 2595-record SOW 仍无法保证后，明确回复‘lets do this xiuzheng now’。现批准执行 hash-bound config configs/foundir_blur_only_flux2_scalar_residual_full_development_v1.json：exact step-10k parent、alpha 永久冻结为 .75、原 full-development crop seed 2026091111、inference seed 2026091113 与 namespace blur_full_development、全部 2595 source-disjoint development records；同时 paired replay alpha=1 以验证可比性。严禁用 development GT 调 alpha、模型权重更新、自动后续训练、Qwen degradation conditioning、mixed degradation、distillation、decoder tuning、sealed internal 和 official FoundIR test；失败即停止。该记录是 USER authorization，不代表或捏造 advisor 回复。",
-  "recorded_at": "2026-09-16T10:35:20Z"
+  "statement": "Advisor 明确指示‘下一步应该把所有的退化联合训练，看一下效果’；用户随后确认 1→5 执行顺序正确，并明确要求‘also, we can start this now, the 1-5 u mentioned’。现仅授权执行 hash-bound phase-1 design configs/foundir_four_task_flux2_capacity_sanity_v1.json：Noise/Haze/Rain/Low-light 四个彼此独立的 single-degradation fail-fast capacity arms，每类 16 train + 16 source-group-disjoint descriptive validation、400 steps、固定 task prompt、固定 Input|Output|GT 和 PSNR/LPIPS。禁止 Qwen degradation predictions、mixed degradation、pixel refiner、sealed internal、official FoundIR test 和自动 joint launch；必须四个结果共同审计后才能设计五类 joint baseline。该记录是 USER authorization，不代表或捏造 advisor 对本具体 config 的新回复。",
+  "recorded_at": "2026-09-16T12:54:00Z"
 }
