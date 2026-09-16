@@ -6,7 +6,41 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## FLUX.2 scalar-residual feasibility GPU-ready — 2026-09-16T10:06Z (LATEST AUTHORITY)
+## FLUX.2 scalar-residual feasibility TERMINAL GATE FAILURE — 2026-09-16T10:29Z (LATEST AUTHORITY)
+
+The homogeneous 8xH100 inference run completed all 512 records in `439.5092 s`.
+All 512 sidecars and 128 validation base PNGs are complete. There was no OOM,
+NCCL failure, NaN, or inference exception. Result SHA is
+`08e7b0220ea02e4067c1c4b0ef5834a93976857a46fc7c27e502e1891c41b6bc`.
+
+The frozen automatic gate failed before alpha selection: no calibration alpha
+met the absolute LPIPS <=.17 constraint. Calibration alpha=1 baseline is
+`21.621397/.225653`; best PSNR is alpha=.375 at `22.986674/.284560`, and best
+LPIPS is alpha=.875 at `22.067155/.225097`. No full-development evaluation or
+model update occurred.
+
+A read-only audit of the already-generated 128 validation metrics shows useful
+relative signal that cannot alter the failed gate. Alpha=.875 is
+`22.353720/.229522` versus alpha=1 `21.877117/.229102`: `+.476604 dB` PSNR,
+only `+.000421` LPIPS, 93.75% PSNR wins, and worst PSNR regression `.765213 dB`.
+The absolute `.17` selection constraint was therefore mismatched to this
+training-crop distribution, whose baseline LPIPS is about `.225--.229`. This is
+a protocol-design error; post-hoc alpha=.875 is not an authorized selection.
+
+Torchrun correctly completed and returned the scientific-failure result, but
+torch elastic exposed status 1 while the wrapper expected status 2, producing
+an `unexpected torchrun status 1` line after governance emission. This is a
+wrapper status-normalization defect, not a runtime failure.
+
+Formal report:
+`reports/foundir_blur_only_flux2_scalar_residual_terminal_result_2026-09-16.md`.
+Active hold:
+`flux2_blur_scalar_residual_feasibility_result-fe6e894531bf58fa`, hold SHA
+`85333598e8d73275349506b292291558fab8bf1d5442308a764680a24011cc29`.
+Only read-only audit/report preparation is allowed. A relative-gate redesign or
+frozen-alpha full-development evaluation requires a new explicit decision.
+
+## FLUX.2 scalar-residual feasibility GPU-ready — 2026-09-16T10:06Z (HISTORICAL)
 
 After the source-diverse pilot failed, the user explicitly replied `execute`
 to the fail-fast correction route. The terminal hold was resolved against that

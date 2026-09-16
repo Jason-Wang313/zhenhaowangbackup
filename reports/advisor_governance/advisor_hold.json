@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-16T10:04:06Z",
+  "created_at": "2026-09-16T10:18:09Z",
   "evidence": {
-    "path": "reports/flux2_blur_scalar_residual_feasibility_authorization_v1.json",
-    "sha256": "9119999d8a7bc896378f1c19c612c6fc37075b44dd6968521e775000ee6a76ce"
+    "path": "checkpoints/foundir_blur_only_flux2_scalar_residual_feasibility_v1/result.json",
+    "sha256": "08e7b0220ea02e4067c1c4b0ef5834a93976857a46fc7c27e502e1891c41b6bc"
   },
-  "hold_id": "flux2_blur_scalar_residual_feasibility_design_v1-4d5e6851f0efc5e0",
-  "reason": "proposed route/architecture change requires advisor decision before experiments",
-  "report": "reports/advisor_governance/reports/flux2_blur_scalar_residual_feasibility_design_v1-4d5e6851f0efc5e0.md",
-  "report_sha256": "544a386a2509663ac3762d96158edf54f8bae24724b78e0f4213cd2ca209e2e4",
+  "hold_id": "flux2_blur_scalar_residual_feasibility_result-fe6e894531bf58fa",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/flux2_blur_scalar_residual_feasibility_result-fe6e894531bf58fa.md",
+  "report_sha256": "996d357211b73cfc7dfe18c2aa082f4dc251572f32d4e4f09e37f01552f26272",
   "schema_version": 1
 }
