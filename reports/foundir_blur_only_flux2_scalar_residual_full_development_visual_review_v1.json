@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "visual_pass_but_predeclared_tail_gate_failed",
+  "reviewed_at": "2026-09-16T11:40:00Z",
+  "review_scope": {
+    "triptychs": 16,
+    "layout": "Input | alpha=.75 Corrected FLUX | Ground Truth",
+    "record_ids": [
+      "foundir_train_0001925", "foundir_train_0003946", "foundir_train_0021020", "foundir_train_0026402",
+      "foundir_train_0033769", "foundir_train_0055120", "foundir_train_0055608", "foundir_train_0060122",
+      "foundir_train_0062371", "foundir_train_0070750", "foundir_train_0079533", "foundir_train_0092666",
+      "foundir_train_0092917", "foundir_train_0100453", "foundir_train_0100870", "foundir_train_0106209"
+    ],
+    "sorted_sha256_manifest_sha256": "a991a7159242a56f2edd4117c952258050d42e57c71f91120d4aa9f4cce4f9d3"
+  },
+  "root_result": "checkpoints/foundir_blur_only_flux2_scalar_residual_full_development_v1/result.json",
+  "root_result_sha256": "5b9dac81e11d338d17a36c24bba90f8e5c08299727d15883ebee0d5129e25daf",
+  "config": "configs/foundir_blur_only_flux2_scalar_residual_full_development_v1.json",
+  "config_sha256": "b756c7b223d8aed8e2a7018eec8e2e395042f772e477584b79ba2a98c7a12da5",
+  "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+  "frozen_alpha": 0.75,
+  "human_visual_gate_pass": true,
+  "automatic_metric_gate_pass": false,
+  "sow_average_metrics_pass": true,
+  "findings": {
+    "overall": "All 16 fixed corrected outputs are coherent, artifact-free, and visibly closer to GT than the blurred input. The blend preserves more input structure than raw FLUX while retaining substantial deblurring.",
+    "motion_and_text": "Bus, scooter, signage, tree, fence, and product-text examples show credible restoration without gross hallucination. Some lettering and fine edges remain softer or not exactly identical to GT, as expected for a fixed scalar blend.",
+    "tail_metric_interpretation": "The worst delta record is not in the fixed visual set. Its candidate remains objectively high quality at 31.479966 dB / .016354 LPIPS; the 12.569169 dB regression is caused by an exceptionally accurate 44.049135 dB base output rather than a low-quality candidate. The predeclared >2 dB regression rule nevertheless fails and cannot be changed post hoc."
+  },
+  "metrics": {
+    "base_psnr": 25.730036107198046,
+    "base_lpips": 0.1454392582316289,
+    "candidate_psnr": 26.55914080547484,
+    "candidate_lpips": 0.15199301428769882,
+    "psnr_gain_over_base_db": 0.8291046982767929,
+    "lpips_regression_vs_base": 0.006553756056069926,
+    "psnr_win_fraction_vs_base": 0.8955684007707129,
+    "maximum_per_record_psnr_regression_vs_base_db": 12.569169454781225,
+    "records_regressing_more_than_2db": 3,
+    "candidate_mean_psnr_gain_over_input_db": 0.7095961752827009,
+    "candidate_psnr_win_fraction_over_input": 0.5352601156069364
+  },
+  "decision": "Average SOW PSNR/LPIPS and the fixed visual review pass, but the predeclared conservative tail gate fails. Stop under governance hold; do not tune alpha or claim the complete scientific gate passed.",
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "model_weight_updates": false,
+  "decoder_tuning": false,
+  "distillation": false,
+  "development_gt_optimization": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}

@@ -6,7 +6,41 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## FLUX.2 frozen alpha=.75 full-development confirmation GPU-ready — 2026-09-16T10:40Z (LATEST AUTHORITY)
+## FLUX.2 frozen alpha=.75 full-development: SOW PASS / TAIL GATE FAIL — 2026-09-16T11:40Z (LATEST AUTHORITY)
+
+The one-shot 8xH100 run completed all 2,595 source-disjoint development records
+and 16 fixed visuals at `2026-09-16T11:31:11Z` in `2118.4764 s`. There was no
+OOM, NCCL, NaN, or runtime failure; exit 2 intentionally reports the frozen
+scientific-gate failure. Result SHA is
+`5b9dac81e11d338d17a36c24bba90f8e5c08299727d15883ebee0d5129e25daf`.
+
+Paired alpha=1 replay is `25.730036/.145439`, reproducing the prior
+`25.734236/.145406` within tolerance. Frozen alpha=.75 is
+`26.559141/.151993`: both Blur SOW average thresholds `25.9/.18` pass.
+Candidate gains `+.829105 dB`, regresses LPIPS only `+.006554`, and wins PSNR
+on 89.56% of records. The improvement is real and directly paired.
+
+The separately predeclared conservative tail gate fails: worst per-record PSNR
+regression is `12.569169 dB` versus allowed 2 dB; 3/2,595 records regress >2
+dB. The worst candidate remains high quality (`31.479966/.016354`) but its base
+was exceptionally accurate (`44.049135/.002379`), so fixed blending harms it.
+Do not erase this failure or retune alpha on development.
+
+All 16 fixed Input|Candidate|GT visuals were reviewed and pass: coherent,
+artifact-free, strong deblurring, no gross hallucination. Formal report:
+`reports/foundir_blur_only_flux2_scalar_residual_full_development_terminal_result_2026-09-16.md`.
+Hash-bound review:
+`reports/foundir_blur_only_flux2_scalar_residual_full_development_visual_review_v1.json`,
+SHA `7f2cbb91e1706f2ac1aa847a4d9fee960f4088e6d31cb2377191a3cffa8c18e9`.
+
+Active hold:
+`flux2_blur_scalar_residual_full_development_result-b484e042c294985c`, hold SHA
+`be7a01460d78f3fb04de321921c5a98d08dc5535424e6c4d76a4f85dc98a3d37`.
+Only read-only audit/report preparation is allowed. The exact statement is:
+SOW average metrics pass, human visual review passes, complete predeclared
+scientific gate fails on worst-record regression. No follow-on is authorized.
+
+## FLUX.2 frozen alpha=.75 full-development confirmation GPU-ready — 2026-09-16T10:40Z (HISTORICAL)
 
 The user explicitly replied `lets do this xiuzheng now` after being told that
 the corrected relative feasibility gate passes but final SOW success is not

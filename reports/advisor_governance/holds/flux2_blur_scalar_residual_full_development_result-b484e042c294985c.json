@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-16T11:31:05Z",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_flux2_scalar_residual_full_development_v1/result.json",
+    "sha256": "5b9dac81e11d338d17a36c24bba90f8e5c08299727d15883ebee0d5129e25daf"
+  },
+  "hold_id": "flux2_blur_scalar_residual_full_development_result-b484e042c294985c",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/flux2_blur_scalar_residual_full_development_result-b484e042c294985c.md",
+  "report_sha256": "160829a7a7684f98b90a86277d39b3c33190282e108805a1dd53187579d7a08c",
+  "schema_version": 1
+}
