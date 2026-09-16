@@ -10,9 +10,11 @@ os.environ["DIFFSYNTH_ATTENTION_IMPLEMENTATION"] = "torch"
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/foundir_blur_only_zimage_deterministic_bridge_tiny_v1.json"
+CORRECTIVE_CONFIG = ROOT / "configs/foundir_blur_only_zimage_corrective_bridge_tiny_v2.json"
 
 from lowlight_restoration.zimage_deterministic_bridge import (
-    bridge_pair, clean_from_velocity, load_settings, multidepth_velocity, pyramid_tokens,
+    bridge_pair, clean_from_velocity, corrective_target, load_settings,
+    multidepth_velocity, pyramid_tokens,
 )
 
 
@@ -39,6 +41,16 @@ def test_bridge_endpoints_target_and_clean_estimate():
     assert torch.equal(bridge_pair(gt, lq, 1)[0], lq)
     with pytest.raises(ValueError):
         bridge_pair(gt, lq[:, :, :-1], .5)
+
+
+def test_corrective_target_recovers_gt_from_arbitrary_off_trajectory_state():
+    gt = torch.randn(1, 16, 4, 4)
+    state = torch.randn_like(gt) * 3
+    for sigma in (.02, .3, 1):
+        target = corrective_target(state, gt, sigma)
+        torch.testing.assert_close(clean_from_velocity(state, target, sigma), gt)
+    with pytest.raises(ValueError):
+        corrective_target(state, gt, 0)
 
 
 def test_three_scale_tokens_preserve_patch_correspondence():
@@ -79,6 +91,27 @@ def test_zero_gate_is_exact_identity_and_first_update_is_learnable():
     assert any(projection.weight.grad.abs().max() > 0 for projection in projections.values())
 
 
+def test_global_plus_spatial_gate_is_zero_initialized_and_learnable():
+    dit = small_dit()
+    prompt = torch.randn(5, 32, dtype=torch.bfloat16)
+    state = torch.randn(1, 16, 4, 4, dtype=torch.bfloat16)
+    lq = torch.randn_like(state)
+    projections = torch.nn.ModuleDict({key: torch.nn.Linear(192, 128, bias=False)
+                                       for key in ("input", "0", "1")})
+    for projection in projections.values():
+        torch.nn.init.zeros_(projection.weight)
+    global_gate = torch.nn.Parameter(torch.zeros(1, 16, 1, 1))
+    spatial_gate = torch.nn.Conv2d(16, 16, 1)
+    torch.nn.init.zeros_(spatial_gate.weight)
+    torch.nn.init.zeros_(spatial_gate.bias)
+    output = multidepth_velocity(dit, projections, global_gate, state, lq, .6,
+                                 prompt, grad=True, spatial_gate=spatial_gate)
+    assert torch.equal(output, torch.zeros_like(output))
+    (output - torch.randn_like(output)).square().mean().backward()
+    assert spatial_gate.weight.grad is not None and spatial_gate.weight.grad.abs().max() > 0
+    assert global_gate.grad is not None and global_gate.grad.abs().max() > 0
+
+
 def test_config_locks_pure_zimage_layer1_scope(tmp_path):
     settings, base = load_settings(CONFIG)
     assert settings["independent_restoration_branch"] is False
@@ -91,6 +124,24 @@ def test_config_locks_pure_zimage_layer1_scope(tmp_path):
         bad = copy.deepcopy(settings)
         bad.update(mutation)
         path = tmp_path / "bad.json"
+        path.write_text(json.dumps(bad))
+        with pytest.raises(ValueError):
+            load_settings(path)
+
+
+def test_corrective_config_locks_rollout_and_endpoint_scope(tmp_path):
+    settings, _ = load_settings(CORRECTIVE_CONFIG)
+    assert settings["formulation_version"] == 2
+    assert settings["teacher_steps"] == settings["training_states"]["rollout_steps"] == 8
+    assert settings["training_states"]["detach_rollout"] is True
+    assert settings["independent_restoration_branch"] is False
+    assert settings["distillation"] is False and settings["decoder_finetuning"] is False
+    for mutation in ({"teacher_steps": 50},
+                     {"identity_path": "zero_initialized_per_channel_velocity_gate"},
+                     {"development_gt_optimization": True}):
+        bad = copy.deepcopy(settings)
+        bad.update(mutation)
+        path = tmp_path / "bad_corrective.json"
         path.write_text(json.dumps(bad))
         with pytest.raises(ValueError):
             load_settings(path)

@@ -24,15 +24,21 @@ PROTECTED = (
 
 def load_settings(path: Path):
     settings = json.loads(Path(path).read_text())
-    if settings.get("status") != "user_authorized_blur_only_zimage_deterministic_bridge_tiny_v1":
+    version = {"user_authorized_blur_only_zimage_deterministic_bridge_tiny_v1": 1,
+               "user_authorized_blur_only_zimage_corrective_bridge_tiny_v2": 2}.get(settings.get("status"))
+    if version is None:
         raise ValueError("unexpected deterministic bridge experiment")
     if any(settings.get(key) is not False for key in PROTECTED):
         raise ValueError("protected scope or independent branch enabled")
-    if settings.get("objective") != "deterministic_lq_latent_to_gt_latent_rectified_flow":
+    expected_objective = ("deterministic_lq_latent_to_gt_latent_rectified_flow" if version == 1 else
+                          "solver_aligned_corrective_lq_latent_to_gt_latent_flow")
+    if settings.get("objective") != expected_objective:
         raise ValueError("unexpected bridge objective")
     if settings.get("solver_initialization") != "exact_lq_vae_latent":
         raise ValueError("deterministic solver must start at LQ latent")
-    if settings.get("identity_path") != "zero_initialized_per_channel_velocity_gate":
+    expected_identity = ("zero_initialized_per_channel_velocity_gate" if version == 1 else
+                         "zero_initialized_global_plus_spatial_velocity_gate")
+    if settings.get("identity_path") != expected_identity:
         raise ValueError("identity path changed")
     if settings.get("condition_scales") != [1, 2, 4]:
         raise ValueError("condition pyramid changed")
@@ -41,18 +47,24 @@ def load_settings(path: Path):
         raise ValueError("invalid condition injection depths")
     if (settings.get("crop_size"), settings.get("lora_rank"), settings.get("trainable_dtype")) != (512, 64, "float32"):
         raise ValueError("model capacity/precision changed")
-    if (settings.get("teacher_steps"), settings.get("inference_shift"), settings.get("cfg_scale")) != (50, 6.0, 1.0):
+    expected_teacher_steps = 50 if version == 1 else 8
+    if (settings.get("teacher_steps"), settings.get("inference_shift"), settings.get("cfg_scale")) != (expected_teacher_steps, 6.0, 1.0):
         raise ValueError("teacher inference contract changed")
     if (settings.get("steps"), settings.get("global_batch"), settings.get("snapshot_steps")) != (1000, 8, [0, 250, 500, 1000]):
         raise ValueError("tiny budget changed")
     if settings.get("microbatch_per_rank") != 1 or settings.get("gradient_accumulation") != 1:
         raise ValueError("eight-rank batch arithmetic changed")
-    for key in ("learning_rate", "condition_learning_rate", "velocity_gate_learning_rate",
-                "max_grad_norm"):
+    lr_keys = ["learning_rate", "condition_learning_rate", "velocity_gate_learning_rate", "max_grad_norm"]
+    if version == 2:
+        lr_keys.append("spatial_gate_learning_rate")
+    for key in lr_keys:
         if not math.isfinite(settings[key]) or settings[key] <= 0:
             raise ValueError(f"invalid {key}")
-    expected_loss = {"flow_mse", "clean_latent_charbonnier", "rgb_charbonnier", "lpips",
-                     "charbonnier_epsilon"}
+    expected_loss = ({"flow_mse", "clean_latent_charbonnier", "rgb_charbonnier", "lpips",
+                      "charbonnier_epsilon"} if version == 1 else
+                     {"flow_mse", "clean_latent_charbonnier", "rgb_charbonnier",
+                      "rgb_edge_charbonnier", "lpips", "near_clean_identity",
+                      "identity_decay", "charbonnier_epsilon"})
     if set(settings.get("loss", {})) != expected_loss or any(
             not math.isfinite(value) or value <= 0 for value in settings["loss"].values()):
         raise ValueError("invalid fidelity loss")
@@ -60,8 +72,20 @@ def load_settings(path: Path):
     if (data["train_records"], data["train_source_groups"], data["development_records"],
             data["development_source_groups"], data["development_is_descriptive"]) != (16, 16, 16, 16, True):
         raise ValueError("tiny data contract changed")
-    if settings["output_dir"] != "checkpoints/foundir_blur_only_zimage_deterministic_bridge_tiny_v1":
+    expected_output = ("checkpoints/foundir_blur_only_zimage_deterministic_bridge_tiny_v1" if version == 1 else
+                       "checkpoints/foundir_blur_only_zimage_corrective_bridge_tiny_v2")
+    if settings["output_dir"] != expected_output:
         raise ValueError("unexpected output directory")
+    if version == 2:
+        states = settings.get("training_states", {})
+        if (states.get("analytic_fraction"), states.get("on_policy_fraction"),
+                states.get("rollout_steps"), states.get("detach_rollout"),
+                states.get("corrective_target")) != (
+                    .5, .5, 8, True, "(state_minus_gt)_div_sigma"):
+            raise ValueError("corrective rollout contract changed")
+        if not 0 < states.get("minimum_sigma", 0) < 1:
+            raise ValueError("invalid corrective minimum sigma")
+    settings["formulation_version"] = version
     base_path = ROOT / settings["base_config"]
     if sha256(base_path) != settings["base_config_sha256"]:
         raise ValueError("base config changed")
@@ -82,6 +106,13 @@ def clean_from_velocity(state: torch.Tensor, velocity: torch.Tensor, sigma: floa
     return state.float() - float(sigma) * velocity.float()
 
 
+def corrective_target(state: torch.Tensor, gt: torch.Tensor, sigma: float):
+    """Velocity that maps any (including off-trajectory) state exactly to GT."""
+    if state.shape != gt.shape or not 0 < float(sigma) <= 1:
+        raise ValueError("invalid corrective target")
+    return (state.float() - gt.float()) / float(sigma)
+
+
 def pyramid_tokens(dit, lq: torch.Tensor, prompt, scales=(1, 2, 4)):
     """Aligned 2x2 tokens from a fixed, non-learned LQ latent pyramid."""
     if tuple(scales) != (1, 2, 4):
@@ -99,7 +130,8 @@ def pyramid_tokens(dit, lq: torch.Tensor, prompt, scales=(1, 2, 4)):
     return torch.cat(tokens, dim=-1)
 
 
-def multidepth_velocity(dit, projections, velocity_gate, state, lq, sigma, prompt, grad=False):
+def multidepth_velocity(dit, projections, velocity_gate, state, lq, sigma, prompt, grad=False,
+                        spatial_gate=None):
     """Native Base DiT with zero-init LQ injections and an exact identity gate."""
     if state.shape != lq.shape:
         raise ValueError("LQ/state geometry differs")
@@ -139,7 +171,12 @@ def multidepth_velocity(dit, projections, velocity_gate, state, lq, sigma, promp
         unified = run(layer, unified, freqs, modulation)
     output = dit.all_final_layer["2-1"](unified, modulation)
     raw = -dit.unpatchify([output[0]], meta["x_size"])[0].permute(1, 0, 2, 3)
-    return raw.float() * velocity_gate.float()
+    gate = velocity_gate.float()
+    if spatial_gate is not None:
+        # Bound the corrective residual amplitude without weakening the exact
+        # zero initialization or its unit derivative at the origin.
+        gate = torch.tanh(gate + spatial_gate(lq.float()))
+    return raw.float() * gate
 
 
 class DeterministicBridgeTeacher(nn.Module):
@@ -163,6 +200,12 @@ class DeterministicBridgeTeacher(nn.Module):
         for projection in self.lq_projections.values():
             nn.init.zeros_(projection.weight)
         self.velocity_gate = nn.Parameter(torch.zeros(1, 16, 1, 1, device=device, dtype=torch.float32))
+        self.spatial_gate = None
+        if settings.get("formulation_version") == 2:
+            self.spatial_gate = nn.Conv2d(16, 16, kernel_size=1, bias=True,
+                                          device=device, dtype=torch.float32)
+            nn.init.zeros_(self.spatial_gate.weight)
+            nn.init.zeros_(self.spatial_gate.bias)
         self.scales = tuple(settings["condition_scales"])
         if any(parameter.requires_grad for parameter in self.pipe.vae_encoder.parameters()) or any(
                 parameter.requires_grad for parameter in self.pipe.vae_decoder.parameters()):
@@ -171,7 +214,22 @@ class DeterministicBridgeTeacher(nn.Module):
     def forward(self, state, lq, sigma, prompt, grad=None):
         return multidepth_velocity(self.pipe.dit, self.lq_projections, self.velocity_gate,
                                    state.to(self.pipe.torch_dtype), lq.to(self.pipe.torch_dtype),
-                                   sigma, prompt, torch.is_grad_enabled() if grad is None else grad)
+                                   sigma, prompt, torch.is_grad_enabled() if grad is None else grad,
+                                   self.spatial_gate)
+
+    @torch.no_grad()
+    def rollout_state(self, lq, prompt, target_index, steps=8, shift=6.0):
+        """Detached on-policy state at a nonzero solver grid point."""
+        grid = shifted_grid(steps, shift)
+        if not 1 <= int(target_index) < len(grid) - 1:
+            raise ValueError("rollout target must be an interior nonzero grid point")
+        state = lq.float().clone()
+        for index in range(int(target_index)):
+            sigma, following = grid[index], grid[index + 1]
+            state = euler_step(state, self(state, lq, float(sigma), prompt, grad=False), sigma, following)
+            if not torch.isfinite(state).all():
+                raise RuntimeError("nonfinite corrective rollout state")
+        return state.detach(), float(grid[int(target_index)])
 
     @torch.no_grad()
     def restore(self, lq, prompt, steps=50, shift=6.0):

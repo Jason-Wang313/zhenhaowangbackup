@@ -26,7 +26,7 @@ from lowlight_restoration.foundir_zimage_paired_flow import (
     verify_model_artifacts, write_once,
 )
 from lowlight_restoration.zimage_deterministic_bridge import (
-    PROTECTED, DeterministicBridgeTeacher, bridge_pair, clean_from_velocity,
+    PROTECTED, DeterministicBridgeTeacher, bridge_pair, clean_from_velocity, corrective_target,
     load_settings,
 )
 from lowlight_restoration.zimage_latent_first import average_gradients
@@ -71,8 +71,13 @@ def charbonnier(a: torch.Tensor, b: torch.Tensor, epsilon: float) -> torch.Tenso
     return torch.sqrt((a.float() - b.float()).square() + epsilon**2).mean()
 
 
-def loss_for(model, item, prompt, sigma: float, metric, settings):
-    state, target = bridge_pair(item["gt_latent"], item["lq_latent"], sigma)
+def image_gradients(value: torch.Tensor):
+    return value[..., 1:, :] - value[..., :-1, :], value[..., :, 1:] - value[..., :, :-1]
+
+
+def loss_for(model, item, prompt, sigma: float, metric, settings, state=None, target=None):
+    if state is None or target is None:
+        state, target = bridge_pair(item["gt_latent"], item["lq_latent"], sigma)
     velocity = model(state, item["lq_latent"], sigma, prompt)
     clean = clean_from_velocity(state, velocity, sigma)
     rgb = model.pipe.vae_decoder(clean.to(model.pipe.torch_dtype)).float()
@@ -86,6 +91,18 @@ def loss_for(model, item, prompt, sigma: float, metric, settings):
         "lpips": metric(((rgb + 1) / 2).clamp(0, 1),
                          ((item["gt_rgb"].float() + 1) / 2).clamp(0, 1)),
     }
+    if settings["formulation_version"] == 2:
+        rgb_dy, rgb_dx = image_gradients(rgb)
+        gt_dy, gt_dx = image_gradients(item["gt_rgb"].float())
+        terms["rgb_edge_charbonnier"] = (
+            charbonnier(rgb_dy, gt_dy, weights["charbonnier_epsilon"]) +
+            charbonnier(rgb_dx, gt_dx, weights["charbonnier_epsilon"])) / 2
+        # GT is used only to weight a training regularizer, never as an input
+        # condition. Near-clean pairs receive strong no-op protection.
+        distance = (item["lq_rgb"].float() - item["gt_rgb"].float()).abs().mean().detach()
+        closeness = torch.exp(-weights["identity_decay"] * distance)
+        terms["near_clean_identity"] = closeness * charbonnier(
+            rgb, item["lq_rgb"], weights["charbonnier_epsilon"])
     loss = sum(terms[name] * weights[name] for name in terms)
     return loss, terms, velocity, clean, rgb
 
@@ -93,18 +110,42 @@ def loss_for(model, item, prompt, sigma: float, metric, settings):
 def optimizer_for(model, settings, scale: float = 1.0):
     projections = list(model.lq_projections.parameters())
     gate = [model.velocity_gate]
-    excluded = {id(p) for p in projections + gate}
+    spatial = [] if model.spatial_gate is None else list(model.spatial_gate.parameters())
+    excluded = {id(p) for p in projections + gate + spatial}
     lora = [p for p in model.parameters() if p.requires_grad and id(p) not in excluded]
     if not lora or not projections:
         raise RuntimeError("missing LoRA or Layer-1 conditioning parameters")
-    return torch.optim.AdamW([
+    groups = [
         {"params": lora, "lr": settings["learning_rate"] * scale,
          "base_lr": settings["learning_rate"], "name": "lora"},
         {"params": projections, "lr": settings["condition_learning_rate"] * scale,
          "base_lr": settings["condition_learning_rate"], "name": "lq_multidepth"},
         {"params": gate, "lr": settings["velocity_gate_learning_rate"] * scale,
          "base_lr": settings["velocity_gate_learning_rate"], "name": "velocity_gate"},
-    ], weight_decay=settings["weight_decay"])
+    ]
+    if spatial:
+        groups.append({"params": spatial, "lr": settings["spatial_gate_learning_rate"] * scale,
+                       "base_lr": settings["spatial_gate_learning_rate"], "name": "spatial_gate"})
+    return torch.optim.AdamW(groups, weight_decay=settings["weight_decay"])
+
+
+@torch.no_grad()
+def training_pair(model, item, prompt, settings, generator):
+    """Mix exact bridge states with detached model-generated off-trajectory states."""
+    states = settings.get("training_states")
+    if not states or float(torch.rand((), generator=generator, device=item["lq_latent"].device)) < states["analytic_fraction"]:
+        minimum = 0.0 if not states else states["minimum_sigma"]
+        sigma = minimum + (1 - minimum) * float(torch.rand(
+            (), generator=generator, device=item["lq_latent"].device))
+        state, target = bridge_pair(item["gt_latent"], item["lq_latent"], sigma)
+        return state, target, sigma, "analytic", 0
+    target_index = int(torch.randint(1, states["rollout_steps"], (), generator=generator,
+                                     device=item["lq_latent"].device))
+    state, sigma = model.rollout_state(item["lq_latent"], prompt, target_index,
+                                       states["rollout_steps"], settings["inference_shift"])
+    if sigma < states["minimum_sigma"]:
+        raise RuntimeError("corrective rollout selected a sigma below the safety floor")
+    return state, corrective_target(state, item["gt_latent"], sigma), sigma, "on_policy", target_index
 
 
 def parameter_digest(model, world: int) -> str:
@@ -115,10 +156,13 @@ def parameter_digest(model, world: int) -> str:
     return digest
 
 
-def save_checkpoint(model, path: Path, config_digest: str, step: int, digest: str) -> str:
+def save_checkpoint(model, path: Path, config_digest: str, step: int, digest: str,
+                    formulation_version: int) -> str:
     state = {n: p.detach().cpu().contiguous() for n, p in model.named_parameters() if p.requires_grad}
     save_file(state, str(path), metadata={"config_sha256": config_digest, "step": str(step),
-                                         "classification": "pure_zimage_layer1_bridge"})
+                                         "classification": ("pure_zimage_layer1_corrective_bridge"
+                                                            if formulation_version == 2 else
+                                                            "pure_zimage_layer1_bridge")})
     loaded = load_file(str(path))
     if tensor_digest(loaded.items()) != digest or any(v.dtype != torch.float32 for v in loaded.values()):
         raise RuntimeError("checkpoint roundtrip mismatch")
@@ -256,6 +300,18 @@ def main() -> None:
                         if n.startswith("pipe.dit.") and "lora_" in n)
         if projection_grad <= 0 or lora_grad <= 0:
             raise RuntimeError("second real update did not reach Layer-1 projections and DiT LoRA")
+        if model.spatial_gate is not None:
+            spatial_grad = max(float(p.grad.abs().max()) for p in model.spatial_gate.parameters())
+            if spatial_grad <= 0:
+                raise RuntimeError("second real update did not reach spatial residual gate")
+            # Exercise a real detached on-policy corrective target after the
+            # learned gate has become nonzero.
+            state, sigma = model.rollout_state(item["lq_latent"], prompt, 2,
+                                               settings["training_states"]["rollout_steps"],
+                                               settings["inference_shift"])
+            target = corrective_target(state, item["gt_latent"], sigma)
+            if not torch.isfinite(target).all():
+                raise RuntimeError("CPU corrective target is nonfinite")
         print("DETERMINISTIC_BRIDGE_REAL_CPU_SMOKE_PASS", output.relative_to(ROOT),
               {**{k: float(v.detach()) for k, v in terms.items()},
                "projection_grad_max": projection_grad, "lora_grad_max": lora_grad}, flush=True)
@@ -318,8 +374,9 @@ def main() -> None:
             group["lr"] = group["base_lr"] * lr_scale
         item = local_train[(step - 1) % len(local_train)]
         generator = torch.Generator(device=device).manual_seed(fixed_seed(settings["seed"], "sigma", rank, step))
-        sigma = float(torch.rand((), generator=generator, device=device))
-        loss, terms, _, _, _ = loss_for(model, item, prompt, sigma, metric, settings)
+        state, target, sigma, state_source, rollout_depth = training_pair(
+            model, item, prompt, settings, generator)
+        loss, terms, _, _, _ = loss_for(model, item, prompt, sigma, metric, settings, state, target)
         if not torch.isfinite(loss):
             raise RuntimeError("non-finite Layer-1 loss")
         loss.backward()
@@ -329,16 +386,18 @@ def main() -> None:
         if any(optimizer.state[p][key].dtype != torch.float32 for p in parameters
                for key in ("exp_avg", "exp_avg_sq")):
             raise RuntimeError("AdamW state is not FP32")
-        values = torch.tensor([float(loss.detach()), *(float(terms[k].detach()) for k in
-                              ("flow_mse", "clean_latent_charbonnier", "rgb_charbonnier", "lpips"))], device=device)
+        term_names = ["flow_mse", "clean_latent_charbonnier", "rgb_charbonnier", "lpips"]
+        if settings["formulation_version"] == 2:
+            term_names += ["rgb_edge_charbonnier", "near_clean_identity"]
+        values = torch.tensor([float(loss.detach()), *(float(terms[k].detach()) for k in term_names)], device=device)
         dist.all_reduce(values)
         values /= world
         metric.reset()
         if rank == 0:
-            row = dict(step=step, loss=float(values[0]), flow_mse=float(values[1]),
-                       clean_latent_charbonnier=float(values[2]), rgb_charbonnier=float(values[3]),
-                       lpips=float(values[4]), sigma=sigma, grad_norm=float(norm), lr_scale=lr_scale,
-                       elapsed_seconds=time.monotonic() - start)
+            row = dict(step=step, loss=float(values[0]),
+                       **{name: float(values[index + 1]) for index, name in enumerate(term_names)},
+                       sigma=sigma, state_source=state_source, rollout_depth=rollout_depth,
+                       grad_norm=float(norm), lr_scale=lr_scale, elapsed_seconds=time.monotonic() - start)
             with (output / "training.jsonl").open("a") as handle:
                 handle.write(json.dumps(row, allow_nan=False) + "\n")
             if step == 1 or step % 20 == 0:
@@ -348,7 +407,8 @@ def main() -> None:
             path = output / f"step_{step:06d}.safetensors"
             if rank == 0:
                 checkpoints.append({"step": step, "path": str(path.relative_to(ROOT)),
-                                    "sha256": save_checkpoint(model, path, config_digest, step, digest)})
+                                    "sha256": save_checkpoint(model, path, config_digest, step, digest,
+                                                              settings["formulation_version"])})
             dist.barrier()
             evaluate(step, digest)
     if rank == 0:
@@ -359,9 +419,12 @@ def main() -> None:
                   final["output_lpips"] <= gate["train_lpips_max"] and
                   final["output_psnr"] > baseline["input_psnr"] and
                   final["output_lpips"] < baseline["input_lpips"])
+        corrective = settings["formulation_version"] == 2
         result = {
-            "status": "zimage_deterministic_bridge_tiny_complete", "config_sha256": config_digest,
-            "classification": "pure_zimage_layer1_teacher_not_independent_restoration_branch",
+            "status": ("zimage_corrective_bridge_tiny_complete" if corrective else
+                       "zimage_deterministic_bridge_tiny_complete"), "config_sha256": config_digest,
+            "classification": ("pure_zimage_layer1_corrective_teacher_not_independent_restoration_branch"
+                               if corrective else "pure_zimage_layer1_teacher_not_independent_restoration_branch"),
             "steps": settings["steps"], "checkpoints": checkpoints, "snapshots": snapshots,
             "automatic_metric_gate_pass": passed, "visual_review_required": True,
             **{key: False for key in PROTECTED},

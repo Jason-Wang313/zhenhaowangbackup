@@ -6,7 +6,65 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Pure Z-Image Layer-1 TINY TERMINAL FAILURE — 2026-09-15T13:17:54Z (LATEST AUTHORITY)
+## Corrective Layer-1 v2 READY TO LAUNCH — 2026-09-16 (LATEST AUTHORITY)
+
+After reviewing the terminal v1 failure, the user explicitly instructed
+execution of the corrective improvement. V2 remains pure Z-Image Base 6B
+Layer-1 and keeps the identical fixed 16-train/16-source-disjoint-development
+Blur tiny gate. It adds no independent restoration branch and does not enable
+distillation, decoder tuning, Qwen degradation conditioning, mixed
+degradation, sealed internal, official FoundIR test, or development-GT
+optimization.
+
+The key repair is solver-aligned correction. Training mixes 50% analytic
+bridge states and 50% detached states produced by the current model's own
+eight-step rollout. Any off-trajectory state is supervised with
+`v=(state-GT)/sigma`, so its clean estimate points directly to GT. Training
+and inference both use the same eight-step shift-6 solver. Endpoint loss is
+now dominant (latent/RGB/edge/LPIPS), near-clean samples receive identity
+protection, and a zero-initialized spatial gate complements the global channel
+gate while preserving exact step-0 identity.
+
+Exact new files:
+
+```text
+configs/foundir_blur_only_zimage_corrective_bridge_tiny_v2.json
+smoke/launch_zimage_corrective_bridge_tiny_v2_8gpu.sh
+reports/zimage_corrective_bridge_v2_readiness_2026-09-16.md
+```
+
+Backward-compatible changes are in
+`lowlight_restoration/zimage_deterministic_bridge.py`,
+`smoke/train_zimage_deterministic_bridge_tiny.py`, and
+`tests/test_zimage_deterministic_bridge.py`. The v1 config and immutable
+artifacts are unchanged.
+
+Seven focused tests, complete model/data preflight, compilation, shell syntax,
+and both H100/H200 profiles pass. Config SHA:
+`64c1b53518e3b429e11c33f62d84097375a1220b0ea0cf90703cee461d184ddf`.
+A real Base-6B CPU smoke passed two FP32 updates plus an actual detached
+rollout; projection/LoRA gradients were nonzero. Evidence:
+`logs/zimage_bridge_cpu__d5__0v3/`.
+
+Launch on the existing homogeneous 8-GPU instance:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_zimage_corrective_bridge_tiny_v2_8gpu.sh
+```
+
+Monitor:
+
+```bash
+tail -f logs/foundir_blur_only_zimage_corrective_bridge_tiny_v2.log
+```
+
+The launcher has tmux/nohup fallback, H100/H200 runtime detection, unique
+locks, no-overwrite guards, telemetry, terminal verification, and no automatic
+full scaling.
+
+## Pure Z-Image Layer-1 v1 TINY TERMINAL FAILURE — 2026-09-15T13:17:54Z (HISTORICAL EVIDENCE)
 
 The 8xH100 Layer-1 tiny run completed all 1,000 steps normally at
 `2026-09-15T13:17:54Z`, terminal status 0. No process remains to monitor. This
