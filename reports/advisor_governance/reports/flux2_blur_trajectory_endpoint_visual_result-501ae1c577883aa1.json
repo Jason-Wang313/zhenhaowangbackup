@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请决定是否授权一个专门解决source-disjoint spatial correspondence的新设计；当前checkpoint不得full-scale、distill或decoder-tune。",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_flux2_trajectory_endpoint_gate_v1/arms/trajectory_endpoint/step_000200.safetensors",
+    "sha256": "67a0dc81fc7361de2b5f00a7abcfd0b97ab872e73e60a8662f637a4de5278abc"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.json",
+    "sha256": "d1824e219a5f46629e6d8cc3e964e5b676512e2bb8037c41c5bf88a01f9f7b23"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "16 frozen training crops plus 16 source-group-disjoint descriptive development crops; visual review only, no protected split",
+  "evidence": {
+    "path": "reports/foundir_blur_only_flux2_trajectory_endpoint_visual_review_v1.json",
+    "sha256": "17e48c633813b4138c61fe037a9aef2740683612b5cd8b3b3ae2bb9f9f6d4d62"
+  },
+  "gate": "flux2_blur_trajectory_endpoint_visual_result",
+  "generated_at": "2026-09-16T07:30:57Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Blur step-10000 parent trajectory-endpoint tiny gate",
+  "outcome": "failure",
+  "report_id": "flux2_blur_trajectory_endpoint_visual_result-501ae1c577883aa1",
+  "root_cause_or_status": "Automatic train checks passed, but required visual/full-scale admission failed: source-disjoint candidate regressed 1.914361 dB and 0.035996 LPIPS versus parent, with sharp but spatially mismatched edges/text on hard motion examples.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

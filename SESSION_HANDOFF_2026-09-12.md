@@ -6,6 +6,49 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## FLUX.2 trajectory-endpoint gate TERMINAL VISUAL FAILURE — 2026-09-16T07:30:57Z (LATEST AUTHORITY)
+
+The exact 8xH100 job completed normally at `2026-09-16T07:18:16Z` with
+terminal status 0 and model wall time `1941.4355 s`. There was no OOM, NCCL,
+NaN, traceback, or runtime failure. Both paired arms completed 200/200. The
+immutable root result SHA is
+`d73470876cb5b63a55c964b501e31288fcc4cae7f7fe27b2cca49c0869811586`;
+candidate/control step-200 SHAs are
+`67a0dc81fc7361de2b5f00a7abcfd0b97ab872e73e60a8662f637a4de5278abc` /
+`4eda55c096a3735221a4958d140f00c0cbd9ced9e3c36961799d81a949e0ea79`.
+
+The predeclared train automatic checks passed. Train parent/control/candidate
+are `23.653284/.167751`, `24.943428/.144580`, and `25.373643/.144914`.
+Candidate beats control by `+.430215 dB` with only `+.000334` LPIPS and wins
+PSNR on 13/16 records. This proves that exact-trajectory differentiation adds
+real pixel-fidelity capacity beyond matched flow training.
+
+The required visual/full-scale admission nevertheless fails. Source-disjoint
+development parent/control/candidate are `24.591062/.150766`,
+`22.234235/.183982`, and `22.676701/.186763`. Candidate therefore regresses
+`-1.914361 dB / +.035996 LPIPS` versus its parent and beats parent PSNR on only
+8/16. All 16 final train and 16 final development triptychs were reviewed.
+Training outputs are mostly coherent and sharp, but several unseen motion/text
+examples are sharp at incorrect edge, object, or lettering positions relative
+to GT. Severe cases include records 0055608, 0001925, and 0021020 with roughly
+5--9 dB regressions. Do not full-scale, extend, distill, or decoder-tune this
+checkpoint.
+
+Artifact audit passes: 6 checkpoints, 6 optimizer states, 12 complete metrics
+files/192 finite rows, and 192 fixed PNG triptychs. Formal report:
+`reports/foundir_blur_only_flux2_trajectory_endpoint_terminal_result_2026-09-16.md`.
+Hash-bound visual review:
+`reports/foundir_blur_only_flux2_trajectory_endpoint_visual_review_v1.json`,
+SHA `17e48c633813b4138c61fe037a9aef2740683612b5cd8b3b3ae2bb9f9f6d4d62`.
+
+Active terminal hold:
+`flux2_blur_trajectory_endpoint_visual_result-501ae1c577883aa1`, hold SHA
+`08d1c453422ddaf1d320d224596c8b21b88fdc0826639b09b7a8a79de8e84557`.
+Only read-only audit/report preparation is allowed until a matching explicit
+decision is recorded. Any next design must address source-disjoint spatial
+correspondence; repeating this endpoint weight/steps or scaling this checkpoint
+is unsupported.
+
 ## FLUX.2 trajectory-endpoint gate LIVE — 2026-09-16T07:02:44Z (LATEST AUTHORITY)
 
 The exact commit `626537e95ac065da7691c9016fd96e8afe65aa15` GPU job started

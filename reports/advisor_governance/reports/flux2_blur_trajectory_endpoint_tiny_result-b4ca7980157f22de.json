@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "若metric与visual gate均通过，是否授权把同一trajectory-endpoint objective扩到完整isolated-Blur training？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_flux2_trajectory_endpoint_gate_v1/arms/trajectory_endpoint/step_000200.safetensors",
+    "sha256": "67a0dc81fc7361de2b5f00a7abcfd0b97ab872e73e60a8662f637a4de5278abc"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.json",
+    "sha256": "d1824e219a5f46629e6d8cc3e964e5b676512e2bb8037c41c5bf88a01f9f7b23"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "16 frozen training crops plus 16 source-group-disjoint descriptive development crops; no protected split",
+  "evidence": {
+    "path": "checkpoints/foundir_blur_only_flux2_trajectory_endpoint_gate_v1/result.json",
+    "sha256": "d73470876cb5b63a55c964b501e31288fcc4cae7f7fe27b2cca49c0869811586"
+  },
+  "gate": "flux2_blur_trajectory_endpoint_tiny_result",
+  "generated_at": "2026-09-16T07:18:15Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Blur step-10000 parent paired flow/trajectory-endpoint tiny gate",
+  "outcome": "information",
+  "report_id": "flux2_blur_trajectory_endpoint_tiny_result-b4ca7980157f22de",
+  "root_cause_or_status": "Exact 50-step trajectory endpoint gate finished; inspect paired metrics, full-resolution rehearsal, and fixed Input|Output|GT visuals. No automatic full-scale action.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

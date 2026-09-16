@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "human_visual_gate_failed",
+  "reviewed_at": "2026-09-16T07:29:27Z",
+  "review_scope": {
+    "candidate_train_step_200_triptychs": 16,
+    "candidate_source_disjoint_development_step_200_triptychs": 16,
+    "layout": "Input | FLUX.2 Output | Ground Truth"
+  },
+  "root_result": "checkpoints/foundir_blur_only_flux2_trajectory_endpoint_gate_v1/result.json",
+  "root_result_sha256": "d73470876cb5b63a55c964b501e31288fcc4cae7f7fe27b2cca49c0869811586",
+  "config": "configs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.json",
+  "config_sha256": "d1824e219a5f46629e6d8cc3e964e5b676512e2bb8037c41c5bf88a01f9f7b23",
+  "selected_checkpoint": "checkpoints/foundir_blur_only_flux2_trajectory_endpoint_gate_v1/arms/trajectory_endpoint/step_000200.safetensors",
+  "selected_checkpoint_sha256": "67a0dc81fc7361de2b5f00a7abcfd0b97ab872e73e60a8662f637a4de5278abc",
+  "automatic_train_metric_gate_pass": true,
+  "human_visual_gate_pass": false,
+  "full_scale_admission_pass": false,
+  "findings": {
+    "train": "Most fixed training outputs are sharp, coherent, and close to GT; the trajectory loss clearly improves several hard crops without checker texture or gross hallucination. A few near-clean crops are slightly degraded.",
+    "source_disjoint_development": "Many outputs are plausibly sharper, but several moving-object, text, and fine-structure crops reconstruct edges at positions or shapes that do not match GT. The output can therefore look sharp while being wrong for pixel-aligned restoration.",
+    "representative_failures": [
+      {
+        "record_id": "foundir_train_0055608",
+        "observation": "bus edges and lettering are sharpened at incorrect positions relative to GT",
+        "parent_to_candidate_psnr_db": "24.264 -> 15.411",
+        "parent_to_candidate_lpips": "0.1177 -> 0.3333"
+      },
+      {
+        "record_id": "foundir_train_0001925",
+        "observation": "box text and product contours are plausible but differ materially from GT",
+        "parent_to_candidate_psnr_db": "29.047 -> 19.879",
+        "parent_to_candidate_lpips": "0.0466 -> 0.1921"
+      },
+      {
+        "record_id": "foundir_train_0021020",
+        "observation": "grass and tree boundaries are sharp but spatially mismatched to GT",
+        "parent_to_candidate_psnr_db": "27.486 -> 21.026",
+        "parent_to_candidate_lpips": "0.1300 -> 0.2121"
+      }
+    ]
+  },
+  "metrics": {
+    "train_parent_psnr": 23.653284395081275,
+    "train_parent_lpips": 0.16775111015886068,
+    "train_control_psnr": 24.943427874286527,
+    "train_control_lpips": 0.1445804345421493,
+    "train_candidate_psnr": 25.373643112392195,
+    "train_candidate_lpips": 0.1449140370823443,
+    "development_parent_psnr": 24.591061618112587,
+    "development_parent_lpips": 0.1507664299570024,
+    "development_control_psnr": 22.234235190657408,
+    "development_control_lpips": 0.18398186238482594,
+    "development_candidate_psnr": 22.67670088464994,
+    "development_candidate_lpips": 0.18676280602812767,
+    "development_candidate_psnr_delta_vs_parent_db": -1.9143607334626473,
+    "development_candidate_lpips_delta_vs_parent": 0.03599637607112527,
+    "development_candidate_psnr_better_than_parent_records": 8,
+    "development_records": 16
+  },
+  "decision": "Do not full-scale, extend, distill, or decoder-tune this checkpoint. The experiment validates trajectory differentiation and improves the candidate relative to its matched tiny-overfit control, but it does not establish source-disjoint pixel-aligned fidelity.",
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "decoder_tuning": false,
+  "distillation": false,
+  "development_gt_optimization": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}
