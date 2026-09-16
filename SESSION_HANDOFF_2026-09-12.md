@@ -40,6 +40,15 @@ Only read-only audit/report preparation is allowed. The exact statement is:
 SOW average metrics pass, human visual review passes, complete predeclared
 scientific gate fails on worst-record regression. No follow-on is authorized.
 
+The first-principles breakthrough and the user prompts that catalyzed it are
+documented separately in
+`reports/foundir_blur_flux2_breakthrough_first_principles_2026-09-16.md`.
+Core lesson: LQ already supplied near-target PSNR while FLUX supplied large
+LPIPS margin; a zero-parameter Pareto interpolation solved the average target
+that repeated trainable objectives could not, while preserving the tail-risk
+caveat. Future task/joint designs must test such identity-preserving,
+low-degree-of-freedom corrections before new loss/architecture searches.
+
 ## FLUX.2 frozen alpha=.75 full-development confirmation GPU-ready — 2026-09-16T10:40Z (HISTORICAL)
 
 The user explicitly replied `lets do this xiuzheng now` after being told that
