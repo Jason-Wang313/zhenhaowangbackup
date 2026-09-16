@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_flux2_blur_source_diverse_spatial_anchor_pilot",
+  "recorded_at": "2026-09-16T07:51:23Z",
+  "user_statement": "sure,execute",
+  "authorization_kind": "USER authorization after the prior advisor response; not an advisor reply",
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "authorized_context": "The 16-source trajectory endpoint candidate causally improved PSNR over its matched flow control but overfit and failed source-disjoint development. The user explicitly authorized the recommended source-diverse intermediate pilot.",
+  "selected_design": {
+    "config": "configs/foundir_blur_only_flux2_source_diverse_spatial_anchor_pilot_v1.json",
+    "parent_checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "parent_checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+    "train_source_groups": 512,
+    "records_per_source_group": 1,
+    "paired_arms": ["flow_control", "trajectory_spatial_anchor"],
+    "optimizer_steps_per_arm": 400,
+    "global_batch_size": 8,
+    "checkpoint_steps": [200, 400],
+    "trajectory": "official 50-step trajectory; first 46 transitions detached and last 4 differentiable with activation checkpointing",
+    "candidate_losses": "flow MSE 1.0; endpoint RGB Charbonnier 1.0; LPIPS 0.02; half/quarter-scale RGB Charbonnier total 0.5; endpoint latent L1 0.25; average-pool-16 LQ identity 0.1",
+    "development_policy": "the fixed 16 source-disjoint development crops are evaluated only at steps 0 and 400 under the predeclared gate and cannot tune arms, weights, or checkpoints"
+  },
+  "scope": {
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "decoder_tuning": false,
+    "distillation": false,
+    "development_gt_optimization": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false,
+    "automatic_full_scale": false
+  }
+}

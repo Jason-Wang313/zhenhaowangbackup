@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "flux2_blur_trajectory_endpoint_design_v1_final-6dab2f3e67857f10",
-  "hold_sha256": "6cbfdf2c063ddb871361bc0f8945a93d359d620a5d8f386a9510aad5e69a5489",
+  "hold_id": "flux2_blur_source_diverse_spatial_anchor_design_v1-c8d0dfd7adb8e2b7",
+  "hold_sha256": "dbf3866095d66b6eb5ebe07faade3b353be41d170767d51dff3471a1af003ce0",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "在 FLUX.2 step-10k pixel-fidelity paired gate 已完整结束并形成 terminal scientific failure 后，用户针对推荐的下一步 trajectory-aligned endpoint fidelity gate 明确回复‘execute’，随后在新会话再次指示‘continue’。现批准执行 reports/flux2_blur_trajectory_endpoint_authorization_v1.json 与冻结 config：保留 flow MSE，使用官方 50-step shifted trajectory，前 46 步 detached、末 4 步可微并 activation checkpoint，冻结 VAE endpoint decode，加入 endpoint RGB MSE 1.0 与 LPIPS 0.02；对照/候选各 200 步，development 仅作描述性评估，不自动 full-scale。继续禁止 Qwen degradation conditioning、mixed degradation、decoder tuning、distillation、development-GT optimization、sealed internal 和 official FoundIR test。该记录仅绑定最新 USER 明确授权，不代表或捏造 advisor 回复。",
-  "recorded_at": "2026-09-16T06:39:16Z"
+  "statement": "用户针对 source-diverse intermediate pilot 的推荐明确回复‘sure,execute’。现批准执行 hash-bound config configs/foundir_blur_only_flux2_source_diverse_spatial_anchor_pilot_v1.json：exact step-10k parent；512 个确定性、互异且排除旧 tiny/development 的 isolated-Blur training source groups；完全配对的 flow_control 与 trajectory_spatial_anchor，各 400 steps；candidate 固定使用 flow MSE 1.0、endpoint RGB Charbonnier 1.0、LPIPS 0.02、multi-scale Charbonnier 0.5、latent L1 0.25、low-frequency LQ identity 0.1；development 只执行预声明 step-400 gate，不用于权重、arm 或 checkpoint 调参，且不自动 full-scale。继续禁止 Qwen degradation conditioning、mixed degradation、distillation、decoder tuning、development-GT optimization、sealed internal 和 official FoundIR test。该记录只绑定最新 USER 明确授权‘sure,execute’，是 USER authorization，不代表或捏造 advisor 回复。",
+  "recorded_at": "2026-09-16T07:55:58Z"
 }

@@ -1,0 +1,28 @@
+{
+  "excluded_fixed_development_groups": 16,
+  "excluded_old_tiny_train_groups": 16,
+  "excluded_sanity_manifest": "manifests/foundir_blur_only_sanity_v1.csv",
+  "excluded_sanity_manifest_sha256": "7114dab36b3978f28657f366e9a961462c3dbfb06927c9262754cced0d8c8e6f",
+  "fixed_development_records": 16,
+  "fixed_development_unique_source_groups": 16,
+  "frozen_manifest": "manifests/foundir_blur_only_flux2_source_diverse_pilot_v1.csv",
+  "frozen_manifest_sha256": "ebd0319ab2f82e7fb629d5ed8fa09309100c9ef28ba80c46a38529288a2e31f8",
+  "official_foundir_test_accessed": false,
+  "pilot_train_records": 512,
+  "pilot_train_unique_source_groups": 512,
+  "schema_version": 1,
+  "sealed_internal_accessed": false,
+  "selection": {
+    "crop_seed": "flux2-blur-source-diverse-pilot-v1-crops-20260916",
+    "crop_size": 512,
+    "group_seed": "flux2-blur-source-diverse-pilot-v1-groups-20260916",
+    "method": "ascending_sha256_seeded_hash",
+    "one_record_per_source_group": true,
+    "record_seed": "flux2-blur-source-diverse-pilot-v1-records-20260916"
+  },
+  "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+  "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "status": "frozen_flux2_blur_source_diverse_pilot_manifest",
+  "train_development_source_group_overlap": 0,
+  "visual_train_records": 16
+}

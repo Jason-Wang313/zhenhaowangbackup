@@ -6,6 +6,60 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## FLUX.2 source-diverse spatial-anchor pilot CPU-ready — 2026-09-16T08:02Z (LATEST AUTHORITY)
+
+The user explicitly replied `sure,execute` to the recommended source-diverse
+intermediate pilot. The prior terminal hold was resolved first, then the final
+hash-bound design event
+`flux2_blur_source_diverse_spatial_anchor_design_v1-c8d0dfd7adb8e2b7`
+(hold SHA `dbf3866095d66b6eb5ebe07faade3b353be41d170767d51dff3471a1af003ce0`)
+was emitted and resolved against that exact USER authorization. This is not a
+fabricated advisor response. Governance check passes.
+
+Frozen design: exact step-10k FLUX parent; 512 deterministic isolated-Blur
+training source groups with one record/crop each; excludes all old 16 tiny-train
+and fixed development groups. Paired `flow_control` and
+`trajectory_spatial_anchor` arms use fresh AdamW, identical record order/noise/
+timesteps, 400 steps, global batch 8, checkpoints 200/400. Candidate keeps flow
+MSE 1.0 and exact official 50-step 46-detached+4-differentiable trajectory, with
+endpoint RGB Charbonnier 1.0, LPIPS .02, half/quarter-scale Charbonnier total
+.5, latent L1 .25, and average-pool-16 LQ identity .1. No edge loss or
+independent restoration branch.
+
+Manifest SHA is
+`ebd0319ab2f82e7fb629d5ed8fa09309100c9ef28ba80c46a38529288a2e31f8`;
+config SHA is
+`ab5a41af64d6a8e39e228625a18b5b978ab616cc007308dcd2999242bb1a05be`.
+Fixed visuals are 16 pilot-train crops at 0/200/400 and the existing 16
+source-disjoint development crops at 0/400. Development only executes the
+predeclared final gate and cannot tune arm/weights/checkpoint. Gate requires
+candidate development PSNR >=24.591062, LPIPS <=.153766, >=+.15dB versus
+control with <=.003 LPIPS regression, >=10/16 PSNR wins versus parent, no
+record >2dB worse than parent, plus mandatory visual review. No automatic full
+scale.
+
+Implementation and CPU verification are complete. Twenty-eight focused tests,
+compilation, shell syntax, complete 528-pair/model/parent hash preflight,
+H100/H200 global-batch equivalence, governance, and launcher `--check` pass.
+The candidate performs a mandatory full-resolution CUDA rehearsal before its
+first optimizer step, requiring nonzero finite gradients on every LoRA tensor,
+no frozen-VAE gradients, and recorded peak memory. Readiness report:
+`reports/foundir_blur_only_flux2_source_diverse_spatial_anchor_readiness_2026-09-16.md`.
+
+No GPU job has started. Exact next action on one homogeneous 8xH100/H200 host:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_foundir_blur_only_flux2_source_diverse_spatial_anchor_v1_8gpu.sh
+```
+
+Monitor
+`tail -f logs/foundir_blur_only_flux2_source_diverse_spatial_anchor_pilot_v1.log`.
+Continue to prohibit Qwen degradation conditioning, mixed degradation,
+distillation, decoder tuning, development-GT optimization, sealed internal,
+official FoundIR test, and automatic full scale.
+
 ## FLUX.2 trajectory-endpoint gate TERMINAL VISUAL FAILURE — 2026-09-16T07:30:57Z (LATEST AUTHORITY)
 
 The exact 8xH100 job completed normally at `2026-09-16T07:18:16Z` with

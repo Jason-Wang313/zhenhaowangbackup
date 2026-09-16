@@ -53,6 +53,7 @@ from smoke.train_foundir_blur_only_flux2_overfit_ddp import (  # noqa: E402
 
 STATUS = "user_authorized_blur_only_step10k_pixel_fidelity_ablation"
 TRAJECTORY_STATUS = "user_authorized_blur_only_step10k_trajectory_endpoint_ablation"
+SPATIAL_STATUS = "user_authorized_blur_only_step10k_source_diverse_spatial_anchor_pilot"
 REQUIRED_FALSE = (
     "qwen_degradation_conditioning",
     "mixed_degradations",
@@ -66,7 +67,7 @@ REQUIRED_FALSE = (
 
 def validate_config(config: Mapping[str, object]) -> None:
     status = config.get("status")
-    if status not in {STATUS, TRAJECTORY_STATUS}:
+    if status not in {STATUS, TRAJECTORY_STATUS, SPATIAL_STATUS}:
         raise RuntimeError("config is not authorized for the step-10k pixel-fidelity gate")
     scope = config["scope"]
     if scope.get("category") != "01Blur" or any(scope.get(key) is not False for key in REQUIRED_FALSE):
@@ -80,8 +81,11 @@ def validate_config(config: Mapping[str, object]) -> None:
             raise RuntimeError("pure flow objective changed")
         if training.get("predicted_clean_identity") != "noise_minus_predicted_velocity":
             raise RuntimeError("predicted-clean identity changed")
-    elif training.get("objective") != "pure_noise_to_clean_flow_plus_official_trajectory_endpoint":
-        raise RuntimeError("trajectory endpoint objective changed")
+    elif status == TRAJECTORY_STATUS:
+        if training.get("objective") != "pure_noise_to_clean_flow_plus_official_trajectory_endpoint":
+            raise RuntimeError("trajectory endpoint objective changed")
+    elif training.get("objective") != "pure_noise_to_clean_flow_plus_official_trajectory_spatial_anchor":
+        raise RuntimeError("trajectory spatial-anchor objective changed")
     if training.get("optimizer_initialization") != "fresh_adamw_per_arm":
         raise RuntimeError("each arm must use fresh AdamW state")
     arms = training.get("arms")
@@ -95,13 +99,18 @@ def validate_config(config: Mapping[str, object]) -> None:
             {"name": "flow_control", "flow_mse_weight": 1.0, "endpoint_rgb_mse_weight": 0.0, "endpoint_lpips_weight": 0.0},
             {"name": "trajectory_endpoint", "flow_mse_weight": 1.0, "endpoint_rgb_mse_weight": 1.0, "endpoint_lpips_weight": 0.02},
         ]
+        if status == TRAJECTORY_STATUS
+        else [
+            {"name": "flow_control", "flow_mse_weight": 1.0, "endpoint_rgb_charbonnier_weight": 0.0, "endpoint_lpips_weight": 0.0, "multiscale_rgb_charbonnier_weight": 0.0, "endpoint_latent_l1_weight": 0.0, "low_frequency_lq_identity_weight": 0.0},
+            {"name": "trajectory_spatial_anchor", "flow_mse_weight": 1.0, "endpoint_rgb_charbonnier_weight": 1.0, "endpoint_lpips_weight": 0.02, "multiscale_rgb_charbonnier_weight": 0.5, "endpoint_latent_l1_weight": 0.25, "low_frequency_lq_identity_weight": 0.1},
+        ]
     )
     if arms != expected_arms:
         raise RuntimeError("paired loss arms changed")
     maximum = int(training["max_steps_per_arm"])
     checkpoints = [int(value) for value in training["checkpoint_steps"]]
-    expected_checkpoints = [50, 100, 200, 400] if status == STATUS else [50, 100, 200]
-    expected_maximum = 400 if status == STATUS else 200
+    expected_checkpoints = [50, 100, 200, 400] if status == STATUS else ([50, 100, 200] if status == TRAJECTORY_STATUS else [200, 400])
+    expected_maximum = 200 if status == TRAJECTORY_STATUS else 400
     if checkpoints != expected_checkpoints or maximum != expected_maximum:
         raise RuntimeError("bounded checkpoint schedule changed")
     if config["inference"].get("schedule") != "official_flux2_shifted_schedule":
@@ -119,12 +128,12 @@ def validate_config(config: Mapping[str, object]) -> None:
         if actual != global_batch:
             raise RuntimeError(f"{family} profile changes global batch: {actual} != {global_batch}")
     gate = config["gate"]
-    expected_candidate = "rgb_mse" if status == STATUS else "trajectory_endpoint"
+    expected_candidate = "rgb_mse" if status == STATUS else ("trajectory_endpoint" if status == TRAJECTORY_STATUS else "trajectory_spatial_anchor")
     if gate.get("candidate_arm") != expected_candidate or gate.get("control_arm") != "flow_control":
         raise RuntimeError("paired gate arm identities changed")
     if int(gate["predeclared_candidate_step"]) != maximum or gate.get("full_scale_automatic") is not False:
         raise RuntimeError("candidate selection or full-scale stop contract changed")
-    if status == TRAJECTORY_STATUS:
+    if status in {TRAJECTORY_STATUS, SPATIAL_STATUS}:
         if config["scope"].get("distillation") is not False:
             raise RuntimeError("distillation is prohibited in the trajectory gate")
         trajectory = config["trajectory"]
@@ -142,6 +151,19 @@ def validate_config(config: Mapping[str, object]) -> None:
             detached_prefix_steps=int(trajectory["detached_prefix_steps"]),
             differentiable_suffix_steps=int(trajectory["differentiable_suffix_steps"]),
         )
+    if status == SPATIAL_STATUS:
+        data = config["data"]
+        if (
+            int(data["pilot_train_records"]) != 512
+            or int(data["pilot_train_source_groups"]) != 512
+            or int(data["visual_train_records"]) != 16
+            or int(data["fixed_development_records"]) != 16
+            or data.get("one_record_per_source_group") is not True
+            or training.get("paired_sample_order_noise_timesteps") is not True
+        ):
+            raise RuntimeError("source-diverse paired pilot contract changed")
+        if abs(float(training["charbonnier_epsilon"]) - 0.001) > 1e-12:
+            raise RuntimeError("Charbonnier epsilon changed")
 
 
 def load_frozen_manifest(
@@ -155,20 +177,43 @@ def load_frozen_manifest(
     if sha256(metadata_path) != data["frozen_manifest_metadata_sha256"]:
         raise RuntimeError("frozen tiny manifest metadata hash changed")
     metadata = json.loads(metadata_path.read_text())
+    official_protected = metadata.get(
+        "protected_foundir_test_accessed", metadata.get("official_foundir_test_accessed")
+    )
     if (
         metadata.get("frozen_manifest_sha256") != data["frozen_manifest_sha256"]
-        or metadata.get("protected_foundir_test_accessed") is not False
+        or official_protected is not False
         or metadata.get("sealed_internal_accessed") is not False
     ):
         raise RuntimeError("frozen manifest metadata contract changed")
     with manifest.open(newline="") as handle:
         rows = list(csv.DictReader(handle))
-    train = [row for row in rows if row["role"] == "tiny_overfit_train"]
-    development = [row for row in rows if row["role"] == "future_blur_validation"]
-    if len(train) != int(data["tiny_overfit_records"]):
-        raise RuntimeError("tiny training record count changed")
-    if len(development) != int(data["descriptive_development_records"]):
-        raise RuntimeError("descriptive development record count changed")
+    if config["status"] == SPATIAL_STATUS:
+        train = [row for row in rows if row["role"] == "pilot_train"]
+        development = [row for row in rows if row["role"] == "fixed_development"]
+        if len(train) != int(data["pilot_train_records"]):
+            raise RuntimeError("pilot training record count changed")
+        if len(development) != int(data["fixed_development_records"]):
+            raise RuntimeError("fixed development record count changed")
+        if len({row["source_group"] for row in train}) != int(data["pilot_train_source_groups"]):
+            raise RuntimeError("pilot training source-group count changed")
+        if sum(row.get("visual_train") == "true" for row in train) != int(data["visual_train_records"]):
+            raise RuntimeError("pilot visual-train selection changed")
+        source = ROOT / str(data["source_manifest"])
+        excluded = ROOT / str(data["excluded_sanity_manifest"])
+        if sha256(source) != data["source_manifest_sha256"] or sha256(excluded) != data["excluded_sanity_manifest_sha256"]:
+            raise RuntimeError("pilot source/exclusion manifest identity changed")
+        with excluded.open(newline="") as handle:
+            excluded_groups = {row["source_group"] for row in csv.DictReader(handle)}
+        if excluded_groups & {row["source_group"] for row in train}:
+            raise RuntimeError("pilot includes an excluded old tiny/development source group")
+    else:
+        train = [row for row in rows if row["role"] == "tiny_overfit_train"]
+        development = [row for row in rows if row["role"] == "future_blur_validation"]
+        if len(train) != int(data["tiny_overfit_records"]):
+            raise RuntimeError("tiny training record count changed")
+        if len(development) != int(data["descriptive_development_records"]):
+            raise RuntimeError("descriptive development record count changed")
     for role, selected in (("train", train), ("development", development)):
         if any(row["category"] != "01Blur" or row["composition_size"] != "1" for row in selected):
             raise RuntimeError(f"{role} contains non-isolated Blur")
@@ -255,6 +300,66 @@ def trajectory_endpoint_losses(
     return rgb_loss, lpips_loss, decoded
 
 
+def charbonnier_loss(prediction: torch.Tensor, target: torch.Tensor, epsilon: float) -> torch.Tensor:
+    return torch.sqrt((prediction.float() - target.float()).square() + epsilon * epsilon).mean()
+
+
+def trajectory_spatial_anchor_losses(
+    model,
+    autoencoder,
+    degraded_latent: torch.Tensor,
+    clean_latent: torch.Tensor,
+    initial_noise: torch.Tensor,
+    lq_rgb: torch.Tensor,
+    target_rgb: torch.Tensor,
+    cfg_context: torch.Tensor,
+    cfg_ids: torch.Tensor,
+    pack_image,
+    perceptual_metric,
+    trajectory: Mapping[str, object],
+    *,
+    reference_time: int,
+    epsilon: float,
+) -> dict[str, torch.Tensor]:
+    """Conservative endpoint anchors for exact spatial correspondence."""
+
+    from flux2.sampling import get_schedule, scatter_ids
+
+    reference_tokens, reference_ids = pack_image(degraded_latent)
+    reference_ids = reference_ids.clone()
+    reference_ids[..., 0] = reference_time
+    image_tokens, image_ids = pack_image(initial_noise)
+    schedule = get_schedule(int(trajectory["num_steps"]), image_tokens.shape[1])
+    endpoint_tokens = denoise_cfg_split_gradient(
+        model, image_tokens, image_ids, cfg_context, cfg_ids, schedule,
+        float(trajectory["guidance"]), reference_tokens=reference_tokens,
+        reference_ids=reference_ids,
+        detached_prefix_steps=int(trajectory["detached_prefix_steps"]),
+        differentiable_suffix_steps=int(trajectory["differentiable_suffix_steps"]),
+        checkpoint_suffix=bool(trajectory["activation_checkpoint_suffix"]),
+    )
+    endpoint_latent = torch.cat(scatter_ids(endpoint_tokens, image_ids)).squeeze(2)
+    decoded = autoencoder.decode(endpoint_latent).float().clamp(-1, 1)
+    rgb = charbonnier_loss(decoded, target_rgb, epsilon)
+    multiscale_terms = []
+    for scale in (2, 4):
+        multiscale_terms.append(charbonnier_loss(
+            F.avg_pool2d(decoded, scale), F.avg_pool2d(target_rgb.float(), scale), epsilon
+        ))
+    multiscale = torch.stack(multiscale_terms).mean()
+    low_frequency = charbonnier_loss(
+        F.avg_pool2d(decoded, 16), F.avg_pool2d(lq_rgb.float(), 16), epsilon
+    )
+    return {
+        "rgb_charbonnier": rgb,
+        "lpips": perceptual_metric((decoded + 1.0) * 0.5, (target_rgb.float() + 1.0) * 0.5),
+        "multiscale_charbonnier": multiscale,
+        "latent_l1": F.l1_loss(endpoint_latent.float(), clean_latent.float()),
+        "low_frequency_lq_identity": low_frequency,
+        "decoded": decoded,
+    }
+
+
 def verify_parent(config: Mapping[str, object]) -> None:
     model = config["model"]
     for key, hash_key in (
@@ -299,7 +404,9 @@ def preflight(config_path: Path) -> None:
         raise RuntimeError("prior VAE ceiling evidence changed")
     print(json.dumps({
         "status": (
-            "FOUNDIR_BLUR_TRAJECTORY_ENDPOINT_PREFLIGHT_PASS"
+            "FOUNDIR_BLUR_SOURCE_DIVERSE_SPATIAL_ANCHOR_PREFLIGHT_PASS"
+            if config["status"] == SPATIAL_STATUS
+            else "FOUNDIR_BLUR_TRAJECTORY_ENDPOINT_PREFLIGHT_PASS"
             if config["status"] == TRAJECTORY_STATUS
             else "FOUNDIR_BLUR_PIXEL_FIDELITY_PREFLIGHT_PASS"
         ),
@@ -377,6 +484,39 @@ def compare_final_arms(config: Mapping[str, object], arm_results: Mapping[str, M
     gate = config["gate"]
     control = arm_results[str(gate["control_arm"])]
     candidate = arm_results[str(gate["candidate_arm"])]
+    if config["status"] == SPATIAL_STATUS:
+        control_final = control["final_descriptive_development_metrics"]
+        candidate_final = candidate["final_descriptive_development_metrics"]
+        candidate_parent = candidate["parent_descriptive_development_metrics"]
+        control_rows = {row["record_id"]: row for row in control_final["rows"]}
+        candidate_rows = {row["record_id"]: row for row in candidate_final["rows"]}
+        parent_rows = {row["record_id"]: row for row in candidate_parent["rows"]}
+        if set(control_rows) != set(candidate_rows) or set(candidate_rows) != set(parent_rows):
+            raise RuntimeError("paired development record identities changed")
+        psnr_over_control = float(candidate_final["mean_output_psnr"] - control_final["mean_output_psnr"])
+        lpips_regression_control = float(candidate_final["mean_output_lpips"] - control_final["mean_output_lpips"])
+        wins = sum(candidate_rows[key]["output_psnr"] > parent_rows[key]["output_psnr"] for key in sorted(parent_rows))
+        worst_regression = max(
+            parent_rows[key]["output_psnr"] - candidate_rows[key]["output_psnr"]
+            for key in sorted(parent_rows)
+        )
+        checks = {
+            "candidate_development_psnr_at_least_parent": candidate_final["mean_output_psnr"] >= float(gate["minimum_candidate_development_psnr"]),
+            "candidate_development_lpips_within_parent_limit": candidate_final["mean_output_lpips"] <= float(gate["maximum_candidate_development_lpips"]),
+            "candidate_development_psnr_gain_over_control": psnr_over_control >= float(gate["minimum_development_psnr_gain_over_control_db"]),
+            "candidate_development_lpips_not_worse_than_control": lpips_regression_control <= float(gate["maximum_development_lpips_regression_vs_control"]),
+            "candidate_development_psnr_wins_over_parent": wins >= int(gate["minimum_development_psnr_wins_over_parent"]),
+            "candidate_maximum_per_record_regression_within_limit": worst_regression <= float(gate["maximum_per_record_psnr_regression_vs_parent_db"]),
+        }
+        return {
+            "checks": checks,
+            "development_psnr_gain_over_control_db": psnr_over_control,
+            "development_lpips_regression_vs_control": lpips_regression_control,
+            "development_psnr_wins_over_parent": wins,
+            "development_maximum_per_record_psnr_regression_vs_parent_db": worst_regression,
+            "candidate_development_psnr": candidate_final["mean_output_psnr"],
+            "candidate_development_lpips": candidate_final["mean_output_lpips"],
+        }
     control_final = control["final_train_metrics"]
     candidate_final = candidate["final_train_metrics"]
     candidate_parent = candidate["parent_train_metrics"]
@@ -437,17 +577,36 @@ def run_trajectory_cuda_rehearsal(
     lq = record["lq"].unsqueeze(0).to(device)
     gt = record["gt"].unsqueeze(0).to(device)
     with torch.no_grad():
-        degraded = autoencoder.encode(lq).to(torch.bfloat16)
+        clean, degraded = autoencoder.encode(torch.cat([gt, lq])).chunk(2)
+        clean = clean.to(torch.bfloat16)
+        degraded = degraded.to(torch.bfloat16)
     generator = torch.Generator(device=device).manual_seed(int(config["trajectory"]["seed"]) + rank)
     noise = torch.randn(degraded.shape, generator=generator, device=device, dtype=torch.bfloat16)
     torch.cuda.reset_peak_memory_stats(device)
     with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
-        rgb_loss, perceptual_loss, _ = trajectory_endpoint_losses(
-            wrapped.module, autoencoder, degraded, noise, gt, cfg_context, cfg_ids,
-            pack_image, metric, config["trajectory"],
-            reference_time=int(config["training"]["reference_time_coordinate"]),
-        )
-        rehearsal_loss = rgb_loss + float(config["training"]["arms"][1]["endpoint_lpips_weight"]) * perceptual_loss
+        if config["status"] == SPATIAL_STATUS:
+            losses = trajectory_spatial_anchor_losses(
+                wrapped.module, autoencoder, degraded, clean, noise, lq, gt,
+                cfg_context, cfg_ids, pack_image, metric, config["trajectory"],
+                reference_time=int(config["training"]["reference_time_coordinate"]),
+                epsilon=float(config["training"]["charbonnier_epsilon"]),
+            )
+            arm = config["training"]["arms"][1]
+            rehearsal_loss = (
+                float(arm["endpoint_rgb_charbonnier_weight"]) * losses["rgb_charbonnier"]
+                + float(arm["endpoint_lpips_weight"]) * losses["lpips"]
+                + float(arm["multiscale_rgb_charbonnier_weight"]) * losses["multiscale_charbonnier"]
+                + float(arm["endpoint_latent_l1_weight"]) * losses["latent_l1"]
+                + float(arm["low_frequency_lq_identity_weight"]) * losses["low_frequency_lq_identity"]
+            )
+            rgb_loss, perceptual_loss = losses["rgb_charbonnier"], losses["lpips"]
+        else:
+            rgb_loss, perceptual_loss, _ = trajectory_endpoint_losses(
+                wrapped.module, autoencoder, degraded, noise, gt, cfg_context, cfg_ids,
+                pack_image, metric, config["trajectory"],
+                reference_time=int(config["training"]["reference_time_coordinate"]),
+            )
+            rehearsal_loss = rgb_loss + float(config["training"]["arms"][1]["endpoint_lpips_weight"]) * perceptual_loss
     rehearsal_loss.backward()
     local_nonzero = sum(
         parameter.grad is not None
@@ -455,7 +614,7 @@ def run_trajectory_cuda_rehearsal(
         and float(parameter.grad.detach().abs().max()) > 0
         for parameter in trainable
     )
-    if local_nonzero == 0 or any(parameter.grad is not None for parameter in autoencoder.parameters()):
+    if local_nonzero != len(trainable) or any(parameter.grad is not None for parameter in autoencoder.parameters()):
         raise RuntimeError("trajectory CUDA rehearsal gradient contract failed")
     peak = torch.cuda.max_memory_allocated(device)
     mean_values = torch.tensor(
@@ -503,6 +662,10 @@ def main() -> int:
     crop_size = int(config["data"]["crop_size"])
     train_records = prepare_records(train_rows, crop_size)
     development_records = prepare_records(development_rows, crop_size)
+    visual_train_records = (
+        [record for record in train_records if record.get("visual_train") == "true"]
+        if config["status"] == SPATIAL_STATUS else train_records
+    )
     output_dir = ROOT / str(config["runtime"]["output_dir"])
     output_dir.mkdir(parents=True, exist_ok=True)
     if (output_dir / "result.json").exists():
@@ -591,7 +754,7 @@ def main() -> int:
             raise RuntimeError("partial VAE ceiling evidence requires inspection before resume")
         else:
             ceiling_train = evaluate_vae_ceiling(
-                autoencoder, train_records, metric, role="train", output_dir=output_dir,
+                autoencoder, visual_train_records, metric, role="train", output_dir=output_dir,
                 rank=rank, world=world, device=device,
             )
             ceiling_development = evaluate_vae_ceiling(
@@ -635,7 +798,7 @@ def main() -> int:
                 weight_decay=float(config["training"]["weight_decay"]),
                 fused=True,
             )
-            if config["status"] == TRAJECTORY_STATUS and arm_name == "trajectory_endpoint":
+            if config["status"] in {TRAJECTORY_STATUS, SPATIAL_STATUS} and arm_name != "flow_control":
                 run_trajectory_cuda_rehearsal(
                     wrapped, autoencoder, trainable, train_records[rank % len(train_records)],
                     cfg_context, cfg_ids, batched_prc_img, metric, config,
@@ -667,17 +830,18 @@ def main() -> int:
 
             if start_step == 0:
                 parent_train = evaluate_snapshot(
-                    wrapped, autoencoder, train_records, cfg_context, cfg_ids, batched_prc_img, metric,
-                    step=0, limit=len(train_records), config=config, output_dir=arm_dir,
+                    wrapped, autoencoder, visual_train_records, cfg_context, cfg_ids, batched_prc_img, metric,
+                    step=0, limit=len(visual_train_records), config=config, output_dir=arm_dir,
                     rank=rank, world=world, device=device,
                 )
-                evaluate_snapshot(
+                parent_development = evaluate_snapshot(
                     wrapped, autoencoder, development_records, cfg_context, cfg_ids, batched_prc_img, metric,
                     step=0, limit=len(development_records), config=config,
                     output_dir=arm_dir / "descriptive_development", rank=rank, world=world, device=device,
                 )
             else:
                 parent_train = load_metrics(arm_dir / "training_triptychs/step_000000/metrics.json") if rank == 0 else None
+                parent_development = load_metrics(arm_dir / "descriptive_development/training_triptychs/step_000000/metrics.json") if rank == 0 else None
 
             optimizer.zero_grad(set_to_none=True)
             final_train = None
@@ -685,6 +849,9 @@ def main() -> int:
                 flow_sum = 0.0
                 rgb_sum = 0.0
                 lpips_sum = 0.0
+                multiscale_sum = 0.0
+                latent_sum = 0.0
+                low_frequency_sum = 0.0
                 total_sum = 0.0
                 for micro in range(accumulation):
                     position = (step * accumulation + micro) * world + rank
@@ -715,6 +882,9 @@ def main() -> int:
                                 guidance=None,
                             )[:, : flow.target_token_count]
                             flow_loss = F.mse_loss(prediction.float(), flow.target_velocity.float())
+                            multiscale_loss = flow_loss.new_zeros(())
+                            latent_loss = flow_loss.new_zeros(())
+                            low_frequency_loss = flow_loss.new_zeros(())
                             if config["status"] == STATUS and float(arm["rgb_mse_weight"]) > 0:
                                 rgb_loss, _ = decoded_rgb_mse(
                                     prediction, noise, clean.shape, autoencoder, gt
@@ -743,14 +913,52 @@ def main() -> int:
                                     + float(arm["endpoint_rgb_mse_weight"]) * rgb_loss
                                     + float(arm["endpoint_lpips_weight"]) * perceptual_loss
                                 )
+                                multiscale_loss = flow_loss.new_zeros(())
+                                latent_loss = flow_loss.new_zeros(())
+                                low_frequency_loss = flow_loss.new_zeros(())
+                            elif config["status"] == SPATIAL_STATUS and float(arm["endpoint_rgb_charbonnier_weight"]) > 0:
+                                endpoint_generator = torch.Generator(device=device).manual_seed(
+                                    int(config["trajectory"]["seed"]) + position * 1_000_033
+                                )
+                                endpoint_noise = torch.randn(
+                                    clean.shape, generator=endpoint_generator, device=device,
+                                    dtype=torch.bfloat16,
+                                )
+                                anchor = trajectory_spatial_anchor_losses(
+                                    wrapped.module, autoencoder, degraded.to(torch.bfloat16),
+                                    clean.to(torch.bfloat16), endpoint_noise, lq, gt,
+                                    cfg_context, cfg_ids, batched_prc_img, metric,
+                                    config["trajectory"],
+                                    reference_time=int(config["training"]["reference_time_coordinate"]),
+                                    epsilon=float(config["training"]["charbonnier_epsilon"]),
+                                )
+                                rgb_loss = anchor["rgb_charbonnier"]
+                                perceptual_loss = anchor["lpips"]
+                                multiscale_loss = anchor["multiscale_charbonnier"]
+                                latent_loss = anchor["latent_l1"]
+                                low_frequency_loss = anchor["low_frequency_lq_identity"]
+                                loss = (
+                                    float(arm["flow_mse_weight"]) * flow_loss
+                                    + float(arm["endpoint_rgb_charbonnier_weight"]) * rgb_loss
+                                    + float(arm["endpoint_lpips_weight"]) * perceptual_loss
+                                    + float(arm["multiscale_rgb_charbonnier_weight"]) * multiscale_loss
+                                    + float(arm["endpoint_latent_l1_weight"]) * latent_loss
+                                    + float(arm["low_frequency_lq_identity_weight"]) * low_frequency_loss
+                                )
                             else:
                                 rgb_loss = flow_loss.new_zeros(())
                                 perceptual_loss = flow_loss.new_zeros(())
+                                multiscale_loss = flow_loss.new_zeros(())
+                                latent_loss = flow_loss.new_zeros(())
+                                low_frequency_loss = flow_loss.new_zeros(())
                                 loss = float(arm["flow_mse_weight"]) * flow_loss
                         (loss / accumulation).backward()
                     flow_sum += float(flow_loss.detach())
                     rgb_sum += float(rgb_loss.detach())
                     lpips_sum += float(perceptual_loss.detach())
+                    multiscale_sum += float(multiscale_loss.detach())
+                    latent_sum += float(latent_loss.detach())
+                    low_frequency_sum += float(low_frequency_loss.detach())
                     total_sum += float(loss.detach())
                 if any(parameter.grad is not None for parameter in autoencoder.parameters()):
                     raise RuntimeError("frozen VAE unexpectedly accumulated gradients")
@@ -762,6 +970,9 @@ def main() -> int:
                         flow_sum / accumulation,
                         rgb_sum / accumulation,
                         lpips_sum / accumulation,
+                        multiscale_sum / accumulation,
+                        latent_sum / accumulation,
+                        low_frequency_sum / accumulation,
                         total_sum / accumulation,
                     ],
                     device=device,
@@ -773,7 +984,9 @@ def main() -> int:
                     print(
                         f"FOUNDIR_BLUR_PIXEL_FIDELITY arm={arm_name} step={completed}/{maximum} "
                         f"flow={float(values[0]):.8f} rgb={float(values[1]):.8f} "
-                        f"lpips={float(values[2]):.8f} total={float(values[3]):.8f} "
+                        f"lpips={float(values[2]):.8f} multiscale={float(values[3]):.8f} "
+                        f"latent={float(values[4]):.8f} lowfreq={float(values[5]):.8f} "
+                        f"total={float(values[6]):.8f} "
                         f"grad_norm={float(grad_norm):.6f}",
                         flush=True,
                     )
@@ -795,8 +1008,8 @@ def main() -> int:
                             torch.save({**metadata, "optimizer": optimizer.state_dict()}, handle)
                     dist.barrier()
                     final_train = evaluate_snapshot(
-                        wrapped, autoencoder, train_records, cfg_context, cfg_ids, batched_prc_img, metric,
-                        step=completed, limit=len(train_records), config=config, output_dir=arm_dir,
+                        wrapped, autoencoder, visual_train_records, cfg_context, cfg_ids, batched_prc_img, metric,
+                        step=completed, limit=len(visual_train_records), config=config, output_dir=arm_dir,
                         rank=rank, world=world, device=device,
                     )
 
@@ -808,7 +1021,7 @@ def main() -> int:
                 output_dir=arm_dir / "descriptive_development", rank=rank, world=world, device=device,
             )
             if rank == 0:
-                assert parent_train is not None and final_train is not None and final_development is not None
+                assert parent_train is not None and parent_development is not None and final_train is not None and final_development is not None
                 checkpoint = arm_dir / f"step_{maximum:06d}.safetensors"
                 arm_result = {
                     "schema_version": 1,
@@ -816,6 +1029,7 @@ def main() -> int:
                     "arm": arm_name,
                     "loss_weights": arm,
                     "parent_train_metrics": parent_train,
+                    "parent_descriptive_development_metrics": parent_development,
                     "final_train_metrics": final_train,
                     "final_descriptive_development_metrics": final_development,
                     "development_used_for_selection": False,
