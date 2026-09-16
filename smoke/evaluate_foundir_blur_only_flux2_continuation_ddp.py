@@ -46,8 +46,10 @@ def validate_config(config_path: Path) -> tuple[dict[str, object], dict[str, obj
     ):
         raise RuntimeError("continuation parent config changed")
     checkpoints = config.get("checkpoints")
-    if not isinstance(checkpoints, list) or [int(item["step"]) for item in checkpoints] != [12000]:
-        raise RuntimeError("step-12000 must be the sole first-gate checkpoint")
+    steps = [int(item["step"]) for item in checkpoints] if isinstance(checkpoints, list) else []
+    if len(steps) != 1 or steps[0] not in {12000, 14000}:
+        raise RuntimeError("exactly one authorized continuation gate checkpoint is required")
+    evaluation_step = steps[0]
     parent_sha = base.sha256(parent_path)
     for item in checkpoints:
         checkpoint = base.workspace_path(item["path"])
@@ -55,7 +57,7 @@ def validate_config(config_path: Path) -> tuple[dict[str, object], dict[str, obj
             raise RuntimeError(f"missing continuation checkpoint: {checkpoint}")
         metadata = base.load_json(checkpoint.with_suffix(checkpoint.suffix + ".json"))
         checkpoint_sha = base.sha256(checkpoint)
-        if int(metadata.get("step", -1)) != 12000 or metadata.get("config_sha256") != parent_sha:
+        if int(metadata.get("step", -1)) != evaluation_step or metadata.get("config_sha256") != parent_sha:
             raise RuntimeError("continuation checkpoint metadata changed")
         item["sha256"] = checkpoint_sha
         optimizer = checkpoint.with_suffix(".optimizer.pt")
@@ -89,14 +91,15 @@ def validate_config(config_path: Path) -> tuple[dict[str, object], dict[str, obj
 def run_preflight(config_path: Path) -> None:
     config, _ = validate_config(config_path)
     rows = base.load_development_rows(config)
+    evaluation_step = int(config["checkpoints"][0]["step"])
     visual_root = ROOT / "checkpoints/foundir_blur_only_flux2_continuation_v1/fixed_validation/training_triptychs"
-    directory = visual_root / "step_012000"
+    directory = visual_root / f"step_{evaluation_step:06d}"
     if not (directory / "metrics.json").is_file() or len(list(directory.glob("*.png"))) != 16:
-        raise RuntimeError(f"step-12000 fixed visual evidence is incomplete: {directory}")
+        raise RuntimeError(f"step-{evaluation_step} fixed visual evidence is incomplete: {directory}")
     print("FOUNDIR_BLUR_FLUX2_CONTINUATION_DEVELOPMENT_PREFLIGHT_PASS " + json.dumps({
         "records": len(rows),
         "source_groups": len({row["source_group"] for row in rows}),
-        "checkpoint_step": 12000,
+        "checkpoint_step": evaluation_step,
         "checkpoint_sha256": config["checkpoints"][0]["sha256"],
         "sealed_internal_accessed": False,
         "protected_foundir_test_accessed": False,
@@ -105,8 +108,9 @@ def run_preflight(config_path: Path) -> None:
 
 def render_report(result: Mapping[str, object]) -> str:
     item = result["checkpoint_curve"][0]
+    step = int(item["checkpoint_step"])
     return "\n".join([
-        "# FLUX.2 Blur-only step-12k continuation development 结果",
+        f"# FLUX.2 Blur-only step-{step // 1000}k continuation development 结果",
         "",
         "> DEVELOPMENT ONLY；未访问 sealed internal 或 official FoundIR test。",
         "",
@@ -116,9 +120,12 @@ def render_report(result: Mapping[str, object]) -> str:
         "",
         "| Step | PSNR | LPIPS | PSNR >=25.9 | LPIPS <=0.18 |",
         "|---:|---:|---:|:---:|:---:|",
-        f"| 12000 | {item['metrics']['psnr']:.6f} | {item['metrics']['lpips']:.6f} | {'pass' if item['sow_checks']['psnr'] else 'fail'} | {'pass' if item['sow_checks']['lpips'] else 'fail'} |",
+        f"| {step} | {item['metrics']['psnr']:.6f} | {item['metrics']['lpips']:.6f} | {'pass' if item['sow_checks']['psnr'] else 'fail'} | {'pass' if item['sow_checks']['lpips'] else 'fail'} |",
         "",
-        "只有 step-12k 相对 step-10k 的 25.734236 / 0.145406 仍有价值时，才继续到 step-14k。",
+        (
+            "只有 step-12k 相对 step-10k 的 25.734236 / 0.145406 仍有价值时，才继续到 step-14k。"
+            if step == 12000 else "这是经 step-12k 改善 gate 后的最终 step-14k continuation 评估。"
+        ),
         "",
     ])
 

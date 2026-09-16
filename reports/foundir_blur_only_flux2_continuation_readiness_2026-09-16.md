@@ -54,3 +54,24 @@ smoke/launch_foundir_blur_only_flux2_continuation_v1_8gpu.sh
 Monitor `logs/foundir_blur_only_flux2_continuation_v1.log`. A valid terminal
 run ends with `FOUNDIR_BLUR_FLUX2_CONTINUATION_STEP12_COMPLETE` and then stops
 at the explicit 12k→14k evidence gate.
+
+## Conditional step-14k stage
+
+The step-14k path is implemented but deliberately separate. Its executable
+gate requires the immutable step-12k full-development result to satisfy both:
+
+- PSNR strictly exceeds the step-10k baseline `25.734236`;
+- LPIPS remains at or below the SOW limit `0.18`.
+
+It additionally requires the step-12k checkpoint, optimizer state, and all 16
+fixed visual snapshots. If any condition fails, it refuses to start. If all
+conditions pass, the second launcher resumes exactly from step 12k, saves 13k
+and 14k checkpoints/snapshots, and evaluates all 2,595 records at step 14k:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang && \
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 && \
+smoke/launch_foundir_blur_only_flux2_continuation_step14_v1_8gpu.sh
+```
+
+The step-14k launcher is never invoked automatically by the first stage.

@@ -2368,3 +2368,38 @@ on Sol medium/high. Use Sol xhigh for a non-obvious runtime/numerical failure.
 Explicitly tell the user before recommending Astra; Astra medium is justified
 only for a genuine architecture/objective redesign or conflicting scientific
 evidence that materially affects code quality or optimization performance.
+
+## 2026-09-16 conditional step-14k implementation update
+
+The final conditional path is now implemented rather than left as an informal
+future action:
+
+- gate checker:
+  `smoke/check_foundir_blur_only_flux2_continuation_step14_gate.py`;
+- step-14k evaluation config:
+  `configs/foundir_blur_only_flux2_continuation_development_step14_v1.json`;
+- runner:
+  `smoke/run_foundir_blur_only_flux2_continuation_step14_v1_8gpu.sh`;
+- launcher:
+  `smoke/launch_foundir_blur_only_flux2_continuation_step14_v1_8gpu.sh`.
+
+The gate opens only when the immutable 2,595-record step-12k result has PSNR
+strictly greater than the step-10k baseline 25.734236 and LPIPS <=0.18. It also
+requires the step-12k checkpoint, optimizer, metrics file, and 16 visual PNGs.
+This is the operational definition of "curve still has value": measurable
+progress on the only failing SOW metric without losing the already-passing
+LPIPS metric. The first-stage runner never auto-launches this second stage.
+
+If the gate passes after inspecting step 12k, launch with:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang && \
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 && \
+smoke/launch_foundir_blur_only_flux2_continuation_step14_v1_8gpu.sh
+```
+
+The second stage resumes the exact step-12k continuation optimizer, saves
+immutable step-13k/14k checkpoints and fixed visuals, and performs the full
+2,595-record step-14k evaluation. Focused suite and launcher check: 17/17
+passed. As of 2026-09-16T02:55:45Z, no first-stage PID, log, checkpoint, or GPU
+telemetry existed; the user still needed to launch the first-stage command.

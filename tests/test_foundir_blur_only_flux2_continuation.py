@@ -9,12 +9,14 @@ from smoke.train_foundir_blur_only_flux2_continuation_ddp import (
     continuation_lr_scale,
     validate_config,
 )
+from smoke.check_foundir_blur_only_flux2_continuation_step14_gate import validate_gate
 from smoke.train_foundir_blur_only_flux2_full_ddp import RankPositionSampler, sha256
 
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/foundir_blur_only_flux2_continuation_v1.json"
 EVAL_CONFIG = ROOT / "configs/foundir_blur_only_flux2_continuation_development_v1.json"
+EVAL14_CONFIG = ROOT / "configs/foundir_blur_only_flux2_continuation_development_step14_v1.json"
 
 
 def loaded_config() -> dict[str, object]:
@@ -87,6 +89,43 @@ def test_step12_evaluator_is_bound_to_one_staged_checkpoint() -> None:
     source = (ROOT / "smoke/evaluate_foundir_blur_only_flux2_continuation_ddp.py").read_text()
     assert 'metadata.get("config_sha256") != parent_sha' in source
     assert 'item["sha256"] = checkpoint_sha' in source
+
+
+def test_step14_evaluator_is_separately_bound_to_final_checkpoint() -> None:
+    config = json.loads(EVAL14_CONFIG.read_text())
+    assert config["checkpoints"] == [{
+        "step": 14000,
+        "path": "checkpoints/foundir_blur_only_flux2_continuation_v1/step_014000.safetensors",
+    }]
+    assert config["runtime"]["output_dir"].endswith("full_development_step_014000")
+
+
+def gate_result(psnr: float, lpips: float, config_sha: str = "config") -> dict[str, object]:
+    return {
+        "status": "blur_only_full_development_evaluation_complete",
+        "config_sha256": config_sha,
+        "records": 2595,
+        "source_groups": 165,
+        "sealed_internal_accessed": False,
+        "protected_foundir_test_accessed": False,
+        "checkpoint_curve": [{
+            "checkpoint_step": 12000,
+            "metrics": {"psnr": psnr, "lpips": lpips},
+        }],
+    }
+
+
+def test_step14_gate_requires_target_directed_psnr_progress_and_lpips_pass() -> None:
+    assert validate_gate(gate_result(25.8, 0.15), expected_config_sha="config") == {
+        "step12_psnr": 25.8,
+        "step12_lpips": 0.15,
+    }
+    with pytest.raises(RuntimeError, match="did not improve"):
+        validate_gate(gate_result(25.734236, 0.14), expected_config_sha="config")
+    with pytest.raises(RuntimeError, match="lost the <=0.18 pass"):
+        validate_gate(gate_result(25.8, 0.180001), expected_config_sha="config")
+    with pytest.raises(RuntimeError, match="identity changed"):
+        validate_gate(gate_result(25.8, 0.15), expected_config_sha="wrong")
 
 
 def test_runner_stages_at_12k_before_full_development() -> None:
