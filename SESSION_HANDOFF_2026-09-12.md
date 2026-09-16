@@ -6,7 +6,51 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## Corrective Layer-1 v2 READY TO LAUNCH — 2026-09-16 (LATEST AUTHORITY)
+## Corrective Layer-1 v2 TERMINAL FAILURE — 2026-09-16T02:01:48Z (LATEST AUTHORITY)
+
+The exact frozen v2 tiny run completed 1000/1000 steps normally on 8xH100,
+with terminal status 0 and no traceback, OOM, NCCL, or nonfinite failure. This
+is a runtime success and a scientific/teacher-quality failure. Do not restart,
+extend, full-scale, distill, or decoder-tune this checkpoint.
+
+Final train input/output is 24.723185/25.199975 dB and
+0.308547/0.283527 LPIPS. It misses the 26.4/0.16 gate by 1.200025 dB and
+0.123527 LPIPS; only 10/16 images improve PSNR and 8/16 improve LPIPS. Final
+development input/output is 23.904541/23.125971 dB and
+0.326357/0.342116 LPIPS: worse by 0.778570 dB and 0.015760 LPIPS, with only
+4/16 improving PSNR.
+
+Visual review fails independently of the aggregate metrics. Representative
+hard-blur and near-clean outputs show granular/checker false texture, ringing,
+edge echoes, and local structural damage. Near-clean protection failed to
+prevent large regressions (up to -3.77 dB on train and -3.33 dB on
+development). The model did not robustly overfit even the 16 training images.
+
+Artifact verification passed: every step/split at 0/250/500/1000 has exactly
+16 PNGs, 16 sidecars, and one metrics JSON (128 PNGs and 128 sidecars total).
+All protected flags are false. Result status is
+`zimage_corrective_bridge_tiny_complete`, with automatic metric gate false.
+Result SHA-256 is
+`9d33c238eb3bb44adee15ed8dc6845dbddc665a7b811c6d6aae07a18f99bfcc1`.
+Formal report:
+`reports/zimage_corrective_bridge_v2_terminal_result_2026-09-16.md`.
+
+The bounded pure Layer-1 corrective experiment is complete. More steps/data
+are not evidence-backed because tiny overfit and unseen-image behavior both
+failed. A student is bounded by this teacher, and decoder tuning cannot replace
+missing upstream restoration. Any continuation must change upstream
+restoration capacity/formulation; no independent restoration branch has been
+authorized or implemented by this run.
+
+Authoritative live paths:
+
+```text
+logs/foundir_blur_only_zimage_corrective_bridge_tiny_v2.log
+logs/foundir_blur_only_zimage_corrective_bridge_tiny_v2_gpu.csv
+checkpoints/foundir_blur_only_zimage_corrective_bridge_tiny_v2/
+```
+
+## Corrective Layer-1 v2 prelaunch record — 2026-09-16 (HISTORICAL)
 
 After reviewing the terminal v1 failure, the user explicitly instructed
 execution of the corrective improvement. V2 remains pure Z-Image Base 6B
