@@ -2403,3 +2403,76 @@ immutable step-13k/14k checkpoints and fixed visuals, and performs the full
 2,595-record step-14k evaluation. Focused suite and launcher check: 17/17
 passed. As of 2026-09-16T02:55:45Z, no first-stage PID, log, checkpoint, or GPU
 telemetry existed; the user still needed to launch the first-stage command.
+
+## 2026-09-16 live continuation runtime update
+
+The user launched the first stage. Authoritative runtime state:
+
+- runner start: `2026-09-16T03:50:22Z`;
+- hardware: 8x NVIDIA H100 80GB HBM3;
+- exact optimizer source profile: H200; global batch remains 32 on H100, so
+  cross-profile resume satisfies the frozen equivalence contract;
+- first trained step: 10001, loss 0.58342135, LR 4.999e-6;
+- steady throughput: approximately 0.851 seconds/optimizer step, 97-100% GPU
+  utilization, approximately 32GB per GPU;
+- no NaN, OOM, NCCL failure, traceback, sealed/internal access, or official
+  test access observed.
+
+Step-10k fixed snapshot in the new continuation output:
+
+- 16/16 records complete;
+- PSNR 25.663550 / LPIPS 0.122995;
+- input PSNR 23.904540 / LPIPS 0.326300.
+
+Step-11k checkpoint completed:
+
+- LoRA SHA-256:
+  `05e26346aa25163df6b278c0a00185ae9546ada29933315243482a56ab06dda7`;
+- optimizer SHA-256:
+  `da92f1f0eb3ef62094fd96ba1121c0cee3dc745cb9500eef8cf5e71f64f4271d`;
+- fixed snapshot 16/16: PSNR 25.236514 / LPIPS 0.129536;
+- versus the same step-10k fixed subset: PSNR -0.427036 dB and LPIPS
+  +0.006542 (both worse).
+
+This 16-image warning does not replace the frozen 2,595-record evaluation.
+Continue to step 12k and complete the full development run. Do not open the
+step-14k gate unless the full step-12k PSNR strictly exceeds 25.734236 and
+LPIPS remains <=0.18.
+
+## 2026-09-16 terminal continuation result
+
+The first-stage runner completed normally at `2026-09-16T04:57:36Z` with
+status 0. All 2,595 development sidecars and the final aggregate are complete.
+
+Full, directly comparable metrics:
+
+| Step | PSNR | LPIPS | SOW PSNR | SOW LPIPS |
+|---:|---:|---:|:---:|:---:|
+| 10000 | 25.734236 | 0.145406 | fail | pass |
+| 12000 | 25.709168 | 0.145691 | fail | pass |
+
+Step 12k regressed by 0.025068 dB PSNR and 0.000285 LPIPS. Its output PSNR
+also remained 0.140376 dB below the input baseline, with only 45.048% of
+records improving PSNR. The executable step-14k gate failed exactly as
+designed:
+
+```text
+step-14k gate closed: step-12k PSNR 25.709168 did not improve over step-10k 25.734236
+```
+
+There are no step-13k or step-14k artifacts. Do not launch the second-stage
+runner. Step 10k remains the best verified FLUX.2 checkpoint. Do not spend
+more compute on continuation or another LR/step sweep.
+
+Authoritative result:
+
+- `checkpoints/foundir_blur_only_flux2_continuation_v1/full_development_step_012000/result.json`;
+- SHA-256:
+  `aaf08bb78292884bb5cce682db190e8d7e894ccf87bb5a21048d2aad331db561`;
+- formal report:
+  `reports/foundir_blur_only_flux2_continuation_terminal_result_2026-09-16.md`.
+
+The next strategy must change the fidelity mechanism while retaining step 10k
+as parent. Prioritize an explicitly pixel-aligned correction/fidelity
+objective with a small overfit gate before scaling; this is outside the closed
+continuation goal and must not be mislabeled as more continuation.
