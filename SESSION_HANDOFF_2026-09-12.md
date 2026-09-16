@@ -6,7 +6,49 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## FLUX.2 source-diverse spatial-anchor pilot TERMINAL FAILURE — 2026-09-16T09:40:59Z (LATEST AUTHORITY)
+## FLUX.2 scalar-residual feasibility GPU-ready — 2026-09-16T10:06Z (LATEST AUTHORITY)
+
+After the source-diverse pilot failed, the user explicitly replied `execute`
+to the fail-fast correction route. The terminal hold was resolved against that
+exact USER instruction, then the new architecture/design event
+`flux2_blur_scalar_residual_feasibility_design_v1-4d5e6851f0efc5e0`
+(hold SHA `984e1b16f20968904857aaa7e78ebcec30d175be2733702055aef0cd6cc8e9be`)
+was emitted and resolved against the same explicit scope. This is USER
+authorization and does not represent or fabricate an advisor reply.
+
+The first gate has deliberately been reduced to a non-trainable correction:
+`corrected = LQ + alpha * (FLUX_step10k - LQ)`. It uses the existing 512
+isolated-Blur training source groups only, frozen by selection rank into 384
+calibration and 128 validation records. The seven-value alpha grid is selected
+only on calibration by maximum PSNR subject to LPIPS <=.17; the frozen alpha
+then receives one validation gate. Development GT is neither loaded nor used.
+There are zero model-weight updates, and no automatic full-development run or
+trainable residual network.
+
+Validation admission requires >=+.25 dB versus alpha=1, LPIPS <=.17, LPIPS
+regression <=.01, >=60% per-record PSNR wins, and no record >2 dB worse. The
+exact step-10k checkpoint remains the fallback. Config SHA is
+`a2e49e2094a1f8f8911377729cd48297891dd3392435638d12faddb838844bac`.
+Four focused tests, Python compilation, shell syntax, complete 512-pair/image
+hash preflight, governance, and launcher `--check` pass.
+
+No GPU job has started. Launch on one homogeneous 8xH100/H200 host:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_foundir_blur_only_flux2_scalar_residual_v1_8gpu.sh
+```
+
+Monitor
+`tail -f logs/foundir_blur_only_flux2_scalar_residual_feasibility_v1.log`.
+Expected wall time is roughly 10--20 minutes. The runner always emits a new
+terminal hold and stops. Continue to prohibit development-GT optimization,
+automatic full development, trainable correction, Qwen degradation
+conditioning, mixed degradation, distillation, decoder tuning, sealed
+internal, and official FoundIR test.
+
+## FLUX.2 source-diverse spatial-anchor pilot TERMINAL FAILURE — 2026-09-16T09:40:59Z (HISTORICAL)
 
 The homogeneous 8xH100 run completed both arms at 400/400 at
 `2026-09-16T09:22:55Z` in `3744.3806 s`. There was no OOM, NCCL, NaN, or

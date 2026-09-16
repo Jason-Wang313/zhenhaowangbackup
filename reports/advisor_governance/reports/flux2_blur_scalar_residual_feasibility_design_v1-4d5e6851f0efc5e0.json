@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否批准执行该固定 scalar residual feasibility gate，并仅在其通过后另行决定 full-development 或 trainable correction？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_scalar_residual_feasibility_v1.json",
+    "sha256": "a2e49e2094a1f8f8911377729cd48297891dd3392435638d12faddb838844bac"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "512 isolated-Blur training source groups frozen into 384 calibration and 128 validation; no development or protected split",
+  "evidence": {
+    "path": "reports/flux2_blur_scalar_residual_feasibility_authorization_v1.json",
+    "sha256": "9119999d8a7bc896378f1c19c612c6fc37075b44dd6968521e775000ee6a76ce"
+  },
+  "gate": "flux2_blur_scalar_residual_feasibility_design_v1",
+  "generated_at": "2026-09-16T10:04:06Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B step-10000 with non-trainable scalar LQ residual correction",
+  "outcome": "information",
+  "report_id": "flux2_blur_scalar_residual_feasibility_design_v1-4d5e6851f0efc5e0",
+  "root_cause_or_status": "User authorized a fail-fast no-weight-update feasibility gate. Alpha is selected only on calibration; validation is one-shot; no automatic full development or residual-network training.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

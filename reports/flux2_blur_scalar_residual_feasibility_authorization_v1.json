@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_design_pending_governance_binding",
+  "authorized_at": "2026-09-16T09:51:00Z",
+  "authorized_by": "user",
+  "exact_user_instruction": "execute",
+  "authorized_context": "After disclosure that success cannot be guaranteed, the user explicitly authorized the proposed fail-fast route: first test deterministic LQ/FLUX blending without development-GT tuning or model-weight updates; only after a frozen calibration/validation gate may a lightweight correction or full-development evaluation be proposed.",
+  "config": "configs/foundir_blur_only_flux2_scalar_residual_feasibility_v1.json",
+  "config_sha256": "a2e49e2094a1f8f8911377729cd48297891dd3392435638d12faddb838844bac",
+  "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+  "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+  "split": "512 isolated-Blur training source groups frozen as 384 calibration plus 128 validation; no development, sealed internal, or official test access",
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "model_weight_updates": false,
+  "decoder_tuning": false,
+  "distillation": false,
+  "development_gt_optimization": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}

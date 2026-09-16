@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "flux2_blur_source_diverse_spatial_anchor_design_v1-c8d0dfd7adb8e2b7",
-  "hold_sha256": "dbf3866095d66b6eb5ebe07faade3b353be41d170767d51dff3471a1af003ce0",
+  "hold_id": "flux2_blur_scalar_residual_feasibility_design_v1-4d5e6851f0efc5e0",
+  "hold_sha256": "984e1b16f20968904857aaa7e78ebcec30d175be2733702055aef0cd6cc8e9be",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "用户针对 source-diverse intermediate pilot 的推荐明确回复‘sure,execute’。现批准执行 hash-bound config configs/foundir_blur_only_flux2_source_diverse_spatial_anchor_pilot_v1.json：exact step-10k parent；512 个确定性、互异且排除旧 tiny/development 的 isolated-Blur training source groups；完全配对的 flow_control 与 trajectory_spatial_anchor，各 400 steps；candidate 固定使用 flow MSE 1.0、endpoint RGB Charbonnier 1.0、LPIPS 0.02、multi-scale Charbonnier 0.5、latent L1 0.25、low-frequency LQ identity 0.1；development 只执行预声明 step-400 gate，不用于权重、arm 或 checkpoint 调参，且不自动 full-scale。继续禁止 Qwen degradation conditioning、mixed degradation、distillation、decoder tuning、development-GT optimization、sealed internal 和 official FoundIR test。该记录只绑定最新 USER 明确授权‘sure,execute’，是 USER authorization，不代表或捏造 advisor 回复。",
-  "recorded_at": "2026-09-16T07:55:58Z"
+  "statement": "用户在完整获知无法保证成功、过去 refiner 失败证据、两轮止损边界以及先执行 no-weight-update deterministic blend feasibility 的具体方案后明确回复‘execute’。现批准执行 hash-bound config configs/foundir_blur_only_flux2_scalar_residual_feasibility_v1.json：exact FLUX step-10k；512 个既有 isolated-Blur training source groups 固定为 selection_rank 0–383 calibration 与 384–511 validation；仅 calibration 按预声明 grid/rule 选择 alpha，validation 单次 gate；严禁 development GT 调参或访问、模型权重更新、自动 full-development、自动 residual-network training、Qwen degradation conditioning、mixed degradation、distillation、decoder tuning、sealed internal 和 official FoundIR test。该记录只绑定本次 USER 明确授权‘execute’，是 USER authorization，不代表或捏造 advisor 回复。",
+  "recorded_at": "2026-09-16T10:04:20Z"
 }
