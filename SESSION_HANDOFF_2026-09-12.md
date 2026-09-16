@@ -2263,3 +2263,108 @@ The worktree contains many unrelated historical tracked modifications and
 untracked experiment artifacts owned by the user. Preserve them. If this
 handoff or `agents.md` is committed, stage only those exact files and any
 verified checkpoint-result/governance artifacts required by the current gate.
+
+---
+
+# 2026-09-16 FLUX.2 Blur-only low-LR continuation handoff
+
+The Z-Image corrective bridge v2 route is terminally closed. The active route
+is the user's explicit return to FLUX.2, based on the complete 2,595-record
+development result at step 10,000: **25.734236 dB / 0.145406 LPIPS**. The SOW
+target is 25.9 / 0.18, so LPIPS already passes and PSNR is short by only
+0.165764 dB. The old 16-image FLUX.2 overfit already reached 28.4124 / 0.08520
+on its train subset; do not repeat it.
+
+## Active goal and exact stage
+
+Restore the exact step-10,000 LoRA plus AdamW optimizer, preserve the original
+pure flow formulation and cumulative deterministic data stream, and train one
+8-GPU instance to cumulative step 12,000. The runner then evaluates all 2,595
+source-group-disjoint development records and stops. Continue to 14,000 only
+if step 12,000 remains scientifically useful relative to step 10,000.
+
+Authorization/governance:
+
+- evidence: `reports/flux2_blur_continuation_authorization_v1.json`;
+- hold: `flux2_blur_continuation_authorization-60565f4f75ef056b`;
+- decision: `reports/advisor_governance/advisor_decision.json`;
+- governance check result: `ADVISOR_HOLD_RESOLVED`;
+- no further advisor pause is required for the authorized step-12k stage.
+
+Frozen continuation contract:
+
+- parent config SHA: `ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c`;
+- parent checkpoint SHA: `e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439`;
+- exact parent optimizer metadata and state are mandatory;
+- train: 105,057 records / 7,339 source groups;
+- development: 2,595 records / 165 source groups;
+- global batch: 32 on H100 and H200;
+- cumulative presentation start: 320,000;
+- LR: linear absolute schedule, 10k=5e-6, 12k=3e-6, 14k=1e-6;
+- candidates: 11k/12k/13k/14k, with immutable checkpoints and fixed 16-image
+  triptychs;
+- forbidden: Qwen degradation conditioning, mixed degradation, pixel refiner,
+  development-GT optimization, sealed internal, official FoundIR test.
+
+## Implemented and verified
+
+Primary files:
+
+- `configs/foundir_blur_only_flux2_continuation_v1.json`;
+- `configs/foundir_blur_only_flux2_continuation_development_v1.json`;
+- `smoke/train_foundir_blur_only_flux2_continuation_ddp.py`;
+- `smoke/evaluate_foundir_blur_only_flux2_continuation_ddp.py`;
+- `smoke/run_foundir_blur_only_flux2_continuation_v1_8gpu.sh`;
+- `smoke/launch_foundir_blur_only_flux2_continuation_v1_8gpu.sh`;
+- `tests/test_foundir_blur_only_flux2_continuation.py`;
+- `reports/foundir_blur_only_flux2_continuation_readiness_2026-09-16.md`.
+
+The shared full trainer gained a backward-compatible optional `--stop-step`
+for staged, resumable runs. Default behavior of the historical trainer is
+unchanged.
+
+Verification completed:
+
+- focused tests: 15/15 passed;
+- Python compilation and shell syntax: passed;
+- full preflight: passed;
+- training config SHA:
+  `813f6e59630d5d37834f6d8ea745020e10139194996f1da7a0a7ab252ed3a589`;
+- preflight confirmed parent step/hash/optimizer metadata, model hashes,
+  105,057/7,339 train coverage, 2,595/165 development coverage, fixed visual
+  set, cumulative start position 320,000, and all protected-data flags false.
+
+## Exact launch and monitoring
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang && \
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 && \
+smoke/launch_foundir_blur_only_flux2_continuation_v1_8gpu.sh
+```
+
+Monitor:
+
+```bash
+tail -f logs/foundir_blur_only_flux2_continuation_v1.log
+```
+
+Expected staged artifacts:
+
+- `checkpoints/foundir_blur_only_flux2_continuation_v1/step_011000.safetensors`;
+- `checkpoints/foundir_blur_only_flux2_continuation_v1/step_012000.safetensors`;
+- `checkpoints/foundir_blur_only_flux2_continuation_v1/stage_summary_012000.json`;
+- `checkpoints/foundir_blur_only_flux2_continuation_v1/full_development_step_012000/result.json`;
+- `checkpoints/foundir_blur_only_flux2_continuation_v1/full_development_step_012000/advisor_report.md`.
+
+Do not launch a second instance against this output root. The shared flock is
+the authoritative duplicate-run guard. On a process failure, the runner may
+be relaunched and will resume from the highest complete continuation
+checkpoint or per-record evaluation sidecars without overwriting them.
+
+## Model-effort escalation rule
+
+Routine monitoring, log interpretation, and deterministic resume should stay
+on Sol medium/high. Use Sol xhigh for a non-obvious runtime/numerical failure.
+Explicitly tell the user before recommending Astra; Astra medium is justified
+only for a genuine architecture/objective redesign or conflicting scientific
+evidence that materially affects code quality or optimization performance.

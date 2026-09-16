@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "zimage_conditional_teacher_full_scale_authorization-0eead9c305ff368e",
-  "hold_sha256": "af590e1f17bd81b34404e79e313f9c1986ff68fc7c20c930ea162592d7a65c0e",
+  "hold_id": "flux2_blur_continuation_authorization-60565f4f75ef056b",
+  "hold_sha256": "52535877d8b0ede5424fb41c6191f7eb9969778ca42d15830de74f17003a628b",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "用户在获知 2048-source pilot 完整结果（开发集 step1000 到 step2000 仍改善，但绝对 gate 失败）后明确说：sure, so for the scaling, let;s just start execute, just for 1 instance, 8 h100/200, for the max scaling plan u just had。这是最新 USER 授权，不是新 advisor 回复。在已有 advisor Blur-only Z-Image teacher 路线内，授权执行 reports/zimage_conditional_teacher_full_scale_authorization_v1.json：从精确 pilot step2000 checkpoint 继续，单台同构 8xH100/H200，全部 7339 training source groups / 105057 records，追加 20000 optimizer steps，global batch32，完整 2595-record source-disjoint development 候选评估。旧失败不改判；不自动蒸馏或调 decoder；禁止 Qwen degradation conditioning、mixed degradation、sealed internal、official FoundIR test 和 development-GT optimization。无需再次询问 advisor。",
-  "recorded_at": "2026-09-15T00:47:33Z"
+  "statement": "用户在获知 FLUX.2 isolated-Blur step10000 已在全部2595张 source-disjoint development records 达到25.734236 dB / 0.145406 LPIPS、只差0.165764 dB，且原16图 FLUX.2 overfit 已证明 learnability 后，明确回复 sure, let's do it，授权执行 reports/flux2_blur_continuation_authorization_v1.json：返回 FLUX.2，从精确 step10000 LoRA 与 optimizer state 继续到累计 step14000，global batch32，低学习率 continuation，保存11000/12000/13000/14000 checkpoints，先完整评估 step12000，只有仍有价值时推进/完整评估 step14000。禁止 Qwen degradation conditioning、mixed degradation、pixel refiner、sealed internal、official FoundIR test 和 development-GT optimization。该记录是最新 USER 明确授权，不是捏造 advisor 回复。",
+  "recorded_at": "2026-09-16T02:36:02Z"
 }

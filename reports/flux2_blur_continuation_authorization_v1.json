@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_flux2_blur_continuation",
+  "recorded_at": "2026-09-16T02:32:43Z",
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "user_statement": "sure, let's do it",
+  "authorized_context": "After reviewing that the isolated-Blur FLUX.2 step-10000 checkpoint achieved 25.734236 dB PSNR / 0.145406 LPIPS over all 2595 source-disjoint development records, the user explicitly approved the proposed exact-optimizer low-LR continuation to cumulative step 14000.",
+  "route": {
+    "model": "FLUX.2 Klein Base 4B isolated-Blur DiT LoRA rank32",
+    "parent_config": "configs/foundir_blur_only_flux2_full_v1.json",
+    "parent_checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "parent_checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+    "parent_optimizer": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.optimizer.pt",
+    "cumulative_final_step": 14000,
+    "candidate_steps": [11000, 12000, 13000, 14000],
+    "full_development_gate_steps": [12000, 14000]
+  },
+  "scope": {
+    "training_records": 105057,
+    "training_source_groups": 7339,
+    "development_records": 2595,
+    "development_source_groups": 165,
+    "global_batch_size": 32,
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false,
+    "development_gt_optimization": false
+  },
+  "interpretation": "This authorization returns from the failed Z-Image diagnostic route to the previously trained isolated-Blur FLUX.2 family. It does not relabel any historical result and does not authorize protected evaluation."
+}

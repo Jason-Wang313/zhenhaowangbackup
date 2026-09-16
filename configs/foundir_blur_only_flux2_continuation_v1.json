@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_blur_only_flux2_continuation_v1",
+  "status": "user_authorized_blur_only_low_lr_continuation",
+  "scope": {
+    "category": "01Blur",
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "development_gt_optimization": false
+  },
+  "authorization": {
+    "decision": "reports/advisor_governance/advisor_decision.json",
+    "hold_id": "flux2_blur_continuation_authorization-60565f4f75ef056b",
+    "hold_sha256": "52535877d8b0ede5424fb41c6191f7eb9969778ca42d15830de74f17003a628b",
+    "evidence": "reports/flux2_blur_continuation_authorization_v1.json",
+    "evidence_sha256": "35e6b4051672a042a13429bed614d42cfd6520e820dc984b927207bcf9050e3e"
+  },
+  "parent": {
+    "config": "configs/foundir_blur_only_flux2_full_v1.json",
+    "config_sha256": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c",
+    "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+    "optimizer": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.optimizer.pt",
+    "step": 10000
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "dtype": "bfloat16",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "text_encoder": "models/qwen3-4b-fp8",
+    "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture."
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "training_split": "train",
+    "expected_training_records": 105057,
+    "expected_training_source_groups": 7339,
+    "development_split": "validation",
+    "expected_development_records": 2595,
+    "expected_development_source_groups": 165,
+    "fixed_validation_manifest": "manifests/foundir_blur_only_sanity_v1.csv",
+    "fixed_validation_manifest_sha256": "7114dab36b3978f28657f366e9a961462c3dbfb06927c9262754cced0d8c8e6f",
+    "fixed_validation_role": "future_blur_validation",
+    "fixed_validation_records": 16,
+    "fixed_validation_source_groups": 16,
+    "crop_size": 512,
+    "crop_seed": 2026091111
+  },
+  "lora": {
+    "initialization": "exact_parent_step_10000",
+    "rank": 32,
+    "alpha": 32.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "objective": "pure_noise_to_clean_rectified_flow_with_native_reference",
+    "seed": 2026091112,
+    "start_step": 10000,
+    "max_steps": 14000,
+    "global_batch_size": 32,
+    "learning_rate": 0.000005,
+    "continuation_final_learning_rate": 0.000001,
+    "continuation_schedule": "linear_absolute_steps_10000_to_14000",
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "warmup_steps": 0,
+    "minimum_lr_ratio": 0.2,
+    "timestep_sampling": "uniform",
+    "reference_time_coordinate": 10,
+    "checkpoint_steps": [10000, 11000, 12000, 13000, 14000],
+    "data_loader_workers_per_rank": 4
+  },
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091113,
+    "evaluate_steps": [10000, 11000, 12000, 13000, 14000],
+    "selection_protocol": "fixed_triptychs_then_full_development_at_12000_and_conditionally_14000",
+    "automatic_checkpoint_selection": false
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "hardware_profiles": {
+      "H100": {"micro_batch_size_per_rank": 2, "gradient_accumulation_steps": 2},
+      "H200": {"micro_batch_size_per_rank": 4, "gradient_accumulation_steps": 1}
+    }
+  },
+  "runtime": {
+    "output_dir": "checkpoints/foundir_blur_only_flux2_continuation_v1",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

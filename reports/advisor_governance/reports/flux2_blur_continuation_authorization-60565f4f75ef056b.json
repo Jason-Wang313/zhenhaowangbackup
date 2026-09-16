@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Record the user explicit authorization to return to FLUX.2 and continue the exact step10000 optimizer trajectory through cumulative step14000, with full development gates at step12000 and conditionally step14000.",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_full_v1.json",
+    "sha256": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "105057 Blur training records / 7339 groups; 2595 source-disjoint development records / 165 groups; no protected test",
+  "evidence": {
+    "path": "reports/flux2_blur_continuation_authorization_v1.json",
+    "sha256": "35e6b4051672a042a13429bed614d42cfd6520e820dc984b927207bcf9050e3e"
+  },
+  "gate": "flux2_blur_continuation_authorization",
+  "generated_at": "2026-09-16T02:35:54Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Blur DiT LoRA rank32 exact-optimizer continuation",
+  "outcome": "information",
+  "report_id": "flux2_blur_continuation_authorization-60565f4f75ef056b",
+  "root_cause_or_status": "User explicitly selected the evidence-backed FLUX.2 continuation after Z-Image Layer-1 failed; prior FLUX.2 step10000 is 25.734236/0.145406 and retains exact optimizer state.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -366,6 +366,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--preflight", action="store_true")
+    parser.add_argument(
+        "--stop-step",
+        type=int,
+        help="Stop at a configured checkpoint without declaring the configured run complete.",
+    )
     args = parser.parse_args()
     config_path = args.config.resolve()
     if args.preflight:
@@ -468,7 +473,10 @@ def main() -> int:
                 step=start_step, config=config, output=output, rank=rank, world=world, device=device,
             )
 
-        max_steps = int(training["max_steps"])
+        configured_max_steps = int(training["max_steps"])
+        max_steps = args.stop_step if args.stop_step is not None else configured_max_steps
+        if max_steps not in candidates or max_steps > configured_max_steps or max_steps < start_step:
+            raise RuntimeError("stop-step must be a configured candidate at or after the resume step")
         runtime_profile = config["distributed"]["hardware_profiles"][hardware_profile]
         micro_batch = int(runtime_profile["micro_batch_size_per_rank"])
         accumulation = int(runtime_profile["gradient_accumulation_steps"])
@@ -561,9 +569,13 @@ def main() -> int:
             revision = subprocess.run(
                 ["git", "rev-parse", "HEAD"], cwd=ROOT, check=True, capture_output=True, text=True,
             ).stdout.strip()
+            staged = max_steps < configured_max_steps
             payload = {
                 "schema_version": 1,
-                "status": "training_complete_awaiting_human_visual_review",
+                "status": (
+                    "staged_training_stop_awaiting_full_development_evaluation"
+                    if staged else "training_complete_awaiting_human_visual_review"
+                ),
                 "automatic_checkpoint_selection": False,
                 "human_visual_review": "pending",
                 "selection_protocol": config["inference"]["selection_protocol"],
@@ -590,8 +602,13 @@ def main() -> int:
                 "protected_foundir_test_accessed": False,
                 "wall_seconds_this_process": time.monotonic() - started,
             }
-            write_once_json(output / "training_summary.json", payload)
-            print("FOUNDIR_BLUR_ONLY_FULL_TRAINING_COMPLETE_STOP_FOR_VISUAL_REVIEW", flush=True)
+            summary_name = f"stage_summary_{max_steps:06d}.json" if staged else "training_summary.json"
+            write_once_json(output / summary_name, payload)
+            print(
+                "FOUNDIR_BLUR_ONLY_FULL_STAGE_COMPLETE" if staged
+                else "FOUNDIR_BLUR_ONLY_FULL_TRAINING_COMPLETE_STOP_FOR_VISUAL_REVIEW",
+                flush=True,
+            )
         dist.barrier()
         return 0
     finally:
