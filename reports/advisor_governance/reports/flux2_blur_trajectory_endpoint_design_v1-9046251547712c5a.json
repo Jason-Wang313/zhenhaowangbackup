@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否批准执行已冻结的trajectory-aligned endpoint tiny paired gate，且结果前禁止full-scale？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.json",
+    "sha256": "348d41dea999485e46f0352c033e5e1a95bd6dcdce0b12f71dc4dbb49e72263e"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "16 frozen training crops plus 16 source-group-disjoint descriptive development crops; no protected split",
+  "evidence": {
+    "path": "reports/flux2_blur_trajectory_endpoint_authorization_v1.json",
+    "sha256": "c0dae44ebf692a5207438a7a0b2502639678249c8e94d67e16d5d64bb58f21ec"
+  },
+  "gate": "flux2_blur_trajectory_endpoint_design_v1",
+  "generated_at": "2026-09-16T06:23:19Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Blur step-10000 parent paired flow control versus 50-step trajectory-endpoint fidelity",
+  "outcome": "information",
+  "report_id": "flux2_blur_trajectory_endpoint_design_v1-9046251547712c5a",
+  "root_cause_or_status": "User-authorized bounded architecture/loss change after random-t RGB fidelity failed to generalize: supervise the exact official 50-step endpoint with 46 detached and four differentiable activation-checkpointed steps, frozen VAE RGB plus LPIPS content preservation.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

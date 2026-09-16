@@ -6,6 +6,55 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## FLUX.2 trajectory-aligned endpoint gate DESIGN FROZEN — 2026-09-16T06:23:28Z (LATEST AUTHORITY)
+
+The user explicitly replied `execute` to the recommended trajectory-aligned
+endpoint fidelity gate and then said `continue` in the resumed session. The
+prior terminal hold `flux2_blur_pixel_fidelity_tiny_result-54e5b532a225ebd7`
+was first resolved against its immutable SHA. A distinct architecture/loss
+event was then registered and resolved against the same explicit USER
+authorization (not a fabricated advisor reply). The final hash-bound event is
+`flux2_blur_trajectory_endpoint_design_v1_final-6dab2f3e67857f10`, hold SHA
+`6cbfdf2c063ddb871361bc0f8945a93d359d620a5d8f386a9510aad5e69a5489`.
+`advisor_governance.py check` passes.
+
+Frozen design: exact step-10000 FLUX.2 Blur parent; paired `flow_control` and
+`trajectory_endpoint` arms with independent fresh AdamW; 16 frozen training
+crops plus 16 source-group-disjoint descriptive development crops; 200 steps
+per arm and checkpoints 50/100/200. The candidate retains flow MSE and runs
+the exact official 50-step shifted CFG trajectory on every update, with the
+first 46 transitions under `no_grad` and detached, then four differentiable
+activation-checkpointed transitions. Its final tokens are decoded by the
+frozen VAE and receive RGB MSE weight 1.0 plus LPIPS weight 0.02. No four-step
+surrogate/caching shortcut is allowed. Development cannot select arm, weight,
+or checkpoint; no automatic full scale.
+
+Authorization and frozen config:
+`reports/flux2_blur_trajectory_endpoint_authorization_v1.json` and
+`configs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.json`.
+Implementation and CPU verification are complete. Twenty focused tests,
+compilation, shell syntax, complete preflight hashes, and launcher `--check`
+pass. A real reduced-resolution FLUX.2 4B rehearsal loaded the exact parent,
+ran a 2-detached + 2-checkpointed-suffix trajectory, produced finite loss
+`1.0449200868606567`, and delivered finite nonzero gradients to all 100 LoRA
+tensors. The GPU runner adds a full-resolution 50-step CUDA rehearsal before
+optimizer step 1. Readiness report:
+`reports/foundir_blur_only_flux2_trajectory_endpoint_readiness_2026-09-16.md`.
+
+No GPU job has started. Exact next action on homogeneous 8xH100/H200:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_foundir_blur_only_flux2_trajectory_endpoint_v1_8gpu.sh
+```
+
+Monitor `tail -f logs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.log`.
+Estimated wall time is roughly 35--70 minutes, subject to the live CUDA
+rehearsal and measured throughput. Continue to prohibit Qwen degradation conditioning, mixed
+degradation, decoder tuning, distillation, development-GT optimization,
+sealed internal, and official FoundIR test.
+
 ## FLUX.2 step-10k pixel-fidelity paired gate TERMINAL FAILURE — 2026-09-16T06:02Z (LATEST AUTHORITY)
 
 The GPU gate finished normally on homogeneous 8xH100 in 460.1632 seconds.

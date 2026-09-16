@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否批准执行此最终hash冻结的trajectory-endpoint tiny paired gate？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.json",
+    "sha256": "d1824e219a5f46629e6d8cc3e964e5b676512e2bb8037c41c5bf88a01f9f7b23"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "16 frozen training crops plus 16 source-group-disjoint descriptive development crops; no protected split",
+  "evidence": {
+    "path": "reports/flux2_blur_trajectory_endpoint_authorization_v1.json",
+    "sha256": "c0dae44ebf692a5207438a7a0b2502639678249c8e94d67e16d5d64bb58f21ec"
+  },
+  "gate": "flux2_blur_trajectory_endpoint_design_v1_final",
+  "generated_at": "2026-09-16T06:39:08Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Blur step-10000 parent paired flow control versus exact 50-step trajectory-endpoint fidelity",
+  "outcome": "information",
+  "report_id": "flux2_blur_trajectory_endpoint_design_v1_final-6dab2f3e67857f10",
+  "root_cause_or_status": "Final CPU-ready user-authorized gate: exact official 50-step solver with 46 detached and four differentiable activation-checkpointed transitions, frozen VAE RGB MSE 1.0 and LPIPS 0.02, paired 200-step control/candidate, no automatic full scale.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

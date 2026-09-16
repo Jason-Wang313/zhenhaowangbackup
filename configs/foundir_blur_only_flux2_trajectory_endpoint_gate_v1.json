@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_blur_only_flux2_trajectory_endpoint_gate_v1",
+  "status": "user_authorized_blur_only_step10k_trajectory_endpoint_ablation",
+  "scope": {
+    "category": "01Blur",
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "decoder_tuning": false,
+    "distillation": false,
+    "development_gt_optimization": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "dtype": "bfloat16",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "text_encoder": "models/qwen3-4b-fp8",
+    "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+    "parent_config": "configs/foundir_blur_only_flux2_full_v1.json",
+    "parent_config_sha256": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c",
+    "parent_checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "parent_checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+    "parent_step": 10000
+  },
+  "data": {
+    "frozen_manifest": "manifests/foundir_blur_only_sanity_v1.csv",
+    "frozen_manifest_sha256": "7114dab36b3978f28657f366e9a961462c3dbfb06927c9262754cced0d8c8e6f",
+    "frozen_manifest_metadata": "manifests/foundir_blur_only_sanity_v1.json",
+    "frozen_manifest_metadata_sha256": "67dd1730db67af007d5b26cfddbb7b190fe95614b548b0dfab934d4b4040a796",
+    "tiny_overfit_records": 16,
+    "descriptive_development_records": 16,
+    "crop_size": 512,
+    "development_used_for_selection": false
+  },
+  "lora": {
+    "rank": 32,
+    "alpha": 32.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "objective": "pure_noise_to_clean_flow_plus_official_trajectory_endpoint",
+    "optimizer_initialization": "fresh_adamw_per_arm",
+    "seed": 2026091603,
+    "max_steps_per_arm": 200,
+    "checkpoint_steps": [50, 100, 200],
+    "learning_rate": 0.00001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "timestep_sampling": "uniform",
+    "reference_time_coordinate": 10,
+    "global_batch_size": 8,
+    "arms": [
+      {
+        "name": "flow_control",
+        "flow_mse_weight": 1.0,
+        "endpoint_rgb_mse_weight": 0.0,
+        "endpoint_lpips_weight": 0.0
+      },
+      {
+        "name": "trajectory_endpoint",
+        "flow_mse_weight": 1.0,
+        "endpoint_rgb_mse_weight": 1.0,
+        "endpoint_lpips_weight": 0.02
+      }
+    ],
+    "hardware_profiles": {
+      "H100": {"micro_batch_size_per_rank": 1, "gradient_accumulation_steps": 1},
+      "H200": {"micro_batch_size_per_rank": 1, "gradient_accumulation_steps": 1}
+    }
+  },
+  "trajectory": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "detached_prefix_steps": 46,
+    "differentiable_suffix_steps": 4,
+    "guidance": 1.0,
+    "activation_checkpoint_suffix": true,
+    "recompute_prefix_each_optimizer_step": true,
+    "surrogate_shortcut": false,
+    "seed": 2026091604
+  },
+  "vae_ceiling": {
+    "prior_evidence": "checkpoints/foundir_five_type_flux2_dit_v2/vae_ceiling_result.json",
+    "prior_blur_psnr": 41.106045953656626,
+    "prior_blur_lpips": 0.010296531254425645,
+    "recompute_on_frozen_tiny_records": true,
+    "minimum_mean_psnr": 35.0,
+    "maximum_mean_lpips": 0.03
+  },
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091602,
+    "evaluate_train_steps": [0, 50, 100, 200],
+    "evaluate_development_steps": [0, 200]
+  },
+  "gate": {
+    "candidate_arm": "trajectory_endpoint",
+    "control_arm": "flow_control",
+    "predeclared_candidate_step": 200,
+    "minimum_train_psnr_gain_over_control_db": 0.15,
+    "maximum_train_lpips_regression_vs_control": 0.003,
+    "minimum_train_psnr_gain_over_parent_db": 0.15,
+    "maximum_train_lpips_regression_vs_parent": 0.003,
+    "minimum_psnr_improved_fraction_vs_control": 0.625,
+    "require_visual_review": true,
+    "full_scale_automatic": false
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"]
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_blur_only_flux2_trajectory_endpoint_gate_v1",
+    "persistent_log": "logs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.log",
+    "gpu_telemetry": "logs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1_gpu.csv",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

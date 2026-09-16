@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "flux2_blur_pixel_fidelity_design_v1_final-d37d35b71035af98",
-  "hold_sha256": "14c7196980c9ce3653bc4d72e0fa4fbe7b137299eec459616e95e640327b8b94",
+  "hold_id": "flux2_blur_trajectory_endpoint_design_v1_final-6dab2f3e67857f10",
+  "hold_sha256": "6cbfdf2c063ddb871361bc0f8945a93d359d620a5d8f386a9510aad5e69a5489",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "在完整2595-record step12000评估确认 continuation 同时回退、step10000仍为最佳后，用户针对‘保留10k为parent并改变fidelity mechanism、先做严格小样本pixel-fidelity gate’明确回复 yes, lets do this now, any idea?，随后再次提醒必须先审计旧五类 predicted-clean→frozen-VAE→RGB 路径为何未转化成Blur指标、确认正确后只为10k Blur parent做严格小样本消融。现批准执行 reports/flux2_blur_pixel_fidelity_authorization_v1.json 和冻结 config：同一step10000 parent、同一数据/随机流、fresh optimizer的flow-only对照与flow+RGB-MSE候选各400步；冻结VAE，无refiner/decoder tuning；development仅描述性评估且不选arm/weight/checkpoint；禁止Qwen degradation conditioning、mixed degradation、sealed internal、official FoundIR test；不自动full-scale。该记录是最新USER明确授权，不是捏造advisor回复。",
-  "recorded_at": "2026-09-16T05:26:05Z"
+  "statement": "在 FLUX.2 step-10k pixel-fidelity paired gate 已完整结束并形成 terminal scientific failure 后，用户针对推荐的下一步 trajectory-aligned endpoint fidelity gate 明确回复‘execute’，随后在新会话再次指示‘continue’。现批准执行 reports/flux2_blur_trajectory_endpoint_authorization_v1.json 与冻结 config：保留 flow MSE，使用官方 50-step shifted trajectory，前 46 步 detached、末 4 步可微并 activation checkpoint，冻结 VAE endpoint decode，加入 endpoint RGB MSE 1.0 与 LPIPS 0.02；对照/候选各 200 步，development 仅作描述性评估，不自动 full-scale。继续禁止 Qwen degradation conditioning、mixed degradation、decoder tuning、distillation、development-GT optimization、sealed internal 和 official FoundIR test。该记录仅绑定最新 USER 明确授权，不代表或捏造 advisor 回复。",
+  "recorded_at": "2026-09-16T06:39:16Z"
 }

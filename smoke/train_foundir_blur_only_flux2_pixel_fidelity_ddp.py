@@ -27,6 +27,10 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "third_party/flux2/src"))
 
 from lowlight_restoration.flow import build_reference_flow_batch  # noqa: E402
+from lowlight_restoration.flux2_trajectory_endpoint import (  # noqa: E402
+    denoise_cfg_split_gradient,
+    validate_trajectory_split,
+)
 from lowlight_restoration.lora import (  # noqa: E402
     inject_lora,
     load_lora_checkpoint,
@@ -48,6 +52,7 @@ from smoke.train_foundir_blur_only_flux2_overfit_ddp import (  # noqa: E402
 
 
 STATUS = "user_authorized_blur_only_step10k_pixel_fidelity_ablation"
+TRAJECTORY_STATUS = "user_authorized_blur_only_step10k_trajectory_endpoint_ablation"
 REQUIRED_FALSE = (
     "qwen_degradation_conditioning",
     "mixed_degradations",
@@ -60,7 +65,8 @@ REQUIRED_FALSE = (
 
 
 def validate_config(config: Mapping[str, object]) -> None:
-    if config.get("status") != STATUS:
+    status = config.get("status")
+    if status not in {STATUS, TRAJECTORY_STATUS}:
         raise RuntimeError("config is not authorized for the step-10k pixel-fidelity gate")
     scope = config["scope"]
     if scope.get("category") != "01Blur" or any(scope.get(key) is not False for key in REQUIRED_FALSE):
@@ -69,22 +75,34 @@ def validate_config(config: Mapping[str, object]) -> None:
     if model.get("name") != "flux.2-klein-base-4b" or int(model.get("parent_step", -1)) != 10000:
         raise RuntimeError("model family or parent step changed")
     training = config["training"]
-    if training.get("objective") != "pure_noise_to_clean_rectified_flow_with_native_reference":
-        raise RuntimeError("pure flow objective changed")
-    if training.get("predicted_clean_identity") != "noise_minus_predicted_velocity":
-        raise RuntimeError("predicted-clean identity changed")
+    if status == STATUS:
+        if training.get("objective") != "pure_noise_to_clean_rectified_flow_with_native_reference":
+            raise RuntimeError("pure flow objective changed")
+        if training.get("predicted_clean_identity") != "noise_minus_predicted_velocity":
+            raise RuntimeError("predicted-clean identity changed")
+    elif training.get("objective") != "pure_noise_to_clean_flow_plus_official_trajectory_endpoint":
+        raise RuntimeError("trajectory endpoint objective changed")
     if training.get("optimizer_initialization") != "fresh_adamw_per_arm":
         raise RuntimeError("each arm must use fresh AdamW state")
     arms = training.get("arms")
-    expected_arms = [
-        {"name": "flow_control", "flow_mse_weight": 1.0, "rgb_mse_weight": 0.0},
-        {"name": "rgb_mse", "flow_mse_weight": 1.0, "rgb_mse_weight": 1.0},
-    ]
+    expected_arms = (
+        [
+            {"name": "flow_control", "flow_mse_weight": 1.0, "rgb_mse_weight": 0.0},
+            {"name": "rgb_mse", "flow_mse_weight": 1.0, "rgb_mse_weight": 1.0},
+        ]
+        if status == STATUS
+        else [
+            {"name": "flow_control", "flow_mse_weight": 1.0, "endpoint_rgb_mse_weight": 0.0, "endpoint_lpips_weight": 0.0},
+            {"name": "trajectory_endpoint", "flow_mse_weight": 1.0, "endpoint_rgb_mse_weight": 1.0, "endpoint_lpips_weight": 0.02},
+        ]
+    )
     if arms != expected_arms:
         raise RuntimeError("paired loss arms changed")
     maximum = int(training["max_steps_per_arm"])
     checkpoints = [int(value) for value in training["checkpoint_steps"]]
-    if checkpoints != [50, 100, 200, 400] or maximum != 400:
+    expected_checkpoints = [50, 100, 200, 400] if status == STATUS else [50, 100, 200]
+    expected_maximum = 400 if status == STATUS else 200
+    if checkpoints != expected_checkpoints or maximum != expected_maximum:
         raise RuntimeError("bounded checkpoint schedule changed")
     if config["inference"].get("schedule") != "official_flux2_shifted_schedule":
         raise RuntimeError("official FLUX.2 schedule is required")
@@ -101,10 +119,29 @@ def validate_config(config: Mapping[str, object]) -> None:
         if actual != global_batch:
             raise RuntimeError(f"{family} profile changes global batch: {actual} != {global_batch}")
     gate = config["gate"]
-    if gate.get("candidate_arm") != "rgb_mse" or gate.get("control_arm") != "flow_control":
+    expected_candidate = "rgb_mse" if status == STATUS else "trajectory_endpoint"
+    if gate.get("candidate_arm") != expected_candidate or gate.get("control_arm") != "flow_control":
         raise RuntimeError("paired gate arm identities changed")
     if int(gate["predeclared_candidate_step"]) != maximum or gate.get("full_scale_automatic") is not False:
         raise RuntimeError("candidate selection or full-scale stop contract changed")
+    if status == TRAJECTORY_STATUS:
+        if config["scope"].get("distillation") is not False:
+            raise RuntimeError("distillation is prohibited in the trajectory gate")
+        trajectory = config["trajectory"]
+        if (
+            trajectory.get("schedule") != "official_flux2_shifted_schedule"
+            or int(trajectory["num_steps"]) != 50
+            or float(trajectory["guidance"]) != 1.0
+            or trajectory.get("activation_checkpoint_suffix") is not True
+            or trajectory.get("recompute_prefix_each_optimizer_step") is not True
+            or trajectory.get("surrogate_shortcut") is not False
+        ):
+            raise RuntimeError("trajectory solver contract changed")
+        validate_trajectory_split(
+            [float(index) for index in range(51)],
+            detached_prefix_steps=int(trajectory["detached_prefix_steps"]),
+            differentiable_suffix_steps=int(trajectory["differentiable_suffix_steps"]),
+        )
 
 
 def load_frozen_manifest(
@@ -171,6 +208,53 @@ def decoded_rgb_mse(
     return F.mse_loss(decoded, target_rgb.float()), decoded
 
 
+def trajectory_endpoint_losses(
+    model,
+    autoencoder,
+    degraded_latent: torch.Tensor,
+    initial_noise: torch.Tensor,
+    target_rgb: torch.Tensor,
+    cfg_context: torch.Tensor,
+    cfg_ids: torch.Tensor,
+    pack_image,
+    perceptual_metric,
+    trajectory: Mapping[str, object],
+    *,
+    reference_time: int,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    """Differentiate fidelity losses through the exact declared solver suffix."""
+
+    from flux2.sampling import get_schedule, scatter_ids
+
+    reference_tokens, reference_ids = pack_image(degraded_latent)
+    reference_ids = reference_ids.clone()
+    reference_ids[..., 0] = reference_time
+    image_tokens, image_ids = pack_image(initial_noise)
+    schedule = get_schedule(int(trajectory["num_steps"]), image_tokens.shape[1])
+    endpoint_tokens = denoise_cfg_split_gradient(
+        model,
+        image_tokens,
+        image_ids,
+        cfg_context,
+        cfg_ids,
+        schedule,
+        float(trajectory["guidance"]),
+        reference_tokens=reference_tokens,
+        reference_ids=reference_ids,
+        detached_prefix_steps=int(trajectory["detached_prefix_steps"]),
+        differentiable_suffix_steps=int(trajectory["differentiable_suffix_steps"]),
+        checkpoint_suffix=bool(trajectory["activation_checkpoint_suffix"]),
+    )
+    endpoint_latent = torch.cat(scatter_ids(endpoint_tokens, image_ids)).squeeze(2)
+    decoded = autoencoder.decode(endpoint_latent).float().clamp(-1, 1)
+    rgb_loss = F.mse_loss(decoded, target_rgb.float())
+    lpips_loss = perceptual_metric(
+        (decoded + 1.0) * 0.5,
+        (target_rgb.float() + 1.0) * 0.5,
+    )
+    return rgb_loss, lpips_loss, decoded
+
+
 def verify_parent(config: Mapping[str, object]) -> None:
     model = config["model"]
     for key, hash_key in (
@@ -214,7 +298,11 @@ def preflight(config_path: Path) -> None:
     ):
         raise RuntimeError("prior VAE ceiling evidence changed")
     print(json.dumps({
-        "status": "FOUNDIR_BLUR_PIXEL_FIDELITY_PREFLIGHT_PASS",
+        "status": (
+            "FOUNDIR_BLUR_TRAJECTORY_ENDPOINT_PREFLIGHT_PASS"
+            if config["status"] == TRAJECTORY_STATUS
+            else "FOUNDIR_BLUR_PIXEL_FIDELITY_PREFLIGHT_PASS"
+        ),
         "config_sha256": sha256(config_path),
         "parent_checkpoint_sha256": config["model"]["parent_checkpoint_sha256"],
         "train_records": len(train),
@@ -321,6 +409,82 @@ def compare_final_arms(config: Mapping[str, object], arm_results: Mapping[str, M
     }
 
 
+def run_trajectory_cuda_rehearsal(
+    wrapped,
+    autoencoder,
+    trainable: Sequence[torch.nn.Parameter],
+    record: Mapping[str, object],
+    cfg_context: torch.Tensor,
+    cfg_ids: torch.Tensor,
+    pack_image,
+    metric,
+    config: Mapping[str, object],
+    *,
+    rank: int,
+    world: int,
+    device: torch.device,
+    output_dir: Path,
+) -> None:
+    """Exercise one full-resolution endpoint backward without an optimizer step."""
+
+    artifact = output_dir / "cuda_rehearsal.json"
+    if artifact.exists():
+        payload = json.loads(artifact.read_text())
+        if payload.get("status") != "pass" or payload.get("config_sha256") != sha256(Path(config["_config_path"])):
+            raise RuntimeError("trajectory CUDA rehearsal artifact is invalid")
+        dist.barrier()
+        return
+    lq = record["lq"].unsqueeze(0).to(device)
+    gt = record["gt"].unsqueeze(0).to(device)
+    with torch.no_grad():
+        degraded = autoencoder.encode(lq).to(torch.bfloat16)
+    generator = torch.Generator(device=device).manual_seed(int(config["trajectory"]["seed"]) + rank)
+    noise = torch.randn(degraded.shape, generator=generator, device=device, dtype=torch.bfloat16)
+    torch.cuda.reset_peak_memory_stats(device)
+    with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+        rgb_loss, perceptual_loss, _ = trajectory_endpoint_losses(
+            wrapped.module, autoencoder, degraded, noise, gt, cfg_context, cfg_ids,
+            pack_image, metric, config["trajectory"],
+            reference_time=int(config["training"]["reference_time_coordinate"]),
+        )
+        rehearsal_loss = rgb_loss + float(config["training"]["arms"][1]["endpoint_lpips_weight"]) * perceptual_loss
+    rehearsal_loss.backward()
+    local_nonzero = sum(
+        parameter.grad is not None
+        and torch.isfinite(parameter.grad).all().item()
+        and float(parameter.grad.detach().abs().max()) > 0
+        for parameter in trainable
+    )
+    if local_nonzero == 0 or any(parameter.grad is not None for parameter in autoencoder.parameters()):
+        raise RuntimeError("trajectory CUDA rehearsal gradient contract failed")
+    peak = torch.cuda.max_memory_allocated(device)
+    mean_values = torch.tensor(
+        [float(rgb_loss.detach()), float(perceptual_loss.detach())], device=device
+    )
+    minimum_nonzero = torch.tensor([local_nonzero], dtype=torch.int64, device=device)
+    maximum_peak = torch.tensor([peak], dtype=torch.int64, device=device)
+    dist.all_reduce(mean_values)
+    dist.all_reduce(minimum_nonzero, op=dist.ReduceOp.MIN)
+    dist.all_reduce(maximum_peak, op=dist.ReduceOp.MAX)
+    for parameter in trainable:
+        parameter.grad = None
+    if rank == 0:
+        payload = {
+            "status": "pass",
+            "config_sha256": sha256(Path(config["_config_path"])),
+            "world_size": world,
+            "mean_rgb_loss": float(mean_values[0] / world),
+            "mean_lpips_loss": float(mean_values[1] / world),
+            "minimum_nonzero_trainable_grad_tensors_per_rank": int(minimum_nonzero.item()),
+            "maximum_peak_memory_bytes": int(maximum_peak.item()),
+            "optimizer_step_performed": False,
+            "frozen_vae_parameter_gradients": False,
+        }
+        write_once(artifact, (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
+        print("FOUNDIR_BLUR_TRAJECTORY_CUDA_REHEARSAL_PASS " + json.dumps(payload, sort_keys=True), flush=True)
+    dist.barrier()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
@@ -410,7 +574,12 @@ def main() -> int:
             find_unused_parameters=False,
             gradient_as_bucket_view=True,
         )
-        metric = LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True).to(device).eval()
+        metric = (
+            LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True)
+            .to(device)
+            .eval()
+            .requires_grad_(False)
+        )
 
         ceiling_train_path = output_dir / "vae_ceiling_train.json"
         ceiling_development_path = output_dir / "vae_ceiling_descriptive_development.json"
@@ -466,6 +635,12 @@ def main() -> int:
                 weight_decay=float(config["training"]["weight_decay"]),
                 fused=True,
             )
+            if config["status"] == TRAJECTORY_STATUS and arm_name == "trajectory_endpoint":
+                run_trajectory_cuda_rehearsal(
+                    wrapped, autoencoder, trainable, train_records[rank % len(train_records)],
+                    cfg_context, cfg_ids, batched_prc_img, metric, config,
+                    rank=rank, world=world, device=device, output_dir=output_dir,
+                )
             start_step = 0
             checkpoints = sorted(arm_dir.glob("step_*.safetensors")) if args.resume else []
             if checkpoints:
@@ -509,6 +684,7 @@ def main() -> int:
             for step in range(start_step, maximum):
                 flow_sum = 0.0
                 rgb_sum = 0.0
+                lpips_sum = 0.0
                 total_sum = 0.0
                 for micro in range(accumulation):
                     position = (step * accumulation + micro) * world + rank
@@ -539,19 +715,42 @@ def main() -> int:
                                 guidance=None,
                             )[:, : flow.target_token_count]
                             flow_loss = F.mse_loss(prediction.float(), flow.target_velocity.float())
-                            if float(arm["rgb_mse_weight"]) > 0:
+                            if config["status"] == STATUS and float(arm["rgb_mse_weight"]) > 0:
                                 rgb_loss, _ = decoded_rgb_mse(
                                     prediction, noise, clean.shape, autoencoder, gt
                                 )
+                                perceptual_loss = flow_loss.new_zeros(())
+                                loss = (
+                                    float(arm["flow_mse_weight"]) * flow_loss
+                                    + float(arm["rgb_mse_weight"]) * rgb_loss
+                                )
+                            elif config["status"] == TRAJECTORY_STATUS and float(arm["endpoint_rgb_mse_weight"]) > 0:
+                                endpoint_generator = torch.Generator(device=device).manual_seed(
+                                    int(config["trajectory"]["seed"]) + position * 1_000_033
+                                )
+                                endpoint_noise = torch.randn(
+                                    clean.shape, generator=endpoint_generator, device=device,
+                                    dtype=torch.bfloat16,
+                                )
+                                rgb_loss, perceptual_loss, _ = trajectory_endpoint_losses(
+                                    wrapped.module, autoencoder, degraded.to(torch.bfloat16), endpoint_noise,
+                                    gt, cfg_context, cfg_ids, batched_prc_img, metric,
+                                    config["trajectory"],
+                                    reference_time=int(config["training"]["reference_time_coordinate"]),
+                                )
+                                loss = (
+                                    float(arm["flow_mse_weight"]) * flow_loss
+                                    + float(arm["endpoint_rgb_mse_weight"]) * rgb_loss
+                                    + float(arm["endpoint_lpips_weight"]) * perceptual_loss
+                                )
                             else:
                                 rgb_loss = flow_loss.new_zeros(())
-                            loss = (
-                                float(arm["flow_mse_weight"]) * flow_loss
-                                + float(arm["rgb_mse_weight"]) * rgb_loss
-                            )
+                                perceptual_loss = flow_loss.new_zeros(())
+                                loss = float(arm["flow_mse_weight"]) * flow_loss
                         (loss / accumulation).backward()
                     flow_sum += float(flow_loss.detach())
                     rgb_sum += float(rgb_loss.detach())
+                    lpips_sum += float(perceptual_loss.detach())
                     total_sum += float(loss.detach())
                 if any(parameter.grad is not None for parameter in autoencoder.parameters()):
                     raise RuntimeError("frozen VAE unexpectedly accumulated gradients")
@@ -559,7 +758,12 @@ def main() -> int:
                 optimizer.step()
                 optimizer.zero_grad(set_to_none=True)
                 values = torch.tensor(
-                    [flow_sum / accumulation, rgb_sum / accumulation, total_sum / accumulation],
+                    [
+                        flow_sum / accumulation,
+                        rgb_sum / accumulation,
+                        lpips_sum / accumulation,
+                        total_sum / accumulation,
+                    ],
                     device=device,
                 )
                 dist.all_reduce(values)
@@ -569,7 +773,8 @@ def main() -> int:
                     print(
                         f"FOUNDIR_BLUR_PIXEL_FIDELITY arm={arm_name} step={completed}/{maximum} "
                         f"flow={float(values[0]):.8f} rgb={float(values[1]):.8f} "
-                        f"total={float(values[2]):.8f} grad_norm={float(grad_norm):.6f}",
+                        f"lpips={float(values[2]):.8f} total={float(values[3]):.8f} "
+                        f"grad_norm={float(grad_norm):.6f}",
                         flush=True,
                     )
                 if completed in checkpoint_steps:
@@ -623,6 +828,7 @@ def main() -> int:
                     "mixed_degradations": False,
                     "pixel_refiner": False,
                     "decoder_tuning": False,
+                    "distillation": False,
                     "development_gt_optimization": False,
                     "sealed_internal_accessed": False,
                     "official_foundir_test_accessed": False,
@@ -666,12 +872,14 @@ def main() -> int:
                 "mixed_degradations": False,
                 "pixel_refiner": False,
                 "decoder_tuning": False,
+                "distillation": False,
                 "development_gt_optimization": False,
                 "sealed_internal_accessed": False,
                 "official_foundir_test_accessed": False,
                 "gpu_family": family,
                 "world_size": world,
                 "global_batch_size": int(config["training"]["global_batch_size"]),
+                "trajectory": config.get("trajectory"),
                 "wall_seconds": time.monotonic() - started,
             }
             write_once(output_dir / "result.json", (json.dumps(result, indent=2, sort_keys=True) + "\n").encode())

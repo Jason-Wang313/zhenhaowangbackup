@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_flux2_blur_trajectory_endpoint_gate",
+  "recorded_at": "2026-09-16T06:21:00Z",
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "user_statement": "execute; continue",
+  "authorized_context": "The completed random-t predicted-clean RGB gate proved the frozen VAE gradient path works but overfit the 16 training crops, regressed source-disjoint development, and damaged LPIPS. The user explicitly authorized the recommended materially distinct trajectory-aligned endpoint gate.",
+  "selected_design": {
+    "config": "configs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.json",
+    "model": "FLUX.2 Klein Base 4B isolated-Blur DiT LoRA rank32",
+    "parent_checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "parent_checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+    "mechanism": "retain flow MSE and supervise the actual official 50-step inference endpoint after a 46-step detached prefix and four differentiable activation-checkpointed suffix steps",
+    "endpoint_losses": "frozen-VAE RGB MSE weight 1.0 plus LPIPS weight 0.02",
+    "train_records": 16,
+    "descriptive_source_disjoint_records": 16,
+    "optimizer": "fresh AdamW independently initialized for control and candidate",
+    "candidate_step": 200
+  },
+  "scope": {
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "decoder_tuning": false,
+    "distillation": false,
+    "development_gt_optimization": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false,
+    "automatic_full_scale": false
+  },
+  "interpretation": "This is a bounded paired mechanism gate. Development is descriptive only and cannot select the arm, weights, or checkpoint. It is not a cheaper four-step surrogate and cannot automatically launch full-scale training."
+}
