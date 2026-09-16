@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_flux2_blur_pixel_fidelity_gate",
+  "recorded_at": "2026-09-16T05:22:00Z",
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "user_statement": "yes, lets do this now, any idea?",
+  "authorized_context": "After the complete 2595-record step-12000 evaluation showed that continued pure-flow optimization regressed both PSNR and LPIPS and step 10000 remained best, the user explicitly approved changing the fidelity mechanism while retaining step 10000 as parent.",
+  "selected_design": {
+    "config": "configs/foundir_blur_only_flux2_pixel_fidelity_gate_v1.json",
+    "model": "FLUX.2 Klein Base 4B isolated-Blur DiT LoRA rank32",
+    "parent_checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+    "parent_checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+    "mechanism": "paired tiny ablation of unchanged pure flow versus pure flow plus differentiable RGB MSE through the frozen VAE decoder",
+    "train_records": 16,
+    "descriptive_source_disjoint_records": 16,
+    "optimizer": "fresh AdamW independently initialized for each arm",
+    "candidate_step": 400
+  },
+  "scope": {
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "decoder_tuning": false,
+    "development_gt_optimization": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false,
+    "automatic_full_scale": false
+  },
+  "interpretation": "This is a bounded loss-mechanism gate, not further step/LR continuation and not authorization for full-scale training. The source-disjoint development records are descriptive only and cannot select an arm, weight, or checkpoint."
+}

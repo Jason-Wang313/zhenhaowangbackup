@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否按用户最新明确指令执行该最终冻结的paired pixel-fidelity tiny gate；仅metric及visual gate通过后再讨论full scale？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_pixel_fidelity_gate_v1.json",
+    "sha256": "e366396c9189dbd03dda45a501d41552cb80ccfb2ebc60748848dcd22284a9b1"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "16 frozen isolated-Blur training crops plus 16 source-group-disjoint descriptive development crops; no protected split",
+  "evidence": {
+    "path": "reports/flux2_blur_pixel_fidelity_authorization_v1.json",
+    "sha256": "35976edd6b31cac486504618db67db434cb11f1e750fe6cd0374efcbc2c33139"
+  },
+  "gate": "flux2_blur_pixel_fidelity_design_v1_final",
+  "generated_at": "2026-09-16T05:25:56Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Blur step-10000 parent; paired DiT-LoRA flow-only versus flow-plus-frozen-VAE RGB-MSE tiny ablation",
+  "outcome": "information",
+  "report_id": "flux2_blur_pixel_fidelity_design_v1_final-d37d35b71035af98",
+  "root_cause_or_status": "Final frozen design supersedes the earlier design event by adding the missing no-LPIPS-regression-versus-parent acceptance check. All other paired-ablation scope is unchanged.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

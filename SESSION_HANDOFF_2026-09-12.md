@@ -6,6 +6,74 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## FLUX.2 step-10k pixel-fidelity paired gate CPU-ready — 2026-09-16T05:30Z (LATEST AUTHORITY)
+
+The low-LR continuation is terminally closed: complete 2,595-record metrics
+are step10k `25.734236/.145406` and step12k `25.709168/.145691`. Keep exact
+step10k parent SHA
+`e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439`;
+do not continue steps or run another LR sweep.
+
+The user explicitly authorized changing the fidelity mechanism. The final
+registered design hold
+`flux2_blur_pixel_fidelity_design_v1_final-d37d35b71035af98` is resolved by
+the exact user instruction. This is a paired 16-pair ablation: `flow_control`
+versus `rgb_mse`, both from the same step10k LoRA with independently fresh
+AdamW, identical samples/noise/timesteps, unchanged pure noise-to-clean flow,
+native LQ reference and official 50-step inference. The only candidate-arm
+difference is RGB MSE through the frozen VAE from
+`predicted_clean = noise - predicted_velocity`. No refiner, edge/LPIPS loss,
+decoder tuning, Qwen degradation conditioning, mixed degradation,
+development-GT optimization, sealed internal, or official FoundIR test.
+
+The historical five-type RGB implementation is not being rerun. It was
+confounded by degraded-anchored flow, mixed tasks/Qwen conditions, six-step
+inference, an RGB term only every eighth step, and a jointly trained pixel
+refiner. Its two isolated Blur examples did not demonstrate Blur learning.
+Only its validated unpack/decode-gradient mechanics were reused.
+
+Exact new files:
+
+```text
+configs/foundir_blur_only_flux2_pixel_fidelity_gate_v1.json
+smoke/train_foundir_blur_only_flux2_pixel_fidelity_ddp.py
+smoke/run_foundir_blur_only_flux2_pixel_fidelity_v1_8gpu.sh
+smoke/launch_foundir_blur_only_flux2_pixel_fidelity_v1_8gpu.sh
+tests/test_foundir_blur_only_flux2_pixel_fidelity.py
+reports/foundir_blur_only_flux2_pixel_fidelity_readiness_2026-09-16.md
+reports/flux2_blur_pixel_fidelity_authorization_v1.json
+```
+
+Config SHA is
+`e366396c9189dbd03dda45a501d41552cb80ccfb2ebc60748848dcd22284a9b1`.
+Fourteen focused tests, compilation, shell syntax, complete launcher check,
+parent/model/manifest hashes and prior VAE evidence pass. A real FLUX VAE CPU
+decode-backward smoke produced finite loss and nonzero latent gradients while
+all decoder parameter gradients remained absent. The GPU job recomputes VAE
+ceilings on all fixed 16+16 crops before training.
+
+The candidate is predeclared step400; checkpoints/fixed train visuals are at
+0/50/100/200/400. Development is descriptive at 0/400 and cannot select the
+arm, loss weight, or checkpoint. Metric pass requires >=.15dB over paired
+control and parent, LPIPS regression <=.003 against both, and candidate PSNR
+better on >=10/16 train records. Human visual review remains mandatory. There
+is no automatic full-scale action.
+
+No GPU job has started from this CPU-only shell. Exact next action:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang && \
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 && \
+smoke/launch_foundir_blur_only_flux2_pixel_fidelity_v1_8gpu.sh
+```
+
+Monitor:
+`tail -f logs/foundir_blur_only_flux2_pixel_fidelity_gate_v1.log`.
+Expected runtime is roughly 20--35 minutes. After completion, audit both arm
+metrics, hashes/counts, VAE ceiling, fixed train/development visuals, and the
+terminal governance report before considering full scale. The active goal is
+not complete until this GPU quality gate finishes.
+
 ## Corrective Layer-1 v2 TERMINAL FAILURE — 2026-09-16T02:01:48Z (LATEST AUTHORITY)
 
 The exact frozen v2 tiny run completed 1000/1000 steps normally on 8xH100,

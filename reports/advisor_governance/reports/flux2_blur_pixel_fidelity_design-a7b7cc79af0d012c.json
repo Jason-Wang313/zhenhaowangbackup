@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否按用户最新明确指令执行已冻结的 paired 16-pair pixel-fidelity tiny gate；仅 gate 明确胜过同轨 flow control 后再讨论 full scale？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_blur_only_flux2_pixel_fidelity_gate_v1.json",
+    "sha256": "9219c0f9b1df8f871efb2cf87f2a95818a1ea73dbf9844b64cef57ec9e85c1e4"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "16 frozen isolated-Blur training crops plus 16 source-group-disjoint descriptive development crops; no protected split",
+  "evidence": {
+    "path": "reports/flux2_blur_pixel_fidelity_authorization_v1.json",
+    "sha256": "35976edd6b31cac486504618db67db434cb11f1e750fe6cd0374efcbc2c33139"
+  },
+  "gate": "flux2_blur_pixel_fidelity_design",
+  "generated_at": "2026-09-16T05:22:18Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Blur step-10000 parent; paired DiT-LoRA flow-only versus flow-plus-frozen-VAE RGB-MSE tiny ablation",
+  "outcome": "information",
+  "report_id": "flux2_blur_pixel_fidelity_design-a7b7cc79af0d012c",
+  "root_cause_or_status": "Step-12000 continuation regressed; historical five-type RGB path was confounded by anchored flow, mixed tasks, six-step solver, sparse auxiliary application, and a jointly trained pixel refiner. This design isolates direct RGB gradient on the best step-10000 pure-flow Blur parent.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
