@@ -6,7 +6,52 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## FLUX.2 source-diverse spatial-anchor pilot CPU-ready — 2026-09-16T08:02Z (LATEST AUTHORITY)
+## FLUX.2 source-diverse spatial-anchor pilot TERMINAL FAILURE — 2026-09-16T09:40:59Z (LATEST AUTHORITY)
+
+The homogeneous 8xH100 run completed both arms at 400/400 at
+`2026-09-16T09:22:55Z` in `3744.3806 s`. There was no OOM, NCCL, NaN, or
+runtime failure; torchrun exit 2 intentionally reports the scientific gate
+failure. The CUDA rehearsal passed with finite nonzero gradients on all 100
+LoRA tensors, no frozen-VAE gradients, and peak memory `29,487,960,064` bytes.
+
+Final train matched-parent/control/candidate metrics are
+`22.619227/.183367`, `22.626140/.184824`, and `23.521008/.185978`.
+Source-disjoint development matched-parent/control/candidate metrics are
+`24.032013/.158307`, `23.426864/.160281`, and `24.105156/.170990`.
+Candidate beats control by `+.678292 dB` but worsens LPIPS by `+.010708`.
+Versus matched parent it is `+.073143 dB / +.012683 LPIPS`, wins PSNR on
+13/16 records, but the worst record regresses `8.129650 dB`. The frozen
+automatic gate fails; do not scale, extend, distill, or decoder-tune it.
+
+Protocol caveat: this pilot used inference seed `2026091607`, while the prior
+trajectory gate used `2026091602`. Thus its matched parent replay does not
+exactly reproduce the earlier quoted fixed-16 parent. This does not rescue the
+candidate because it loses LPIPS against both matched parent and control,
+incurs an 8.13 dB worst-record regression, and fails the frozen absolute gate.
+
+All 32 final candidate triptychs were reviewed. Outputs are often sharper and
+coherent, proving useful generalization relative to control, but text, moving
+objects, small structure, and near-clean preservation remain spatially
+unreliable. Formal report:
+`reports/foundir_blur_only_flux2_source_diverse_spatial_anchor_terminal_result_2026-09-16.md`.
+Hash-bound visual review:
+`reports/foundir_blur_only_flux2_source_diverse_spatial_anchor_visual_review_v1.json`,
+SHA `c806345148fd76ae61024f71349478c47ede6336eb5aa024b8aff9df2091ead8`.
+
+Immutable identities: root result SHA
+`47d72b0d4efb887f9e684d09e83854dcd3e9a00b233ee5c707292fefab674de7`;
+candidate/control checkpoint SHAs
+`a1be1e983d33de71faa6ea0da3be1ff161a73c5bc791e602cb7be0a5fff3d29d` /
+`53521088154d4ac9798711e809bda0052f3e16c26e2b7f3deb01db6d40dff083`.
+Artifacts: 4 checkpoints, 4 optimizer states, 10 metrics JSON files, and 160
+PNGs. Protected flags are false.
+
+Active hold:
+`flux2_blur_source_diverse_spatial_anchor_pilot_result-b2414002ee6a3cdc`.
+Only read-only audit/report preparation is allowed until a matching explicit
+decision is recorded. No new experiment is authorized.
+
+## FLUX.2 source-diverse spatial-anchor pilot CPU-ready — 2026-09-16T08:02Z (HISTORICAL)
 
 The user explicitly replied `sure,execute` to the recommended source-diverse
 intermediate pilot. The prior terminal hold was resolved first, then the final

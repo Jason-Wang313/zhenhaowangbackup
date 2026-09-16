@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "status": "human_visual_gate_failed",
+  "reviewed_at": "2026-09-16T09:40:59Z",
+  "review_scope": {
+    "candidate_train_step_400_triptychs": 16,
+    "candidate_source_disjoint_development_step_400_triptychs": 16,
+    "layout": "Input | FLUX.2 Output | Ground Truth",
+    "train_record_ids": [
+      "foundir_train_0000507", "foundir_train_0002050", "foundir_train_0008555", "foundir_train_0008734",
+      "foundir_train_0031149", "foundir_train_0044313", "foundir_train_0066939", "foundir_train_0067756",
+      "foundir_train_0068903", "foundir_train_0076358", "foundir_train_0085841", "foundir_train_0095286",
+      "foundir_train_0097791", "foundir_train_0097978", "foundir_train_0104013", "foundir_train_0109033"
+    ],
+    "development_record_ids": [
+      "foundir_train_0001925", "foundir_train_0003946", "foundir_train_0021020", "foundir_train_0026402",
+      "foundir_train_0033769", "foundir_train_0055120", "foundir_train_0055608", "foundir_train_0060122",
+      "foundir_train_0062371", "foundir_train_0070750", "foundir_train_0079533", "foundir_train_0092666",
+      "foundir_train_0092917", "foundir_train_0100453", "foundir_train_0100870", "foundir_train_0106209"
+    ],
+    "train_sorted_sha256_manifest_sha256": "7a88952d4ae554c8ddf61fd7c11efe5ecb73eed95bb8aa354d7c1d4210a63c6c",
+    "development_sorted_sha256_manifest_sha256": "81d150128cc1fa95cc061272dde7e4fa361391bee79ebd80c5ff3a94277677a4"
+  },
+  "root_result": "checkpoints/foundir_blur_only_flux2_source_diverse_spatial_anchor_pilot_v1/result.json",
+  "root_result_sha256": "47d72b0d4efb887f9e684d09e83854dcd3e9a00b233ee5c707292fefab674de7",
+  "config": "configs/foundir_blur_only_flux2_source_diverse_spatial_anchor_pilot_v1.json",
+  "config_sha256": "ab5a41af64d6a8e39e228625a18b5b978ab616cc007308dcd2999242bb1a05be",
+  "selected_checkpoint": "checkpoints/foundir_blur_only_flux2_source_diverse_spatial_anchor_pilot_v1/arms/trajectory_spatial_anchor/step_000400.safetensors",
+  "selected_checkpoint_sha256": "a1be1e983d33de71faa6ea0da3be1ff161a73c5bc791e602cb7be0a5fff3d29d",
+  "automatic_metric_gate_pass": false,
+  "human_visual_gate_pass": false,
+  "full_scale_admission_pass": false,
+  "protocol_caveat": {
+    "current_inference_seed": 2026091607,
+    "prior_trajectory_gate_inference_seed": 2026091602,
+    "effect": "The current parent replay is internally matched to both current arms but is not an exact replay of the prior quoted fixed-16 parent. Cross-experiment absolute parent comparisons are therefore descriptive only.",
+    "does_not_rescue_candidate": "Candidate LPIPS is worse than the matched current parent and matched control, its worst matched-parent PSNR regression is 8.129650 dB, and it fails the frozen absolute gate."
+  },
+  "findings": {
+    "train": "The source-diverse candidate is generally coherent and often sharper, with no systematic checker texture or gross collapse, but exact alignment and near-clean preservation remain inconsistent.",
+    "source_disjoint_development": "Many outputs are plausibly sharper and candidate PSNR beats the matched parent on 13/16 records. Text, small structure, moving objects, and edges can nevertheless be reconstructed at incorrect positions or shapes, and the perceptual metric regresses systematically.",
+    "representative_failures": [
+      {
+        "record_id": "foundir_train_0100870",
+        "observation": "near-clean content is unnecessarily changed",
+        "matched_parent_to_candidate_psnr_db": "33.040240 -> 24.910589",
+        "matched_parent_to_candidate_lpips": "0.037672 -> 0.089046"
+      },
+      {
+        "record_id": "foundir_train_0100453",
+        "observation": "candidate remains sharp but exact fidelity regresses materially",
+        "matched_parent_to_candidate_psnr_db": "36.736191 -> 34.041943",
+        "matched_parent_to_candidate_lpips": "0.054697 -> 0.073365"
+      },
+      {
+        "record_id": "foundir_train_0021020",
+        "observation": "fine spatial structure remains imperfectly aligned",
+        "matched_parent_to_candidate_psnr_db": "27.091726 -> 26.680576",
+        "matched_parent_to_candidate_lpips": "0.123421 -> 0.134559"
+      }
+    ]
+  },
+  "metrics": {
+    "matched_parent_train_psnr": 22.61922646089349,
+    "matched_parent_train_lpips": 0.1833666735328734,
+    "control_train_psnr": 22.62613954654474,
+    "control_train_lpips": 0.18482405366376042,
+    "candidate_train_psnr": 23.521007614886717,
+    "candidate_train_lpips": 0.18597765732556581,
+    "matched_parent_development_psnr": 24.032012597179804,
+    "matched_parent_development_lpips": 0.15830691647715867,
+    "control_development_psnr": 23.42686386634398,
+    "control_development_lpips": 0.16028137993998826,
+    "candidate_development_psnr": 24.10515592247679,
+    "candidate_development_lpips": 0.1709895625244826,
+    "candidate_development_psnr_delta_vs_control_db": 0.6782920561328112,
+    "candidate_development_lpips_delta_vs_control": 0.010708182584494352,
+    "candidate_development_psnr_delta_vs_matched_parent_db": 0.0731433252969858,
+    "candidate_development_lpips_delta_vs_matched_parent": 0.01268264604732393,
+    "candidate_development_psnr_better_than_parent_records": 13,
+    "candidate_maximum_per_record_psnr_regression_vs_parent_db": 8.129650450532711,
+    "development_records": 16
+  },
+  "decision": "Do not full-scale, extend, distill, or decoder-tune this checkpoint. Source diversity and spatial anchors materially improve PSNR versus the matched flow control, but LPIPS and worst-case pixel fidelity fail the frozen gate.",
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "decoder_tuning": false,
+  "distillation": false,
+  "development_gt_optimization": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}
