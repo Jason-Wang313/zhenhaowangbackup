@@ -6,6 +6,33 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
+## FLUX.2 trajectory-endpoint gate LIVE — 2026-09-16T07:02:44Z (LATEST AUTHORITY)
+
+The exact commit `626537e95ac065da7691c9016fd96e8afe65aa15` GPU job started
+at `2026-09-16T06:45:10Z` on homogeneous 8x NVIDIA H100 80GB HBM3. It is
+live and healthy. The flow-control arm completed 200/200 with step-200 train
+`24.943428/.144580` and descriptive development `22.234235/.183982`. These
+control values are not the candidate result and do not authorize selection.
+
+The mandatory full-resolution CUDA rehearsal for the trajectory arm passed:
+peak allocated memory `29,491,896,832` bytes, all 100 trainable LoRA tensors
+had nonzero gradients on every rank, frozen VAE parameters had no gradients,
+and no optimizer update occurred during rehearsal. At the latest log marker,
+the trajectory arm had completed 90/200 optimizer steps and its immutable
+step-50 checkpoint/snapshot existed. Eight-GPU telemetry continued advancing
+through `07:02:26Z`, with every H100 at 100% utilization and approximately
+41GB allocated; there is no OOM, NCCL, NaN, runtime-failure marker, terminal
+result, or end marker. The detached launcher PID is not visible from this
+Codex process namespace, so advancing persistent log/telemetry and artifacts
+remain the authoritative liveness evidence. Do not restart or duplicate it.
+
+Monitor the same job only:
+`tail -f logs/foundir_blur_only_flux2_trajectory_endpoint_gate_v1.log`.
+Estimated remaining wall time at this checkpoint is roughly 15--20 minutes,
+including final fixed train/development evaluation. After completion, verify
+the root result, both arm artifacts, hashes/counts, terminal marker, governance
+hold, and fixed visuals before proposing any scale-up.
+
 ## FLUX.2 trajectory-aligned endpoint gate DESIGN FROZEN — 2026-09-16T06:23:28Z (LATEST AUTHORITY)
 
 The user explicitly replied `execute` to the recommended trajectory-aligned
