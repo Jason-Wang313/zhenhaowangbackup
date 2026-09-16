@@ -6,7 +6,62 @@ and exact next task only. The advisor-authoritative mainline, governance,
 workspace boundary, H100/H200 portability, destructive-action, and protected
 FoundIR-test rules in `agents.md` remain higher authority.
 
-## FLUX.2 step-10k pixel-fidelity paired gate CPU-ready — 2026-09-16T05:30Z (LATEST AUTHORITY)
+## FLUX.2 step-10k pixel-fidelity paired gate TERMINAL FAILURE — 2026-09-16T06:02Z (LATEST AUTHORITY)
+
+The GPU gate finished normally on homogeneous 8xH100 in 460.1632 seconds.
+Both `flow_control` and `rgb_mse` completed 400/400 steps from exact step10k
+parent with fresh independent optimizers. Torchrun's terminal
+`ChildFailedError` only propagates the intended scientific-failure exit code
+2 after complete result creation; there was no OOM, NCCL, NaN, or runtime
+failure. Do not rerun, extend, or full-scale either arm.
+
+The VAE is conclusively not limiting. Quantized GT encode/decode ceiling is
+train `42.220081/.007048` (minimum PSNR 37.737290) and source-disjoint
+development `41.716497/.006953` (minimum 33.108700). All ceiling checks pass.
+
+Paired train step400:
+
+- common parent: `23.653284/.167751`;
+- flow control: `26.149324/.126395`;
+- RGB MSE: `26.549051/.139953`.
+
+RGB MSE produces a real `+.399728dB` causal gain over control and wins PSNR on
+14/16 paired train records, proving the frozen-decoder gradient path works. It
+fails because LPIPS is `.013557` worse than control, beyond the frozen `.003`
+limit. This PSNR/LPIPS tradeoff persists at every 50/100/200/400 snapshot.
+
+Both arms overfit the tiny set. On descriptive source-disjoint development,
+the common parent is `24.591062/.150766`, flow control becomes
+`22.365686/.181016`, and RGB MSE becomes `22.749107/.195493`; RGB loses
+1.841955dB and .044726 LPIPS versus its parent, with only 5/16 improving PSNR.
+Development GT never selected an arm, weight, or checkpoint.
+
+Fixed visual review confirms the result. Hard train crops can be deblurred
+credibly, and a few development crops improve strongly, but many unseen crops
+produce plausible sharp content with incorrect exact edge positions, texture,
+or photometry. The bus crop 0055608 looks sharper yet drops to15.1085dB from
+18.9710dB input. This is not acceptable pixel-aligned restoration.
+
+Immutable root result SHA:
+`5e8d1aff388efb75ca4aecb29217a9e979e2561843720236254c5b868d68ec1b`.
+Flow/RGB final checkpoint SHAs are
+`52c87b7c225edbeeffc6469c894d005478c59d8031645cfcad01519d3c0f6b6f` /
+`ddbc3ec9614f2c7c711c8a27546e75c8ccb273f6396586be99af52c78d59dc49`.
+Independent terminal audit passes: 2 arms,8 checkpoints,8 optimizer states,
+14 metrics files/224 finite rows,224 fixed PNGs, and all protected flags false.
+Formal report:
+`reports/foundir_blur_only_flux2_pixel_fidelity_terminal_result_2026-09-16.md`.
+Hash-bound human visual review:
+`reports/foundir_blur_only_flux2_pixel_fidelity_visual_review_v1.json`.
+
+Active terminal hold:
+`flux2_blur_pixel_fidelity_tiny_result-54e5b532a225ebd7`. Until resolved, only
+read-only audit and report preparation are allowed. The evidence suggests a
+future materially distinct proposal should supervise the deployed multi-step
+trajectory/endpoint with content preservation, not repeat this RGB weight,
+extend tiny steps, or full-scale. No such new experiment is authorized here.
+
+## FLUX.2 step-10k pixel-fidelity paired gate CPU-ready — 2026-09-16T05:30Z (HISTORICAL)
 
 The low-LR continuation is terminally closed: complete 2,595-record metrics
 are step10k `25.734236/.145406` and step12k `25.709168/.145691`. Keep exact

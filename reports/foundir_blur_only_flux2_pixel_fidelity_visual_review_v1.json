@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "status": "human_visual_review_complete",
+  "reviewed_at": "2026-09-16T06:01:30Z",
+  "result": "checkpoints/foundir_blur_only_flux2_pixel_fidelity_gate_v1/result.json",
+  "result_sha256": "5e8d1aff388efb75ca4aecb29217a9e979e2561843720236254c5b868d68ec1b",
+  "decision": "fail",
+  "summary": "Hard training examples demonstrate credible local deblurring, but source-disjoint outputs are inconsistent: a few are strong while many generate sharp plausible content with incorrect exact edge positions, texture, or photometry. This does not satisfy pixel-aligned restoration and does not rescue the failed metric gate.",
+  "reviewed_images": [
+    {
+      "path": "checkpoints/foundir_blur_only_flux2_pixel_fidelity_gate_v1/arms/flow_control/training_triptychs/step_000400/04_foundir_train_0091486.png",
+      "sha256": "716e63b526088b74f4604b71fa15a0d2e8410132eb80eacf488dac747060e9e8",
+      "finding": "Near-clean train control is largely content-preserving."
+    },
+    {
+      "path": "checkpoints/foundir_blur_only_flux2_pixel_fidelity_gate_v1/arms/rgb_mse/training_triptychs/step_000400/04_foundir_train_0091486.png",
+      "sha256": "db22dbc96226f125a668a6ca169260a9da809b456dc9ef8844d99eebf22b6a5d",
+      "finding": "Near-clean RGB output remains plausible but is slightly worse than control in both metrics."
+    },
+    {
+      "path": "checkpoints/foundir_blur_only_flux2_pixel_fidelity_gate_v1/arms/flow_control/training_triptychs/step_000400/10_foundir_train_0042483.png",
+      "sha256": "70ef0b0164dad282fcac38caf857fde0b15ad10fdd76c338d4ae3ac0079f2835",
+      "finding": "Hard-blur train control recovers the statue and scene structure credibly."
+    },
+    {
+      "path": "checkpoints/foundir_blur_only_flux2_pixel_fidelity_gate_v1/arms/rgb_mse/training_triptychs/step_000400/10_foundir_train_0042483.png",
+      "sha256": "887bdc69331c92fb3217781da0f8722fd9f95b8a646887b9903ed2a00105673d",
+      "finding": "Hard-blur RGB arm also recovers credible sharp structure and proves local learnability."
+    },
+    {
+      "path": "checkpoints/foundir_blur_only_flux2_pixel_fidelity_gate_v1/arms/rgb_mse/descriptive_development/training_triptychs/step_000400/15_foundir_train_0055608.png",
+      "sha256": "e05e1de3324ce314421618d7bca50286d2559e673ec88dc2f4ae165dee44e7b1",
+      "finding": "Bus output looks sharper but exact geometry, edges, and pixels disagree with GT; PSNR falls from 18.9710 to 15.1085 dB."
+    },
+    {
+      "path": "checkpoints/foundir_blur_only_flux2_pixel_fidelity_gate_v1/arms/rgb_mse/descriptive_development/training_triptychs/step_000400/06_foundir_train_0106209.png",
+      "sha256": "ab1449e69bca9075ac046e623b122b1d4fd545234571aa84c83631f8c5b29723",
+      "finding": "Representative successful development output is sharp and content-consistent, showing heterogeneous rather than uniformly failed behavior."
+    }
+  ],
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}
