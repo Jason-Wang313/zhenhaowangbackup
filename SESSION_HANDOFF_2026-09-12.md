@@ -26,6 +26,35 @@ not merely time per step, checkpoint, task, or sub-stage. The disclosure must:
 
 Never give another GPU launch command without this overall-time disclosure.
 
+## Noise GT-free adaptive-alpha read-only gate FAILURE — 2026-09-17 (LATEST AUTHORITY)
+
+At the user's explicit `sure, execute`, one lowest-complexity GT-free
+identity/strength policy was frozen using only the existing sixteen Noise
+calibration triptychs, then applied exactly once to the sixteen untouched
+source-disjoint validation triptychs. This was a CPU-only read-only audit of
+existing PNGs; it did not resolve the active hold or rerun FLUX.
+
+The observable feature was a classical robust high-pass noise estimate on LQ.
+Calibration alone froze four bins: estimated sigma <=.0005 -> alpha .075;
+<=.0015 -> .125; <=.0025 -> .325; otherwise .525. Calibration was strong:
+`42.00849/.058768`, +1.55058dB versus LQ, 15/16 PSNR wins, zero records worse
+than LQ by >2dB. The one-shot validation still passes Noise SOW averages at
+`39.51763/.068551`, but the identity/tail behavior fails: mean PSNR is
+-.82852dB versus LQ, only 5/16 records win, 6/16 regress >1dB, and 4/16 regress
+>2dB. Worst regression is 4.00788dB on `foundir_train_0151268`.
+
+This adaptive policy is rejected. It is worse than fixed alpha=.30 on
+validation tail frequency (4/16 versus 2/16 >2dB), although its maximum loss
+is smaller (4.01 versus 5.64dB). Do not retune its bins or alpha values using
+validation, and do not scale it to full development. The evidence shows that
+simple LQ high-pass magnitude is confounded with scene texture/content and is
+not a reliable restoration-strength controller. Any next policy needs a new
+prospectively frozen calibration design and stronger GT-free identity signal;
+the present validation set is now consumed for this policy family.
+
+Runtime disclosure: GPU wall time `0`, GPU-hours `0`; the final CPU metric run
+took about nine seconds after policy freeze.
+
 ## Noise frozen scalar-residual read-only audit — 2026-09-17 (LATEST AUTHORITY)
 
 The user explicitly requested applying the successful Blur logic to Noise
