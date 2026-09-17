@@ -26,6 +26,38 @@ not merely time per step, checkpoint, task, or sub-stage. The disclosure must:
 
 Never give another GPU launch command without this overall-time disclosure.
 
+## Noise frozen scalar-residual read-only audit — 2026-09-17 (LATEST AUTHORITY)
+
+The user explicitly requested applying the successful Blur logic to Noise
+first. No new inference or training was needed: the isolated-Noise step-400
+run already preserves sixteen calibration (`training_triptychs`) and sixteen
+source-group-disjoint validation `Input | Output | GT` PNGs. A read-only,
+post-hoc audit used only those immutable PNGs and did not resolve the active
+terminal hold, create a formal pass, or consume GPU time.
+
+The correction was `candidate = LQ + alpha * (FLUX - LQ)`, quantized to uint8
+before metrics. A grid from 0 through 1 in increments of .025 was inspected on
+calibration only. The predeclared Noise safety-margin constraint was mean
+LPIPS <= .09 (SOW is <= .10), then maximum mean PSNR; this selected
+`alpha=.30`. Calibration at the frozen alpha is `41.37065 PSNR / .054805
+LPIPS`. Applying that alpha once to the untouched source-disjoint validation
+gives **39.83359 PSNR / .067606 LPIPS**, so both Noise SOW average thresholds
+(`>=38.9 / <=.10`) pass.
+
+This is strong feasibility evidence but not a complete formal pass. Relative
+to validation LQ, mean PSNR changes by `-.51256 dB`, only 50% of records win
+PSNR, and the worst record (`foundir_train_0187477`) regresses by `5.63777 dB`.
+Therefore the same fixed-alpha tail problem seen in Blur remains, and the
+strict identity/tail-safety gate fails. Do not relabel the active four-task
+failure or automatically start joint training. The next technical design, if
+explicitly authorized, should preserve this aggregate Pareto win while using
+an inference-time, GT-free identity/strength-aware alpha policy. It must be
+calibrated without validation GT and must retain a frozen tail-risk gate.
+
+Runtime disclosure: this audit was CPU-only and reused existing outputs, so
+GPU wall time and GPU-hours were both exactly zero. The exploratory metric
+calculation took under one minute after the immutable artifacts were located.
+
 ## Four-task FLUX.2 capacity sanity TERMINAL FAILURE — 2026-09-16T23:56Z (LATEST AUTHORITY)
 
 The one-command four-arm run completed at `2026-09-16T13:30:07Z` after
