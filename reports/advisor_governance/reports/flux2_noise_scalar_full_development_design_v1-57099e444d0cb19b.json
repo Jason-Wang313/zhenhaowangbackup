@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否按用户明确授权执行该 frozen-alpha Noise full-development validation？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+    "sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_noise_flux2_scalar_residual_full_development_v1.json",
+    "sha256": "5e7a356ea89d21f7b60b4b736f851ef26a0216d8555d73846f527b958b5b7dd6"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "all 1859 source-group-disjoint isolated-Noise development records; no protected split",
+  "evidence": {
+    "path": "reports/foundir_noise_flux2_scalar_residual_full_development_authorization_v1.json",
+    "sha256": "810b4b591a014dde9db995889e1b2471ac2e0c54550556afdb6b8495648df400"
+  },
+  "gate": "flux2_noise_scalar_full_development_design_v1",
+  "generated_at": "2026-09-17T02:56:10Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Noise step-400 plus frozen alpha=.30 scalar residual",
+  "outcome": "information",
+  "report_id": "flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b",
+  "root_cause_or_status": "Hash-bound one-shot Noise full-development design is CPU-ready. SOW mean PSNR/LPIPS are the only formal metric gate; tail statistics remain descriptive. No weight update or alpha tuning.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

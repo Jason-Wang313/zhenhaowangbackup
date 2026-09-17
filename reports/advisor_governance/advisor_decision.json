@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "flux2_four_task_capacity_sanity_design_v1-37a4459ff7574823",
-  "hold_sha256": "1d6d2812fb89df95553eaae7e6b48a1cd96fa431cca1c04c603e31511a4edf0e",
+  "hold_id": "flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b",
+  "hold_sha256": "5c9bb2ad18d875a5b44c45e23d3fd52f4af9e89dd4da46e0d8d97750b96f2394",
   "decided_by": "user_after_advisor_response",
   "decision": "approve_documented_change",
-  "statement": "Advisor 明确指示‘下一步应该把所有的退化联合训练，看一下效果’；用户随后确认 1→5 执行顺序正确，并明确要求‘also, we can start this now, the 1-5 u mentioned’。现仅授权执行 hash-bound phase-1 design configs/foundir_four_task_flux2_capacity_sanity_v1.json：Noise/Haze/Rain/Low-light 四个彼此独立的 single-degradation fail-fast capacity arms，每类 16 train + 16 source-group-disjoint descriptive validation、400 steps、固定 task prompt、固定 Input|Output|GT 和 PSNR/LPIPS。禁止 Qwen degradation predictions、mixed degradation、pixel refiner、sealed internal、official FoundIR test 和自动 joint launch；必须四个结果共同审计后才能设计五类 joint baseline。该记录是 USER authorization，不代表或捏造 advisor 对本具体 config 的新回复。",
-  "recorded_at": "2026-09-16T12:54:00Z"
+  "statement": "针对已登记且 hash-bound 的 flux2_noise_scalar_full_development_design_v1，用户在知悉 16 图证据的不确定性和预计 75–85% SOW 成功概率后明确要求‘let's just fucking do it’。现批准且仅批准 config SHA 5e7a356e... 的一次性 Noise full-development evaluation：1859 张 source-group-disjoint isolated-Noise validation、step-400 checkpoint、冻结 alpha=.30、50-step inference，以 SOW mean PSNR>=38.9 与 LPIPS<=.10 为正式 gate；tail 仅描述。禁止 validation 调 alpha、权重更新、Qwen degradation conditioning、mixed degradation、sealed internal 和 official FoundIR test。该记录是 advisor 已要求继续全部退化后的明确 USER 授权，不声称 advisor 审阅过本具体 config。",
+  "recorded_at": "2026-09-17T02:55:44Z"
 }

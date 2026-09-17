@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-16T12:53:14Z",
+  "created_at": "2026-09-17T02:56:10Z",
   "evidence": {
-    "path": "reports/foundir_four_task_flux2_capacity_sanity_authorization_v1.json",
-    "sha256": "06fa6acf761cacc648039ec6b45e0447e19bdd93aff9bd10f3ea62e9477eb87c"
+    "path": "reports/foundir_noise_flux2_scalar_residual_full_development_authorization_v1.json",
+    "sha256": "810b4b591a014dde9db995889e1b2471ac2e0c54550556afdb6b8495648df400"
   },
-  "hold_id": "flux2_four_task_capacity_sanity_design_v1-37a4459ff7574823",
+  "hold_id": "flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b",
   "reason": "proposed route/architecture change requires advisor decision before experiments",
-  "report": "reports/advisor_governance/reports/flux2_four_task_capacity_sanity_design_v1-37a4459ff7574823.md",
-  "report_sha256": "e244bef60ad56bb38fa82534083be11d436ea9a10f8e1a47bcbe5f0402a730c3",
+  "report": "reports/advisor_governance/reports/flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b.md",
+  "report_sha256": "6b6ce4425a99be72c368de5eedc410d0bde74915f9c1a207f454c0b676c8be47",
   "schema_version": 1
 }

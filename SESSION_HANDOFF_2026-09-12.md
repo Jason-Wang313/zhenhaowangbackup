@@ -26,6 +26,59 @@ not merely time per step, checkpoint, task, or sub-stage. The disclosure must:
 
 Never give another GPU launch command without this overall-time disclosure.
 
+## Noise alpha=.30 full-development GPU-ready — 2026-09-17 (LATEST AUTHORITY)
+
+The user explicitly clarified that the advisor/SOW acceptance target is mean
+PSNR/LPIPS and that the agent-added conservative tail check must not veto the
+formal Noise result. The user then authorized direct full-development
+validation of calibration-frozen alpha=.30. Tail statistics remain mandatory
+descriptive evidence but are not part of the formal gate.
+
+The one-shot evaluation is frozen in
+`configs/foundir_noise_flux2_scalar_residual_full_development_v1.json`, SHA
+`5e7a356ea89d21f7b60b4b736f851ef26a0216d8555d73846f527b958b5b7dd6`.
+It evaluates the exact isolated-Noise step-400 checkpoint SHA
+`1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a`
+on all 1,859 isolated-Noise validation records (34 source groups), using one
+deterministic aligned 512 crop per record, official 50-step inference, paired
+alpha=1 base, and frozen alpha=.30 candidate. Formal checks are only mean PSNR
+>=38.9 and mean LPIPS <=.10. Sixteen prospectively fixed visuals are saved.
+There is no weight update, alpha tuning, Qwen degradation conditioning, mixed
+degradation, sealed internal access, or official FoundIR test access.
+
+The design hold
+`flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b` is resolved
+against the user's exact authorization after the advisor's direction to
+continue across all degradation types. This record does not claim that the
+advisor reviewed the exact config. Seven combined focused tests pass; Python
+compilation, shell syntax, all 3,718 LQ/GT image hashes, cardinality/source
+isolation, H100/H200 portability, governance, and launcher `--check` pass.
+Readiness report:
+`reports/foundir_noise_flux2_scalar_residual_full_development_readiness_2026-09-17.md`.
+
+Mandatory total-time disclosure for the single command below: on one
+homogeneous 8xH100 instance, expected end-to-end wall time is **25--35 minutes,
+central estimate 30 minutes** (3.3--4.7 aggregate GPU-hours, central 4.0). On
+one homogeneous 8xH200 instance, it is **18--27 minutes, central estimate 22
+minutes** (2.4--3.6 GPU-hours, central 2.9). This includes full hash preflight,
+model loading, all 1,859 50-step inferences, paired metrics, sixteen visuals,
+aggregation, and governance reporting. Primary uncertainty is shared-storage
+I/O plus per-device inference/LPIPS throughput. After launch, update ETA from
+observed completed sidecars; after completion, record exact start/end/total.
+
+Exact GPU-shell launch:
+
+```bash
+cd /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+smoke/launch_foundir_noise_flux2_scalar_residual_full_development_v1_8gpu.sh
+```
+
+Monitor
+`tail -f logs/foundir_noise_flux2_scalar_residual_full_development_v1.log`.
+Do not start a second instance. On terminal result, stop for metric and visual
+audit; there is no automatic next degradation or joint launch.
+
 ## Noise GT-free adaptive-alpha read-only gate FAILURE — 2026-09-17 (LATEST AUTHORITY)
 
 At the user's explicit `sure, execute`, one lowest-complexity GT-free

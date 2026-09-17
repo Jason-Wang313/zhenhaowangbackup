@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_design_pending_governance_binding",
+  "authorized_at": "2026-09-17T02:55:44Z",
+  "authorized_by": "user_after_advisor_response",
+  "exact_user_instruction": "advisor and sow never mentioned this tail; for alpha = 0.30, if official GPU validation is estimated to exceed SOW, let's just do it",
+  "authorized_context": "Advisor requested proceeding across all degradations. The user clarified that SOW mean PSNR/LPIPS, not the agent-added tail veto, is the acceptance target and explicitly authorized one frozen-alpha full-development Noise evaluation.",
+  "config": "configs/foundir_noise_flux2_scalar_residual_full_development_v1.json",
+  "config_sha256": "5e7a356ea89d21f7b60b4b736f851ef26a0216d8555d73846f527b958b5b7dd6",
+  "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+  "checkpoint_sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a",
+  "split": "all 1859 source-group-disjoint isolated-Noise development records; no sealed internal or official test",
+  "frozen_alpha": 0.3,
+  "formal_gate": "mean PSNR >=38.9 and mean LPIPS <=.10; tail statistics descriptive only",
+  "qwen_degradation_conditioning": false,
+  "mixed_degradations": false,
+  "model_weight_updates": false,
+  "development_gt_optimization": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false
+}
