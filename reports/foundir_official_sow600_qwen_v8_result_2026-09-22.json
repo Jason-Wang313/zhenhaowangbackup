@@ -1,0 +1,19 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "completed_utc": "2026-09-22T10:39:22Z",
+  "completed_shanghai": "2026-09-22T18:39:22+08:00",
+  "records": 600,
+  "all_ten_sow_checks_pass": true,
+  "category_metrics": {
+    "01Blur": {"records": 150, "psnr": 28.092635459899903, "lpips": 0.14408854724218448, "psnr_minimum": 25.9, "lpips_maximum": 0.18, "pass": true},
+    "05Noise": {"records": 100, "psnr": 40.04832290649414, "lpips": 0.05660083245486021, "psnr_minimum": 38.9, "lpips_maximum": 0.10, "pass": true},
+    "08Haze": {"records": 200, "psnr": 22.67741975784302, "lpips": 0.1104374347999692, "psnr_minimum": 22.1, "lpips_maximum": 0.19, "pass": true},
+    "10Rain": {"records": 100, "psnr": 37.80917455673218, "lpips": 0.05290071293478832, "psnr_minimum": 34.2, "lpips_maximum": 0.08, "pass": true},
+    "14Lowlight": {"records": 50, "psnr": 19.32245937347412, "lpips": 0.14879852652549744, "psnr_minimum": 18.9, "lpips_maximum": 0.28, "pass": true}
+  },
+  "routing": {"correct": 538, "fallback": 62, "wrong": 0, "truth_used_as_router_input": false},
+  "protocol": {"color_space": "RGB", "original_size": true, "resize_crop_or_border_shave": false, "implementation": "pyiqa", "pyiqa_version": "0.1.16", "aggregation": "unweighted arithmetic mean within each category"},
+  "config_sha256": "6a84adfec7c929f291fd501976358cf61c062f35179217425b835e0d4979e04d",
+  "raw_result_sha256": "8ea3a681eec65f1ef6b28cbd48292a17e1d6b2ee8e11f04345bd54d7cee12684"
+}
