@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT=/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang
+PYTHON=/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3/bin/python
+RUN_ID=${PROPOSAL_ENERGY_V2_RUN_ID:-qualification_v1}
+TOTAL_STEPS=${PROPOSAL_ENERGY_V2_TOTAL_STEPS:-25}
+LOG="$ROOT/logs/foundir_proposal_relative_energy_noise_v2_${RUN_ID}.log"
+
+cd "$ROOT"
+if [[ "${CUDA_VISIBLE_DEVICES:-}" != "0,1,2,3,4,5,6,7" ]]; then
+  echo "ERROR: expose exactly local GPUs 0-7" >&2
+  exit 2
+fi
+case "$TOTAL_STEPS" in
+  25|1706|3412|5118|6824|8530) ;;
+  *) echo "ERROR: PROPOSAL_ENERGY_V2_TOTAL_STEPS is not a frozen milestone" >&2; exit 2 ;;
+esac
+
+export TORCH_HOME="$ROOT/models/torch"
+export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 HF_DATASETS_OFFLINE=1
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+export OMP_NUM_THREADS=4 MKL_NUM_THREADS=4
+export PROPOSAL_ENERGY_V2_RUN_ID="$RUN_ID"
+export PROPOSAL_ENERGY_V2_TOTAL_STEPS="$TOTAL_STEPS"
+mkdir -p "$ROOT/logs" "$ROOT/checkpoints/foundir_proposal_relative_energy_noise_v2"
+
+echo "FOUNDIR_PROPOSAL_ENERGY_NOISE_V2_START utc=$(date -u +%FT%TZ) run_id=$RUN_ID total_steps=$TOTAL_STEPS allocated_gpus=8" | tee -a "$LOG"
+echo "SCOPE exact_six_PPT_corrections Noise_only source_disjoint no_protected_test" | tee -a "$LOG"
+echo "HARDWARE single_node_only homogeneous_8xH100_or_8xH200 global_batch=32" | tee -a "$LOG"
+sha256sum \
+  configs/foundir_proposal_relative_energy_noise_v2.json \
+  lowlight_restoration/proposal_relative_energy_v2.py \
+  smoke/train_foundir_proposal_relative_energy_noise_v2_ddp.py | tee -a "$LOG"
+
+set +e
+"$PYTHON" -m torch.distributed.run --standalone --nnodes=1 --nproc_per_node=8 \
+  smoke/train_foundir_proposal_relative_energy_noise_v2_ddp.py 2>&1 | tee -a "$LOG"
+status=${PIPESTATUS[0]}
+set -e
+echo "FOUNDIR_PROPOSAL_ENERGY_NOISE_V2_END status=$status utc=$(date -u +%FT%TZ)" | tee -a "$LOG"
+exit "$status"

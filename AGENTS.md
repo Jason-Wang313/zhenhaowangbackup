@@ -59,7 +59,48 @@ blocks the push, report that immediately and preserve the ready commit. Do not
 silently defer Git tracking across later milestones. Do not claim the work is
 backed up until the remote hash has been verified.
 
-## STOP: advisor-approved two-stage novelty plan — 2026-10-15
+## STOP: max-complete PPT energy V2 only — 2026-10-15
+
+This section supersedes the V1/fallback sequence below wherever they differ.
+The proposal-relative energy V1 must finish its already-running frozen
+five-pass endpoint and then stop; do not extend it to ten passes. Its observed
+failure mode is higher PSNR with worse LPIPS, poor gradient-direction
+alignment, and multi-step drift. Preserve V1 as causal evidence.
+
+Before switching to the DiT-MoE fallback, implement and test exactly one
+max-complete V2 of the advisor-approved PPT energy idea. V2 must contain all
+and only these six missing parts:
+
+1. LPIPS/perceptual-aware training in addition to pixel/edge fidelity;
+2. actual frozen-model outputs for wrong-expert, under-restored,
+   over-restored, and detail-damaged contrastive candidates;
+3. directly unrolled and trained 1/2/3-step energy trajectories;
+4. per-step no-harm constraints for both pixel fidelity and LPIPS, with the
+   learned energy also allowed to select the unchanged proposal;
+5. per-image VLM degradation severity from the existing frozen Qwen manifest,
+   not a constant Noise one-hot vector;
+6. spatially preserved/local energy supervision rather than reducing all
+   quality evidence to one early global scalar.
+
+Do not add another backbone, dataset, degradation task, specialist, routing
+mechanism, MoE, compositional branch, or unrelated loss/idea to V2. Keep the
+frozen Noise proposal, the 54,585-record source-disjoint training split, the
+fixed 256-record development validation, 1/2/3-step reporting, protected-data
+prohibitions, and the existing minimum `+.30 dB` and `-.005 LPIPS` gate.
+Engineering qualification and the adequately scaled scientific run are
+allowed only to validate this exact V2; they are not extra research branches.
+Do not claim the PPT approach works until both metrics improve on the frozen
+development protocol.
+
+Current status: V1 completed `8,530` steps and failed the gate because its best
+energy arm improved PSNR only `+.10285484790802033 dB` while worsening LPIPS
+by `+.006770727247385367`. V1 is terminal and must not resume. The exact-six-
+change V2 code is CPU/static-qualified; the next action is one fresh 25-step
+eight-GPU engineering qualification, followed by a separate from-zero formal
+run only if that qualification passes. The 25-step checkpoint must never seed
+the formal run.
+
+## DEFERRED: advisor-approved two-stage novelty plan — 2026-10-15
 
 This section supersedes the 2026-10-14 energy-TTS decision below wherever the
 two differ. The phrase "PPT direction" means the restoration-energy method

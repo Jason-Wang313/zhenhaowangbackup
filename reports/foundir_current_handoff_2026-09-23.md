@@ -1,5 +1,41 @@
 # FoundIR current handoff — 2026-09-23
 
+## STOP: 2026-10-15 MAX-COMPLETE PPT ENERGY V2 ONLY
+
+The user explicitly chose one final, complete implementation of the PPT
+proposal-relative energy idea before any DiT-MoE fallback. V1 must finish its
+already-running 8,530-step endpoint and then stop. Do not extend V1.
+
+V2 is restricted to exactly six corrections supported by the V1 failure:
+LPIPS-aware training; real frozen-model wrong/under/over/detail-damaged
+candidates; trained 1/2/3-step unrolling; per-step PSNR/LPIPS no-harm plus the
+option to retain the proposal; per-image frozen-Qwen severity; and spatial
+local energy supervision. Do not add a new backbone, dataset, degradation,
+specialist, MoE, router, or compositional mechanism. Noise data, frozen
+Restormer proposal, source-disjoint validation, protected-data boundaries, and
+the `+.30 dB/-.005 LPIPS` gate remain unchanged. This section supersedes the
+older instruction to switch directly from V1 to DiT-MoE.
+
+### 2026-10-15 V1 terminal and V2 launch-readiness update
+
+V1 has now completed its frozen five-pass endpoint at `8,530` steps and is no
+longer running. Its final best energy arm was
+`43.227015025913715/.05713279500741919` versus the unchanged proposal
+`43.124160178005695/.050362067760033824`: PSNR improved only
+`+.10285484790802033 dB` while LPIPS worsened `+.006770727247385367`.
+Therefore V1 failed the `+.30 dB/-.005 LPIPS` gate and must not be resumed.
+It consumed `3.1357351445996513` wall-clock hours and
+`25.08588115926418` allocated H100 GPU-hours. Full record:
+`reports/foundir_proposal_relative_energy_noise_v1_terminal_2026-10-15.md`.
+
+The exact-six-change V2 implementation now exists and passes compilation,
+JSON/Bash/diff checks and five direct CPU tests. A PyTorch naming collision
+(`self.half` versus `nn.Module.half()`) was corrected before GPU launch.
+No V2 GPU job has been launched yet. The next action is exactly one fresh
+25-step, single-node eight-GPU engineering qualification; it is not scientific
+evidence and must not be reused as the formal five-pass run. Readiness record:
+`reports/foundir_proposal_relative_energy_noise_v2_readiness_2026-10-15.md`.
+
 ## MANDATORY: keep coherent progress pushed to GitHub
 
 Do not let model code, experiment contracts, fixes, research decisions, or
