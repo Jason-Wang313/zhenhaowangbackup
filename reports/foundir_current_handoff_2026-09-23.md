@@ -36,6 +36,16 @@ No V2 GPU job has been launched yet. The next action is exactly one fresh
 evidence and must not be reused as the formal five-pass run. Readiness record:
 `reports/foundir_proposal_relative_energy_noise_v2_readiness_2026-10-15.md`.
 
+The 25-step qualification subsequently completed successfully as
+`noise_energy_v2_qualification1` on `8 x H100 80GB`: launcher status `0`, all
+`488` model tensors finite, all `488` trainable entries represented in the
+optimizer state, checkpoint and 256-record validation written, and every
+protected-data flag false. Step-25 metrics are intentionally non-scientific
+and essentially unchanged from the proposal. The qualification checkpoint
+must not seed the formal run. The next action is a new-ID, from-zero `8,530`-
+step V2 run. Full record:
+`reports/foundir_proposal_relative_energy_noise_v2_qualification_2026-10-15.md`.
+
 ## MANDATORY: keep coherent progress pushed to GitHub
 
 Do not let model code, experiment contracts, fixes, research decisions, or

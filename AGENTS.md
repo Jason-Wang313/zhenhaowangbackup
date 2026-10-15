@@ -95,10 +95,11 @@ development protocol.
 Current status: V1 completed `8,530` steps and failed the gate because its best
 energy arm improved PSNR only `+.10285484790802033 dB` while worsening LPIPS
 by `+.006770727247385367`. V1 is terminal and must not resume. The exact-six-
-change V2 code is CPU/static-qualified; the next action is one fresh 25-step
-eight-GPU engineering qualification, followed by a separate from-zero formal
-run only if that qualification passes. The 25-step checkpoint must never seed
-the formal run.
+change V2 code passed its fresh 25-step qualification on `8 x H100 80GB` with
+status `0`, finite saved weights, optimizer state for every trainable entry,
+successful validation/checkpointing, and no protected-data access. The next
+action is a new-run-ID, from-zero `8,530`-step formal V2 run. The 25-step
+checkpoint must never seed the formal run.
 
 ## DEFERRED: advisor-approved two-stage novelty plan — 2026-10-15
 
