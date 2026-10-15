@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "cpu_target_cache_build",
+  "objective": "Pre-render immutable clean-plus-nuisance targets for the frozen 66k lower-order EBT corpus so GPU training does not block on source verification and target regeneration.",
+  "input_manifest": "manifests/foundir_compositional_ebt_scaled_data_v1.jsonl",
+  "input_manifest_sha256": "d7add2be0ec4edff95034caee1287b4746acffcec76d43ab3f288503bbf3b449",
+  "input_metadata": "manifests/foundir_compositional_ebt_scaled_data_v1.json",
+  "input_metadata_sha256": "44f4546a941fa7e150f51eb6e148b7bfb64d4346cbb8a342d73a82c970e51c7a",
+  "output_root": "data/foundir_compositional_ebt_scaled_targets_v1",
+  "output_manifest": "manifests/foundir_compositional_ebt_scaled_targets_v1.jsonl",
+  "output_metadata": "manifests/foundir_compositional_ebt_scaled_targets_v1.json",
+  "expected_records": 66000,
+  "expected_split_records": {"train": 60000, "validation": 6000},
+  "target_rule": "generate_record_stages(record, application_order=[])[0], encoded losslessly as PNG by headless OpenCV 4.10.0",
+  "headless_cv2_module_root": "/usr/local/lib/python3.12/dist-packages",
+  "headless_cv2_version": "4.10.0",
+  "default_workers": 32,
+  "access_flags": {
+    "triple_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "gpu_used": false
+  }
+}

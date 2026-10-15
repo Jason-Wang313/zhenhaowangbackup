@@ -40,6 +40,13 @@
 !reports/lowlight_real_photometric_ceiling_v1.json
 !reports/qa/
 !reports/qa/*.md
+!reports/advisor_governance/
+!reports/advisor_governance/*.json
+!reports/advisor_governance/holds/
+!reports/advisor_governance/holds/*.json
+!reports/advisor_governance/reports/
+!reports/advisor_governance/reports/*.json
+!reports/advisor_governance/reports/*.md
 !logs/
 !logs/project_journal.md
 !patches/

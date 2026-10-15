@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "status": "advisor_authorized_official_sow600_qwen_evaluation_v1",
+  "authorization": "reports/advisor_governance/foundir_official_sow600_qwen_authorization_2026-09-21.json",
+  "authorization_sha256": "001c70b975e6c7b3cc1683e1b9ac82e0a62d73f06020290c415ad308132fefc0",
+  "data": {
+    "manifest": "manifests/foundir_official_sow600_qwen_v1.csv",
+    "manifest_sha256": "dfe5a05ba13f941ac57734e2a96eb21048ad463f4248f306d2fb2d9c6d48866e",
+    "records": 600,
+    "records_by_category": {
+      "01Blur": 150,
+      "05Noise": 100,
+      "08Haze": 200,
+      "10Rain": 100,
+      "14Lowlight": 50
+    }
+  },
+  "qwen": {
+    "training_config": "configs/qwen_multidegradation_100k_rank64_per_type_physical_v8.json",
+    "training_config_sha256": "eef9fe05e21a2fd5b92543f17473e96cb1723b1d4f800ef13a2f6e1622168aeb",
+    "adapter": "checkpoints/qwen_multidegradation_100k_rank64_per_type_physical_v8/merger_trainable/checkpoints/V8_physical_shard5/adapter.safetensors",
+    "adapter_sha256": "5416311d7cd0aa0308e206084c13c7c950f9dacfc96cd558466642804ccbee3c",
+    "feature_dim": 7168,
+    "batch_size_per_gpu": 8,
+    "world_size": 8
+  },
+  "frozen_restoration": {
+    "config": "configs/foundir_final_eleven_all_in_one_development_rehearsal_v3.json",
+    "config_sha256": "304f0d45b62a575d64d9e52c04e8dd6ff5c3a2c8abe6ebb58ff3fc5777d6fb22",
+    "tile_size": 512,
+    "tile_overlap": 128,
+    "tile_blending": "sqrt_hann_overlap_average",
+    "edge_padding": "reflect_to_512_then_crop",
+    "output_quantization": "round_clip_uint8_png_after_each_expert",
+    "output_dimensions": "exact_input_dimensions"
+  },
+  "metrics": {
+    "implementation": "pyiqa",
+    "color_space": "RGB",
+    "resize_crop_or_border_shave": false,
+    "names": ["psnr", "lpips", "ssim"],
+    "aggregation": "unweighted_per_image_mean_within_category",
+    "sow": {
+      "01Blur": {"psnr_minimum": 25.9, "lpips_maximum": 0.18},
+      "05Noise": {"psnr_minimum": 38.9, "lpips_maximum": 0.10},
+      "08Haze": {"psnr_minimum": 22.1, "lpips_maximum": 0.19},
+      "10Rain": {"psnr_minimum": 34.2, "lpips_maximum": 0.08},
+      "14Lowlight": {"psnr_minimum": 18.9, "lpips_maximum": 0.28}
+    }
+  },
+  "runtime": {
+    "feature_dir": "checkpoints/foundir_official_sow600_qwen_v1/features",
+    "router_decisions": "checkpoints/foundir_official_sow600_qwen_v1/router_decisions.csv",
+    "output_dir": "checkpoints/foundir_official_sow600_qwen_v1",
+    "log": "logs/foundir_official_sow600_qwen_v1.log"
+  }
+}

@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 CONFIG="$ROOT/configs/foundir_five_type_flux2_dit_v2.json"
 MANIFEST="$ROOT/manifests/foundir_five_type_pairs_v1.csv"
 MANIFEST_JSON="$ROOT/manifests/foundir_five_type_pairs_v1.json"

@@ -51,8 +51,9 @@ def select(config_path: Path, result_paths: list[Path]) -> dict[str, object]:
         )
     winner = select_checkpoint(candidates)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "frozen_development_selected_checkpoint",
+        "metric_contract": "sow_isolated_categories_v1",
         "config_sha256": config_sha,
         "selection_rule": "maximize_worst_five_task_normalized_psnr_lpips_margin_then_earlier_step",
         "candidates": candidates,

@@ -6,6 +6,7 @@ CONFIG="$ROOT/configs/foundir_five_type_flux2_dit_v3.json"
 QWEN_PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 FLUX_PYTHON="$ROOT/.venv/flux2-smoke/bin/python"
 OUTPUT="$ROOT/checkpoints/foundir_five_type_flux2_dit_v3"
+MODEL="VLM-guided FLUX.2 Klein 4B; frozen physical-v8 Qwen; DiT LoRA + pixel refiner"
 MANIFEST="$ROOT/manifests/foundir_five_type_pairs_v1.csv"
 CONDITIONS="$ROOT/manifests/foundir_five_type_all_qwen_conditions_v3.csv"
 CONDITIONS_JSON="$ROOT/manifests/foundir_five_type_all_qwen_conditions_v3.json"
@@ -18,6 +19,7 @@ GPU_LOG="$ROOT/logs/foundir_five_type_flux2_main_v3_gpu.csv"
 LOCK="$ROOT/logs/foundir_five_type_flux2_main_v3.lock"
 
 cd "$ROOT"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 mkdir -p "$ROOT/logs" "$OUTPUT" "$ROOT/.cache/triton/foundir_five_type_v3" \
   "$ROOT/.cache/torch_extensions/foundir_five_type_v3"
 exec > >(tee -a "$LOG") 2>&1
@@ -29,7 +31,13 @@ finish_run() {
     kill "$telemetry_pid" 2>/dev/null || true
     wait "$telemetry_pid" 2>/dev/null || true
   fi
+  if [[ "$status" -ne 0 ]]; then
+    /usr/bin/python3 "$ROOT/smoke/advisor_governance.py" runtime-failure \
+      --gate flux2_main_v3_runtime_failure --evidence "$CONFIG" --config "$CONFIG" \
+      --model "$MODEL" --status "$status" --log "$LOG" || true
+  fi
   echo "FOUNDIR_FIVE_TYPE_MAIN_V3_END status=$status utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  return "$status"
 }
 trap finish_run EXIT
 
@@ -129,6 +137,13 @@ print("FOUNDIR_FLUX_MAIN_V3_TRAINING_VERIFY_PASS")
 PY
 fi
 
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" emit \
+  --gate full_training_completion --evidence "$TRAINING_SUMMARY" --config "$CONFIG" \
+  --model "$MODEL" --split foundir_training \
+  --outcome information \
+  --root-cause-or-status "Full training completed; development checkpoint selection is next." \
+  --advisor-decision-question "请知悉 full-training evidence；主线保持不变并进入 frozen development selection。"
+
 mapfile -t candidate_steps < <("$FLUX_PYTHON" - "$CONFIG" <<'PY'
 import json,sys
 for step in json.load(open(sys.argv[1]))["evaluation"]["candidate_steps"]: print(step)
@@ -148,6 +163,12 @@ for step in "${candidate_steps[@]}"; do
   selection_args+=(--result "$result_dir/result.json")
 done
 "$FLUX_PYTHON" smoke/select_foundir_five_type_flux2_checkpoint.py "${selection_args[@]}"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" emit \
+  --gate development_checkpoint_selection --evidence "$SELECTION" --config "$CONFIG" \
+  --model "$MODEL" --split source_group_disjoint_development \
+  --outcome information \
+  --root-cause-or-status "Development selection completed without sealed/official-test access." \
+  --advisor-decision-question "请知悉 selected checkpoint；除非 advisor 要求暂停，否则只按 frozen protocol 进入一次 sealed internal。"
 
 readarray -t selected_identity < <("$FLUX_PYTHON" - "$SELECTION" <<'PY'
 import json,sys
@@ -183,6 +204,13 @@ if [[ ! -f "$OUTPUT/sealed_internal/qwen/result.json" \
     --checkpoint "$SELECTED_CHECKPOINT" --selection "$SELECTION" \
     --split internal_test --arm qwen --output "$OUTPUT/sealed_internal/qwen"
 fi
+
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" emit \
+  --gate sealed_internal_evaluation --evidence "$OUTPUT/sealed_internal/qwen/result.json" \
+  --config "$CONFIG" --model "$MODEL" --split sealed_internal \
+  --outcome information \
+  --root-cause-or-status "The one-time sealed internal evaluation is complete; official FoundIR test remains protected." \
+  --advisor-decision-question "请审阅 sealed metrics；final scientific gate 将据 frozen SOW thresholds 判定。"
 if [[ ! -f "$OUTPUT/released_baselines/sealed_internal/result.json" ]]; then
   "$FLUX_PYTHON" smoke/evaluate_foundir_five_type_released_baselines_ddp.py \
     --config "$CONFIG" --split internal_test \
@@ -206,4 +234,10 @@ set +e
   --output "$OUTPUT/final_internal_freeze.json"
 status=$?
 set -e
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" emit \
+  --gate sealed_internal_final --evidence "$OUTPUT/final_internal_freeze.json" \
+  --config "$CONFIG" --model "$MODEL" --split sealed_internal \
+  --outcome auto --hold-on-failure \
+  --root-cause-or-status "FLUX.2 sealed internal metrics did not meet the frozen SOW gate; the exact capacity/optimization correction requires advisor review." \
+  --advisor-decision-question "请决定继续 FLUX.2 并批准具体 architecture/capacity correction，或明确批准改变路线。"
 exit "$status"

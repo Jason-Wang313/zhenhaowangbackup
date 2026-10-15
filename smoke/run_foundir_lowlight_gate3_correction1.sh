@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 cd "$ROOT"
 TRAIN_PY="$ROOT/.conda/gpu-train-stable/bin/python"
 METRIC_PY="$ROOT/.venv/foundir-metrics/bin/python"

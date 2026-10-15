@@ -2,6 +2,7 @@
 set -Eeuo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 WATCHER="$ROOT/smoke/watch_foundir_five_type_ready_install.sh"
 LOG="$ROOT/logs/foundir_five_type_ready_install_watch_v1.log"
 PIDFILE="$ROOT/data/foundir/_extract_stage/five_type_v1/state/ready_watch.pid"

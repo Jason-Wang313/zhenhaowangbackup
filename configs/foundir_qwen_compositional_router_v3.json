@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "purpose": "final bounded asymmetric absence safety gate for low-light conditional noise",
+  "data": {
+    "fit_calibration_manifest": "manifests/foundir_qwen_eleven_class_fresh_holdout_v2.csv",
+    "fit_calibration_manifest_sha256": "b58c08a63ff42d06cf2f3f54b9a3838cadaa94359c4f6c5cca7e030e3d012ecc",
+    "fit_records_per_class": 450,
+    "calibration_records_per_class": 90,
+    "singleton_development_manifest": "manifests/foundir_qwen_five_class_development_v1.csv",
+    "singleton_development_manifest_sha256": "ecfea1e02007ca74fa753b4768985afa05ac7f2c9c656751fb8b5b00fc4fbba3",
+    "mixed_development_manifest": "manifests/foundir_qwen_mixed_consensus_development_v3.csv",
+    "mixed_development_manifest_sha256": "7394299192ba9af0c5de3f5459c761b8c45a82f2b302188cee9ff94ec7edfae5",
+    "internal_or_official_test_allowed": false
+  },
+  "qwen": {"adapter_sha256": "5416311d7cd0aa0308e206084c13c7c950f9dacfc96cd558466642804ccbee3c"},
+  "features": {
+    "feature_dim": 7168,
+    "fit_calibration_dir": "checkpoints/foundir_qwen_eleven_class_fresh_holdout_v2/features",
+    "singleton_development_dir": "checkpoints/foundir_qwen_five_class_development_v1/features",
+    "mixed_development_dir": "checkpoints/foundir_qwen_mixed_consensus_development_v3/features"
+  },
+  "base": {
+    "head": "checkpoints/foundir_qwen_compositional_router_v2/head.safetensors",
+    "head_sha256": "05c45e9ce63900c69aaf088281d02f8b0be0625c09c47354e4a8d93e95fa7bf9",
+    "route_margin": 0.9,
+    "positive_noise_margin": 0.95,
+    "candidate_negative_noise_margins": [0.95, 0.975, 0.99, 0.995, 0.999]
+  },
+  "gates": {
+    "maximum_wrong_rate": 0.005,
+    "maximum_per_class_wrong_rate": 0.01,
+    "minimum_coverage": 0.65,
+    "minimum_per_class_coverage": 0.5
+  },
+  "outputs": {
+    "predictions": "checkpoints/foundir_qwen_compositional_router_v3/development_predictions.csv",
+    "result": "checkpoints/foundir_qwen_compositional_router_v3/result.json"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_noise_rain_full_development_audit",
+  "router_config": "configs/foundir_five_type_qwen_routed_integrated_v2.json",
+  "router_config_sha256": "0215a518a81f48c4b244c96c7ea4e237ef8dc53f803919bbd47fd7f1ce072243",
+  "conditions": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+  "conditions_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "selection": {
+    "split": "validation",
+    "policy": "all_noise_or_rain_related_records_in_frozen_validation_split",
+    "categories": {
+      "02Blur_Noise": 579,
+      "05Noise": 1859,
+      "10Rain": 835,
+      "13Rain_Haze": 1580,
+      "16Lowlight_Noise": 1743,
+      "18Lowlight_Blur_Noise": 579
+    },
+    "expected_records": 7175,
+    "crop_size": 512,
+    "undersized_pair_policy": "bicubic_short_side_to_512_then_aligned_crop_v1"
+  },
+  "metrics": {
+    "names": ["psnr", "lpips"],
+    "quantization": "round_clip_uint8_png_equivalent_before_metrics",
+    "bootstrap_unit": "source_group_equal_weight",
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 2026091001,
+    "worst_records_per_category": 20
+  },
+  "strong_gates": {
+    "noise": {
+      "category": "05Noise",
+      "sow_psnr_minimum": 38.9,
+      "sow_lpips_maximum": 0.10,
+      "mean_psnr_minimum": 39.9,
+      "mean_lpips_maximum": 0.08,
+      "group_bootstrap_psnr_lower_minimum": 39.4,
+      "group_bootstrap_lpips_upper_maximum": 0.09
+    },
+    "rain": {
+      "category": "10Rain",
+      "sow_psnr_minimum": 34.2,
+      "sow_lpips_maximum": 0.08,
+      "mean_psnr_minimum": 35.2,
+      "mean_lpips_maximum": 0.06,
+      "group_bootstrap_psnr_lower_minimum": 34.7,
+      "group_bootstrap_lpips_upper_maximum": 0.07
+    }
+  },
+  "output": "checkpoints/foundir_five_type_flux2_dit_v3/noise_rain_full_development_audit_v1",
+  "checkpoint_selection_uses_this_development_audit_only": true,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_rain_flux2_strength_identity_directional_gate_v1",
+  "status": "user_authorized_rain_strength_identity_directional_gate",
+  "scope": {
+    "category": "10Rain",
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "authorization": {
+    "user_statement": "yes,execute",
+    "frozen_scope": "exact Rain step-2000 checkpoint and optimizer; 250-step directional gate at LR 2.5e-5; deterministic equal heavy/moderate/near-clean sampling; LQ identity targets only for near-clean training crops; new balanced 48-record train-split source-disjoint development gate; no automatic continuation",
+    "hold_id": "flux2_rain_source_diverse_pilot_result-0448a9fb1ba14791",
+    "hold_sha256": "bc2be5cbe8c3f4979bf1683cb13aa09bcd3128d9ed263642de4241c83a1b3132"
+  },
+  "initialization": {
+    "mode": "resume_exact_checkpoint_and_optimizer",
+    "start_step": 2000,
+    "parent_config": "configs/foundir_rain_flux2_source_diverse_pilot_v1.json",
+    "parent_config_sha256": "ab55489d25a03c1801c7d425e9fb42b0aa92d81b5b0d433bd9c9f4fefb1a2f71",
+    "parent_checkpoint": "checkpoints/foundir_rain_flux2_source_diverse_pilot_v1/step_002000.safetensors",
+    "parent_checkpoint_sha256": "2c4537258783f51ad15163b1a3377ce811d1418d51b4da68b5d75ef502bd45af",
+    "parent_optimizer": "checkpoints/foundir_rain_flux2_source_diverse_pilot_v1/step_002000.optimizer.pt",
+    "parent_optimizer_sha256": "d7a07519bf96b27ddee1df1ff5789476b1d996edde3dadfd25ccefdc1d181768",
+    "parent_result": "checkpoints/foundir_rain_flux2_source_diverse_pilot_v1/result.json",
+    "parent_result_sha256": "194c57cfaa5860699277979ffa5123c645e63fa4fbf2483d57ed530d7ca67fb9"
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+    "dtype": "bfloat16",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "text_encoder": "models/qwen3-4b-fp8"
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "parent_manifest": "manifests/foundir_rain_flux2_source_diverse_pilot_v1.csv",
+    "parent_manifest_sha256": "ace5c8cb6da1a1628fe3ab3f7eec9e0a50feb1a12bb2b26732f06726f552636b",
+    "excluded_manifest": "manifests/foundir_four_task_flux2_capacity_sanity_v1.csv",
+    "frozen_manifest": "manifests/foundir_rain_flux2_strength_identity_directional_gate_v1.csv",
+    "frozen_manifest_metadata": "manifests/foundir_rain_flux2_strength_identity_directional_gate_v1.json",
+    "category": "10Rain",
+    "train_role": "directional_train",
+    "validation_role": "directional_development",
+    "tiny_overfit_split": "train",
+    "tiny_overfit_records": 1580,
+    "tiny_overfit_unique_source_groups": 1580,
+    "frozen_validation_split": "train",
+    "frozen_validation_records": 48,
+    "frozen_validation_unique_source_groups": 48,
+    "development_records_per_strength_bin": 16,
+    "crop_size": 512,
+    "selection_seed": 2026091709,
+    "crop_seed": 2026091710
+  },
+  "lora": {
+    "initialization": "resume_exact_checkpoint_and_optimizer",
+    "rank": 32,
+    "alpha": 32.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "objective": "pure_noise_to_clean_rectified_flow_with_native_reference",
+    "seed": 2026091711,
+    "max_steps": 2250,
+    "global_batch_size": 32,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.000025,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "timestep_sampling": "uniform",
+    "reference_time_coordinate": 10,
+    "checkpoint_steps": [2250],
+    "strength_identity_policy": {
+      "sampling": "equal_three_bins_absolute_position",
+      "input_psnr_bins": [28.0, 34.0],
+      "heavy_target": "gt",
+      "moderate_target": "gt",
+      "near_clean_target": "lq_identity"
+    }
+  },
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091712,
+    "evaluate_steps": [2000, 2250],
+    "visual_records": 16,
+    "validation_visual_records": 16,
+    "final_train_metric_records": 16,
+    "final_validation_metric_records": 48
+  },
+  "gate": {
+    "protocol": "directional_strength_identity_gate_on_new_train_split_development",
+    "near_clean_minimum_psnr_gain_db": 0.5,
+    "moderate_maximum_psnr_regression_db": 0.1,
+    "heavy_maximum_psnr_regression_db": 0.1,
+    "overall_minimum_psnr_gain_db": 0.2,
+    "overall_maximum_lpips_regression": 0.005,
+    "require_human_visual_review": true,
+    "automatic_continuation": false
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"]
+  },
+  "runtime": {
+    "output_dir": "checkpoints/foundir_rain_flux2_strength_identity_directional_gate_v1",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

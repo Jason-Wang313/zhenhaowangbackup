@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 RUNNER="$ROOT/smoke/run_foundir_five_type_qwen_real_gate_v2_8gpu.sh"
 LAUNCHER_LOG="$ROOT/logs/foundir_five_type_qwen_real_gate_v2_launcher.log"
 

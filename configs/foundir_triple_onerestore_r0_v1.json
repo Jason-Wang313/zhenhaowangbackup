@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_onerestore_style_r0_bounded_diagnostic",
+  "scientific_role": "diagnostic_only_not_flux2_mainline_not_sow_result",
+  "authorization": {
+    "user_statement": "execute",
+    "authorized_scope": "R0 fixed categorical descriptor plus CDRL bounded diagnostic only",
+    "stop_after_r0": true,
+    "prohibit_automatic_r1_r2_csr": true
+  },
+  "parent_protocol": {
+    "config": "configs/foundir_triple_counterfactual_reproduction_r0_v1.json",
+    "config_sha256": "f099113d41867bf42f4143c70ebc7cbbc31d393368d81c7cc0fea3f9ca1b0cd8",
+    "manifest": "manifests/foundir_triple_counterfactual_reproduction_r0_v1.jsonl",
+    "manifest_sha256": "29fafafec8929d57136068433f081c8998053df0ec638b8f654a5f69e0c4ac85",
+    "metadata": "manifests/foundir_triple_counterfactual_reproduction_r0_v1.json",
+    "metadata_sha256": "82302da80acde9de29a8964f4125c69b8f893686db81bc31bd5d140afa97f948"
+  },
+  "public_mechanism_binding": {
+    "paper": "OneRestore: A Universal Restoration Framework for Composite Degradation",
+    "repository": "https://github.com/gy65896/OneRestore",
+    "commit": "23a2e6af066864dca013aeed7f6c6f5958aa7259",
+    "mechanism_reproduced": [
+      "single_restoration_backbone",
+      "fixed_global_categorical_descriptor",
+      "descriptor_guided_cross_attention_in_every_block",
+      "smooth_l1_plus_ms_ssim_plus_composite_degradation_restoration_loss"
+    ],
+    "not_claimed": [
+      "exact_CDD11_reproduction",
+      "published_OneRestore_checkpoint_result",
+      "semantic_GloVe_descriptor_equivalence"
+    ]
+  },
+  "model": {
+    "architecture": "OneRestore_style_encoder_backbone_decoder",
+    "channel": 32,
+    "descriptor_dim": 324,
+    "descriptor_classes": 16,
+    "descriptor_class_contract": "clean_plus_all_five_singletons_plus_all_ten_doubles",
+    "descriptor_initialization": "frozen_seeded_normalized_gaussian_table",
+    "descriptor_seed": 2026092602,
+    "descriptor_trainable": false,
+    "input_range": [0.0, 1.0],
+    "residual_output": true,
+    "parameter_count": 5849324,
+    "parameter_target": "OneRestore_scale_5_to_7M"
+  },
+  "frozen_losses": {
+    "vgg16_weight": "models/torch/hub/checkpoints/vgg16-397923af.pth",
+    "vgg16_weight_sha256": "397923af8e79cdbb6a7127f12361acd7a2f83e06b05044ddf496e83de57a5bf0",
+    "vgg16_feature_layers": [3, 8, 15],
+    "vgg16_trainable": false,
+    "cdrl_formula": "mean_layer_L1_out_clean_div_half_sum_L1_out_input_and_L1_out_other_negative_plus_1e-7"
+  },
+  "arms": [
+    {
+      "name": "A_unconditioned",
+      "descriptor": false,
+      "cdrl": false,
+      "loss_weights": {"smooth_l1": 0.7, "ms_ssim": 0.3, "cdrl": 0.0}
+    },
+    {
+      "name": "B_fixed_categorical",
+      "descriptor": true,
+      "cdrl": false,
+      "loss_weights": {"smooth_l1": 0.7, "ms_ssim": 0.3, "cdrl": 0.0}
+    },
+    {
+      "name": "C_fixed_categorical_cdrl",
+      "descriptor": true,
+      "cdrl": true,
+      "loss_weights": {"smooth_l1": 0.6, "ms_ssim": 0.3, "cdrl": 0.1}
+    }
+  ],
+  "data": {
+    "gradient_role": "train",
+    "selection_role": "development",
+    "heldout_role": "heldout_triple",
+    "train_parents": 60,
+    "development_parents": 30,
+    "heldout_triple_parents": 40,
+    "training_target": "clean_node",
+    "training_input": "full_parent_node",
+    "cdrl_negatives": "other_nonclean_nodes_from_same_parent_lattice",
+    "cache_root": "data/foundir_triple_onerestore_r0_v1",
+    "crop_size": 256,
+    "augmentations": ["horizontal_flip", "vertical_flip", "transpose"],
+    "triple_gradient_leakage_allowed": 0,
+    "triple_checkpoint_selection_leakage_allowed": 0
+  },
+  "training": {
+    "seed": 2026092603,
+    "global_batch_size": 8,
+    "supported_world_sizes": [8],
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 1,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0001,
+    "weight_decay": 0.0001,
+    "betas": [0.9, 0.999],
+    "total_steps_per_arm": 1200,
+    "scheduler": "cosine_to_1e-6",
+    "mixed_precision": "bfloat16",
+    "gradient_clip_norm": 1.0,
+    "checkpoint_steps": [1200],
+    "selection_rule": "final_step_only_no_heldout_selection",
+    "identical_initial_backbone_state_across_arms": true,
+    "identical_parent_schedule_and_augmentations_across_arms": true
+  },
+  "evaluation": {
+    "metrics": ["PSNR_RGB_0_1", "LPIPS_Alex_pyiqa_0.1.16"],
+    "development_access": "once_per_final_arm",
+    "heldout_triple_access": "once_after_all_three_arms_are_frozen",
+    "official_foundir_test_accessed": false,
+    "foundir_60_image_triple_accessed": false,
+    "primary_gate": {
+      "B_minus_A_development_psnr_min_db": 0.0,
+      "B_minus_A_development_lpips_max": 0.0,
+      "C_minus_B_development_lpips_max": 0.0,
+      "C_minus_B_development_psnr_min_db": -0.2,
+      "require_heldout_triple_metrics_reported_without_selection": true
+    }
+  },
+  "runtime": {
+    "supported_gpu_families": ["NVIDIA H100 80GB HBM3", "NVIDIA H200"],
+    "homogeneous_8gpu_required": true,
+    "output_root": "checkpoints/foundir_triple_onerestore_r0_v1",
+    "log": "logs/foundir_triple_onerestore_r0_v1.log",
+    "terminal_marker": "FOUNDIR_TRIPLE_ONERESTORE_R0_V1_END",
+    "network_during_gpu_run": false
+  },
+  "stop_conditions": [
+    "any_triple_gradient_or_selection_leakage",
+    "nonfinite_loss_or_gradient",
+    "source_or_artifact_hash_mismatch",
+    "any_official_foundir_test_or_60_image_triple_access",
+    "runtime_failure",
+    "R0_terminal_result"
+  ]
+}

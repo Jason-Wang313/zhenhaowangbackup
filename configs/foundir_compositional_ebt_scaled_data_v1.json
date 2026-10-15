@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "cpu_data_contract_only_no_training",
+  "objective": "Scale matched Plain/Compositional EBT to a source-disjoint, all-pairs singleton/double corpus comparable in record count to successful Restormer training while preserving unseen triples.",
+  "parent_manifest": "manifests/qwen_multidegradation_100k_physical_v8b.jsonl",
+  "parent_manifest_sha256": "777d0130bb0ff9590ad967e8bc848b13399de71df58bf72739f95be62720fb02",
+  "rendered_root": "data/qwen_multidegradation_100k_physical_v8b",
+  "selection": {
+    "train": {
+      "composition_sizes": [1, 2],
+      "records": 60000,
+      "source_ids": 1600,
+      "singleton_records_per_type": 6000,
+      "double_records_per_pair": 3000
+    },
+    "validation": {
+      "composition_sizes": [1, 2],
+      "records": 6000,
+      "source_ids": 200,
+      "singleton_records_per_type": 600,
+      "double_records_per_pair": 300
+    }
+  },
+  "required_degradations": ["blur", "noise", "rain", "haze", "low_light"],
+  "required_pair_count": 10,
+  "target_rule": "deterministically regenerate the clean frozen crop plus the same non-target nuisance from source_path/source_sha256/crop/non_target_nuisance, applying zero labeled degradation operators",
+  "degraded_rule": "use immutable rendered output_path bound to its generation-sidecar SHA-256",
+  "output_manifest": "manifests/foundir_compositional_ebt_scaled_data_v1.jsonl",
+  "output_metadata": "manifests/foundir_compositional_ebt_scaled_data_v1.json",
+  "integrity": {
+    "verify_every_selected_degraded_png": true,
+    "verify_every_unique_source_once": true,
+    "source_disjoint_train_validation": true
+  },
+  "prohibited": {
+    "clean_identity_records": true,
+    "triple_records": true,
+    "parent_test_split": true,
+    "foundir_60_image_triple_endpoint": true,
+    "sealed_internal": true,
+    "official_foundir_test": true
+  }
+}

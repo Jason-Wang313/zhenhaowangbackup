@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_vlm_energy_intersection_v1",
+  "classification": "PERFORMANCE-FIRST SINGLETON DOUBLE TRIPLE DEVELOPMENT TRAINING",
+  "objective": "Beat Full FoundIR on the matched 660-image development comparison using one VLM-conditioned trajectory-calibrated energy restorer with adaptive intrinsic TTS and self-verification.",
+  "claims": {
+    "included": [
+      "VLM-conditioned candidate-dependent restoration energy",
+      "trajectory-calibrated restoration vector field",
+      "adaptive intrinsic test-time scaling",
+      "same-energy intrinsic self-verification"
+    ],
+    "excluded": [
+      "compositional energy factorization",
+      "from-scratch training as novelty",
+      "unseen-triple generalization",
+      "official or sealed evaluation"
+    ]
+  },
+  "data": {
+    "manifest": "manifests/foundir_vlm_energy_full_order_data_v1.jsonl",
+    "manifest_sha256": "df1f51f37f22d294561014225e97b24e340202c986bf0ec8f393d36d7bd998a7",
+    "metadata": "manifests/foundir_vlm_energy_full_order_data_v1.json",
+    "metadata_sha256": "3db76018cceed3e66a33648bc7e5389ca569bc78219668c5ef3dac5c0f7fe96e",
+    "target_manifest": "manifests/foundir_vlm_energy_full_order_targets_v1.jsonl",
+    "target_manifest_sha256": "ea1ced7954db561f6d2e2c48d1059eb19ebabe47240e96d380d8b1cb2bb027d1",
+    "target_metadata": "manifests/foundir_vlm_energy_full_order_targets_v1.json",
+    "target_metadata_sha256": "760dda5250101503f684a69d0fe5933da2d63e897fde285483121d27e157f29a",
+    "train_records": 90000,
+    "validation_records": 9000,
+    "composition_sizes": [1, 2, 3],
+    "crop_size": 256,
+    "source_disjoint": true
+  },
+  "model": {
+    "implementation": "lowlight_restoration/vlm_energy_restoration.py",
+    "objectives": "lowlight_restoration/vlm_energy_objectives.py",
+    "condition_dim": 192,
+    "proposal_width": 64,
+    "proposal_encoder_blocks": [2, 2, 4],
+    "proposal_middle_blocks": 8,
+    "proposal_residual_bound": 0.75,
+    "energy_width": 64,
+    "energy_blocks_per_scale": [2, 2, 4, 4],
+    "maximum_descent_steps": 8,
+    "initial_step_size": 64.0,
+    "trainable_parameters": 40197726,
+    "initialization_seed": 2026100803
+  },
+  "landscape_training": {
+    "random_descent_steps": [1, 3],
+    "random_step_scale": [0.5, 1.5],
+    "langevin_initialization_sigma": [0.0, 0.05],
+    "replay_residual_probability": 0.25,
+    "replay_capacity": 4096,
+    "replay_spatial_size": 64,
+    "detach_between_steps": false,
+    "ranking_margin_scale": 0.1
+  },
+  "loss": {
+    "multi_scale_reconstruction": 1.0,
+    "edge_reconstruction": 0.1,
+    "lpips_alex": 0.05,
+    "vector_direction": 0.1,
+    "vector_progress": 0.05,
+    "quality_ranking": 0.1,
+    "alexnet_weights": "models/torch/hub/checkpoints/alexnet-owt-7be5be79.pth",
+    "alexnet_weights_sha256": "7be5be791159472b1fbf3c69796f7cb30dca7ad8466c2df70058c37116cdee02"
+  },
+  "preflight": {
+    "required_visible_gpus": 8,
+    "local_batch_per_gpu": 1,
+    "descent_steps": 2,
+    "optimizer_steps": 0,
+    "precision": "float32 for higher-order energy path",
+    "expected_wall_hours": [0.02, 0.20],
+    "expected_gpu_hours": [0.16, 1.60]
+  },
+  "training": {
+    "status": "PENDING GPU PREFLIGHT AND MEASURED PROFILE",
+    "proposal_warmup_steps": 20000,
+    "joint_steps": 100000,
+    "optimizer": "AdamW",
+    "peak_learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "gradient_clip_norm": 1.0,
+    "checkpoint_selection": "development singleton/double/triple PSNR+LPIPS only; no official/sealed access"
+  },
+  "evaluation": {
+    "matched_660_manifest": "manifests/foundir_composition_whole_image_v1.csv",
+    "matched_660_manifest_sha256": "a94128195ffd219f7e94b44c1ec98291c75e727f17e2c3af88cf1c2f9b6282a9",
+    "full_foundir_targets": {
+      "singleton": {"psnr": 28.852611, "lpips": 0.168653},
+      "double": {"psnr": 24.184117, "lpips": 0.194418},
+      "triple": {"psnr": 33.677913, "lpips": 0.031967}
+    },
+    "primary_gate": "exceed Full FoundIR in both PSNR and LPIPS for singleton, double, and triple"
+  },
+  "runtime": {
+    "python": "/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3/bin/python",
+    "supported_gpu_families": ["NVIDIA H100 80GB HBM3", "NVIDIA H200"],
+    "output_root": "checkpoints/foundir_vlm_energy_intersection_v1",
+    "log_root": "logs"
+  },
+  "access": {
+    "parent_test_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_lowlight_flux2_scalar_residual_full_development_v1",
+  "status": "user_authorized_lowlight_frozen_alpha_full_development",
+  "authorization": {
+    "exact_user_instruction": "let's proceed to low light now",
+    "acceptance_priority": "SOW mean PSNR and LPIPS are the formal gate; tail statistics are descriptive and have no veto",
+    "frozen_alpha": 0.925,
+    "selection_provenance": "selected on 16 calibration triptychs before one-shot evaluation on 16 source-disjoint validation triptychs"
+  },
+  "evidence": {
+    "capacity_result": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/result.json",
+    "capacity_result_sha256": "58120f6812cdd1d07349fdadab8dcf820915c6f2dc36e3046e1c94944332ceb7",
+    "scalar_read_only_audit": "reports/foundir_lowlight_flux2_scalar_residual_read_only_audit_2026-09-17.md",
+    "scalar_read_only_audit_sha256": "5e2c1886b0f94b90243126633aaf66ccde230a664f6553d84a317cfa0c76467c"
+  },
+  "scope": {
+    "category": "14Lowlight",
+    "split": "validation",
+    "single_degradation_only": true,
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "model_weight_updates": false,
+    "pixel_refiner": false,
+    "decoder_tuning": false,
+    "distillation": false,
+    "development_gt_optimization": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+    "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+    "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/step_000400.safetensors",
+    "checkpoint_sha256": "592e49ca2606565c5aeec8aadeb5466cf0c34b30024d5c02f0f2292ad28c90d8",
+    "checkpoint_step": 400
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "expected_records": 1400,
+    "expected_source_groups": 21,
+    "crop_size": 512,
+    "crop_seed": 2026091602,
+    "crop_policy": "one_deterministic_aligned_512_crop_per_record"
+  },
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091704,
+    "seed_namespace": "lowlight_scalar_full_development_v1",
+    "reference_time_coordinate": 10,
+    "quantization": "round_clip_uint8_before_metrics",
+    "frozen_alpha": 0.925,
+    "formula": "lq_plus_alpha_times_flux_minus_lq"
+  },
+  "gate": {
+    "formal_checks": ["sow_psnr", "sow_lpips"],
+    "sow_psnr_minimum": 18.9,
+    "sow_lpips_maximum": 0.28,
+    "tail_statistics_descriptive_only": true,
+    "require_visual_review": true,
+    "automatic_follow_on": false
+  },
+  "visual_record_ids": [
+    "foundir_train_0507750", "foundir_train_0483490", "foundir_train_0493351", "foundir_train_0494863",
+    "foundir_train_0481989", "foundir_train_0510638", "foundir_train_0477982", "foundir_train_0510165",
+    "foundir_train_0489816", "foundir_train_0478981", "foundir_train_0484811", "foundir_train_0478769",
+    "foundir_train_0498363", "foundir_train_0485913", "foundir_train_0476930", "foundir_train_0510143"
+  ],
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "evaluation_batch_size_per_rank": {"H100": 2, "H200": 4},
+    "data_loader_workers_per_rank": 2
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_lowlight_flux2_scalar_residual_full_development_v1",
+    "persistent_log": "logs/foundir_lowlight_flux2_scalar_residual_full_development_v1.log",
+    "gpu_telemetry": "logs/foundir_lowlight_flux2_scalar_residual_full_development_v1_gpu.csv",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

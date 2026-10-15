@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_training_only_mixed_restoration_confirmation_v1",
+  "scope": {
+    "split": "train",
+    "mixed_degradations": true,
+    "model_weight_updates": false,
+    "checkpoint_selection_reopened": false,
+    "pilot_source_disjoint": true,
+    "singleton_training_source_disjoint": false,
+    "limitation": "All available mixed training source groups overlap singleton expert training source groups; this confirms fresh mixed-pair stability, not model-held-out content generalization.",
+    "development_pixels_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "data": {
+    "manifest": "manifests/foundir_mixed_restoration_confirmation_v1.csv",
+    "manifest_sha256": "188e7c60e88c6fedfb2fa9a86604f58f7f83cb152435162206f4ec04e9b9255a",
+    "records": 640,
+    "records_per_category": 128,
+    "source_groups": 640,
+    "crop_size": 512,
+    "crop_seed": 2026091902
+  },
+  "orders": {
+    "09Lowlight_Haze": ["haze", "low_light"],
+    "13Rain_Haze": ["rain", "haze"],
+    "15Lowlight_Blur": ["low_light", "blur"],
+    "16Lowlight_Noise": ["noise", "low_light"],
+    "18Lowlight_Blur_Noise": ["noise", "low_light", "blur"]
+  },
+  "experts": {
+    "blur": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_blur_only_flux2_full_v1.json",
+      "parent_config_sha256": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c",
+      "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+      "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+      "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 0.75
+    },
+    "noise": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+      "checkpoint_sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a",
+      "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 0.30
+    },
+    "haze": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_haze_flux2_source_diverse_continuation_v1.json",
+      "parent_config_sha256": "f98ae254db5a39b751654269870d037dd75f844cfaa2210d3e47123bf3596c86",
+      "checkpoint": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/step_003000.safetensors",
+      "checkpoint_sha256": "4d94ecf6dd902704345e28ae0bf3447d7e172235158c2b2177933794fd973e00",
+      "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 1.0
+    },
+    "rain": {
+      "kind": "restormer",
+      "checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/rain_restormer_adaptation_v2_8gpu/step_005000.pt",
+      "checkpoint_sha256": "ff829573175df0f25add8a4d8f82db648fd6dad88a261297cfe88d2a8944c444",
+      "base_checkpoint_name": "deraining",
+      "base_checkpoint_dir": "models/restormer-task-native",
+      "alpha": 1.0
+    },
+    "low_light": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/step_000400.safetensors",
+      "checkpoint_sha256": "592e49ca2606565c5aeec8aadeb5466cf0c34b30024d5c02f0f2292ad28c90d8",
+      "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 0.925
+    }
+  },
+  "inference": {
+    "stage_order": ["rain", "noise", "haze", "low_light", "blur"],
+    "num_steps": 50,
+    "guidance": 1.0,
+    "reference_time_coordinate": 10,
+    "seed": 2026091903,
+    "quantization": "round_clip_uint8_png_between_every_expert"
+  },
+  "gate": {
+    "per_category_mean_psnr_must_improve_over_input": true,
+    "per_category_mean_lpips_must_improve_over_input": true,
+    "source_group_bootstrap_required": true,
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 2026091904,
+    "fixed_visual_review_required": true
+  },
+  "visual_record_ids": [
+    "foundir_train_0294849", "foundir_train_0279471",
+    "foundir_train_0416133", "foundir_train_0461183",
+    "foundir_train_0587170", "foundir_train_0559881",
+    "foundir_train_0649005", "foundir_train_0649689",
+    "foundir_train_0685216", "foundir_train_0664430"
+  ],
+  "distributed": {
+    "required_world_size": 8,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "batch_size_per_rank": {"H100": 2, "H200": 4}
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "torch_home": "models/torch",
+    "output_dir": "checkpoints/foundir_mixed_restoration_confirmation_v1",
+    "log": "logs/foundir_mixed_restoration_confirmation_v1.log",
+    "gpu_telemetry": "logs/foundir_mixed_restoration_confirmation_v1_gpu.csv"
+  }
+}

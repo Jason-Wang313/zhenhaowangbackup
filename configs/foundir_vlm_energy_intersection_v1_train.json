@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_vlm_energy_intersection_v1_train",
+  "classification": "FORMAL DEVELOPMENT TRAINING; NOT OFFICIAL OR SEALED EVALUATION",
+  "base_config": "configs/foundir_vlm_energy_intersection_v1.json",
+  "base_config_sha256": "942cc99e03643a419c46b52aba4cfcff7be915ceca33f2903787b58f3518281b",
+  "autotune_result": "checkpoints/foundir_vlm_energy_intersection_v1/autotune/result.json",
+  "autotune_result_sha256": "21b0818a135f9e7c65f75652723df64e496385de09bdc3490a9182821c421938",
+  "implementation_sha256": "78f9073da563f7be67e5469380f81c0bbb220f06552c28f109cbacdea619f9a2",
+  "objectives_sha256": "2b9db916ce4260cb4a37d5b527c070dd54ee027ebf61b9f134acfe56043fc547",
+  "data": {
+    "manifest_sha256": "df1f51f37f22d294561014225e97b24e340202c986bf0ec8f393d36d7bd998a7",
+    "target_manifest_sha256": "ea1ced7954db561f6d2e2c48d1059eb19ebabe47240e96d380d8b1cb2bb027d1",
+    "crop_size": 256,
+    "workers_per_rank": 4,
+    "pin_memory": true,
+    "persistent_workers": false,
+    "validation_records_per_combination": 30,
+    "validation_records": 750
+  },
+  "distributed": {
+    "precision": "float32",
+    "profiles": {
+      "8": {"nodes": 1, "batch_per_gpu": 8, "global_batch": 64},
+      "24": {"nodes": 3, "batch_per_gpu": 3, "global_batch": 72},
+      "32": {"nodes": 4, "batch_per_gpu": 2, "global_batch": 64},
+      "40": {"nodes": 5, "batch_per_gpu": 2, "global_batch": 80}
+    },
+    "gpus_per_node": 8,
+    "require_measured_multinode_benchmark": true,
+    "gradient_as_bucket_view": false
+  },
+  "schedule": {
+    "proposal_warmup_epochs": 3,
+    "joint_epochs": 20,
+    "total_epochs": 23,
+    "steps_per_epoch_policy": "ceil(train_records / actual_global_batch)",
+    "warmup_learning_rate": 0.0002,
+    "joint_peak_learning_rate": 0.0001,
+    "joint_minimum_learning_rate": 0.000001,
+    "joint_lr_warmup_steps": 500,
+    "optimizer": "AdamW",
+    "betas": [0.9, 0.999],
+    "weight_decay": 0.01,
+    "gradient_clip_norm": 1.0,
+    "full_objective_interval": 4,
+    "checkpoint_every_epochs": 1,
+    "validation_epochs": [1, 3, 4, 6, 8, 13, 18, 23]
+  },
+  "landscape": {
+    "descent_steps_cycle": [1, 2, 3],
+    "step_scale": [0.5, 1.5],
+    "langevin_sigma": [0.0, 0.05],
+    "replay_probability": 0.25,
+    "replay_capacity": 4096,
+    "replay_spatial_size": 64
+  },
+  "validation": {
+    "fixed_descent_steps": 3,
+    "metrics": ["PSNR_RGB_0_1", "LPIPS_Alex"],
+    "stratify_by": ["composition_size", "degradation_combination"],
+    "checkpoint_rule": "retain every validation checkpoint; no official or sealed selection"
+  },
+  "runtime": {
+    "output_root": "checkpoints/foundir_vlm_energy_intersection_v1/train",
+    "log_root": "logs",
+    "expected_wall_hours": [50.0, 60.0],
+    "expected_gpu_hours": [400.0, 480.0]
+  },
+  "access": {
+    "train_split_only_for_optimizer": true,
+    "development_validation_only": true,
+    "parent_test_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

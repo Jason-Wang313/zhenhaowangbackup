@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 CONFIG="$ROOT/configs/foundir_lowlight_gate3_v1.json"
 CONFIG_SHA256="818bd402ad5aec6b12e826cc30c99b49bead9c30a2a85a7ff63c4eb744434ca3"
 TRAIN_PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"

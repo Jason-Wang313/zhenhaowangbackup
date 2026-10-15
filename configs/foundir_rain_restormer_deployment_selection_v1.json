@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_isolated_rain_restormer_deployment_selection",
+  "authorization": {
+    "user_statement": "sure, do it",
+    "hold_id": "flux2_rain_strength_identity_ratio_result-54d5e10c4c95d5d8",
+    "hold_sha256": "40b90ef13013160de339aa8945c08161fe75afae331528b4436e6c5bf0d1c977"
+  },
+  "scope": {
+    "task": "rain",
+    "category": "10Rain",
+    "isolated_composition_size": 1,
+    "other_types_modified": false,
+    "mixed_degradations_supported_by_expert": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "routing": {
+    "policy": "fail_closed_exact_singleton_rain_only",
+    "expert_backend": "rain_restormer_step5000",
+    "non_rain_backend": "existing_pipeline_unchanged",
+    "allowed_expert_degradations": ["rain"],
+    "explicitly_forbidden_expert_degradations": ["blur", "noise", "haze", "low_light"],
+    "mixed_degradation_fallback": "existing_pipeline_unchanged",
+    "ground_truth_pixels_used_for_routing": false
+  },
+  "model": {
+    "architecture": "task_native_restormer_deraining",
+    "architecture_revision": "68dc6ac472db26f16361150cb7a96a1bc87da93f",
+    "base_checkpoint": "models/restormer-task-native/deraining.pth",
+    "base_checkpoint_sha256": "225ed9acf80b3527d7080e5182918f642a23a78ef8593ad700b7e924bd660681",
+    "adaptation_config": "configs/foundir_rain_restormer_adaptation_v2_8gpu.json",
+    "adaptation_config_sha256": "c37d2dfadc440bc0f68f2b75d623578be151ff4e5e80e5db90b92f12374a6d1d",
+    "checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/rain_restormer_adaptation_v2_8gpu/step_005000.pt",
+    "checkpoint_sha256": "ff829573175df0f25add8a4d8f82db648fd6dad88a261297cfe88d2a8944c444",
+    "step": 5000
+  },
+  "evidence": {
+    "selection": "checkpoints/foundir_five_type_flux2_dit_v3/rain_restormer_adaptation_v2_8gpu/development_selection.json",
+    "selection_sha256": "924f64288198d6ebc1aa8b3ef8b744865f260d679b989633b3544a43dce70bc4",
+    "development_result": "checkpoints/foundir_five_type_flux2_dit_v3/rain_restormer_adaptation_v2_8gpu/development_step_005000.json",
+    "development_result_sha256": "0c0aeffa3e60ba809f84069cbc66ee85272d99424b6daf2adb2107eaa3bfc4ce",
+    "validation_records": 835,
+    "validation_source_groups": 117,
+    "mean_psnr": 42.2843466542096,
+    "mean_lpips": 0.047452168240756334,
+    "rain_sow_psnr_minimum": 34.2,
+    "rain_sow_lpips_maximum": 0.08,
+    "mean_sow_pass": true,
+    "legacy_stronger_bootstrap_gate_pass": false,
+    "legacy_bootstrap_lpips_upper": 0.07038051062658,
+    "legacy_bootstrap_lpips_upper_limit": 0.07
+  },
+  "execution": {
+    "new_training_required": false,
+    "new_gpu_evaluation_required": false,
+    "input_range": "zero_to_one_rgb",
+    "output_range": "clamp_zero_to_one_rgb",
+    "spatial_dimensions_must_be_divisible_by": 8
+  }
+}

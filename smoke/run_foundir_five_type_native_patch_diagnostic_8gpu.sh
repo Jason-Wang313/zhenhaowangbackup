@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 CONFIG="$ROOT/configs/foundir_five_type_native_patch_diagnostic_v1.json"
 PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 LOG="$ROOT/logs/foundir_five_type_native_patch_diagnostic_v1.log"

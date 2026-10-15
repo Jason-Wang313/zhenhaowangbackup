@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "purpose": "one-shot image-space Noise versus Noise+Low-light guard",
+  "data": {
+    "calibration_manifest": "manifests/foundir_qwen_eleven_class_fresh_holdout_v2.csv",
+    "calibration_manifest_sha256": "b58c08a63ff42d06cf2f3f54b9a3838cadaa94359c4f6c5cca7e030e3d012ecc",
+    "records_per_class": 90,
+    "internal_or_official_test_allowed": false
+  },
+  "rule": {"dark_noise_floor": 0.00392156862745098},
+  "gates": {"maximum_per_class_wrong_rate": 0.01},
+  "outputs": {
+    "rule": "checkpoints/foundir_qwen_noise_lowlight_physical_guard_v3/rule.json",
+    "calibration_predictions": "checkpoints/foundir_qwen_noise_lowlight_physical_guard_v3/calibration_predictions.csv"
+  }
+}

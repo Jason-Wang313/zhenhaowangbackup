@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "purpose": "bounded low-light-conditional noise correction for the compositional router",
+  "data": {
+    "fit_calibration_manifest": "manifests/foundir_qwen_eleven_class_fresh_holdout_v2.csv",
+    "fit_calibration_manifest_sha256": "b58c08a63ff42d06cf2f3f54b9a3838cadaa94359c4f6c5cca7e030e3d012ecc",
+    "fit_records_per_class": 450,
+    "calibration_records_per_class": 90,
+    "singleton_development_manifest": "manifests/foundir_qwen_five_class_development_v1.csv",
+    "singleton_development_manifest_sha256": "ecfea1e02007ca74fa753b4768985afa05ac7f2c9c656751fb8b5b00fc4fbba3",
+    "mixed_development_manifest": "manifests/foundir_qwen_mixed_consensus_development_v3.csv",
+    "mixed_development_manifest_sha256": "7394299192ba9af0c5de3f5459c761b8c45a82f2b302188cee9ff94ec7edfae5",
+    "internal_or_official_test_allowed": false
+  },
+  "qwen": {
+    "adapter_sha256": "5416311d7cd0aa0308e206084c13c7c950f9dacfc96cd558466642804ccbee3c"
+  },
+  "features": {
+    "feature_dim": 7168,
+    "fit_calibration_dir": "checkpoints/foundir_qwen_eleven_class_fresh_holdout_v2/features",
+    "singleton_development_dir": "checkpoints/foundir_qwen_five_class_development_v1/features",
+    "mixed_development_dir": "checkpoints/foundir_qwen_mixed_consensus_development_v3/features"
+  },
+  "base": {
+    "head": "checkpoints/foundir_qwen_compositional_router_v1/head.safetensors",
+    "head_sha256": "7d8a8d2584fc5193f091523a7b2c76ff91898bd7612d9dd167abb9b0cd0af6bb",
+    "margin": 0.9
+  },
+  "conditional_head": {
+    "eligible_classes": ["low_light", "haze+low_light", "blur+low_light", "noise+low_light", "blur+noise+low_light"],
+    "positive_classes": ["noise+low_light", "blur+noise+low_light"],
+    "c": 0.1,
+    "maximum_iterations": 1000,
+    "seed": 20260919,
+    "candidate_margins": [0.75, 0.8, 0.85, 0.9, 0.925, 0.95]
+  },
+  "gates": {
+    "maximum_wrong_rate": 0.005,
+    "maximum_per_class_wrong_rate": 0.01,
+    "minimum_coverage": 0.65,
+    "minimum_per_class_coverage": 0.5
+  },
+  "outputs": {
+    "head": "checkpoints/foundir_qwen_compositional_router_v2/head.safetensors",
+    "predictions": "checkpoints/foundir_qwen_compositional_router_v2/development_predictions.csv",
+    "result": "checkpoints/foundir_qwen_compositional_router_v2/result.json"
+  }
+}

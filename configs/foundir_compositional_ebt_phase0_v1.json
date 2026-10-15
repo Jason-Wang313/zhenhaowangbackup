@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_compositional_ebt_phase0_v1",
+  "classification": "DIAGNOSTIC ONLY / 非主线",
+  "objective": "Faithfully audit and minimally instantiate the official Energy-Based Transformer image-denoising formulation before any restoration training.",
+  "workspace": "/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang",
+  "python": "/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3/bin/python",
+  "official_ebt": {
+    "repository": "https://github.com/alexiglad/EBT",
+    "revision": "19420cbeae655bbf11930219a675ade6897019e8",
+    "paper": "https://arxiv.org/abs/2507.02092",
+    "project_page": "https://energy-based-transformers.github.io/"
+  },
+  "phase0_scope": {
+    "allowed": [
+      "read_only_paper_and_source_audit",
+      "workspace_local_pinned_source_acquisition",
+      "minimal_plain_and_compositional_energy_module_implementation",
+      "cpu_unit_tests",
+      "zero_optimizer_step_cuda_forward_backward_smoke"
+    ],
+    "prohibited": [
+      "optimizer_update",
+      "model_training",
+      "checkpoint_selection",
+      "singleton_or_double_metric_evaluation",
+      "triple_endpoint_access",
+      "sealed_internal_access",
+      "official_foundir_test_access"
+    ]
+  },
+  "frozen_hypothesis": "Atomic energies learned from singleton degradations and pairwise interaction energies learned from double degradations can be jointly activated by a frozen VLM descriptor and minimized at inference to generalize to unseen triple compositions.",
+  "planned_matched_models": [
+    "plain_conditional_ebt",
+    "vlm_activated_atomic_pairwise_compositional_ebt"
+  ],
+  "phase0_gates": [
+    "official image EBT objective and inference algorithm are cited line-by-line",
+    "candidate-image gradients are finite and nonzero",
+    "one bounded optimization step lowers energy without image collapse",
+    "plain and compositional models have matched capacity and compute accounting",
+    "optimizer_steps_equal_zero"
+  ],
+  "hardware_policy": {
+    "substantial_future_runs": "homogeneous 8xH100 or 8xH200",
+    "phase0_cuda_smoke": "one visible H100 or H200 is sufficient because no optimizer update is allowed"
+  },
+  "data_policy": {
+    "phase0": "synthetic tensors or non-protected workspace development examples only",
+    "future_training": "singleton and double only",
+    "future_checkpoint_selection": "singleton and double only",
+    "future_triple_use": "one frozen evaluation after checkpoint selection"
+  }
+}

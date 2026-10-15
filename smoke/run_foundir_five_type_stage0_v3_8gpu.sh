@@ -9,11 +9,13 @@ MANIFEST_CONFIG="$ROOT/configs/foundir_five_type_flux2_dit_v1.json"
 FLUX_PYTHON="$ROOT/.venv/flux2-smoke/bin/python"
 QWEN_PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 OUTPUT="$ROOT/checkpoints/foundir_five_type_flux2_dit_v3"
+MODEL="VLM-guided FLUX.2 Klein 4B; frozen physical-v8 Qwen; DiT LoRA + pixel refiner"
 LOG="$ROOT/logs/foundir_five_type_flux2_dit_v3.log"
 GPU_LOG="$ROOT/logs/foundir_five_type_flux2_dit_v3_gpu.csv"
 LOCK="$ROOT/logs/foundir_five_type_flux2_dit_v3.lock"
 
 cd "$ROOT"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 mkdir -p "$ROOT/logs" "$OUTPUT" "$ROOT/.cache/triton/foundir_five_type_v3" \
   "$ROOT/.cache/torch_extensions/foundir_five_type_v3"
 exec > >(tee -a "$LOG") 2>&1
@@ -25,7 +27,13 @@ finish_run() {
     kill "$telemetry_pid" 2>/dev/null || true
     wait "$telemetry_pid" 2>/dev/null || true
   fi
+  if [[ "$status" -ne 0 ]]; then
+    /usr/bin/python3 "$ROOT/smoke/advisor_governance.py" runtime-failure \
+      --gate stage0_v3_runtime_failure --evidence "$CONFIG" --config "$CONFIG" \
+      --model "$MODEL" --status "$status" --log "$LOG" || true
+  fi
   echo "FOUNDIR_FIVE_TYPE_STAGE0_V3_END status=$status utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  return "$status"
 }
 trap finish_run EXIT
 
@@ -93,6 +101,14 @@ assert set(p["arm_metrics"]) == {"qwen"}
 print("FOUNDIR_FIVE_TYPE_V3_OVERFIT_VERIFY_PASS", p["status"])
 raise SystemExit(0 if p["automatic_gate_pass"] else 2)
 PY
-  exit $?
+  gate_status=$?
+  set -e
+  /usr/bin/python3 "$ROOT/smoke/advisor_governance.py" emit \
+    --gate stage0_overfit --evidence "$OVERFIT_RESULT" --config "$CONFIG" \
+    --model "$MODEL" --split foundir_training_only_overfit \
+    --outcome auto --hold-on-failure \
+    --root-cause-or-status "Stage-0 overfit learnability gate completed." \
+    --advisor-decision-question "若失败，请判断是否修复同一 FLUX.2 mainline；若通过，记录后继续 full training。"
+  exit "$gate_status"
 fi
 exit "$torchrun_status"

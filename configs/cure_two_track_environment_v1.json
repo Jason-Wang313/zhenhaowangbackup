@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "interpreter": ".venv/cure-repro-py311/bin/python",
+  "base_environment": ".conda/gpu-train-clean",
+  "python": "3.11.15",
+  "torch": "2.11.0+cu128",
+  "torchvision": "0.26.0+cu128",
+  "numpy": "1.26.4",
+  "h5py": "3.14.0",
+  "Pillow": "12.2.0",
+  "tqdm": "4.67.1",
+  "einops": "0.8.1",
+  "scikit-image": "0.25.2",
+  "pandas": "2.2.3",
+  "TORCH_HOME": "models/torch",
+  "pretrained_weights": {
+    "ResNet18": {
+      "path": "models/torch/hub/checkpoints/resnet18-f37072fd.pth",
+      "sha256": "f37072fd47e89c5e827621c5baffa7500819f7896bbacec160b1a16c560e07ec"
+    },
+    "VGG16": {
+      "path": "models/torch/hub/checkpoints/vgg16-397923af.pth",
+      "sha256": "397923af8e79cdbb6a7127f12361acd7a2f83e06b05044ddf496e83de57a5bf0"
+    },
+    "GloVe": {
+      "path": "third_party/cure_official/assets/glove.6B.300d.txt",
+      "sha256": "7e1a8bb9fc57bcc088a4f7a32ff29426520b406dbd2bd0ed1585b7677c974c89"
+    }
+  },
+  "note": "Workspace-local Python 3.11 environment inherits the pinned torch/torchvision installation from the workspace-local base; NumPy<2 and h5py are isolated in the venv."
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "status": "development_only_blur_restormer_refinement_gate",
+  "router_config": "configs/foundir_five_type_qwen_routed_integrated_v2.json",
+  "router_config_sha256": "0215a518a81f48c4b244c96c7ea4e237ef8dc53f803919bbd47fd7f1ce072243",
+  "router_development_result": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/qwen_routed_integrated_v2/development/result.json",
+  "router_development_result_sha256": "f4a4bbda2af3c59b25cb478db8a364eb30109ee44ec9b74171d64a9042e961ff",
+  "router_development_freeze": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/qwen_routed_integrated_v2/development_freeze.json",
+  "router_development_freeze_sha256": "8a99d64e00fbf1650448ae07d81678f012bfbc533ddbcb3f3f55869b7abc225b",
+  "restormer_source": "third_party/foundir/specialist_model/basicsr/archs/Restormer_arch.py",
+  "restormer_source_sha256": "df47fe411031685fb5e67e34fd99e6504c4711ba51d464458df8ed22d24c1d7f",
+  "initial_checkpoint": "third_party/foundir/specialist_model/ckpt/weather.pth",
+  "initial_checkpoint_sha256": "25fa90003de8fa6965d861fc66159fb0c188654723acc15e8c49ec8359ca8b93",
+  "correction_source": {
+    "config": "configs/foundir_blur_restormer_refinement_gate_v3.json",
+    "config_sha256": "b625b6877fb72a768e90d4c129b65cb6ad92df7fa1c56088189c6dc7cba8ce4a",
+    "checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/blur_restormer_refinement_gate_v3/step_001000.pt",
+    "checkpoint_sha256": "8de33c2393997bbc32324c885e55c78e45ba16ac7adfcb5780dac8e5f8c51f38",
+    "development_result": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/blur_restormer_refinement_gate_v3/development_step_001000.json",
+    "development_result_sha256": "735c126816bb90e7f398ee1e420d67f847a6fae75d5bee49cec121628c45ae23"
+  },
+  "data": {
+    "training_split": "train",
+    "training_categories": ["01Blur"],
+    "training_qwen_blur_levels": [4, 5],
+    "expected_training_records": 85153,
+    "expected_training_records_by_qwen_blur_level": {
+      "4": 36396,
+      "5": 48757
+    },
+    "qwen_blur_level_sampling_probabilities": {
+      "4": 0.25,
+      "5": 0.75
+    },
+    "validation_split": "validation",
+    "validation_categories": ["01Blur", "05Noise"],
+    "validation_records_per_category": 60,
+    "crop_size": 512,
+    "d4_augmentation": true,
+    "noise_identity_presentation_probability": 0.0,
+    "identity_probability": 0.0,
+    "seed": 2026090908
+  },
+  "model": {
+    "architecture": "released_foundir_restormer_26m_base_lq_fusion_corrective",
+    "parameters": 26126887,
+    "input": "frozen_selected_blur_base_and_aligned_lq",
+    "output": "full_refined_rgb_with_internal_residual_skip",
+    "initialization": "v3_step_1000_corrective_finetune",
+    "evaluation_residual_scales": [0.0, 0.5, 0.75, 1.0, 1.25],
+    "residual_scale_selection": "maximize_worst_gate_margin_then_closest_to_one_then_lower_scale"
+  },
+  "training": {
+    "world_size": 8,
+    "batch_size_per_rank": 2,
+    "gradient_accumulation_steps": 2,
+    "global_batch_size": 32,
+    "optimizer_steps": 3000,
+    "learning_rate": 0.00002,
+    "minimum_learning_rate": 0.000002,
+    "warmup_steps": 50,
+    "weight_decay": 0.0001,
+    "max_grad_norm": 1.0,
+    "num_workers_per_rank": 4,
+    "data_loader_timeout_seconds": 120,
+    "checkpoint_steps": [250, 750, 1500, 3000],
+    "loss": {
+      "charbonnier_weight": 0.25,
+      "charbonnier_epsilon": 0.001,
+      "rgb_mse_weight": 10.0,
+      "psnr_surrogate_weight": 0.02,
+      "psnr_surrogate_epsilon": 0.0001,
+      "edge_l1_weight": 0.05,
+      "lpips_weight": 0.1,
+      "lpips_every_steps": 1
+    }
+  },
+  "gate": {
+    "selection": "maximize_worst_qwen_routed_blur_and_noise_normalized_margin",
+    "blur_psnr_minimum": 25.9,
+    "blur_lpips_maximum": 0.18,
+    "noise_psnr_minimum": 38.9,
+    "noise_lpips_maximum": 0.1,
+    "require_exact_v2_base_metric_reproduction": true,
+    "base_metric_tolerance": 0.0001
+  },
+  "continuation": {
+    "policy": "fail_closed_improve_worst_margin_with_psnr_base_and_v3_lpips_floors",
+    "minimum_blur_psnr": 25.316358061390666,
+    "maximum_blur_lpips": 0.2349482521453562,
+    "initial_selection_score": -5.49482521453562,
+    "minimum_selection_score_gain": 0.0,
+    "stop_on_gate_pass": true
+  },
+  "output": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/blur_restormer_refinement_gate_v4",
+  "checkpoint_selection_uses_validation_only": true,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "development_only_blur_capacity_gate",
+  "parent_config": "configs/foundir_five_type_flux2_dit_v3.json",
+  "parent_config_sha256": "5145e97b2f170b617f34180783d8e7934a77b5ef82f2e6c5cae7756c89763810",
+  "conditions": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+  "conditions_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "data": {
+    "training_split": "train",
+    "training_category": "01Blur",
+    "noise_identity_category": "05Noise",
+    "noise_identity_presentation_probability": 0.20,
+    "validation_split": "validation",
+    "validation_categories": ["01Blur", "05Noise"],
+    "validation_records_per_category": 60,
+    "crop_size": 256,
+    "d4_augmentation": true,
+    "identity_probability": 0.10,
+    "seed": 2026090901
+  },
+  "model": {
+    "width": 48,
+    "encoder_blocks": [2, 2],
+    "middle_blocks": 12,
+    "decoder_blocks": [2, 2],
+    "residual_bound": 0.5
+  },
+  "training": {
+    "world_size": 8,
+    "batch_size_per_rank": 4,
+    "gradient_accumulation_steps": 2,
+    "global_batch_size": 64,
+    "optimizer_steps": 24000,
+    "learning_rate": 0.0002,
+    "minimum_learning_rate": 0.000001,
+    "warmup_steps": 500,
+    "weight_decay": 0.0001,
+    "max_grad_norm": 1.0,
+    "num_workers_per_rank": 6,
+    "checkpoint_steps": [3000, 6000, 12000, 18000, 24000],
+    "loss": {
+      "rgb_mse_weight": 1.0,
+      "charbonnier_weight": 0.7,
+      "charbonnier_epsilon": 0.001,
+      "edge_l1_weight": 0.05,
+      "lpips_weight": 0.05,
+      "lpips_every_steps": 4,
+      "identity_l1_weight": 0.10
+    }
+  },
+  "gate": {
+    "selection": "maximize_worst_qwen_routed_blur_and_noise_normalized_margin",
+    "blur_psnr_minimum": 25.9,
+    "blur_lpips_maximum": 0.18,
+    "noise_psnr_minimum": 38.9,
+    "noise_lpips_maximum": 0.10,
+    "require_noise_identity_bypass": true
+  },
+  "output": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/blur_pixel_expert_gate_v1",
+  "checkpoint_selection_uses_validation_only": true,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

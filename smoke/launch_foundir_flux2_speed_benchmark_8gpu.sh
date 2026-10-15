@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 RUNNER="$ROOT/smoke/run_foundir_flux2_speed_benchmark_8gpu.sh"
 LOG="$ROOT/logs/foundir_flux2_speed_benchmark.log"
 PID_FILE="$ROOT/logs/foundir_flux2_speed_benchmark.pid"

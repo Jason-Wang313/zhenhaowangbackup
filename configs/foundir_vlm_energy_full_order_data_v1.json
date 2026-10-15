@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "performance_first_development_data_contract",
+  "objective": "Create a source-disjoint singleton/double/triple development corpus for the VLM-conditioned energy restorer. This protocol makes no unseen-composition claim.",
+  "parent_manifest": "manifests/qwen_multidegradation_100k_physical_v8b.jsonl",
+  "parent_manifest_sha256": "777d0130bb0ff9590ad967e8bc848b13399de71df58bf72739f95be62720fb02",
+  "rendered_root": "data/qwen_multidegradation_100k_physical_v8b",
+  "allowed_splits": ["train", "validation"],
+  "allowed_composition_sizes": [1, 2, 3],
+  "required_degradations": ["blur", "noise", "rain", "haze", "low_light"],
+  "expected": {
+    "train_records": 90000,
+    "validation_records": 9000,
+    "train_sources": 1600,
+    "validation_sources": 200,
+    "single_combinations": 5,
+    "double_combinations": 10,
+    "triple_combinations": 10
+  },
+  "target_rule": "deterministically regenerate the clean frozen crop plus the same non-target nuisance with zero labeled degradation operators",
+  "output_manifest": "manifests/foundir_vlm_energy_full_order_data_v1.jsonl",
+  "output_metadata": "manifests/foundir_vlm_energy_full_order_data_v1.json",
+  "prohibited": {
+    "parent_test_split": true,
+    "sealed_internal": true,
+    "official_foundir_test": true
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "purpose": "truth-free final eleven-route CPU gate before any restoration integration GPU run",
+  "scope": {
+    "development_only": true,
+    "model_weight_updates": false,
+    "official_or_sealed_test_allowed": false
+  },
+  "inputs": {
+    "compositional": {
+      "path": "checkpoints/foundir_qwen_compositional_router_v3/development_predictions.csv",
+      "sha256": "62adefca53a7230e236be4a6ee95af79f366173ea7b0e0ed9b17f61d091a37db"
+    },
+    "eleven_consensus": {
+      "path": "checkpoints/foundir_qwen_mixed_consensus_development_v3/predictions.csv",
+      "sha256": "7fbd2a92ce659ecb6222b3c8971f182aa9a03006d3f1489a98a89d89030957a0"
+    },
+    "dual_nonlinear": {
+      "path": "checkpoints/foundir_qwen_lowlight_noise_dual_nonlinear_v2/development_predictions.csv",
+      "sha256": "0107c8ca432257bc5bfb529d6e2e2f4cdf8df3941292c471873541a1a0eb1b6f"
+    },
+    "physical_guard": {
+      "path": "checkpoints/foundir_qwen_noise_lowlight_physical_guard_v3/full_development_predictions.csv",
+      "sha256": "fb3ff1eef8b5acaf9cadc6cc973735c28b430144fc3da69d73430270d4d6633e"
+    }
+  },
+  "gates": {
+    "required_wrong_routes": 0,
+    "minimum_overall_coverage": 0.65,
+    "minimum_per_class_coverage": 0.50
+  },
+  "outputs": {
+    "directory": "checkpoints/foundir_final_eleven_route_cpu_gate_v1",
+    "result": "result.json",
+    "decisions": "development_decisions.csv"
+  }
+}

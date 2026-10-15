@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_stage_trajectory_compatibility_tiny_gate_v1",
+  "hypothesis": "A bounded residual adapter trained only on source-disjoint double-composition expert trajectories can correct reusable inter-expert errors and improve a completely held-out triple trajectory.",
+  "model": {
+    "name": "StageTrajectoryCompatibilityAdapter",
+    "channels": 48,
+    "blocks": 6,
+    "maximum_residual": 0.25,
+    "identity_initialized": true,
+    "frozen_router": true,
+    "frozen_experts": true
+  },
+  "data": {
+    "manifest": "manifests/foundir_stage_trajectory_compatibility_v1.csv",
+    "manifest_sha256": "120b45c24fb92f7222adee1b0dcbf93c02234f883f1b283fe1fe03263b425397",
+    "records": 108,
+    "train_records": 89,
+    "validation_records": 19,
+    "train_source_groups": 51,
+    "validation_source_groups": 13,
+    "excluded_endpoint_source_groups": 221,
+    "train_categories": ["15Lowlight_Blur", "16Lowlight_Noise"],
+    "triple_records_in_gradients_or_selection": 0,
+    "crop_size": 256,
+    "stage_image_size": 512,
+    "geometric_augmentation": true,
+    "category_balanced_sampling": true
+  },
+  "optimization": {
+    "world_size": 8,
+    "micro_batch_per_gpu": 2,
+    "gradient_accumulation": 2,
+    "global_batch": 32,
+    "total_steps": 1000,
+    "milestones": [250, 500, 1000],
+    "optimizer": "AdamW",
+    "learning_rate": 0.0002,
+    "minimum_learning_rate": 0.000005,
+    "warmup_steps": 50,
+    "betas": [0.9, 0.999],
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "loss": "charbonnier_plus_0.1_gradient_l1",
+    "precision": "bfloat16_autocast_fp32_parameters",
+    "seed": 2026092702
+  },
+  "selection": {
+    "split": "source_disjoint_double_validation_only",
+    "rule": "maximize_minimum_per_category_psnr_gain_then_overall_gain_then_earlier_step",
+    "endpoint_promotion_requires_each_category_psnr_gain_gt": 0.0,
+    "triple_metrics_forbidden_before_selection_freeze": true
+  },
+  "frozen_endpoint": {
+    "manifest": "manifests/foundir_composition_whole_image_v1.csv",
+    "manifest_sha256": "a94128195ffd219f7e94b44c1ec98291c75e727f17e2c3af88cf1c2f9b6282a9",
+    "category": "18Lowlight_Blur_Noise",
+    "records": 60,
+    "trajectory_root": "checkpoints/foundir_composition_whole_image_v1/ours/stages",
+    "baseline_psnr": 16.94112188891049,
+    "baseline_lpips": 0.1773316387586878,
+    "released_generalist_psnr": 24.9455711880497,
+    "released_generalist_lpips": 0.03775338436922618,
+    "use_for_gradients_or_checkpoint_selection": false,
+    "single_access_after_checkpoint_freeze": true
+  },
+  "distributed": {
+    "required_world_size": 8,
+    "allowed_gpu_name_fragments": ["H100", "H200"]
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_stage_trajectory_compatibility_v1",
+    "log": "logs/foundir_stage_trajectory_compatibility_v1.log",
+    "end_marker": "logs/foundir_stage_trajectory_compatibility_v1.end"
+  },
+  "one_bounded_run_no_automatic_follow_on": true,
+  "diagnostic_only": true,
+  "development_pixels_accessed": true,
+  "official_foundir_test_accessed": false
+}

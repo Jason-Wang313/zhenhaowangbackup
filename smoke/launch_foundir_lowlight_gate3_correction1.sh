@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 cd "$ROOT"
 RUNNER="$ROOT/smoke/run_foundir_lowlight_gate3_correction1.sh"
 LOG="$ROOT/logs/foundir_lowlight_gate3_correction1_v1.log"

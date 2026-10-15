@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 HISTORICAL_RESULT="$ROOT/reports/foundir_lowlight_gate2_historical_flux_result_v1b.json"
 cd "$ROOT"
 

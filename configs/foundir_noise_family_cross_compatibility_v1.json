@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "status": "frozen_existing_route_cross_compatibility_v1",
+  "scope": {
+    "split": "train",
+    "model_weight_updates": false,
+    "development_pixels_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "data": {
+    "manifest": "manifests/foundir_noise_family_cross_compatibility_v1.csv",
+    "manifest_sha256": "834e4e2759d548b80a10ce1af20441f82e26ebe6e511e2ee1774896552cc4683",
+    "records": 128,
+    "source_groups": 128,
+    "crop_size": 512,
+    "crop_seed": 2026091902
+  },
+  "orders": {"05Noise": ["noise", "low_light"]},
+  "experts": {
+    "noise": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+      "checkpoint_sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a",
+      "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 0.30
+    },
+    "low_light": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/step_000400.safetensors",
+      "checkpoint_sha256": "592e49ca2606565c5aeec8aadeb5466cf0c34b30024d5c02f0f2292ad28c90d8",
+      "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 0.925
+    }
+  },
+  "inference": {
+    "stage_order": ["noise", "low_light"],
+    "num_steps": 50,
+    "guidance": 1.0,
+    "reference_time_coordinate": 10,
+    "seed": 2026091903,
+    "quantization": "round_clip_uint8_png_between_every_expert"
+  },
+  "gate": {
+    "noise_sow_psnr_minimum": 38.9,
+    "noise_sow_lpips_maximum": 0.10,
+    "candidate_must_not_reduce_mean_psnr": true,
+    "candidate_must_not_increase_mean_lpips": true,
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 20260926
+  },
+  "distributed": {
+    "required_world_size": 8,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "batch_size_per_rank": {"H100": 2, "H200": 4}
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "torch_home": "models/torch",
+    "output_dir": "checkpoints/foundir_noise_family_cross_compatibility_v1",
+    "log": "logs/foundir_noise_family_cross_compatibility_v1.log"
+  }
+}

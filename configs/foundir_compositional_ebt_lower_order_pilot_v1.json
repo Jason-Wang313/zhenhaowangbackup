@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_compositional_ebt_lower_order_pilot_v1",
+  "classification": "DIAGNOSTIC ONLY / 非主线",
+  "objective": "Fail-fast lower-order learnability comparison of matched Plain and atomic/pairwise Compositional EBT arms before any held-out-triple access.",
+  "authorization": {
+    "user_statement": "sure, execute new step now",
+    "scope": "matched Plain-vs-Compositional EBT lower-order learnability pilot",
+    "stop_after_lower_order_gate": true
+  },
+  "scientific_intervention": {
+    "shared_descriptor": "[base, five binary atomic q_i, ten normalized q_i*q_j]",
+    "plain": "dense learned descriptor-to-energy mixing",
+    "compositional": "diagonal atomic/pairwise descriptor-to-energy mixing",
+    "all_other_tensors_parameters_initialization_compute_and_schedule_matched": true,
+    "claim_limit": "small-data causal diagnostic only; not evidence of unseen-triple generalization"
+  },
+  "model": {
+    "implementation": "lowlight_restoration/compositional_ebt.py",
+    "image_size": 64,
+    "patch_size": 8,
+    "hidden_size": 64,
+    "depth": 2,
+    "num_heads": 4,
+    "mlp_ratio": 2.0,
+    "trainable_parameters_per_arm": 146432,
+    "zero_init_energy_head": false,
+    "initialization_seed": 2026100702,
+    "input_range": [-1.0, 1.0]
+  },
+  "data": {
+    "protocol_manifest": "manifests/foundir_triple_counterfactual_reproduction_r0_v1.jsonl",
+    "protocol_manifest_sha256": "29fafafec8929d57136068433f081c8998053df0ec638b8f654a5f69e0c4ac85",
+    "protocol_metadata": "manifests/foundir_triple_counterfactual_reproduction_r0_v1.json",
+    "protocol_metadata_sha256": "82302da80acde9de29a8964f4125c69b8f893686db81bc31bd5d140afa97f948",
+    "rendered_cache": "data/foundir_triple_onerestore_r0_v1",
+    "cache_manifest": "data/foundir_triple_onerestore_r0_v1/manifest.jsonl",
+    "cache_manifest_sha256": "94e631ddcc44b2d10f2e1f9467767635fb1b333d23e94610b3c25a566536880f",
+    "gradient_role": "train",
+    "gradient_parents": 60,
+    "gradient_composition_sizes": [1, 2],
+    "development_role": "development",
+    "development_parents": 30,
+    "development_composition_sizes": [1, 2],
+    "training_input": "full_parent_degradation_node",
+    "target": "clean_node",
+    "q_source": "frozen_manifest_binary_degradation_labels",
+    "crop": "deterministic_64x64_per_parent_and_presentation",
+    "augmentations": ["horizontal_flip", "vertical_flip", "transpose"],
+    "heldout_triple_image_access": "prohibited_in_this_pilot",
+    "official_foundir_test_access": "prohibited"
+  },
+  "energy_descent": {
+    "training_steps": 3,
+    "inference_steps": 3,
+    "candidate_step_size": 10.0,
+    "candidate_clamp": [-1.0, 1.0],
+    "differentiate_through_descent": true,
+    "loss": "SmoothL1(final_candidate, clean_target)"
+  },
+  "training": {
+    "arms": ["plain", "compositional"],
+    "optimizer": "AdamW",
+    "optimizer_steps_per_arm": 300,
+    "batch_size": 4,
+    "learning_rate": 0.0002,
+    "betas": [0.9, 0.999],
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "mixed_precision": "disabled_for_higher_order_stability",
+    "schedule": "constant",
+    "identical_initialization": true,
+    "identical_sample_and_augmentation_schedule": true,
+    "checkpoint_rule": "fixed_final_step_only_no_metric_selection"
+  },
+  "lower_order_gate": {
+    "evaluation": "one fixed center 64x64 crop per source-disjoint development parent after both checkpoints are frozen",
+    "metrics": ["PSNR_RGB_0_1", "SmoothL1_0_1"],
+    "each_arm_development_psnr_gain_over_input_min_db": 0.05,
+    "each_arm_development_smooth_l1_improvement_over_input_min": 0.0,
+    "each_arm_train_loss_last_25_over_first_25_max_ratio": 0.9,
+    "finite_outputs_required": true,
+    "output_mean_range_0_1": [0.01, 0.99],
+    "promotion_if_pass": "freeze both checkpoints, register a separate decision-bound one-time 40-image held-out-triple evaluation",
+    "failure_action": "stop without triple access and report that the minimal EBT adaptation failed lower-order learnability"
+  },
+  "runtime": {
+    "python": "/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3/bin/python",
+    "supported_gpu_families": ["NVIDIA H100 80GB HBM3", "NVIDIA H200"],
+    "visible_gpus": 1,
+    "output_root": "checkpoints/foundir_compositional_ebt_lower_order_pilot_v1",
+    "log_root": "logs",
+    "network_during_run": false
+  },
+  "access_flags": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "foundir_60_image_triple_accessed": false,
+    "r0_heldout_triple_images_accessed": false
+  }
+}

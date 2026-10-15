@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_noise_family_fail_closed_integrated_development_v1",
+  "scope": {
+    "split": "validation",
+    "mixed_degradations": true,
+    "model_weight_updates": false,
+    "checkpoint_selection_reopened": false,
+    "pilot_source_disjoint": false,
+    "singleton_training_source_disjoint": false,
+    "limitation": "The same complete development partition established the fail-closed intersection; this run verifies integration and restoration behavior, not fresh-holdout routing generalization.",
+    "development_pixels_accessed": true,
+    "official_foundir_test_accessed": false
+  },
+  "data": {
+    "manifest": "manifests/foundir_noise_family_integrated_development_v1.csv",
+    "manifest_sha256": "b149c907f0b67856b41d8ab670206836a666ed388d02d18a34d5cb0938e796fc",
+    "routing_decisions": "checkpoints/foundir_noise_family_fail_closed_consensus_v1/development_decisions.csv",
+    "routing_decisions_sha256": "ad7e9d487741de458018c016c6aa9582b5e883c5384bb3bef9254b32bd5c3182",
+    "records": 1842,
+    "records_by_category": {
+      "05Noise": 674,
+      "16Lowlight_Noise": 1168
+    },
+    "source_groups": 34,
+    "crop_size": 512,
+    "crop_seed": 2026091902
+  },
+  "orders": {
+    "05Noise": ["noise"],
+    "16Lowlight_Noise": ["noise", "low_light"]
+  },
+  "experts": {
+    "noise": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+      "checkpoint_sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a",
+      "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 0.3
+    },
+    "low_light": {
+      "kind": "flux2",
+      "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/step_000400.safetensors",
+      "checkpoint_sha256": "592e49ca2606565c5aeec8aadeb5466cf0c34b30024d5c02f0f2292ad28c90d8",
+      "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+      "alpha": 0.925
+    }
+  },
+  "inference": {
+    "stage_order": ["rain", "noise", "haze", "low_light", "blur"],
+    "num_steps": 50,
+    "guidance": 1.0,
+    "reference_time_coordinate": 10,
+    "seed": 2026091903,
+    "quantization": "round_clip_uint8_png_between_every_expert"
+  },
+  "gate": {
+    "per_category_mean_psnr_must_improve_over_input": true,
+    "per_category_mean_lpips_must_improve_over_input": true,
+    "source_group_bootstrap_required": true,
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 2026091904,
+    "absolute_thresholds": {
+      "05Noise": {"psnr_minimum": 38.9, "lpips_maximum": 0.10}
+    },
+    "fixed_visual_review_required": true
+  },
+  "visual_record_ids": [
+    "foundir_train_0144501",
+    "foundir_train_0144502",
+    "foundir_train_0144504",
+    "foundir_train_0144505",
+    "foundir_train_0602551",
+    "foundir_train_0602552",
+    "foundir_train_0602553",
+    "foundir_train_0602564"
+  ],
+  "distributed": {
+    "required_world_size": 8,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "batch_size_per_rank": {"H100": 2, "H200": 4}
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "torch_home": "models/torch",
+    "output_dir": "checkpoints/foundir_noise_family_integrated_development_v1",
+    "log": "logs/foundir_noise_family_integrated_development_v1.log",
+    "gpu_telemetry": "logs/foundir_noise_family_integrated_development_v1_gpu.csv"
+  }
+}

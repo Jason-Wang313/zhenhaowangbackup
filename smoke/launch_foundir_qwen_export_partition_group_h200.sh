@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 RUNNER="$ROOT/smoke/run_foundir_qwen_export_partition_group_h200.sh"
 GROUP="${1:-}"
 PID_FILE="$ROOT/logs/foundir_qwen_export_partition_group_${GROUP}.pid"

@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "classification": "DIAGNOSTIC ONLY / 非主线",
+  "official_code": {
+    "repository": "https://github.com/bo-oseng/CURE",
+    "commit": "a294116ad3d7dce58723a21bdd64f74b085e7b13",
+    "path": "third_party/cure_official"
+  },
+  "dataset": {
+    "repository": "ses7720/CCDD-11",
+    "revision": "4784b88382f8616008ac9ae1e9be36c75f871f4e",
+    "archives": ["half_train.zip", "half_test.zip"],
+    "split_policy": "source-disjoint train/development split within half_train; half_test triple images are frozen evaluation only",
+    "prohibit": ["FoundIR official sealed test", "FoundIR 60-image triple endpoint"]
+  },
+  "tracks": {
+    "published_style": {
+      "embedder_and_baseline_classes": "official EMBEDDER_TYPES and BASELINE_TYPES including triples",
+      "cure_finetune_classes": "official RESTORATION_TYPES excluding triples"
+    },
+    "strict_holdout": {
+      "embedder_and_baseline_classes": "same official vocabulary/order and model shapes, but no triple training or development samples; baseline HDF5 contains singleton/double classes only",
+      "cure_finetune_classes": "identical RESTORATION_TYPES as published_style",
+      "selection": "fixed terminal epochs; no triple evaluation before both tracks are frozen"
+    }
+  },
+  "matched_training": {
+    "embedder_epochs": 200,
+    "baseline_epochs": 300,
+    "cure_epochs": 300,
+    "effective_global_batch": {"embedder": 256, "baseline": 128, "cure": 24},
+    "optimizer": "original CURE Adam and learning-rate schedule per stage",
+    "update_policy": "match optimizer updates and source split across tracks; resample permitted singleton/double embedder examples for strict track without introducing triple examples",
+    "checkpoint_policy": "fixed terminal checkpoint of each stage, no test-based selection"
+  },
+  "evaluation": {
+    "primary": "frozen CCDD-11 half_test triple full restoration and selective restoration with verified matched targets",
+    "metrics": ["PSNR", "SSIM"],
+    "additional_if_fixed_in_advance": ["LPIPS"],
+    "output_collapse_gate": "real-image finite/range/luminance and input-relative PSNR checks before full training or test export"
+  },
+  "execution_state": "design_only_pending_data_and_cpu_preflight"
+}

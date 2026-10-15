@@ -123,6 +123,11 @@ def validate_config(config: Mapping[str, object]) -> None:
     allowed_status = {
         "advisor_authorized_blur_only_tiny_overfit",
         "user_authorized_single_task_capacity_sanity",
+        "user_authorized_haze_source_diverse_pilot",
+        "user_authorized_haze_source_diverse_continuation",
+        "user_authorized_rain_source_diverse_pilot",
+        "user_authorized_rain_strength_identity_directional_gate",
+        "user_authorized_rain_strength_identity_ratio_gate",
     }
     if config.get("status") not in allowed_status:
         raise RuntimeError("config is not authorized for a single-task tiny-overfit gate")
@@ -157,8 +162,173 @@ def validate_config(config: Mapping[str, object]) -> None:
     evaluations = [int(value) for value in inference["evaluate_steps"]]
     if checkpoints != sorted(set(checkpoints)) or checkpoints[-1] != int(training["max_steps"]):
         raise RuntimeError("checkpoint schedule must be sorted and finish at max_steps")
-    if evaluations != [0, *checkpoints]:
-        raise RuntimeError("every candidate checkpoint plus initialization must be visualized")
+    continuation = config.get("status") == "user_authorized_haze_source_diverse_continuation"
+    rain_directional = config.get("status") == "user_authorized_rain_strength_identity_directional_gate"
+    rain_ratio = config.get("status") == "user_authorized_rain_strength_identity_ratio_gate"
+    expected_evaluations = (
+        [int(config["initialization"]["start_step"]), *checkpoints]
+        if rain_directional or rain_ratio else checkpoints if continuation else [0, *checkpoints]
+    )
+    if evaluations != expected_evaluations:
+        raise RuntimeError("checkpoint evaluation schedule changed")
+    if config.get("status") == "user_authorized_haze_source_diverse_pilot":
+        data = config["data"]
+        gate = config["gate"]
+        if (
+            scope.get("category") != "08Haze"
+            or int(data["tiny_overfit_records"]) != 1580
+            or int(data["tiny_overfit_unique_source_groups"]) != 1580
+            or int(data["frozen_validation_records"]) != 128
+            or int(data["frozen_validation_unique_source_groups"]) != 128
+            or config["lora"].get("initialization") != "fresh_zero_lora"
+            or int(training["max_steps"]) != 2000
+            or int(training["global_batch_size"]) != 32
+            or gate.get("protocol") != "final_frozen_source_disjoint_validation_sow_only"
+            or float(gate["validation_psnr_minimum"]) != 22.1
+            or float(gate["validation_lpips_maximum"]) != 0.19
+            or gate.get("automatic_full_development_launch") is not False
+        ):
+            raise RuntimeError("Haze source-diverse pilot contract changed")
+    if continuation:
+        data = config["data"]
+        gate = config["gate"]
+        initialization = config.get("initialization", {})
+        if (
+            scope.get("category") != "08Haze"
+            or int(data["tiny_overfit_records"]) != 1580
+            or int(data["tiny_overfit_unique_source_groups"]) != 1580
+            or int(data["frozen_validation_records"]) != 128
+            or int(data["frozen_validation_unique_source_groups"]) != 128
+            or config["lora"].get("initialization") != "resume_exact_checkpoint_and_optimizer"
+            or int(initialization.get("start_step", -1)) != 2000
+            or int(training["max_steps"]) != 3000
+            or checkpoints != [3000]
+            or int(training["global_batch_size"]) != 32
+            or gate.get("protocol") != "final_frozen_source_disjoint_validation_sow_only"
+            or float(gate["validation_psnr_minimum"]) != 22.1
+            or float(gate["validation_lpips_maximum"]) != 0.19
+            or gate.get("automatic_full_development_launch") is not False
+        ):
+            raise RuntimeError("Haze source-diverse continuation contract changed")
+    if config.get("status") == "user_authorized_rain_source_diverse_pilot":
+        data = config["data"]
+        gate = config["gate"]
+        if (
+            scope.get("category") != "10Rain"
+            or int(data["tiny_overfit_records"]) != 1580
+            or int(data["tiny_overfit_unique_source_groups"]) != 1580
+            or int(data["frozen_validation_records"]) != 100
+            or int(data["frozen_validation_unique_source_groups"]) != 100
+            or config["lora"].get("initialization") != "fresh_zero_lora"
+            or int(training["max_steps"]) != 2000
+            or int(training["global_batch_size"]) != 32
+            or gate.get("protocol") != "final_frozen_source_disjoint_validation_sow_only"
+            or float(gate["validation_psnr_minimum"]) != 34.2
+            or float(gate["validation_lpips_maximum"]) != 0.08
+            or gate.get("automatic_full_development_launch") is not False
+        ):
+            raise RuntimeError("Rain source-diverse pilot contract changed")
+    if rain_directional:
+        data = config["data"]
+        gate = config["gate"]
+        initialization = config.get("initialization", {})
+        policy = training.get("strength_identity_policy", {})
+        if (
+            scope.get("category") != "10Rain"
+            or int(data["tiny_overfit_records"]) != 1580
+            or int(data["tiny_overfit_unique_source_groups"]) != 1580
+            or int(data["frozen_validation_records"]) != 48
+            or int(data["frozen_validation_unique_source_groups"]) != 48
+            or int(data["development_records_per_strength_bin"]) != 16
+            or int(initialization.get("start_step", -1)) != 2000
+            or config["lora"].get("initialization") != "resume_exact_checkpoint_and_optimizer"
+            or int(training["max_steps"]) != 2250
+            or checkpoints != [2250]
+            or int(training["global_batch_size"]) != 32
+            or float(training["learning_rate"]) != 0.000025
+            or policy.get("sampling") != "equal_three_bins_absolute_position"
+            or list(policy.get("input_psnr_bins", [])) != [28.0, 34.0]
+            or policy.get("near_clean_target") != "lq_identity"
+            or policy.get("moderate_target") != "gt"
+            or policy.get("heavy_target") != "gt"
+            or gate.get("protocol") != "directional_strength_identity_gate_on_new_train_split_development"
+            or float(gate["near_clean_minimum_psnr_gain_db"]) != 0.5
+            or float(gate["moderate_maximum_psnr_regression_db"]) != 0.1
+            or float(gate["heavy_maximum_psnr_regression_db"]) != 0.1
+            or float(gate["overall_minimum_psnr_gain_db"]) != 0.2
+            or float(gate["overall_maximum_lpips_regression"]) != 0.005
+            or gate.get("automatic_continuation") is not False
+        ):
+            raise RuntimeError("Rain strength-identity directional contract changed")
+    if rain_ratio:
+        data = config["data"]
+        gate = config["gate"]
+        initialization = config.get("initialization", {})
+        policy = training.get("strength_identity_policy", {})
+        if (
+            scope.get("category") != "10Rain"
+            or int(data["tiny_overfit_records"]) != 1580
+            or int(data["tiny_overfit_unique_source_groups"]) != 1580
+            or int(data["frozen_validation_records"]) != 48
+            or int(data["frozen_validation_unique_source_groups"]) != 48
+            or int(data["development_records_per_strength_bin"]) != 16
+            or int(initialization.get("start_step", -1)) != 2000
+            or config["lora"].get("initialization") != "resume_exact_checkpoint_and_optimizer"
+            or int(training["max_steps"]) != 2250
+            or checkpoints != [2250]
+            or int(training["global_batch_size"]) != 32
+            or float(training["learning_rate"]) != 0.000025
+            or policy.get("sampling") != "weighted_cycle_3_2_1_absolute_position"
+            or list(policy.get("sampling_weights", [])) != [3, 2, 1]
+            or list(policy.get("input_psnr_bins", [])) != [28.0, 34.0]
+            or policy.get("near_clean_target") != "lq_identity"
+            or policy.get("moderate_target") != "gt"
+            or policy.get("heavy_target") != "gt"
+            or gate.get("protocol") != "directional_strength_identity_gate_on_new_train_split_development"
+            or float(gate["near_clean_minimum_psnr_gain_db"]) != 0.5
+            or float(gate["moderate_maximum_psnr_regression_db"]) != 0.1
+            or float(gate["heavy_maximum_psnr_regression_db"]) != 0.1
+            or float(gate["overall_minimum_psnr_gain_db"]) != 0.2
+            or float(gate["overall_maximum_lpips_regression"]) != 0.005
+            or gate.get("automatic_continuation") is not False
+        ):
+            raise RuntimeError("Rain strength-identity ratio contract changed")
+
+
+def validate_external_continuation(config: Mapping[str, object]) -> None:
+    status = config.get("status")
+    if status not in {
+        "user_authorized_haze_source_diverse_continuation",
+        "user_authorized_rain_strength_identity_directional_gate",
+        "user_authorized_rain_strength_identity_ratio_gate",
+    }:
+        return
+    initialization = config["initialization"]
+    for path_key, hash_key in (
+        ("parent_config", "parent_config_sha256"),
+        ("parent_checkpoint", "parent_checkpoint_sha256"),
+        ("parent_optimizer", "parent_optimizer_sha256"),
+        ("parent_result", "parent_result_sha256"),
+    ):
+        path = ROOT / str(initialization[path_key])
+        if not path.is_file() or sha256(path) != initialization[hash_key]:
+            raise RuntimeError(f"external continuation parent identity changed: {path}")
+    parent_config = json.loads((ROOT / str(initialization["parent_config"])).read_text())
+    parent_result = json.loads((ROOT / str(initialization["parent_result"])).read_text())
+    expected_parent_status = (
+        "user_authorized_haze_source_diverse_pilot"
+        if status == "user_authorized_haze_source_diverse_continuation"
+        else "user_authorized_rain_source_diverse_pilot"
+    )
+    expected_records = 128 if status == "user_authorized_haze_source_diverse_continuation" else 100
+    if (
+        parent_config.get("status") != expected_parent_status
+        or int(parent_config["training"]["max_steps"]) != 2000
+        or parent_result.get("checkpoint_sha256") != initialization["parent_checkpoint_sha256"]
+        or parent_result.get("automatic_gate_pass") is not False
+        or parent_result.get("descriptive_validation_metrics", {}).get("records") != expected_records
+    ):
+        raise RuntimeError("external continuation parent result contract changed")
 
 
 def load_manifest(config: Mapping[str, object], *, verify_images: bool) -> tuple[list[dict[str, str]], list[dict[str, str]]]:
@@ -167,8 +337,11 @@ def load_manifest(config: Mapping[str, object], *, verify_images: bool) -> tuple
     metadata_path = ROOT / str(data["frozen_manifest_metadata"])
     metadata = json.loads(metadata_path.read_text())
     config_sha = sha256(Path(config["_config_path"]))
+    expected_manifest_config_sha = config_sha
+    if config.get("status") == "user_authorized_haze_source_diverse_continuation":
+        expected_manifest_config_sha = str(config["initialization"]["parent_config_sha256"])
     if (
-        metadata.get("config_sha256") != config_sha
+        metadata.get("config_sha256") != expected_manifest_config_sha
         or metadata.get("frozen_manifest_sha256") != sha256(manifest)
         or metadata.get("protected_foundir_test_accessed") is not False
         or metadata.get("sealed_internal_accessed") is not False
@@ -245,6 +418,78 @@ def scheduled_index(position: int, length: int, seed: int) -> int:
     epoch, offset = divmod(position, length)
     generator = torch.Generator(device="cpu").manual_seed(seed + epoch)
     return int(torch.randperm(length, generator=generator)[offset])
+
+
+def strength_bin(input_psnr: float, thresholds: Sequence[float] = (28.0, 34.0)) -> str:
+    if input_psnr < float(thresholds[0]):
+        return "heavy"
+    if input_psnr < float(thresholds[1]):
+        return "moderate"
+    return "near_clean"
+
+
+def build_strength_buckets(
+    records: Sequence[Mapping[str, object]], thresholds: Sequence[float]
+) -> dict[str, list[int]]:
+    buckets = {name: [] for name in ("heavy", "moderate", "near_clean")}
+    for index, record in enumerate(records):
+        bucket = strength_bin(psnr(record["gt"], record["lq"]), thresholds)
+        buckets[bucket].append(index)
+    if any(not indexes for indexes in buckets.values()):
+        raise RuntimeError(f"empty Rain strength bucket: { {key: len(value) for key, value in buckets.items()} }")
+    return buckets
+
+
+def strength_balanced_index(
+    position: int, buckets: Mapping[str, Sequence[int]], seed: int
+) -> tuple[int, str]:
+    names = ("heavy", "moderate", "near_clean")
+    bucket_name = names[position % len(names)]
+    within_bucket_position = position // len(names)
+    indexes = buckets[bucket_name]
+    bucket_seed = seed + stable_int(bucket_name) % 1_000_000_007
+    selected = scheduled_index(within_bucket_position, len(indexes), bucket_seed)
+    return int(indexes[selected]), bucket_name
+
+
+def strength_weighted_index(
+    position: int, buckets: Mapping[str, Sequence[int]], seed: int,
+    weights: Sequence[int],
+) -> tuple[int, str]:
+    names = ("heavy", "moderate", "near_clean")
+    cycle = [name for name, weight in zip(names, weights) for _ in range(int(weight))]
+    if len(weights) != len(names) or any(int(weight) <= 0 for weight in weights):
+        raise RuntimeError("invalid Rain strength sampling weights")
+    offset = position % len(cycle)
+    bucket_name = cycle[offset]
+    completed_cycles = position // len(cycle)
+    within_cycle_occurrence = sum(name == bucket_name for name in cycle[:offset])
+    within_bucket_position = completed_cycles * int(weights[names.index(bucket_name)]) + within_cycle_occurrence
+    indexes = buckets[bucket_name]
+    bucket_seed = seed + stable_int(bucket_name) % 1_000_000_007
+    selected = scheduled_index(within_bucket_position, len(indexes), bucket_seed)
+    return int(indexes[selected]), bucket_name
+
+
+def aggregate_strength_metrics(
+    metrics: Mapping[str, object], thresholds: Sequence[float]
+) -> dict[str, dict[str, float | int]]:
+    result: dict[str, dict[str, float | int]] = {}
+    rows = metrics["rows"]
+    for bucket_name in ("heavy", "moderate", "near_clean"):
+        selected = [row for row in rows if strength_bin(float(row["input_psnr"]), thresholds) == bucket_name]
+        if not selected:
+            raise RuntimeError(f"development metrics have no {bucket_name} records")
+        result[bucket_name] = {
+            "records": len(selected),
+            "mean_input_psnr": float(np.mean([row["input_psnr"] for row in selected])),
+            "mean_output_psnr": float(np.mean([row["output_psnr"] for row in selected])),
+            "mean_input_lpips": float(np.mean([row["input_lpips"] for row in selected])),
+            "mean_output_lpips": float(np.mean([row["output_lpips"] for row in selected])),
+            "psnr_improved_fraction": sum(row["psnr_gain_db"] > 0 for row in selected) / len(selected),
+            "lpips_improved_fraction": sum(row["lpips_improvement"] > 0 for row in selected) / len(selected),
+        }
+    return result
 
 
 def probe_loss(model, autoencoder, record: Mapping[str, object], context, context_ids, pack_image, *, seed: int, device: torch.device) -> float:
@@ -376,6 +621,7 @@ def preflight(config_path: Path, task: str | None = None, *, verify_model_hashes
     config = materialize_task_config(json.loads(config_path.read_text()), task)
     config["_config_path"] = str(config_path.resolve())
     validate_config(config)
+    validate_external_continuation(config)
     train, validation = load_manifest(config, verify_images=True)
     if verify_model_hashes:
         for key, hash_key in (("flow_weights", "flow_weights_sha256"), ("autoencoder_weights", "autoencoder_weights_sha256")):
@@ -410,6 +656,7 @@ def main() -> int:
     config = materialize_task_config(json.loads(config_path.read_text()), args.task)
     config["_config_path"] = str(config_path)
     validate_config(config)
+    validate_external_continuation(config)
     train_rows, validation_rows = load_manifest(config, verify_images=False)
     records = prepare_records(train_rows, int(config["data"]["crop_size"]))
     validation_records = prepare_records(validation_rows, int(config["data"]["crop_size"]))
@@ -466,6 +713,16 @@ def main() -> int:
             weight_decay=float(config["training"]["weight_decay"]), fused=True,
         )
         start_step = 0
+        external_continuation = config.get("status") in {
+            "user_authorized_haze_source_diverse_continuation",
+            "user_authorized_rain_strength_identity_directional_gate",
+            "user_authorized_rain_strength_identity_ratio_gate",
+        }
+        rain_directional = config.get("status") in {
+            "user_authorized_rain_strength_identity_directional_gate",
+            "user_authorized_rain_strength_identity_ratio_gate",
+        }
+        rain_ratio = config.get("status") == "user_authorized_rain_strength_identity_ratio_gate"
         if args.resume:
             checkpoints = sorted(output_dir.glob("step_*.safetensors"))
             if checkpoints:
@@ -476,6 +733,23 @@ def main() -> int:
                 if optimizer_payload.get("config_sha256") != sha256(config_path) or optimizer_payload.get("step") != start_step:
                     raise RuntimeError("resume optimizer identity changed")
                 optimizer.load_state_dict(optimizer_payload["optimizer"])
+        elif external_continuation:
+            initialization = config["initialization"]
+            start_step = int(initialization["start_step"])
+            load_lora_checkpoint(wrapped.module, ROOT / str(initialization["parent_checkpoint"]))
+            optimizer_payload = torch.load(
+                ROOT / str(initialization["parent_optimizer"]), map_location="cpu", weights_only=False
+            )
+            if (
+                optimizer_payload.get("config_sha256") != initialization["parent_config_sha256"]
+                or optimizer_payload.get("step") != start_step
+            ):
+                raise RuntimeError("external continuation optimizer identity changed")
+            optimizer.load_state_dict(optimizer_payload["optimizer"])
+            # load_state_dict restores the parent's LR.  The Rain directional
+            # gate intentionally uses the lower, config-bound continuation LR.
+            for group in optimizer.param_groups:
+                group["lr"] = float(config["training"]["learning_rate"])
         elif any(output_dir.iterdir()):
             raise RuntimeError("output directory is nonempty; use --resume only after inspecting a runtime interruption")
 
@@ -492,6 +766,7 @@ def main() -> int:
             if rank == 0:
                 write_once(baseline_path, (json.dumps({"config_sha256": sha256(config_path), "probe_loss": initial_probe}, indent=2, sort_keys=True) + "\n").encode())
         dist.barrier()
+        parent_validation_metrics = None
         if start_step == 0:
             evaluate_snapshot(
                 wrapped, autoencoder, records, cfg_context, cfg_ids, batched_prc_img, metric,
@@ -504,18 +779,52 @@ def main() -> int:
                 config=config, output_dir=output_dir, rank=rank, world=world, device=device,
                 role="validation",
             )
+        elif rain_directional:
+            if start_step not in {int(value) for value in config["inference"]["evaluate_steps"]}:
+                raise RuntimeError("Rain parent step is absent from the evaluation schedule")
+            evaluate_snapshot(
+                wrapped, autoencoder, records, cfg_context, cfg_ids, batched_prc_img, metric,
+                step=start_step, limit=int(config["inference"]["visual_records"]), config=config,
+                output_dir=output_dir, rank=rank, world=world, device=device,
+            )
+            parent_validation_metrics = evaluate_snapshot(
+                wrapped, autoencoder, validation_records, cfg_context, cfg_ids, batched_prc_img, metric,
+                step=start_step, limit=len(validation_records), config=config,
+                output_dir=output_dir, rank=rank, world=world, device=device, role="validation",
+            )
         training = config["training"]
         accumulation = int(training["gradient_accumulation_steps"])
+        strength_buckets = None
+        strength_thresholds = (28.0, 34.0)
+        if rain_directional:
+            strength_thresholds = tuple(float(value) for value in training["strength_identity_policy"]["input_psnr_bins"])
+            strength_buckets = build_strength_buckets(records, strength_thresholds)
+            counts = {key: len(value) for key, value in strength_buckets.items()}
+            if rank == 0:
+                print("FOUNDIR_RAIN_STRENGTH_BUCKETS " + json.dumps(counts, sort_keys=True), flush=True)
         optimizer.zero_grad(set_to_none=True)
         for step in range(start_step, int(training["max_steps"])):
             accumulated = 0.0
             for micro in range(accumulation):
                 position = (step * accumulation + micro) * world + rank
-                record = records[scheduled_index(position, len(records), seed)]
+                if rain_directional:
+                    assert strength_buckets is not None
+                    if rain_ratio:
+                        record_index, bucket_name = strength_weighted_index(
+                            position, strength_buckets, seed,
+                            training["strength_identity_policy"]["sampling_weights"],
+                        )
+                    else:
+                        record_index, bucket_name = strength_balanced_index(position, strength_buckets, seed)
+                    record = records[record_index]
+                else:
+                    bucket_name = "gt"
+                    record = records[scheduled_index(position, len(records), seed)]
                 lq = record["lq"].unsqueeze(0).to(device)
                 gt = record["gt"].unsqueeze(0).to(device)
+                target = lq if rain_directional and bucket_name == "near_clean" else gt
                 with torch.no_grad():
-                    clean, degraded = autoencoder.encode(torch.cat([gt, lq])).chunk(2)
+                    clean, degraded = autoencoder.encode(torch.cat([target, lq])).chunk(2)
                 generator = torch.Generator(device=device).manual_seed(seed + position * 1_000_003)
                 noise = torch.randn(clean.shape, generator=generator, device=device, dtype=torch.bfloat16)
                 timesteps = torch.rand((1,), generator=generator, device=device, dtype=torch.bfloat16).clamp_(1e-4, 1 - 1e-4)
@@ -568,14 +877,16 @@ def main() -> int:
             wrapped, autoencoder, records[rank % len(records)], context, context_ids, batched_prc_img,
             seed=seed + rank * 1009, device=device,
         )
+        final_train_limit = int(config["inference"].get("final_train_metric_records", len(records)))
+        final_validation_limit = int(config["inference"].get("final_validation_metric_records", len(validation_records)))
         final_metrics = evaluate_snapshot(
             wrapped, autoencoder, records, cfg_context, cfg_ids, batched_prc_img, metric,
-            step=int(training["max_steps"]), limit=len(records), config=config,
+            step=int(training["max_steps"]), limit=final_train_limit, config=config,
             output_dir=output_dir / "final_all_16", rank=rank, world=world, device=device,
         )
         final_validation_metrics = evaluate_snapshot(
             wrapped, autoencoder, validation_records, cfg_context, cfg_ids, batched_prc_img, metric,
-            step=int(training["max_steps"]), limit=len(validation_records), config=config,
+            step=int(training["max_steps"]), limit=final_validation_limit, config=config,
             output_dir=output_dir / "final_all_16", rank=rank, world=world, device=device,
             role="validation",
         )
@@ -583,13 +894,42 @@ def main() -> int:
             assert final_metrics is not None and final_validation_metrics is not None
             gate = config["gate"]
             loss_ratio = final_probe / initial_probe
-            checks = {
-                "probe_loss_ratio": loss_ratio <= float(gate["maximum_probe_loss_ratio"]),
-                "mean_psnr_gain_db": final_metrics["mean_psnr_gain_db"] >= float(gate["minimum_mean_psnr_gain_db"]),
-                "mean_lpips_improvement": final_metrics["mean_lpips_improvement"] >= float(gate["minimum_mean_lpips_improvement"]),
-                "psnr_improved_fraction": final_metrics["psnr_improved_fraction"] >= float(gate["minimum_psnr_improved_fraction"]),
-                "lpips_improved_fraction": final_metrics["lpips_improved_fraction"] >= float(gate["minimum_lpips_improved_fraction"]),
+            source_diverse_pilot = config.get("status") in {
+                "user_authorized_haze_source_diverse_pilot",
+                "user_authorized_haze_source_diverse_continuation",
+                "user_authorized_rain_source_diverse_pilot",
             }
+            if rain_directional:
+                if parent_validation_metrics is None:
+                    parent_metrics_path = output_dir / "validation_triptychs" / f"step_{start_step:06d}" / "metrics.json"
+                    parent_validation_metrics = json.loads(parent_metrics_path.read_text())
+                parent_strength = aggregate_strength_metrics(parent_validation_metrics, strength_thresholds)
+                candidate_strength = aggregate_strength_metrics(final_validation_metrics, strength_thresholds)
+                checks = {
+                    "near_clean_psnr_gain_vs_parent": candidate_strength["near_clean"]["mean_output_psnr"]
+                    >= parent_strength["near_clean"]["mean_output_psnr"] + float(gate["near_clean_minimum_psnr_gain_db"]),
+                    "moderate_psnr_retention_vs_parent": candidate_strength["moderate"]["mean_output_psnr"]
+                    >= parent_strength["moderate"]["mean_output_psnr"] - float(gate["moderate_maximum_psnr_regression_db"]),
+                    "heavy_psnr_retention_vs_parent": candidate_strength["heavy"]["mean_output_psnr"]
+                    >= parent_strength["heavy"]["mean_output_psnr"] - float(gate["heavy_maximum_psnr_regression_db"]),
+                    "overall_psnr_gain_vs_parent": final_validation_metrics["mean_output_psnr"]
+                    >= parent_validation_metrics["mean_output_psnr"] + float(gate["overall_minimum_psnr_gain_db"]),
+                    "overall_lpips_retention_vs_parent": final_validation_metrics["mean_output_lpips"]
+                    <= parent_validation_metrics["mean_output_lpips"] + float(gate["overall_maximum_lpips_regression"]),
+                }
+            elif source_diverse_pilot:
+                checks = {
+                    "validation_psnr_sow": final_validation_metrics["mean_output_psnr"] >= float(gate["validation_psnr_minimum"]),
+                    "validation_lpips_sow": final_validation_metrics["mean_output_lpips"] <= float(gate["validation_lpips_maximum"]),
+                }
+            else:
+                checks = {
+                    "probe_loss_ratio": loss_ratio <= float(gate["maximum_probe_loss_ratio"]),
+                    "mean_psnr_gain_db": final_metrics["mean_psnr_gain_db"] >= float(gate["minimum_mean_psnr_gain_db"]),
+                    "mean_lpips_improvement": final_metrics["mean_lpips_improvement"] >= float(gate["minimum_mean_lpips_improvement"]),
+                    "psnr_improved_fraction": final_metrics["psnr_improved_fraction"] >= float(gate["minimum_psnr_improved_fraction"]),
+                    "lpips_improved_fraction": final_metrics["lpips_improved_fraction"] >= float(gate["minimum_lpips_improved_fraction"]),
+                }
             automatic_pass = all(checks.values())
             sow = config.get("_sow_stage2")
             sow_proxy = None if not isinstance(sow, dict) else {
@@ -606,6 +946,8 @@ def main() -> int:
                 "task": config["scope"]["category"],
                 "probe_loss_ratio": loss_ratio, "final_metrics": final_metrics,
                 "descriptive_validation_metrics": final_validation_metrics,
+                "validation_metrics_are_formal_gate": source_diverse_pilot or rain_directional,
+                "automatic_full_development_launch": False,
                 "train_sow_proxy": sow_proxy,
                 "config": config_path.relative_to(ROOT).as_posix(), "config_sha256": sha256(config_path),
                 "checkpoint": checkpoint.relative_to(ROOT).as_posix(), "checkpoint_sha256": sha256(checkpoint),
@@ -616,9 +958,23 @@ def main() -> int:
                 "protected_foundir_test_accessed": False, "sealed_internal_accessed": False,
                 "wall_seconds": time.monotonic() - started,
             }
+            if rain_directional:
+                payload.update({
+                    "directional_gate_only": True,
+                    "automatic_continuation": False,
+                    "parent_development_metrics": parent_validation_metrics,
+                    "parent_strength_metrics": parent_strength,
+                    "candidate_strength_metrics": candidate_strength,
+                    "strength_bucket_counts": {key: len(value) for key, value in strength_buckets.items()},
+                    "near_clean_training_target": "lq_identity",
+                    "heavy_moderate_training_target": "gt",
+                })
             write_once(output_dir / "result.json", (json.dumps(payload, indent=2, sort_keys=True) + "\n").encode())
             print("FOUNDIR_SINGLE_TASK_AUTOMATIC_PASS_AWAITING_VISUAL_REVIEW" if automatic_pass else "FOUNDIR_SINGLE_TASK_AUTOMATIC_GATE_FAILED", flush=True)
-            exit_value = 0 if automatic_pass else 2
+            # A completed scientific gate is a successful distributed workflow.
+            # Keep pass/fail in result.json; a nonzero rank exit is normalized by
+            # torchrun into a runtime failure and destroys that distinction.
+            exit_value = 0
         else:
             exit_value = 0
         exit_tensor = torch.tensor([exit_value], device=device, dtype=torch.int32)

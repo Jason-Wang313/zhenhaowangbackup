@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_route_aware_integrated_composition_replay_v2",
+  "source": {
+    "manifest": "manifests/foundir_composition_whole_image_v1.csv",
+    "manifest_sha256": "a94128195ffd219f7e94b44c1ec98291c75e727f17e2c3af88cf1c2f9b6282a9",
+    "project_config": "configs/foundir_composition_whole_image_v1.json",
+    "project_config_sha256": "b9b04fc4242524cfa44a2f2ac038bd73266d4bf14809dad20ce2b5929a6de0cb",
+    "project_result": "checkpoints/foundir_composition_whole_image_v1/result.json",
+    "project_result_sha256": "61a8a2d73c26f4abbc52f7308b756bd15aa19316731cccb052499f85ab6bd5ae",
+    "project_output_dir": "checkpoints/foundir_composition_whole_image_v1",
+    "project_sidecar_dir": "checkpoints/foundir_composition_whole_image_v1/per_record",
+    "full_foundir_config": "configs/foundir_composition_whole_image_full_pipeline_v1.json",
+    "full_foundir_config_sha256": "c1dc876671622fd4d0541b52ca28a6cf95c036f181249d275ba370c98d835760",
+    "full_foundir_result": "checkpoints/foundir_composition_whole_image_full_pipeline_v1/result.json",
+    "full_foundir_result_sha256": "ab4a1b0330c732432072917dca4ba74012bf7efe166e347e43aee4461a1e09e6",
+    "full_foundir_sidecar_dir": "checkpoints/foundir_composition_whole_image_full_pipeline_v1/per_record"
+  },
+  "replacement_expert": {
+    "name": "lowlight_haze_direct_restormer_v1",
+    "category": "09Lowlight_Haze",
+    "accepted_final_route": "haze+low_light",
+    "accepted_routing_status": "correct",
+    "expected_replaced_records": 53,
+    "expected_fallback_records": 5,
+    "expected_abstain_records": 2,
+    "config": "configs/foundir_lowlight_haze_restormer_v1.json",
+    "config_sha256": "d60d67ba2a285fa0cb0691ac04f9630e2dc3129f1bf95d7563934ce777235cd3",
+    "development_selection": "checkpoints/foundir_lowlight_haze_restormer_v1/development_selection.json",
+    "development_selection_sha256": "9ad6f48ff30332b243bbc3a95057ac0faa39e6463bde98a10ce4ebbb47488f50",
+    "checkpoint": "checkpoints/foundir_lowlight_haze_restormer_v1/step_006000.pt",
+    "checkpoint_sha256": "a6f9523a6b9b44ab95d693c29038bb12378ba050b575104e62b6d9b5d1ef0cc3",
+    "capacity_result": "checkpoints/foundir_lowlight_haze_restormer_v1/final_comparison/result.json",
+    "capacity_result_sha256": "26266d6ff414919fab77b6c01126afb56c8dba6f43e154483fd75e796d9d78ae",
+    "image_dir": "checkpoints/foundir_lowlight_haze_restormer_v1/final_comparison/images",
+    "sidecar_dir": "checkpoints/foundir_lowlight_haze_restormer_v1/final_comparison/per_record"
+  },
+  "metric_protocol": {
+    "psnr": "full_rgb_uint8_image",
+    "lpips": "area_weighted_nonoverlap_512_rgb_uint8",
+    "aggregation": "record_weighted_arithmetic_mean",
+    "unchanged_records": "hash_verified_immutable_parent_output_and_metric_replay",
+    "replacement_records": "hash_verified_route_accepted_direct_restormer_output_and_metric_replay"
+  },
+  "runtime": {
+    "output_dir": "checkpoints/foundir_composition_integrated_restormer_v2",
+    "log": "logs/foundir_composition_integrated_restormer_v2.log"
+  },
+  "scope": {
+    "split": "validation",
+    "records": 660,
+    "records_per_category": 60,
+    "fresh_inference": false,
+    "artifact_replay": true,
+    "model_weight_updates": false,
+    "development_pixels_accessed": true,
+    "official_foundir_test_accessed": false,
+    "diagnostic_only": true,
+    "limitation": "Route-aware paper-table replay over immutable outputs. It is exactly reproducible from hash-bound parent artifacts but is not a fresh rerun of unchanged neural inference."
+  }
+}

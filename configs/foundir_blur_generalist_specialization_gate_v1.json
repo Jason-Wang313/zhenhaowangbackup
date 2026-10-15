@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "status": "development_only_pretrained_blur_specialization_gate",
+  "parent_config": "configs/foundir_five_type_flux2_dit_v3.json",
+  "parent_config_sha256": "5145e97b2f170b617f34180783d8e7934a77b5ef82f2e6c5cae7756c89763810",
+  "conditions": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+  "conditions_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "pretrained_checkpoint": "third_party/foundir/premodel/model-2000.pt",
+  "pretrained_checkpoint_sha256": "2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9",
+  "data": {
+    "training_split": "train",
+    "training_category": "01Blur",
+    "noise_identity_category": "05Noise",
+    "noise_identity_presentation_probability": 0.10,
+    "validation_split": "validation",
+    "validation_categories": ["01Blur", "05Noise"],
+    "validation_records_per_category": 60,
+    "crop_size": 256,
+    "d4_augmentation": true,
+    "identity_probability": 0.05,
+    "seed": 2026090902
+  },
+  "model": {
+    "architecture": "released_foundir_residual_diffusion_unet",
+    "dim": 64,
+    "dim_mults": [1, 2, 4, 8],
+    "timesteps": 1000,
+    "sampling_steps": 4,
+    "delta_end": 0.0014,
+    "sum_scale": 0.01,
+    "ddim_eta": 0.0
+  },
+  "training": {
+    "world_size": 8,
+    "batch_size_per_rank": 2,
+    "gradient_accumulation_steps": 2,
+    "global_batch_size": 32,
+    "optimizer_steps": 12000,
+    "learning_rate": 0.00001,
+    "minimum_learning_rate": 0.0000005,
+    "warmup_steps": 250,
+    "weight_decay": 0.0001,
+    "max_grad_norm": 1.0,
+    "num_workers_per_rank": 4,
+    "checkpoint_steps": [1000, 3000, 6000, 12000],
+    "loss": {
+      "residual_l1_weight": 1.0,
+      "clean_l1_weight": 0.5,
+      "clean_mse_weight": 1.0,
+      "edge_l1_weight": 0.02,
+      "lpips_weight": 0.05,
+      "lpips_every_steps": 4
+    }
+  },
+  "gate": {
+    "selection": "maximize_blur_worst_normalized_psnr_lpips_margin",
+    "blur_psnr_minimum": 25.9,
+    "blur_lpips_maximum": 0.18,
+    "reference_development_psnr": 24.9623,
+    "reference_development_lpips": 0.3150
+  },
+  "output": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/blur_generalist_specialization_gate_v1",
+  "checkpoint_selection_uses_validation_only": true,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

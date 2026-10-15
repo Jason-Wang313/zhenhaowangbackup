@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "status": "cpu_readiness_only_no_gpu_launch",
+  "scientific_role": "diagnostic_reproduction_not_mainline_result",
+  "literature_baseline": {
+    "name": "OneRestore",
+    "repository": "https://github.com/gy65896/OneRestore",
+    "commit": "23a2e6af066864dca013aeed7f6c6f5958aa7259",
+    "files": {
+      "model/Embedder.py": "4addb8fcab236c786d478ccc58abff9ce871971b3fec15bab84d432be4d1c184",
+      "model/OneRestore.py": "049c8fa19be7439239fd107ea3e470418fd517d9a5e35471f7e783611501cbb7",
+      "model/loss.py": "476decc4d16c2f8695e6b04e4e161c24437deb25d952e255b76c635e2fabe220",
+      "makedataset.py": "7b3f558e44bfe0637a3f946bfd09c050fb32986a6ba968d87b87ce5271371d8a",
+      "train_OneRestore_multi-gpu.py": "4eb7b2c8f7dbb1fc7dea2b094ae926115cc0a926ff7881e5df1bd2e5c56fa6f2"
+    }
+  },
+  "data": {
+    "parent_manifest": "manifests/qwen_multidegradation_100k_physical_v8b.jsonl",
+    "parent_manifest_sha256": "777d0130bb0ff9590ad967e8bc848b13399de71df58bf72739f95be62720fb02",
+    "parent_split": "train",
+    "builder_seed": 2026092601,
+    "output_manifest": "manifests/foundir_triple_counterfactual_reproduction_r0_v1.jsonl",
+    "output_metadata": "manifests/foundir_triple_counterfactual_reproduction_r0_v1.json",
+    "selection": {
+      "train": {"1": 20, "2": 40},
+      "development": {"1": 10, "2": 20},
+      "heldout_triple": {"3": 40}
+    },
+    "required_heldout_triple_combinations": [
+      "blur+noise+low_light",
+      "blur+noise+rain",
+      "blur+noise+haze",
+      "blur+rain+haze",
+      "blur+rain+low_light",
+      "blur+haze+low_light",
+      "noise+rain+haze",
+      "noise+rain+low_light",
+      "noise+haze+low_light",
+      "rain+haze+low_light"
+    ],
+    "source_disjoint_across_roles": true,
+    "verify_source_sha256": true
+  },
+  "protocol": {
+    "gradient_eligible_roles": ["train"],
+    "checkpoint_selection_roles": ["development"],
+    "heldout_roles": ["heldout_triple"],
+    "maximum_gradient_composition_size": 2,
+    "maximum_selection_composition_size": 2,
+    "heldout_composition_size": 3,
+    "official_foundir_test_accessed": false,
+    "foundir_60_image_triple_accessed": false,
+    "rendering_rule": "ordered_subset_reuses_frozen_crop_operator_parameters_seeds_and_non_target_nuisance",
+    "counterfactual_rule": "for_input_subset_I_and_remove_subset_A_target_is_explicit_render_of_I_minus_A_in_parent_order",
+    "non_commutativity_rule": "never_reorder_operators_and_never_infer_targets_by_pixel_subtraction"
+  }
+}

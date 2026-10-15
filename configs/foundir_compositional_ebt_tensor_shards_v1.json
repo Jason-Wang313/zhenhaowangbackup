@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "cpu_tensor_shard_build",
+  "objective": "Eliminate GPFS small-file and PNG-decode stalls by materializing deterministic 128x128 lower-order train pairs in contiguous binary shards.",
+  "record_manifest": "manifests/foundir_compositional_ebt_scaled_data_v1.jsonl",
+  "record_manifest_sha256": "d7add2be0ec4edff95034caee1287b4746acffcec76d43ab3f288503bbf3b449",
+  "target_manifest": "manifests/foundir_compositional_ebt_scaled_targets_v1.jsonl",
+  "target_manifest_sha256": "64bcea7cdb95ae1f399d469dfbb76b4078dbc98e501081084e54a9d086b65178",
+  "train_records": 60000,
+  "views_per_record": 8,
+  "total_samples": 480000,
+  "crop_size": 128,
+  "records_per_shard": 128,
+  "expected_shards": 469,
+  "seed": 2026100803,
+  "view_rule": "eight deterministic record-id-seeded random 128x128 crops with deterministic horizontal flip, vertical flip, and transpose",
+  "sample_dtype": {
+    "degraded": "uint8[3,128,128] RGB CHW",
+    "target": "uint8[3,128,128] RGB CHW",
+    "condition": "uint8[5] in blur,noise,rain,haze,low_light order",
+    "record_index": "uint32",
+    "view_index": "uint8"
+  },
+  "output_root": "data/foundir_compositional_ebt_tensor_shards_v1",
+  "output_manifest": "manifests/foundir_compositional_ebt_tensor_shards_v1.jsonl",
+  "output_metadata": "manifests/foundir_compositional_ebt_tensor_shards_v1.json",
+  "default_workers": 16,
+  "access_flags": {
+    "validation_materialized": false,
+    "triple_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "gpu_used": false
+  }
+}

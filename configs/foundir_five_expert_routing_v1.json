@@ -1,0 +1,71 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_frozen_five_expert_fail_closed_routing",
+  "scope": {
+    "isolated_single_degradation_only": true,
+    "mixed_degradations_supported": false,
+    "qwen_routing_enabled": false,
+    "model_weight_updates": false,
+    "checkpoint_selection_reopened": false,
+    "development_gt_used_for_routing": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "registry": {
+    "path": "reports/foundir_five_type_source_disjoint_development_registry_v1.json",
+    "sha256": "225004da30a29854423ef1e921787830344d3af824d1b213900c0481c5328e47"
+  },
+  "routing": {
+    "policy": "fail_closed_exact_singleton_five_expert_v1",
+    "accepted_labels": ["blur", "noise", "haze", "rain", "low_light"],
+    "unknown_label_action": "raise_routing_refusal",
+    "empty_label_action": "raise_routing_refusal",
+    "duplicate_label_action": "raise_routing_refusal",
+    "mixed_label_action": "raise_routing_refusal",
+    "ground_truth_pixels_used": false,
+    "qwen_prediction_used": false
+  },
+  "experts": {
+    "blur": {
+      "backend": "blur_flux2_step10000_alpha075",
+      "category": "01Blur",
+      "checkpoint": "checkpoints/foundir_blur_only_flux2_full_v1/step_010000.safetensors",
+      "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+      "postprocess": {"kind": "scalar_residual", "alpha": 0.75}
+    },
+    "noise": {
+      "backend": "noise_flux2_step400_alpha030",
+      "category": "05Noise",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+      "checkpoint_sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a",
+      "postprocess": {"kind": "scalar_residual", "alpha": 0.30}
+    },
+    "haze": {
+      "backend": "haze_flux2_step3000",
+      "category": "08Haze",
+      "checkpoint": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/step_003000.safetensors",
+      "checkpoint_sha256": "4d94ecf6dd902704345e28ae0bf3447d7e172235158c2b2177933794fd973e00",
+      "postprocess": {"kind": "identity"}
+    },
+    "rain": {
+      "backend": "rain_restormer_step5000",
+      "category": "10Rain",
+      "checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/rain_restormer_adaptation_v2_8gpu/step_005000.pt",
+      "checkpoint_sha256": "ff829573175df0f25add8a4d8f82db648fd6dad88a261297cfe88d2a8944c444",
+      "postprocess": {"kind": "identity"}
+    },
+    "low_light": {
+      "backend": "lowlight_flux2_step400_alpha0925",
+      "category": "14Lowlight",
+      "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/step_000400.safetensors",
+      "checkpoint_sha256": "592e49ca2606565c5aeec8aadeb5466cf0c34b30024d5c02f0f2292ad28c90d8",
+      "postprocess": {"kind": "scalar_residual", "alpha": 0.925}
+    }
+  },
+  "execution": {
+    "cpu_routing_tests_required": true,
+    "routed_vs_direct_output_equivalence_required": true,
+    "automatic_qwen_follow_on": false,
+    "automatic_mixed_degradation_follow_on": false
+  }
+}

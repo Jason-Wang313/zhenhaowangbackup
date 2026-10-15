@@ -2,6 +2,7 @@
 set -Eeuo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 BIN="$ROOT/.tools/baidupcs-go-v4.0.2/verified/BaiduPCS-Go-v4.0.2-linux-amd64/BaiduPCS-Go"
 CFG="$ROOT/.tools/baidupcs-go-v4.0.2/private-config"
 MANIFEST="$ROOT/manifests/foundir_five_type_training_archives_baidupan_v1.tsv"

@@ -13,6 +13,11 @@ select_tmux_binary() {
       return 0
     fi
   done
+  candidate="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/.tools/tmux-env/bin/tmux"
+  if [[ -f "$candidate" && -x "$candidate" ]]; then
+    printf '%s\n' "$candidate"
+    return 0
+  fi
   candidate="$(type -P tmux 2>/dev/null || true)"
   if [[ -n "$candidate" && -f "$candidate" && -x "$candidate" ]]; then
     printf '%s\n' "$candidate"

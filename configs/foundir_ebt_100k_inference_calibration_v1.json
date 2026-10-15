@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_ebt_100k_inference_calibration_v1",
+  "objective": "Calibrate frozen 100k EBT descent step size and inference iteration count using only the fixed singleton/double development subset, with PSNR and LPIPS reported separately and no triple access.",
+  "authorization": "user: u can do the calibration if u want",
+  "training_config": "configs/foundir_compositional_ebt_tensor_shard_100k_v5.json",
+  "training_config_sha256": "9dd6ed9219b084879eb0ab5e6f9b3ac87ba22ac7d52362b3e6c4e2834d315f99",
+  "run_root": "checkpoints/foundir_compositional_ebt_tensor_shard_100k_v5/shard100k_v5",
+  "arms": {
+    "plain": {
+      "checkpoint": "checkpoints/foundir_compositional_ebt_tensor_shard_100k_v5/shard100k_v5/plain_step_100000.pt",
+      "checkpoint_sha256": "228a67bac4acfa0be7930720e416451428f1d8d9b5455e3f58f88b4864c869f0"
+    },
+    "compositional": {
+      "checkpoint": "checkpoints/foundir_compositional_ebt_tensor_shard_100k_v5/shard100k_v5/compositional_step_100000.pt",
+      "checkpoint_sha256": "b37a3534de5607bcf8848e43e9b869ad33b62bad6aeb4a737c77417a6d4e348b"
+    }
+  },
+  "grid": {
+    "step_sizes": [0.5, 1.0, 2.5, 5.0, 7.5, 10.0],
+    "descent_steps": [1, 2, 3]
+  },
+  "selection": "report full grid and PSNR/LPIPS Pareto frontier; do not use triple for selection",
+  "metrics": ["per-image PSNR_RGB_0_1 mean", "LPIPS_Alex_torchmetrics_normalize_true mean"],
+  "records": 512,
+  "allowed_composition_sizes": [1, 2],
+  "output_root": "checkpoints/foundir_compositional_ebt_tensor_shard_100k_v5/shard100k_v5/calibration_v1",
+  "triple_accessed": false,
+  "official_foundir_test_accessed": false,
+  "sealed_internal_accessed": false
+}

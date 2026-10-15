@@ -10,7 +10,7 @@ from fractions import Fraction
 from typing import Mapping, Sequence
 from pathlib import Path
 
-from .foundir_five_type import DEGRADATION_ORDER, FIVE_TYPE_CATEGORIES
+from .foundir_five_type import FIVE_TYPE_CATEGORIES
 
 
 SOW_STAGE2_THRESHOLDS: dict[str, dict[str, float]] = {
@@ -19,6 +19,17 @@ SOW_STAGE2_THRESHOLDS: dict[str, dict[str, float]] = {
     "rain": {"psnr": 34.2, "lpips": 0.08},
     "haze": {"psnr": 22.1, "lpips": 0.19},
     "low_light": {"psnr": 18.9, "lpips": 0.28},
+}
+
+# The Stage-2 SOW reports each restoration task on its corresponding isolated
+# FoundIR category.  Coupled categories remain useful diagnostics, but they
+# must not influence SOW metrics or checkpoint selection.
+SOW_ISOLATED_CATEGORIES: dict[str, str] = {
+    "blur": "01Blur",
+    "noise": "05Noise",
+    "haze": "08Haze",
+    "rain": "10Rain",
+    "low_light": "14Lowlight",
 }
 
 
@@ -363,24 +374,32 @@ def balanced_evaluation_subset(
 
 
 def aggregate_task_metrics(rows: Sequence[Mapping[str, object]]) -> dict[str, dict[str, float]]:
-    """Aggregate restoration metrics by every degradation present in a category."""
+    """Aggregate SOW task metrics from the five isolated FoundIR categories."""
 
+    isolated_task_by_category = {
+        category: task for task, category in SOW_ISOLATED_CATEGORIES.items()
+    }
     values: dict[str, list[Mapping[str, object]]] = defaultdict(list)
     for row in rows:
         category = str(row["category"])
         if category not in FIVE_TYPE_CATEGORIES:
             raise ValueError(f"unknown FoundIR category in metrics: {category}")
-        for degradation in FIVE_TYPE_CATEGORIES[category]:
-            values[degradation].append(row)
-    if set(values) != set(DEGRADATION_ORDER):
-        raise RuntimeError("metric rows do not cover all five restoration tasks")
+        task = isolated_task_by_category.get(category)
+        if task is not None:
+            values[task].append(row)
+    if set(values) != set(SOW_ISOLATED_CATEGORIES):
+        missing = sorted(set(SOW_ISOLATED_CATEGORIES) - set(values))
+        raise RuntimeError(
+            "metric rows do not cover all five isolated SOW restoration tasks; "
+            f"missing={missing}"
+        )
     return {
-        degradation: {
+        task: {
             "records": float(len(task_rows)),
             "psnr": sum(float(row["psnr"]) for row in task_rows) / len(task_rows),
             "lpips": sum(float(row["lpips"]) for row in task_rows) / len(task_rows),
         }
-        for degradation, task_rows in sorted(values.items())
+        for task, task_rows in sorted(values.items())
     }
 
 

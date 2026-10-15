@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "status": "cpu_target_cache_only_no_training",
+  "input_manifest": "manifests/foundir_vlm_energy_full_order_data_v1.jsonl",
+  "input_manifest_sha256": "df1f51f37f22d294561014225e97b24e340202c986bf0ec8f393d36d7bd998a7",
+  "lower_order_target_manifest": "manifests/foundir_compositional_ebt_scaled_targets_v1.jsonl",
+  "lower_order_target_manifest_sha256": "64bcea7cdb95ae1f399d469dfbb76b4078dbc98e501081084e54a9d086b65178",
+  "output_root": "data/foundir_vlm_energy_full_order_targets_v1",
+  "output_manifest": "manifests/foundir_vlm_energy_full_order_targets_v1.jsonl",
+  "output_metadata": "manifests/foundir_vlm_energy_full_order_targets_v1.json",
+  "expected_records": 99000,
+  "expected_reused_lower_order": 66000,
+  "expected_generated_triple": 33000,
+  "default_workers": 32,
+  "headless_cv2_module_root": "/usr/local/lib/python3.12/dist-packages",
+  "headless_cv2_version": "4.10.0"
+}

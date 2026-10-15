@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_haze_flux2_step3000_full_development_v1",
+  "status": "user_authorized_haze_step3000_full_development",
+  "authorization": {
+    "exact_user_instruction": "lets complete this first",
+    "scope": "evaluate the immutable isolated-Haze FLUX step-3000 checkpoint on all 1580 source-group-disjoint validation records; no training or tuning"
+  },
+  "scope": {
+    "category": "08Haze",
+    "split": "validation",
+    "single_degradation_only": true,
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "model_weight_updates": false,
+    "pixel_refiner": false,
+    "decoder_tuning": false,
+    "distillation": false,
+    "development_gt_optimization": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "parent_config": "configs/foundir_haze_flux2_source_diverse_continuation_v1.json",
+    "parent_config_sha256": "f98ae254db5a39b751654269870d037dd75f844cfaa2210d3e47123bf3596c86",
+    "checkpoint": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/step_003000.safetensors",
+    "checkpoint_sha256": "4d94ecf6dd902704345e28ae0bf3447d7e172235158c2b2177933794fd973e00",
+    "checkpoint_step": 3000
+  },
+  "evidence": {
+    "pilot_result": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/result.json",
+    "pilot_result_sha256": "8f899601fb95f63b78e2a5d0db457b7cbae6b24d053a7c35b0f703f9167ce212",
+    "pilot_records": 128,
+    "pilot_source_groups": 128
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "expected_records": 1580,
+    "expected_source_groups": 158,
+    "training_records": 76650,
+    "training_source_groups": 7642,
+    "crop_size": 512,
+    "crop_seed": 2026091702,
+    "crop_namespace": "full_development_crop",
+    "crop_policy": "one_deterministic_aligned_512_crop_per_record"
+  },
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091704,
+    "seed_namespace": "haze_step3000_full_development_v1",
+    "reference_time_coordinate": 10,
+    "quantization": "round_clip_uint8_before_metrics"
+  },
+  "metrics": {
+    "names": ["psnr", "lpips"],
+    "bootstrap_unit": "source_group_equal_weight",
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 2026091801
+  },
+  "gate": {
+    "formal_checks": ["sow_psnr", "sow_lpips"],
+    "sow_psnr_minimum": 22.1,
+    "sow_lpips_maximum": 0.19,
+    "tail_statistics_descriptive_only": true,
+    "require_visual_review": true,
+    "automatic_follow_on": false
+  },
+  "visual_record_ids": [
+    "foundir_train_0234391",
+    "foundir_train_0211693",
+    "foundir_train_0257270",
+    "foundir_train_0271294",
+    "foundir_train_0218494",
+    "foundir_train_0242783",
+    "foundir_train_0206837",
+    "foundir_train_0276713",
+    "foundir_train_0250366",
+    "foundir_train_0224252",
+    "foundir_train_0225017",
+    "foundir_train_0236410",
+    "foundir_train_0264275",
+    "foundir_train_0264626",
+    "foundir_train_0262462",
+    "foundir_train_0271638"
+  ],
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "evaluation_batch_size_per_rank": {"H100": 2, "H200": 4},
+    "data_loader_workers_per_rank": 2
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_haze_flux2_step3000_full_development_v1",
+    "persistent_log": "logs/foundir_haze_flux2_step3000_full_development_v1.log",
+    "gpu_telemetry": "logs/foundir_haze_flux2_step3000_full_development_v1_gpu.csv",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

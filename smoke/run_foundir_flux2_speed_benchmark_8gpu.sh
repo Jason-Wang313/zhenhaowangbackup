@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 CONFIG="$ROOT/configs/foundir_five_type_flux2_dit_v3.json"
 PYTHON="$ROOT/.venv/flux2-smoke/bin/python"
 LOCK="$ROOT/logs/foundir_flux2_speed_benchmark.lock"

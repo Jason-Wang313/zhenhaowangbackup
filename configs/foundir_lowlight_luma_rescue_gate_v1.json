@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_lowlight_luma_rescue_development_gate",
+  "router_config": "configs/foundir_five_type_qwen_routed_integrated_v2.json",
+  "router_config_sha256": "0215a518a81f48c4b244c96c7ea4e237ef8dc53f803919bbd47fd7f1ce072243",
+  "conditions": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+  "conditions_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "baseline_audits": [
+    {
+      "name": "noise_rain_full_development_audit_v1",
+      "result": "checkpoints/foundir_five_type_flux2_dit_v3/noise_rain_full_development_audit_v1/result.json",
+      "result_sha256": "8e425b43d75bd2a4cca6a22e6bd7d71106134b5568cb56ea737298b9ff2d6e34",
+      "sidecars": "checkpoints/foundir_five_type_flux2_dit_v3/noise_rain_full_development_audit_v1/per_record"
+    },
+    {
+      "name": "blur_haze_lowlight_full_development_audit_v1",
+      "result": "checkpoints/foundir_five_type_flux2_dit_v3/blur_haze_lowlight_full_development_audit_v1/result.json",
+      "result_sha256": "ec308c3ee4bd8e74a9ad0eb16f96ed5bebba186356ce8e3aa084e5a99210a7d3",
+      "sidecars": "checkpoints/foundir_five_type_flux2_dit_v3/blur_haze_lowlight_full_development_audit_v1/per_record"
+    }
+  ],
+  "selection": {
+    "split": "validation",
+    "baseline_records": 16461,
+    "counterfactual_records": 1076,
+    "crop_size": 512,
+    "policy": "qwen_lowlight_below_l3_and_member_of_any_predeclared_luma_rescue_candidate",
+    "undersized_pair_policy": "bicubic_short_side_to_512_then_aligned_crop_v1"
+  },
+  "luma": {
+    "space": "srgb_encoded_rgb_0_1",
+    "weights": [0.2126, 0.7152, 0.0722],
+    "reduction": "mean_over_frozen_512_crop"
+  },
+  "candidates": {
+    "current_qwen_l3": {
+      "qwen_level_minimum": 3,
+      "l2_mean_luma_maximum": null,
+      "l1_mean_luma_maximum": null
+    },
+    "l2_dark_0175": {
+      "qwen_level_minimum": 3,
+      "l2_mean_luma_maximum": 0.175,
+      "l1_mean_luma_maximum": null
+    },
+    "l2_dark_0200": {
+      "qwen_level_minimum": 3,
+      "l2_mean_luma_maximum": 0.2,
+      "l1_mean_luma_maximum": null
+    },
+    "l2_dark_0225": {
+      "qwen_level_minimum": 3,
+      "l2_mean_luma_maximum": 0.225,
+      "l1_mean_luma_maximum": null
+    },
+    "l2_dark_0200_l1_extreme_0075": {
+      "qwen_level_minimum": 3,
+      "l2_mean_luma_maximum": 0.2,
+      "l1_mean_luma_maximum": 0.075
+    },
+    "l2_dark_0200_l1_extreme_0100": {
+      "qwen_level_minimum": 3,
+      "l2_mean_luma_maximum": 0.2,
+      "l1_mean_luma_maximum": 0.1
+    }
+  },
+  "metrics": {
+    "names": ["psnr", "lpips"],
+    "quantization": "round_clip_uint8_png_equivalent_before_metrics",
+    "bootstrap_unit": "source_group_equal_weight",
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 2026091011
+  },
+  "strong_gates": {
+    "blur": {
+      "category": "01Blur",
+      "mean_psnr_minimum": 26.9,
+      "mean_lpips_maximum": 0.16,
+      "group_bootstrap_psnr_lower_minimum": 26.4,
+      "group_bootstrap_lpips_upper_maximum": 0.17
+    },
+    "noise": {
+      "category": "05Noise",
+      "mean_psnr_minimum": 40.9,
+      "mean_lpips_maximum": 0.08,
+      "group_bootstrap_psnr_lower_minimum": 39.9,
+      "group_bootstrap_lpips_upper_maximum": 0.09
+    },
+    "rain": {
+      "category": "10Rain",
+      "mean_psnr_minimum": 36.2,
+      "mean_lpips_maximum": 0.07,
+      "group_bootstrap_psnr_lower_minimum": 35.2,
+      "group_bootstrap_lpips_upper_maximum": 0.07
+    },
+    "haze": {
+      "category": "08Haze",
+      "mean_psnr_minimum": 23.1,
+      "mean_lpips_maximum": 0.17,
+      "group_bootstrap_psnr_lower_minimum": 22.6,
+      "group_bootstrap_lpips_upper_maximum": 0.18
+    },
+    "low_light": {
+      "category": "14Lowlight",
+      "mean_psnr_minimum": 19.9,
+      "mean_lpips_maximum": 0.26,
+      "group_bootstrap_psnr_lower_minimum": 19.4,
+      "group_bootstrap_lpips_upper_maximum": 0.27
+    }
+  },
+  "selection_rule": {
+    "primary": "maximize_low_light_worst_normalized_strong_gate_margin",
+    "constraints": "no_isolated_non_lowlight_mean_psnr_drop_over_0p10_or_lpips_increase_over_0p002_vs_current",
+    "tie_break": "fewer_route_changes_then_lexicographic_candidate_name"
+  },
+  "output": "checkpoints/foundir_five_type_flux2_dit_v3/lowlight_luma_rescue_gate_v1",
+  "checkpoint_and_router_selection_uses_development_only": true,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

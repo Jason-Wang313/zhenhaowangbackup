@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "development_only_inference_diagnostic",
+  "parent_config": "configs/foundir_five_type_flux2_dit_v3.json",
+  "parent_config_sha256": "5145e97b2f170b617f34180783d8e7934a77b5ef82f2e6c5cae7756c89763810",
+  "checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/full_curriculum/step_033750.safetensors",
+  "checkpoint_sha256": "bb49bf0d270cb35ddd9cb4b91d87e2149e7c68ab3afd7f4e52663a14a1ba621a",
+  "split": "validation",
+  "categories": ["01Blur", "05Noise", "08Haze", "10Rain", "14Lowlight"],
+  "records_per_category": 60,
+  "arm": "qwen",
+  "variants": [
+    {"name": "s1_n0", "steps": 1, "anchor_noise_scale": 0.0},
+    {"name": "s2_n0", "steps": 2, "anchor_noise_scale": 0.0},
+    {"name": "s4_n0", "steps": 4, "anchor_noise_scale": 0.0},
+    {"name": "s6_n0", "steps": 6, "anchor_noise_scale": 0.0},
+    {"name": "s2_n001", "steps": 2, "anchor_noise_scale": 0.01},
+    {"name": "s4_n001", "steps": 4, "anchor_noise_scale": 0.01},
+    {"name": "s6_n005_canonical", "steps": 6, "anchor_noise_scale": 0.05}
+  ],
+  "report_both_decoded_and_refined": true,
+  "checkpoint_selection_performed": false,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false,
+  "output": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/inference_diagnostic_v1"
+}

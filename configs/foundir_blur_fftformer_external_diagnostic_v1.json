@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "external_initialization_diagnostic_only_not_deployable",
+  "scope": "official_01Blur_150_with_frozen_qwen_routes",
+  "provenance": {
+    "repository": "kkkls/FFTformer",
+    "revision": "01306b5d4072146a011c8c6e9d4927cf4607f1d5",
+    "license": "MIT",
+    "architecture": "third_party/fftformer-upstream/basicsr/models/archs/fftformer_arch.py",
+    "architecture_sha256": "dc0e1775eed3c3358f637084e9e345ec0246b66084487dc4220aad0a5cb66ddf",
+    "checkpoint": "third_party/fftformer-upstream/pretrain_model/fftformer_GoPro.pth",
+    "checkpoint_sha256": "336717b7c4e97b66af112cc7878106cb185b698bd872c2a8247911507540b2a3",
+    "external_checkpoint_is_finally_deployable": false
+  },
+  "data": {
+    "manifest": "manifests/foundir_official_sow600_qwen_v1.csv",
+    "manifest_sha256": "dfe5a05ba13f941ac57734e2a96eb21048ad463f4248f306d2fb2d9c6d48866e",
+    "category": "01Blur",
+    "records": 150
+  },
+  "qwen": {
+    "router_decisions": "checkpoints/foundir_official_sow600_qwen_v3_noise_restormer/router_decisions.csv",
+    "required_status": "correct",
+    "required_expert_plan": "blur"
+  },
+  "inference": {
+    "tile_size": 512,
+    "tile_overlap": 128,
+    "batch_size_per_gpu": 1,
+    "world_size": 8,
+    "output_quantization": "round_clip_uint8_png_after_sqrt_hann_merge"
+  },
+  "metrics": {
+    "implementation": "pyiqa",
+    "names": ["psnr", "lpips", "ssim"],
+    "color_space": "RGB",
+    "aggregation": "unweighted_per_image_mean",
+    "sow": {"psnr_minimum": 25.9, "lpips_maximum": 0.18},
+    "qualification": {
+      "minimum_psnr": 22.3639,
+      "maximum_lpips": 0.20456,
+      "meaning": "at_least_plus_0.5db_over_official_input_and_no_worse_lpips_than_current_flux"
+    }
+  },
+  "policy": {
+    "official_gt_used_for_training": false,
+    "diagnostic_output_must_not_enter_final_integration": true,
+    "qualified_next_step": "FoundIR Blur paired fine-tuning producing a new project checkpoint",
+    "failed_next_step": "stop FFTformer without a training sweep"
+  },
+  "output": "checkpoints/foundir_blur_fftformer_external_diagnostic_v1"
+}

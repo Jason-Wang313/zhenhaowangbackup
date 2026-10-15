@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_released_foundir_full_pipeline_development_comparison",
+  "source": {
+    "manifest": "manifests/foundir_composition_whole_image_v1.csv",
+    "manifest_sha256": "a94128195ffd219f7e94b44c1ec98291c75e727f17e2c3af88cf1c2f9b6282a9",
+    "generalist_output_dir": "checkpoints/foundir_composition_whole_image_v1/foundir/images",
+    "generalist_result": "checkpoints/foundir_composition_whole_image_v1/result.json",
+    "generalist_result_sha256": "61a8a2d73c26f4abbc52f7308b756bd15aa19316731cccb052499f85ab6bd5ae",
+    "generalist_sidecar_dir": "checkpoints/foundir_composition_whole_image_v1/per_record"
+  },
+  "specialists": {
+    "repository": "third_party/foundir/specialist_model",
+    "weather": {
+      "checkpoint": "third_party/foundir/specialist_model/ckpt/weather.pth",
+      "checkpoint_sha256": "25fa90003de8fa6965d861fc66159fb0c188654723acc15e8c49ec8359ca8b93",
+      "categories": ["08Haze", "13Rain_Haze"],
+      "protocol": "released_script_512_nonoverlap_reflect_pad"
+    },
+    "lowlight": {
+      "checkpoint": "third_party/foundir/specialist_model/ckpt/lowlight.pth",
+      "checkpoint_sha256": "f834248e145d020d5a02f257b7ceb383b579add2522932938b3e1e0bd460abe6",
+      "categories": ["09Lowlight_Haze", "14Lowlight", "15Lowlight_Blur", "18Lowlight_Blur_Noise"],
+      "protocol": "released_script_whole_image_reflect_pad_128"
+    }
+  },
+  "metric_protocol": {
+    "psnr": "full_rgb_uint8_image",
+    "lpips": "area_weighted_nonoverlap_512_rgb_uint8",
+    "unchanged_generalist_records": "reuse_hash_bound_original_sidecars"
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_composition_whole_image_full_pipeline_v1",
+    "log": "logs/foundir_composition_whole_image_full_pipeline_v1.log",
+    "gpu_telemetry": "logs/foundir_composition_whole_image_full_pipeline_v1_gpu.csv",
+    "extra_packages": ".tools/foundir-runtime"
+  },
+  "scope": {
+    "split": "validation",
+    "records": 660,
+    "specialist_records": 360,
+    "model_weight_updates": false,
+    "development_pixels_accessed": true,
+    "official_foundir_test_accessed": false,
+    "diagnostic_only": true
+  }
+}

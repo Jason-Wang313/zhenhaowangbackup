@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_noise_family_training_only_pilot",
+  "task": "noise_family",
+  "categories": ["05Noise", "16Lowlight_Noise"],
+  "manifest": "manifests/foundir_noise_family_restormer_pilot_v1.csv",
+  "manifest_sha256": "940e7fae9fdaa4344e4325b2c9fc8c636067fda3cc66bb67a7be6c16a2cdd5ab",
+  "manifest_expected_records": 2304,
+  "base_checkpoint_name": "real_denoising",
+  "base_checkpoint": "models/restormer-task-native/real_denoising.pth",
+  "base_checkpoint_sha256": "4cae18bed8a291b9a5deeeab48756bbe6f61fcf7f31a4cca0969b24608601387",
+  "initial_adaptation_checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/noise_restormer_adaptation_v1/step_000250.pt",
+  "initial_adaptation_checkpoint_sha256": "b3fca23f8271477834c6b3eba2a6dfdf6fcbd480e53c43570e42960a13044429",
+  "initial_adaptation_result": "checkpoints/foundir_five_type_flux2_dit_v3/noise_restormer_adaptation_v1/development_step_000250.json",
+  "initial_adaptation_result_sha256": "739538a39273040fb730b0c59613022e996836a801ca2fc99eba6ecbc5d8df65",
+  "failed_mixed_compatibility_result": "checkpoints/foundir_noise_route_cross_compatibility_v1/result.json",
+  "failed_mixed_compatibility_result_sha256": "382a04a75b466f935afd7e1774c841ab8bbc17d38ed5bee97916aa4fc957d5c4",
+  "data": {
+    "train_records_per_category": 1024,
+    "validation_records_per_category": 128,
+    "train_source_groups": 768,
+    "validation_source_groups": 128,
+    "sampling": "equal_category_then_uniform_source_group_then_uniform_record",
+    "geometric_augmentation": true,
+    "validation_crop_size": 512,
+    "validation_crop_seed": 2026091902
+  },
+  "optimization": {
+    "world_size": 8,
+    "global_batch": 32,
+    "micro_batch_per_gpu": 4,
+    "gradient_accumulation": 1,
+    "total_steps": 1000,
+    "milestones": [500, 1000],
+    "progressive_crops": [[0, 128], [500, 192]],
+    "optimizer": "AdamW",
+    "learning_rate": 0.00005,
+    "minimum_learning_rate": 0.000001,
+    "warmup_steps": 100,
+    "betas": [0.9, 0.999],
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "loss": "rgb_l1",
+    "identity_mix_probability": 0.0,
+    "precision": "bfloat16_autocast_fp32_parameters",
+    "seed": 2026091912
+  },
+  "per_category_gates": {
+    "05Noise": {
+      "mean_psnr_minimum": 39.9,
+      "mean_lpips_maximum": 0.08
+    },
+    "16Lowlight_Noise": {
+      "mean_psnr_minimum": 18.733316631721234,
+      "mean_lpips_maximum": 0.2582512099761516
+    }
+  },
+  "bootstrap": {
+    "resamples": 5000,
+    "confidence": 0.95,
+    "seed": 2026091913
+  },
+  "selection_rule": "maximize_worst_per_category_normalized_gate_margin_then_earlier_step",
+  "output": "checkpoints/foundir_noise_family_restormer_pilot_v1",
+  "one_bounded_pilot_no_automatic_tuning": true,
+  "development_pixels_accessed": false,
+  "official_foundir_test_accessed": false
+}

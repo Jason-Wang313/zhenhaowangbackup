@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 PYTHON="${FOUNDIR_PYTHON:-$ROOT/.venv/flux2-smoke/bin/python}"
 RUNTIME_ROOT="${FOUNDIR_RUNTIME_ROOT:-$ROOT/downloads/foundir_official}"
 GT_ARCHIVE="$RUNTIME_ROOT/GT.zip"

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_official_sow600_released_foundir_comparison",
+  "authorization": {
+    "path": "reports/advisor_governance/foundir_official_sow600_released_baseline_authorization_2026-09-25.json",
+    "sha256": "1b9df7984dfa6d198b5dbf9c1c1070387367b1aca589d43b8516215c125a5307"
+  },
+  "data": {
+    "manifest": "manifests/foundir_official_sow600_qwen_v1.csv",
+    "manifest_sha256": "dfe5a05ba13f941ac57734e2a96eb21048ad463f4248f306d2fb2d9c6d48866e",
+    "records": 600,
+    "records_by_category": {
+      "01Blur": 150,
+      "05Noise": 100,
+      "08Haze": 200,
+      "10Rain": 100,
+      "14Lowlight": 50
+    }
+  },
+  "released_foundir": {
+    "repository": "third_party/foundir",
+    "runtime_config": "configs/foundir_five_type_flux2_dit_v3.json",
+    "runtime_config_sha256": "5145e97b2f170b617f34180783d8e7934a77b5ef82f2e6c5cae7756c89763810",
+    "generalist_checkpoint": "third_party/foundir/premodel/model-2000.pt",
+    "generalist_checkpoint_sha256": "2603a0be47d0844d4c9cea542ecca039e0e4aaa39d45d41064bfbdc13c0830c9",
+    "generalist_tile_size": 1024,
+    "generalist_overlap": 512,
+    "specialist_repository": "third_party/foundir/specialist_model",
+    "weather": {
+      "checkpoint": "third_party/foundir/specialist_model/ckpt/weather.pth",
+      "checkpoint_sha256": "25fa90003de8fa6965d861fc66159fb0c188654723acc15e8c49ec8359ca8b93",
+      "categories": ["08Haze"],
+      "protocol": "released_script_512_nonoverlap_reflect_pad"
+    },
+    "lowlight": {
+      "checkpoint": "third_party/foundir/specialist_model/ckpt/lowlight.pth",
+      "checkpoint_sha256": "f834248e145d020d5a02f257b7ceb383b579add2522932938b3e1e0bd460abe6",
+      "categories": ["14Lowlight"],
+      "protocol": "released_script_whole_image_reflect_pad_128"
+    }
+  },
+  "project_reference": {
+    "identity": "terminal official SOW600 Qwen v8 long-singleton system",
+    "canonical_commit": "5003e1e51bf9373fbdb352cc0420d712d396f114",
+    "result_path_in_commit": "reports/foundir_official_sow600_qwen_v8_result_2026-09-22.json",
+    "result_content_sha256": "6488ba4c3f87c9eda1f83e03c9e0356a3461020ad18b981c8a4d6b7974a89c02",
+    "category_metrics": {
+      "01Blur": {"records": 150, "psnr": 28.092635459899903, "lpips": 0.14408854724218448},
+      "05Noise": {"records": 100, "psnr": 40.04832290649414, "lpips": 0.05660083245486021},
+      "08Haze": {"records": 200, "psnr": 22.67741975784302, "lpips": 0.1104374347999692},
+      "10Rain": {"records": 100, "psnr": 37.80917455673218, "lpips": 0.05290071293478832},
+      "14Lowlight": {"records": 50, "psnr": 19.32245937347412, "lpips": 0.14879852652549744}
+    }
+  },
+  "metrics": {
+    "implementation": "pyiqa",
+    "version": "0.1.16",
+    "color_space": "RGB",
+    "original_size": true,
+    "resize_crop_or_border_shave": false,
+    "aggregation": "unweighted arithmetic mean within each category",
+    "official_metric_script": "third_party/foundir/cal_metrics.py",
+    "official_metric_script_sha256": "bf5bbff7c73b3a8a9623180764ff6ded6cdf4e03960d12825a5b68eaacaf9b32"
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_official_sow600_released_full_pipeline_v1",
+    "log": "logs/foundir_official_sow600_released_full_pipeline_v1.log",
+    "gpu_telemetry": "logs/foundir_official_sow600_released_full_pipeline_v1_gpu.csv",
+    "extra_packages": ".tools/foundir-runtime"
+  },
+  "scope": {
+    "diagnostic_only": true,
+    "official_foundir_test_accessed": true,
+    "model_weight_updates": false,
+    "training": false,
+    "checkpoint_selection": false,
+    "specialist_records": 250
+  }
+}

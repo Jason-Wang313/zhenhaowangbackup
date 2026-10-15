@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "purpose": "one bounded retry with a stronger linear head and a fresh training-only source-disjoint holdout",
+  "classes": [
+    "blur", "noise", "haze", "rain", "low_light", "blur+noise",
+    "haze+low_light", "rain+haze", "blur+low_light", "noise+low_light",
+    "blur+noise+low_light"
+  ],
+  "data": {
+    "manifest": "manifests/foundir_qwen_eleven_class_fresh_holdout_v2.csv",
+    "manifest_sha256": "b58c08a63ff42d06cf2f3f54b9a3838cadaa94359c4f6c5cca7e030e3d012ecc",
+    "singleton_manifest": "manifests/foundir_qwen_five_class_train_only_v1.csv",
+    "singleton_manifest_sha256": "af8798fab6ea340ba4589684ac02997b0cb01fe88a56a78bafcd92e75f36fc6c",
+    "records_per_class": {"fit": 450, "calibration": 90, "holdout": 40},
+    "development_or_internal_test_allowed": false,
+    "v1_holdout_quarantined": true
+  },
+  "qwen": {
+    "training_config": "configs/qwen_multidegradation_100k_rank64_per_type_physical_v8.json",
+    "training_config_sha256": "eef9fe05e21a2fd5b92543f17473e96cb1723b1d4f800ef13a2f6e1622168aeb",
+    "adapter": "checkpoints/qwen_multidegradation_100k_rank64_per_type_physical_v8/merger_trainable/checkpoints/V8_physical_shard5/adapter.safetensors",
+    "adapter_sha256": "5416311d7cd0aa0308e206084c13c7c950f9dacfc96cd558466642804ccbee3c",
+    "policy": "freeze complete Qwen and fit one stronger linear eleven-way head"
+  },
+  "features": {
+    "pooling": "visual token mean plus standard deviation",
+    "embedding_dim": 3584,
+    "feature_dim": 7168,
+    "batch_size_per_gpu": 8,
+    "world_size": 8,
+    "reused_feature_dirs": ["checkpoints/foundir_qwen_eleven_class_gate_v1/features"],
+    "expected_reused_features": 5940
+  },
+  "head": {
+    "type": "multinomial_logistic_regression",
+    "seed": 20260918,
+    "candidate_c": [0.5],
+    "candidate_temperatures": [2.0],
+    "candidate_thresholds": [0.95],
+    "maximum_iterations": 1000,
+    "selection_frozen_from_v1_calibration_only": true,
+    "terminal_split": "fresh_holdout"
+  },
+  "gates": {
+    "maximum_wrong_rate": 0.005,
+    "maximum_per_class_wrong_rate": 0.01,
+    "minimum_coverage": 0.65,
+    "minimum_per_class_coverage": 0.5,
+    "priority": "minimize wrong class routing before maximizing coverage"
+  },
+  "outputs": {
+    "feature_dir": "checkpoints/foundir_qwen_eleven_class_fresh_holdout_v2/features",
+    "head": "checkpoints/foundir_qwen_eleven_class_fresh_holdout_v2/head.safetensors",
+    "result": "checkpoints/foundir_qwen_eleven_class_fresh_holdout_v2/result.json"
+  }
+}

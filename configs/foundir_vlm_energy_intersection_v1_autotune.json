@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_vlm_energy_intersection_v1_autotune",
+  "base_config": "configs/foundir_vlm_energy_intersection_v1.json",
+  "base_config_sha256": "942cc99e03643a419c46b52aba4cfcff7be915ceca33f2903787b58f3518281b",
+  "implementation_sha256": "78f9073da563f7be67e5469380f81c0bbb220f06552c28f109cbacdea619f9a2",
+  "objectives_sha256": "2b9db916ce4260cb4a37d5b527c070dd54ee027ebf61b9f134acfe56043fc547",
+  "required_visible_gpus": 8,
+  "profile": {
+    "batch_candidates": [1, 2, 4, 8],
+    "precision_candidates": ["float32", "bfloat16"],
+    "reference_steps": 2,
+    "maximum_steps": 3,
+    "repeats": 2,
+    "maximum_projected_bytes_for_three_steps": 77309411328,
+    "full_objective_interval": 4
+  },
+  "optimizer_smoke": {
+    "steps": 12,
+    "learning_rate": 0.0001,
+    "weight_decay": 0.01,
+    "gradient_clip_norm": 1.0,
+    "random_step_scale": [0.5, 1.5],
+    "langevin_sigma": [0.0, 0.05]
+  },
+  "runtime": {
+    "output_root": "checkpoints/foundir_vlm_energy_intersection_v1/autotune",
+    "expected_wall_hours": [0.10, 1.00],
+    "expected_gpu_hours": [0.80, 8.00]
+  },
+  "access": {
+    "parent_test_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

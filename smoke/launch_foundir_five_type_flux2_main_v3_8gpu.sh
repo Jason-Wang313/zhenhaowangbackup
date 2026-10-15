@@ -8,6 +8,7 @@ PID_FILE="$ROOT/logs/foundir_five_type_flux2_main_v3.pid"
 PYTHON="$ROOT/.venv/flux2-smoke/bin/python"
 
 cd "$ROOT"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 [[ $# -le 1 && ( $# -eq 0 || "$1" == "--check" ) ]] || {
   echo "ERROR: only the optional --check argument is supported" >&2; exit 1;
 }
@@ -29,6 +30,7 @@ required=(
   reports/foundir_five_type_flux2_main_v3_readiness_2026-09-07.md
   reports/foundir_five_type_flux2_sow_metric_correction_2026-09-07.md
   smoke/build_foundir_five_type_physical_v8_conditions.py
+  smoke/advisor_governance.py
   smoke/export_foundir_five_type_physical_v8_conditions_ddp.py
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
@@ -50,6 +52,7 @@ required=(
   smoke/run_foundir_five_type_flux2_main_v3_8gpu.sh
   smoke/launch_foundir_five_type_flux2_main_v3_8gpu.sh
   tests/test_foundir_flux2_protocol.py
+  tests/test_advisor_governance.py
   tests/test_foundir_five_type_main_v3.py
   tests/test_foundir_lowlight_gate2_teachers.py
   tests/test_pixel_refinement.py
@@ -59,6 +62,7 @@ python_files=(
   lowlight_restoration/lora.py
   lowlight_restoration/pixel_refinement.py
   smoke/build_foundir_five_type_physical_v8_conditions.py
+  smoke/advisor_governance.py
   smoke/export_foundir_five_type_physical_v8_conditions_ddp.py
   smoke/foundir_five_type_preflight.py
   smoke/foundir_five_type_runtime_preflight.py
@@ -73,6 +77,7 @@ python_files=(
   smoke/evaluate_foundir_five_type_released_baselines_ddp.py
   smoke/freeze_foundir_five_type_flux2_main_v3_report.py
   tests/test_foundir_flux2_protocol.py
+  tests/test_advisor_governance.py
   tests/test_foundir_five_type_main_v3.py
   tests/test_foundir_lowlight_gate2_teachers.py
   tests/test_pixel_refinement.py
@@ -87,6 +92,7 @@ bash -n "$RUNNER" "$ROOT/smoke/run_foundir_five_type_stage0_v3_8gpu.sh" "$0"
 "$ROOT/.conda/gpu-train-stable/bin/python" \
   smoke/build_foundir_five_type_physical_v8_conditions.py \
   --config configs/foundir_five_type_flux2_dit_v3.json
+"$PYTHON" -m pytest -q tests/test_advisor_governance.py
 "$PYTHON" -m unittest \
   tests.test_foundir_flux2_protocol \
   tests.test_foundir_five_type_main_v3 \

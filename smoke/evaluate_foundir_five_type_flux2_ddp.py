@@ -239,6 +239,7 @@ def aggregate(
             }
     summary = {
         "records": len(rows),
+        "task_metric_contract": "sow_isolated_categories_v1",
         "task_metrics": tasks,
         "category_metrics": categories,
         "worst_normalized_margin": worst_normalized_margin(tasks),
@@ -539,8 +540,9 @@ def main() -> None:
                 result_rows.append(verify_sidecar(sidecars / f"{stem}.json", identity))
             summary = aggregate(result_rows, config=config)
             payload = {
-                "schema_version": 1,
+                "schema_version": 2,
                 "status": "sealed_internal_test_complete" if args.split == "internal_test" else "development_evaluation_complete",
+                "metric_contract": "sow_isolated_categories_v1",
                 "config_sha256": config_sha,
                 "checkpoint": args.checkpoint.relative_to(ROOT).as_posix(),
                 "checkpoint_sha256": checkpoint_sha,

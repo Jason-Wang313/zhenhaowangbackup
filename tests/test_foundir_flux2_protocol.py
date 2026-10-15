@@ -11,6 +11,7 @@ from unittest.mock import patch
 
 from lowlight_restoration.foundir_five_type import FIVE_TYPE_CATEGORIES
 from lowlight_restoration.foundir_flux2_protocol import (
+    SOW_ISOLATED_CATEGORIES,
     SOW_STAGE2_THRESHOLDS,
     aggregate_task_metrics,
     balanced_group_fold_assignment,
@@ -105,7 +106,7 @@ class FoundIRFlux2ProtocolTests(unittest.TestCase):
         ]
         config = {"evaluation": {"folds": 2}}
 
-        with self.assertRaisesRegex(RuntimeError, "all five restoration tasks"):
+        with self.assertRaisesRegex(RuntimeError, "all five isolated SOW restoration tasks"):
             aggregate_evaluation_metrics(rows, config=config)
 
         summary = aggregate_evaluation_metrics(
@@ -114,6 +115,7 @@ class FoundIRFlux2ProtocolTests(unittest.TestCase):
             include_fold_metrics=False,
         )
         self.assertEqual(summary["records"], len(FIVE_TYPE_CATEGORIES))
+        self.assertEqual(summary["task_metric_contract"], "sow_isolated_categories_v1")
         self.assertEqual(set(summary["task_metrics"]), set(SOW_STAGE2_THRESHOLDS))
         self.assertNotIn("fold_metrics", summary)
 
@@ -259,14 +261,31 @@ class FoundIRFlux2ProtocolTests(unittest.TestCase):
                 seed=19,
             )
 
-    def test_task_metrics_include_composite_records(self) -> None:
-        rows = [
-            {"category": category, "psnr": 30.0, "lpips": 0.1}
-            for category in FIVE_TYPE_CATEGORIES
-        ]
+    def test_task_metrics_use_exactly_one_isolated_category_per_task(self) -> None:
+        rows = []
+        expected = {}
+        for index, (task, category) in enumerate(SOW_ISOLATED_CATEGORIES.items()):
+            psnr = 20.0 + index
+            lpips = 0.1 + index * 0.01
+            rows.append({"category": category, "psnr": psnr, "lpips": lpips})
+            expected[task] = {"records": 1.0, "psnr": psnr, "lpips": lpips}
         metrics = aggregate_task_metrics(rows)
-        self.assertEqual(set(metrics), set(SOW_STAGE2_THRESHOLDS))
-        self.assertGreater(metrics["low_light"]["records"], metrics["rain"]["records"])
+        self.assertEqual(metrics, expected)
+
+    def test_composite_records_cannot_pollute_sow_task_metrics(self) -> None:
+        isolated_rows = [
+            {"category": category, "psnr": 30.0, "lpips": 0.1}
+            for category in SOW_ISOLATED_CATEGORIES.values()
+        ]
+        composite_rows = [
+            {"category": category, "psnr": -1000.0, "lpips": 1000.0}
+            for category, degradations in FIVE_TYPE_CATEGORIES.items()
+            if len(degradations) > 1
+        ]
+        self.assertEqual(
+            aggregate_task_metrics(isolated_rows + composite_rows),
+            aggregate_task_metrics(isolated_rows),
+        )
 
     def test_checkpoint_selection_maximizes_worst_margin_then_earlier_step(self) -> None:
         def candidate(step: int, offset: float) -> dict[str, object]:
@@ -383,6 +402,7 @@ class FoundIRFlux2ProtocolTests(unittest.TestCase):
                 results.append(result)
             payload = select(config, results)
             self.assertEqual(payload["selected_step"], 200)
+            self.assertEqual(payload["metric_contract"], "sow_isolated_categories_v1")
             self.assertFalse(payload["sealed_internal_test_accessed"])
 
 

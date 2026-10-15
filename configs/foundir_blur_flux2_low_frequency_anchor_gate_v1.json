@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_blur_flux2_low_frequency_anchor_gate_v1",
+  "status": "user_authorized_one_shot_cached_low_frequency_anchor_gate",
+  "scope": {
+    "category": "01Blur",
+    "training_only": true,
+    "model_inference": false,
+    "calibration_cache_replay": true,
+    "model_weight_updates": false,
+    "parameter_search": false,
+    "development_accessed": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "source": {
+    "manifest": "manifests/foundir_blur_only_flux2_source_diverse_pilot_v1.csv",
+    "manifest_sha256": "ebd0319ab2f82e7fb629d5ed8fa09309100c9ef28ba80c46a38529288a2e31f8",
+    "cached_config": "configs/foundir_blur_only_flux2_scalar_residual_feasibility_v1.json",
+    "cached_output_dir": "checkpoints/foundir_blur_only_flux2_scalar_residual_feasibility_v1",
+    "calibration_export_dir": "checkpoints/foundir_blur_flux2_low_frequency_anchor_gate_v1/calibration_flux_cache",
+    "cached_config_sha256": "a2e49e2094a1f8f8911377729cd48297891dd3392435638d12faddb838844bac",
+    "checkpoint_sha256": "e0c834d88fc69ba6916032ef7763cdf84047a60d2407eeef23eae8992359c439",
+    "selection_rank_min": 384,
+    "selection_rank_max": 511,
+    "records": 128,
+    "source_groups": 128,
+    "crop_size": 512
+  },
+  "correction": {
+    "formula": "flux_plus_lambda_times_gaussian_lowpass_of_lq_minus_flux",
+    "gaussian_sigma_grid_pixels": [4.0, 8.0, 16.0],
+    "lambda_grid": [0.15, 0.25, 0.35],
+    "radius_rule": "three_sigma_rounded_to_integer",
+    "selection_split": "calibration_ranks_0_383_only",
+    "selection_rule": "maximum_calibration_psnr_subject_to_lpips_regression_over_scalar_at_most_0.002_then_smaller_lambda_then_smaller_sigma",
+    "trainable_parameters": 0
+  },
+  "references": {
+    "base": "alpha_1.0_flux",
+    "scalar": "lq_plus_0.75_times_flux_minus_lq"
+  },
+  "gate": {
+    "reference_aggregate_replay_psnr_tolerance_db": 0.01,
+    "reference_aggregate_replay_lpips_tolerance": 0.001,
+    "minimum_psnr_gain_over_scalar_db": 0.25,
+    "maximum_lpips_regression_over_scalar": 0.002,
+    "minimum_psnr_win_fraction_over_scalar": 0.6,
+    "maximum_per_record_psnr_regression_over_scalar_db": 2.0,
+    "full_development_automatic": false
+  },
+  "runtime": {
+    "device": "cuda_if_available_else_cpu",
+    "python": ".venv/flux2-smoke/bin/python",
+    "output_dir": "checkpoints/foundir_blur_flux2_low_frequency_anchor_gate_v1"
+  }
+}

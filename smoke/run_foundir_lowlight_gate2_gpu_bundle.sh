@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 cd "$ROOT"
 
 if [[ ! "${CUDA_VISIBLE_DEVICES:-}" =~ ^[0-9]+(,[0-9]+)?$ ]]; then

@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 CONFIG="$ROOT/configs/foundir_five_type_flux2_dit_v1.json"
 QWEN_CONFIG="$ROOT/configs/qwen_multidegradation_100k_rank64_joint_v1.json"
 PRELAUNCH="$ROOT/configs/foundir_five_type_prelaunch_gate_v1.json"

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_rain_flux2_source_diverse_pilot_v1",
+  "status": "user_authorized_rain_source_diverse_pilot",
+  "scope": {
+    "category": "10Rain",
+    "qwen_degradation_conditioning": false,
+    "mixed_degradations": false,
+    "pixel_refiner": false,
+    "sealed_internal_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "authorization": {
+    "user_statement": "sure, execute",
+    "frozen_scope": "1580 independent untouched Rain training sources, fresh LoRA, 2000 optimizer steps at global batch 32, then all 100 remaining untouched source-disjoint Rain validation groups",
+    "hold_id": "flux2_haze_source_diverse_continuation_result-56d69d24d8e70f7d",
+    "hold_sha256": "8c3357982873b2c9fe55a20855b47cc745021af00fda2227449c88a22ed8245d"
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+    "dtype": "bfloat16",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "text_encoder": "models/qwen3-4b-fp8"
+  },
+  "data": {
+    "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+    "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "excluded_manifest": "manifests/foundir_four_task_flux2_capacity_sanity_v1.csv",
+    "frozen_manifest": "manifests/foundir_rain_flux2_source_diverse_pilot_v1.csv",
+    "frozen_manifest_metadata": "manifests/foundir_rain_flux2_source_diverse_pilot_v1.json",
+    "category": "10Rain",
+    "train_role": "pilot_train",
+    "validation_role": "pilot_validation",
+    "tiny_overfit_split": "train",
+    "tiny_overfit_records": 1580,
+    "tiny_overfit_unique_source_groups": 1580,
+    "frozen_validation_split": "validation",
+    "frozen_validation_records": 100,
+    "frozen_validation_unique_source_groups": 100,
+    "crop_size": 512,
+    "selection_seed": 2026091705,
+    "crop_seed": 2026091706
+  },
+  "lora": {
+    "initialization": "fresh_zero_lora",
+    "rank": 32,
+    "alpha": 32.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "objective": "pure_noise_to_clean_rectified_flow_with_native_reference",
+    "seed": 2026091707,
+    "max_steps": 2000,
+    "global_batch_size": 32,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.00005,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "timestep_sampling": "uniform",
+    "reference_time_coordinate": 10,
+    "checkpoint_steps": [1000, 2000]
+  },
+  "inference": {
+    "schedule": "official_flux2_shifted_schedule",
+    "num_steps": 50,
+    "guidance": 1.0,
+    "seed": 2026091708,
+    "evaluate_steps": [0, 1000, 2000],
+    "visual_records": 16,
+    "validation_visual_records": 16,
+    "final_train_metric_records": 16,
+    "final_validation_metric_records": 100
+  },
+  "gate": {
+    "protocol": "final_frozen_source_disjoint_validation_sow_only",
+    "validation_psnr_minimum": 34.2,
+    "validation_lpips_maximum": 0.08,
+    "require_human_visual_review": true,
+    "automatic_full_development_launch": false
+  },
+  "distributed": {
+    "backend": "nccl",
+    "required_world_size": 8,
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"]
+  },
+  "runtime": {
+    "output_dir": "checkpoints/foundir_rain_flux2_source_diverse_pilot_v1",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

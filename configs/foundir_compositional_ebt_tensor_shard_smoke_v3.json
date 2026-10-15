@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_compositional_ebt_tensor_shard_smoke_v3",
+  "classification": "BOUNDED TENSOR-SHARD THROUGHPUT/LEARNING DIAGNOSTIC",
+  "objective": "Qualify end-to-end throughput and lower-order learnability after replacing training PNG reads with contiguous pre-cropped tensor shards.",
+  "authorization": {"user_statement": "yes, execute", "full_100k_training_authorized": false},
+  "data": {
+    "manifest": "manifests/foundir_compositional_ebt_scaled_data_v1.jsonl",
+    "manifest_sha256": "d7add2be0ec4edff95034caee1287b4746acffcec76d43ab3f288503bbf3b449",
+    "metadata": "manifests/foundir_compositional_ebt_scaled_data_v1.json",
+    "metadata_sha256": "44f4546a941fa7e150f51eb6e148b7bfb64d4346cbb8a342d73a82c970e51c7a",
+    "target_manifest": "manifests/foundir_compositional_ebt_scaled_targets_v1.jsonl",
+    "target_manifest_sha256": "64bcea7cdb95ae1f399d469dfbb76b4078dbc98e501081084e54a9d086b65178",
+    "target_metadata": "manifests/foundir_compositional_ebt_scaled_targets_v1.json",
+    "target_metadata_sha256": "a44abca0a007fc616fbccc22a9887f357fe65ee8794e2bcaccf21ff32d5b5907",
+    "shard_manifest": "manifests/foundir_compositional_ebt_tensor_shards_v1.jsonl",
+    "shard_manifest_sha256": "561037670c88ead7a115687ef19da51eed061c329fd53b8e9b383b598fb5f3ff",
+    "shard_metadata": "manifests/foundir_compositional_ebt_tensor_shards_v1.json",
+    "train_records": 60000,
+    "validation_records": 6000,
+    "allowed_composition_sizes": [1, 2],
+    "crop_size": 128,
+    "validation_subset_records": 512,
+    "train_bank_samples": 480000,
+    "train_presentations": 51200,
+    "train_schedule": "composition-balanced deterministically shuffled shard order with sequential local samples; without replacement",
+    "validation_target": "immutable cached full target PNG; fixed center crop"
+  },
+  "model": {
+    "implementation": "lowlight_restoration/compositional_ebt.py",
+    "image_size": 128, "patch_size": 16, "hidden_size": 512, "depth": 8,
+    "num_heads": 8, "mlp_ratio": 1.0, "trainable_parameters_per_arm": 26043648,
+    "zero_init_energy_head": false, "initialization_seed": 2026100802
+  },
+  "energy_descent": {
+    "steps": 1, "candidate_step_size": 10.0, "candidate_step_size_learnable": false,
+    "candidate_clamp": [-1.0, 1.0], "differentiate_through_descent": true,
+    "qualification": "one-step project adaptation; not complete official learnable-alpha recipe"
+  },
+  "training": {
+    "arms": ["plain", "compositional"], "optimizer_steps_per_arm": 400,
+    "batch_size_per_arm": 128, "optimizer": "AdamW", "peak_learning_rate": 0.0001,
+    "warmup_steps": 50, "weight_decay": 0.01, "betas": [0.9, 0.999],
+    "gradient_clip_norm": 1.0, "precision": "float32", "num_workers_per_arm": 8,
+    "prefetch_factor": 4, "identical_initialization_and_record_schedule": true,
+    "checkpoint_saved": false
+  },
+  "evaluation": {
+    "before_and_after_training": true,
+    "metrics": ["PSNR_RGB_0_1", "SmoothL1_0_1"],
+    "fixed_validation_subset": true,
+    "promotion_requirement": "finite run, positive validation PSNR gain for both arms, and material data-wait reduction"
+  },
+  "runtime": {
+    "python": "/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3/bin/python",
+    "supported_gpu_families": ["NVIDIA H100 80GB HBM3", "NVIDIA H200"],
+    "required_visible_gpus": 2,
+    "parallel_execution": "one arm per GPU; no DDP",
+    "prelaunch_wall_time_hours": [0.02, 0.15],
+    "prelaunch_gpu_hours": [0.04, 0.30],
+    "output_root": "checkpoints/foundir_compositional_ebt_tensor_shard_smoke_v3"
+  },
+  "access_flags": {"triple_accessed": false, "official_foundir_test_accessed": false, "sealed_internal_accessed": false}
+}

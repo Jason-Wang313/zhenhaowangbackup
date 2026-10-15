@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT="/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 ATTEMPTS="$ROOT/logs/foundir_lowlight_gate2_gpu_resume_v1b_attempts.tsv"
 RESULT="$ROOT/reports/foundir_lowlight_gate2_proposal_lattice_result_v1b.json"
 cd "$ROOT"

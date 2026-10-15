@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "status": "frozen_development_selected_qwen_routed_integrated_protocol",
+  "parent_config": "configs/foundir_five_type_flux2_dit_v3.json",
+  "parent_config_sha256": "5145e97b2f170b617f34180783d8e7934a77b5ef82f2e6c5cae7756c89763810",
+  "conditions": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+  "conditions_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "evaluation_contract_csv": "manifests/foundir_five_type_evaluation_contract_v3.csv",
+  "evaluation_contract_csv_sha256": "f650e7b3f83b2e6447f5b3ff1707c3fb13946fe78d48f87c0620a7b4e75b5e8b",
+  "evaluation_contract_json": "manifests/foundir_five_type_evaluation_contract_v3.json",
+  "evaluation_contract_json_sha256": "076d239e6d8858a980b30302fe5d55844b2c1ce55b6eed6defb4436e756e10b2",
+  "blur_selection": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/blur_generalist_specialization_gate_v2/development_selection.json",
+  "blur_selection_sha256": "e9e9c55a48ef8b523cd1086d5e9af2cd73dcce654f4f3892cf470099bcb1957d",
+  "routing": {
+    "policy": "development_selected_confidence_guarded_v2",
+    "condition_source": "frozen_actual_physical_v8_qwen_json",
+    "active_level_minimum": 2,
+    "blur_level_minimum": 4,
+    "low_light_level_minimum": 3,
+    "weather_haze_level_minimum": 2,
+    "base": "selected_blur_specialization_if_qwen_blur_l4plus_else_released_generalist",
+    "refinement_precedence": ["low_light", "weather", "none"],
+    "low_light_trigger": "qwen_low_light_l3plus",
+    "weather_trigger": "qwen_haze_l2plus_without_blur_specialization",
+    "rain_alone_uses_generalist": true,
+    "weather_is_skipped_when_blur_base": true,
+    "weather_is_skipped_when_low_light_active": true,
+    "noise_uses_base_without_a_separate_specialist": true,
+    "specialist_input": "unquantized_selected_base_output",
+    "ground_truth_category_must_not_control_route": true
+  },
+  "development_selection_evidence": {
+    "selection_split": "development_only",
+    "v1_router_config": "configs/foundir_five_type_qwen_routed_integrated_v1.json",
+    "v1_router_config_sha256": "b42b3e956f17d27bc966a27224b9ea0cabff38c149d00fd5d14c07fd0948bf7c",
+    "v1_development_result": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/qwen_routed_integrated_v1/development/result.json",
+    "v1_development_result_sha256": "d8f49018139f2a60006d6b73dcede80276327c4139bc99df3bfb666b0e0cd255",
+    "v1_development_freeze": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/qwen_routed_integrated_v1/development_freeze.json",
+    "v1_development_freeze_sha256": "3d08f38d25b72514d037f5ee0b136ac1adbfb4e0f1a468a09f5b7e13c8aabdd4",
+    "released_development_result": "checkpoints/foundir_five_type_flux2_dit_v3/released_baselines/development/result.json",
+    "released_development_result_sha256": "b8e4fa26559dbb48bff2cb88abc6610a1118b042f100636d474ca8801f534331",
+    "selection_rationale": "Development-only category-by-route audit: require high-confidence Blur and Low-light; use Weather only for Haze; suppress specialist cascades contradicted by development metrics.",
+    "projected_development_route_counts": {
+      "blur_specialization+low_light": 24,
+      "blur_specialization+none": 93,
+      "generalist+low_light": 204,
+      "generalist+none": 231,
+      "generalist+weather": 108
+    },
+    "sealed_internal_test_accessed_for_selection": false,
+    "protected_foundir_test_accessed": false
+  },
+  "evaluation": {
+    "world_size": 8,
+    "crop_size": 512,
+    "seed": 2026090904,
+    "metric_contract": "sow_isolated_categories_v1",
+    "metrics": ["psnr", "lpips"],
+    "development_records": 660,
+    "sealed_internal_records": 660
+  },
+  "outputs": {
+    "development": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/qwen_routed_integrated_v2/development",
+    "development_freeze": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/qwen_routed_integrated_v2/development_freeze.json",
+    "sealed_internal": "checkpoints/foundir_five_type_flux2_dit_v3/protocol_v4_isolated/qwen_routed_integrated_v2/sealed_internal"
+  },
+  "checkpoint_and_routing_selected_on_development_only": true,
+  "sealed_internal_test_accessed_for_this_protocol": false,
+  "protected_foundir_test_accessed": false
+}

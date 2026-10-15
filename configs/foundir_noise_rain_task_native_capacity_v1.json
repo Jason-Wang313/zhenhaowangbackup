@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "status": "frozen_after_full_development_baseline_failure_slice_audit",
+  "baseline_config": "configs/foundir_noise_rain_full_development_audit_v1.json",
+  "baseline_config_sha256": "f76610542610bc594a0e5f88522f9e0a5c76bbfeaa009efd9189c2b2c6623e87",
+  "baseline_result": "checkpoints/foundir_five_type_flux2_dit_v3/noise_rain_full_development_audit_v1/result.json",
+  "baseline_result_sha256": "8e425b43d75bd2a4cca6a22e6bd7d71106134b5568cb56ea737298b9ff2d6e34",
+  "conditions": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+  "conditions_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "selection": {
+    "split": "validation",
+    "scope": "complete_isolated_noise_and_rain_development_capacity_audit",
+    "categories": {
+      "05Noise": 1859,
+      "10Rain": 835
+    },
+    "manifest_expected_records": 685495,
+    "expected_records": 2694,
+    "crop_size": 512,
+    "crop_seed": 2026083001
+  },
+  "candidates": {
+    "noise": ["real_denoising", "gaussian_color_denoising_blind"],
+    "rain": ["deraining"],
+    "checkpoint_directory": "models/restormer-task-native",
+    "input": "raw_lq_rgb_0_1",
+    "precision": "float32_tf32_disabled",
+    "category_selects_candidate_family_for_capacity_measurement_only": true,
+    "category_must_not_control_final_deployable_route": true
+  },
+  "routing_diagnostics": {
+    "policy": "actual_frozen_qwen_task_level_threshold_then_baseline_fallback",
+    "thresholds": [2, 3, 4, 5],
+    "not_a_frozen_deployable_selection": true
+  },
+  "metrics": {
+    "names": ["psnr", "lpips"],
+    "quantization": "round_clip_uint8_png_equivalent_before_metrics",
+    "bootstrap_unit": "source_group_equal_weight",
+    "bootstrap_resamples": 5000,
+    "bootstrap_confidence": 0.95,
+    "bootstrap_seed": 2026091002
+  },
+  "strong_gates": {
+    "noise": {
+      "category": "05Noise",
+      "mean_psnr_minimum": 39.9,
+      "mean_lpips_maximum": 0.08,
+      "group_bootstrap_psnr_lower_minimum": 39.4,
+      "group_bootstrap_lpips_upper_maximum": 0.09
+    },
+    "rain": {
+      "category": "10Rain",
+      "mean_psnr_minimum": 35.2,
+      "mean_lpips_maximum": 0.06,
+      "group_bootstrap_psnr_lower_minimum": 34.7,
+      "group_bootstrap_lpips_upper_maximum": 0.07
+    }
+  },
+  "output": "checkpoints/foundir_five_type_flux2_dit_v3/noise_rain_task_native_capacity_v1",
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

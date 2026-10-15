@@ -2,6 +2,7 @@
 set -uo pipefail
 
 ROOT="/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang"
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 cd "$ROOT"
 
 echo "FOUNDIR_LOWLIGHT_GATE2_RESUME_RUN_START utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"

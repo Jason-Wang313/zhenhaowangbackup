@@ -2,6 +2,7 @@
 set -uo pipefail
 
 ROOT=/inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang
+/usr/bin/python3 "$ROOT/smoke/advisor_governance.py" check
 PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 CONFIG="$ROOT/configs/foundir_five_type_qwen_real_gate_physical_v8.json"
 EVALUATOR="$ROOT/smoke/evaluate_foundir_five_type_qwen_real_gate_v2_ddp.py"

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_frozen_blur_noise_noise_only_confirmation_v1",
+  "scope": {
+    "split": "train",
+    "category": "02Blur_Noise",
+    "model_weight_updates": false,
+    "alpha_selection_reopened": false,
+    "development_pixels_accessed": false,
+    "official_foundir_test_accessed": false
+  },
+  "data": {
+    "manifest": "manifests/foundir_blur_noise_noise_only_confirmation_v1.csv",
+    "manifest_sha256": "cf8bed4ed1e19e657920d134426a54649cb48fc6bea936ec6a61ec0db4de90b2",
+    "records": 16,
+    "source_groups": 16,
+    "crop_size": 512,
+    "crop_seed": 2026091811
+  },
+  "selection_evidence": {
+    "path": "checkpoints/foundir_mixed_restoration_pilot_v1/blur_noise_noise_only_alpha_selection_v1.json",
+    "sha256": "c4930f6f8c492f6ce04549ae307362c3ec439461e39bbf324e087b18ee7df82f",
+    "selected_alpha": 0.5
+  },
+  "expert": {
+    "kind": "flux2",
+    "parent_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+    "parent_config_sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+    "checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+    "checkpoint_sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a",
+    "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+    "alpha": 0.5
+  },
+  "inference": {
+    "num_steps": 50,
+    "guidance": 1.0,
+    "reference_time_coordinate": 10,
+    "seed": 2026091812,
+    "quantization": "round_clip_uint8_before_metrics"
+  },
+  "gate": {
+    "mean_psnr_must_improve_over_input": true,
+    "mean_lpips_must_improve_over_input": true,
+    "fixed_visual_review_required": true
+  },
+  "distributed": {
+    "required_world_size": 8,
+    "allowed_gpu_name_fragments": ["H100", "H200"],
+    "batch_size_per_rank": {"H100": 2, "H200": 2}
+  },
+  "runtime": {
+    "python": ".venv/flux2-smoke/bin/python",
+    "torch_home": "models/torch",
+    "output_dir": "checkpoints/foundir_blur_noise_noise_only_confirmation_v1",
+    "log": "logs/foundir_blur_noise_noise_only_confirmation_v1.log",
+    "gpu_telemetry": "logs/foundir_blur_noise_noise_only_confirmation_v1_gpu.csv"
+  }
+}
