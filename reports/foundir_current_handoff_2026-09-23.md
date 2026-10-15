@@ -224,6 +224,16 @@ about `2.59 wall hours` and `20.75 allocated GPU-hours`, plus small validation
 overhead. Full report:
 `reports/foundir_proposal_relative_energy_noise_v1_pass1_2026-10-15.md`.
 
+Pass-2 and pass-3 validations were subsequently produced at steps `3,412` and
+`5,118` while the same run continued normally. At pass 3, the best perceptual
+energy arm is Energy-1 at `43.19604617357254/.05484414789316361`, versus the
+unchanged proposal `43.124160178005695/.050362067760033824`. This is only about
+`+.07189 dB`, while LPIPS is still worse by about `.00448`. No energy arm has
+passed the frozen `+.30 dB/-.005 LPIPS` gate. Continue unchanged through the
+already-running five-pass endpoint; do not tune from these intermediate
+records. Interim report:
+`reports/foundir_proposal_relative_energy_noise_v1_pass2_pass3_interim_2026-10-15.md`.
+
 ### Why the MoE fallback is not a clean first claim
 
 - FoundIR-v2 already uses MoE, but uses an SDXL backbone rather than DiT.
