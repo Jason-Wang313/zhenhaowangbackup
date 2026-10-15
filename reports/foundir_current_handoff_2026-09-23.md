@@ -198,6 +198,32 @@ Full report:
 Checkpoint SHA-256:
 `dffad058a9b9697fb76c580144b482e22dddbb5ae2bfb618e0b1134e1f107cdf`.
 
+#### 2026-10-15 corrected pass-1 scientific result
+
+Fresh run `noise_energy_v1_pass1` completed `1,706` optimizer steps on
+`8 x H100 80GB` in `.6484166688554817` wall hours, or
+`5.187333353174229` allocated GPU-hours. It completed normally with no OOM,
+NCCL, non-finite, or protected-data-access error.
+
+On the same frozen 256-record source-disjoint development validation, the
+proposal remains `43.124160178005695/.050362067760033824`. Energy refinement
+at 1/2/3 steps reaches respectively
+`43.20002077519894/.05506254433294089`,
+`43.21786245703697/.05692732973329839`, and
+`43.22869956493378/.058651921212913294`. Thus more steps add only
+`+.07586` to `+.10454 dB` while worsening LPIPS by `.00470` to `.00829`.
+The direct refiner reaches `43.24551533162594/.06125720706040738`, likewise a
+small PSNR gain with materially worse LPIPS. No arm passes the predeclared
+`+.30 dB/-.005 LPIPS` technical gate.
+
+This is a weak one-pass result, not a code failure and not yet the frozen
+five-pass method decision. Resume the exact same run ID and checkpoint to
+`8,530` total steps. Do not restart, change hyperparameters, or access the
+official/sealed/internal/frozen-660 endpoints. Estimated remaining H100 time is
+about `2.59 wall hours` and `20.75 allocated GPU-hours`, plus small validation
+overhead. Full report:
+`reports/foundir_proposal_relative_energy_noise_v1_pass1_2026-10-15.md`.
+
 ### Why the MoE fallback is not a clean first claim
 
 - FoundIR-v2 already uses MoE, but uses an SDXL backbone rather than DiT.
