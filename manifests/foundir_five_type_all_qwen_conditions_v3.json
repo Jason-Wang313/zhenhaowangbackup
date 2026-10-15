@@ -1,0 +1,42 @@
+{
+  "category_counts": {
+    "01Blur": 109480,
+    "02Blur_Noise": 29950,
+    "05Noise": 58015,
+    "08Haze": 79800,
+    "09Lowlight_Haze": 79800,
+    "10Rain": 39900,
+    "13Rain_Haze": 79750,
+    "14Lowlight": 39962,
+    "15Lowlight_Blur": 85893,
+    "16Lowlight_Noise": 52995,
+    "18Lowlight_Blur_Noise": 29950
+  },
+  "condition_arms": [
+    "qwen"
+  ],
+  "conditions_csv": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+  "conditions_csv_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "jpeg_included": false,
+  "manifest": "manifests/foundir_five_type_pairs_v1.csv",
+  "manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "protected_foundir_test_accessed": false,
+  "query_count_per_image": 5,
+  "qwen_adapter": "checkpoints/qwen_multidegradation_100k_rank64_per_type_physical_v8/merger_trainable/checkpoints/V8_physical_shard5/adapter.safetensors",
+  "qwen_adapter_sha256": "5416311d7cd0aa0308e206084c13c7c950f9dacfc96cd558466642804ccbee3c",
+  "qwen_config": "configs/qwen_multidegradation_100k_rank64_per_type_physical_v8.json",
+  "qwen_config_sha256": "eef9fe05e21a2fd5b92543f17473e96cb1723b1d4f800ef13a2f6e1622168aeb",
+  "qwen_method": "per_type_dialogue_center_crop_448",
+  "records": 685495,
+  "restoration_config": "configs/foundir_five_type_flux2_dit_v3.json",
+  "restoration_config_sha256": "5145e97b2f170b617f34180783d8e7934a77b5ef82f2e6c5cae7756c89763810",
+  "schema_version": 1,
+  "split_counts": {
+    "internal_test": 14153,
+    "train": 654881,
+    "validation": 16461
+  },
+  "status": "frozen_physical_v8_qwen_foundir_all_development_conditions",
+  "undersized_input_policy": "bicubic_short_side_to_448_then_center_crop_v1",
+  "undersized_records": 19
+}

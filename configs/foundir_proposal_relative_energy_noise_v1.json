@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_proposal_relative_energy_noise_v1",
+  "classification": "SOURCE-DISJOINT DEVELOPMENT ONLY; NO OFFICIAL/SEALED/INTERNAL/660 ACCESS",
+  "data": {
+    "manifest": "manifests/foundir_five_type_all_qwen_conditions_v3.csv",
+    "manifest_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+    "category": "05Noise",
+    "train_records": 54585,
+    "train_source_groups": 1755,
+    "validation_records": 1859,
+    "validation_source_groups": 34,
+    "validation_subset_records": 256,
+    "validation_crop_size": 256,
+    "validation_crop_seed": 2026101502
+  },
+  "frozen_proposal": {
+    "kind": "Restormer",
+    "base_checkpoint_name": "real_denoising",
+    "base_checkpoint_dir": "models/restormer-task-native",
+    "checkpoint": "checkpoints/foundir_noise_mse_lpips_continuation_v1/step_000250.pt",
+    "checkpoint_sha256": "0ec585e4bfc07a7d85c4f26e8abcabc9b778299db4b83440cc5bbabf02f2b4a0"
+  },
+  "hardware": {
+    "nodes": 1,
+    "world_size": 8,
+    "supported_families": ["H100", "H200"],
+    "profiles": {
+      "H100": {"micro_batch_per_gpu": 1, "gradient_accumulation": 4},
+      "H200": {"micro_batch_per_gpu": 4, "gradient_accumulation": 1}
+    },
+    "global_batch": 32,
+    "precision": "bfloat16_autocast_fp32_energy_gradient"
+  },
+  "schedule": {
+    "qualification_steps": 500,
+    "steps_per_effective_pass": 1706,
+    "primary_steps": 8530,
+    "continuation_cap_steps": 17060,
+    "milestones": [500, 1706, 3412, 5118, 6824, 8530, 10236, 11942, 13648, 15354, 17060],
+    "progressive_crops": [[0, 128], [1706, 192], [5118, 256]],
+    "learning_rate": 0.0001,
+    "minimum_learning_rate": 0.000001,
+    "warmup_steps": 250,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "seed": 2026101501
+  },
+  "loss": {
+    "energy_reconstruction": 1.0,
+    "energy_direction": 0.1,
+    "energy_ranking": 0.1,
+    "direct_reconstruction": 1.0,
+    "edge": 0.1
+  },
+  "runtime": {
+    "output_root": "checkpoints/foundir_proposal_relative_energy_noise_v1",
+    "log_root": "logs"
+  },
+  "access": {
+    "train_split_only_for_optimizer": true,
+    "development_validation_only": true,
+    "internal_test_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "frozen_660_accessed": false
+  }
+}
