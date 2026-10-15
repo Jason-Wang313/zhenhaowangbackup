@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "proposed_diagnostic_reproduction_after_r0_terminal_failure",
+  "model": "official CURE/OneRestore two-track reproduction",
+  "selected_checkpoint": "not_applicable",
+  "selected_checkpoint_sha256": "not_applicable",
+  "official_foundir_test_accessed": false,
+  "protected_foundir_test_accessed": false,
+  "advisor_authorization_source": "user explicitly approved CURE two-track reproduction and then confirmed they are the advisor or are relaying the advisor's explicit approval in the current conversation",
+  "scope": "published-style versus strict end-to-end triple-free baseline/embedder/CURE fine-tuning on CCDD-11 only; frozen triple/selective evaluation; no new mechanism"
+}

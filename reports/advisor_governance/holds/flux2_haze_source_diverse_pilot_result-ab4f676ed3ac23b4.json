@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-17T08:18:01Z",
+  "evidence": {
+    "path": "checkpoints/foundir_haze_flux2_source_diverse_pilot_v1/result.json",
+    "sha256": "c972fdeb43962b28644308737783729c5d74e22a5d4f1302229fedb5dba17d27"
+  },
+  "hold_id": "flux2_haze_source_diverse_pilot_result-ab4f676ed3ac23b4",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/flux2_haze_source_diverse_pilot_result-ab4f676ed3ac23b4.md",
+  "report_sha256": "89cb9f7b55b2cd24097482f5c316e27529a64a7dba897544385ebf602b811e18",
+  "schema_version": 1
+}

@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-16T13:30:02Z",
+  "evidence": {
+    "path": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/result.json",
+    "sha256": "94e7740268d8aff9328b177042e68329c82c48bdfcde3ad20cf40ee7db580fbe"
+  },
+  "hold_id": "flux2_four_task_capacity_sanity_result-323541cca1c3b528",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/flux2_four_task_capacity_sanity_result-323541cca1c3b528.md",
+  "report_sha256": "e0503df6947ad19cf29016f0bf7b6b780b28f597afe17cd35af0bffd82144d81",
+  "schema_version": 1
+}

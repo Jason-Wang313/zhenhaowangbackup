@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请检查五项 directional checks 与固定视觉；是否允许正式 Rain validation，或停止并重新诊断？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_rain_flux2_strength_identity_ratio_gate_v1/step_002250.safetensors",
+    "sha256": "507a52f523f774f4de5a241dc7e78f57092085d1df76ae5cfa00c83c67a43cc0"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_rain_flux2_strength_identity_ratio_gate_v1.json",
+    "sha256": "00f0e17da13595a21c5ad1f054d08c073d5022aacbffb6c5c687cfc85b0e66d0"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "exact 1580 Rain parent training crops; frozen source-disjoint train-split development with 16 heavy, 16 moderate, 16 near-clean",
+  "evidence": {
+    "path": "checkpoints/foundir_rain_flux2_strength_identity_ratio_gate_v1/result.json",
+    "sha256": "4514ae7d1129bc58c940600a7d519959009845fdbd2f3b5d1d694a049a32f534"
+  },
+  "gate": "flux2_rain_strength_identity_ratio_result",
+  "generated_at": "2026-09-18T00:24:10Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B exact Rain step-2000 rank32 LoRA 3:2:1 ratio gate",
+  "outcome": "failure",
+  "report_id": "flux2_rain_strength_identity_ratio_result-54d5e10c4c95d5d8",
+  "root_cause_or_status": "The one-change 3:2:1 Rain ratio gate completed; it decides whether reduced identity exposure retains near-clean gains while recovering heavy PSNR and LPIPS. There is no automatic continuation.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_onerestore_style_r0_design_frozen",
+  "automatic_gate_pass": true,
+  "config_sha256": "415ffaa126393e0125ca070830596c413645919836e290b7a16970b2f27c2c64",
+  "checkpoint": "not_applicable_preimplementation_design_gate",
+  "checkpoint_sha256": "not_applicable",
+  "model_weight_updates": false,
+  "development_pixels_accessed": false,
+  "heldout_triple_pixels_accessed": false,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false,
+  "official_foundir_test_accessed": false,
+  "foundir_60_image_triple_accessed": false,
+  "authorization": {
+    "user_statement": "execute",
+    "scope": "implement and run only R0 fixed categorical descriptor plus CDRL bounded diagnostic; stop before R1, R2, or CSR"
+  },
+  "cpu_protocol_audit": {
+    "parents": 130,
+    "nodes": 620,
+    "counterfactual_pairs": 1710,
+    "unique_sources": 130,
+    "triple_gradient_leakage": 0,
+    "triple_checkpoint_selection_leakage": 0,
+    "focused_tests_passed": 6
+  }
+}

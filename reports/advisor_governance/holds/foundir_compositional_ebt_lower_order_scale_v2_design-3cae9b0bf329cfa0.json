@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-10-07T20:23:11Z",
+  "evidence": {
+    "path": "reports/advisor_governance/foundir_compositional_ebt_lower_order_scale_v2_design_evidence.json",
+    "sha256": "d2c1e05b1631c0161057e18c07ea4827d6a785514a8318e997687e53ded3542c"
+  },
+  "hold_id": "foundir_compositional_ebt_lower_order_scale_v2_design-3cae9b0bf329cfa0",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/foundir_compositional_ebt_lower_order_scale_v2_design-3cae9b0bf329cfa0.md",
+  "report_sha256": "f74e1e3d61b6c2b3d7f9b5854a80895624733fac83d65446e58dd0405f6c64b3",
+  "schema_version": 1
+}

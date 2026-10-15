@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否允许保持相同 1,580 sources、模型、objective 和 optimizer，从 exact step-2000 只续训 1,000 steps 到 step-3000，再做冻结 Haze validation？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_haze_flux2_source_diverse_pilot_v1/step_002000.safetensors",
+    "sha256": "945b49c61fb2842bcd8fb96b4ea4a53c4c935f07729bfd5c3f17568060d780f0"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_haze_flux2_source_diverse_pilot_v1.json",
+    "sha256": "1fde72e12149b8097fdd533bf73734b89a3c6ffb7278c5d483b2ced0f87d596d"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "1580 isolated-Haze training source groups and frozen 128 source-group-disjoint validation records",
+  "evidence": {
+    "path": "checkpoints/foundir_haze_flux2_source_diverse_pilot_v1/result.json",
+    "sha256": "c972fdeb43962b28644308737783729c5d74e22a5d4f1302229fedb5dba17d27"
+  },
+  "gate": "flux2_haze_source_diverse_pilot_result",
+  "generated_at": "2026-09-17T08:18:01Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B fresh rank32 LoRA isolated-Haze source-diverse pilot",
+  "outcome": "failure",
+  "report_id": "flux2_haze_source_diverse_pilot_result-ab4f676ed3ac23b4",
+  "root_cause_or_status": "The pilot completed normally. Haze validation reached 21.969477 PSNR / 0.111869 LPIPS: PSNR narrowly missed the 22.1 floor by 0.130523 dB (0.5906%), while LPIPS passed with 41.1218% safety. The fixed curve improved through step 2000; exact checkpoint and optimizer continuation is the bounded next action.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

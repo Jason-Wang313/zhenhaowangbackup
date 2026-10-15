@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "recorded_at": "2026-09-25T01:02:28Z",
+  "authority": "explicit_user_decision_in_current_session",
+  "user_direction": "Run the new sealed-test singleton comparison for the frozen terminal project system and released FoundIR full pipeline now; improve singleton types first, then double compositions, then triple composition.",
+  "authorized_scope": {
+    "benchmark": "FoundIR official SOW600",
+    "records": 600,
+    "categories": [
+      "01Blur",
+      "05Noise",
+      "08Haze",
+      "10Rain",
+      "14Lowlight"
+    ],
+    "systems": [
+      "terminal project v8 frozen category metrics",
+      "Released FoundIR Generalist",
+      "Released FoundIR Generalist then documented degradation-aware Specialist"
+    ],
+    "foundir_specialist_routing": {
+      "08Haze": "Weather specialist",
+      "14Lowlight": "Low-light specialist",
+      "01Blur": "retain Generalist",
+      "05Noise": "retain Generalist",
+      "10Rain": "retain Generalist"
+    },
+    "metrics": [
+      "pyiqa RGB PSNR",
+      "pyiqa RGB LPIPS",
+      "pyiqa RGB SSIM"
+    ],
+    "aggregation": "unweighted arithmetic mean over images within each category",
+    "training": false,
+    "model_weight_updates": false
+  },
+  "protected_data_rules": {
+    "official_inputs_and_gt_may_be_used_for_this_frozen_evaluation": true,
+    "official_images_or_gt_as_training_examples": false,
+    "official_gt_loss_or_gradient_updates": false,
+    "iterative_checkpoint_selection_from_this_run": false
+  },
+  "ordered_follow_up": [
+    "freeze and compare all five singleton categories",
+    "improve singleton categories under a separately frozen development protocol",
+    "after singleton success address double compositions",
+    "after double-composition success address triple composition"
+  ]
+}

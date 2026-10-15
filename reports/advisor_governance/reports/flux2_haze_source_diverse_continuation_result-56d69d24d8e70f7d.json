@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请检查 Haze step-3000 的 128-record PSNR/LPIPS 与固定视觉，并决定是否结束 Haze；不得自动开始 Rain。",
+  "checkpoint": {
+    "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/step_003000.safetensors",
+    "sha256": "4d94ecf6dd902704345e28ae0bf3447d7e172235158c2b2177933794fd973e00"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_haze_flux2_source_diverse_continuation_v1.json",
+    "sha256": "f98ae254db5a39b751654269870d037dd75f844cfaa2210d3e47123bf3596c86"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "same 1580 isolated-Haze training sources and frozen 128 source-group-disjoint validation records",
+  "evidence": {
+    "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/result.json",
+    "sha256": "8f899601fb95f63b78e2a5d0db457b7cbae6b24d053a7c35b0f703f9167ce212"
+  },
+  "gate": "flux2_haze_source_diverse_continuation_result",
+  "generated_at": "2026-09-17T09:24:26Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B rank32 LoRA isolated-Haze exact step-2000 optimizer continuation",
+  "outcome": "pass",
+  "report_id": "flux2_haze_source_diverse_continuation_result-56d69d24d8e70f7d",
+  "root_cause_or_status": "The bounded exact-optimizer Haze continuation completed; frozen 128-record metrics and fixed visuals decide whether Haze meets Stage-2 SOW. There is no automatic next experiment.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

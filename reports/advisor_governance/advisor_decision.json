@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "hold_id": "flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b",
-  "hold_sha256": "5c9bb2ad18d875a5b44c45e23d3fd52f4af9e89dd4da46e0d8d97750b96f2394",
-  "decided_by": "user_after_advisor_response",
+  "hold_id": "foundir_compositional_ebt_lower_order_scale_v2_design-3cae9b0bf329cfa0",
+  "hold_sha256": "1321c086d9640a08a58786fd8d83873f75b7f35f2d2a6b67f0977bfba3d1e0c7",
+  "decided_by": "advisor",
   "decision": "approve_documented_change",
-  "statement": "针对已登记且 hash-bound 的 flux2_noise_scalar_full_development_design_v1，用户在知悉 16 图证据的不确定性和预计 75–85% SOW 成功概率后明确要求‘let's just fucking do it’。现批准且仅批准 config SHA 5e7a356e... 的一次性 Noise full-development evaluation：1859 张 source-group-disjoint isolated-Noise validation、step-400 checkpoint、冻结 alpha=.30、50-step inference，以 SOW mean PSNR>=38.9 与 LPIPS<=.10 为正式 gate；tail 仅描述。禁止 validation 调 alpha、权重更新、Qwen degradation conditioning、mixed degradation、sealed internal 和 official FoundIR test。该记录是 advisor 已要求继续全部退化后的明确 USER 授权，不声称 advisor 审阅过本具体 config。",
-  "recorded_at": "2026-09-17T02:55:44Z"
+  "statement": "The advisor/user explicitly directed 'maybe after 10k then we consider scale to 100k or not, execute'. Approval is limited to the frozen v2 steps-only intervention: restart matched Plain and Compositional arms from the identical seed for 10,000 optimizer steps each, run the independent arms concurrently on two H200 GPUs without DDP or batch changes, evaluate singleton/double development only, and stop. It does not authorize 100,000 steps, held-out-triple access, model/data/hyperparameter changes, sealed/internal access, or official FoundIR test access.",
+  "recorded_at": "2026-10-07T20:23:20Z"
 }

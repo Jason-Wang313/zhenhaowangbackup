@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-17T12:45:58Z",
+  "evidence": {
+    "path": "checkpoints/foundir_rain_flux2_source_diverse_pilot_v1/result.json",
+    "sha256": "194c57cfaa5860699277979ffa5123c645e63fa4fbf2483d57ed530d7ca67fb9"
+  },
+  "hold_id": "flux2_rain_source_diverse_pilot_result-0448a9fb1ba14791",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/flux2_rain_source_diverse_pilot_result-0448a9fb1ba14791.md",
+  "report_sha256": "7f745c5dd7d36ed7e0baa4e41b6b0917f91372decc3a7adfabadaae06f5d7b5b",
+  "schema_version": 1
+}

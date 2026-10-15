@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否批准执行这个 hash-bound 的一次性 Low-light full-development validation？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/step_000400.safetensors",
+    "sha256": "592e49ca2606565c5aeec8aadeb5466cf0c34b30024d5c02f0f2292ad28c90d8"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_lowlight_flux2_scalar_residual_full_development_v1.json",
+    "sha256": "fea0227d13b6d572897d683a8833e2312047cf28be2d4cf12462ddf95092856e"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "all 1400 source-group-disjoint isolated-Low-light development records; no protected split",
+  "evidence": {
+    "path": "reports/foundir_lowlight_flux2_scalar_residual_full_development_authorization_v1.json",
+    "sha256": "acca130306b83fe063f4972ba17e5936dc9bb613480655f0701587a6d88c7fe4"
+  },
+  "gate": "flux2_lowlight_scalar_full_development_design_v1",
+  "generated_at": "2026-09-17T04:55:51Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Low-light step-400 plus frozen alpha=.925 scalar residual",
+  "outcome": "information",
+  "report_id": "flux2_lowlight_scalar_full_development_design_v1-b07dc4830b5426b4",
+  "root_cause_or_status": "User-authorized frozen-alpha Low-light full-development confirmation is fully specified. SOW mean PSNR/LPIPS are formal; tails are descriptive. No tuning, weight update, protected split, Haze, or Rain.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

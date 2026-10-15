@@ -1,0 +1,20 @@
+{
+  "checkpoint": "none_cpu_readiness",
+  "checkpoint_sha256": "none",
+  "config": "configs/foundir_stage_trajectory_compatibility_v1.json",
+  "config_sha256": "4413728d0d4ffd10d9657e2bb9c4c3be266a36d58594c2524c0e09aab9236d26",
+  "development_pixels_accessed": true,
+  "finite_gradient_rehearsal": true,
+  "identity_initialization_exact": true,
+  "manifest_sha256": "120b45c24fb92f7222adee1b0dcbf93c02234f883f1b283fe1fe03263b425397",
+  "official_foundir_test_accessed": false,
+  "parameters": 257235,
+  "records": {
+    "train": 89,
+    "validation": 19
+  },
+  "schema_version": 1,
+  "source_disjoint_endpoint": true,
+  "status": "stage_trajectory_compatibility_cpu_preflight_pass",
+  "triple_records_in_gradients_or_selection": 0
+}

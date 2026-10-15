@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_lowlight_haze_direct_restormer_design_frozen",
+  "checkpoint": "models/restormer-task-native/deraining.pth",
+  "checkpoint_sha256": "225ed9acf80b3527d7080e5182918f642a23a78ef8593ad700b7e924bd660681",
+  "automatic_gate_pass": true,
+  "model_weight_updates": false,
+  "development_pixels_accessed": false,
+  "sealed_internal_test_accessed": false,
+  "protected_foundir_test_accessed": false,
+  "official_foundir_test_accessed": false
+}

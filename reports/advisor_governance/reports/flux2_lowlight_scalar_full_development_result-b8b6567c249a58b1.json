@@ -1,0 +1,46 @@
+{
+  "advisor_decision_question": "根据完整 Low-light development SOW metrics 与固定视觉审查，是否接受该 Low-light correction 并继续 Haze？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/lowlight/step_000400.safetensors",
+    "sha256": "592e49ca2606565c5aeec8aadeb5466cf0c34b30024d5c02f0f2292ad28c90d8"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_lowlight_flux2_scalar_residual_full_development_v1.json",
+    "sha256": "fea0227d13b6d572897d683a8833e2312047cf28be2d4cf12462ddf95092856e"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "all 1400 source-group-disjoint isolated-Low-light development records; no protected split",
+  "evidence": {
+    "path": "checkpoints/foundir_lowlight_flux2_scalar_residual_full_development_v1/result.json",
+    "sha256": "2673ace6eac831b06684826cd732fbd14c57974eef81eb86e0260cf931bd93ca"
+  },
+  "gate": "flux2_lowlight_scalar_full_development_result",
+  "generated_at": "2026-09-17T05:29:43Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {
+    "low_light": {
+      "metrics": {
+        "lpips": 0.15405833744710046,
+        "psnr": 19.779134519531198
+      },
+      "pass": {
+        "lpips": true,
+        "psnr": true
+      },
+      "sow": {
+        "lpips": 0.28,
+        "psnr": 18.9
+      }
+    }
+  },
+  "model": "FLUX.2 Klein Base 4B isolated-Low-light step-400 plus frozen alpha=.925 scalar residual",
+  "outcome": "information",
+  "report_id": "flux2_lowlight_scalar_full_development_result-b8b6567c249a58b1",
+  "root_cause_or_status": "Frozen-alpha Low-light full-development confirmation completed. SOW mean PSNR/LPIPS are formal; tail statistics are descriptive per explicit user acceptance scope. Human review remains required.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

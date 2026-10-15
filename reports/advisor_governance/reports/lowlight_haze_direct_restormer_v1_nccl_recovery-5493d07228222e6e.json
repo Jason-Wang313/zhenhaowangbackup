@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请判断应修复并恢复同一 FLUX.2 mainline，还是停止/修改路线。",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_lowlight_haze_restormer_v1.json",
+    "sha256": "d60d67ba2a285fa0cb0691ac04f9630e2dc3129f1bf95d7563934ce777235cd3"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "runtime_before_gate_completion",
+  "evidence": {
+    "path": "reports/advisor_governance/runtime_evidence/lowlight_haze_direct_restormer_v1_nccl_recovery-b75de61585b6e4c0.json",
+    "sha256": "abb38571cd123843e4f639de001c9b5897f788243cc98a5ac5d9435b378a53c1"
+  },
+  "gate": "lowlight_haze_direct_restormer_v1_nccl_recovery",
+  "generated_at": "2026-09-26T03:15:10Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "project_direct_restormer_deraining_initialized",
+  "outcome": "failure",
+  "report_id": "lowlight_haze_direct_restormer_v1_nccl_recovery-5493d07228222e6e",
+  "root_cause_or_status": "workflow exit status 1; inspect logs/foundir_lowlight_haze_nccl_recovery.log",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-17T04:55:51Z",
+  "evidence": {
+    "path": "reports/foundir_lowlight_flux2_scalar_residual_full_development_authorization_v1.json",
+    "sha256": "acca130306b83fe063f4972ba17e5936dc9bb613480655f0701587a6d88c7fe4"
+  },
+  "hold_id": "flux2_lowlight_scalar_full_development_design_v1-b07dc4830b5426b4",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/flux2_lowlight_scalar_full_development_design_v1-b07dc4830b5426b4.md",
+  "report_sha256": "021e51840cdf04beae8a7f200baaf44b4646b4943e98d8002e4082371c6f5281",
+  "schema_version": 1
+}

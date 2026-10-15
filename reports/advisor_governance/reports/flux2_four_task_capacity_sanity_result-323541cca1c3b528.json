@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "四类独立 capacity evidence 与视觉审计完成后，是否进入 balanced five-single-degradation joint FLUX baseline design？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+    "sha256": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "fixed 16 train plus 16 source-group-disjoint descriptive validation per Noise/Haze/Rain/Low-light task",
+  "evidence": {
+    "path": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/result.json",
+    "sha256": "94e7740268d8aff9328b177042e68329c82c48bdfcde3ad20cf40ee7db580fbe"
+  },
+  "gate": "flux2_four_task_capacity_sanity_result",
+  "generated_at": "2026-09-16T13:30:02Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B four independent single-degradation LoRA arms",
+  "outcome": "failure",
+  "report_id": "flux2_four_task_capacity_sanity_result-323541cca1c3b528",
+  "root_cause_or_status": "All four bounded task arms completed; inspect task-specific train capacity, SOW proxies, descriptive validation, and fixed visuals together. No automatic joint launch.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

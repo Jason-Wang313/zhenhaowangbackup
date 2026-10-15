@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Approve exactly R0: implement and run A unconditioned, B fixed categorical descriptor, and C fixed categorical descriptor plus CDRL under the frozen synthetic protocol; stop before R1/R2/CSR?",
+  "checkpoint": {
+    "path": "not_applicable_preimplementation_design_gate",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_triple_onerestore_r0_v1.json",
+    "sha256": "fdb59f7e5f8698a1b22301a091a30baeededf23355ceb8898217d4c212304437"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "synthetic_train_single_double_development_single_double_heldout_triple",
+  "evidence": {
+    "path": "reports/advisor_governance/foundir_triple_onerestore_r0_v1_design_evidence.json",
+    "sha256": "df9eb017eeb8673ff2db1599596737b54d39e0cbb3386439f9de622094f02770"
+  },
+  "gate": "foundir_triple_onerestore_r0_v1_design",
+  "generated_at": "2026-09-26T12:07:42Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "OneRestore-style 5.98M fixed categorical descriptor diagnostic",
+  "outcome": "information",
+  "report_id": "foundir_triple_onerestore_r0_v1_design-e779a05567e7d037",
+  "root_cause_or_status": "User authorized only the bounded R0 diagnostic after literature audit; CPU protocol is frozen with zero triple gradient/selection leakage; neural implementation has not started.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

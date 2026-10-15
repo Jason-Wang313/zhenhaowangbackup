@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否批准两条 matched arms 各自从同一 seed 重启至 10000 steps，并在 lower-order development gate 后停止？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_compositional_ebt_lower_order_scale_v2.json",
+    "sha256": "7d307614e00fdaa9ec6cb0f26bcc3ea2124543708ed03327eb2f409a201c44bd"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "60 singleton/double train plus 30 source-disjoint singleton/double development; no triple",
+  "evidence": {
+    "path": "reports/advisor_governance/foundir_compositional_ebt_lower_order_scale_v2_design_evidence.json",
+    "sha256": "d2c1e05b1631c0161057e18c07ea4827d6a785514a8318e997687e53ded3542c"
+  },
+  "gate": "foundir_compositional_ebt_lower_order_scale_v2_design",
+  "generated_at": "2026-10-07T20:23:11Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "matched Plain versus atomic/pairwise Compositional EBT 10k steps-only scale test",
+  "outcome": "information",
+  "report_id": "foundir_compositional_ebt_lower_order_scale_v2_design-3cae9b0bf329cfa0",
+  "root_cause_or_status": "v1 learned small positive development corrections but 300 steps were insufficient; v2 changes only optimizer steps to 10000",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

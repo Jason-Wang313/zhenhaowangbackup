@@ -27,6 +27,21 @@ tracking branch is `main`. The canonical remote base recovered on 2026-10-15
 is `5003e1e51bf9373fbdb352cc0420d712d396f114`. Credentials must remain outside
 the repository; never record the previously exposed token or any new token.
 
+### 2026-10-15 historical workspace backfill
+
+The accumulated reproducible text backlog was audited against current
+`origin/main` and prepared as two explicit Git snapshots: executable
+source/config/tests first, then reports/context. This is archival preservation,
+not a reactivation of older research branches. The topmost STOP decision in
+this handoff and `AGENTS.md` remains authoritative.
+
+Large generated manifests, checkpoints, weights, datasets, images, caches,
+telemetry, and live logs are intentionally excluded and remain untouched
+locally. The stale lowercase `agents.md` and old top-level session handoffs are
+also excluded so they cannot compete with the authoritative context files.
+Full scope and validation record:
+`reports/github_historical_workspace_snapshot_2026-10-15.md`.
+
 ## STOP: 2026-10-15 ADVISOR-APPROVED NOVELTY SEQUENCE
 
 This section is the current terminal decision and supersedes every older active

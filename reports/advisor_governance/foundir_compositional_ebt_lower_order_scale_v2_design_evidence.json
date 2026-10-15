@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "matched_10k_steps_only_scale_design_cpu_ready_requires_decision",
+  "automatic_gate_pass": true,
+  "classification": "DIAGNOSTIC ONLY / 非主线",
+  "config": "configs/foundir_compositional_ebt_lower_order_scale_v2.json",
+  "config_sha256": "7d307614e00fdaa9ec6cb0f26bcc3ea2124543708ed03327eb2f409a201c44bd",
+  "trainer": "smoke/train_foundir_compositional_ebt_lower_order_scale_v2.py",
+  "trainer_sha256": "70fc49a45bda1e908b5a1e8a561952494067e494363a6def46cf66041182a3e7",
+  "cpu_preflight": {
+    "path": "checkpoints/foundir_compositional_ebt_lower_order_scale_v2/cpu_preflight/result.json",
+    "sha256": "5902e4d76c7c8215b99b306058973ab01b0b2827b664689491d492d29d148bbe",
+    "status": "cpu_preflight_pass",
+    "both_arms_identical_initial_loss": 0.0009887457126751542,
+    "finite_outputs_and_higher_order_gradients": true
+  },
+  "only_change_from_v1": "optimizer_steps_per_arm_300_to_10000",
+  "unchanged": [
+    "146432_parameters_per_arm",
+    "initialization_seed",
+    "60_singleton_double_train_parents",
+    "30_source_disjoint_singleton_double_development_parents",
+    "batch_size_4",
+    "AdamW_lr_0.0002_weight_decay_0.0001_betas_0.9_0.999",
+    "three_candidate_steps",
+    "fixed_candidate_step_size_10",
+    "deterministic_presentation_schedule",
+    "final_step_only_checkpoint_rule"
+  ],
+  "parallelism": {
+    "gpus": 2,
+    "gpu_family": "H200",
+    "plain": "one independent GPU",
+    "compositional": "one independent GPU",
+    "ddp": false,
+    "batch_semantics_changed": false
+  },
+  "estimated_wall_minutes": [8, 20],
+  "estimated_gpu_hours": [0.27, 0.67],
+  "stop_after_lower_order_gate": true,
+  "heldout_triple_images_accessed": false,
+  "foundir_60_image_triple_accessed": false,
+  "official_foundir_test_accessed": false,
+  "protected_foundir_test_accessed": false,
+  "sealed_internal_accessed": false
+}

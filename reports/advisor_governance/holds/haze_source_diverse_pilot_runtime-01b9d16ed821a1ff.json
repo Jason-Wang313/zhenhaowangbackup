@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-17T07:52:02Z",
+  "evidence": {
+    "path": "reports/advisor_governance/runtime_evidence/haze_source_diverse_pilot_runtime-cab0c4f19e919ba7.json",
+    "sha256": "cf3efa379bf5bba782cd092e291a6f423bfcccde6526f135d97248e5a520f0d3"
+  },
+  "hold_id": "haze_source_diverse_pilot_runtime-01b9d16ed821a1ff",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/haze_source_diverse_pilot_runtime-01b9d16ed821a1ff.md",
+  "report_sha256": "65a83f0b8c1c311fc951ce0a78af021f0f3ee26ea3af35a9407cb658ba259b54",
+  "schema_version": 1
+}

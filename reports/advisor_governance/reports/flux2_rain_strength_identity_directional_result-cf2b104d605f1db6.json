@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请检查五项 parent-vs-candidate directional checks 与固定视觉；是否允许后续更长 continuation，或停止该方向？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_rain_flux2_strength_identity_directional_gate_v1/step_002250.safetensors",
+    "sha256": "fe2885d690eabdd4bf86865b7866c40a0e86302397ef821d1ae37a7f56a2b127"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_rain_flux2_strength_identity_directional_gate_v1.json",
+    "sha256": "fa9e5fe097be5e18b46de2f904d94374771dd6fa3a686c5f3bf624459e2c8fc2"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "exact 1580 Rain parent training crops and new source-disjoint train-split development: 16 heavy, 16 moderate, 16 near-clean",
+  "evidence": {
+    "path": "checkpoints/foundir_rain_flux2_strength_identity_directional_gate_v1/result.json",
+    "sha256": "81199c746840e9363c3f7846068e3871b070a513337effe43e76e61413b6b6b9"
+  },
+  "gate": "flux2_rain_strength_identity_directional_result",
+  "generated_at": "2026-09-17T14:19:14Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B exact Rain step-2000 rank32 LoRA strength/identity directional gate",
+  "outcome": "failure",
+  "report_id": "flux2_rain_strength_identity_directional_result-cf2b104d605f1db6",
+  "root_cause_or_status": "The bounded 250-step Rain strength/identity directional gate completed. It tests whether explicit near-clean identity supervision fixes overprocessing without sacrificing heavy/moderate restoration. There is no automatic continuation.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

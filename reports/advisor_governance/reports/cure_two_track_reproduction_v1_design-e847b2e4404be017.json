@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "批准两条匹配的 CURE reproduction；仅 CCDD-11，triple 只用于冻结评价，不接触 FoundIR sealed test？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/cure_two_track_reproduction_v1.json",
+    "sha256": "01a428b7eced044cc26e5a6a939010d23eade49627d6e776d19938acef823119"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "CCDD11_train_development_only",
+  "evidence": {
+    "path": "reports/advisor_governance/cure_two_track_reproduction_v1_design_evidence.json",
+    "sha256": "8ccc493059b012fe9f54bf1a32c5d0fd1960dd8d0392b519e984a832d47b9335"
+  },
+  "gate": "cure_two_track_reproduction_v1_design",
+  "generated_at": "2026-09-26T13:54:39Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "official_CURE_OneRestore",
+  "outcome": "information",
+  "report_id": "cure_two_track_reproduction_v1_design-e847b2e4404be017",
+  "root_cause_or_status": "R0 output collapse; CURE original-code exposure-control reproduction proposed",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

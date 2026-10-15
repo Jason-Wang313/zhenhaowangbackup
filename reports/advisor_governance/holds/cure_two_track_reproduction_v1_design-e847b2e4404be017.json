@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-26T13:54:39Z",
+  "evidence": {
+    "path": "reports/advisor_governance/cure_two_track_reproduction_v1_design_evidence.json",
+    "sha256": "8ccc493059b012fe9f54bf1a32c5d0fd1960dd8d0392b519e984a832d47b9335"
+  },
+  "hold_id": "cure_two_track_reproduction_v1_design-e847b2e4404be017",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/cure_two_track_reproduction_v1_design-e847b2e4404be017.md",
+  "report_sha256": "c85208f2a18b9f5cb15c0810a0c47c70c8c9b4c24d045813a9ac2d22dd8a790c",
+  "schema_version": 1
+}

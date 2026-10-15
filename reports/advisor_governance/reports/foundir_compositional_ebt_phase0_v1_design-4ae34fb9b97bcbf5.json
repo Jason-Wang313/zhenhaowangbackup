@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "是否批准仅执行 pinned official EBT audit、minimal implementation、CPU tests 与 zero-update CUDA smoke，并继续禁止训练、triple endpoint 与 official FoundIR test access？",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_compositional_ebt_phase0_v1.json",
+    "sha256": "b79d3cfec14f55a26f8563e9488fa8f6ed57c1f55ac15467ea5642caabaf0cea"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "none_design_and_zero_update_smoke_only",
+  "evidence": {
+    "path": "reports/advisor_governance/foundir_compositional_ebt_phase0_v1_design_evidence.json",
+    "sha256": "298e3030203e0b11bf2f05eadb205a770f539fafb38183fb811f968a7f138182"
+  },
+  "gate": "foundir_compositional_ebt_phase0_v1_design",
+  "generated_at": "2026-10-07T14:47:32Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "VLM-activated atomic/pairwise compositional Energy-Based Transformer (Phase-0 only)",
+  "outcome": "information",
+  "report_id": "foundir_compositional_ebt_phase0_v1_design-4ae34fb9b97bcbf5",
+  "root_cause_or_status": "Lower-order FLUX.2/Restormer success coexists with a 16.736791 dB unseen-triple deficit; correctly routed stage evidence isolates inter-expert composition failure. Phase-0 tests whether the official EBT formulation can be instantiated safely before any training.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

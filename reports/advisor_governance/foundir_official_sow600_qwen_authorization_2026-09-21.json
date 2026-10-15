@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "status": "authorized",
+  "recorded_at": "2026-09-21T00:51:18Z",
+  "authority": "advisor_decision_relayed_by_user",
+  "benchmark": "House-Leo/FoundIR official README Table 1 testset",
+  "advisor_statements_relayed_by_user": [
+    "直接用官方的测。",
+    "可以重新训再测，PSNR和LPIPS还是比较好刷的，调参可以调的。",
+    "授权范围为五个SOW类别、600张。"
+  ],
+  "authorized_scope": {
+    "categories": {
+      "01Blur": 150,
+      "05Noise": 100,
+      "08Haze": 200,
+      "10Rain": 100,
+      "14Lowlight": 50
+    },
+    "total_pairs": 600,
+    "input": "official full-resolution LQ images",
+    "target": "corresponding official full-resolution GT images",
+    "pipeline": "Qwen inference -> frozen fail-closed routing and fallback -> frozen restoration expert -> exact original-size output",
+    "metrics": [
+      "pyiqa RGB PSNR",
+      "pyiqa RGB LPIPS",
+      "pyiqa RGB SSIM"
+    ],
+    "aggregation": "unweighted arithmetic mean over images within each official category",
+    "outputs_allowed": [
+      "original-size restored PNG files",
+      "machine-readable per-record route and metric sidecars",
+      "per-category and overall aggregate reports",
+      "SOW pass/fail and percentage-margin reports"
+    ]
+  },
+  "repeat_policy": {
+    "one_time_only": false,
+    "retraining_and_retesting_allowed": true,
+    "parameter_tuning_allowed": true,
+    "required_disclosure": "Every official evaluation round and every intervening model, router, or parameter change must be retained and reported.",
+    "official_images_or_gt_as_training_examples": false,
+    "official_gt_loss_or_gradient_updates": false
+  },
+  "pre_official_gate": {
+    "data": "non-official source-disjoint development images only",
+    "purpose": "verify Qwen execution, full-resolution tiling, stitching, exact dimensions, quantization, and pyiqa implementation",
+    "model_selection_allowed": false,
+    "engineering_repairs_allowed": true
+  },
+  "supersedes": [
+    "the no-authorization status dated 2026-09-18 in FOUNDir_OFFICIAL_TEST_ACCESS_POLICY.md",
+    "the one-time/no-retest restriction proposed in reports/foundir_final_sealed_evaluation_approval_request_zh_2026-09-20.md"
+  ]
+}

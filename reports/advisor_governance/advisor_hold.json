@@ -10,14 +10,14 @@
     "architecture_change",
     "diagnostic_branch"
   ],
-  "created_at": "2026-09-17T02:56:10Z",
+  "created_at": "2026-10-07T20:23:11Z",
   "evidence": {
-    "path": "reports/foundir_noise_flux2_scalar_residual_full_development_authorization_v1.json",
-    "sha256": "810b4b591a014dde9db995889e1b2471ac2e0c54550556afdb6b8495648df400"
+    "path": "reports/advisor_governance/foundir_compositional_ebt_lower_order_scale_v2_design_evidence.json",
+    "sha256": "d2c1e05b1631c0161057e18c07ea4827d6a785514a8318e997687e53ded3542c"
   },
-  "hold_id": "flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b",
+  "hold_id": "foundir_compositional_ebt_lower_order_scale_v2_design-3cae9b0bf329cfa0",
   "reason": "proposed route/architecture change requires advisor decision before experiments",
-  "report": "reports/advisor_governance/reports/flux2_noise_scalar_full_development_design_v1-57099e444d0cb19b.md",
-  "report_sha256": "6b6ce4425a99be72c368de5eedc410d0bde74915f9c1a207f454c0b676c8be47",
+  "report": "reports/advisor_governance/reports/foundir_compositional_ebt_lower_order_scale_v2_design-3cae9b0bf329cfa0.md",
+  "report_sha256": "f74e1e3d61b6c2b3d7f9b5854a80895624733fac83d65446e58dd0405f6c64b3",
   "schema_version": 1
 }

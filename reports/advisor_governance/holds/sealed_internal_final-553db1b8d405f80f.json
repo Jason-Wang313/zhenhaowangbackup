@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-11T02:48:03Z",
+  "evidence": {
+    "path": "checkpoints/foundir_five_type_flux2_dit_v3/final_internal_freeze.json",
+    "sha256": "e4a4332e7b3f7e83bf447be9d94435330c0500cdd0b3baef8d4257a2cf582d7d"
+  },
+  "hold_id": "sealed_internal_final-553db1b8d405f80f",
+  "reason": "terminal scientific/runtime failure requires advisor decision before further experiments",
+  "report": "reports/advisor_governance/reports/sealed_internal_final-553db1b8d405f80f.md",
+  "report_sha256": "6dbe4bd401c508f63084279b5199d00de57ea8a852146baffe2d9166074f279d",
+  "schema_version": 1
+}

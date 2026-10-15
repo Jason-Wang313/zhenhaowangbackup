@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "architecture_switch_phase0_design_ready",
+  "automatic_gate_pass": null,
+  "checkpoint": "not_applicable",
+  "checkpoint_sha256": "not_applicable",
+  "evaluation_split": "none_design_and_zero_update_smoke_only",
+  "official_foundir_test_accessed": false,
+  "protected_foundir_test_accessed": false,
+  "sealed_internal_accessed": false,
+  "optimizer_steps": 0,
+  "prior_evidence": {
+    "singleton_project_psnr_lpips": "28.714078/.141957",
+    "double_project_psnr_lpips": "24.321537/.192313",
+    "double_full_foundir_psnr_lpips": "24.184117/.194418",
+    "triple_project_psnr_lpips": "16.941122/.177332",
+    "triple_full_foundir_psnr_lpips": "33.677913/.031967",
+    "correct_route_stage_diagnosis": "Noise +.069859 dB; Low-light +6.807510 dB; Blur -.272308 dB"
+  },
+  "root_cause": "The frozen heterogeneous FLUX.2/Restormer system succeeds on lower-order compositions but independently trained sequential experts fail to jointly resolve unseen triple degradation interactions even when routing is correct.",
+  "decision_scope": "Authorize only the pinned official EBT audit, minimal energy-module implementation, CPU tests, and a zero-update CUDA forward/backward/energy-descent smoke. Formal training and triple evaluation require a later frozen protocol and are excluded."
+}

@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Approve exactly one bounded 1000-step 8-GPU double-only stage-trajectory compatibility gate, with automatic stop before triple endpoint unless both double validation categories improve?",
+  "checkpoint": {
+    "path": "none_cpu_readiness",
+    "sha256": "none"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_stage_trajectory_compatibility_v1.json",
+    "sha256": "4413728d0d4ffd10d9657e2bb9c4c3be266a36d58594c2524c0e09aab9236d26"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "source_disjoint_double_only_train_validation_then_one_frozen_full_resolution_triple_endpoint",
+  "evidence": {
+    "path": "reports/advisor_governance/foundir_stage_trajectory_compatibility_v1_design_evidence.json",
+    "sha256": "87e16b3e26c62f7141491fe640b943f15d711ea7738b938fecba29dadef0aa15"
+  },
+  "gate": "foundir_stage_trajectory_compatibility_v1_design",
+  "generated_at": "2026-09-27T09:05:14Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "StageTrajectoryCompatibilityAdapter_257235_parameters_frozen_expert_trajectory_fusion",
+  "outcome": "information",
+  "report_id": "foundir_stage_trajectory_compatibility_v1_design-e435439b0673fefc",
+  "root_cause_or_status": "Correctly routed triple failure is caused by non-transferable singleton-expert interactions: Noise-to-Low-light loses 3.092122 dB versus double and Low-light-to-Blur reverses from +0.125191 to -0.272308 dB. Tiny gate uses existing immutable stage trajectories, excludes all 221 endpoint source groups from training and validation, and exposes no triple metrics before checkpoint freeze.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

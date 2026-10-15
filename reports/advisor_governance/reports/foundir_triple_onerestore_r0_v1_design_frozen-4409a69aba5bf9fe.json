@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "Approve this final hash-frozen R0 implementation and one bounded A/B/C run; stop before R1/R2/CSR?",
+  "checkpoint": {
+    "path": "not_applicable_preimplementation_design_gate",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_triple_onerestore_r0_v1.json",
+    "sha256": "415ffaa126393e0125ca070830596c413645919836e290b7a16970b2f27c2c64"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "synthetic_train_single_double_development_single_double_heldout_triple",
+  "evidence": {
+    "path": "reports/advisor_governance/foundir_triple_onerestore_r0_v1_design_evidence.json",
+    "sha256": "d0ff38441ec5eba05664394779a68d23ea366efdc0d2e18336315da6e2cb7d6f"
+  },
+  "gate": "foundir_triple_onerestore_r0_v1_design_frozen",
+  "generated_at": "2026-09-26T12:15:45Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "OneRestore-style 5.849324M fixed categorical descriptor diagnostic",
+  "outcome": "information",
+  "report_id": "foundir_triple_onerestore_r0_v1_design_frozen-4409a69aba5bf9fe",
+  "root_cause_or_status": "User authorized only bounded R0. Frozen config now binds the 5,849,324-parameter clean-room model design and official torchvision VGG16 CDRL weight; CPU protocol has zero triple gradient/selection leakage.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-21T00:51:18Z",
+  "status": "contained_no_pixel_access",
+  "authorized_scope": "01Blur, 05Noise, 08Haze, 10Rain, 14Lowlight; 600 pairs",
+  "incident": "A directory-existence check used find on the top-level extracted_lq root and printed twelve 06JPEG filenames before head terminated the command.",
+  "data_exposed": "filenames only",
+  "pixels_opened": false,
+  "hashes_computed": false,
+  "inference_run": false,
+  "metrics_computed": false,
+  "used_for_model_or_parameter_selection": false,
+  "containment": "All subsequent official-data builders and runners must name the five authorized category directories explicitly and reject every other category."
+}

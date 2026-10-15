@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "matched_lower_order_pilot_design_cpu_ready_requires_training_decision",
+  "automatic_gate_pass": true,
+  "classification": "DIAGNOSTIC ONLY / 非主线",
+  "config": "configs/foundir_compositional_ebt_lower_order_pilot_v1.json",
+  "config_sha256": "a69e48b35fd1e58b03a864e8d1da15bfc5fdd1e3a8f5401c43b5ae67f6844d87",
+  "implementation": {
+    "energy_model": "lowlight_restoration/compositional_ebt.py",
+    "energy_model_sha256": "5a5540ab06f67a8f165ca126ed8852d4dc6f63fd2998d6f454163c40af0918b6",
+    "trainer": "smoke/train_foundir_compositional_ebt_lower_order_pilot_v1.py",
+    "trainer_sha256": "25ff4925d62adc36609645a80f240dc8cffc31c8e57df071666675cec83b80b7"
+  },
+  "cpu_preflight": {
+    "path": "checkpoints/foundir_compositional_ebt_lower_order_pilot_v1/cpu_preflight/result.json",
+    "sha256": "c3f6dd159b0d7762988b7f301d4079f497d476bc901fd8a062fabb239fb638b6",
+    "status": "cpu_preflight_pass",
+    "plain_loss": 0.0009887457126751542,
+    "compositional_loss": 0.0009887457126751542,
+    "both_outputs_and_higher_order_gradients_finite": true
+  },
+  "frozen_comparison": {
+    "arms": ["plain", "compositional"],
+    "parameters_per_arm": 146432,
+    "optimizer_steps_per_arm": 300,
+    "initialization_data_schedule_crops_optimizer_and_compute_matched": true,
+    "only_intervention": "dense descriptor mixing versus diagonal atomic/pairwise mixing",
+    "training_parents": 60,
+    "development_parents": 30,
+    "allowed_composition_sizes": [1, 2],
+    "fixed_final_checkpoint_only": true
+  },
+  "stop_and_promotion_policy": {
+    "stop_after_lower_order_gate": true,
+    "heldout_triple_evaluation_in_this_run": false,
+    "promotion_requires_both_arms_to_improve_psnr_and_smooth_l1_over_input": true,
+    "separate_decision_required_before_one_time_heldout_triple_evaluation": true
+  },
+  "estimated_runtime": {
+    "gpu_count": 1,
+    "supported": ["H100 80GB", "H200"],
+    "wall_time_minutes": [10, 30],
+    "gpu_hours": [0.17, 0.5],
+    "qualification": "prelaunch engineering estimate; runner prints measured arm estimate after every ten optimizer steps"
+  },
+  "heldout_triple_images_accessed": false,
+  "foundir_60_image_triple_accessed": false,
+  "sealed_internal_accessed": false,
+  "official_foundir_test_accessed": false,
+  "protected_foundir_test_accessed": false
+}

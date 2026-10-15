@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "根据完整 Noise development SOW metrics 与固定视觉审查，是否接受该 Noise correction 并继续下一类退化？",
+  "checkpoint": {
+    "path": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+    "sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_noise_flux2_scalar_residual_full_development_v1.json",
+    "sha256": "5e7a356ea89d21f7b60b4b736f851ef26a0216d8555d73846f527b958b5b7dd6"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "all 1859 source-group-disjoint isolated-Noise development records; no protected split",
+  "evidence": {
+    "path": "checkpoints/foundir_noise_flux2_scalar_residual_full_development_v1/result.json",
+    "sha256": "527494e719564c159b3e9932f4d36ad8facfbc5d308801081c7c36c6b9f87e25"
+  },
+  "gate": "flux2_noise_scalar_full_development_result",
+  "generated_at": "2026-09-17T03:33:46Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {},
+  "model": "FLUX.2 Klein Base 4B isolated-Noise step-400 plus frozen alpha=.30 scalar residual",
+  "outcome": "information",
+  "report_id": "flux2_noise_scalar_full_development_result-b7860a2d8ddbd7d3",
+  "root_cause_or_status": "Frozen-alpha Noise full-development confirmation completed. SOW mean PSNR/LPIPS are formal; tail statistics are descriptive per explicit user acceptance scope. Human review remains required.",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}

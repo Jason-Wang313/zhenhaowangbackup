@@ -1,0 +1,102 @@
+{
+  "advisor_decision_question": "请决定继续 FLUX.2 并批准具体 architecture/capacity correction，或明确批准改变 model family/route。",
+  "checkpoint": {
+    "path": "checkpoints/foundir_five_type_flux2_dit_v3/full_curriculum/step_042500.safetensors",
+    "sha256": "8e7b30710fa78d297c27a78c96063052561d4200d31806daac4b0c8a3a867766"
+  },
+  "claim_classification": "vlm_guided_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_five_type_flux2_dit_v3.json",
+    "sha256": "5145e97b2f170b617f34180783d8e7934a77b5ef82f2e6c5cae7756c89763810"
+  },
+  "diagnostic_only": false,
+  "evaluation_split": "sealed_internal",
+  "evidence": {
+    "path": "checkpoints/foundir_five_type_flux2_dit_v3/final_internal_freeze.json",
+    "sha256": "e4a4332e7b3f7e83bf447be9d94435330c0500cdd0b3baef8d4257a2cf582d7d"
+  },
+  "gate": "sealed_internal_final",
+  "generated_at": "2026-09-11T02:48:03Z",
+  "mainline_result": true,
+  "metrics_vs_sow": {
+    "blur": {
+      "metrics": {
+        "lpips": 0.2473246750111381,
+        "psnr": 20.27463646081863
+      },
+      "pass": {
+        "lpips": false,
+        "psnr": false
+      },
+      "sow": {
+        "lpips": 0.18,
+        "psnr": 25.9
+      }
+    },
+    "haze": {
+      "metrics": {
+        "lpips": 0.255814276695148,
+        "psnr": 17.919616798441513
+      },
+      "pass": {
+        "lpips": false,
+        "psnr": false
+      },
+      "sow": {
+        "lpips": 0.19,
+        "psnr": 22.1
+      }
+    },
+    "low_light": {
+      "metrics": {
+        "lpips": 0.2583656449367603,
+        "psnr": 18.196460949628417
+      },
+      "pass": {
+        "lpips": true,
+        "psnr": false
+      },
+      "sow": {
+        "lpips": 0.28,
+        "psnr": 18.9
+      }
+    },
+    "noise": {
+      "metrics": {
+        "lpips": 0.1497421042333978,
+        "psnr": 21.846603906328976
+      },
+      "pass": {
+        "lpips": false,
+        "psnr": false
+      },
+      "sow": {
+        "lpips": 0.1,
+        "psnr": 38.9
+      }
+    },
+    "rain": {
+      "metrics": {
+        "lpips": 0.25094846659339964,
+        "psnr": 21.209546484204495
+      },
+      "pass": {
+        "lpips": false,
+        "psnr": false
+      },
+      "sow": {
+        "lpips": 0.08,
+        "psnr": 34.2
+      }
+    }
+  },
+  "model": "VLM-guided FLUX.2 Klein 4B; frozen physical-v8 Qwen; DiT LoRA + pixel refiner",
+  "outcome": "failure",
+  "report_id": "sealed_internal_final-553db1b8d405f80f",
+  "root_cause_or_status": "FLUX.2 sealed internal 未达到 frozen SOW gate（仅 1/10 checks 通过）。现有证据说明 restoration capacity/optimization 存在明显缺口，尤其是 Noise 与 Rain PSNR；目前尚不能声称已确认唯一深层原因。",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": true
+  }
+}

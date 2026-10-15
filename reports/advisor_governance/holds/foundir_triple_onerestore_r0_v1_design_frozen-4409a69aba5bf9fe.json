@@ -1,0 +1,23 @@
+{
+  "allowed_while_active": [
+    "read_only_audit",
+    "advisor_report_preparation"
+  ],
+  "blocked_while_active": [
+    "training",
+    "evaluation",
+    "model_family_change",
+    "architecture_change",
+    "diagnostic_branch"
+  ],
+  "created_at": "2026-09-26T12:15:45Z",
+  "evidence": {
+    "path": "reports/advisor_governance/foundir_triple_onerestore_r0_v1_design_evidence.json",
+    "sha256": "d0ff38441ec5eba05664394779a68d23ea366efdc0d2e18336315da6e2cb7d6f"
+  },
+  "hold_id": "foundir_triple_onerestore_r0_v1_design_frozen-4409a69aba5bf9fe",
+  "reason": "proposed route/architecture change requires advisor decision before experiments",
+  "report": "reports/advisor_governance/reports/foundir_triple_onerestore_r0_v1_design_frozen-4409a69aba5bf9fe.md",
+  "report_sha256": "5cce76037f0386620b1ea1396f90e35d4dba8b8ba512fbf0ebcaed7e0820f5e0",
+  "schema_version": 1
+}

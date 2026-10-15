@@ -1,0 +1,31 @@
+{
+  "advisor_decision_question": "请审阅 lower-order learnability gate；只有 pass 后才考虑另行批准一次 frozen held-out-triple evaluation。",
+  "checkpoint": {
+    "path": "not_applicable",
+    "sha256": "not_applicable"
+  },
+  "claim_classification": "diagnostic_non_mainline_not_flux2_mainline_result",
+  "config": {
+    "path": "configs/foundir_compositional_ebt_lower_order_pilot_v1.json",
+    "sha256": "a69e48b35fd1e58b03a864e8d1da15bfc5fdd1e3a8f5401c43b5ae67f6844d87"
+  },
+  "diagnostic_only": true,
+  "evaluation_split": "source-disjoint singleton/double development only",
+  "evidence": {
+    "path": "checkpoints/foundir_compositional_ebt_lower_order_pilot_v1/pilot_v1/result.json",
+    "sha256": "0bfcc30805387e22b8ede15e91e1aa13b6c3d8335d924695d0d99d746ce4b78f"
+  },
+  "gate": "foundir_compositional_ebt_lower_order_pilot_v1",
+  "generated_at": "2026-10-07T18:41:40Z",
+  "mainline_result": false,
+  "metrics_vs_sow": {},
+  "model": "matched Plain versus atomic/pairwise Compositional Energy-Based Transformer",
+  "outcome": "failure",
+  "report_id": "foundir_compositional_ebt_lower_order_pilot_v1-c31644dbf2370957",
+  "root_cause_or_status": "lower_order_learnability_fail; held-out triples remained untouched",
+  "schema_version": 1,
+  "test_access": {
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  }
+}
