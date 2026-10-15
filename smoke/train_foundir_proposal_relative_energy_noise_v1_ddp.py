@@ -177,10 +177,15 @@ def crop_for_step(config: dict, step: int) -> int:
     return selected
 
 
-def learning_rate(config: dict, step: int, total: int) -> float:
+def learning_rate(config: dict, step: int) -> float:
     peak = float(config["schedule"]["learning_rate"])
     minimum = float(config["schedule"]["minimum_learning_rate"])
     warmup = int(config["schedule"]["warmup_steps"])
+    total = int(config["schedule"]["learning_rate_horizon_steps"])
+    if total != int(config["schedule"]["continuation_cap_steps"]):
+        raise RuntimeError("learning-rate horizon must equal the frozen continuation cap")
+    if step > total:
+        raise RuntimeError("step exceeds the frozen learning-rate horizon")
     if step <= warmup:
         return peak * step / warmup
     progress = (step - warmup) / max(1, total - warmup)
@@ -435,7 +440,7 @@ def main() -> None:
     started = time.monotonic()
     ddp.train()
     for step in range(start_step + 1, total + 1):
-        lr = learning_rate(config, step, total)
+        lr = learning_rate(config, step)
         for group in optimizer.param_groups:
             group["lr"] = lr
         selected = sample_global_batch(

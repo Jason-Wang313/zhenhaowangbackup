@@ -42,6 +42,7 @@
     "learning_rate": 0.0001,
     "minimum_learning_rate": 0.000001,
     "warmup_steps": 250,
+    "learning_rate_horizon_steps": 17060,
     "weight_decay": 0.0001,
     "gradient_clip_norm": 1.0,
     "seed": 2026101501

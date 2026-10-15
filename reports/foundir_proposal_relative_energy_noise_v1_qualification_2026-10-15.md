@@ -59,8 +59,16 @@ No internal-test, official FoundIR test, sealed-internal, parent-test, or frozen
 
 ## Next frozen action
 
-Resume the exact run to `1,706` total optimizer steps and evaluate the same
-fixed 256 records. Do not change the loss, learning objective, candidate-step
-set, validation records, or checkpoint-selection rule from this 500-step
-result. Decide whether to proceed toward 8,530 only from the one-pass and later
-predeclared development trend.
+Post-run audit found that the qualification launcher originally tied cosine-LR
+horizon to the requested stop step. The 500-step systems run therefore reached
+minimum LR at step 500; directly resuming it to 1,706 would cause an invalid LR
+jump. Preserve its systems/throughput evidence, but do not use its checkpoint
+as the scientific trajectory initialization.
+
+The corrected config freezes the LR horizon at the 17,060-step continuation
+cap, independent of the requested milestone. Start a fresh run to `1,706`
+total optimizer steps and evaluate the same fixed 256 records. This makes every
+future 500/1,706/8,530/17,060 checkpoint a true prefix of one schedule. Do not
+change the loss, learning objective, candidate-step set, validation records,
+or checkpoint-selection rule. Decide whether to proceed toward 8,530 only from
+the one-pass and later predeclared development trend.

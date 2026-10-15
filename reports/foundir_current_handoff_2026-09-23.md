@@ -168,8 +168,15 @@ Thus the short run changes PSNR by only `+.00079` to `+.00186 dB` and worsens
 LPIPS by `.000081` to `.000192`. It is not a method pass. The matched direct
 refiner reached `43.231114752590656/.05958490435659769`: `+.106955 dB` but a
 much worse `+.009223` LPIPS. Per the frozen scale policy, 500 steps are a
-systems qualification rather than a scientific rejection. Resume unchanged to
-the first scientific checkpoint at 1,706 total steps, not directly to 8,530.
+systems qualification rather than a scientific rejection.
+
+A post-run schedule audit found that v1 tied cosine-LR horizon to the requested
+stop step, so this 500-step run reached minimum LR at step 500. Resuming the
+checkpoint to 1,706 would make LR jump upward and would not be one continuous
+scientific trajectory. The fix freezes LR horizon at the 17,060-step cap for
+all milestones. Preserve retry1 as systems/throughput evidence, but start a
+fresh corrected run to the first scientific checkpoint at 1,706 total steps.
+Do not resume `step_000500.pt` and do not jump directly to 8,530.
 
 Full report:
 `reports/foundir_proposal_relative_energy_noise_v1_qualification_2026-10-15.md`.
