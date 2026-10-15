@@ -150,6 +150,32 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 \
 bash smoke/run_foundir_proposal_relative_energy_noise_v1_8gpu.sh
 ```
 
+#### 2026-10-15 retry1 qualification terminal result
+
+`noise_energy_v1_retry1` completed all 500 optimizer steps on one node with
+`8 x H100 80GB`, global batch 32 (`1/GPU x accumulation 4`). Wall time was
+`.1976426635413534 hours`; allocated cost was `1.5811413112655281 GPU-hours`.
+No OOM, NCCL error, non-finite objective, or protected-data access occurred.
+
+On the fixed 256-record source-disjoint validation set, the frozen proposal was
+`43.124160178005695/.050362067760033824`. Energy refinement produced:
+
+- 1 step: `43.124949902296066/.05044266952609178`;
+- 2 steps: `43.125487580895424/.050498137210524874`;
+- 3 steps: `43.126018427312374/.05055382074897352`.
+
+Thus the short run changes PSNR by only `+.00079` to `+.00186 dB` and worsens
+LPIPS by `.000081` to `.000192`. It is not a method pass. The matched direct
+refiner reached `43.231114752590656/.05958490435659769`: `+.106955 dB` but a
+much worse `+.009223` LPIPS. Per the frozen scale policy, 500 steps are a
+systems qualification rather than a scientific rejection. Resume unchanged to
+the first scientific checkpoint at 1,706 total steps, not directly to 8,530.
+
+Full report:
+`reports/foundir_proposal_relative_energy_noise_v1_qualification_2026-10-15.md`.
+Checkpoint SHA-256:
+`dffad058a9b9697fb76c580144b482e22dddbb5ae2bfb618e0b1134e1f107cdf`.
+
 ### Why the MoE fallback is not a clean first claim
 
 - FoundIR-v2 already uses MoE, but uses an SDXL backbone rather than DiT.
