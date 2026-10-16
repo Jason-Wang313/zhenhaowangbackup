@@ -1,5 +1,18 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-16 V2 pass-3 interim
+
+`noise_energy_v2_formal1` reached step `5,118` (three complete effective
+passes) and continued to step `6,635/8,530` as of `19:09 UTC` on `8 x H200`.
+On the fixed 256-record source-disjoint development set, frozen proposal is
+`43.123698368668556/.05036422960256459` PSNR/LPIPS; the adaptive energy arm
+is `43.12445606291294/.05040028668190644`, and the direct refiner is
+`42.9707455933094/.04185937133115658`. No arm simultaneously meets the
+predeclared `+.30 dB` and `-.005 LPIPS` improvement gate. This is interim
+evidence, not a reason to alter or stop the frozen five-pass run. Full metrics,
+artifact hashes, and protected-data flags:
+`reports/foundir_proposal_relative_energy_noise_v2_pass3_2026-10-16.md`.
+
 ## 2026-10-16 V2 pass-2 interim
 
 `noise_energy_v2_formal1` resumed from step `1,706` and passed step `3,412`
