@@ -1,5 +1,17 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-16 V2 pass-2 interim
+
+`noise_energy_v2_formal1` resumed from step `1,706` and passed step `3,412`
+on `8 x H200`; it was still advancing beyond step `4,100` at the last check.
+The fixed development validation shows adaptive energy
+`43.12455575913191/.05040373227166128` versus its frozen proposal
+`43.123698368668556/.05036422960256459`. The change is only
+`+.0008573904633522034 dB` and `+.000039502669096691534 LPIPS` (worse LPIPS), so
+the method has not met the gate. The direct refiner improves LPIPS but lowers
+PSNR. Continue the frozen five-pass run without retuning. Details and artifact
+hashes: `reports/foundir_proposal_relative_energy_noise_v2_pass2_2026-10-16.md`.
+
 ## STOP: 2026-10-15 MAX-COMPLETE PPT ENERGY V2 ONLY
 
 The user explicitly chose one final, complete implementation of the PPT
