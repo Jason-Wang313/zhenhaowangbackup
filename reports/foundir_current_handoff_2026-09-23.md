@@ -1,5 +1,20 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-16 V2 stopped; direct-residual oracle is next
+
+The user stopped `noise_energy_v2_formal1` externally after the last logged
+step `6,655`. Do not resume it. Since no later milestone checkpoint was
+written, the diagnostic input remains the hash-bound step-`5,118` checkpoint.
+The user authorized a GT-only feasibility audit on the same fixed 256-record
+source-disjoint development subset. It tests global residual amplitudes,
+GT-fitted local patch amplitudes, and a per-image Pareto selection over those
+candidates. It performs no training and accesses no protected set. The result
+can establish whether the learned direct residual contains enough information
+to clear `+.30 dB/-.005 LPIPS`; it cannot be reported as deployable quality.
+Implementation and single-node launcher:
+`smoke/evaluate_foundir_proposal_energy_v2_oracle_feasibility_ddp.py` and
+`smoke/run_foundir_proposal_energy_v2_oracle_feasibility_v1_8gpu.sh`.
+
 ## 2026-10-16 V2 pass-3 interim
 
 `noise_energy_v2_formal1` reached step `5,118` (three complete effective

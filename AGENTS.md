@@ -59,6 +59,19 @@ blocks the push, report that immediately and preserve the ready commit. Do not
 silently defer Git tracking across later milestones. Do not claim the work is
 backed up until the remote hash has been verified.
 
+## LIVE: V2 stopped; direct-residual oracle authorized — 2026-10-16
+
+The user stopped `noise_energy_v2_formal1` externally after its last logged
+step `6,655`; do not resume it. The last complete checkpoint with a matched
+validation is step `5,118`. The next and only authorized action on this branch
+is a GT-only feasibility diagnostic on the same fixed 256-record
+source-disjoint development set. It must compare the frozen proposal with
+global residual amplitudes, local patch amplitudes, and a target-selecting
+Pareto upper bound using the already learned V2 direct residual. This is an
+oracle diagnosis, never a deployable result or a method-success claim. It may
+not access official, sealed, internal, or frozen-660 data and performs no
+training. Do not design or train V3 until this feasibility result is known.
+
 ## STOP: max-complete PPT energy V2 only — 2026-10-15
 
 This section supersedes the V1/fallback sequence below wherever they differ.
