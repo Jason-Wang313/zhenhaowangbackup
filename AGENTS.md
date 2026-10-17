@@ -120,6 +120,15 @@ unchanged run through passes 4 and 5; do not stop early or alter the schedule.
 Full record:
 `reports/foundir_proposal_residual_basis_noise_v1_pass3_2026-10-17.md`.
 
+Pass 4 at step `6,824` did not cross the gate. Fidelity is
+`43.365845650434494/.02899720575715037`, or `+.24168547242879868 dB` and
+`-.021364862002883456` LPIPS. The PSNR gain increased only
+`+.011031992733478546 dB` from pass 3 and remains `.05831452757120131 dB`
+short, showing clear late-stage saturation after the 256-crop transition and
+with the learning rate already near `6e-6`. Complete the frozen fifth pass,
+but do not claim likely gate success or modify the live recipe. Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass4_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged

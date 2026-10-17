@@ -1,5 +1,16 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 residual-basis formal pass 4: PSNR plateau
+
+At step `6,824`, fidelity is `43.365845650434494/.02899720575715037`, equal
+to `+.24168547242879868 dB` PSNR and `-.021364862002883456` LPIPS versus the
+proposal. It still improves both metrics strongly, but PSNR gained only
+`+.011031992733478546 dB` over pass 3 and remains `.05831452757120131 dB`
+short of the joint gate. This is a clear plateau signal, so final gate success
+is now unlikely rather than assured. Finish the unchanged fifth pass to obtain
+the frozen endpoint; do not retune the active job. Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass4_2026-10-17.md`.
+
 ## 2026-10-17 residual-basis formal pass 3: near joint gate
 
 At step `5,118`, fidelity reached `43.354813657701015/.030396450317311974`,
