@@ -1,5 +1,21 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 complete candidate energy pass 1 fails
+
+`formal1` reached step `1,706` with numerically healthy training and no
+protected-data access, but inference-only selection is substantially worse
+than fidelity. Selected is `43.18257042020559/.03665485502278898`; fidelity is
+`43.39715355634689/.028955043449059303`. This is
+`-.21458313614130042 dB/+.007699811573729676 LPIPS` relative damage.
+
+The core failure is over-acceptance: `96.69189453125%` of regions abandon the
+safe fidelity candidate, and unchanged proposal alone is selected on
+`43.511962890625%`. The intended uncertainty gate is therefore not calibrated
+at pass 1. The joint gate is false. The frozen run continued beyond step
+1,900 because no pass-1 stop rule was declared; do not restart, retune, or
+interrupt it without a new user decision. Full record:
+`reports/foundir_complete_candidate_energy_noise_v1_pass1_2026-10-17.md`.
+
 ## 2026-10-17 active: complete candidate-conditioned energy CPU-ready
 
 The user explicitly paused the EBT Generalist gate and authorized the complete
