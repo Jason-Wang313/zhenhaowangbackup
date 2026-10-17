@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_complete_candidate_energy_noise_v1",
+  "classification": "SOURCE-DISJOINT DEVELOPMENT ONLY; NO OFFICIAL/SEALED/INTERNAL/660 ACCESS",
+  "base_config": "configs/foundir_proposal_residual_basis_noise_v1.json",
+  "frozen_residual_basis": {
+    "checkpoint": "checkpoints/foundir_proposal_residual_basis_noise_v1/formal1/step_008530.pt",
+    "checkpoint_sha256": "9ebc6b73e627e94f35ef52f511696215285c7efb9f800936d0b3d873b8aac95a",
+    "step": 8530
+  },
+  "candidate_names": [
+    "proposal",
+    "fidelity",
+    "perceptual",
+    "under_fidelity_0.5",
+    "over_fidelity_1.25",
+    "fidelity_0.75_perceptual_0.25",
+    "fidelity_0.5_perceptual_0.5"
+  ],
+  "safe_index": 1,
+  "negative_models": {
+    "under_restored": "real_denoising",
+    "wrong_expert": "deraining",
+    "detail_damaged": "gaussian_color_denoising_blind",
+    "checkpoint_dir": "models/restormer-task-native"
+  },
+  "model": {
+    "condition_dim": 5,
+    "widths": [48, 64, 80, 96, 128],
+    "blocks": 3,
+    "patch_size": 32,
+    "initial_log_variance": 0.0
+  },
+  "hardware": {
+    "world_size": 8,
+    "supported_families": ["H100", "H200"],
+    "profiles": {
+      "H100": {"micro_batch_per_gpu": 1, "gradient_accumulation": 4},
+      "H200": {"micro_batch_per_gpu": 2, "gradient_accumulation": 2}
+    },
+    "global_batch": 32,
+    "precision": "bf16_scorer_fp32_targets_and_losses"
+  },
+  "schedule": {
+    "qualification_steps": 25,
+    "steps_per_effective_pass": 1706,
+    "primary_steps": 8530,
+    "milestones": [25, 1706, 3412, 5118, 6824, 8530],
+    "progressive_crops": [[0, 128], [1706, 192], [5118, 256]],
+    "learning_rate": 0.0001,
+    "minimum_learning_rate": 0.000001,
+    "warmup_steps": 100,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 1.0,
+    "seed": 2026101704
+  },
+  "loss": {
+    "target_epsilon": 1e-8,
+    "target_log_clip": 4.0,
+    "risk_regression_weight": 1.0,
+    "ranking_weight": 0.5,
+    "negative_margin_weight": 0.25,
+    "tie_epsilon": 0.01,
+    "negative_relative_mse_margin": 0.05
+  },
+  "inference": {
+    "uncertainty_scale": 0.25,
+    "minimum_mse_advantage": 0.0,
+    "maximum_relative_perceptual_risk": 0.25
+  },
+  "gate": {
+    "minimum_psnr": 43.424160178005695,
+    "maximum_lpips": 0.045362067760033824,
+    "baseline_fidelity_psnr": 43.39715355634689,
+    "baseline_fidelity_lpips": 0.028955043449059303
+  },
+  "runtime": {
+    "output_root": "checkpoints/foundir_complete_candidate_energy_noise_v1",
+    "log_root": "logs"
+  },
+  "access": {
+    "train_split_only_for_optimizer": true,
+    "development_validation_only": true,
+    "internal_test_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "frozen_660_accessed": false
+  }
+}

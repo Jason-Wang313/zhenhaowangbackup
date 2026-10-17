@@ -1,5 +1,55 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 active: complete candidate-conditioned energy CPU-ready
+
+The user explicitly paused the EBT Generalist gate and authorized the complete
+candidate-conditioned Noise energy after the 32x32/64x64 GT oracle passed.
+The previous seven-alpha and continuous-alpha selectors remain terminal and
+must not resume.
+
+The new implementation freezes the existing proposal and hash-bound
+step-8,530 residual basis. A `1,193,907`-parameter shared scorer sees the
+observation, proposal, actual candidate, two candidate-relative residuals,
+and structured VLM severity. It predicts separate relative local MSE and
+spatial-LPIPS risks plus uncertainty on 32x32 regions. Wrong-expert,
+under-restored, detail-damaged and repeated-proposal outputs are training
+negatives only and are never deployable actions. Fidelity is the fail-closed
+baseline.
+
+Static/CPU qualification is complete: compilation, JSON/Bash checks, all six
+focused tests, spatial-LPIPS forward/backward, and every manifest/checkpoint
+hash check passed. No GPU job has been launched from the Codex container,
+which has no visible GPUs. The exact next action is one fresh 25-step
+engineering qualification on a homogeneous 8xH100/H200 node. Its checkpoint
+must never seed formal training. Estimated cost is `.2–.6` wall-clock hours
+and `1.6–4.8` allocated GPU-hours; replace this estimate with measured data.
+Full contract:
+`reports/foundir_complete_candidate_energy_noise_v1_readiness_2026-10-17.md`.
+
+## 2026-10-17 complete-candidate oracle passes both protocols
+
+The no-training audit completed successfully in `235` seconds (`.0653`
+wall-clock hours and `.5222` allocated H100 GPU-hours). Both 32x32 and 64x64
+protocols pass all predeclared feasibility conditions.
+
+- Fidelity: `43.39715355634689/.028955043449059303`.
+- 32x32 oracle: `43.52247426658869/.03426853639393812`, or
+  `+.1253207102417946 dB` beyond fidelity; five candidates exceed 1% wins and
+  flip-aligned winner stability is `.77020263671875`.
+- 64x64 oracle: `43.512206099927425/.03413928690861212`, or
+  `+.11505254358053207 dB` beyond fidelity; four candidates exceed 1% wins and
+  stability is `.818603515625`.
+
+Both oracle LPIPS values remain safely below `.045362067760033824`. Candidate
+wins are meaningfully distributed among over-fidelity, fidelity,
+under-fidelity and unchanged proposal, while wrong-expert/detail-damaged
+negatives are much worse than fidelity. This resolves the feasibility gate in
+favor of implementing the complete candidate-conditioned energy. These are
+GT-selected upper bounds, not deployable performance. Result SHA-256:
+`7f7bbfa757580efeaeeb457ed32cb764e948c369393c907f6361cff7a8d0111d`.
+Full record:
+`reports/foundir_complete_energy_candidate_oracle_noise_v1_terminal_2026-10-17.md`.
+
 ## 2026-10-17 active: complete-candidate oracle after seven-alpha stop
 
 The user stopped local-action `formal1`. Its final log record is step `3,910`;
