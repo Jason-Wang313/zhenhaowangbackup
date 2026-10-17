@@ -1,5 +1,26 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 direct-residual oracle terminal: joint gate fails
+
+The step-`5,118` GT-only feasibility audit completed normally on all 256 fixed
+source-disjoint development records. The best maximum-PSNR oracle output uses
+GT-fitted 8x8 patch amplitudes on 255/256 images and keeps the proposal on one:
+`43.16661264002323/.04641580081442953`, versus proposal
+`43.124160178005695/.050362067760033824`. This simultaneously improves both
+metrics, but by only `+.04245246201753616 dB` and `-.003946266945604293`
+LPIPS, far below the `+.30/-.005` gate. Among target-selecting Pareto points
+that do clear the LPIPS reduction, the best PSNR gain is only
+`+.03746754676103592 dB`. No Pareto point gains `+.30 dB` PSNR, so the frozen
+direct residual does not contain a combination capable of passing the joint
+gate. A learned gate over the same candidates cannot fix that ceiling.
+
+The successful rerun took `207` seconds (`.0575` wall hours) on 8 GPUs, about
+`.46` allocated GPU-hours. Including the earlier false-failure run, the audit
+used about `.94` allocated GPU-hours. Result SHA-256:
+`6400d78624dd2a9fe2cc2f67e622dc9371fd44243346df4f5977c6c17fc8a317`.
+Full report:
+`reports/foundir_proposal_energy_v2_direct_residual_oracle_terminal_2026-10-17.md`.
+
 ## 2026-10-17 oracle first launch: protocol-tolerance false failure
 
 The first direct-residual oracle launch completed all 256 records but exited

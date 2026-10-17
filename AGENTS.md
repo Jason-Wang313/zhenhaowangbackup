@@ -59,18 +59,21 @@ blocks the push, report that immediately and preserve the ready commit. Do not
 silently defer Git tracking across later milestones. Do not claim the work is
 backed up until the remote hash has been verified.
 
-## LIVE: V2 stopped; direct-residual oracle authorized — 2026-10-16
+## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
 step `6,655`; do not resume it. The last complete checkpoint with a matched
-validation is step `5,118`. The next and only authorized action on this branch
-is a GT-only feasibility diagnostic on the same fixed 256-record
-source-disjoint development set. It must compare the frozen proposal with
-global residual amplitudes, local patch amplitudes, and a target-selecting
-Pareto upper bound using the already learned V2 direct residual. This is an
-oracle diagnosis, never a deployable result or a method-success claim. It may
-not access official, sealed, internal, or frozen-660 data and performs no
-training. Do not design or train V3 until this feasibility result is known.
+validation is step `5,118`. Its GT-only direct-residual feasibility diagnostic
+finished on the same fixed 256-record source-disjoint development set. Even
+the target-selecting upper bound failed the `+.30 dB/-.005 LPIPS` joint gate.
+The maximum-PSNR oracle point was only `+.042452 dB/-.003946 LPIPS`; when the
+LPIPS requirement was enforced, the best PSNR gain was only `+.037468 dB`.
+Therefore the learned direct residual does not contain enough corrective
+information, and a learned gate over these candidates cannot meet the target.
+Do not resume V2, train a gate over this frozen residual, or claim the oracle
+as deployable evidence. No V3 or fallback is authorized until the user makes
+the next research decision. Full result:
+`reports/foundir_proposal_energy_v2_direct_residual_oracle_terminal_2026-10-17.md`.
 
 ## STOP: max-complete PPT energy V2 only — 2026-10-15
 
