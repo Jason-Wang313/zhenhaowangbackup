@@ -1,5 +1,25 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 residual-basis formal pass 1: joint improvement
+
+`formal1` is live on `8 x H100 80GB` and reached step `1,706` normally. The
+fidelity head is `43.16839203238487/.0400125195938017`, versus frozen proposal
+`43.124160178005695/.050362067760033824`: `+.044231854379177094 dB` PSNR and
+`-.010349548166232125` LPIPS. It therefore improves both metrics and already
+beats the old direct residual's GT-only oracle (`+.042452 dB/-.003946 LPIPS`)
+in both dimensions. The new restoration-native basis is producing useful
+correction information rather than merely learning a better gate.
+
+The perceptual head trades more PSNR for LPIPS
+(`43.0077431127429/.03262401805659465`), showing that the two heads have now
+separated as intended. The fidelity head already clears the LPIPS component
+of the `+.30 dB/-.005` gate by more than twofold, but its `.0442 dB` PSNR gain
+is only about 15% of the PSNR requirement. This is promising pass-1 evidence,
+not final success. Continue the unchanged five-pass run; do not retune or
+restart it. Pass 1 took about `.458` wall-clock hours and `3.66` allocated
+GPU-hours. Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass1_2026-10-17.md`.
+
 ## 2026-10-17 residual-basis GPU qualification passed; formal run next
 
 The fresh `qualification_v1` run completed successfully on `8 x H100 80GB`

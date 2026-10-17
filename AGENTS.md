@@ -90,6 +90,18 @@ Implementation contract:
 `configs/foundir_proposal_residual_basis_noise_v1.json` and
 `reports/foundir_proposal_residual_basis_noise_v1_readiness_2026-10-17.md`.
 
+`formal1` is now live on `8 x H100 80GB` and passed its first effective pass
+at step `1,706`. Do not restart, duplicate, retune, or interrupt it. The
+fidelity head reached `43.16839203238487/.0400125195938017`, simultaneously
+improving over the frozen proposal by `+.044231854379177094 dB` and
+`-.010349548166232125` LPIPS. This already exceeds the old direct residual's
+GT-only oracle in both metrics, so the restoration-native basis has resolved
+the earlier lack-of-information bottleneck at least for LPIPS/headroom. It has
+not passed the full `+.30 dB/-.005 LPIPS` gate because PSNR gain is still only
+`.0442 dB`. Continue the frozen five-pass run and judge the next validations
+without changing the recipe. Full pass-1 record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass1_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
