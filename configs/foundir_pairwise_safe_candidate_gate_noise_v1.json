@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_pairwise_safe_candidate_gate_noise_v1",
+  "classification": "SOURCE-DISJOINT DEVELOPMENT ONLY; NO PROTECTED DATA",
+  "base_config": "configs/foundir_complete_candidate_energy_noise_v1.json",
+  "candidate_names": ["proposal", "perceptual", "under_fidelity_0.5", "over_fidelity_1.25", "fidelity_0.75_perceptual_0.25", "fidelity_0.5_perceptual_0.5"],
+  "model": {"condition_dim": 5, "widths": [48, 64, 80, 96, 128], "blocks": 3, "patch_size": 32},
+  "hardware": {
+    "world_size": 8,
+    "supported_families": ["H100", "H200"],
+    "profiles": {"H100": {"micro_batch_per_gpu": 1, "gradient_accumulation": 4}, "H200": {"micro_batch_per_gpu": 2, "gradient_accumulation": 2}},
+    "global_batch": 32
+  },
+  "schedule": {
+    "qualification_steps": 25, "steps_per_effective_pass": 1706, "primary_steps": 8530,
+    "milestones": [25, 1706, 3412, 5118, 6824, 8530],
+    "progressive_crops": [[0, 128], [1706, 192], [5118, 256]],
+    "learning_rate": 0.0001, "minimum_learning_rate": 0.000001, "warmup_steps": 100,
+    "weight_decay": 0.0001, "gradient_clip_norm": 1.0, "seed": 2026101706
+  },
+  "loss": {
+    "gain_margin": 0.01, "gain_tie": 0.005, "harm_margin": 0.05, "harm_tie": 0.01,
+    "gain_classification_weight": 1.0, "harm_classification_weight": 1.0,
+    "delta_regression_weight": 1.0, "ranking_weight": 0.5
+  },
+  "calibration": {
+    "split_seed": 2026101705,
+    "gain_probabilities": [0.5, 0.6, 0.7, 0.8, 0.9, 0.95, 0.98, 0.99],
+    "maximum_harm_probabilities": [0.5, 0.4, 0.3, 0.2, 0.1, 0.05],
+    "maximum_perceptual_proxy_ratio": 1.15,
+    "minimum_acceptance": 0.001
+  },
+  "gate": {"minimum_psnr": 43.424160178005695, "maximum_lpips": 0.045362067760033824},
+  "runtime": {"output_root": "checkpoints/foundir_pairwise_safe_candidate_gate_noise_v1"},
+  "access": {"train_split_only_for_optimizer": true, "development_validation_only": true, "internal_test_accessed": false, "official_foundir_test_accessed": false, "sealed_internal_accessed": false, "frozen_660_accessed": false}
+}

@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 active: explicit pairwise safe gate CPU-ready
+
+Following the terminal confidence-ranking failure, the active replacement is
+a fresh `1,199,043`-parameter pairwise safe gate. It directly predicts gain,
+perceptual harm and relative log-MSE for each deployable alternative versus
+fidelity. It does not reuse the failed scorer or train on obvious external
+negatives. Structured VLM severity and candidate identity remain explicit
+inputs.
+
+Probability thresholds are selected only on source-disjoint calibration
+groups and frozen before evaluation. No valid calibration policy means exact
+fidelity fallback. Compilation, configuration/Bash checks, checkpoint hashes
+and `7/7` focused tests pass. The next action is a fresh 25-step qualification
+on 8xH100/H200, estimated at `.08–.25` wall-clock hours and `.64–2.0`
+GPU-hours. Full contract:
+`reports/foundir_pairwise_safe_candidate_gate_noise_v1_readiness_2026-10-17.md`.
+
 ## 2026-10-17 risk/coverage audit rejects current scorer
 
 The source-disjoint no-training audit completed in `203` seconds (`.0564`
