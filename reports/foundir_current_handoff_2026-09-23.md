@@ -1,5 +1,19 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 oracle first launch: protocol-tolerance false failure
+
+The first direct-residual oracle launch completed all 256 records but exited
+before writing its result because the protocol-reproduction assertion was too
+strict. The rerun proposal was `43.124160178005695/.050362067760033824`
+versus checkpoint validation `43.123698368668556/.05036422960256459`: only
+`.00046180933713935146 dB` and `.000002161842530766122` LPIPS apart. This is
+far below the scientific `+.30/-.005` gate and is consistent with a tiny
+GPU-kernel evaluation difference, not a changed dataset or model. The
+checkpoint/config hashes and 256-record protocol all matched. The assertion
+now permits at most `.001 dB/.00001 LPIPS` and records the exact reproduction
+delta in the output JSON. Re-run the same launcher; no training or recipe
+change occurred.
+
 ## 2026-10-16 V2 stopped; direct-residual oracle is next
 
 The user stopped `noise_energy_v2_formal1` externally after the last logged

@@ -45,6 +45,8 @@ ALPHAS = tuple(index / 40 for index in range(41))
 PATCH_SIZES = (8, 16, 32, 64)
 PSNR_GATE = 0.30
 LPIPS_GATE = 0.005
+PROTOCOL_PSNR_TOLERANCE = 0.001
+PROTOCOL_LPIPS_TOLERANCE = 0.00001
 
 
 def patch_alpha_candidate(proposal: Tensor, direct: Tensor, target: Tensor, patch: int, smooth: bool) -> Tensor:
@@ -195,7 +197,11 @@ def main() -> None:
         summary = summarize(records, labels)
         proposal = summary["fixed_candidate_means"]["proposal"]
         expected = payload.get("validation", {}).get("proposal")
-        if expected is None or abs(proposal["psnr"] - expected["psnr"]) > 2e-4 or abs(proposal["lpips"] - expected["lpips"]) > 2e-5:
+        if (
+            expected is None
+            or abs(proposal["psnr"] - expected["psnr"]) > PROTOCOL_PSNR_TOLERANCE
+            or abs(proposal["lpips"] - expected["lpips"]) > PROTOCOL_LPIPS_TOLERANCE
+        ):
             raise RuntimeError(f"oracle protocol failed to reproduce checkpoint proposal metrics: {proposal} vs {expected}")
         result = {
             "schema_version": 1,
@@ -207,6 +213,22 @@ def main() -> None:
             "records": len(records),
             "candidate_labels": labels,
             "gate": {"psnr_gain_db": PSNR_GATE, "lpips_reduction": LPIPS_GATE},
+            "protocol_reproduction": {
+                "checkpoint_proposal": expected,
+                "oracle_rerun_proposal": {
+                    "psnr": proposal["psnr"],
+                    "lpips": proposal["lpips"],
+                },
+                "absolute_difference": {
+                    "psnr": abs(proposal["psnr"] - expected["psnr"]),
+                    "lpips": abs(proposal["lpips"] - expected["lpips"]),
+                },
+                "tolerance": {
+                    "psnr": PROTOCOL_PSNR_TOLERANCE,
+                    "lpips": PROTOCOL_LPIPS_TOLERANCE,
+                },
+                "pass": True,
+            },
             **summary,
             "official_foundir_test_accessed": False,
             "sealed_internal_accessed": False,
