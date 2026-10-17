@@ -1,5 +1,21 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 spatial-amplitude GPU qualification passed
+
+`qualification_v1` completed successfully on `8 x H100 80GB` from
+`13:19:04Z` to `13:20:14Z`, with status `0`, finite training and matched
+checkpoint/validation output. At step 25 the amplitude map remains near its
+identity initialization (`mean 1.0000218451`, standard deviation
+`.0004146491`); spatial output is therefore effectively identical to frozen
+fidelity (`43.39715509861708/.028954966111086833` versus
+`43.39715355634689/.028955043449059303`). This proves engineering safety but
+is not enough optimization for a scientific conclusion.
+
+The next action is a fresh, from-zero `formal1` run for 8,530 steps. Never seed
+it from qualification. Estimated H100 cost is `2.5–3.5` wall-clock hours and
+`20–28` allocated GPU-hours; update the estimate at step 1,706. Full record:
+`reports/foundir_spatial_residual_amplitude_noise_v1_qualification_2026-10-17.md`.
+
 ## 2026-10-17 deployable spatial-amplitude predictor CPU-ready
 
 The user authorized the narrow follow-up supported by the oracle. Proposal and

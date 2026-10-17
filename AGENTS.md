@@ -187,6 +187,16 @@ Contract:
 `configs/foundir_spatial_residual_amplitude_noise_v1.json` and
 `reports/foundir_spatial_residual_amplitude_noise_v1_readiness_2026-10-17.md`.
 
+The fresh `qualification_v1` run completed successfully on `8 x H100 80GB`
+with status `0`, finite training, checkpoint/validation output and no protected
+data access. At step 25, predicted amplitude is still near its exact-identity
+initialization (`mean 1.0000218451`, standard deviation `.0004146491`), so
+spatial output reproduces fidelity within `+.0000015423 dB` and
+`-.0000000773` LPIPS. This is an engineering pass, not a scientific result.
+The next action is a fresh-ID, from-zero five-pass/8,530-step formal run; never
+seed it from qualification. Estimated H100 cost is `2.5–3.5` wall-clock hours
+and `20–28` allocated GPU-hours, to be updated from pass-1 throughput.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
