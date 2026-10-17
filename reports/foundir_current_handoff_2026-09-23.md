@@ -1,5 +1,17 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 spatial-amplitude formal pass 1: slight regression
+
+`formal1` is live and reached step `1,706`. Spatial output is
+`43.395900413393974/.029359601011492487`, versus frozen fidelity
+`43.39715355634689/.028955043449059303`: PSNR is lower by
+`.00125314295291574 dB` and LPIPS is worse by `.000404557562433184`. The map
+is learning nontrivial variation (`mean 1.0358318537`, standard deviation
+`.1107148176`) but has not yet generalized to a metric improvement. Continue
+the frozen run unchanged; pass 1 alone is not a justified stop or retune.
+Full record:
+`reports/foundir_spatial_residual_amplitude_noise_v1_pass1_2026-10-17.md`.
+
 ## 2026-10-17 spatial-amplitude GPU qualification passed
 
 `qualification_v1` completed successfully on `8 x H100 80GB` from

@@ -197,6 +197,15 @@ The next action is a fresh-ID, from-zero five-pass/8,530-step formal run; never
 seed it from qualification. Estimated H100 cost is `2.5–3.5` wall-clock hours
 and `20–28` allocated GPU-hours, to be updated from pass-1 throughput.
 
+`formal1` is live and completed pass 1 at step `1,706`. Spatial output is
+`43.395900413393974/.029359601011492487`, which is worse than frozen fidelity
+by `.00125314295291574 dB` PSNR and `.000404557562433184` LPIPS. The amplitude
+map has moved materially (`mean 1.0358318537`, standard deviation `.1107148176`),
+so this is an early generalization miss rather than a no-learning failure.
+Continue the unchanged five-pass schedule; do not retune or stop from pass 1.
+Full record:
+`reports/foundir_spatial_residual_amplitude_noise_v1_pass1_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
