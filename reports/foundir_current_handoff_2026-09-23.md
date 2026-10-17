@@ -1,5 +1,21 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 residual-basis causal test authorized and CPU-ready
+
+The user explicitly authorized fixing the oracle-proven lack of information in
+the direct residual. The active experiment freezes the existing proposal and
+uses a `26,116,852`-parameter restoration-native Restormer to learn two
+independent proposal corrections from degraded image, proposal, and their
+difference. The fidelity head directly optimizes MSE; the perceptual head uses
+a stronger LPIPS term while both retain MSE and 8x8 local no-harm supervision.
+Energy and gate training remain off until this basis proves sufficient.
+
+JSON, Python, Bash, a focused unit test, and real step-250 checkpoint
+initialization pass. The next action is a fresh 25-step engineering
+qualification on one homogeneous 8xH100 or 8xH200 node. It must not seed the
+formal run. Details:
+`reports/foundir_proposal_residual_basis_noise_v1_readiness_2026-10-17.md`.
+
 ## 2026-10-17 direct-residual oracle terminal: joint gate fails
 
 The step-`5,118` GT-only feasibility audit completed normally on all 256 fixed

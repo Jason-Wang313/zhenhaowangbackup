@@ -59,6 +59,26 @@ blocks the push, report that immediately and preserve the ready commit. Do not
 silently defer Git tracking across later milestones. Do not claim the work is
 backed up until the remote hash has been verified.
 
+## LIVE: residual-basis causal test authorized — 2026-10-17
+
+The user explicitly authorized addressing the oracle-proven lack of corrective
+information in the V2 direct residual. The next experiment is not another
+energy/gate run. Freeze the existing Noise proposal and train exactly one
+restoration-native residual-basis model on the same 54,585-record training
+split. It receives the degraded image, proposal, and their difference and
+produces two independent directions: fidelity trained explicitly with MSE and
+perception trained with stronger LPIPS while retaining MSE/local no-harm.
+
+This is a causal prerequisite for later energy work. First run the fresh
+25-step eight-GPU engineering qualification. If it passes, use a fresh formal
+run ID for the predeclared five-pass/8,530-step schedule and validate after
+every effective pass. Do not initialize the formal run from qualification.
+Do not restart V2, train an energy/gate, use protected data, or claim novelty
+success until the new residual basis itself demonstrates adequate headroom on
+the fixed 256-record development protocol. Implementation contract:
+`configs/foundir_proposal_residual_basis_noise_v1.json` and
+`reports/foundir_proposal_residual_basis_noise_v1_readiness_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
