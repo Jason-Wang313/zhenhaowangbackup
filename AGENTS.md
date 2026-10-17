@@ -59,7 +59,7 @@ blocks the push, report that immediately and preserve the ready commit. Do not
 silently defer Git tracking across later milestones. Do not claim the work is
 backed up until the remote hash has been verified.
 
-## LIVE: residual-basis causal test authorized — 2026-10-17
+## LIVE: residual-basis formal run ready — 2026-10-17
 
 The user explicitly authorized addressing the oracle-proven lack of corrective
 information in the V2 direct residual. The next experiment is not another
@@ -69,13 +69,24 @@ split. It receives the degraded image, proposal, and their difference and
 produces two independent directions: fidelity trained explicitly with MSE and
 perception trained with stronger LPIPS while retaining MSE/local no-harm.
 
-This is a causal prerequisite for later energy work. First run the fresh
-25-step eight-GPU engineering qualification. If it passes, use a fresh formal
-run ID for the predeclared five-pass/8,530-step schedule and validate after
-every effective pass. Do not initialize the formal run from qualification.
-Do not restart V2, train an energy/gate, use protected data, or claim novelty
-success until the new residual basis itself demonstrates adequate headroom on
-the fixed 256-record development protocol. Implementation contract:
+This is a causal prerequisite for later energy work. The fresh 25-step
+eight-GPU engineering qualification completed successfully on `8 x H100
+80GB` with status `0`, finite training, checkpoint and matched 256-record
+development validation. It consumed about `.0217` wall-clock hours and `.173`
+allocated GPU-hours. At step 25 the fidelity/perceptual heads improved PSNR by
+about `+.0116/+.0114 dB` but worsened LPIPS by about `.00020`; this is only an
+engineering check, not scientific evidence or a reason to alter the frozen
+recipe.
+
+The next action is a fresh formal run ID for the predeclared five-pass/8,530-
+step schedule, validating after every effective pass. Never initialize it from
+`qualification_v1`. Do not restart V2, train an energy/gate, use protected
+data, or claim novelty success until the new residual basis itself
+demonstrates adequate headroom on the fixed 256-record development protocol.
+Formal runtime is conservatively estimated at `3.5–6.0` wall-clock hours on
+one eight-GPU node (`28–48` allocated GPU-hours); update this estimate from
+the measured pass-1 runtime.
+Implementation contract:
 `configs/foundir_proposal_residual_basis_noise_v1.json` and
 `reports/foundir_proposal_residual_basis_noise_v1_readiness_2026-10-17.md`.
 

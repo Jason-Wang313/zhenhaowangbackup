@@ -1,5 +1,29 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 residual-basis GPU qualification passed; formal run next
+
+The fresh `qualification_v1` run completed successfully on `8 x H100 80GB`
+from `2026-10-17T09:57:50Z` to `09:59:08Z`, with launcher status `0`, finite
+training, and a saved step-25 checkpoint plus matched 256-record development
+validation. The run took about `.0217` wall-clock hours and `.173` allocated
+GPU-hours. All protected-data access flags are false.
+
+Proposal is `43.124160178005695/.050362067760033824` PSNR/LPIPS. At step 25,
+the fidelity head is `43.13571598380804/.05056087289904099` (`+.011555805802345276`
+dB and LPIPS worse by `.00019880513900716323`), while the perceptual head is
+`43.13552286475897/.050557308552015456` (`+.01136268675327301` dB and LPIPS
+worse by `.00019524079198163236`). The near-identical heads and small LPIPS
+regression are not a scientific failure after only 25 warm-up steps; this run
+only establishes that the engineering path works.
+
+The next action is a fresh, from-zero `formal1` run for the frozen five-pass,
+`8,530`-step schedule. Never resume or seed it from `qualification_v1`. A
+conservative runtime estimate is `3.5–6.0` wall-clock hours on one eight-GPU
+node (`28–48` allocated GPU-hours), with pass 1 used to update the estimate.
+No energy/gate training is authorized before the residual basis demonstrates
+adequate headroom. Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_qualification_2026-10-17.md`.
+
 ## 2026-10-17 residual-basis causal test authorized and CPU-ready
 
 The user explicitly authorized fixing the oracle-proven lack of information in
