@@ -1,5 +1,17 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 spatial-amplitude formal pass 2: tiny PSNR gain
+
+At step `3,412`, spatial output is `43.3995122089982/.033109975053776`.
+Compared with frozen fidelity, PSNR is now `+.00235865265130997 dB` better,
+while LPIPS is `.004154931604716697` worse. Compared with proposal, the result
+is `+.27535203099250793 dB/-.017252092706257827 LPIPS`: LPIPS still clears the
+target comfortably, while PSNR remains `.02464796900749206 dB` short. The
+predictor has begun to recover a small deployable PSNR benefit but remains far
+below the GT-local oracle. Continue the frozen five-pass run unchanged. Full
+record:
+`reports/foundir_spatial_residual_amplitude_noise_v1_pass2_2026-10-17.md`.
+
 ## 2026-10-17 spatial-amplitude formal pass 1: slight regression
 
 `formal1` is live and reached step `1,706`. Spatial output is

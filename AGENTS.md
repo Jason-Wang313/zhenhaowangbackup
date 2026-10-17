@@ -206,6 +206,15 @@ Continue the unchanged five-pass schedule; do not retune or stop from pass 1.
 Full record:
 `reports/foundir_spatial_residual_amplitude_noise_v1_pass1_2026-10-17.md`.
 
+Pass 2 at step `3,412` is mixed but slightly more encouraging. Spatial output
+is `43.3995122089982/.033109975053776`, which improves PSNR over frozen
+fidelity by `+.00235865265130997 dB` but worsens LPIPS by
+`.004154931604716697`. Relative to proposal it remains
+`+.27535203099250793 dB/-.017252092706257827 LPIPS`, so LPIPS still passes the
+joint target while PSNR is `.02464796900749206 dB` short. Continue unchanged;
+do not claim oracle transfer or retune from this interim result. Full record:
+`reports/foundir_spatial_residual_amplitude_noise_v1_pass2_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
