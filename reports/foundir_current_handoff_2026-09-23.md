@@ -1,5 +1,25 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 formal1 stopped; risk/coverage audit CPU-ready
+
+The user stopped complete-candidate energy `formal1` after pass 1 failed.
+Shared telemetry stopped after step `2,285` at UTC
+`2026-10-17T20:23:20Z`; direct tmux termination produced no normal END marker.
+Never resume it or use its post-pass-1 partial state.
+
+The next experiment is a short, no-training source-disjoint risk/coverage
+audit of the immutable step-1,706 checkpoint. The fixed 256 development rows
+are split by source group into calibration and evaluation halves. Acceptance
+threshold selection uses calibration only; evaluation is consumed once. This
+determines whether the scorer contains any genuine high-confidence ordering
+signal. If it fails, reject the current scorer and move to explicit pairwise
+safe-versus-candidate learning rather than adjusting another threshold.
+
+Static checks and `6/6` focused tests pass. Expected cost is `.08–.20`
+wall-clock hours and `.64–1.60` allocated GPU-hours on one 8xH100/H200 node.
+Full contract:
+`reports/foundir_complete_candidate_energy_risk_coverage_v1_readiness_2026-10-17.md`.
+
 ## 2026-10-17 complete candidate energy pass 1 fails
 
 `formal1` reached step `1,706` with numerically healthy training and no

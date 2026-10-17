@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_complete_candidate_energy_risk_coverage_v1",
+  "classification": "NO-TRAINING SOURCE-DISJOINT DEVELOPMENT DIAGNOSTIC",
+  "energy_config": "configs/foundir_complete_candidate_energy_noise_v1.json",
+  "checkpoint": "checkpoints/foundir_complete_candidate_energy_noise_v1/formal1/step_001706.pt",
+  "checkpoint_sha256": "0d285e7d12ad3ad89e734dfbde082821ff4a681be4f4535f88740c7044af071f",
+  "checkpoint_step": 1706,
+  "split_seed": 2026101705,
+  "threshold_quantiles": [0.0, 0.5, 0.75, 0.9, 0.95, 0.975, 0.99, 0.995, 1.0],
+  "minimum_calibration_acceptance": 0.001,
+  "output": "reports/foundir_complete_candidate_energy_risk_coverage_v1.json",
+  "access": {
+    "training": false,
+    "development_validation_only": true,
+    "internal_test_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "frozen_660_accessed": false
+  }
+}
