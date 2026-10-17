@@ -1,5 +1,24 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 residual-basis formal terminal: near miss
+
+`formal1` completed normally at step `8,530` with status `0`. Final fidelity
+is `43.39715355634689/.028955043449059303`, or
+`+.27299337834119797 dB/-.02140702431097452 LPIPS` versus proposal. It passes
+the LPIPS target widely but misses the `+.30 dB` PSNR requirement by only
+`.02700662165880202 dB`; the joint gate is therefore not passed. The final
+pass added `+.03130790591239929 dB`, so optimization was not completely
+stationary. The remaining PSNR gap corresponds to only about `.620%` further
+MSE reduction relative to the final fidelity output.
+
+The successful run used `2.5869` wall-clock hours and `20.6956` allocated
+H100 GPU-hours. Do not resume or extend it. Next, run only a GT-only
+amplitude/local feasibility audit of the frozen final fidelity residual to
+determine whether its direction already contains enough headroom for the
+gate. Do not start an energy/gate or continuation before reviewing that audit.
+Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_terminal_2026-10-17.md`.
+
 ## 2026-10-17 residual-basis formal pass 4: PSNR plateau
 
 At step `6,824`, fidelity is `43.365845650434494/.02899720575715037`, equal

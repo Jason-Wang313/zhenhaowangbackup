@@ -59,7 +59,7 @@ blocks the push, report that immediately and preserve the ready commit. Do not
 silently defer Git tracking across later milestones. Do not claim the work is
 backed up until the remote hash has been verified.
 
-## LIVE: residual-basis formal run ready — 2026-10-17
+## TERMINAL: residual-basis formal run complete — 2026-10-17
 
 The user explicitly authorized addressing the oracle-proven lack of corrective
 information in the V2 direct residual. The next experiment is not another
@@ -128,6 +128,17 @@ short, showing clear late-stage saturation after the 256-crop transition and
 with the learning rate already near `6e-6`. Complete the frozen fifth pass,
 but do not claim likely gate success or modify the live recipe. Full record:
 `reports/foundir_proposal_residual_basis_noise_v1_pass4_2026-10-17.md`.
+
+`formal1` completed successfully at step `8,530` with launcher status `0`.
+Final fidelity is `43.39715355634689/.028955043449059303`, equal to
+`+.27299337834119797 dB` and `-.02140702431097452` LPIPS versus proposal. It
+therefore misses the PSNR gate by only `.02700662165880202 dB` while passing
+the LPIPS gate widely. The joint gate is terminally **not passed** for this
+run. Do not resume or silently extend it. The next authorized reasoning step
+is a no-training GT-only amplitude/local feasibility audit of the frozen
+step-8,530 fidelity residual; no energy/gate or new training may start before
+that evidence is reviewed. Terminal report:
+`reports/foundir_proposal_residual_basis_noise_v1_terminal_2026-10-17.md`.
 
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
