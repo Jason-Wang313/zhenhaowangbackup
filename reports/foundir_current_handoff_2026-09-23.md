@@ -1,5 +1,20 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 local candidate-action formal pass 2: still no action
+
+At step `3,412`, local action remains exactly equal to frozen fidelity:
+`43.39715355634689/.028955043449059303`. The selector again accepts `0%` of
+alternative regions and chooses alpha `1` everywhere. Relative to proposal it
+is unchanged at `+.27299337834119797 dB/-.02140702431097452 LPIPS`, leaving
+`.02700662165880202 dB` to the PSNR gate.
+
+Two full passes now show no deployable change. Recent ranking cross-entropy is
+roughly `1.95–1.98`, essentially the seven-class uniform reference `1.94591`.
+This is a strong failure signal for the current formulation, not a promising
+trend. The healthy run has already entered pass 3 and continues unchanged
+unless the user explicitly stops it. Full record:
+`reports/foundir_local_action_energy_noise_v1_pass2_2026-10-17.md`.
+
 ## 2026-10-17 local candidate-action formal pass 1: safe no-change
 
 At step `1,706`, the local-action output is
