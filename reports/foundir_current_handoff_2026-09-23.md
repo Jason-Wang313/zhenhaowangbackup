@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 local candidate-action formal pass 1: safe no-change
+
+At step `1,706`, the local-action output is
+`43.39715355634689/.028955043449059303`, exactly equal to frozen fidelity.
+The fail-closed selector accepted `0%` of alternative regions and selected
+alpha `1` everywhere. Relative to proposal this remains
+`+.27299337834119797 dB/-.02140702431097452 LPIPS`; PSNR is still
+`.02700662165880202 dB` short of the joint gate, while LPIPS passes widely.
+
+This confirms no-harm behavior but is not evidence that the candidate-energy
+mechanism works. Recent candidate-ranking cross-entropy remains about `1.98`,
+which is not better than the uniform seven-class reference `ln(7)=1.94591`.
+Continue the unchanged frozen schedule so later passes can determine whether
+ranking begins to generalize; do not alter the live decision margin or loss.
+Full record:
+`reports/foundir_local_action_energy_noise_v1_pass1_2026-10-17.md`.
+
 ## 2026-10-17 local candidate-action energy qualification passed
 
 Fresh run `qualification_v1` completed on 8xH100 from `15:08:02Z` to
