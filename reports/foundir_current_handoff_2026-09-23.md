@@ -1,5 +1,26 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 final fidelity-residual oracle: local headroom confirmed
+
+The GT-only audit completed successfully in `72` seconds (`.020` wall-clock
+hours, `.160` allocated GPU-hours), exactly reproducing the checkpoint's
+proposal and fidelity metrics. No global amplitude improves enough to cross
+the joint gate; maximum global PSNR remains at alpha `1.000`. However, the
+GT-derived local 8x8 hard-amplitude upper bound is
+`43.65973751991987/.03243445468615391`, or
+`+.5355773419141769 dB/-.01792761307387991 LPIPS`, and all 8/16/32/64 local
+patch variants pass.
+
+This proves the fidelity direction contains enough local information, while a
+single image-wide scale cannot recover it. These GT-dependent patch results
+are not deployable model metrics. The next scientific problem is narrowly
+defined: learn a spatial amplitude map from inference-available inputs without
+GT, rather than simply extending training or changing a global residual
+scale. Result SHA-256:
+`ce6ab400c5003a630f3e05fed60a5e1fe9e6d6514af86cddc1fed6b9e65e2f66`.
+Full report:
+`reports/foundir_proposal_residual_basis_noise_v1_oracle_terminal_2026-10-17.md`.
+
 ## 2026-10-17 final fidelity-residual oracle launch-ready
 
 The user authorized the no-training GT-only feasibility audit of the frozen

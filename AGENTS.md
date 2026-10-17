@@ -140,7 +140,7 @@ step-8,530 fidelity residual; no energy/gate or new training may start before
 that evidence is reviewed. Terminal report:
 `reports/foundir_proposal_residual_basis_noise_v1_terminal_2026-10-17.md`.
 
-## LIVE: final fidelity-residual oracle ready — 2026-10-17
+## TERMINAL: final fidelity-residual oracle passes local headroom — 2026-10-17
 
 The user authorized the next feasibility audit. Run exactly one no-training,
 GT-only diagnostic on the fixed 256-record source-disjoint development subset
@@ -153,9 +153,20 @@ evidence and may not access protected data. Code and CPU/unit qualification
 are complete; the Codex container exposes no GPU, so the next action is the
 single-node eight-GPU launcher:
 `smoke/run_foundir_proposal_residual_basis_noise_v1_oracle_8gpu.sh`.
-Estimated cost is `.10–.17` wall-clock hours and `.8–1.36` allocated GPU-hours.
-Do not start continuation, energy, or gate training before reviewing the
-oracle result.
+The audit completed successfully in `72` seconds (`.020` wall-clock hours,
+`.160` allocated GPU-hours), with exact proposal and fidelity metric
+reproduction and no protected-data access. No global amplitude crosses the
+joint gate; alpha `1.000` remains the maximum-PSNR global setting. In contrast,
+the GT-derived local 8x8 amplitude upper bound reaches
+`43.65973751991987/.03243445468615391`, or `+.5355773419141769 dB` and
+`-.01792761307387991` LPIPS, and all tested local patch families cross the
+gate. Therefore the frozen residual direction contains ample local corrective
+information; the remaining problem is learning a deployable spatial amplitude
+map without GT. Do not report any patch-oracle metric as model performance.
+Result SHA-256:
+`ce6ab400c5003a630f3e05fed60a5e1fe9e6d6514af86cddc1fed6b9e65e2f66`.
+Full report:
+`reports/foundir_proposal_residual_basis_noise_v1_oracle_terminal_2026-10-17.md`.
 
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
