@@ -168,6 +168,25 @@ Result SHA-256:
 Full report:
 `reports/foundir_proposal_residual_basis_noise_v1_oracle_terminal_2026-10-17.md`.
 
+## LIVE: deployable 8x8 spatial amplitude predictor ready — 2026-10-17
+
+The user authorized the minimal causal follow-up to the local oracle. Freeze
+both the proposal and step-8,530 residual basis and train only the `223,393`-
+parameter spatial amplitude predictor. It receives observation, proposal,
+fidelity and fidelity-minus-proposal, outputs one `[0,2]` amplitude per 8x8
+patch, and starts at exact alpha `1` so step zero reproduces fidelity. Training
+GT provides analytic patch-amplitude supervision; inference and validation
+must never use GT to select amplitudes. The loss contains restored-image MSE,
+residual-energy-weighted teacher regression, weak LPIPS and local no-harm.
+
+JSON, Python, Bash, focused unit tests, strict frozen-checkpoint loading and
+diff checks pass. The next action is a fresh 25-step engineering qualification
+on one homogeneous 8xH100/H200 node. It must not seed a formal run. Do not
+train energy, use protected data, or report the GT oracle as model quality.
+Contract:
+`configs/foundir_spatial_residual_amplitude_noise_v1.json` and
+`reports/foundir_spatial_residual_amplitude_noise_v1_readiness_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged

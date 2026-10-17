@@ -1,5 +1,20 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 deployable spatial-amplitude predictor CPU-ready
+
+The user authorized the narrow follow-up supported by the oracle. Proposal and
+the step-8,530 residual basis remain frozen; only a `223,393`-parameter CNN is
+trained to predict one `[0,2]` amplitude per 8x8 patch from observation,
+proposal, fidelity and their residual. Its zero-initialized output starts at
+exact alpha `1`, reproducing fidelity. Training GT creates analytic local
+amplitude targets, but inference and development validation use no GT-time
+selection.
+
+JSON/Python/Bash checks, two focused unit tests, strict frozen-checkpoint
+loading and diff checks pass. The next action is a fresh 25-step eight-GPU
+qualification; its checkpoint must not seed the formal run. Readiness:
+`reports/foundir_spatial_residual_amplitude_noise_v1_readiness_2026-10-17.md`.
+
 ## 2026-10-17 final fidelity-residual oracle: local headroom confirmed
 
 The GT-only audit completed successfully in `72` seconds (`.020` wall-clock
