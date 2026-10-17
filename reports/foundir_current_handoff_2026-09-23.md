@@ -1,5 +1,16 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 residual-basis formal pass 3: near joint gate
+
+At step `5,118`, fidelity reached `43.354813657701015/.030396450317311974`,
+or `+.23065347969532013 dB` PSNR and `-.01996561744272185` LPIPS versus the
+proposal. It now needs only `.06934652030467986 dB` more PSNR to clear the
+joint `+.30 dB/-.005 LPIPS` gate. The PSNR gain increased by
+`+.1251758486032486 dB` from pass 2 rather than saturating. This makes gate
+success likely, but it is still interim development evidence. Continue passes
+4 and 5 unchanged. Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass3_2026-10-17.md`.
+
 ## 2026-10-17 residual-basis formal pass 2: hopeful trend confirmed
 
 At step `3,412`, fidelity reached `43.22963780909777/.03339703518213355`,

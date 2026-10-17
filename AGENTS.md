@@ -111,6 +111,15 @@ five-pass schedule. Do not extrapolate linearly or retune from this interim
 result. Full record:
 `reports/foundir_proposal_residual_basis_noise_v1_pass2_2026-10-17.md`.
 
+Pass 3 at step `5,118` strengthened the result materially. Fidelity reached
+`43.354813657701015/.030396450317311974`, equal to
+`+.23065347969532013 dB` and `-.01996561744272185` LPIPS versus proposal. It
+now needs only `.06934652030467986 dB` more PSNR to pass the joint target, and
+the pass-2 to pass-3 PSNR increment was `+.1251758486032486 dB`. Continue the
+unchanged run through passes 4 and 5; do not stop early or alter the schedule.
+Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass3_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
