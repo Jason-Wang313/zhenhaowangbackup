@@ -1,5 +1,25 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 local candidate-action energy qualification passed
+
+Fresh run `qualification_v1` completed on 8xH100 from `15:08:02Z` to
+`15:11:53Z` with launcher status `0`, finite training, checkpoint and matched
+256-record development validation. Cost was `.0642` wall-clock hours and
+`.5133` allocated GPU-hours. All protected-data access flags are false.
+
+At step 25, the fail-closed selector accepts zero alternative regions and
+chooses alpha `1` everywhere. Therefore local action output exactly reproduces
+fidelity: `43.39715355634689/.028955043449059303`, equal to
+`+.27299337834119797 dB/-.02140702431097452 LPIPS` versus proposal. This is
+the intended safe engineering baseline, not evidence that action selection
+improves quality. The qualification checkpoint must not seed formal training.
+Next action is a fresh-ID, from-zero 8,530-step formal run.
+
+Checkpoint SHA-256:
+`ec98308fefd05fffa92a2dd6d05e76dbc2c38363b7ad251ce220d23c2e8be5f4`.
+Validation JSON SHA-256:
+`36512bcf48f63aea88e161d611f3bf7888056aba6f737a99a0a37db69794d48f`.
+
 ## 2026-10-17 active decision: local candidate-action energy
 
 The user stopped `foundir_spatial_residual_amplitude_noise_v1/formal1` and
