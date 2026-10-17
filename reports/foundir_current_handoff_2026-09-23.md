@@ -1,5 +1,21 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 risk/coverage audit rejects current scorer
+
+The source-disjoint no-training audit completed in `203` seconds (`.0564`
+wall-clock hours, `.4511` H100 GPU-hours). On 174 calibration records from 17
+source groups, every nonzero acceptance threshold reduces PSNR below the
+fidelity-only `43.341621968938014`; even `.4849%` acceptance reaches only
+`43.339416964300746`. Calibration therefore selects zero coverage.
+
+On the disjoint 82-record/17-group evaluation partition, the output equals
+fidelity exactly at `43.514986642977085/.03269933527846616`.
+`scorer_has_deployable_signal=false`. This terminally rejects threshold repair
+and the present heteroscedastic scorer. The next route is explicit pairwise
+safe-versus-candidate advantage/perceptual-harm learning with source-disjoint
+confidence calibration. Full record:
+`reports/foundir_complete_candidate_energy_risk_coverage_v1_terminal_2026-10-17.md`.
+
 ## 2026-10-17 formal1 stopped; risk/coverage audit CPU-ready
 
 The user stopped complete-candidate energy `formal1` after pass 1 failed.
