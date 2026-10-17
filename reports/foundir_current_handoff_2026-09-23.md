@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 active: complete-candidate oracle after seven-alpha stop
+
+The user stopped local-action `formal1`. Its final log record is step `3,910`;
+the last complete checkpoint and validation are step `3,412`. Direct tmux
+termination produced no normal END marker. Never resume this run.
+
+The seven-alpha selector is now recognized as a narrow diagnostic, not the
+complete advisor-PPT method. The next authorized action is no-training only:
+audit the strong step-8,530 residual basis with genuinely different deployable
+candidates (proposal, fidelity, perceptual, under/over fidelity, and
+fidelity/perceptual blends), while treating wrong-expert and detail-damaged
+outputs only as contrastive negatives. On the fixed 256-record development
+set, measure 32/64-patch GT oracle metrics, candidate win shares, and aligned
+horizontal-flip winner stability. Do not start energy training until this
+candidate pool shows at least `+.08 dB` oracle headroom beyond fidelity,
+LPIPS remains within the frozen gate, and winner labels are not random.
+
 ## 2026-10-17 local candidate-action formal pass 2: still no action
 
 At step `3,412`, local action remains exactly equal to frozen fidelity:

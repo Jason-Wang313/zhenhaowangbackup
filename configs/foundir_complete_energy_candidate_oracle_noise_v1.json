@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "experiment_id": "foundir_complete_energy_candidate_oracle_noise_v1",
+  "classification": "GT-ONLY SOURCE-DISJOINT DEVELOPMENT DIAGNOSTIC; NOT DEPLOYABLE",
+  "base_config": "configs/foundir_proposal_residual_basis_noise_v1.json",
+  "residual_checkpoint": "checkpoints/foundir_proposal_residual_basis_noise_v1/formal1/step_008530.pt",
+  "residual_checkpoint_sha256": "9ebc6b73e627e94f35ef52f511696215285c7efb9f800936d0b3d873b8aac95a",
+  "residual_checkpoint_step": 8530,
+  "deployable_candidates": [
+    "proposal",
+    "fidelity",
+    "perceptual",
+    "under_fidelity_0.5",
+    "over_fidelity_1.25",
+    "fidelity_0.75_perceptual_0.25",
+    "fidelity_0.5_perceptual_0.5"
+  ],
+  "contrastive_negative_models": {
+    "under_restored": "real_denoising",
+    "wrong_expert": "deraining",
+    "detail_damaged": "gaussian_color_denoising_blind",
+    "checkpoint_dir": "models/restormer-task-native"
+  },
+  "patch_sizes": [32, 64],
+  "feasibility_gate": {
+    "minimum_psnr_gain_over_fidelity_db": 0.08,
+    "maximum_lpips": 0.045362067760033824,
+    "minimum_candidates_with_one_percent_wins": 2,
+    "minimum_flip_stability": {"32": 0.45, "64": 0.55}
+  },
+  "hardware": {
+    "world_size": 8,
+    "supported_families": ["H100", "H200"]
+  },
+  "output": "reports/foundir_complete_energy_candidate_oracle_noise_v1.json",
+  "access": {
+    "development_validation_only": true,
+    "gt_selection_upper_bound_only": true,
+    "internal_test_accessed": false,
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "frozen_660_accessed": false
+  }
+}
