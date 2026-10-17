@@ -1,5 +1,30 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 active decision: local candidate-action energy
+
+The user stopped `foundir_spatial_residual_amplitude_noise_v1/formal1` and
+rejected further continuous-alpha regression. The launcher ended with status
+`120` at `2026-10-17T14:53:05Z`; the last logged step was `5,525`, while the
+last complete checkpoint and development validation remain step `5,118`.
+Never resume or seed from this stopped run.
+
+The active replacement freezes the Noise proposal and step-8,530 residual
+basis, then learns to compare seven local restoration actions:
+`alpha={0,.5,.75,1,1.25,1.5,2}`. The model sees only inference-available
+observation/proposal/fidelity/residual tensors and predicts one relative cost
+per candidate per 8x8 region. Training GT labels which action is locally
+better. Validation and inference never use GT for action selection. Alpha
+`1` is the safe baseline; initialization and uncertain decisions fall back
+exactly to the frozen fidelity output.
+
+This addresses the measured failure directly: continuous regression learned
+an average alpha and recovered only `+.0031436309 dB` beyond fidelity, while
+the GT-local oracle proves that the frozen direction contains about
+`+.2626 dB` additional PSNR headroom beyond fidelity. The new test asks whether
+explicit action comparison can recover the missing `.0270066217 dB` needed
+for the original `+.30 dB` proposal-relative gate. It is not yet evidence of
+an image-quality gain.
+
 ## 2026-10-17 spatial-amplitude formal pass 3: improvement flattening
 
 At step `5,118`, spatial is `43.400297187268734/.0317960577121994`.
