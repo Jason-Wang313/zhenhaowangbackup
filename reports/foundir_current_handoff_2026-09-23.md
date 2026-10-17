@@ -1,5 +1,16 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 spatial-amplitude formal pass 3: improvement flattening
+
+At step `5,118`, spatial is `43.400297187268734/.0317960577121994`.
+Compared with frozen fidelity, PSNR is `+.0031436309218444425 dB` better and
+LPIPS is `.0028410142631400966` worse. Relative to proposal, it remains
+`+.27613700926303864 dB/-.018566010047834425 LPIPS`, so LPIPS passes but PSNR
+is `.023862990736961353 dB` short. Pass-2 to pass-3 PSNR gain grew by only
+`.0007849782705344696 dB`; the deployable transfer is flattening far below the
+GT oracle. Continue the last two frozen passes unchanged. Full record:
+`reports/foundir_spatial_residual_amplitude_noise_v1_pass3_2026-10-17.md`.
+
 ## 2026-10-17 spatial-amplitude formal pass 2: tiny PSNR gain
 
 At step `3,412`, spatial output is `43.3995122089982/.033109975053776`.

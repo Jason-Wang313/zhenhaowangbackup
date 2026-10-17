@@ -215,6 +215,16 @@ joint target while PSNR is `.02464796900749206 dB` short. Continue unchanged;
 do not claim oracle transfer or retune from this interim result. Full record:
 `reports/foundir_spatial_residual_amplitude_noise_v1_pass2_2026-10-17.md`.
 
+Pass 3 at step `5,118` remains a small positive PSNR result but is flattening.
+Spatial is `43.400297187268734/.0317960577121994`, or
+`+.0031436309218444425 dB` PSNR and `.0028410142631400966` worse LPIPS versus
+frozen fidelity. Relative to proposal it is
+`+.27613700926303864 dB/-.018566010047834425 LPIPS`, leaving
+`.023862990736961353 dB` to the PSNR gate. Continue passes 4 and 5 unchanged;
+current evidence does not support likely gate success or early retuning. Full
+record:
+`reports/foundir_spatial_residual_amplitude_noise_v1_pass3_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
