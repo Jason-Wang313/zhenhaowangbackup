@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 final fidelity-residual oracle launch-ready
+
+The user authorized the no-training GT-only feasibility audit of the frozen
+step-8,530 fidelity residual. The implementation evaluates global amplitudes
+`0–2` in `.025` increments and analytic local 8/16/32/64-patch amplitudes on
+the same fixed 256-record source-disjoint development subset. It verifies both
+proposal and alpha-1 fidelity protocol reproduction before writing output and
+reports fixed-candidate plus per-image Pareto upper bounds. This cannot be
+reported as deployable inference quality.
+
+Python compilation, Bash syntax, focused unit tests, and diff checks pass. The
+Codex container exposes no GPU, so launch the prepared script on one
+homogeneous eight-GPU H100/H200 node. Estimated cost is `.10–.17` wall-clock
+hours and `.8–1.36` allocated GPU-hours. Do not begin continuation, energy, or
+gate training before reviewing this result. Readiness details:
+`reports/foundir_proposal_residual_basis_noise_v1_oracle_readiness_2026-10-17.md`.
+
 ## 2026-10-17 residual-basis formal terminal: near miss
 
 `formal1` completed normally at step `8,530` with status `0`. Final fidelity

@@ -140,6 +140,23 @@ step-8,530 fidelity residual; no energy/gate or new training may start before
 that evidence is reviewed. Terminal report:
 `reports/foundir_proposal_residual_basis_noise_v1_terminal_2026-10-17.md`.
 
+## LIVE: final fidelity-residual oracle ready — 2026-10-17
+
+The user authorized the next feasibility audit. Run exactly one no-training,
+GT-only diagnostic on the fixed 256-record source-disjoint development subset
+using the hash-bound step-8,530 checkpoint. It evaluates global fidelity-
+residual amplitudes from `0` to `2` in `.025` increments plus analytic local
+8/16/32/64-patch amplitudes, and reports fixed-candidate and per-image Pareto
+upper bounds. It must reproduce both proposal and alpha-1 fidelity metrics
+within the frozen tolerance before writing a result. This is not deployable
+evidence and may not access protected data. Code and CPU/unit qualification
+are complete; the Codex container exposes no GPU, so the next action is the
+single-node eight-GPU launcher:
+`smoke/run_foundir_proposal_residual_basis_noise_v1_oracle_8gpu.sh`.
+Estimated cost is `.10–.17` wall-clock hours and `.8–1.36` allocated GPU-hours.
+Do not start continuation, energy, or gate training before reviewing the
+oracle result.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged
