@@ -102,6 +102,15 @@ not passed the full `+.30 dB/-.005 LPIPS` gate because PSNR gain is still only
 without changing the recipe. Full pass-1 record:
 `reports/foundir_proposal_residual_basis_noise_v1_pass1_2026-10-17.md`.
 
+Pass 2 at step `3,412` improved further. Fidelity is now
+`43.22963780909777/.03339703518213355`, or `+.10547763109207153 dB` and
+`-.016965032577900274` LPIPS versus proposal. This lands inside the
+predeclared `+.09–.12 dB` pass-2 hopeful trend range. It has not passed the
+`+.30 dB` PSNR gate, but the evidence now supports completing the unchanged
+five-pass schedule. Do not extrapolate linearly or retune from this interim
+result. Full record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass2_2026-10-17.md`.
+
 ## STOP: V2 and direct-residual oracle are terminal — 2026-10-17
 
 The user stopped `noise_energy_v2_formal1` externally after its last logged

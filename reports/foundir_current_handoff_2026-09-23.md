@@ -1,5 +1,17 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-17 residual-basis formal pass 2: hopeful trend confirmed
+
+At step `3,412`, fidelity reached `43.22963780909777/.03339703518213355`,
+improving over proposal by `+.10547763109207153 dB` and
+`-.016965032577900274` LPIPS. PSNR gain therefore increased from pass 1's
+`.04423 dB` into the predeclared `.09–.12 dB` hopeful pass-2 range, while the
+LPIPS improvement also grew. The joint direction is real, but the PSNR gain
+still needs another `.194522 dB` to clear the `+.30 dB` gate. Continue the
+unchanged run; do not infer a linear endpoint or retune from pass 2. Full
+record:
+`reports/foundir_proposal_residual_basis_noise_v1_pass2_2026-10-17.md`.
+
 ## 2026-10-17 residual-basis formal pass 1: joint improvement
 
 `formal1` is live on `8 x H100 80GB` and reached step `1,706` normally. The
