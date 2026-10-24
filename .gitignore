@@ -51,6 +51,8 @@
 !logs/project_journal.md
 !patches/
 !patches/*.patch
+!presentations/
+!presentations/*.pptx
 
 # Explicitly excluded even if a parent directory is later whitelisted.
 checkpoints/
