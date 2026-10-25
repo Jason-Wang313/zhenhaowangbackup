@@ -1,5 +1,42 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: full-data FP32 Rain FLUX — 2026-10-25
+
+The user explicitly authorized full-data matched-resolution training after
+the 300-step fitting diagnostic. This supersedes the earlier instruction to
+wait for a new full-data decision. Do not resume the 32-image fit run.
+Keep Rain development gate >=34.2 PSNR / <=.08 LPIPS before image-only MoE
+and then VLM-token routing. No pixel refiner, EBT or action-energy branch.
+
+Use `configs/foundir_rain_flux2_precision_full_v1.json` and its new trainer.
+Independent initialization remains the original hash-bound direct-endpoint
+step-2,000 LoRA with fresh Adam; neither diagnostic nor qualification weights
+may seed formal. Preserve FP32 LoRA/Adam, BF16 compute, shared FP32 endpoint,
+teacher training-only, rank32 and all eight original loss terms/coefficients.
+The pool is all 38,334 Rain records / 5,780 sources. Cycle uniformly through
+source groups then each group's records, random aligned 512 crops and D4
+augmentation. Reflect-pad only the 35 training records with short side <512;
+never resize or change development images. No decoded training-image cache.
+Two spawned workers per rank prefetch two batches each; verify image SHA-256
+before first decode and again if file stat changes. Metadata-path checks run
+once on rank0, not redundantly on all ranks.
+
+First run a fresh 25-step full-data engineering qualification on one homogeneous
+8xH100/H200 node. Then independently train 3,000 steps, batch32, evaluating
+at 0/250/500/1000/2000/3000. Formal requires a passing matching qualification
+receipt and cannot auto-start. Keep the same 100-record development gate and
+32 training probe; probe scores are not SOW results. No protected data.
+Qualification estimate .10-.50 wall hours / .8-4 allocated GPU-hours.
+Provisional formal estimate 1.5-3.0 wall hours / 12-24 allocated GPU-hours;
+replace with full-data qualification throughput (cached 32-image speed is not
+a guarantee). Report actual unique records/sources and sample presentations.
+
+Eight CPU tests and full artifact/data preflight passed. No GPU full-data
+qualification has been launched from this GPU-less Codex environment.
+Start on the user's node:
+`bash smoke/start_foundir_rain_flux2_precision_full_v1_tmux.sh`.
+Readiness: `reports/foundir_rain_precision_full_readiness_2026-10-25.md`.
+
 ## Latest terminal update: Rain precision fit complete — 2026-10-25
 
 The independent `fit_v1` completed 300/300 steps on 8xH100 at
