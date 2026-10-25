@@ -1,16 +1,26 @@
 # FoundIR current handoff — 2026-09-23
 
-## Latest formal milestone: step 2,000 — 2026-10-25
+## TERMINAL: full-data Rain formal completed — 2026-10-25
 
-Full-data Rain formal remains live on 8xH100. Step2000 development is
-33.624228321542766/.07938327748794109; train probe is
-33.79339515340005/.06371757120359689. LPIPS passes .08, but PSNR remains
-about .5758 dB short of 34.2. Only about .110 dB gained since step1000;
-do not promise final joint success. Checkpoint/optimizer/metrics exist.
-Keep the fixed final 1,000 steps; do not retune, restart or advance MoE.
-Next and final validation: step3,000. Recent step time about 2 seconds;
-estimated remaining wall time 35-40 minutes, not a guarantee.
-Progress: `reports/foundir_rain_precision_full_formal_progress_2026-10-25.md`.
+This supersedes every earlier LIVE/unstarted status for this run.
+`formal_v1` completed 3,000/3,000 steps on 8xH100 at
+2026-10-25T22:55:59Z, launcher status 0. Final/best development is
+34.00838778684664/.07343229320365935; training probe is
+33.984372473834554/.060009161999914795. LPIPS passes .08; PSNR remains
+.19161221315336263 dB below 34.2. Thus engineering completion succeeds but
+the joint Rain gate is NOT passed. Do not advance image-only MoE/VLM routing.
+Relative to matched step0, gains are +1.9236860265013505 dB and
+-.015389716671779755 LPIPS. The final 1,000 steps add .384159465303874 dB;
+do not promise an unrun extension will pass. No automatic continuation.
+Actual exposure: 96,000 presentations / 36,156 unique records / 5,780 sources.
+Total launcher cost: 1h36m33s, 1.6091666666666666 wall hours and
+12.873333333333333 allocated H100 GPU-hours. All final artifacts, F32 tensor
+headers, source/config identities and aggregate metric means were verified.
+Final LoRA: `checkpoints/foundir_rain_flux2_precision_full_v1/formal_v1/step_003000.safetensors`,
+SHA-256 `336d412299cd7cd9ff919d8983b2b4c435105161496510c0cec8748785c15904`.
+No next run is active. Any extension/recipe change requires a fresh user
+decision and frozen protocol; preserve all prior artifacts.
+Complete report: `reports/foundir_rain_precision_full_formal_progress_2026-10-25.md`.
 
 ## LIVE: full-data Rain formal started — 2026-10-25
 
