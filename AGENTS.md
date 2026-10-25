@@ -75,6 +75,24 @@ Estimated cost per arm is `1.3-2.5` wall hours and `10.4-20.0` allocated
 GPU-hours. Do not claim scientific success until both final holdouts have been
 paired by `smoke/compare_foundir_vlm_token_moe_matched_formal_v1.py`.
 
+The `image_only` formal arm completed normally at 2026-10-25T16:53:00Z:
+1,000/1,000 steps, `.643642` wall hours, `5.14914` allocated H100 GPU-hours,
+finite training, and no OOM/NCCL/runtime failure. It failed the scientific
+prerequisite that the ordinary MoE be usable. On the fixed 450-record holdout
+it reached only `15.634318159133873` PSNR and `.34884399509264363` LPIPS,
+versus the unprocessed input at `23.71294072670594/.3023991875624698`.
+Routing collapsed almost completely onto expert 1: mean weights are about
+`5.8873e-7/0.99999941`, with entropy `8.6261e-6`. Step 500 showed the same
+failure and step 1,000 did not repair it. This is a valid terminal result for
+the current image-only construction, not a compute/runtime failure.
+
+Do not call this a working restoration MoE or use it as paper evidence. Do not
+automatically launch `vlm_assisted`: an additive VLM score cannot by itself
+repair a restoration backbone/expert bank whose image-only output is already
+catastrophically below the input. The next design must begin from an actually
+working restoration model/MoE and explicitly prevent router collapse; obtain
+the user's decision before replacing the frozen matched protocol.
+
 ## MANDATORY: regular focused GitHub progress tracking
 
 GitHub is the durable project history. Do not allow material work to remain
