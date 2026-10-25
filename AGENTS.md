@@ -1,5 +1,20 @@
 # Project agent instructions
 
+## Latest Rain qualification update — 2026-10-25
+
+The 25-step FP32 precision qualification completed successfully at
+2026-10-25T20:39:00Z on 8xH100, status 0. Development improved from
+32.08470176034529/.0888220098754391 to
+32.61941190970921/.08720199926523492, still failing the 34.2/.08 gate.
+The user authorized the independent 300-step fit diagnostic, not full-data
+training. Initialize from the original step-2,000 LoRA with fresh optimizer,
+never the qualification checkpoint. Command on the GPU node:
+`bash smoke/start_foundir_rain_flux2_precision_fit_v1_tmux.sh fit fit_v1`.
+Estimate 15-20 wall minutes / 2.0-2.67 allocated GPU-hours. Fit has no launch
+log at this update; this Codex environment has no GPU. Keep Rain gate first,
+image-only MoE second, VLM router third; no pixel refiner.
+See `reports/foundir_rain_precision_qualification_2026-10-25.md` for evidence.
+
 ## Active workspace and runtime
 
 - The sole active project root is `/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang`.

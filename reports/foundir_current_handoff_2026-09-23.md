@@ -1,5 +1,20 @@
 # FoundIR current handoff — 2026-09-23
 
+## Latest update: precision qualification complete; fit authorized
+
+25-step qualification ended normally at 2026-10-25T20:39:00Z on eight H100s.
+Development: 32.61941190970921/.08720199926523492, improving both metrics
+but still below the 34.2/.08 joint gate. Training-fit:
+33.364734543215874/.06714100111275911. Parameter updates and finite gradients
+were verified. No protected data used. Full report:
+`reports/foundir_rain_precision_qualification_2026-10-25.md`.
+User authorized independent 300-step fitting diagnosis from original
+step-2,000 LoRA and fresh optimizer, not qualification weights or full-data
+training. On the user's GPU node run:
+`bash smoke/start_foundir_rain_flux2_precision_fit_v1_tmux.sh fit fit_v1`.
+Expected 15-20 minutes / 2.0-2.67 allocated GPU-hours. Fit launch is not yet
+confirmed; no log existed at this update, and Codex has no local GPU.
+
 ## 2026-10-25 current: Rain numerical repair, no pixel refiner
 
 The latest user instruction is Rain DiT SOW pass first, ordinary image-only
