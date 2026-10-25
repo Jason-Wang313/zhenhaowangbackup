@@ -47,6 +47,18 @@ qualification only, not a restoration-quality result, and its checkpoint may
 not seed formal training. The next active action is the fresh matched
 `vlm_assisted` 25-step qualification; do not launch formal training yet.
 
+The independent `vlm_assisted` qualification also completed successfully on
+8xH100 at 2026-10-25T15:53:30Z. It ran 25/25 steps in `.0460070` wall-clock
+hours and `.368056` allocated GPU-hours, with no OOM/NCCL/runtime failure and
+`12,669,009,408` bytes peak allocated memory per rank. Its VLM branch was
+active: maximum logit adjustment was `.75` and the output-head L1 update was
+`.78411865234375`. Expert weights remained normalized within `1.1921e-7`.
+Both engineering arms have therefore passed. Their last-five training losses
+(`1.1534720` image-only versus `1.1534493` VLM-assisted) are not restoration
+metrics and must not be presented as scientific improvement. Neither
+qualification checkpoint may seed formal work. The next step is to freeze a
+matched scientific train/evaluation protocol before any longer GPU run.
+
 ## MANDATORY: regular focused GitHub progress tracking
 
 GitHub is the durable project history. Do not allow material work to remain
