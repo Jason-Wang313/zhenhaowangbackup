@@ -1,5 +1,20 @@
 # FoundIR current handoff — 2026-09-23
 
+## MILESTONE: Rain continuation step 3,500 — 2026-10-25
+
+Development is 34.0641582441431/.07644298265688121 on the identical 100
+records. Relative to step 3,000: PSNR +.05577045729646102 dB, LPIPS worsens
+by .0030106894532218598. PSNR still misses 34.2 by .1358417558569016 dB;
+LPIPS remains below .08. This is a modest PSNR improvement, NOT a joint gate
+pass or evidence of uniformly improving perception. Per-image wins are
+57/100 PSNR, 35/100 LPIPS, 28/100 both. Train probe is
+33.95975334657288/.06225986051140353 (not generalization evidence).
+Saved LoRA is 100 F32 tensors; all 100 Adam states remain F32/finite with
+step=3500 and next_sample_position=112000. Source hashes remain unchanged,
+and aggregate means/record identities match the frozen evaluation files.
+Training resumed normally beyond 3,500. Continue only to the authorized
+4,000-step terminal milestone without retuning or early termination.
+
 ## LIVE: Rain step-3,000 continuation running — 2026-10-25
 
 The user launched `continue_v1` on 8xH100 at 2026-10-25T23:20:16Z and
