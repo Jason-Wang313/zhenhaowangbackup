@@ -80,6 +80,39 @@ class BoundedPixelRefiner(nn.Module):
         return torch.clamp(decoded + residual * self.maximum_residual_m11, -1.0, 1.0)
 
 
+class ObservationAnchoredRainHead(nn.Module):
+    """Predict a bounded Rain correction while preserving an exact LQ skip.
+
+    ``guidance`` is a frozen or trainable DiT restoration. Passing the input
+    itself as guidance defines a parameter-matched image-only control.
+    """
+
+    def __init__(
+        self, *, width: int = 32, blocks: int = 6, maximum_residual_m11: float = 0.5
+    ) -> None:
+        super().__init__()
+        if width <= 0 or blocks <= 0:
+            raise ValueError("width and blocks must be positive")
+        if not 0.0 < maximum_residual_m11 <= 1.0:
+            raise ValueError("maximum_residual_m11 must be in (0, 1]")
+        self.maximum_residual_m11 = float(maximum_residual_m11)
+        self.intro = nn.Conv2d(9, width, 3, padding=1, padding_mode="reflect")
+        dilations = (1, 2, 3)
+        self.blocks = nn.Sequential(
+            *(RefinementBlock(width, dilations[index % len(dilations)]) for index in range(blocks))
+        )
+        self.ending = nn.Conv2d(width, 3, 3, padding=1, padding_mode="reflect")
+        nn.init.zeros_(self.ending.weight)
+        nn.init.zeros_(self.ending.bias)
+
+    def forward(self, observation: Tensor, guidance: Tensor) -> Tensor:
+        if observation.shape != guidance.shape or observation.ndim != 4 or observation.shape[1] != 3:
+            raise ValueError("observation and guidance must be aligned BCHW RGB")
+        features = torch.cat((observation, guidance, guidance - observation), dim=1)
+        residual = torch.tanh(self.ending(self.blocks(self.intro(features))))
+        return torch.clamp(observation + residual * self.maximum_residual_m11, -1.0, 1.0)
+
+
 def spatial_highpass(value: Tensor) -> Tensor:
     """Return a fixed per-channel Laplacian response without trainable state."""
     if value.ndim != 4 or value.shape[1] != 3:

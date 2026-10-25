@@ -59,6 +59,12 @@ latent, which can damage unaltered pixels. The previously implemented
 observation; blindly appending it is not this test. This hypothesis remains
 unproven and must not be described as a solution yet.
 
+The reusable observation-anchored head is now implemented in
+`lowlight_restoration/pixel_refinement.py`, with three passing CPU unit tests
+in `tests/test_observation_anchored_rain_head.py`. At initialization it returns
+the input exactly. The head has not yet been integrated into a Rain trainer
+or evaluated on GPU; these CPU tests do not establish restoration quality.
+
 Before a GPU launch, freeze (a) an observation-anchored DiT correction and
 its image-only small-head control, so the DiT's contribution cannot be
 misattributed to a CNN; (b) train/validation source identities and the same

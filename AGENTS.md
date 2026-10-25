@@ -34,6 +34,8 @@ triptychs. Even a non-deployable GT-only best blend per image reaches only
 model results. Simple strength control cannot repair the gap. Diagnose the
 Rain action/representation and verify a distinct fix before another GPU run.
 See `reports/foundir_rain_dit_gate_priority_and_failure_audit_2026-10-25.md`.
+An observation-anchored correction head now exists and passes three CPU unit
+tests, but it has no Rain trainer or GPU result. Do not call the gate passed.
 
 ## ACTIVE: advisor-approved minimal VLM-token-to-MoE-router pilot — 2026-10-25
 
