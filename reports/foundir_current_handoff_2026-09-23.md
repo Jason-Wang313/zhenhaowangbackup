@@ -1,13 +1,13 @@
 # FoundIR current handoff — 2026-09-23
 
-## Latest formal milestone: step 250 — 2026-10-25
+## Latest formal milestone: step 500 — 2026-10-25
 
-Full-data Rain formal remains live on 8xH100. Step250 development is
-33.187940708396006/.08063413599971682; train probe is
-33.165263671232395/.06575017247814685. Both development metrics improved
-from step0, but the joint 34.2/.08 gate is not passed. Checkpoint/optimizer/
-metrics exist and training continued. Do not restart, retune, or advance MoE.
-Continue monitoring the fixed schedule through 3,000 steps.
+Full-data Rain formal remains live on 8xH100. Step500 development is
+33.26594373552425/.08544677892699838; train probe is
+33.12226387894517/.07149094255873933. PSNR improves slightly over step250,
+but LPIPS regresses. Neither threshold passes; joint improvement is not stable.
+Checkpoint/optimizer/metrics exist. Keep the fixed schedule through 3,000
+steps; do not retune, restart or advance MoE. Next validation: step1,000.
 Progress: `reports/foundir_rain_precision_full_formal_progress_2026-10-25.md`.
 
 ## LIVE: full-data Rain formal started — 2026-10-25
