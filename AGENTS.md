@@ -8,6 +8,35 @@
 - Keep the old HDD workspace untouched.
 - Never use official, sealed, parent-test, or internal-test pixels for training, hyperparameter selection, checkpoint selection, or early stopping.
 
+## ACTIVE: advisor-approved minimal VLM-token-to-MoE-router pilot — 2026-10-25
+
+This section supersedes every older Rain, EBT, energy, specialist, and
+explicit-VLM scheduling priority below. The user reported that the advisor
+approved the minimal architecture and explicitly authorized execution. Do not
+restart an older branch unless the user explicitly returns to it.
+
+Implement and test only the minimal advisor proposal:
+
+1. start from one ordinary restoration DiT-MoE with one expert bank;
+2. retain its image-feature router and restoration experts;
+3. pool frozen VLM output tokens/features, pass them through one small MLP,
+   and use the result to adjust the original router's expert logits;
+4. select/weight the same MoE experts and combine their outputs normally.
+
+There must not be a second MoE, a bank of LoRA experts, EBT/energy refinement,
+atomic-token composition, counterfactual routing, hard diagnosis priors, or
+block/timestep scheduling in this first experiment. The matched comparison is
+image-only routing versus the identical MoE with the VLM score branch enabled.
+Use the same backbone, expert bank, data, optimization, and inference budget.
+
+CPU/static implementation and a training-only data preflight are complete.
+The frozen 25-step eight-GPU qualification is defined by
+`configs/foundir_vlm_token_moe_minimal_qualification_v1.json`. Run the
+`image_only` and `vlm_assisted` arms separately; neither qualification may seed
+formal training or auto-launch later work. Keep official, sealed, parent-test,
+and internal-test pixels out of development. Report wall-clock hours and
+allocated GPU-hours for every GPU run.
+
 ## MANDATORY: regular focused GitHub progress tracking
 
 GitHub is the durable project history. Do not allow material work to remain

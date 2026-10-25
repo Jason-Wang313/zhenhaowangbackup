@@ -1,5 +1,37 @@
 # VLM-guided DiT-MoE PPT agent handoff
 
+## STOP — advisor-approved simplification on 2026-10-25
+
+This update supersedes the older constrained-LoRA/block-time proposal later in
+this file. Do not use that older proposal for the next diagram or deck.
+
+The approved minimal architecture contains one ordinary restoration DiT-MoE
+and one expert bank. The original image router produces expert scores. Frozen
+VLM output tokens/features pass through pooling and one small MLP to produce a
+score adjustment. Add the two score vectors, then select/weight the same MoE
+experts and combine their outputs normally:
+
+```text
+Image Feature -> Original Image Router -> Image Expert Scores ----+
+                                                                  +-> Final Expert Weights -> Existing MoE Experts
+VLM Tokens -> Pooling -> Small MLP -> VLM Score Adjustment -------+
+```
+
+The minimal equation is
+`g = Softmax(r_img + alpha * r_vlm)`.
+
+There are no LoRA experts, no second MoE, no hard diagnosis prior, no atomic
+token composition, no counterfactual loss, and no block/timestep scheduling in
+this first experiment. The sole matched comparison is the same MoE with an
+image-only router versus the VLM score branch enabled.
+
+When teaching the user, say simply:
+
+> 原来的 Router 先根据图像给每个 expert 打分；VLM token 经过一个小模型后，
+> 只负责修正这些分数。Experts 本身完全不变，也没有第二套 experts。
+
+Everything below is historical design context and prior-work warning only.
+
 ## Read this first
 
 This file is the single entry point for an external agent that will explain,
@@ -274,4 +306,3 @@ w_i^(l,t) = Softmax(log(π_i+ε) + c·tanh(δ_i^(l,t)))
 - The six LLM/MoE titles and arXiv identifiers above were checked against the
   arXiv records on 2026-10-22.
 - No proposed VLM-constrained DiT-MoE experiment is reported in this handoff.
-

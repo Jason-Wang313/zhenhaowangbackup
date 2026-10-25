@@ -1,0 +1,30 @@
+{
+  "conditions_manifest_sha256": "e07e16234d4d1eb674b5d667732600628448b215e9fab67e6e6732f99c1ea2f7",
+  "head_manifest_sha256": "af8798fab6ea340ba4589684ac02997b0cb01fe88a56a78bafcd92e75f36fc6c",
+  "internal_test_accessed": false,
+  "label_counts": {
+    "blur": 630,
+    "haze": 630,
+    "low_light": 630,
+    "noise": 630,
+    "rain": 630
+  },
+  "manifest_sha256": "af6a96dfaa21982535bc77b490f4c521960767afd5b5cf4ded4f9c4da2b749c7",
+  "official_foundir_test_accessed": false,
+  "parent_test_accessed": false,
+  "records": 3150,
+  "role_counts": {
+    "calibration": 450,
+    "fit": 2250,
+    "holdout": 450
+  },
+  "schema_version": 1,
+  "sealed_internal_accessed": false,
+  "source_groups_by_role": {
+    "calibration": 421,
+    "fit": 2066,
+    "holdout": 424
+  },
+  "status": "foundir_vlm_token_moe_training_only_pilot_manifest",
+  "vlm_feature_dim": 7168
+}
