@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_rain_precision_and_fit_diagnostic",
+  "parent_config": "configs/foundir_rain_flux2_direct_endpoint_distillation_formal_v1.json",
+  "parent_config_sha256": "d82a3b4a8c0d46a0766c07a51894098b351bd4bf805fd6ad619ced4a43a5fdf3",
+  "initial_lora": "checkpoints/foundir_rain_flux2_direct_endpoint_distillation_formal_v1/step_002000.safetensors",
+  "initial_lora_sha256": "eff05dccc0d9bcdf538305ac4095304348a876eb6cb3a4ded3ea27767901f36a",
+  "fit_sources": 32,
+  "crop_size": 512,
+  "selection": "sha256_rain_precision_fit_v1_source_then_record",
+  "training": {
+    "seed": 2026102507,
+    "global_batch_size": 32,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 4,
+    "learning_rate": 0.00001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "augmentation": false,
+    "losses": "unchanged_parent_coefficients_and_terms",
+    "trainable_dtype": "float32",
+    "optimizer_state_dtype": "float32",
+    "compute_dtype": "bfloat16",
+    "endpoint_subtraction_dtype": "float32"
+  },
+  "modes": {
+    "qualification": {"steps": 25, "milestones": [0, 25]},
+    "fit": {"steps": 300, "milestones": [0, 100, 300]}
+  },
+  "evaluation": {
+    "train_records": 32,
+    "development_records": 100,
+    "legacy_baseline_at_step_zero": true,
+    "psnr_minimum": 34.2,
+    "lpips_maximum": 0.08,
+    "fit_is_not_generalization_evidence": true
+  },
+  "distributed": {"world_size": 8, "allowed_gpu_families": ["H100", "H200"], "minimum_memory_gib": 75},
+  "automatic_formal_launch": false,
+  "official_foundir_test_accessed": false,
+  "sealed_internal_accessed": false,
+  "pixel_refiner": false
+}

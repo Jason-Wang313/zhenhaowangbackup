@@ -15,6 +15,7 @@ import os
 import random
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -28,7 +29,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "third_party/flux2/src"))
 
-from lowlight_restoration.flow import build_reference_flow_batch  # noqa: E402
+from lowlight_restoration.flow import (  # noqa: E402
+    build_degraded_anchored_flow_batch,
+    build_reference_flow_batch,
+)
 from lowlight_restoration.lora import inject_lora, load_lora_checkpoint, save_lora_checkpoint  # noqa: E402
 
 
@@ -128,6 +132,7 @@ def validate_config(config: Mapping[str, object]) -> None:
         "user_authorized_rain_source_diverse_pilot",
         "user_authorized_rain_strength_identity_directional_gate",
         "user_authorized_rain_strength_identity_ratio_gate",
+        "user_authorized_rain_degraded_anchor_fidelity_gate",
     }
     if config.get("status") not in allowed_status:
         raise RuntimeError("config is not authorized for a single-task tiny-overfit gate")
@@ -141,11 +146,18 @@ def validate_config(config: Mapping[str, object]) -> None:
         raise RuntimeError("single-task scope contract changed")
     if config["model"].get("name") != "flux.2-klein-base-4b":
         raise RuntimeError("model family changed")
-    if config["training"].get("objective") != "pure_noise_to_clean_rectified_flow_with_native_reference":
-        raise RuntimeError("tiny-overfit flow objective changed")
+    rain_anchor = config.get("status") == "user_authorized_rain_degraded_anchor_fidelity_gate"
+    expected_objective = (
+        "degraded_anchored_residual_flow_with_rain_change_fidelity"
+        if rain_anchor else "pure_noise_to_clean_rectified_flow_with_native_reference"
+    )
+    if config["training"].get("objective") != expected_objective:
+        raise RuntimeError("single-task flow objective changed")
     inference = config["inference"]
-    if inference.get("schedule") != "official_flux2_shifted_schedule" or int(inference["num_steps"]) != 50:
-        raise RuntimeError("official Base-model inference schedule is required")
+    expected_schedule = "linear_degraded_anchor_euler" if rain_anchor else "official_flux2_shifted_schedule"
+    expected_steps = 6 if rain_anchor else 50
+    if inference.get("schedule") != expected_schedule or int(inference["num_steps"]) != expected_steps:
+        raise RuntimeError("single-task inference schedule changed")
     if float(inference["guidance"]) != 1.0:
         raise RuntimeError("guidance 1.0 must match the conditional training branch")
     distributed = config["distributed"]
@@ -158,6 +170,36 @@ def validate_config(config: Mapping[str, object]) -> None:
         * int(training["gradient_accumulation_steps"])
     ):
         raise RuntimeError("global batch arithmetic changed")
+    if rain_anchor:
+        data = config["data"]
+        losses = training.get("losses", {})
+        qualification_only = config["gate"].get("qualification_only") is True
+        expected_max_steps = 25 if qualification_only else 5000
+        expected_checkpoint_steps = [25] if qualification_only else [500, 1000, 2000, 3500, 5000]
+        if (
+            scope.get("category") != "10Rain"
+            or int(data["tiny_overfit_records"]) != 1580
+            or int(data["tiny_overfit_unique_source_groups"]) != 1580
+            or int(data["frozen_validation_records"]) != 100
+            or int(data["frozen_validation_unique_source_groups"]) != 100
+            or data.get("loading") != "per_rank_lazy_crop_cache"
+            or config["lora"].get("initialization") != "fresh_zero_lora"
+            or not 0.0 < float(training.get("anchor_noise_scale", -1)) <= 0.25
+            or int(training["global_batch_size"]) != 32
+            or float(losses.get("flow_mse_weight", -1)) != 1.0
+            or float(losses.get("predicted_clean_latent_l1_weight", -1)) != 0.5
+            or float(losses.get("rgb_charbonnier_weight", -1)) != 1.0
+            or float(losses.get("rain_change_weight", -1)) != 2.0
+            or float(losses.get("unchanged_identity_weight", -1)) != 0.25
+            or float(losses.get("lpips_weight", -1)) != 0.02
+            or int(losses.get("rgb_every_steps", -1)) != 4
+            or int(training["max_steps"]) != expected_max_steps
+            or [int(value) for value in training["checkpoint_steps"]] != expected_checkpoint_steps
+            or config["gate"].get("protocol") != "frozen_100_source_disjoint_rain_development"
+            or float(config["gate"]["validation_psnr_minimum"]) != 34.2
+            or float(config["gate"]["validation_lpips_maximum"]) != 0.08
+        ):
+            raise RuntimeError("Rain degraded-anchor fidelity contract changed")
     checkpoints = [int(value) for value in training["checkpoint_steps"]]
     evaluations = [int(value) for value in inference["evaluate_steps"]]
     if checkpoints != sorted(set(checkpoints)) or checkpoints[-1] != int(training["max_steps"]):
@@ -337,7 +379,7 @@ def load_manifest(config: Mapping[str, object], *, verify_images: bool) -> tuple
     metadata_path = ROOT / str(data["frozen_manifest_metadata"])
     metadata = json.loads(metadata_path.read_text())
     config_sha = sha256(Path(config["_config_path"]))
-    expected_manifest_config_sha = config_sha
+    expected_manifest_config_sha = str(data.get("manifest_origin_config_sha256", config_sha))
     if config.get("status") == "user_authorized_haze_source_diverse_continuation":
         expected_manifest_config_sha = str(config["initialization"]["parent_config_sha256"])
     if (
@@ -367,11 +409,13 @@ def load_manifest(config: Mapping[str, object], *, verify_images: bool) -> tuple
     if {row["source_group"] for row in train} & {row["source_group"] for row in validation}:
         raise RuntimeError("train/validation source-group leakage")
     if verify_images:
-        for row in rows:
+        def verify_pair(row: Mapping[str, str]) -> None:
             for field, hash_field in (("lq_path", "lq_sha256"), ("gt_path", "gt_sha256")):
                 path = ROOT / row[field]
                 if not path.is_file() or sha256(path) != row[hash_field]:
                     raise RuntimeError(f"pair identity changed: {row['record_id']} {field}")
+        with ThreadPoolExecutor(max_workers=min(32, len(rows))) as pool:
+            list(pool.map(verify_pair, rows))
     return train, validation
 
 
@@ -392,7 +436,44 @@ def prepare_records(rows: Sequence[Mapping[str, str]], crop_size: int) -> list[d
     return [{**dict(row), "lq": lq, "gt": gt} for row in rows for lq, gt in [load_crop(row, crop_size)]]
 
 
+def materialize_record(record: dict[str, object], crop_size: int) -> dict[str, object]:
+    """Load one crop on first use instead of duplicating the full dataset per rank."""
+    if "lq" not in record or "gt" not in record:
+        lq, gt = load_crop(record, crop_size)
+        record["lq"], record["gt"] = lq, gt
+    return record
+
+
 def encode_prompt(config: Mapping[str, object], device: torch.device) -> tuple[torch.Tensor, ...]:
+    prompt_cache = config["model"].get("prompt_context_cache")
+    if prompt_cache is not None:
+        from safetensors.torch import load_file
+
+        path = ROOT / str(prompt_cache)
+        expected_sha = str(config["model"]["prompt_context_cache_sha256"])
+        if not path.is_file() or sha256(path) != expected_sha:
+            raise RuntimeError(f"prompt context cache identity changed: {path}")
+        tensors = load_file(str(path), device="cpu")
+        expected_keys = {"context", "context_ids", "cfg_context", "cfg_ids"}
+        if set(tensors) != expected_keys:
+            raise RuntimeError("prompt context cache tensor schema changed")
+        expected = {
+            "context": ((1, 512, 7680), torch.bfloat16),
+            "context_ids": ((1, 512, 4), torch.int64),
+            "cfg_context": ((2, 512, 7680), torch.bfloat16),
+            "cfg_ids": ((2, 512, 4), torch.int64),
+        }
+        for key, (shape, dtype) in expected.items():
+            if tuple(tensors[key].shape) != shape or tensors[key].dtype != dtype:
+                raise RuntimeError(
+                    f"prompt context cache {key} changed: "
+                    f"{tuple(tensors[key].shape)} {tensors[key].dtype}"
+                )
+        return tuple(
+            tensors[key].to(device, non_blocking=True).contiguous()
+            for key in ("context", "context_ids", "cfg_context", "cfg_ids")
+        )
+
     from flux2.sampling import batched_prc_txt
     from flux2.util import load_text_encoder
 
@@ -492,17 +573,28 @@ def aggregate_strength_metrics(
     return result
 
 
-def probe_loss(model, autoencoder, record: Mapping[str, object], context, context_ids, pack_image, *, seed: int, device: torch.device) -> float:
+def probe_loss(model, autoencoder, record: Mapping[str, object], context, context_ids, pack_image, *, seed: int, device: torch.device, config: Mapping[str, object] | None = None) -> float:
+    if "lq" not in record or "gt" not in record:
+        if config is None:
+            raise RuntimeError("lazy record materialization requires config")
+        materialize_record(record, int(config["data"]["crop_size"]))
     lq = record["lq"].unsqueeze(0).to(device)
     gt = record["gt"].unsqueeze(0).to(device)
     with torch.inference_mode():
         clean, degraded = autoencoder.encode(torch.cat([gt, lq])).chunk(2)
         generator = torch.Generator(device=device).manual_seed(seed)
         noise = torch.randn(clean.shape, generator=generator, device=device, dtype=torch.bfloat16)
-        flow = build_reference_flow_batch(
+        training = {} if config is None else config["training"]
+        anchored = training.get("objective") == "degraded_anchored_residual_flow_with_rain_change_fidelity"
+        builder = build_degraded_anchored_flow_batch if anchored else build_reference_flow_batch
+        kwargs = {
+            "reference_time_coordinate": int(training.get("reference_time_coordinate", 10)),
+        }
+        if anchored:
+            kwargs["anchor_noise_scale"] = float(training["anchor_noise_scale"])
+        flow = builder(
             clean.to(torch.bfloat16), degraded.to(torch.bfloat16), noise,
-            torch.tensor([0.5], device=device, dtype=torch.bfloat16), pack_image,
-            reference_time_coordinate=10,
+            torch.tensor([0.5], device=device, dtype=torch.bfloat16), pack_image, **kwargs,
         )
         with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
             prediction = model(
@@ -544,7 +636,7 @@ def save_triptych(path: Path, record_id: str, lq: torch.Tensor, output: torch.Te
     write_once(path, buffer.getvalue())
 
 
-def restore(model, autoencoder, lq, cfg_context, cfg_ids, pack_image, *, seed: int, steps: int, reference_time: int):
+def restore(model, autoencoder, lq, cfg_context, cfg_ids, pack_image, *, seed: int, steps: int, reference_time: int, anchor_noise_scale: float | None = None):
     from flux2.sampling import denoise_cfg, get_schedule, scatter_ids
 
     with torch.inference_mode():
@@ -554,14 +646,36 @@ def restore(model, autoencoder, lq, cfg_context, cfg_ids, pack_image, *, seed: i
         reference_ids[..., 0] = reference_time
         generator = torch.Generator(device=lq.device).manual_seed(seed)
         noise = torch.randn(reference.shape, generator=generator, device=lq.device, dtype=torch.bfloat16)
-        tokens, ids = pack_image(noise)
-        schedule = get_schedule(steps, tokens.shape[1])
-        with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
-            restored = denoise_cfg(
-                model, tokens, ids, cfg_context, cfg_ids, timesteps=schedule, guidance=1.0,
-                img_cond_seq=reference_tokens, img_cond_seq_ids=reference_ids,
-            )
-        latent = torch.cat(scatter_ids(restored, ids)).squeeze(2)
+        if anchor_noise_scale is None:
+            tokens, ids = pack_image(noise)
+            schedule = get_schedule(steps, tokens.shape[1])
+            with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+                restored = denoise_cfg(
+                    model, tokens, ids, cfg_context, cfg_ids, timesteps=schedule, guidance=1.0,
+                    img_cond_seq=reference_tokens, img_cond_seq_ids=reference_ids,
+                )
+            latent = torch.cat(scatter_ids(restored, ids)).squeeze(2)
+        else:
+            current = reference + float(anchor_noise_scale) * noise
+            schedule = torch.linspace(1.0, 0.0, steps + 1, device=lq.device)
+            # ``cfg_context`` contains [unconditional, conditional] for the
+            # legacy CFG sampler.  Degraded-anchor inference calls the model
+            # directly with a batch-one image, so use only the conditional
+            # prompt, matching the training branch's batch and semantics.
+            conditional_context = cfg_context[-1:].contiguous()
+            conditional_ids = cfg_ids[-1:].contiguous()
+            for index in range(steps):
+                tokens, ids = pack_image(current)
+                timestep = torch.full((lq.shape[0],), float(schedule[index]), device=lq.device, dtype=torch.bfloat16)
+                with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+                    velocity = model(
+                        x=torch.cat([tokens, reference_tokens], dim=1),
+                        x_ids=torch.cat([ids, reference_ids], dim=1),
+                        timesteps=timestep, ctx=conditional_context,
+                        ctx_ids=conditional_ids, guidance=None,
+                    )[:, : tokens.shape[1]]
+                current = current + float(schedule[index + 1] - schedule[index]) * unpack_tokens(velocity, current.shape)
+            latent = current
         return autoencoder.decode(latent).float().clamp(-1, 1)
 
 
@@ -570,7 +684,7 @@ def evaluate_snapshot(model, autoencoder, records, cfg_context, cfg_ids, pack_im
     local = []
     snapshot_dir = output_dir / f"{role}_triptychs" / f"step_{step:06d}"
     for index in range(rank, len(selected), world):
-        record = selected[index]
+        record = materialize_record(selected[index], int(config["data"]["crop_size"]))
         lq = record["lq"].unsqueeze(0).to(device)
         gt = record["gt"].unsqueeze(0).to(device)
         output = restore(
@@ -578,6 +692,11 @@ def evaluate_snapshot(model, autoencoder, records, cfg_context, cfg_ids, pack_im
             seed=int(config["inference"]["seed"]) + index,
             steps=int(config["inference"]["num_steps"]),
             reference_time=int(config["training"]["reference_time_coordinate"]),
+            anchor_noise_scale=(
+                float(config["training"]["anchor_noise_scale"])
+                if config["training"].get("objective") == "degraded_anchored_residual_flow_with_rain_change_fidelity"
+                else None
+            ),
         )
         # Gate exactly what is saved: quantize to PNG precision before metrics.
         output_q = torch.from_numpy(np.asarray(tensor_image(output[0]), dtype=np.uint8).copy()).permute(2, 0, 1).float().div_(127.5).sub_(1).unsqueeze(0).to(device)
@@ -624,13 +743,25 @@ def preflight(config_path: Path, task: str | None = None, *, verify_model_hashes
     validate_external_continuation(config)
     train, validation = load_manifest(config, verify_images=True)
     if verify_model_hashes:
-        for key, hash_key in (("flow_weights", "flow_weights_sha256"), ("autoencoder_weights", "autoencoder_weights_sha256")):
+        model_artifacts = [
+            (key, hash_key)
+            for key, hash_key in (("flow_weights", "flow_weights_sha256"), ("autoencoder_weights", "autoencoder_weights_sha256"))
+        ]
+        if config["model"].get("prompt_context_cache") is not None:
+            model_artifacts.append(("prompt_context_cache", "prompt_context_cache_sha256"))
+        def verify_model_artifact(item: tuple[str, str]) -> None:
+            key, hash_key = item
             path = ROOT / config["model"][key]
             if sha256(path) != config["model"][hash_key]:
                 raise RuntimeError(f"model artifact identity changed: {path}")
+        with ThreadPoolExecutor(max_workers=len(model_artifacts)) as pool:
+            list(pool.map(verify_model_artifact, model_artifacts))
     crop = int(config["data"]["crop_size"])
-    for row in [*train, *validation]:
+    def verify_crop(row: Mapping[str, str]) -> None:
         load_crop(row, crop)
+    selected = [*train, *validation]
+    with ThreadPoolExecutor(max_workers=min(32, len(selected))) as pool:
+        list(pool.map(verify_crop, selected))
     print(json.dumps({
         "status": "FOUNDIR_SINGLE_TASK_PREFLIGHT_PASS", "task": config["scope"]["category"],
         "config_sha256": sha256(config_path),
@@ -658,8 +789,20 @@ def main() -> int:
     validate_config(config)
     validate_external_continuation(config)
     train_rows, validation_rows = load_manifest(config, verify_images=False)
-    records = prepare_records(train_rows, int(config["data"]["crop_size"]))
-    validation_records = prepare_records(validation_rows, int(config["data"]["crop_size"]))
+    crop_size = int(config["data"]["crop_size"])
+    lazy_rain_anchor = (
+        config["training"].get("objective")
+        == "degraded_anchored_residual_flow_with_rain_change_fidelity"
+    )
+    if lazy_rain_anchor:
+        # Qualification touches only ~100 training crops per rank.  Eagerly
+        # decoding all 1,680 pairs independently on eight ranks caused more
+        # than an hour of silent I/O/memory contention before CUDA startup.
+        records = [dict(row) for row in train_rows]
+        validation_records = [dict(row) for row in validation_rows]
+    else:
+        records = prepare_records(train_rows, crop_size)
+        validation_records = prepare_records(validation_rows, crop_size)
     output_dir = ROOT / config["runtime"]["output_dir"]
     output_dir.mkdir(parents=True, exist_ok=True)
     if (output_dir / "result.json").exists():
@@ -753,7 +896,10 @@ def main() -> int:
         elif any(output_dir.iterdir()):
             raise RuntimeError("output directory is nonempty; use --resume only after inspecting a runtime interruption")
 
-        metric = LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True).to(device).eval()
+        metric = (
+            LearnedPerceptualImagePatchSimilarity(net_type="alex", normalize=True)
+            .to(device).eval().requires_grad_(False)
+        )
         baseline_path = output_dir / "baseline_probe.json"
         if baseline_path.exists():
             baseline = json.loads(baseline_path.read_text())
@@ -761,7 +907,7 @@ def main() -> int:
         else:
             initial_probe = probe_loss(
                 wrapped, autoencoder, records[rank % len(records)], context, context_ids, batched_prc_img,
-                seed=seed + rank * 1009, device=device,
+                seed=seed + rank * 1009, device=device, config=config,
             )
             if rank == 0:
                 write_once(baseline_path, (json.dumps({"config_sha256": sha256(config_path), "probe_loss": initial_probe}, indent=2, sort_keys=True) + "\n").encode())
@@ -793,6 +939,7 @@ def main() -> int:
                 output_dir=output_dir, rank=rank, world=world, device=device, role="validation",
             )
         training = config["training"]
+        rain_anchor = training.get("objective") == "degraded_anchored_residual_flow_with_rain_change_fidelity"
         accumulation = int(training["gradient_accumulation_steps"])
         strength_buckets = None
         strength_thresholds = (28.0, 34.0)
@@ -820,6 +967,7 @@ def main() -> int:
                 else:
                     bucket_name = "gt"
                     record = records[scheduled_index(position, len(records), seed)]
+                record = materialize_record(record, crop_size)
                 lq = record["lq"].unsqueeze(0).to(device)
                 gt = record["gt"].unsqueeze(0).to(device)
                 target = lq if rain_directional and bucket_name == "near_clean" else gt
@@ -828,16 +976,53 @@ def main() -> int:
                 generator = torch.Generator(device=device).manual_seed(seed + position * 1_000_003)
                 noise = torch.randn(clean.shape, generator=generator, device=device, dtype=torch.bfloat16)
                 timesteps = torch.rand((1,), generator=generator, device=device, dtype=torch.bfloat16).clamp_(1e-4, 1 - 1e-4)
-                flow = build_reference_flow_batch(
-                    clean.to(torch.bfloat16), degraded.to(torch.bfloat16), noise, timesteps,
-                    batched_prc_img, reference_time_coordinate=int(training["reference_time_coordinate"]),
-                )
+                if rain_anchor:
+                    flow = build_degraded_anchored_flow_batch(
+                        clean.to(torch.bfloat16), degraded.to(torch.bfloat16), noise, timesteps,
+                        batched_prc_img, anchor_noise_scale=float(training["anchor_noise_scale"]),
+                        reference_time_coordinate=int(training["reference_time_coordinate"]),
+                    )
+                else:
+                    flow = build_reference_flow_batch(
+                        clean.to(torch.bfloat16), degraded.to(torch.bfloat16), noise, timesteps,
+                        batched_prc_img, reference_time_coordinate=int(training["reference_time_coordinate"]),
+                    )
                 with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
                     prediction = wrapped(
                         x=flow.model_tokens, x_ids=flow.model_ids, timesteps=flow.timesteps,
                         ctx=context, ctx_ids=context_ids, guidance=None,
                     )[:, : flow.target_token_count]
-                    loss = torch.nn.functional.mse_loss(prediction.float(), flow.target_velocity.float())
+                    flow_loss = torch.nn.functional.mse_loss(prediction.float(), flow.target_velocity.float())
+                    loss = flow_loss
+                    if rain_anchor:
+                        weights = training["losses"]
+                        velocity = unpack_tokens(prediction, clean.shape)
+                        source = degraded + float(training["anchor_noise_scale"]) * noise
+                        predicted_clean = source - velocity
+                        latent_l1 = torch.nn.functional.l1_loss(predicted_clean.float(), clean.float())
+                        loss = (
+                            float(weights["flow_mse_weight"]) * flow_loss
+                            + float(weights["predicted_clean_latent_l1_weight"]) * latent_l1
+                        )
+                        if (step + 1) % int(weights["rgb_every_steps"]) == 0:
+                            decoded = autoencoder.decode(predicted_clean).float().clamp(-1, 1)
+                            epsilon = float(weights["charbonnier_epsilon"])
+                            change = (gt.float() - lq.float()).abs().mean(dim=1, keepdim=True)
+                            change_mask = (change / float(weights["rain_change_scale_m11"])).clamp(0, 1).detach()
+                            gt_error = torch.sqrt((decoded - gt.float()).square() + epsilon * epsilon)
+                            fidelity = (gt_error * (1.0 + float(weights["rain_change_weight"]) * change_mask)).mean()
+                            identity_error = torch.sqrt((decoded - lq.float()).square() + epsilon * epsilon)
+                            identity = (identity_error * (1.0 - change_mask)).mean()
+                            perceptual = metric(
+                                (decoded + 1.0) * 0.5,
+                                (gt.float() + 1.0) * 0.5,
+                            )
+                            loss = (
+                                loss
+                                + float(weights["rgb_charbonnier_weight"]) * fidelity
+                                + float(weights["unchanged_identity_weight"]) * identity
+                                + float(weights["lpips_weight"]) * perceptual
+                            )
                 (loss / accumulation).backward()
                 accumulated += float(loss.detach())
             grad_norm = torch.nn.utils.clip_grad_norm_(trainable, float(training["max_grad_norm"]))
@@ -875,7 +1060,7 @@ def main() -> int:
                 )
         final_probe = probe_loss(
             wrapped, autoencoder, records[rank % len(records)], context, context_ids, batched_prc_img,
-            seed=seed + rank * 1009, device=device,
+            seed=seed + rank * 1009, device=device, config=config,
         )
         final_train_limit = int(config["inference"].get("final_train_metric_records", len(records)))
         final_validation_limit = int(config["inference"].get("final_validation_metric_records", len(validation_records)))
@@ -898,6 +1083,7 @@ def main() -> int:
                 "user_authorized_haze_source_diverse_pilot",
                 "user_authorized_haze_source_diverse_continuation",
                 "user_authorized_rain_source_diverse_pilot",
+                "user_authorized_rain_degraded_anchor_fidelity_gate",
             }
             if rain_directional:
                 if parent_validation_metrics is None:

@@ -1,5 +1,32 @@
 # FoundIR current handoff — 2026-09-23
 
+## 2026-10-25 current: Rain numerical repair, no pixel refiner
+
+The latest user instruction is Rain DiT SOW pass first, ordinary image-only
+MoE second, VLM-token router third. Blur already passes. The user rejected
+the small pixel refiner proposal. Its code is untrained historical work;
+do not launch it. The former direct-endpoint formal already completed and
+failed: best step 2,000 was 32.085315339143946/.08882607079111039.
+
+The authorized next run fixes BF16 trainable/Adam state and unequal latent
+precision in training versus inference. Both now use one shared endpoint
+function with FP32 observation-minus-prediction; model compute stays BF16.
+Use the new `foundir_rain_flux2_precision_fit_v1` config/trainer/launchers.
+The exact best step-2,000 LoRA initializes each independent run with a fresh
+optimizer. First 25 engineering steps, then an independent 300-step fit
+diagnostic on 32 deterministic training sources at 512 resolution. The same
+100-source development set is evaluated separately at the unchanged gate.
+The original loss coefficients are retained. No extra refiner or MoE is
+trained, and no long full-data run is auto-launched. Four CPU tests and the
+32+100 data/artifact preflight pass; no GPU result exists yet.
+
+Launch on the user's single 8xH100/H200 node:
+`bash smoke/start_foundir_rain_flux2_precision_fit_v1_tmux.sh`
+
+Log: `logs/foundir_rain_flux2_precision_fit_v1_qualification_v1.log`.
+Readiness, limits, budgets and later fit command:
+`reports/foundir_rain_flux2_precision_fit_v1_readiness_2026-10-25.md`.
+
 ## 2026-10-17 active: explicit pairwise safe gate CPU-ready
 
 Following the terminal confidence-ranking failure, the active replacement is

@@ -8,6 +8,39 @@
 - Keep the old HDD workspace untouched.
 - Never use official, sealed, parent-test, or internal-test pixels for training, hyperparameter selection, checkpoint selection, or early stopping.
 
+## ACTIVE: Rain FLUX precision repair and training-fit diagnosis — 2026-10-25
+
+The user rejected the proposed small pixel refiner and authorized the
+precision/fit diagnosis. This supersedes the refiner suggestion below.
+Keep the sequence Rain DiT >=34.2 PSNR / <=.08 LPIPS, then working image-only
+MoE, then VLM tokens. Do not train the observation-anchored pixel head.
+
+The prior run stored trainable LoRA weights and both Adam moments in BF16
+at learning rate 1e-5. At step 3,000, 64.2164% of LoRA A entries were exactly
+unchanged from its parent. This is evidence to investigate update rounding,
+not proof that it explains the entire failure. Training kept the encoded
+observation FP32 for subtraction while inference cast it to BF16 first.
+
+The new isolated implementation is configured by
+`configs/foundir_rain_flux2_precision_fit_v1.json`: FP32 LoRA parameters and
+Adam states, BF16 CUDA compute, and one shared FP32 endpoint subtraction in
+training/evaluation. Start independently from the hash-bound best Rain
+direct-endpoint step-2,000 LoRA with a fresh optimizer. Retain the eight
+parent loss terms and weights. Use 32 deterministic training source groups
+with fixed 512 crops; evaluate the exact same training inputs and the
+unchanged 100-source development gate at 512. The initial evaluation also
+reports the legacy subtraction path on the same checkpoint.
+
+Run a 25-step qualification first on one homogeneous 8xH100/H200 node. Its
+checkpoint cannot seed the independent 300-step fit diagnostic. Fit requires
+a passing qualification with matching config, source and sample hashes.
+Qualification/fit milestones are [0,25]/[0,100,300]. No automatic full-data
+training follows. Passing the 32-image numeric target is evidence of fitting
+ability only; development PSNR/LPIPS remain separate. This is not a matched
+long-training BF16-versus-FP32 ablation and cannot attribute all gains to
+precision alone. Both launchers preserve existing run directories/logs.
+Read `reports/foundir_rain_flux2_precision_fit_v1_readiness_2026-10-25.md`.
+
 ## ACTIVE: Rain DiT gate, then image-only MoE, then VLM router — 2026-10-25
 
 This user decision supersedes the older MoE-first scheduling text below. The

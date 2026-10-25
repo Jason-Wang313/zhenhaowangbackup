@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "run_name": "foundir_rain_flux2_direct_endpoint_distillation_formal_v1",
+  "status": "user_authorized_rain_flux2_direct_endpoint_distillation",
+  "scope": {
+    "category": "10Rain",
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "text_encoder": "models/qwen3-4b-fp8",
+    "prompt_context_cache": "checkpoints/foundir_rain_flux2_prompt_context_v1.safetensors",
+    "prompt_context_cache_sha256": "8fbe32b1e357fcade91f18e85608fc39606c9a32541ddd8c3741dc9662701184"
+  },
+  "data": {
+    "manifest": "manifests/foundir_rain_direct_endpoint_distillation_v1.csv",
+    "manifest_sha256": "2a65ff9b353f4537ac103da387059bba80124b4722c91c0ac1bc77e6fb569317",
+    "metadata": "manifests/foundir_rain_direct_endpoint_distillation_v1.json",
+    "metadata_sha256": "ef50d5e955752d35deb8c242ee78190d23b463396dee5bbf97d7fab04eb48d87",
+    "train_records": 38334,
+    "train_source_groups": 5780,
+    "validation_records": 100,
+    "validation_source_groups": 100,
+    "train_crop_size": 256,
+    "validation_crop_size": 512,
+    "sampling": "uniform_source_group_then_uniform_record",
+    "geometric_augmentation": true
+  },
+  "initialization": {
+    "policy": "frozen_parent_lora_fresh_optimizer",
+    "parent_lora": "checkpoints/foundir_rain_flux2_degraded_anchor_formal_v1/step_000500.safetensors",
+    "parent_lora_sha256": "6c79aa5abdc57cd3cad83b26fa7b6e91e592d64c31e7ffc4062414d8ec1f0d54"
+  },
+  "teacher": {
+    "base_name": "deraining",
+    "base_directory": "models/restormer-task-native",
+    "adapted_checkpoint": "checkpoints/foundir_five_type_flux2_dit_v3/rain_restormer_adaptation_v2_8gpu/step_005000.pt",
+    "adapted_checkpoint_sha256": "ff829573175df0f25add8a4d8f82db648fd6dad88a261297cfe88d2a8944c444",
+    "frozen": true,
+    "inference_range": "zero_one"
+  },
+  "lora": {
+    "rank": 32,
+    "alpha": 32.0,
+    "dropout": 0.0,
+    "target_patterns": [
+      "double_blocks.*.img_attn.qkv",
+      "double_blocks.*.img_attn.proj",
+      "single_blocks.*.linear1",
+      "single_blocks.*.linear2"
+    ],
+    "expected_module_count": 50
+  },
+  "training": {
+    "objective": "direct_endpoint_rgb_teacher_distillation",
+    "seed": 2026102103,
+    "max_steps": 3000,
+    "checkpoint_steps": [250, 500, 1000, 2000, 3000],
+    "global_batch_size": 32,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps_by_world_size": {"4": 8, "8": 4},
+    "learning_rate": 0.00001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "timestep": 1.0,
+    "anchor_noise_scale": 0.0,
+    "reference_time_coordinate": 10,
+    "losses": {
+      "flow_mse_weight": 0.1,
+      "predicted_clean_latent_l1_weight": 0.25,
+      "final_rgb_mse_weight": 10.0,
+      "rgb_charbonnier_weight": 1.0,
+      "highpass_l1_weight": 0.1,
+      "lpips_weight": 0.05,
+      "teacher_l1_weight": 0.5,
+      "unchanged_identity_weight": 0.5,
+      "rain_change_weight": 2.0,
+      "rain_change_scale_m11": 0.08,
+      "charbonnier_epsilon": 0.001
+    }
+  },
+  "inference": {
+    "schedule": "direct_endpoint_one_step",
+    "num_steps": 1,
+    "seed": 2026102104,
+    "evaluate_steps": [250, 500, 1000, 2000, 3000],
+    "validation_records": 100
+  },
+  "gate": {
+    "protocol": "frozen_100_source_disjoint_rain_development",
+    "validation_psnr_minimum": 34.2,
+    "validation_lpips_maximum": 0.08,
+    "qualification_only": false,
+    "automatic_formal_launch": false
+  },
+  "distributed": {
+    "backend": "nccl",
+    "allowed_world_sizes": [4, 8],
+    "minimum_memory_gib": 75,
+    "allowed_gpu_name_fragments": ["H100", "H200"]
+  },
+  "runtime": {
+    "output_dir": "checkpoints/foundir_rain_flux2_direct_endpoint_distillation_formal_v1",
+    "torch_home": "models/torch",
+    "offline": true
+  }
+}

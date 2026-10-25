@@ -1,5 +1,10 @@
 # Rain DiT gate before MoE: decision and failure audit (2026-10-25)
 
+Update: the user subsequently rejected the small pixel-refiner proposal.
+The audit facts below remain historical evidence; its proposed next
+architecture is superseded by the FP32-state/shared-endpoint fitting
+diagnosis in `foundir_rain_flux2_precision_fit_v1_readiness_2026-10-25.md`.
+
 ## User decision
 
 Work in this order only: Rain FLUX/DiT must first pass the frozen SOW
