@@ -1,5 +1,28 @@
 # Project agent instructions
 
+## Latest: full-data Rain qualification PASSED — 2026-10-25
+
+The 25-step full-data qualification completed on eight H100s at
+2026-10-25T21:16:59Z, launcher status 0. Actual exposure: 800 records from
+800 unique training sources. Development PSNR/LPIPS improved from
+32.08470176034529/.0888220098754391 to
+32.64423398615503/.08657967696897685; the 34.2/.08 gate remains false.
+Train-probe result: 32.66665987243047/.0708855870179832. This is engineering
+qualification, not evidence that the final scientific target will pass.
+Finite gradients, actual A/B updates, saved F32 LoRA/optimizer, matched
+metrics and unchanged source/config hashes were verified. No protected data.
+Total launcher elapsed 173 seconds (.04805555555555555 wall hours,
+.3844444444444444 allocated H100 GPU-hours). Median step 1.5106424172408879
+seconds, reported peak allocated memory 24.854560375213623 GiB.
+Update the formal estimate to 1.5-2.0 wall hours / 12-16 allocated GPU-hours,
+subject to sustained full-data IO. Formal has NOT been launched.
+The already-authorized independent 3,000-step formal can now be started on
+the user's GPU node with
+`bash smoke/start_foundir_rain_flux2_precision_full_v1_tmux.sh formal formal_v1`.
+Initialize from original step-2,000 LoRA/fresh Adam, never qualification.
+Do not change source/config after qualification or auto-advance to MoE.
+Full evidence: `reports/foundir_rain_precision_full_qualification_2026-10-25.md`.
+
 ## ACTIVE: full-data FP32 Rain FLUX — 2026-10-25
 
 The user explicitly authorized full-data matched-resolution training after
