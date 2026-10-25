@@ -1,5 +1,17 @@
 # FoundIR current handoff — 2026-09-23
 
+## LIVE: full-data Rain formal started — 2026-10-25
+
+`formal_v1` started at 2026-10-25T21:19:26Z on 8xH100 and logged finite
+training steps after matching the qualification contract. User requests
+monitoring until terminal completion. Do not restart, duplicate, retune,
+interrupt, or advance to MoE. Frozen schedule: 3,000 steps, evaluations at
+0/250/500/1000/2000/3000; keep engineering success separate from 34.2/.08.
+Log: `logs/foundir_rain_flux2_precision_full_v1_formal_v1.log`.
+Output: `checkpoints/foundir_rain_flux2_precision_full_v1/formal_v1/`.
+Launch/config source snapshot is backed up at commit 761a1f5 and the
+qualification evidence at 2ad559c. The previous unstarted status is historical.
+
 ## Latest: full-data Rain qualification PASSED — 2026-10-25
 
 The 25-step full-data qualification completed on eight H100s at
