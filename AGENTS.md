@@ -1,14 +1,15 @@
 # Project agent instructions
 
-## Latest formal milestone: step 1,000 — 2026-10-25
+## Latest formal milestone: step 2,000 — 2026-10-25
 
-Full-data Rain formal remains live on 8xH100. Step1000 development is
-33.51466280495532/.08047093592118472; train probe is
-33.586227005480914/.06417295400751755. Both development metrics improve over
-step500, but PSNR is still about .6853 dB short and LPIPS about .000471 above
-the gate. No joint pass yet. Checkpoint/optimizer/metrics exist.
-Keep the fixed 3,000-step schedule; do not retune, restart or advance MoE.
-Next validation: step2,000.
+Full-data Rain formal remains live on 8xH100. Step2000 development is
+33.624228321542766/.07938327748794109; train probe is
+33.79339515340005/.06371757120359689. LPIPS passes .08, but PSNR remains
+about .5758 dB short of 34.2. Only about .110 dB gained since step1000;
+do not promise final joint success. Checkpoint/optimizer/metrics exist.
+Keep the fixed final 1,000 steps; do not retune, restart or advance MoE.
+Next and final validation: step3,000. Recent step time about 2 seconds;
+estimated remaining wall time 35-40 minutes, not a guarantee.
 Progress: `reports/foundir_rain_precision_full_formal_progress_2026-10-25.md`.
 
 ## LIVE: full-data Rain formal started — 2026-10-25

@@ -11,6 +11,7 @@ LPIPS <=.08. Higher PSNR / lower LPIPS are better.
 | 250 | 33.165263671232395 | 0.06575017247814685 | 33.187940708396006 | 0.08063413599971682 |
 | 500 | 33.12226387894517 | 0.07149094255873933 | 33.26594373552425 | 0.08544677892699838 |
 | 1000 | 33.586227005480914 | 0.06417295400751755 | 33.51466280495532 | 0.08047093592118472 |
+| 2000 | 33.79339515340005 | 0.06371757120359689 | 33.624228321542766 | 0.07938327748794109 |
 
 Step250 improves both development metrics over initialization, but neither
 threshold is met yet. No extrapolation to final success is justified.
@@ -29,3 +30,8 @@ checkpoint/optimizer and metrics were saved. Continue the frozen schedule.
 Step1000: both development metrics improve over step500. PSNR remains
 .68533719504468 dB below 34.2 and LPIPS remains above .08. Neither gate is
 passed. Checkpoint/optimizer/metrics saved; continue unchanged to step2000.
+
+Step2000: LPIPS now passes .08; PSNR remains .5757716784572371 dB below
+34.2. Gain since step1000 is only about .110 dB, so final success must not
+be promised. Both metrics are currently best among the formal milestones.
+Checkpoint/optimizer/metrics saved; continue the fixed final 1,000 steps.
