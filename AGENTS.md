@@ -1,5 +1,26 @@
 # Project agent instructions
 
+## Latest terminal update: Rain precision fit complete — 2026-10-25
+
+The independent `fit_v1` completed 300/300 steps on 8xH100 at
+2026-10-25T20:59:43Z, launcher status 0. Training-fit reaches
+35.09303906168583/.04928288975497708 (numeric target passes); development
+reaches 32.44553214852097/.08547242213506251 (Rain SOW gate fails).
+Step-100 development was 32.54685884616055/.08776275758864358.
+Do not describe training-fit success as Rain gate success or evidence that
+FP32 alone caused the gain. This proves fitting ability on these 32 fixed
+training inputs, not unseen-source generalization. Of 24 development inputs
+with input PSNR >=34, 20 still lose PSNR after restoration at step 300.
+The run is complete: do not resume/extend it on the same 32 images or
+auto-launch full-data training. Next proposed work should address
+generalization with a frozen full-data, matched-resolution protocol and
+measured budget, requiring a new user decision before GPU launch.
+Preserve the Rain gate -> image-only MoE -> VLM router order. No pixel refiner.
+Total launcher time: 546 seconds (9m06s), .15166666666666667 wall hours,
+1.2133333333333334 allocated H100 GPU-hours. This is faster than the prior
+provisional estimate. Full result and limits:
+`reports/foundir_rain_precision_fit_terminal_2026-10-25.md`.
+
 ## Latest Rain qualification update — 2026-10-25
 
 The 25-step FP32 precision qualification completed successfully at
