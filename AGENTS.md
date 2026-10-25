@@ -8,6 +8,33 @@
 - Keep the old HDD workspace untouched.
 - Never use official, sealed, parent-test, or internal-test pixels for training, hyperparameter selection, checkpoint selection, or early stopping.
 
+## ACTIVE: Rain DiT gate, then image-only MoE, then VLM router — 2026-10-25
+
+This user decision supersedes the older MoE-first scheduling text below. The
+order is strict: (1) repair the Rain FLUX/DiT expert until it passes the frozen
+Rain development gate (`PSNR >=34.2`, `LPIPS <=0.08`); (2) build and validate
+an ordinary working image-only restoration DiT-MoE using successful experts;
+(3) only then add pooled VLM output tokens through a small projector to
+adjust that same router. Blur DiT has already passed its SOW gate; do not
+repeat Blur training. The failed 1,000-step image-only MoE is not a usable
+baseline, and its VLM-assisted arm must not be launched.
+
+The full-data direct-endpoint Rain FLUX formal run completed on 2026-10-21 at
+3,000/3,000 steps (8xH100, `6.470578311735836` wall hours,
+`51.76462649388669` allocated GPU-hours). Its frozen 100-record development
+metrics were `31.900863136522702/.08921627756208181`, failing both gates.
+The best predeclared checkpoint was step 2,000 at
+`32.085315339143946/.08882607079111039`; 3,000 regressed. Do not repeat or
+extend the same direct-endpoint recipe. On the 3,000-step result, all 24
+records with input PSNR >=34 dB lost PSNR after restoration; 14 of the other
+76 records also lost PSNR. A no-training, fixed 0.75 blend of input and the
+step-2,000 output reaches only about 32.545 dB PSNR on saved development
+triptychs. Even a non-deployable GT-only best blend per image reaches only
+33.444 dB. These are quantized-export exploratory calculations, not official
+model results. Simple strength control cannot repair the gap. Diagnose the
+Rain action/representation and verify a distinct fix before another GPU run.
+See `reports/foundir_rain_dit_gate_priority_and_failure_audit_2026-10-25.md`.
+
 ## ACTIVE: advisor-approved minimal VLM-token-to-MoE-router pilot — 2026-10-25
 
 This section supersedes every older Rain, EBT, energy, specialist, and
