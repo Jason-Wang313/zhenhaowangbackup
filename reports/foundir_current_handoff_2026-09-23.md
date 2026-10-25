@@ -1,5 +1,42 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: true Rain continuation 3,000 → 4,000 — 2026-10-25
+
+The user explicitly authorized exactly 1,000 more optimizer steps from the
+completed full-data `formal_v1` step 3,000. This supersedes the older
+"no continuation authorized" status, but not the frozen Rain-before-MoE gate.
+Use `configs/foundir_rain_flux2_precision_resume_v1.json` and the new
+`smoke/train_foundir_rain_flux2_precision_resume_v1_ddp.py`; do not edit or
+restart the completed parent trainer/config, and never start with fresh Adam.
+
+Restore the hash-bound step-3,000 FP32 LoRA AND all 100 Adam moment states /
+step counters. Preserve LR 1e-5, the eight loss terms/coefficients, batch32,
+512 crops, source-balanced schedule, augmentation, teacher and evaluation.
+Resume absolute sample positions 96,000 through 127,999: exactly 32,000 new
+presentations, cumulative 128,000. Validate/save only at global steps 3,500
+and 4,000 on the same 100 development records and 32 training-probe records.
+No protected data, new architecture, pixel refiner, EBT or energy experiment.
+Do not automatically extend beyond 4,000 or advance to MoE.
+
+The resume code has passed real LoRA/Adam/source/data preflight, CPU exact
+state restoration and interrupted-versus-uninterrupted update tests. Old
+checkpoints do not contain global RNG states: data sampling/crop/D4 are
+stateless by absolute position, AE encoding uses its mean, anchor noise and
+dropout are zero. No claim of bitwise uninterrupted GPU equivalence.
+The original files/artifacts remain unchanged. New output namespace:
+`checkpoints/foundir_rain_flux2_precision_resume_v1/continue_v1/`.
+Log: `logs/foundir_rain_flux2_precision_resume_v1_continue_v1.log`.
+
+Launch on ONE homogeneous 8xH100/H200 node:
+`bash smoke/start_foundir_rain_flux2_precision_resume_v1_tmux.sh continue_v1`.
+Codex has no GPU; no GPU continuation has been launched here. Session creation
+alone is not success: verify `RAIN_RESUME_STATE_RESTORED` and step 3,001.
+Estimate 40–50 normal wall minutes / 5.3–6.7 allocated GPU-hours on 8xH100;
+replace with observed throughput after launch. Current baseline remains
+34.00838778684664/.07343229320365935, PSNR gap .19161221315336263 dB.
+Do not promise passing 34.2/.08. Readiness:
+`reports/foundir_rain_precision_resume_readiness_2026-10-25.md`.
+
 ## TERMINAL: full-data Rain formal completed — 2026-10-25
 
 This supersedes every earlier LIVE/unstarted status for this run.

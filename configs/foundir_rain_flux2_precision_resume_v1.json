@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_true_resume_3000_to_4000",
+  "parent_config": "configs/foundir_rain_flux2_precision_full_v1.json",
+  "parent_config_sha256": "382bb767dfc6dae743f8c70d690f2307b640acc1eb1ff06d25ce557aef981237",
+  "parent_result": "checkpoints/foundir_rain_flux2_precision_full_v1/formal_v1/result.json",
+  "parent_result_sha256": "59849092b5b4e609aaa5aef703537807b219a579142d86b18bdfc5c4e2875972",
+  "lora": "checkpoints/foundir_rain_flux2_precision_full_v1/formal_v1/step_003000.safetensors",
+  "lora_sha256": "336d412299cd7cd9ff919d8983b2b4c435105161496510c0cec8748785c15904",
+  "optimizer": "checkpoints/foundir_rain_flux2_precision_full_v1/formal_v1/step_003000.optimizer.pt",
+  "optimizer_sha256": "8f45db7a0f700410bdef910898ce2b7588c8f6ec70aefa74aa099ddcf99bd711",
+  "start_step": 3000,
+  "end_step": 4000,
+  "milestones": [
+    3500,
+    4000
+  ],
+  "first_sample_position": 96000,
+  "last_sample_position": 127999,
+  "unchanged": [
+    "training",
+    "data",
+    "evaluation",
+    "distributed",
+    "losses",
+    "learning_rate"
+  ],
+  "saved_rng_available": false,
+  "bitwise_gpu_equivalence_claimed": false
+}
