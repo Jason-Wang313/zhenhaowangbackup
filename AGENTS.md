@@ -1,5 +1,41 @@
 # Project agent instructions
 
+## TERMINAL PASS: Rain FLUX continuation completed — 2026-10-25
+
+This supersedes every earlier active/live/failed/unstarted Rain status below.
+`continue_v1` completed the authorized 3,000→4,000 continuation on 8xH100:
+2026-10-25T23:20:16Z to 23:51:52Z, launcher exit 0, no runtime/OOM/nonfinite/
+NCCL failure. Final fixed 100-record development PSNR/LPIPS is
+34.22743253549469/.07367917290423065: BOTH >=34.2 / <=.08 gates PASS.
+PSNR margin is .027432535494689603 dB, LPIPS margin .006320827095769352.
+Compared with step 3,000, PSNR gains .21904474864805223 dB; LPIPS worsens
+slightly by .0002468797005713008. Do not call this improvement in both means.
+The train probe is 34.171933008547796/.05955105775501579 and is NOT the gate.
+This passes the frozen development protocol, not an independent official test,
+a novelty claim or a SOTA claim. Near-clean over-restoration remains: 14/24
+records with input PSNR >=34 lose PSNR versus the input.
+
+The successful mergeable Rain expert is:
+`checkpoints/foundir_rain_flux2_precision_resume_v1/continue_v1/step_004000.safetensors`
+SHA-256 `020113ce209728452917d49859da7be220f638f0d27f6f87f182ffdab0a8fc2e`.
+Inference remains FLUX LoRA only; Restormer was a frozen training-only teacher.
+Keep the expert and all historical checkpoints; do not continue training or
+change the successful recipe automatically. The Rain prerequisite for the next
+image-only DiT-MoE stage is now cleared. Only after a working image-only MoE,
+add VLM token routing; no MoE job has been launched by this completion.
+
+Final LoRA/Adam tensors, Adam step=4000, next_sample_position=128000,
+configuration/source identities, metric means and matched record/input
+identities were independently verified. No protected pixels. Additional
+exposure is 32,000 presentations / 17,181 unique records / 5,780 sources;
+cumulative presentations 128,000. Total launcher cost is 31m36s,
+.5266666666666666 wall hours / 4.213333333333333 allocated H100 GPU-hours.
+Trainer-only clock is .5022755164518539 hours / 4.018204131614831 GPU-hours.
+Terminal evidence: `reports/foundir_rain_precision_resume_progress_2026-10-25.md`
+and `reports/foundir_rain_precision_resume_terminal_2026-10-25.json`.
+No Rain training remains active; do not mistake the older LIVE sections for
+current instructions.
+
 ## MILESTONE: Rain continuation step 3,500 — 2026-10-25
 
 Development is 34.0641582441431/.07644298265688121 on the identical 100
