@@ -37,6 +37,16 @@ formal training or auto-launch later work. Keep official, sealed, parent-test,
 and internal-test pixels out of development. Report wall-clock hours and
 allocated GPU-hours for every GPU run.
 
+The `image_only` qualification completed successfully on 8xH100 at
+2026-10-25T15:38:24Z. It ran 25/25 steps in `.0563902` wall-clock hours and
+`.451122` allocated GPU-hours, with finite training, no OOM/NCCL/runtime
+failure, and `12,653,083,136` bytes peak allocated memory per rank. The VLM
+logit adjustment was exactly zero, expert weights summed to one within
+`1.1921e-7`, and the checkpoint hash was verified. This is engineering
+qualification only, not a restoration-quality result, and its checkpoint may
+not seed formal training. The next active action is the fresh matched
+`vlm_assisted` 25-step qualification; do not launch formal training yet.
+
 ## MANDATORY: regular focused GitHub progress tracking
 
 GitHub is the durable project history. Do not allow material work to remain
