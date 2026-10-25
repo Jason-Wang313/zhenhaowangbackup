@@ -1,5 +1,19 @@
 # Project agent instructions
 
+## LIVE: Rain step-3,000 continuation running — 2026-10-25
+
+The user launched `continue_v1` on 8xH100 at 2026-10-25T23:20:16Z and
+requested monitoring through terminal completion. GPU preflight passed.
+The log explicitly confirms LoRA step=3000, Adam step=3000, exact optimizer
+state restoration, first sample position=96000 and LR=1e-5. Step 3,001 and
+subsequent steps have finite loss/gradients and real A/B updates. Do not
+restart, duplicate, interrupt, retune or advance to MoE. Continue unchanged
+through the frozen 3,500/4,000 validations; scientific success still requires
+development PSNR >=34.2 and LPIPS <=.08, not merely normal process exit.
+Early steady steps are ~1.5 s with ~24.86 GiB peak allocated memory per rank.
+The earlier "not launched" wording below is now historical.
+Progress: `reports/foundir_rain_precision_resume_progress_2026-10-25.md`.
+
 ## ACTIVE: true Rain continuation 3,000 → 4,000 — 2026-10-25
 
 The user explicitly authorized exactly 1,000 more optimizer steps from the
