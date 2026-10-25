@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "status": "advisor_approved_minimal_vlm_token_moe_matched_formal",
+  "scope": {
+    "degradations": ["blur", "noise", "rain", "haze", "low_light"],
+    "composition_sizes": [1],
+    "official_foundir_test_accessed": false,
+    "sealed_internal_accessed": false,
+    "parent_test_accessed": false,
+    "internal_test_accessed": false
+  },
+  "data": {
+    "manifest": "manifests/foundir_vlm_token_moe_pilot_v1.csv",
+    "manifest_sha256": "af6a96dfaa21982535bc77b490f4c521960767afd5b5cf4ded4f9c4da2b749c7",
+    "metadata": "manifests/foundir_vlm_token_moe_pilot_v1.json",
+    "metadata_sha256": "34713a1141dcd40551756118336588eeb7da40d973e278529b9c5bff0a079b95",
+    "fit_records": 2250,
+    "calibration_records": 450,
+    "holdout_records": 450,
+    "train_crop_size": 256,
+    "evaluation_crop_size": 256,
+    "vlm_feature_dim": 7168,
+    "vlm_feature_semantics": "frozen_qwen_visual_token_mean_plus_standard_deviation",
+    "feature_source_config": "configs/foundir_qwen_five_class_gate_v1.json",
+    "feature_source_config_sha256": "f16cee4cb2cb7b541de5584b1a4cf39a9b8c16b8d08fc158afe41e018eb164d8"
+  },
+  "model": {
+    "name": "flux.2-klein-base-4b",
+    "flow_weights": "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors",
+    "flow_weights_sha256": "9c5fed22b76baea749d88fc2abe3ad53245e7b21a0d353a762665eea00043b92",
+    "autoencoder_weights": "models/flux2-klein-base-4b/ae.safetensors",
+    "autoencoder_weights_sha256": "868fe7b343cc8f3a19dbcfcafbc3d5f888802be3f89bd81b65b3621a066ce8f3",
+    "prompt_cache_index": "checkpoints/foundir_five_type_flux2_dit_v3/qwen3_prompt_cache/index.json",
+    "prompt_cache_index_sha256": "6b5659feac3c9ff91039374228c521cd79b065248d0e2329d7e1547b89dd84ba"
+  },
+  "moe": {
+    "insertion": "double_blocks.4.img_mlp",
+    "double_block_indices": [4],
+    "num_experts": 2,
+    "routing": "dense_softmax_per_image",
+    "top_k": null,
+    "router_hidden_dim": 256,
+    "vlm_scale": 1.0,
+    "expert_initialization": "exact_clone_of_pretrained_img_mlp",
+    "vlm_output_initialization": "zero_exact_image_only_start",
+    "one_expert_bank_only": true,
+    "lora_experts": false
+  },
+  "arms": ["image_only", "vlm_assisted"],
+  "training": {
+    "formal_only": true,
+    "optimizer_steps": 1000,
+    "checkpoint_steps": [500, 1000],
+    "global_batch_size": 32,
+    "micro_batch_size_per_rank": 1,
+    "gradient_accumulation_steps": 4,
+    "expert_learning_rate": 0.00001,
+    "router_learning_rate": 0.0001,
+    "weight_decay": 0.0,
+    "max_grad_norm": 1.0,
+    "flow_mse_weight": 1.0,
+    "predicted_clean_latent_l1_weight": 0.1,
+    "anchor_noise_scale": 0.05,
+    "reference_time_coordinate": 10,
+    "seed": 2026102501,
+    "fresh_pretrained_initialization": true,
+    "qualification_checkpoint_forbidden": true,
+    "resume_only_same_arm_formal_checkpoint": true
+  },
+  "evaluation": {
+    "calibration_steps": [500, 1000],
+    "holdout_steps": [1000],
+    "inference_steps": 6,
+    "deterministic_seed": 2026102502,
+    "quantize_before_metrics": true,
+    "metrics": ["psnr", "lpips_alex"],
+    "report_per_degradation": true,
+    "checkpoint_selection": "fixed_final_step_no_holdout_selection",
+    "primary_hypothesis": "vlm_assisted_improves_both_mean_holdout_psnr_and_mean_holdout_lpips_over_image_only"
+  },
+  "distributed": {
+    "world_size": 8,
+    "backend": "nccl",
+    "supported_gpu_names": ["NVIDIA H100 80GB HBM3", "NVIDIA H200"],
+    "minimum_memory_gib": 75
+  },
+  "gates": {
+    "finite_loss": true,
+    "finite_gradients": true,
+    "checkpoint_written": true,
+    "image_only_vlm_adjustment_exactly_zero": true,
+    "vlm_assisted_projector_update_nonzero": true,
+    "expert_weight_sum_tolerance": 0.00001,
+    "scientific_pass_requires_both_holdout_metrics": true,
+    "automatic_next_experiment_launch": false
+  },
+  "runtime": {
+    "output_root": "checkpoints/foundir_vlm_token_moe_matched_formal_v1",
+    "torch_home": "models/torch",
+    "log_root": "logs",
+    "estimated_wall_hours_per_arm": [1.3, 2.5],
+    "estimated_allocated_gpu_hours_per_arm": [10.4, 20.0]
+  }
+}

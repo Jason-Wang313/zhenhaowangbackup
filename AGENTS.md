@@ -59,6 +59,22 @@ metrics and must not be presented as scientific improvement. Neither
 qualification checkpoint may seed formal work. The next step is to freeze a
 matched scientific train/evaluation protocol before any longer GPU run.
 
+That matched protocol is now frozen and CPU-qualified in
+`configs/foundir_vlm_token_moe_matched_formal_v1.json`. Each arm starts
+independently from the same pretrained FLUX.2 weights, trains for 1,000
+optimizer steps (32,000 fit presentations, about 14.2 fit-set exposures), and
+uses the same data/order/objective/compute. Calibration is evaluated at steps
+500 and 1,000; the source-disjoint 450-record holdout is read exactly once at
+the fixed final step. Metrics are PSNR, AlexNet LPIPS, per-degradation results,
+and routing traces. Four protocol unit tests and both arm-specific CPU/data
+preflights pass. No protected data was accessed. Run the arms separately with
+`smoke/run_foundir_vlm_token_moe_matched_formal_v1_8gpu.sh`; start with
+`image_only`. The launcher is resume-safe within the same arm but forbids all
+qualification checkpoints and never launches the other arm automatically.
+Estimated cost per arm is `1.3-2.5` wall hours and `10.4-20.0` allocated
+GPU-hours. Do not claim scientific success until both final holdouts have been
+paired by `smoke/compare_foundir_vlm_token_moe_matched_formal_v1.py`.
+
 ## MANDATORY: regular focused GitHub progress tracking
 
 GitHub is the durable project history. Do not allow material work to remain
