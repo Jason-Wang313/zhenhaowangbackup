@@ -79,12 +79,17 @@ after reviewing qualification. Use run ID `formal_v1`, from the ORIGINAL
 successful Rain, with unchanged 250/500 warmup and frozen protocol. Never
 initialize from qualification weights. Qualification receipt/source/config
 identities match and formal_v1 output/log were absent at launch handoff.
-Codex is on a CPU-only node and has NOT launched it; the user must execute on
-the available single 8xH100/H200 node:
-`bash smoke/start_foundir_rain_blur_image_moe_v1_tmux.sh formal moe formal_v1`.
+The user launched formal_v1 at 2026-10-26T10:59:57Z on one 8xH100 node.
+GPU/data preflight and initial 100-record Rain parity PASSED (both maximum
+per-record errors 0). Formal step 1 completed with finite loss/gradient.
+The run is LIVE; do not restart, duplicate, retune, or stop it without a new
+user decision. User requested monitoring through terminal completion.
+Preserve the unchanged 1,000/2,000/3,000 evaluations; normal execution does not
+establish a scientific gate pass. Codex observes shared artifacts from its
+CPU-only node, not direct GPU process telemetry.
 Session: `rain_blur_moe_formal_v1`; log:
 `logs/foundir_rain_blur_image_moe_v1_moe_formal_v1.log`.
-Do not claim it is running until shared launch/training evidence appears.
+Output: `checkpoints/foundir_rain_blur_image_moe_v1/moe/formal_v1/`.
 No dense/VLM run is authorized by this launch. Qualification's 6/12 warmup
 is only an engineering stress test, not a reason to retune formal.
 Measured provisional formal estimate: 1.94–3.24 wall hours / 15.53–25.90
