@@ -1,5 +1,20 @@
 # Project agent instructions
 
+## MILESTONE: image-only MoE formal restart step 2,000 — 2026-10-26
+
+formal_restart_v1 remains LIVE beyond 2,000. Rain100:
+34.350766710211964/.07022410760167987, both gates pass, improves on 1,000.
+Blur100 preview: 24.823461629491018/.38983108070679007, only
++.017581826696218883 dB / -.004058933006599541 LPIPS versus 1,000.
+Blur progress has slowed markedly; no evidence warrants promising a joint
+pass after the final 1,000 steps. Preview is still NOT full Blur evaluation.
+Weights/Adam hashes, FP32 weight header, record identities and metric means
+verified. Save time 12:48:41 UTC, cumulative 1.209202438888889 wall hours /
+9.673619511111111 allocated H100 GPU-hours since restart (not terminal cost).
+Continue unchanged through 3,000 and full Blur evaluation. No extension,
+retuning, dense arm or VLM authorized.
+Report: `reports/foundir_rain_blur_image_moe_formal_progress_2026-10-26.md`.
+
 ## MILESTONE: image-only MoE formal restart step 1,000 — 2026-10-26
 
 formal_restart_v1 remains LIVE and has passed its first saved milestone.
