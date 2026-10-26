@@ -1,0 +1,147 @@
+# Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
+
+日期：2026-10-26。状态：CPU／真实资产预检通过；GPU 工程验收尚未开始。
+当前没有新的恢复指标，不能宣称模型改善、论文创新成立或 SOTA。
+
+## 用户决定
+
+取消“新单步 Blur 单专家先达到全部指标，然后普通 MoE，再 VLM”的串行前置。
+改为同一恢复骨架的两个匹配实验，专家和路由一起训练。image-only 的质量
+失败不再禁止 VLM 对照；两者的工程验收仍必须通过，正式训练不自动启动。
+本次限于 Rain／Blur 两任务，不扩展到五类或复合退化，不恢复旧失败实验。
+
+## 我们发现什么问题，具体改什么
+
+| 已有证据／限制 | V2 的具体处理 | 尚未证明的部分 |
+|---|---|---|
+| 去掉 router、只训练 Blur，仍约 26.0962/.32610 | 不再把主要差距归因于 router | 不能由此断言 VLM 联合训练无效 |
+| 原方案冻结 Rain LoRA，只训练五个 FFN | 两条对照都开放原 50 个位置的共享 rank32 LoRA，同时训练 FFN 专家 | 开放空间交互相关参数是否足够，待 GPU 结果 |
+| Blur 仍收到固定 Rain 文本 | 两条对照都采用已缓存的空文本条件 | 新初始化的 Rain 指标可能变化，不能冒充原 Rain 结果 |
+| Rain 专用变化权重／保持输入规则可能不适合 Blur | 去掉这两项，去掉 Rain-only Restormer 教师；使用统一 GT 恢复损失 | 这是成组修复，不是各因素的单变量因果证明 |
+| 原始 token 特征只够小规模子集 | 使用全部已有逐图 VLM 五类强度预测，经小 MLP 加到 router | 本次不是 raw-token 输入；中心448诊断与随机512恢复 crop 有差异 |
+| 旧新分支只接触48,000次 Blur 样本 | 预备每臂10,000步、160,000次 Blur＋160,000次 Rain | 仍少于旧 Blur 320,000次呈现，不能声称训练量完全匹配旧模型 |
+
+保留原成功 Rain、旧 Blur、失败 MoE／单 Blur 的所有结果和权重，不覆盖。
+V2 仍是单步 t=1、零 anchor noise，不能把“一步已可行”当成结论。
+
+## 两条对照唯一的区别
+
+- `image_only`：图像特征产生两个专家的权重。
+- `vlm_assisted`：相同图像 router，再加上 VLM 预测经 `5→256→2` MLP
+  产生的两个分数，然后正常 softmax 合并同一组 FFN 专家的输出。
+
+两者都从原 Rain step4000 独立初始化，不使用失败模型或25步验收权重。
+共享 LoRA 是全模型唯一一份共享适配参数，不是第二个专家库。
+每个双流 block 有两个普通完整 FFN；五个 block 均参与。
+
+训练参数：
+
+- 共享 LoRA：32,440,320。
+- FFN 专家：849,346,560。
+- 图像 router：3,966,730。
+- image-only 合计：885,753,610。
+- VLM 分支仅增加10,250个训练参数；VLM-assisted 合计885,763,860。
+
+两臂都实例化相同模块；image-only 的 VLM 小网络冻结且不执行。
+VLM 输出层零初始化，所以两臂初始恢复输出严格一致。
+图像专家合并使用 `E0 + w1*(E1-E0)`，保留相同专家插入时的输出。
+共享原模型参数本体冻结，仅共享 LoRA、FFN 专家、router 训练。
+训练参数和 Adam 状态使用 FP32，矩阵计算 BF16。
+所有双流／单流 transformer block 使用 activation checkpointing 节省显存；
+CPU 双进程测试覆盖这条反向传播路径，GPU 显存是否安全仍待验收。
+
+## 条件来源与数据边界
+
+只读取 `qwen_levels_json`，绝不读取 `type_oracle_levels_json` 作为 VLM 输入。
+五个值按 Blur、Noise、Rain、Haze、Low-light 排列，等级1–5映射为0–1。
+例如预测 Rain 等级4对应第三个值0.75，不是直接强制选择 Rain 专家。
+不使用 LayerNorm 抹掉绝对强度。不运行新的 Qwen／Qwen3，也不重新生成条件。
+
+条件缓存是既有冻结 V8、中心448 crop 的逐类诊断。用于整张图的条件，
+未对每次随机512 crop重新预测。这可能影响细粒度强度信号，应如实披露。
+Qwen 诊断有额外推理成本，缓存不意味着最终部署时这部分免费。
+
+- Rain：38,334训练记录，5,780来源组。
+- Blur：105,057训练记录，7,339来源组。
+- 每全局 batch32：16 Rain＋16 Blur；来源均衡抽样。
+- 两臂同 seed、来源／记录／crop／D4次序。训练512 crop，不缩图。
+- 评估沿用原 Rain100／Blur2595 固定512 crops；Blur100只作中途预览。
+- 训练与开发来源／GT hash交叉排除结果不变，无新增交叉记录。
+- 146,086个允许记录全部连接到真实 VLM 预测，按 ID／来源／LQ+GT hash核对。
+- 大缓存含其他 split 的元数据；只保留允许 ID，没有读取受保护像素或其指标。
+- 不接触 official／sealed／internal／parent-test 像素。
+
+连接后预测字典 SHA-256：
+`b10b91909b471ddafa42bd77b1f9433030ef06be495b187cd5cb8f4d9d9c8fc0`。
+
+## 训练目标与对照公平性
+
+两臂完全相同的目标：latent velocity MSE×.1、clean latent L1×.25、
+解码 RGB MSE×10、Charbonnier×1、high-pass L1×.1、LPIPS×.05。
+不增加 pixel refiner、energy、第二 MoE、额外专家种类或新迭代机制。
+没有依据把 LPIPS 损失值占比直接当成梯度占比，因此本轮不盲目放大其系数。
+
+训练初期同样使用真实任务标签 warmup，并保留相同 router CE×.01；
+正式 hard250／transition-end500，验收 hard6／end12。
+这些标签只用于训练监督，验证和部署只用图像及真正的 VLM 预测。
+两个实验的共同修复可能改变相对旧模型的结果，因此不能把“V2对旧V1的改进”
+直接归因于 VLM；只能用 V2 内两臂的匹配结果判断 VLM 的作用。
+
+## 规模、费用与续训
+
+当前只交付25步工程验收，两臂各独立一次，单机同型号8×H100／H200。
+每臂暂估 .20–.75 普通小时、1.6–6.0 allocated GPU-hours；这不是已测速度。
+验收内容：原模型到 MoE 的插入一致性、两臂初始化一致、梯度、各分支实际更新、
+显存、归一化权重、FP32 checkpoint／Adam、固定开发输出。25步不用于质量结论。
+
+预备正式训练每臂10,000步，即320,000样本呈现（不是唯一图片数），
+每任务160,000次。正式时刻0／1000／3000／6000／10000评估；
+完整 Blur2595 只在最终10000步评估，不挑选最好的开发 checkpoint。
+正式的耗时／GPU-hours必须根据两臂验收速度重新估计并向用户报告；
+在用户决定正式启动前不代为启动。不能使用验收 checkpoint 初始化正式训练。
+
+第250步、每1000步和评估节点存完整权重／Adam／八 rank RNG。
+两臂各约117 GB训练状态，另加输出图和指标；不自动删除旧文件。
+断点续训只允许同配置／同源文件／同臂未完成正式状态，使用新的输出ID；
+恢复优化器和绝对数据位置，不把重置优化器称为续训。
+
+## 怎样判断结果
+
+固定最终节点逐图匹配比较 image-only／VLM。分别报告 Rain 与 Blur：
+PSNR、LPIPS、获益比例、按来源组的配对 bootstrap 区间、专家权重。
+还记录恒定专家0／1，以及 VLM 模型关闭 VLM 分支的预览诊断。
+bootstrap只反映这次训练的样本差异，不替代多 seed 不确定性。
+
+绝对目标保留：Rain >=34.2／<=.08；Blur >=25.9／<=.18。
+VLM 相对改善与两任务绝对目标是两件事；平均值也不能隐藏逐任务退步。
+在坏 baseline 上获得微小改善，仍不能宣布论文成立。
+沿用相关工作审计，禁止宣称首个 VLM-guided MoE／MoE+DiT。
+当前反复使用的 development 不是新的独立测试，不能冒充正式最终测试成绩。
+
+## 验收记录与下一条命令
+
+- 新测试套件18项通过，包含4项复用数据测试与14项联合 MoE 测试。
+- 覆盖2-rank CPU DDP、整块重计算与普通反传一致、同臂真续训等价。
+- meta-device 实例化真实 FLUX，核对50个 LoRA位置和上述完整参数量。
+- Python／shell语法通过。
+- 真实模型、原协议、条件缓存和全部开发图片 hash／训练路径预检通过。
+- GPU训练、显存验收、正式质量结果：**尚未产生**。
+
+在用户八卡节点先运行：
+
+```bash
+cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_v1
+```
+
+检查第一臂工程结果后，单独启动第二臂，不必等 image-only 达到 SOW：
+
+```bash
+cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification vlm_assisted qualification_v1
+```
+
+两条命令不能在同一节点同时执行。启动器有同节点锁，tmux创建不等于训练成功。
+无自动其他臂／正式训练。后续正式比较工具：
+`smoke/compare_foundir_rain_blur_joint_vlm_moe_v2.py`。
+
+配置：`configs/foundir_rain_blur_joint_vlm_moe_v2.json`
+SHA-256：`3bdd59b3fb3c010cc7a93ab299f3f67fe85cc5eb5a6f380f610d4338398baebe`。

@@ -1,5 +1,79 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: joint image-only versus VLM-guided MoE — 2026-10-26
+
+The user explicitly cancelled the serial prerequisite "new one-step Blur
+expert must pass first, then image-only MoE, then VLM". This supersedes ALL
+older launch holds/order statements below for this new V2 experiment only.
+Do not resume failed Blur-only, frozen-Rain FFN-only MoE, EBT or energy runs.
+Original successful Rain/old Blur checkpoints remain untouched.
+
+The task is a matched TWO-TASK Rain/Blur study, not yet five-type all-in-one
+or coupled restoration. Both arms jointly train the same full FFN experts,
+image routers and ONE shared rank32 LoRA at all 50 original attention/stream
+targets. The old restriction "freeze Rain/shared attention, train FFNs only"
+is removed. Shared LoRA is not a LoRA expert bank. Both arms initialize from
+original Rain step4000, use identical empty text conditioning and one-step
+endpoint inference. Do not claim one-step Blur feasibility is already proven.
+
+Only the VLM-assisted arm adds per-image frozen Qwen predicted five-slot
+strengths through a 5->256->2 MLP to each image router's logits. This is the
+advisor-allowed LABEL/STRENGTH interface, NOT raw VLM tokens. Full prediction
+cache is joined strictly by ID/source/LQ+GT hashes; never use
+type_oracle_levels_json or GT for inference. Existing VLM prediction
+center448 crops differ from random512 restoration crops; disclose this
+image-level-condition limitation. Qwen preprocessing cost is additional,
+not zero merely because predictions are cached.
+
+Both arms use task-neutral decoded RGB/latent/LPIPS/high-pass supervision.
+Remove Rain-specific change-mask weighting, unchanged-region identity, and
+Restormer teacher; retain remaining coefficients. Train-only task CE and
+250/500 hard-route warmup are identical in both arms, absent at inference.
+This bundled repair is not a single-factor causal ablation of old failures.
+VLM superiority must be assessed ONLY against its matching repaired baseline.
+
+Contract: configs/foundir_rain_blur_joint_vlm_moe_v2.json
+SHA-256: 3bdd59b3fb3c010cc7a93ab299f3f67fe85cc5eb5a6f380f610d4338398baebe.
+Data: unchanged 38,334 Rain + 105,057 Blur training records, source-balanced
+16+16 per batch32, random512/D4; unchanged Rain100/Blur2595 development
+crops with Blur100 previews. No protected/official/sealed/internal pixels.
+
+First run separate fresh25-step engineering qualifications for BOTH arms on
+one homogeneous 8xH100/H200 node. Each estimate .20-.75 wall hours /
+1.6-6.0 allocated GPU-hours, provisional. No GPU is available in the Codex
+shell; no new GPU job has been launched by the agent. No automatic formal
+or other-arm launch. Qualification checkpoints must NEVER seed formal.
+Image-only scientific-quality failure is no longer a veto on the matched
+VLM arm; engineering failure still blocks an unsafe formal launch.
+
+Prepared formal recipe: 10,000 steps per arm, 320,000 presentations total /
+160,000 per task (not unique records, not guaranteed complete traversal).
+Same seed/crops/order/optimizer/loss/inference across arms. This is half the
+old Blur expert's 320,000 presentations per task, not a matched old-model
+training-budget claim. Measure BOTH qualifications and report wall hours /
+GPU-hours before a user formal launch decision. Require both valid
+engineering receipts; never require image-only to pass the SOW first.
+Save complete weights/Adam/eight rank RNGs at250, every1000 and milestones;
+resume only same-arm incomplete formal into a fresh output ID.
+Training-state storage is about117 GB per arm before metrics/images.
+
+Final fixed-step comparison reports per-task PSNR/LPIPS, paired source-level
+bootstrap intervals, win fractions, expert use and constant-expert/VLM-off
+diagnostics. Preserve Rain >=34.2/<=.08 and Blur >=25.9/<=.18 as separate
+absolute goals. A tiny gain over a bad baseline is not paper success.
+No broad first-VLM-MoE, novelty-established or SOTA claim is authorized.
+
+CPU readiness: 18 tests passed (including two-rank DDP, full-model meta
+parameter audit, checkpointed gradients and exact resume). Real-asset
+preflight passed; all146,086 allowed records have hash-matched predictions.
+No GPU qualification or new scientific result exists yet.
+Readiness/commands:
+reports/foundir_rain_blur_joint_vlm_moe_v2_readiness_2026-10-26.md.
+Launcher:
+bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_v1
+Run the VLM qualification separately after checking the first engineering
+result; no standalone Blur quality gate in between.
+
 ## TERMINAL: Blur-only formal complete — quality gate FAIL — 2026-10-26
 
 This supersedes every older LIVE/ACTIVE/unlaunched Blur-only status below.
