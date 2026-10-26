@@ -1,5 +1,45 @@
 # Project agent instructions
 
+## TERMINAL: image-only Rain/Blur MoE formal — joint gate FAIL — 2026-10-26
+
+This supersedes every older LIVE/ACTIVE/unlaunched MoE status below.
+formal_restart_v1 completed 3,000/3,000 steps plus full evaluation and
+fixed-expert diagnostics at 2026-10-26T13:30:15Z, launcher exit 0.
+Engineering pass, but JOINT SCIENTIFIC GATE FAIL. No new run is active
+from this launcher; do not automatically extend, restart, retune, run dense,
+or add VLM. User requested monitoring through completion, which is fulfilled.
+
+Final Rain100: 34.36398316275458/.07267702806275338, both >=34.2/<=.08 pass.
+Final full Blur2595: 26.10596660902048/.3271988157297777, PSNR>=25.9
+passes but LPIPS<=.18 FAILS by .14719881572977772. Do not call the two-task
+baseline successful, novelty established or SOTA. Blur input itself is
+25.849544629199475/.29110622298011024: output improves PSNR only
++.2564219798210061 dB and WORSENS LPIPS by .036092592749667474.
+LPIPS worsens vs input on 2,324/2,595 Blur records.
+
+Same final Blur100 preview reaggregated from full output:
+24.966814240094454/.3831212885398418. Fixed expert1 on those same records
+is 25.041084236119197/.38290703640086576, only slightly better and still
+poor. Do not blame the main gap solely on the router. Explicit VLM remains
+deferred until a genuinely working image-only baseline. Next proposed work,
+if requested, is an evidence-based Blur quality audit, not an automatic
+architecture/training change. Preserve original successful Rain/old Blur.
+
+Launcher cost: 6,847 seconds = 1.9019444444444444 wall hours /
+15.215555555555556 allocated H100 GPU-hours on 8xH100, excluding prior
+interrupted run/qualification. Trainer-only 1.8740228895263862 hours /
+14.99218311621109 GPU-hours. Median step 2.001327611040324 seconds;
+rank-0 peak allocated memory 37.40372896194458 GiB.
+96,000 presentations; unique Rain27,228 / Blur30,808. No protected pixels.
+
+All source/config/checkpoint hashes and metric aggregates verified.
+Final 50 Adam states are finite FP32, step=3,000, next_sample_position=96,000.
+Initial Rain per-record equality remained exact. No NaN/OOM/NCCL/runtime
+error. Do not confuse successful completion with scientific gate success.
+Report: `reports/foundir_rain_blur_image_moe_formal_terminal_2026-10-26.md`.
+Machine-readable: `reports/foundir_rain_blur_image_moe_formal_terminal_2026-10-26.json`.
+Result SHA-256: `e13f70ca2169f0f1d0bb584764ab3176ecad16700c96a40d3eac5c1b08e42254`.
+
 ## MILESTONE: image-only MoE formal restart step 2,000 — 2026-10-26
 
 formal_restart_v1 remains LIVE beyond 2,000. Rain100:

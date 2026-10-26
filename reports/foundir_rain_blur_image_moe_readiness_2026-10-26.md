@@ -1,5 +1,10 @@
 # Rain＋Blur 普通 image-only DiT-MoE：启动前协议
 
+> 最新状态：正式重跑已于 2026-10-26T13:30:15Z 正常结束。Rain 两项通过，
+> 完整 Blur LPIPS 失败，双任务门槛未通过。未自动继续训练或接 VLM。
+> 见 `reports/foundir_rain_blur_image_moe_formal_terminal_2026-10-26.md`。
+> 本文剩余内容为启动前协议及资格检查历史，不应当作当前启动指令。
+
 > 后续状态：25 步资格检查已于 2026-10-26T10:41:54Z 正常结束，工程通过。
 > Rain 训练后退步，Blur 预览改善；尚未通过双任务科学门槛，正式训练未启动。
 > 详情见 `reports/foundir_rain_blur_image_moe_qualification_2026-10-26.md`。

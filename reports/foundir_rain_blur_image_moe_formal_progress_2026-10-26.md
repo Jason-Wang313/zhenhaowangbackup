@@ -1,5 +1,10 @@
 # Rain＋Blur image-only MoE 正式重跑：阶段记录
 
+> 已于 2026-10-26T13:30:15Z 完成 3,000 步，exit 0。Rain 两项通过，
+> 完整 Blur PSNR 通过、LPIPS 失败；没有自动启动下一轮。
+> 终报：`reports/foundir_rain_blur_image_moe_formal_terminal_2026-10-26.md`。
+> 下文的“仍在继续”属于阶段历史，不是当前运行状态。
+
 ## 冻结范围与运行身份
 
 - run：`formal_restart_v1`，单机 8×H100。
