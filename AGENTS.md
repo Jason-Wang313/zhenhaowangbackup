@@ -1,5 +1,24 @@
 # Project agent instructions
 
+## LIVE: Blur-only formal training started — 2026-10-26
+
+The user launched `formal_v1` at 2026-10-26T15:52:59Z on one 8xH100 node
+and asked to monitor through successful completion. Initial Rain100/Blur100
+parity passed with exact original metrics; finite optimization is observed
+beyond step 30. This supersedes the prior authorized-but-unlaunched status.
+Do not duplicate, restart, retune or stop the frozen run without user direction.
+Continue through 3,000 steps, the full 2,595-record Blur evaluation and launcher
+END status. Normal execution is not proof of the PSNR/LPIPS quality gate.
+
+Session: `blur_single_formal_v1`.
+Log: `logs/foundir_blur_single_endpoint_v1_formal_v1.log`.
+Output: `checkpoints/foundir_blur_single_endpoint_v1/formal_v1/`.
+Same original Rain initialization, no qualification continuation, no router/VLM.
+Save every 250 steps; evaluate at 1,000/2,000/3,000 as frozen. Preserve all
+artifacts. Codex sees shared files from its CPU-only node, not GPU telemetry.
+Estimate remains 1.11-2.14 wall hours / 8.88-17.12 allocated H100 GPU-hours,
+to be updated from measured progress. No extension or next experiment is authorized.
+
 ## AUTHORIZED: fresh Blur-only formal launch — 2026-10-26
 
 After qualification passed, the user requested the official formal launch
