@@ -1,5 +1,28 @@
 # FoundIR current handoff — 2026-09-23
 
+## MILESTONE: both joint MoE formal arms at step1000 — 2026-10-26
+
+The user requested monitoring BOTH formal_v1 jobs until terminal completion.
+Continue read-only monitoring; do not stop, restart, retune, change bound code,
+auto-launch another experiment or interpret successful execution as quality PASS.
+
+Both first scheduled post-training evaluations are available.
+Rain100 image-only: 33.9101104544897/.07389099790481851;
+VLM: 33.92674730344711/.07357312987558544.
+Blur100 PREVIEW image-only: 24.841265019393163/.35753815472591666;
+VLM: 24.776332465206465/.35622713952558116.
+VLM is slightly better on Rain, but has lower Blur PSNR and better Blur LPIPS.
+No consistent VLM advantage or absolute quality PASS is established.
+Both improve Blur versus initialization but worsen Rain. Keep the frozen
+10000-step schedule; next quality milestone is3000, then6000 and10000.
+Full Blur2595 and final constant-expert/VLM-off diagnostics remain pending.
+
+Both step1000 complete resume receipts are present, next_sample_position32000.
+Each binds the same config/source identities. Checkpoint hashes in the report
+are trainer-recorded; this milestone audit hashes metric/receipt files only.
+Hardware remains8xH100 versus8xH200, with the documented step0 numerical caveat.
+Report: reports/foundir_joint_moe_v2_step1000_2026-10-26.md.
+
 ## ACTIVE: BOTH formal MoE arms confirmed training — 2026-10-26
 
 Read-only shared-log check at 2026-10-26T20:05:52Z confirms BOTH formal_v1
