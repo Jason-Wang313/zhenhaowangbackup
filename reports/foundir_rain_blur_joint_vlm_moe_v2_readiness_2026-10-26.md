@@ -2,8 +2,10 @@
 
 更新：image-only/qualification_v1 已在18:58:49Z因NCCL/CUDA401初始化失败而结束，
 训练0步。下面的CPU验收记录仍成立，但不是GPU验收通过。
-当前启动器尚未补入历史H200 NVLS兼容设置，不要原样重复旧ID。
-详见 `foundir_joint_moe_v2_image_only_launch_failure_2026-10-26.md`。
+用户随后批准修复：实际启动器已强制关闭NVLS、保留P2P，并加入限时八卡通信检查。
+GPU端尚未验证恢复。新ID为 `qualification_nvls_v2`，不要重复旧ID。
+失败记录见 `foundir_joint_moe_v2_image_only_launch_failure_2026-10-26.md`；
+修复与测试见 `foundir_joint_moe_v2_nccl_repair_2026-10-26.md`。
 
 日期：2026-10-26。状态：CPU／真实资产预检通过；首次 GPU 工程验收在通信初始化时失败，训练0步。
 当前没有新的恢复指标，不能宣称模型改善、论文创新成立或 SOTA。
@@ -96,6 +98,7 @@ Qwen 诊断有额外推理成本，缓存不意味着最终部署时这部分免
 
 当前只交付25步工程验收，两臂各独立一次，单机同型号8×H100／H200。
 每臂暂估 .20–.75 普通小时、1.6–6.0 allocated GPU-hours；这不是已测速度。
+新增无更新通信检查上限180秒，另有30秒强制退出宽限；最坏额外约.05833普通小时／.46667 GPU-hours。
 验收内容：原模型到 MoE 的插入一致性、两臂初始化一致、梯度、各分支实际更新、
 显存、归一化权重、FP32 checkpoint／Adam、固定开发输出。25步不用于质量结论。
 
@@ -135,16 +138,17 @@ VLM 相对改善与两任务绝对目标是两件事；平均值也不能隐藏�
 在用户八卡节点先运行：
 
 ```bash
-cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_v1
+cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_nvls_v2
 ```
 
 检查第一臂工程结果后，单独启动第二臂，不必等 image-only 达到 SOW：
 
 ```bash
-cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification vlm_assisted qualification_v1
+cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification vlm_assisted qualification_nvls_v2
 ```
 
 两条命令不能在同一节点同时执行。启动器有同节点锁，tmux创建不等于训练成功。
+先确认 `CURE_NCCL_DDP_REHEARSAL_PASS`／`JOINT_MOE_COMM_CHECK_PASS`，再看实际训练及最终 `engineering_pass`。
 无自动其他臂／正式训练。后续正式比较工具：
 `smoke/compare_foundir_rain_blur_joint_vlm_moe_v2.py`。
 

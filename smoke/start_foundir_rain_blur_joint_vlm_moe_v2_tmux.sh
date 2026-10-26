@@ -3,7 +3,7 @@ set -euo pipefail
 ROOT=/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang
 MODE=${1:-qualification}
 ARM=${2:-image_only}
-RUN_ID=${3:-qualification_v1}
+RUN_ID=${3:-qualification_nvls_v2}
 [[ "$MODE" == qualification || "$MODE" == formal ]] || { echo 'ERROR: invalid mode'; exit 2; }
 [[ "$ARM" == image_only || "$ARM" == vlm_assisted ]] || { echo 'ERROR: invalid arm'; exit 2; }
 [[ "$RUN_ID" =~ ^[A-Za-z0-9_-]+$ ]] || { echo 'ERROR: invalid run ID'; exit 2; }
@@ -18,9 +18,9 @@ LOG="$ROOT/logs/foundir_rain_blur_joint_vlm_moe_v2_${ARM}_${RUN_ID}.log"
 if tmux_job_server has-session -t "$SESSION" 2>/dev/null; then echo 'ERROR: existing session'; exit 3; fi
 printf -v LAUNCH_COMMAND '%q ' env CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 bash \
   "$ROOT/smoke/run_foundir_rain_blur_joint_vlm_moe_v2_8gpu.sh" "$MODE" "$ARM" "$RUN_ID" \
-  "${4:-$ROOT/checkpoints/foundir_rain_blur_joint_vlm_moe_v2/image_only/qualification_v1/result.json}" \
-  "${5:-$ROOT/checkpoints/foundir_rain_blur_joint_vlm_moe_v2/vlm_assisted/qualification_v1/result.json}" "${6:-}"
+  "${4:-$ROOT/checkpoints/foundir_rain_blur_joint_vlm_moe_v2/image_only/qualification_nvls_v2/result.json}" \
+  "${5:-$ROOT/checkpoints/foundir_rain_blur_joint_vlm_moe_v2/vlm_assisted/qualification_nvls_v2/result.json}" "${6:-}"
 tmux_job_server new-session -d -s "$SESSION" "$LAUNCH_COMMAND"
 echo "JOINT_MOE_TMUX_CREATED session=$SESSION"
 echo "LOG=$LOG"
-echo 'Session creation is not training success. Check JOINT_MOE_TRAIN and final engineering_pass.'
+echo 'Session creation is not training success. Check JOINT_MOE_COMM_CHECK_PASS, JOINT_MOE_TRAIN and final engineering_pass.'

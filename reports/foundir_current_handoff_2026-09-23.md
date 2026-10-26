@@ -1,5 +1,35 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: authorized joint MoE V2 transport repair / retry — 2026-10-26
+
+The user explicitly approved repairing the failed image-only qualification.
+This supersedes the previous wait-for-repair-approval instruction, not the
+scientific contract. The actual runner now enforces NCCL_NVLS_ENABLE=0 and
+NCCL_P2P_DISABLE=0 inside the tmux job, independent of inherited server values.
+Before loading restoration models/data, it runs the existing eight-rank
+cure_nccl_rehearsal_v1.py (scalar all-reduce + tiny DDP backward, no optimizer
+update or image access) under a 180-second timeout plus 30-second kill grace.
+Failure/timeout exits without training; success continues ONLY the requested
+25-step qualification. Detailed NCCL logging is scoped to the probe process.
+No model, config, dataset, loss, training step count or protected-data scope
+changed. Formal and the other arm do not auto-start.
+
+Use a fresh image_only / qualification_nvls_v2 run ID. Never overwrite the
+failed qualification_v1 log. Default receipt paths now use qualification_nvls_v2
+for both arms; explicit paths remain supported. The VLM arm still requires
+a separate launch decision after checking this retry's engineering result.
+CPU launcher tests cover forced env values, probe-before-training order,
+failure/timeout blocking, training error propagation and existing-log safety.
+All five launcher tests plus all 18 original joint-MoE/data CPU tests passed.
+Actual H200 transport recovery, memory safety and training remain unverified
+until the user's GPU-node retry; the Codex shell has no GPU access.
+Budget per qualification remains provisional .20-.75 wall hours / 1.6-6.0
+allocated GPU-hours; the new probe adds at most 210 seconds (.058333 hours /
+.466667 allocated GPU-hours) if its timeout/kill grace is exhausted.
+
+Command: bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_nvls_v2
+Repair report: reports/foundir_joint_moe_v2_nccl_repair_2026-10-26.md.
+
 ## TERMINAL: joint MoE V2 first launch failed at NCCL initialization — 2026-10-26
 
 The image_only / qualification_v1 launcher ran on eight NVIDIA H200 GPUs
@@ -97,7 +127,7 @@ No GPU qualification or new scientific result exists yet.
 Readiness/commands:
 reports/foundir_rain_blur_joint_vlm_moe_v2_readiness_2026-10-26.md.
 Launcher:
-bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_v1
+bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_nvls_v2
 Run the VLM qualification separately after checking the first engineering
 result; no standalone Blur quality gate in between.
 
