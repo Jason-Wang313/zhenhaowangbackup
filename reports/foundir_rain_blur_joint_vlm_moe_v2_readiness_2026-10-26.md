@@ -1,5 +1,16 @@
 # Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
 
+最新资源决定：用户另有一台空闲八卡节点，可与当前image-only并行运行VLM对照。
+image-only已于19:45:55Z在8×H100启动，核查时正常推进至70步，峰值42.57 GiB，
+无非有限损失／梯度或退出标志；全部29项代码hash和数据身份、初始评估一致。
+新VLM正式日志／输出尚不存在。不要停止image-only，也不要修改已运行的代码／配置。
+在另一台空闲同型号8×H100或8×H200节点运行下面的VLM正式命令；优先H100便于硬件匹配。
+这是两条独立单机任务，不是跨节点16卡DDP。无需master IP／node rank；
+每条仍使用独立全局batch32，相同10,000步／seed／数据／损失，独立从原Rain权重初始化。
+输出按arm隔离，锁和tmux socket在各节点本地；不需要改启动器。
+VLM单条仍暂估5.45–9.06小时／43.63–72.45 GPU-hours；两条并行总计算量仍87.26–144.89 GPU-hours，
+但等待时间通常接近一条任务，受共享存储和另一节点硬件影响。以下顺序运行限制为旧的单节点安排。
+
 最新授权：用户已批准正式阶段。先在单机8×H100／H200运行
 `image_only/formal_v1` 10,000步，结束后再独立运行匹配的VLM臂10,000步。
 不从25步验收权重续训，不改已验证的配置／代码。当前Codex没有GPU，
@@ -15,13 +26,13 @@
 cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh formal image_only formal_v1
 ```
 
-第一臂结束后，单独启动第二臂（不要现在同时执行）：
+在另一台空闲八卡节点上启动第二臂（现在可以并行；不要在image-only所在节点执行）：
 
 ```bash
 cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh formal vlm_assisted formal_v1
 ```
 
-tmux starter退出只代表创建会话，不能用 `&&` 连接这两条命令冒充顺序执行。
+tmux starter退出只代表创建会话；两节点分别启动，不要在同一节点连续启动两条。
 训练仍为Rain／Blur两任务；完整Blur2595只在最终10,000步评估。
 保存250步、每1,000步和预定评估节点的完整权重／Adam／八rank RNG；
 后续如果中断，需按同臂完整checkpoint真续训，不能直接重用已占用ID。

@@ -1,5 +1,46 @@
 # Project agent instructions
 
+## ACTIVE: independent parallel formal arms on TWO nodes — 2026-10-26
+
+The user reported another free GPU node and requested checking the current
+run before starting the VLM contrast there. The image-only job is healthy:
+image_only/formal_v1 started 2026-10-26T19:45:55Z on8xH100 at
+eight-h200-copy-copy-copy--daf90a2bdaa1-k3xjvzod7q. A read-only audit observed
+advancing steps50->70, finite logged losses/gradients, peak42.56962299346924
+GiB and no terminal marker. All29 bound source hashes and data identities
+match qualification; step0 Rain100/Blur100 metrics exactly match its starting
+point. No post-training quality milestone exists yet (first at1000).
+Do not stop, restart, retune or edit hash-bound training code/config.
+
+The earlier sequential-only plan was a ONE-NODE resource constraint.
+It is now superseded: VLM/formal_v1 may run concurrently on the user's
+OTHER free homogeneous8xH100/H200 node. Prefer8xH100 to match the active
+hardware; if using8xH200, record the difference and do not call runtime a
+hardware-matched comparison. This is TWO independent single-node jobs,
+not a16-GPU cross-node DDP job. No master IP, node ranks, nnodes change,
+global-batch change or cross-node communication setup is needed.
+
+Keep the same frozen code/config, seed, source/crop order, training data,
+losses and10,000-step schedule. Each formal arm independently starts from
+original Rain step4000, NEVER from image-only progress or qualification.
+Each uses all8 GPUs on its own node. Existing /tmp flock/tmux sockets are
+node-local; output/log paths include the arm and therefore do not collide
+in the shared workspace. Do not start VLM on the busy image-only node.
+No launcher changes are needed or authorized merely for parallel scheduling.
+
+At this check VLM/formal_v1 has no log/output yet. Codex has no GPU/node
+execution channel; provide the existing command for the OTHER GPU terminal:
+bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh formal vlm_assisted formal_v1
+Do not claim VLM started until its own shared log confirms it. No GPU job
+was started or current job interrupted by this scheduling/documentation turn.
+
+VLM budget stays5.45-9.06 wall hours /43.63-72.45 allocated GPU-hours.
+Parallel completion can be roughly one-arm5.5-9.1-hour scale from the second
+launch if throughput is comparable, not the old11-18-hour serial wait.
+Total compute for both arms remains87.26-144.89 GPU-hours; parallelism does
+not halve compute. Shared-storage contention or hardware differences may
+extend wall time. Scientific acceptance/quality claims remain unchanged.
+
 ## ACTIVE: paired formal joint MoE phase authorized — 2026-10-26
 
 The user explicitly requested "start now" for the formal phase after BOTH
