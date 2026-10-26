@@ -1,5 +1,45 @@
 # Project agent instructions
 
+## TERMINAL: BOTH joint MoE V2 qualifications PASS — 2026-10-26
+
+vlm_assisted/qualification_nvls_v2 completed 25/25 steps on eight H100 80GB
+GPUs at 2026-10-26T19:34:33Z, launcher status 0, engineering_pass=true.
+Total launcher 278 seconds = .07722222222222222 wall hours /
+.6177777777777778 allocated H100 GPU-hours. Peak42.583311557769775 GiB;
+median training step1.6632833430194296 seconds. On every rank, both FFN
+experts, shared LoRA A/B, image router AND VLM projector updated.
+Maximum VLM logit adjustment .05847013369202614; insertion error0.
+This proves the VLM path executes/learns, NOT a restoration-quality benefit.
+
+Both arms have identical frozen config, all29 source hashes, data identity,
+and byte-identical step0 metric files on Rain100/Blur100. At step25:
+Rain VLM33.86719081854514/.07618030223064125 versus image-only
+33.86460822453734/.07575711041688919, delta+.0025825940077979226 dB /
++.00042319181375205517 LPIPS. Blur100 PREVIEW VLM
+24.269234594175536/.4070244254171848 versus image-only
+24.26987270296453/.4072400273568928, delta-.0006381087889941739 dB /
+-.0002156019397079878 LPIPS. Tiny mixed differences show no clear VLM
+advantage at25 steps. Both lose Rain quality versus initialization; both
+improve Blur versus initialization but Blur LPIPS remains worse than input.
+No fullBlur2595, absolute quality success, significance or novelty claim.
+
+The user's monitoring request is fulfilled. No job was auto-launched and
+no formal training is authorized. Both engineering gates now pass, so the
+next USER decision can be paired10,000-step formal arms on the same single
+eight-GPU node. Fresh independent initialization from original Rain step4000,
+never from either qualification; keep data/seed/recipe/evaluation unchanged.
+Using the slower measured1.6934155019698665 s/step and the existing launcher
+overhead formula, provisional per-arm wall5.453931949916296-9.055897924874444
+hours /43.631455599330366-72.44718339899555 allocated GPU-hours.
+Both arms sequentially:10.907863899832591-18.111795849748887 wall hours /
+87.26291119866073-144.8943667979911 GPU-hours. This includes estimated
+evaluation/save/I-O overhead, is not measured full-run speed or a guarantee.
+Both successful qualifications cost1.5911111111111111 allocated H100 GPU-hours.
+
+Result SHA-256:
+2f589ddf3fc6a2e666f74107fb85062c802149d57a5d9dc4572a91c6566c9506.
+Report: reports/foundir_joint_moe_v2_vlm_qualification_terminal_2026-10-26.md.
+
 ## ACTIVE: VLM-assisted joint MoE qualification authorized — 2026-10-26
 
 The user explicitly said execute for the separate VLM-assisted 25-step

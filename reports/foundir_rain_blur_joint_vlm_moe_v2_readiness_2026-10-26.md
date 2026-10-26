@@ -1,5 +1,15 @@
 # Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
 
+最新终局：两条独立25步工程验收均已通过。VLM臂于19:34:33Z正常结束，
+8×H100，278秒／.6177777777777778 GPU-hours。VLM网络实际更新并改变路由，
+但与image-only的恢复指标差异极小且有好有坏，尚无明确效果优势。
+原始指标、核验记录见 `foundir_joint_moe_v2_vlm_qualification_terminal_2026-10-26.md`。
+下方两个qualification命令均已执行完，不要重复。
+正式训练尚未授权或启动；每臂10,000步暂估5.45–9.06小时／43.63–72.45 GPU-hours，
+单机八卡顺序完成两臂合计10.91–18.11小时／87.26–144.89 GPU-hours。
+
+以下为按时间保留的授权／验收记录，以最新终局为准。
+
 最新授权：用户已批准单独执行 `vlm_assisted/qualification_nvls_v2` 的25步验收。
 代码／配置与image-only保持一致；从原始Rain step4000独立初始化，不从验收权重续训。
 当前Codex无GPU，新VLM日志／输出尚不存在，需用户在八卡节点执行下方VLM命令。
@@ -149,7 +159,7 @@ VLM 相对改善与两任务绝对目标是两件事；平均值也不能隐藏�
 - meta-device 实例化真实 FLUX，核对50个 LoRA位置和上述完整参数量。
 - Python／shell语法通过。
 - 真实模型、原协议、条件缓存和全部开发图片 hash／训练路径预检通过。
-- GPU更新：image-only的25步工程验收已通过，见页首终局；VLM工程验收及正式质量结果尚未产生。
+- GPU更新：image-only和VLM两臂25步工程验收均通过；正式训练／完整Blur2595质量结果尚未产生。
 
 以下image-only命令已完成，仅保留为复现记录，不要再次执行：
 
@@ -157,7 +167,7 @@ VLM 相对改善与两任务绝对目标是两件事；平均值也不能隐藏�
 cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_nvls_v2
 ```
 
-检查第一臂工程结果后，单独启动第二臂，不必等 image-only 达到 SOW：
+以下第二臂命令也已完成，仅保留复现记录，不要再次执行：
 
 ```bash
 cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification vlm_assisted qualification_nvls_v2
