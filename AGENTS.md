@@ -1,5 +1,67 @@
 # Project agent instructions
 
+## ACTIVE: Rain-initialized image-only Rain/Blur MoE — 2026-10-26
+
+The user explicitly approved executing the plain image-only MoE plan after
+the Rain gate passed. This supersedes the prior Rain-before-MoE hold and the
+failed raw-FLUX one-MLP pilot. The only new task is Rain+Blur ordinary DiT-MoE;
+no VLM branch, LoRA expert bank, EBT/energy, pixel refiner, extra task or mixed
+degradation experiment. Preserve the successful Rain and existing Blur experts.
+
+Contract: `configs/foundir_rain_blur_image_moe_v1.json`, SHA-256
+`8988e2374ad736f3e406945f1d9db83ae14587d0aba28a04dbf9cdc900ab5f12`.
+Start from the hash-bound successful Rain step-4,000 LoRA on FLUX.2 Klein 4B.
+Keep that single Rain LoRA and shared backbone frozen. Replace image MLPs in
+all five double-stream blocks with two ordinary full FFN clones per layer;
+learn only those FFNs and image routers (853,313,290 FP32 parameters).
+There is no second external MoE and no bank of LoRA experts. The dense
+control trains one FFN per same block (424,673,280 parameters); disclose the
+capacity/compute difference, never call it a parameter-matched causal test.
+
+Both tasks use the SAME fixed cached Rain text context and SAME one-step,
+t=1, zero-noise FP32 endpoint. The fixed prompt preserves Rain initialization;
+it does not expose each image's task label. No runtime Qwen/VLM.
+Do not load the old 50-step Blur LoRA into this one-step path or retrain that
+old expert. The NEW MoE must learn Blur from allowed paired GT. Keep the
+existing eight Rain loss terms/coefficients, with the auxiliary Restormer
+teacher enabled only on Rain; its weight is zero on Blur.
+
+Use 38,334 Rain / 105,057 Blur training records, balanced 16+16 per global
+batch32, source-balanced within each task, aligned random 512 crops and D4.
+Cross-task development source groups and GT hashes are excluded; the audited
+pools have zero such overlaps. Keep the exact 100 Rain development records
+and all 2,595 original Blur development crops. A deterministic 100-source
+Blur preview is for intermediate diagnostics only, never the full Blur gate.
+No official/sealed/internal/parent-test pixels.
+
+Run ONLY a fresh 25-step `moe/qualification_v1` first on one homogeneous
+8xH100/H200 node. Before updates, replay all 100 Rain records and require
+per-record agreement with the successful checkpoint (PSNR error <=1e-4,
+LPIPS error <=1e-5) AND preserve its 34.2/.08 gate. Then exercise hard training
+task routes, transition, and image-only routing (qualification hard6/end12).
+Task labels never enter validation/inference; fixed-expert diagnostics do
+not use labels either. Require finite gradients, actual expert/router
+updates, memory safety, F32 model/Adam files and matched evaluation artifacts.
+
+Formal is configured at 3,000 fresh optimizer steps, 96,000 presentations
+(48,000 per task, NOT full traversal), with hard warmup250/transition-end500.
+Validate at 0/1000/2000/3000, using full Blur only at formal final. Formal
+requires a passing SAME-ARM qualification and never seeds from it. The dense
+arm needs its own qualification. No automatic formal/other-arm/VLM launch.
+Do not claim a working MoE merely from numeric gates: inspect expert usage
+and constant-expert ablations, and compare against the matched-data dense arm.
+Rain gate is >=34.2/<=.08; full Blur average gate >=25.9/<=.18, with tail
+regressions reported separately as in the historical Blur result.
+
+24 CPU tests, a separate two-rank CPU DDP accumulation/checkpointing/warmup
+test, and full real-asset/development-byte preflight passed. Actual GPU
+memory, initialization parity and learning remain UNVERIFIED; Codex has no
+GPU and has not launched this qualification. Provisional qualification budget:
+.25–1.0 normal wall hours / 2–8 allocated GPU-hours. Measure throughput and
+large checkpoint IO before estimating the formal; do not reuse Rain-LoRA cost.
+Start: `bash smoke/start_foundir_rain_blur_image_moe_v1_tmux.sh qualification moe qualification_v1`.
+Readiness: `reports/foundir_rain_blur_image_moe_readiness_2026-10-26.md`.
+
 ## TERMINAL PASS: Rain FLUX continuation completed — 2026-10-25
 
 This supersedes every earlier active/live/failed/unstarted Rain status below.

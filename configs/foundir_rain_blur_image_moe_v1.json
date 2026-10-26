@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_rain_blur_image_only_moe_qualification_first",
+  "parent_full_config": "configs/foundir_rain_flux2_precision_full_v1.json",
+  "parent_full_config_sha256": "382bb767dfc6dae743f8c70d690f2307b640acc1eb1ff06d25ce557aef981237",
+  "rain_result": "checkpoints/foundir_rain_flux2_precision_resume_v1/continue_v1/result.json",
+  "rain_result_sha256": "b33236cf9999ef157dee44423285832266f2e290949c29f447291ec4e8cdab51",
+  "rain_lora": "checkpoints/foundir_rain_flux2_precision_resume_v1/continue_v1/step_004000.safetensors",
+  "rain_lora_sha256": "020113ce209728452917d49859da7be220f638f0d27f6f87f182ffdab0a8fc2e",
+  "rain_metrics": "checkpoints/foundir_rain_flux2_precision_resume_v1/continue_v1/metrics/development_004000_shared_fp32.json",
+  "rain_metrics_sha256": "19a4589acd7753ed3c31ba0a0355b03e00761d5546cafae700b991eb8371da91",
+  "source_manifest": "manifests/foundir_five_type_pairs_v1.csv",
+  "source_manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "scope": {
+    "tasks": [
+      "rain",
+      "blur"
+    ],
+    "vlm": false,
+    "lora_expert_bank": false,
+    "pixel_refiner": false,
+    "protected_pixels_accessed": false
+  },
+  "architecture": {
+    "blocks": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "expert_kind": "full_existing_img_mlp_clone",
+    "experts": 2,
+    "router_hidden": 256,
+    "router": "per_image_dense_softmax_per_block",
+    "frozen_rain_lora": true,
+    "backbone_frozen": true,
+    "trainable_dtype": "float32",
+    "compute_dtype": "bfloat16",
+    "activation_checkpointing": "expert_ffn_nonreentrant",
+    "trainable_parameters": {
+      "moe": 853313290,
+      "dense": 424673280
+    }
+  },
+  "prompt": "identical_fixed_cached_rain_context_for_both_tasks_no_task_label_at_inference",
+  "data_contract": {
+    "train_records": {
+      "rain": 38334,
+      "blur": 105057
+    },
+    "train_sources": {
+      "rain": 5780,
+      "blur": 7339
+    },
+    "excluded_cross_task_development_records": {
+      "rain": 0,
+      "blur": 0
+    },
+    "training_digest": {
+      "rain": "0207fd65e5a37628023393a93bc9e80d1f1df85708d6677a94cc656dffea9fb0",
+      "blur": "c5524e143881bbefd2ed4086f6b2830f51773848d4b738ddbc7602ae3791aec5"
+    },
+    "development_digest": {
+      "rain": "1652d4e46634c1ee248e1984ea2aeaec271d8491a67dcc3acf12838cb181d783",
+      "blur_preview": "7c91409f76557efc36f06cac278b4b32b0ea7fa2e4a8478e3bd1f265a803b2c2",
+      "blur_full": "f455451693d050074efe351408e5f1a860cfec9560201f5d3ccec4acb74d276a"
+    },
+    "development_records": {
+      "rain": 100,
+      "blur_preview": 100,
+      "blur_full": 2595
+    },
+    "protected_pixels_accessed": false
+  },
+  "training": {
+    "seed": 2026102601,
+    "global_batch": 32,
+    "accumulation": 4,
+    "micro_batch": 1,
+    "expert_lr": 0.00001,
+    "router_lr": 0.0001,
+    "router_ce_weight": 0.01,
+    "weight_decay": 0,
+    "clip_grad_norm": 1,
+    "crop": 512,
+    "task_balance": "16_rain_16_blur_per_update",
+    "source_balanced": true,
+    "teacher": "same_frozen_restormer_on_rain_only",
+    "blur_teacher_weight": 0,
+    "other_losses": "unchanged_rain_eight_terms_and_coefficients",
+    "timestep": 1,
+    "anchor_noise": 0,
+    "workers": 2,
+    "prefetch": 2
+  },
+  "modes": {
+    "qualification": {
+      "steps": 25,
+      "milestones": [
+        0,
+        25
+      ],
+      "hard_steps": 6,
+      "transition_end": 12
+    },
+    "formal": {
+      "steps": 3000,
+      "milestones": [
+        0,
+        1000,
+        2000,
+        3000
+      ],
+      "hard_steps": 250,
+      "transition_end": 500
+    }
+  },
+  "evaluation": {
+    "rain_gate": {
+      "psnr": 34.2,
+      "lpips": 0.08
+    },
+    "blur_gate": {
+      "psnr": 25.9,
+      "lpips": 0.18
+    },
+    "blur_full_at_formal_final_only": true,
+    "preview_is_not_blur_gate": true,
+    "quantize": true,
+    "parity_max_psnr_error": 0.0001,
+    "parity_max_lpips_error": 0.00001,
+    "constant_expert_diagnostics_at_final": true
+  },
+  "runtime": {
+    "world_size": 8,
+    "gpu_families": [
+      "H100",
+      "H200"
+    ],
+    "minimum_memory_gib": 75,
+    "qualification_estimate_wall_hours": [
+      0.25,
+      1
+    ],
+    "qualification_estimate_gpu_hours": [
+      2,
+      8
+    ],
+    "formal_estimate": "derive_from_successful_qualification_including_dense_expert_checkpoint_IO",
+    "no_automatic_formal": true,
+    "no_automatic_other_arm": true,
+    "qualification_checkpoint_must_not_seed_formal": true
+  }
+}
