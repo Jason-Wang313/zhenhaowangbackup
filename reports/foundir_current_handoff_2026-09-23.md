@@ -1,5 +1,23 @@
 # FoundIR current handoff — 2026-09-23
 
+## MILESTONE: Blur-only formal step 1,000 — 2026-10-26
+
+formal_v1 remains LIVE beyond 1,000; continue unchanged to 3,000 and full
+Blur2595 evaluation. On the matched Blur100 preview, single expert is
+24.849666216706655/0.3916540574468672, versus old MoE at the same step
+24.8058798027948/0.3938900137133896.
+Only +0.04378641391185667 dB / -0.0022359562665223986 LPIPS.
+Output LPIPS remains worse than input 0.37266220796853305.
+Do not call this a solved Blur branch, a working MoE, or a full-development
+gate pass. No restart, extra tuning, VLM, or new experiment is authorized.
+
+Checkpoint/Adam hashes, source/config identities, record identities and
+metric means verified; checkpoint step1,000, next Blur position16,000.
+Checkpoint saved at 2026-10-26T16:11:34.685216+00:00;
+0.30991256 wall hours / 2.47930048
+allocated GPU-hours since launch, not terminal cost.
+Report: `reports/foundir_blur_single_endpoint_formal_progress_2026-10-26.md`.
+
 ## LIVE: Blur-only formal training started — 2026-10-26
 
 The user launched `formal_v1` at 2026-10-26T15:52:59Z on one 8xH100 node
