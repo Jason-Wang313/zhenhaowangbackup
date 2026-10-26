@@ -1,5 +1,19 @@
 # Project agent instructions
 
+## MILESTONE: image-only step3000 Rain PASS, Blur still FAIL — 2026-10-26
+
+image_only/formal_v1 reached scheduled step3000 with Rain100
+34.32609266908536/.07442104332614691: both Rain thresholds pass AT THIS
+INTERIM CHECKPOINT. Blur100 preview is25.399459516822663/.31455456842668356,
+still below the PSNR goal and above the LPIPS ceiling. This is not a final
+joint quality PASS and not a fullBlur2595 result. VLM step3000 is still pending.
+image-only saved its full step3000 resume receipt (next_sample_position96000)
+and continued training normally. Preserve the fixed10000-step protocol;
+do not select step3000, retune, stop, or claim VLM superiority.
+User requested monitoring BOTH jobs to terminal completion. No new GPU job,
+protected-data access or source/config change.
+Report: reports/foundir_joint_moe_v2_step3000_2026-10-26.md.
+
 ## MILESTONE: both joint MoE formal arms at step1000 — 2026-10-26
 
 The user requested monitoring BOTH formal_v1 jobs until terminal completion.
