@@ -82,8 +82,22 @@ identities match and formal_v1 output/log were absent at launch handoff.
 The user launched formal_v1 at 2026-10-26T10:59:57Z on one 8xH100 node.
 GPU/data preflight and initial 100-record Rain parity PASSED (both maximum
 per-record errors 0). Formal step 1 completed with finite loss/gradient.
-The run is LIVE; do not restart, duplicate, retune, or stop it without a new
-user decision. User requested monitoring through terminal completion.
+INTERRUPTION UPDATE: the last formal_v1 log is step 810, last modified
+2026-10-26T11:30:30Z, with no launcher END or traceback. The user reports
+possibly stopping the node/job accidentally and asks to continue. This does
+NOT prove an internal training error or that all old GPU processes are dead.
+No step checkpoint or Adam file exists: first save was at 1,000. Only receipt,
+initial parity and step-0 metrics/images exist. Therefore there is NO saved
+state from which to resume step 810, and no trained development result.
+
+Preserve formal_v1. Once the user confirms the old job/node is stopped, use
+fresh run ID `formal_restart_v1` with the SAME frozen 3,000-step recipe and
+original successful Rain initialization:
+`bash smoke/start_foundir_rain_blur_image_moe_v1_tmux.sh formal moe formal_restart_v1`.
+This is a FROM-ZERO FORMAL RESTART, not optimizer/sample-position resume.
+Do not reuse the qualification weights or overwrite the old run. The launcher
+lock prevents same-node overlap only; never infer cross-node exclusion.
+No restart has been launched by Codex. Do not declare it live without logs.
 Preserve the unchanged 1,000/2,000/3,000 evaluations; normal execution does not
 establish a scientific gate pass. Codex observes shared artifacts from its
 CPU-only node, not direct GPU process telemetry.
