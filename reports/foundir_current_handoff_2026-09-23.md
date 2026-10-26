@@ -97,7 +97,14 @@ original successful Rain initialization:
 This is a FROM-ZERO FORMAL RESTART, not optimizer/sample-position resume.
 Do not reuse the qualification weights or overwrite the old run. The launcher
 lock prevents same-node overlap only; never infer cross-node exclusion.
-No restart has been launched by Codex. Do not declare it live without logs.
+The user launched formal_restart_v1 at 2026-10-26T11:36:08Z on 8xH100.
+GPU/data preflight and exact initial Rain parity passed; step 1 completed
+with finite loss/gradient. This RESTART is now LIVE. User requested monitoring
+until terminal completion. Do not duplicate/restart/retune/interrupt it.
+New session: `rain_blur_moe_formal_restart_v1`.
+New log: `logs/foundir_rain_blur_image_moe_v1_moe_formal_restart_v1.log`.
+New output: `checkpoints/foundir_rain_blur_image_moe_v1/moe/formal_restart_v1/`.
+The old formal_v1 paths below describe preserved interrupted history only.
 Preserve the unchanged 1,000/2,000/3,000 evaluations; normal execution does not
 establish a scientific gate pass. Codex observes shared artifacts from its
 CPU-only node, not direct GPU process telemetry.
