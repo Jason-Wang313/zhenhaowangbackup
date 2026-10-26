@@ -1,5 +1,32 @@
 # Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
 
+最新授权：用户已批准正式阶段。先在单机8×H100／H200运行
+`image_only/formal_v1` 10,000步，结束后再独立运行匹配的VLM臂10,000步。
+不从25步验收权重续训，不改已验证的配置／代码。当前Codex没有GPU，
+正式日志／输出尚不存在，需用户在GPU节点执行下面的正式命令。
+实际训练器的正式资格检查已通过：两条验收记录、四个权重／Adam文件hash、
+配置／源文件／数据身份一致；正式ID未占用，shell语法通过，未读取受保护像素。
+每臂暂估5.45–9.06小时／43.63–72.45 GPU-hours；两臂顺序合计
+10.91–18.11小时／87.26–144.89 GPU-hours。第1,000步首次训练后评估预计约35–50分钟。
+
+立即启动第一臂：
+
+```bash
+cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh formal image_only formal_v1
+```
+
+第一臂结束后，单独启动第二臂（不要现在同时执行）：
+
+```bash
+cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh formal vlm_assisted formal_v1
+```
+
+tmux starter退出只代表创建会话，不能用 `&&` 连接这两条命令冒充顺序执行。
+训练仍为Rain／Blur两任务；完整Blur2595只在最终10,000步评估。
+保存250步、每1,000步和预定评估节点的完整权重／Adam／八rank RNG；
+后续如果中断，需按同臂完整checkpoint真续训，不能直接重用已占用ID。
+以下旧的“正式尚未授权”语句仅为历史记录，以本段和AGENTS顶部为准。
+
 最新终局：两条独立25步工程验收均已通过。VLM臂于19:34:33Z正常结束，
 8×H100，278秒／.6177777777777778 GPU-hours。VLM网络实际更新并改变路由，
 但与image-only的恢复指标差异极小且有好有坏，尚无明确效果优势。

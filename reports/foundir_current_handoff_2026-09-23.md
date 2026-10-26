@@ -1,5 +1,49 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: paired formal joint MoE phase authorized — 2026-10-26
+
+The user explicitly requested "start now" for the formal phase after BOTH
+25-step engineering qualifications passed and the paired budget was reported.
+This supersedes all older "formal unauthorized" statements below. The
+immediate launch is image_only/formal_v1 for10,000 steps on one homogeneous
+8xH100/H200 node; vlm_assisted/formal_v1 is the planned matching second arm,
+run sequentially on the same node after the first finishes. Do not start both
+tmux jobs together or auto-start a second job from a monitoring turn.
+
+Use the existing frozen runner/starter/config unchanged. Both formal arms
+independently initialize from original Rain step4000 with fresh Adam and the
+same seed/data/crop order/losses. Do not pass a resume receipt and do not
+initialize from either qualification. Formal validates BOTH qualification
+receipts and checkpoint hashes before training. The two tasks remain Rain
+and Blur, not five-type or coupled restoration. No protected pixels.
+
+Read-only formal launch check completed: the trainer's actual
+require_qualifications validator passed both receipts and all four weight/
+optimizer file hashes against current config/source/data identities.
+Both formal_v1 output/log paths are unused; shell syntax checks passed.
+No training/evaluation or GPU launch was performed by this readiness check.
+
+Per arm10,000 steps,320,000 presentations (160,000 per task), with frozen
+evaluation at0/1000/3000/6000/10000 and fullBlur2595 only at10000. Keep the
+predeclared fixed final checkpoint, no interim selection or retuning.
+Checkpoint at250, every1000 and milestones includes weights/Adam/eight-rank
+RNG for later same-arm exact resume into a fresh ID if explicitly needed.
+
+Budget from matched8xH100 qualifications: per arm5.45-9.06 wall hours /
+43.63-72.45 allocated GPU-hours; both sequentially10.91-18.11 wall hours /
+87.26-144.89 GPU-hours. These are estimates, not guaranteed efficacy or speed.
+The first post-training milestone at1000 is provisionally35-50 minutes from
+launch including startup/evaluation. At this handoff neither formal ID has a
+log/output; the Codex shell has no GPU, so user GPU-node execution is required.
+Never claim it is running until the new shared launch log confirms it.
+
+First command: bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh formal image_only formal_v1
+After the first arm completes, the second command is:
+bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh formal vlm_assisted formal_v1
+Do not join detached tmux starters with && to imply sequencing; starter exit
+only means session creation, not completed training. No new GPU job was
+launched by this CPU agent. Preserve all successful qualification receipts.
+
 ## TERMINAL: BOTH joint MoE V2 qualifications PASS — 2026-10-26
 
 vlm_assisted/qualification_nvls_v2 completed 25/25 steps on eight H100 80GB
