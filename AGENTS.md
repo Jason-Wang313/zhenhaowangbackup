@@ -1,5 +1,18 @@
 # Project agent instructions
 
+## AUTHORIZED: fresh Blur-only formal launch — 2026-10-26
+
+After qualification passed, the user requested the official formal launch
+command. The frozen 3,000-step Blur-only formal is now authorized under run ID
+`formal_v1`. Start from the original successful Rain initialization, NOT the
+25-step qualification weights. No router/VLM, loss change or schedule change.
+Qualification/source/config identities match; formal output/log were absent
+at prelaunch check. The agent has NOT launched a GPU job; wait for the user's
+node launch and verify actual logs before marking it live.
+Command: `bash smoke/start_foundir_blur_single_endpoint_v1_tmux.sh formal formal_v1`.
+Expected 1.11-2.14 wall hours / 8.88-17.12 allocated GPU-hours on 8xH100;
+H200 is supported but its speed is not measured by this qualification.
+
 ## MILESTONE: Blur-only qualification PASS; formal not launched — 2026-10-26
 
 qualification_v1 completed 25/25 steps on one 8xH100 at 2026-10-26T15:44:10Z,
