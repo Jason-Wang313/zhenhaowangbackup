@@ -1,5 +1,22 @@
 # Project agent instructions
 
+## MILESTONE: Blur-only formal step 2,000 — 2026-10-26
+
+formal_v1 remains LIVE beyond 2,000. Matched Blur100:
+24.91918972080556/0.38884398228721695. Relative to step1,000:
++0.06952350409890329 dB / -0.0028100751596502604 LPIPS.
+Old MoE at step2,000 is 24.823461629491018/0.38983108070679007;
+single-task advantage is only +0.09572809131454108 dB /
+-0.000987098419573118 LPIPS. Output LPIPS remains worse than input
+0.37266220796853305. No full Blur gate or solved-branch claim.
+Continue frozen final 1,000 steps and full2595 evaluation, no extension/retune.
+
+Source/config/record/metric identities and weight/Adam hashes verified.
+Checkpoint saved 2026-10-26T16:28:57.101968+00:00; next sample position32,000.
+Cost to checkpoint: 0.5994727688888889 wall hours /
+4.795782151111111 allocated GPU-hours, not terminal cost.
+Report: `reports/foundir_blur_single_endpoint_formal_progress_2026-10-26.md`.
+
 ## MILESTONE: Blur-only formal step 1,000 — 2026-10-26
 
 formal_v1 remains LIVE beyond 1,000; continue unchanged to 3,000 and full
