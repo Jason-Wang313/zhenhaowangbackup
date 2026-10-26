@@ -1,0 +1,88 @@
+{
+  "status": "formal_terminal_artifact_audit_pass",
+  "run_id": "formal_v1",
+  "steps": 3000,
+  "launcher_exit": 0,
+  "completed_utc": "2026-10-26T16:49:10Z",
+  "engineering_pass": true,
+  "psnr_gate_pass": true,
+  "lpips_gate_pass": false,
+  "joint_gate_pass": false,
+  "full_records": 2595,
+  "psnr": 26.096176888792407,
+  "lpips": 0.3260975599297016,
+  "input": {
+    "psnr": 25.849544629199475,
+    "lpips": 0.29110622298011024
+  },
+  "old_moe_psnr": 26.10596660902048,
+  "old_moe_lpips": 0.3271988157297777,
+  "delta_vs_moe_psnr": -0.009789720228074117,
+  "delta_vs_moe_lpips": -0.0011012558000761397,
+  "delta_vs_input_psnr": 0.246632259592932,
+  "delta_vs_input_lpips": 0.034991336949591334,
+  "psnr_margin_to_gate": 0.19617688879240802,
+  "lpips_excess_over_gate": 0.14609755992970158,
+  "psnr_worse_than_input_records": 710,
+  "lpips_worse_than_input_records": 2280,
+  "psnr_improves_over_moe_records": 1284,
+  "lpips_improves_over_moe_records": 1754,
+  "worst_psnr_delta_vs_input": -12.804153721029081,
+  "worst_lpips_delta_vs_input": 0.2284448742866516,
+  "final_matched_preview100": {
+    "psnr": 25.067034539869926,
+    "lpips": 0.37915658176876604
+  },
+  "history": [
+    {
+      "step": 0,
+      "split": "blur_preview",
+      "psnr": 23.788320945242468,
+      "lpips": 0.42077609404921534
+    },
+    {
+      "step": 1000,
+      "split": "blur_preview",
+      "psnr": 24.849666216706655,
+      "lpips": 0.3916540574468672
+    },
+    {
+      "step": 2000,
+      "split": "blur_preview",
+      "psnr": 24.91918972080556,
+      "lpips": 0.38884398228721695
+    },
+    {
+      "step": 3000,
+      "split": "blur_full",
+      "psnr": 26.096176888792407,
+      "lpips": 0.3260975599297016
+    }
+  ],
+  "launcher_seconds": 3371,
+  "launcher_wall_hours": 0.9363888888888889,
+  "launcher_allocated_gpu_hours": 7.4911111111111115,
+  "median_training_step_seconds": 0.8779867839766666,
+  "rank0_peak_memory_gib": 29.185157299041748,
+  "gpu_name": "NVIDIA H100 80GB HBM3",
+  "trainer_wall_hours": 0.9278442934769555,
+  "trainer_gpu_hours": 7.422754347815644,
+  "sample_presentations": 48000,
+  "complete_checkpoints": 12,
+  "result_sha256": "6224638f9b2a65f15f00839f338eb7cb0782b5c4ba028de16af41bad7bb2d1b9",
+  "weights_sha256": "a749d95fb9f151eb2bfb0835dfe22261200c5a81facb6215b3ce09c33f396e17",
+  "optimizer_sha256": "f29242ab6ce8d9ac01d878997b0a80e03567a71b9afe42ea7f9f2275a3ecf759",
+  "metrics_sha256": "15e1d12801cef1df7eca9fa9333177343018cc2b95f7d79022ddf4f0ce11be25",
+  "source_files_verified": 23,
+  "protected_pixels_accessed": false,
+  "automatic_next_launch": false,
+  "checkpoint_adam_audit": {
+    "status": "final_checkpoint_adam_audit_pass",
+    "parameters": 424673280,
+    "fp32_finite": true,
+    "adam_states": 10,
+    "adam_step": 3000,
+    "next_sample_position": 48000,
+    "rank_rng_states": 8
+  }
+}

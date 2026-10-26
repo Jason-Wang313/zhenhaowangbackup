@@ -1,5 +1,39 @@
 # FoundIR current handoff — 2026-09-23
 
+## TERMINAL: Blur-only formal complete — quality gate FAIL — 2026-10-26
+
+This supersedes every older LIVE/ACTIVE/unlaunched Blur-only status below.
+formal_v1 completed all 3,000 steps and full Blur2595 evaluation at
+2026-10-26T16:49:10Z, launcher exit 0. Engineering PASS, joint quality
+gate FAIL. PSNR 26.096176888792407 passes >=25.9, but LPIPS
+0.3260975599297016 fails <=.18 by 0.14609755992970158.
+Old matched MoE is 26.10596660902048/0.3271988157297777:
+single-task changes only -0.009789720228074117 dB /
+-0.0011012558000761397 LPIPS. Removing routing/mixed training did
+not materially solve this Blur branch. Do not claim a working MoE or novelty.
+
+Input is 25.849544629199475/0.29110622298011024; LPIPS is worse on
+2280/2595 records. Final matched Blur100 preview is
+25.067034539869926/0.37915658176876604; never compare the
+full2595 final mean directly against earlier100-record preview means.
+This control does not prove one-step FLUX is impossible or isolate a specific
+loss/prompt/update-scope cause. Original Rain/old Blur remain untouched.
+
+Launcher 3371 seconds = 0.9363888888888889 wall hours /
+7.4911111111111115 allocated H100 GPU-hours. Median step
+0.8779867839766666 seconds; rank0 peak 29.185157299041748 GiB.
+48,000 Blur presentations, 12 complete checkpoints. Source/config/metric
+identities and final artifact hashes verified. All 424,673,280 parameters and
+10 Adam states independently verified finite FP32, Adam step 3,000, next
+sample position 48,000, eight rank RNG states. No protected pixels or runtime error.
+
+The user's monitoring request is fulfilled. No job is active from this
+launcher. Do not auto-extend, restart, tune, add VLM, or launch another
+experiment. Preserve all results and wait for the user's next decision.
+Report: `reports/foundir_blur_single_endpoint_formal_terminal_2026-10-26.md`.
+Result SHA-256:
+`6224638f9b2a65f15f00839f338eb7cb0782b5c4ba028de16af41bad7bb2d1b9`.
+
 ## MILESTONE: Blur-only formal step 2,000 — 2026-10-26
 
 formal_v1 remains LIVE beyond 2,000. Matched Blur100:
