@@ -1,5 +1,31 @@
 # Project agent instructions
 
+## ACTIVE: BOTH formal MoE arms confirmed training — 2026-10-26
+
+Read-only shared-log check at 2026-10-26T20:05:52Z confirms BOTH formal_v1
+arms are training, superseding earlier "VLM not started" statements below.
+image_only: 480/10000 on 8xH100; vlm_assisted: 60/10000 on 8xH200.
+Both advance with finite logged losses/gradients, peak memory about 42.57 GiB,
+and no observed traceback/OOM/NCCL fatal or launcher END. These are log-based
+observations, not direct remote GPU telemetry. Do not restart or retune.
+The VLM launch was at 19:54:58Z; image-only at 19:45:55Z.
+
+Config, all 29 source bindings and data identities match. Inputs/record IDs
+and input metrics match exactly. Formal step0 OUTPUTS differ slightly across
+H100/H200: VLM-minus-image Rain +.0003037634628881847 dB /
+-.000008241008035841935 LPIPS; Blur100 preview +.0009170851552084969 dB /
+-.000034258328378222735 LPIPS. Do not claim bitwise-identical formal outputs,
+attribute these tiny differences to VLM efficacy, or compare runtime as
+hardware-matched. Earlier same-H100 qualification equality remains valid.
+
+image-only step250 weights/Adam/resume receipt are saved; independent file
+hashes match the receipt, next_sample_position=8000. No post-training
+validation exists yet: first at step1000; full Blur2595 only at step10000.
+Keep fixed final selection, frozen recipe and separate single-node jobs.
+No protected pixels, new GPU launch or running-code/config edit in this check.
+Detailed status/hashes: reports/foundir_joint_moe_v2_parallel_formal_start_2026-10-26.md.
+
+
 ## ACTIVE: independent parallel formal arms on TWO nodes — 2026-10-26
 
 The user reported another free GPU node and requested checking the current
