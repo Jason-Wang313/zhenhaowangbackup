@@ -1,11 +1,17 @@
 # Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
 
+最新授权：用户已批准单独执行 `vlm_assisted/qualification_nvls_v2` 的25步验收。
+代码／配置与image-only保持一致；从原始Rain step4000独立初始化，不从验收权重续训。
+当前Codex无GPU，新VLM日志／输出尚不存在，需用户在八卡节点执行下方VLM命令。
+暂估10–20分钟／1.3333–2.6667 GPU-hours，基于上一臂实测7.3分钟；
+共享存储较慢时保留原.81小时／6.47 GPU-hours保守预算。没有启动正式训练。
+
 最新终局：image_only/qualification_nvls_v2 已于19:20:40Z完成25步，8×H100，
 工程验收通过、launcher状态0；总耗时438秒／.9733333333333334 GPU-hours。
 Rain100为33.86460822453734/.07575711041688919，相比step0两个指标退步；
 Blur100预览为24.26987270296453/.4072400273568928，相比step0两个指标改善，
 但没有达到质量要求，也不是完整Blur2595评估。VLM臂与正式训练均未启动。
-不要重复执行下方已完成的image-only命令；下一步为单独VLM工程验收，等待用户指示。
+不要重复执行下方已完成的image-only命令；下一步VLM工程验收已获授权，尚待GPU节点启动。
 详见 `foundir_joint_moe_v2_image_only_qualification_terminal_2026-10-26.md`。
 
 以下启动失败／修复记录按时间保留，以本页最新终局和AGENTS顶部为准。

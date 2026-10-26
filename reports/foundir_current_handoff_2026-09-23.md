@@ -1,5 +1,32 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: VLM-assisted joint MoE qualification authorized — 2026-10-26
+
+The user explicitly said execute for the separate VLM-assisted 25-step
+engineering qualification. No further approval is required for this exact
+qualification; formal training remains unauthorized. Run
+vlm_assisted/qualification_nvls_v2 on one homogeneous 8xH100/H200 node
+through the existing tmux starter, with its bounded NCCL probe first.
+Initialize independently from original Rain step4000 with fresh optimizer;
+NEVER initialize from the image-only qualification or any failed MoE.
+The same frozen config, all 29 bound source files, data, seed, losses and
+evaluation protocol match the completed image-only qualification. No code
+or scientific protocol changes were made for this authorization.
+
+At this handoff, no VLM launch log/output exists and the Codex shell has
+no CUDA device node. Do not claim it started: the user must execute the GPU
+command below, then inspect the shared log. Do not launch on the CPU shell.
+Expected wall time is provisionally 10-20 minutes / 1.3333-2.6667 allocated
+GPU-hours, based on the matched image-only run's 7.3 minutes; not a measured
+VLM duration. Retain the earlier conservative .81-hour / 6.47-GPU-hour
+envelope for slow startup/shared I/O. The launcher still prints its original
+conservative estimate; do not mutate hash-bound launch code to change it.
+Once complete, verify both engineering receipts and compare matched
+initial/final metrics; 25-step quality changes do not establish novelty.
+Then report BOTH-arm measured formal budget and wait for formal permission.
+
+Command: bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification vlm_assisted qualification_nvls_v2
+
 ## TERMINAL: joint MoE V2 image-only qualification PASS — 2026-10-26
 
 image_only/qualification_nvls_v2 finished all 25 steps normally on eight
