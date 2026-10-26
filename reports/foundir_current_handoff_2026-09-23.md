@@ -1,5 +1,16 @@
 # FoundIR current handoff — 2026-09-23
 
+## MILESTONE: image-only step6000 — Rain PASS, Blur still short — 2026-10-26
+
+image-only scheduled step6000: Rain10034.3965064204137/.07232339138630778
+passes both Rain goals; Blur100 preview25.542105757879234/.29018930681515487
+still fails both Blur goals. Both metrics improved since3000, but Blur remains
+about.358 dB short and.11019 LPIPS above its ceiling. This is not joint success
+or fullBlur2595. VLM step6000 is pending. Full step6000 resume receipt saved,
+next_sample_position192000. Continue BOTH frozen10000-step runs to terminal
+completion as requested; no retuning, checkpoint selection or extra GPU work.
+Report: reports/foundir_joint_moe_v2_step6000_2026-10-26.md.
+
 ## MILESTONE: BOTH step3000 Rain PASS, Blur still FAIL — 2026-10-26
 
 Both formal arms completed the scheduled step3000 evaluation.
