@@ -1,6 +1,11 @@
 # Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
 
-日期：2026-10-26。状态：CPU／真实资产预检通过；GPU 工程验收尚未开始。
+更新：image-only/qualification_v1 已在18:58:49Z因NCCL/CUDA401初始化失败而结束，
+训练0步。下面的CPU验收记录仍成立，但不是GPU验收通过。
+当前启动器尚未补入历史H200 NVLS兼容设置，不要原样重复旧ID。
+详见 `foundir_joint_moe_v2_image_only_launch_failure_2026-10-26.md`。
+
+日期：2026-10-26。状态：CPU／真实资产预检通过；首次 GPU 工程验收在通信初始化时失败，训练0步。
 当前没有新的恢复指标，不能宣称模型改善、论文创新成立或 SOTA。
 
 ## 用户决定

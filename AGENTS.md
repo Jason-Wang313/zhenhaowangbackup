@@ -1,5 +1,32 @@
 # Project agent instructions
 
+## TERMINAL: joint MoE V2 first launch failed at NCCL initialization — 2026-10-26
+
+The image_only / qualification_v1 launcher ran on eight NVIDIA H200 GPUs
+from 2026-10-26T18:57:06Z to 18:58:49Z, exit1, 103 seconds
+(.02861111111111111 wall hours / .2288888888888889 allocated GPU-hours).
+All ranks failed in dist.init_process_group('nccl', device_id=device),
+CUDA401 "the operation cannot be performed in the present state".
+No optimizer step, model loading, output directory, checkpoint or evaluation
+was reached. This is initialization failure, NOT scientific quality failure.
+The user requested monitoring through completion; that monitoring is fulfilled.
+
+The current launcher lacks NCCL_NVLS_ENABLE=0 / NCCL_P2P_DISABLE=0,
+which the existing 2026-09-26 H200 recovery explicitly needed and verified.
+The new failure matches that earlier pattern, but this run has no detailed
+NCCL NVLS trace, so do not present the specific transport cause as proven.
+Do not infer that the hardware is faulty or recommend changing the model.
+The proposed next step is the existing H200 transport compatibility setting,
+a no-update communication check, then a fresh-ID retry of the SAME25-step
+qualification. No launcher/code change or GPU retry was made during this
+monitor-only turn. Await user instruction for the repair/retry; preserve the
+failed log and never reuse qualification_v1. Neither formal nor VLM arm starts
+automatically. All preceding CPU readiness remains CPU-only.
+
+Report: reports/foundir_joint_moe_v2_image_only_launch_failure_2026-10-26.md.
+Failed log SHA-256:
+bbee8607da8ed02d3b6befff33c01e0339f772da31b9f6ca703d33521493cfb8.
+
 ## ACTIVE: joint image-only versus VLM-guided MoE — 2026-10-26
 
 The user explicitly cancelled the serial prerequisite "new one-step Blur
