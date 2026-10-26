@@ -53,13 +53,36 @@ and constant-expert ablations, and compare against the matched-data dense arm.
 Rain gate is >=34.2/<=.08; full Blur average gate >=25.9/<=.18, with tail
 regressions reported separately as in the historical Blur result.
 
-24 CPU tests, a separate two-rank CPU DDP accumulation/checkpointing/warmup
-test, and full real-asset/development-byte preflight passed. Actual GPU
-memory, initialization parity and learning remain UNVERIFIED; Codex has no
-GPU and has not launched this qualification. Provisional qualification budget:
-.25–1.0 normal wall hours / 2–8 allocated GPU-hours. Measure throughput and
-large checkpoint IO before estimating the formal; do not reuse Rain-LoRA cost.
-Start: `bash smoke/start_foundir_rain_blur_image_moe_v1_tmux.sh qualification moe qualification_v1`.
+24 CPU tests, a separate two-rank CPU DDP test and real-file preflight passed.
+The user then launched `moe/qualification_v1` on 8xH100. It TERMINALLY
+COMPLETED at 2026-10-26T10:41:54Z, launcher exit 0, 25/25 steps, engineering
+pass. Initial Rain per-record PSNR/LPIPS errors are both exactly zero.
+Both expert branches and routers updated; finite training, FP32 checkpoint
+and optimizer artifacts, no OOM/runtime failure. Recorded rank-0 peak memory
+37.39800262451172 GiB; median step 1.7897918989765458 seconds.
+Launcher: 484 seconds, .13444444444444445 wall hours,
+1.0755555555555556 allocated H100 GPU-hours. Trainer-only timer:
+.10672626883945971 hours / .8538101507156777 GPU-hours.
+
+Do NOT describe this engineering pass as a working two-task MoE or gate pass.
+Rain fell from 34.22743253549469/.07367917290423065 to
+33.77674230661362/.07843095208052546 (PSNR gate FAIL, LPIPS pass).
+Blur preview improved from 23.788320945242468/.42077609404921534 to
+24.169359410868655/.4072999455779791; this is only 100 records, NOT the full
+Blur gate. Fixed-expert diagnostics do not establish successful task
+specialization, and task-average router weights remain close to half/half.
+Preserve the successful original Rain checkpoint and the qualification.
+Never resume qualification as formal or repeat its used run ID.
+
+No GPU job remains active from this launcher; no formal/dense/VLM run was
+auto-started. The next permissible proposed step is fresh 3,000-step MoE
+formal from the ORIGINAL successful Rain, with its unchanged 250/500 warmup
+and frozen protocol, after an explicit launch decision. Qualification's
+6/12 warmup is only an engineering stress test, not a reason to retune formal.
+Measured provisional formal estimate: 1.94–3.24 wall hours / 15.53–25.90
+allocated H100 GPU-hours; full Blur evaluation and filesystem IO add uncertainty.
+Result SHA-256: `5c2d2b8cdcfc8177c58d938bb87e0e1c76eb4cc81a7ec4c6cae66a927215c071`.
+Terminal report: `reports/foundir_rain_blur_image_moe_qualification_2026-10-26.md`.
 Readiness: `reports/foundir_rain_blur_image_moe_readiness_2026-10-26.md`.
 
 ## TERMINAL PASS: Rain FLUX continuation completed — 2026-10-25
