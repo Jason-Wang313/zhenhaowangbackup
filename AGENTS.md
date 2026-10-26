@@ -1,5 +1,21 @@
 # Project agent instructions
 
+## MILESTONE: image-only MoE formal restart step 1,000 — 2026-10-26
+
+formal_restart_v1 remains LIVE and has passed its first saved milestone.
+Rain100: 34.238711513652106/.07147581973578782, both >=34.2/<=.08 gates pass.
+Relative to original Rain initialization: +.011278978157413633 dB,
+-.0022033531684428342 LPIPS. Blur100 preview:
+24.8058798027948/.3938900137133896, improved but far from target, especially
+LPIPS; this is NOT the full 2,595-record Blur gate. No two-task success claim.
+Task-average router weights now clearly distinguish Rain/expert0 and
+Blur/expert1; do not claim causal routing superiority without controls.
+Weights/Adam saved and SHA-verified, FP32 weight header and metric identities/
+aggregates verified. Save time 12:14:14 UTC, about .635 wall hours /
+5.08 allocated H100 GPU-hours since restart launch (not terminal cost).
+Continue unchanged to 2,000 and 3,000; no automatic other arm/VLM.
+Report: `reports/foundir_rain_blur_image_moe_formal_progress_2026-10-26.md`.
+
 ## ACTIVE: Rain-initialized image-only Rain/Blur MoE — 2026-10-26
 
 The user explicitly approved executing the plain image-only MoE plan after
