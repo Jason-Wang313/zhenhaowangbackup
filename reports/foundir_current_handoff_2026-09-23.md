@@ -74,11 +74,19 @@ specialization, and task-average router weights remain close to half/half.
 Preserve the successful original Rain checkpoint and the qualification.
 Never resume qualification as formal or repeat its used run ID.
 
-No GPU job remains active from this launcher; no formal/dense/VLM run was
-auto-started. The next permissible proposed step is fresh 3,000-step MoE
-formal from the ORIGINAL successful Rain, with its unchanged 250/500 warmup
-and frozen protocol, after an explicit launch decision. Qualification's
-6/12 warmup is only an engineering stress test, not a reason to retune formal.
+The user explicitly AUTHORIZED the fresh 3,000-step MoE formal on 2026-10-26
+after reviewing qualification. Use run ID `formal_v1`, from the ORIGINAL
+successful Rain, with unchanged 250/500 warmup and frozen protocol. Never
+initialize from qualification weights. Qualification receipt/source/config
+identities match and formal_v1 output/log were absent at launch handoff.
+Codex is on a CPU-only node and has NOT launched it; the user must execute on
+the available single 8xH100/H200 node:
+`bash smoke/start_foundir_rain_blur_image_moe_v1_tmux.sh formal moe formal_v1`.
+Session: `rain_blur_moe_formal_v1`; log:
+`logs/foundir_rain_blur_image_moe_v1_moe_formal_v1.log`.
+Do not claim it is running until shared launch/training evidence appears.
+No dense/VLM run is authorized by this launch. Qualification's 6/12 warmup
+is only an engineering stress test, not a reason to retune formal.
 Measured provisional formal estimate: 1.94–3.24 wall hours / 15.53–25.90
 allocated H100 GPU-hours; full Blur evaluation and filesystem IO add uncertainty.
 Result SHA-256: `5c2d2b8cdcfc8177c58d938bb87e0e1c76eb4cc81a7ec4c6cae66a927215c071`.
