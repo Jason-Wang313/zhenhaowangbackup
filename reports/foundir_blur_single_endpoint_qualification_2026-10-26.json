@@ -1,0 +1,55 @@
+{
+  "status": "qualification_artifact_audit_pass",
+  "run_id": "qualification_v1",
+  "completed_utc": "2026-10-26T15:44:10Z",
+  "result_sha256": "d1d5e1ca2ae616b3c9ea9473381b125ca79cb37b23b9f95f44e40bbe9f4110f0",
+  "resume_receipt_sha256": "7af656bdc09625fa66059d42be3e3f4946661dbdbd0670cf8ba0f5978ee4b105",
+  "weights_sha256": "1b2f55e9c2c686f97ae5d5db01f1afe451591879616499cec9a5c324bdac5a2b",
+  "optimizer_sha256": "df41317764d34b82a3d8d59e1445d63b47884f8742917ce688eb79476a2bcda8",
+  "initial_blur_psnr": 23.788320945242468,
+  "initial_blur_lpips": 0.42077609404921534,
+  "final_blur_psnr": 24.17730141751229,
+  "final_blur_lpips": 0.39682197285816073,
+  "delta_psnr": 0.3889804722698216,
+  "delta_lpips": -0.02395412119105461,
+  "psnr_improved_records": 50,
+  "lpips_improved_records": 93,
+  "launcher_elapsed_seconds": 331,
+  "launcher_wall_hours": 0.09194444444444444,
+  "launcher_allocated_gpu_hours": 0.7355555555555555,
+  "trainer_wall_hours": 0.069026211225266,
+  "trainer_gpu_hours": 0.552209689802128,
+  "median_training_step_seconds": 0.9119640614371747,
+  "rank0_peak_memory_gib": 29.184199810028076,
+  "formal_estimated_wall_hours": [
+    1.1099700511976456,
+    2.1399550767964683
+  ],
+  "formal_estimated_gpu_hours": [
+    8.879760409581165,
+    17.119640614371747
+  ],
+  "observed_block_updates": {
+    "double_blocks.0.img_mlp": true,
+    "double_blocks.1.img_mlp": true,
+    "double_blocks.2.img_mlp": true,
+    "double_blocks.3.img_mlp": true,
+    "double_blocks.4.img_mlp": true
+  },
+  "protected_pixels_accessed": false,
+  "full_blur_evaluation_performed": false,
+  "formal_launched": false,
+  "source_files_verified": 23,
+  "checkpoint_audit": {
+    "status": "checkpoint_adam_audit_pass",
+    "fp32_finite_parameters": 424673280,
+    "fp32_adam_states": 10,
+    "adam_step": 25,
+    "next_sample_position": 400,
+    "rank_rng_states": 8
+  },
+  "engineering_pass": true,
+  "scientific_gate_assessed": false,
+  "qualification_must_not_seed_formal": true,
+  "report": "reports/foundir_blur_single_endpoint_qualification_2026-10-26.md"
+}

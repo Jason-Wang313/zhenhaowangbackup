@@ -1,5 +1,32 @@
 # Project agent instructions
 
+## MILESTONE: Blur-only qualification PASS; formal not launched — 2026-10-26
+
+qualification_v1 completed 25/25 steps on one 8xH100 at 2026-10-26T15:44:10Z,
+launcher exit 0. This supersedes the older GPU-qualification-pending status.
+Initial Rain100 and Blur100 per-record PSNR/LPIPS parity errors are exactly 0.
+Five FFN blocks updated, finite training, no NaN/OOM/NCCL/runtime failure.
+Final Blur100 preview: 24.17730141751229/0.39682197285816073,
+versus initialization 23.788320945242468/0.42077609404921534;
+deltas +0.3889804722698216 dB / -0.02395412119105461 LPIPS.
+PSNR improves on 50/100 and LPIPS on 93/100. Engineering PASS only:
+no full Blur2595 evaluation and no formal scientific success yet.
+
+Launcher: 331 seconds = 0.09194444444444444 wall hours /
+0.7355555555555555 allocated H100 GPU-hours.
+Median step 0.9119640614371747 seconds; rank0 peak
+29.184199810028076 GiB. Formal estimate now 1.11-2.14 wall hours /
+8.88-17.12 GPU-hours, including provisional full-eval/checkpoint IO.
+Source/config/metric identities and saved artifact hashes verified.
+All 424,673,280 parameters and 10 Adam states independently verified finite
+FP32; Adam step 25, next sample position 400, eight saved rank RNG states.
+The user's monitoring request is fulfilled. No automatic formal or VLM.
+Formal must start fresh from original successful Rain, never qualification.
+Keep the frozen 3,000-step/48,000-Blur exposure protocol and save every 250.
+Report: `reports/foundir_blur_single_endpoint_qualification_2026-10-26.md`.
+Result SHA-256:
+`d1d5e1ca2ae616b3c9ea9473381b125ca79cb37b23b9f95f44e40bbe9f4110f0`.
+
 ## ACTIVE: Blur-only one-step diagnostic, no router — 2026-10-26
 
 This supersedes older active/hold instructions for the immediate next task.
