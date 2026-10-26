@@ -1,5 +1,42 @@
 # Project agent instructions
 
+## TERMINAL: joint MoE V2 image-only qualification PASS — 2026-10-26
+
+image_only/qualification_nvls_v2 finished all 25 steps normally on eight
+NVIDIA H100 80GB GPUs at 2026-10-26T19:20:40Z, launcher status 0.
+The no-update NCCL/DDP probe passed, followed by engineering_pass=true,
+zero insertion error, finite training/checkpoint validation, and observed
+updates to both FFN experts, image router and shared LoRA A/B on all eight
+ranks. VLM was inactive as intended. Peak memory 42.57999897003174 GiB;
+median training step 1.6934155019698665 seconds. Total launcher cost:
+438 seconds = .12166666666666667 wall hours / .9733333333333334 allocated
+H100 GPU-hours. This validates the repaired path on this H100 node, NOT
+the original H200 node or a uniquely proven cause of the earlier CUDA401.
+
+Matched Rain100: step0 34.17715539550872/.07015681236982346 ->
+step25 33.86460822453734/.07575711041688919. Rain regresses by
+.31254717097137785 dB and .00560029804706573 LPIPS; PSNR fails >=34.2.
+Matched Blur100 PREVIEW: 23.8596342447602/.4188850187882781 ->
+24.26987270296453/.4072400273568928 (+.41023845820432925 dB,
+-.01164499143138531 LPIPS). Blur output LPIPS still exceeds input
+.37266220796853305. No full Blur2595 evaluation, no quality gate PASS,
+no demonstrated VLM benefit and no novelty conclusion. Do not extend or
+retune from this 25-step engineering result.
+
+All 29 bound source hashes, config/receipt/history/metric identities and
+weight/optimizer SHA-256 were independently checked. No protected pixels.
+Result SHA-256:
+249071478a7f68d3d3bc8d812e9736497fee3d19a2ca5d3f60147c0c6ab5d278.
+Report: reports/foundir_joint_moe_v2_image_only_qualification_terminal_2026-10-26.md.
+
+The user's monitoring request is fulfilled; this launcher is finished.
+Next planned task is a separate fresh vlm_assisted/qualification_nvls_v2
+25-step qualification, only on user launch instruction. It does not require
+image-only quality to pass first. No VLM/formal job was auto-launched.
+Both matching engineering receipts are required before any formal launch
+decision and measured budget. Never initialize formal from qualification.
+Preserve both the failed qualification_v1 and successful qualification_nvls_v2.
+
 ## ACTIVE: authorized joint MoE V2 transport repair / retry — 2026-10-26
 
 The user explicitly approved repairing the failed image-only qualification.

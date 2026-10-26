@@ -1,5 +1,15 @@
 # Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
 
+最新终局：image_only/qualification_nvls_v2 已于19:20:40Z完成25步，8×H100，
+工程验收通过、launcher状态0；总耗时438秒／.9733333333333334 GPU-hours。
+Rain100为33.86460822453734/.07575711041688919，相比step0两个指标退步；
+Blur100预览为24.26987270296453/.4072400273568928，相比step0两个指标改善，
+但没有达到质量要求，也不是完整Blur2595评估。VLM臂与正式训练均未启动。
+不要重复执行下方已完成的image-only命令；下一步为单独VLM工程验收，等待用户指示。
+详见 `foundir_joint_moe_v2_image_only_qualification_terminal_2026-10-26.md`。
+
+以下启动失败／修复记录按时间保留，以本页最新终局和AGENTS顶部为准。
+
 更新：image-only/qualification_v1 已在18:58:49Z因NCCL/CUDA401初始化失败而结束，
 训练0步。下面的CPU验收记录仍成立，但不是GPU验收通过。
 用户随后批准修复：实际启动器已强制关闭NVLS、保留P2P，并加入限时八卡通信检查。
@@ -133,9 +143,9 @@ VLM 相对改善与两任务绝对目标是两件事；平均值也不能隐藏�
 - meta-device 实例化真实 FLUX，核对50个 LoRA位置和上述完整参数量。
 - Python／shell语法通过。
 - 真实模型、原协议、条件缓存和全部开发图片 hash／训练路径预检通过。
-- GPU训练、显存验收、正式质量结果：**尚未产生**。
+- GPU更新：image-only的25步工程验收已通过，见页首终局；VLM工程验收及正式质量结果尚未产生。
 
-在用户八卡节点先运行：
+以下image-only命令已完成，仅保留为复现记录，不要再次执行：
 
 ```bash
 cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_rain_blur_joint_vlm_moe_v2_tmux.sh qualification image_only qualification_nvls_v2
