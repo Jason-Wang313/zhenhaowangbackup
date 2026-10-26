@@ -1,12 +1,20 @@
 # 联合 MoE 第3,000步中期检查
 
-2026-10-26 21:34 UTC：普通版结果已生成并恢复训练，VLM版尚未到第3000步。
+2026-10-26 21:57 UTC更新：两条第3000步结果均已生成。下面先前普通版观察保留；
+两条继续既定10000步训练，不进行中期checkpoint选择。
 
 | 实验／协议 | PSNR | LPIPS | 本轮判断 |
 |---|---:|---:|---|
 | image-only Rain100 | 34.32609266908536 | .07442104332614691 | 本检查点两项满足34.2／.08 |
 | image-only Blur100预览 | 25.399459516822663 | .31455456842668356 | 仍未满足25.9／.18 |
-| VLM第3000步 | 尚未生成 | 尚未生成 | 不做不同步数的优劣判断 |
+| VLM Rain100 | 34.32999647989338 | .0712783659575507 | 本检查点两项满足34.2／.08 |
+| VLM Blur100预览 | 25.38343235445578 | .30998902085004376 | 仍未满足25.9／.18 |
+
+相同步数VLM减普通版：Rain PSNR +.003903810808019159 dB，
+LPIPS -.0031426773685962056；Blur PSNR -.016027162366881953 dB，
+LPIPS -.004565547576639795。两类LPIPS均降低，但Blur PSNR略差；
+尚无两指标均稳定获益、统计显著性或论文创新成立的结论。
+两臂Rain本检查点都达标，Blur仍有明显LPIPS差距。
 
 相比普通版第1000步，Rain PSNR上升、LPIPS略变差但仍低于.08；
 Blur两个指标均改善，但LPIPS距离.18仍有约.13455。
@@ -34,3 +42,16 @@ mode=formal，world_size=8，next_sample_position=96000。
 权重 `691d6a86c131507001d0755345715aa46962a74ca2b05a50a2f4279a1ef0d4e1`；
 Adam `7379e9ac78581a1a221d794e5c9db4cc255800d3100e102f623a56c7f34ccffe`。
 监控继续，不占用额外GPU，不读取受保护像素。
+
+VLM完整step3000也已保存，world_size8、next_sample_position96000。
+小文件独立SHA-256（相对vlm_assisted/formal_v1）：
+
+| 文件 | SHA-256 |
+|---|---|
+| metrics/rain_003000_learned.json | 0de30c43b78c327b2fdf50fbc73b5fd84b36fb4ec9f10b2d8fec3860a3da3bb7 |
+| metrics/blur_preview_003000_learned.json | 530fbe34c834714429d218616c1155e80fefeff6e4129c054ab7b96ca70294c6 |
+| step_003000.resume.json | 129787e581366fd80086ab9ad2ce192931ce27cd5738f15083fe6c798ad35d6e |
+
+VLM大文件hash来自receipt，本轮未独立重读：
+权重 `90ef3e0481d058cf7b0c8fa9ef2406c85466a090ec0dccda07ade0d82f344818`；
+Adam `1237dcb245aa25fc80b055685c76cfe0d2df13804133cfa6cb87352eb86b9930`。
