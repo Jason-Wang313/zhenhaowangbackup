@@ -1,5 +1,51 @@
 # Project agent instructions
 
+## ACTIVE: Blur-only one-step diagnostic, no router — 2026-10-26
+
+This supersedes older active/hold instructions for the immediate next task.
+After the failed joint Rain+Blur gate and weak fixed-expert Blur result, the
+user authorized a standalone Blur branch diagnostic. Implement/qualify ONLY
+this control; do not resume the failed MoE, EBT/energy, add VLM or alter the
+successful original Rain/old Blur experts.
+
+Use `configs/foundir_blur_single_endpoint_v1.json`, SHA-256
+`a273b55ccfd9ca128b976ea5a6fa314ce862d77273a4127f0e5836e58957eefb`.
+Same original Rain step4,000 initialization, five full image FFNs with ONE
+expert per block and no router (424,673,280 trainable FP32 parameters).
+Shared model/Rain LoRA stay frozen. Keep the same fixed Rain prompt, one-step
+t=1/zero-noise FP32 endpoint, losses and LR1e-5; teacher weight remains zero.
+Train Blur only. Batch16 (8 ranks x 2 accumulation), 3,000 steps =48,000 Blur
+presentations. Exact Blur record/crop/augmentation positions match the old
+MoE's 16-Blur half of each batch. Scale mean Blur loss by .5 to preserve its
+original mixed-objective contribution; do not silently renormalize it.
+
+This is a no-routing/single-task diagnostic, NOT a parameter-matched or
+pure-router causal ablation. A failure would not prove one-step FLUX is
+impossible; frozen Rain conditioning, update scope and objective remain
+possible limitations. No new scientific improvement is available yet.
+
+First run fresh25-step `qualification_v1` on one homogeneous 8xH100/H200.
+Require initial per-record Rain100 AND Blur100 parity, finite gradients,
+actual FFN updates, FP32 weight/Adam saves and valid matched evaluation.
+No automatic formal. Formal must restart original Rain, never qualification.
+Formal evaluates at0/1000/2000/3000; fullBlur2595 only at final. Target
+>=25.9 PSNR / <=.18 LPIPS, with per-record regressions reported separately.
+Save complete state every250 steps. Resume requires a finished hash-bound
+`.resume.json`, formal mode, unchanged code/config, Adam and absolute
+sampling state, and a fresh output ID. Never overwrite a prior run.
+
+Qualification estimate .15-.50 wall hours /1.2-4.0 allocated GPU-hours.
+Formal provisional1.0-2.5 hours /8-20 GPU-hours, to be re-estimated from
+qualification throughput and checkpoint/evaluation IO. No protected data.
+Agent runtime is CPU-only; GPU qualification remains pending user launch.
+Readiness checks PASSED: 28 CPU tests including two-rank DDP, exact Blur
+exposure/crop matching and uninterrupted-versus-resumed state equality;
+Python/shell/JSON syntax and full real-asset read-only preflight passed.
+These are not GPU memory qualification or scientific quality results.
+Readiness: `reports/foundir_blur_single_endpoint_readiness_2026-10-26.md`.
+Launch: `bash smoke/start_foundir_blur_single_endpoint_v1_tmux.sh qualification qualification_v1`.
+Continue Mandarin-only, plain-language reporting and focused GitHub tracking.
+
 ## TERMINAL: image-only Rain/Blur MoE formal — joint gate FAIL — 2026-10-26
 
 This supersedes every older LIVE/ACTIVE/unlaunched MoE status below.

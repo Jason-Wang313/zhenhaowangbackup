@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status": "user_authorized_blur_only_no_router_diagnostic_qualification_first",
+  "parent_config": "configs/foundir_rain_blur_image_moe_v1.json",
+  "parent_config_sha256": "8988e2374ad736f3e406945f1d9db83ae14587d0aba28a04dbf9cdc900ab5f12",
+  "scope": "same_one_step_branch_without_router_or_Rain_updates_not_a_pure_router_ablation",
+  "architecture": {
+    "blocks": [0, 1, 2, 3, 4],
+    "experts": 1,
+    "router": false,
+    "trainable_parameters": 424673280,
+    "initialization": "original_successful_Rain_step4000_never_failed_MoE_or_qualification",
+    "frozen_backbone_and_rain_lora": true,
+    "prompt": "unchanged_fixed_cached_Rain_context",
+    "endpoint": "unchanged_t1_zero_noise_FP32_subtraction"
+  },
+  "training": {
+    "seed": 2026102601,
+    "sample_crop_seed": 2026102602,
+    "global_batch": 16,
+    "accumulation": 2,
+    "micro_batch": 1,
+    "expert_lr": 0.00001,
+    "weight_decay": 0,
+    "clip_grad_norm": 1,
+    "crop": 512,
+    "losses": "unchanged_parent_Blur_terms_teacher_weight_zero",
+    "objective_scale": 0.5,
+    "objective_scale_reason": "preserve_Blur_16_of_32_contribution_remove_Rain_without_renormalizing",
+    "workers": 2,
+    "prefetch": 2,
+    "source_balance": true,
+    "checkpoint_every": 250
+  },
+  "modes": {
+    "qualification": {"steps": 25, "milestones": [0, 25]},
+    "formal": {"steps": 3000, "milestones": [0, 1000, 2000, 3000]}
+  },
+  "evaluation": {
+    "initial_rain_parity_only": true,
+    "initial_blur_parity": true,
+    "blur_initial_reference": "checkpoints/foundir_rain_blur_image_moe_v1/moe/formal_restart_v1/metrics/blur_preview_000000_image.json",
+    "blur_initial_reference_sha256": "e13ba5bf37f0de22fda786f25b5494502d55eff211e9a3ebef5e34aa6021f9a2",
+    "full_2595_at_formal_final_only": true,
+    "preview_is_not_full_gate": true,
+    "psnr_min": 25.9,
+    "lpips_max": 0.18,
+    "protected_pixels_accessed": false
+  },
+  "runtime": {
+    "world_size": 8,
+    "gpu_families": ["H100", "H200"],
+    "minimum_memory_gib": 75,
+    "qualification_estimate_wall_hours": [0.15, 0.50],
+    "qualification_estimate_gpu_hours": [1.2, 4.0],
+    "formal_provisional_wall_hours": [1.0, 2.5],
+    "formal_provisional_gpu_hours": [8, 20],
+    "no_automatic_formal": true,
+    "qualification_must_not_seed_formal": true,
+    "resume": "new_run_id_same_formal_contract_weights_Adam_absolute_sampling_and_rank_RNG"
+  }
+}
