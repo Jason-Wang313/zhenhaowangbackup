@@ -1,5 +1,31 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: node2 PPT full-data stage1 authorized — 2026-10-27
+
+用户已在节点1启动MoE迁移，并要求节点2的PPT命令。这覆盖下面“第二节点待授权”。
+两实验分开节点，各独占单机同型号8×H100/H200；不跨节点DDP，不停止或改写MoE。
+本次节点1共享日志已通过通信并完成恢复起点Rain验证，尚不据此宣称续训已完成。
+
+PPT fixed32/300步已结束，不重跑，不加载其权重。新energy从零训练，
+使用完整54585条/1755来源Noise池，固定256条source-disjoint开发验证。
+模型/loss/三步轨迹/候选/global32/100步warmup/8530步LR跨度全不变。
+只运行至原定首个检查点1706步并停止，不自动继续8530；不增加额外方法。
+入口：bash smoke/start_foundir_novel_ppt_full_data_stage1_v1_tmux.sh stage1_v1
+预算10.5–13普通小时/84–104 allocated GPU-hours，按实际全数据速度更新。
+
+新增独立入口，不改旧绑定源码。每100步保存权重、Adam、8 rank RNG、采样位置、
+config/source哈希及原子receipt。续训须确认旧进程已停，在新ID从明确完整receipt恢复，
+不得拿日志步数当断点，不重置optimizer/warmup，不从trainfit/qualification恢复。
+1706 checkpoint后验证中断也可从其receipt重做固定验证；H100/H200迁移不承诺bit一致。
+绝对PSNR/LPIPS门槛和相对Fidelity贡献分开；修图收益与自选收益分开。
+不读取official/sealed/internal/parent-test像素。保留历史失败和旧数据协议。
+
+配置SHA：dc7a41787e75731f2034644d58c5c9fdef2744a34f7ccf1e0c1fba723a2fab2b。
+19项CPU测试、两个shell语法和真实权重/数据元信息/23项来源绑定预检查通过，零图片读取。
+新增恢复功能尚未在GPU实测；八卡模型工程资格沿用原成功配方，不把CPU通过当GPU通过。
+报告：reports/foundir_novel_ppt_full_data_stage1_v1_readiness_2026-10-27.md。
+本节只授权、记录启动准备，不声称GPU已启动；看共享日志确认。
+
 ## ACTIVE: migrate unfinished MoE; PPT trainfit complete — 2026-10-27
 
 用户要求换新节点，并明确单节点8×H100/8×H200都要兼容；不跨节点DDP。
