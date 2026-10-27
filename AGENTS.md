@@ -1,5 +1,30 @@
 # Project agent instructions
 
+## MILESTONE: FLUX-only energy qualification completed; zero measured gain — 2026-10-27
+
+qualification_v1于22:42:21Z正常结束，25/25步，launcher status=0且
+FLUX_ENERGY_RESULT_VERIFIED。完整耗时992秒（16分32秒，.275555556普通小时，
+2.204444444 allocated H100 GPU-hours）；不是先前保守预估的.5–1.5小时。
+FLUX候选阶段106.3025267579942秒；energy平均20.694357499321924秒/步，
+每rank峰值14.600883483886719 GiB。八rank全部参数hash一致，checkpoint哈希已复核，
+运行绑定源码与当前文件一致。没有受保护像素访问，没有额外Restormer。
+
+仅32条训练来源上的量化评估：baseline、energy 1/2/3和selected逐条记录指标完全相同，
+均值40.41285765171051/.05783069503377192，即PSNR增益0、LPIPS改善0。
+初始选择全为起点；训练后32张全选step3，但不产生量化指标收益。
+这证明工程可运行，不证明energy正确评价画质、自验证或科学成功。
+末步训练有非零修正（rank0平均.00011517549137352034，[-1,1]空间）；
+幅度远小于一个8bit灰度间隔，符合量化掩盖微小修正的解释，但未存逐像素
+最终float差值，不能据此断言所有像素都未变化或量化是唯一瓶颈。
+25步仍在100步warmup内，不能仅凭本次验收终判方法失败，也不能假定扩训必然成功。
+
+不要自动formal、扩退化、末段FLUX引导或恢复旧Restormer/MoE。
+qualification权重不得seed正式训练。后续需另行冻结足够训练预算和独立开发验证，
+目标仍是energy相对FLUX独立+.30dB / LPIPS降低9.93%，未改变。
+报告：reports/foundir_flux_energy_qualification_v1_terminal_2026-10-27.md。
+结果SHA256：1b906a58c423c3fcda6264143c86008b857be6c9727ab5b3ed904ab4e428df75。
+checkpoint SHA256：3640540281ea20a9dd50788cd356366f0a4398b7613c73977cccdffc1766caf2。
+
 ## ACTIVE: FLUX-only energy qualification ready; sampler guidance conditional — 2026-10-27
 
 用户授权先执行冻结FLUX输出上的energy修图接入与25步工程验收。
