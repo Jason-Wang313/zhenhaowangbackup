@@ -1,5 +1,26 @@
 # FoundIR current handoff — 2026-09-23
 
+## LIVE: PPT stage1_retry1 is training on 8 H100 — 2026-10-27
+
+stage1_retry1于18:15:39Z启动，八卡硬件/空闲显存、真实数据与源码绑定、
+NCCL通信检查均通过。节点hostname为eight-h200-copy-copy--b212aa683678-4227pzjtb4，
+实际硬件为8×H100 80GB；不按hostname中的h200判断型号。
+初始256条开发验证已完成，记录无重复，Fidelity和1/2/3步及自选输出逐图完全一致：
+43.39715355634689/.028955043449059303。它是零初始化基线，不是训练后的增益。
+
+已确认真实训练第1/5/10步连续推进，step10于约18:23:36Z写入日志，
+损失/参数梯度有限，未见OOM/NaN/NCCL错误。
+step10约22.233646298001986秒，峰值18.720479488372803 GiB；
+能量修图更新非零，但不代表已达到画质或自验证目标。
+仅凭启动和几步训练，不能声称checkpoint保存/恢复已在本轮GPU验证。
+第一个完整断点计划step100，第一个训练后开发验证仍为step1706。
+暂保留10.5–13普通小时/84–104 allocated GPU-hours规划，后续以实测修正。
+
+日志：logs/foundir_novel_ppt_full_data_stage1_v1_stage1_retry1.log。
+输出：checkpoints/foundir_novel_ppt_full_data_stage1_v1/stage1_retry1/。
+不要重复启动、改变绑定代码/配方或自动扩训；只监测固定计划。
+只做PPT、MoE暂缓的用户决定继续有效。
+
 ## ACTIVE: PPT only; MoE deferred until PPT outcome — 2026-10-27
 
 用户报告节点2被不明人员停止，并明确改为一次只推进一个实验。
