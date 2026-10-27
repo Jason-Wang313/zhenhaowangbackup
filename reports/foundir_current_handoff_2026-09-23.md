@@ -1,5 +1,48 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: VLM/MoE diagnosis AND Novel PPT Approach retry — 2026-10-27
+
+用户已明确授权同时推进两条路线，先分析实际瓶颈、阅读原 PPT 和旧试验。
+本节覆盖下面所有禁止重试、Generalist-first、energy 永久冻结及终局后等待决定的旧优先级。
+历史失败和终局数字仍有效；不恢复 EBT Generalist，不覆盖旧实验，不复跑未改的失败配方。
+
+A. 保留导师批准的 VLM→router 主线。两个 MoE formal_v1 已正常结束：
+Rain 达标，Blur LPIPS 为普通 .23083898932184047、VLM .2282890860716721，均未到 .18。
+固定 Blur 专家也不能修复差距；当前主要证据指向恢复能力/训练目标，而非单纯选错专家。
+VLM 是每图五个强度等级，不是 raw tokens；只加在全局 router logits。
+下一步先在训练来源上检查 Blur 拟合及各损失的梯度作用，保持 Rain 监测。
+不把数据集类别当 VLM 严重度真值，不按开发集选新权重/阈值，不直接合并不兼容旧 Blur LoRA。
+
+B. 重新尝试原 PPT 的完整 candidate-dependent energy：同一 energy 既排序又通过
+候选图梯度修图。旧 V2 已实现真实候选和 1/2/3 步梯度训练，效果失败；不能说从未试过。
+强 residual basis 的 +.27299337834119797 dB 是 refiner 收益，不是 energy 收益。
+最后 pairwise gate 在独立82张上相对 Fidelity 为 -.0007919683689010526 dB；
+其 joint_gate_pass=true 只是绝对阈值，不代表选择器贡献。中期小幅正值不可后验选用。
+
+本轮已读完整8页PPT和4张方法图、重汇总既有指标、复核旧 step5118 能量数值。
+确认 mean-energy 更新有显式1/(H*W)缩放，且旧局部排序质量标签参与反传。
+新隔离组件 restoration_energy_numerics.py 修正这两个数值约定，7项CPU测试通过。
+这不证明画质提升或失败唯一原因；旧日志最后20个256-crop记录方向余弦约.1409，
+不能仅放大步长。下一次完整 energy 重试须对比强 Fidelity 本身，检查方向/幅度，
+真实好坏候选和1/2/3步效果，不再把七选一或普通refiner冒充完整PPT方法。
+
+PPT 已按用户要求命名为 Novel PPT Approach，GitHub 路径：
+presentations/novel_ppt_approach/Novel_PPT_Approach_VLM_Restoration_Energy.pptx
+从 original_attempt_retry 改名，文件字节与 SHA-256 不变：
+cdb8d5e0fe682d6cf30f0ba217d64c426e682fbbc7c70bd51e950ed38edacefb
+名称不是经过验证的 novelty 声明；README 保留“曾试过失败、现在重试”的历史。
+
+审计报告：reports/foundir_vlm_and_novel_ppt_retry_audit_2026-10-27.md
+审计JSON：reports/foundir_vlm_and_novel_ppt_retry_audit_2026-10-27.json
+数值复核：reports/novel_ppt_energy_numerics_audit_2026-10-27.json
+本轮新增GPU用量0小时/0 GPU-hours。没有新GPU训练、没有已验收的正式重训命令。
+用户授权两条后续实施；新GPU资格/正式训练前仍须冻结设计、来源隔离、预算和验收条件，
+使用新ID，不把25步工程测试当科学成败，不承诺必过指标。正式规模依可学习性与实测成本决定。
+每任务只用单节点8×H100/H200；若有第二空闲节点可独立并行，不用跨节点DDP。
+当前Codex无GPU或远端执行通道；不能把准备完成说成已启动。
+所有受保护像素禁令、唯一HDD3工作根/专用Python、简明中文汇报及focused push规则继续适用。
+
+
 ## TERMINAL: BOTH joint MoE formal arms complete; joint quality FAIL — 2026-10-27
 
 This supersedes every earlier running/monitoring/pending statement below.

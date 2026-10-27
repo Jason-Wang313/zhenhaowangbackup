@@ -53,9 +53,9 @@
 !patches/*.patch
 !presentations/
 !presentations/*.pptx
-!presentations/original_attempt_retry/
-!presentations/original_attempt_retry/README.md
-!presentations/original_attempt_retry/*.pptx
+!presentations/novel_ppt_approach/
+!presentations/novel_ppt_approach/README.md
+!presentations/novel_ppt_approach/*.pptx
 
 # Explicitly excluded even if a parent directory is later whitelisted.
 checkpoints/

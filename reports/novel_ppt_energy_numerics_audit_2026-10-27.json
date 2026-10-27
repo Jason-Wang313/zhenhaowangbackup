@@ -1,0 +1,52 @@
+{
+  "status": "cpu_numerical_diagnosis_only",
+  "checkpoint": "checkpoints/foundir_proposal_relative_energy_noise_v2/noise_energy_v2_formal1/step_005118.pt",
+  "checkpoint_sha256": "b9444ff2c3d4dedfbad2022c4d3dbb74b193fd6e64d2dcf52cb33275fa438bd1",
+  "synthetic_pattern_only": true,
+  "dataset_pixels_accessed": false,
+  "optimizer_or_weight_updates": false,
+  "new_restoration_quality_claim": false,
+  "step_sizes_all_absent_condition": [
+    [
+      2.8477060794830322,
+      2.8473358154296875,
+      2.8241384029388428
+    ]
+  ],
+  "resolution_probes": [
+    {
+      "size": 128,
+      "legacy_gradient_rms": 1.305084879277274e-06,
+      "legacy_proposed_step_abs_mean": 2.7956673420703737e-06,
+      "reference_area_gradient_rms": 1.305084879277274e-06,
+      "reference_area_proposed_step_abs_mean": 2.7956673420703737e-06,
+      "explicit_area_multiplier": 1.0,
+      "mean_energy": -0.002721703378483653
+    },
+    {
+      "size": 192,
+      "legacy_gradient_rms": 5.476079536492762e-07,
+      "legacy_proposed_step_abs_mean": 1.1889322877323139e-06,
+      "reference_area_gradient_rms": 1.2321179383434355e-06,
+      "reference_area_proposed_step_abs_mean": 2.67509744844574e-06,
+      "explicit_area_multiplier": 2.25,
+      "mean_energy": -0.0025651799514889717
+    },
+    {
+      "size": 256,
+      "legacy_gradient_rms": 2.9855411298740364e-07,
+      "legacy_proposed_step_abs_mean": 6.53690392482531e-07,
+      "reference_area_gradient_rms": 1.1942164519496146e-06,
+      "reference_area_proposed_step_abs_mean": 2.614761569930124e-06,
+      "explicit_area_multiplier": 4.0,
+      "mean_energy": -0.00248697679489851
+    }
+  ],
+  "ranking_target_graph": {
+    "candidate_receives_gradient_via_quality_label_even_with_independent_scores": true,
+    "candidate_gradient_abs_max": 0.0001666667521931231,
+    "legacy_trainer_sha256": "7176168738add8b30338af77c99b166fc3b233e59ba6592cb0df2aa7c88dd9d4",
+    "meaning": "target_side_gradient_exists; contribution_to_scientific_failure_not_measured"
+  },
+  "caveat": "Area correction removes explicit scaling, not learned directional error; no PSNR/LPIPS claim."
+}
