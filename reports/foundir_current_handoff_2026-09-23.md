@@ -1,5 +1,32 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: migrate unfinished MoE; PPT trainfit complete — 2026-10-27
+
+用户要求换新节点，并明确单节点8×H100/8×H200都要兼容；不跨节点DDP。
+这覆盖此前“整组必须同一实体节点”的限制，但不能抹去迁移对可比性的影响。
+只恢复未完成blur_lpips4x：从保存的10500到11000，500步；日志10750不是checkpoint。
+恢复权重、Adam、每rank RNG及336000采样位置，loss/LR/data不变。
+新增独立resume_v1入口，不改旧绑定代码或旧输出；每100步保存一次以防再中断。
+control已经完成，不重跑；新节点记录型号/UUID，最终比较明确跨节点及可能H200→H100，
+不得称严格同节点消融或逐bit一致。旧严格比较器保持不变。
+
+确认旧任务停用后，在一台新空闲八卡节点：
+OLD_MOE_STOPPED=1 bash smoke/start_foundir_moe_blur_lpips_resume_v1_tmux.sh resume_v1
+预计.5–.9小时/4–7.2 allocated GPU-hours。用户认为旧任务已停，但没有远程PID证明；
+日志停更不是证明，flag代表用户确认，不能声称Codex杀掉或核实了旧进程。
+迁移配置SHA：39afd8616ada4b8a22cac7e41d7453e999ce81f3e5cab161693cf26e8f462f4d。
+13项CPU测试、真实权重/Adam/绑定预检查及语法通过；GPU尚未启动。
+报告：reports/foundir_moe_blur_lpips_resume_v1_readiness_2026-10-27.md。
+
+PPT fixed32/300步于13:15:42Z正常结束，8×H100，总1.7594444444444444小时/
+14.075555555555555 GPU-hours。训练裁块上Fidelity43.393339693546295/.03337287811154965，
+energy自选43.93097627162933/.032854294855496846，即+.5376365780830383 dB/
+-.000518583256052807 LPIPS。只证明32个反复训练裁块可拟合，不证明泛化。
+近质量排序正确率从.5976470588235294到.6023529411764705，未证明自验证有收益。
+不要重跑/迁移已完成trainfit，不能拿其权重seed正式，不能自动开1706/8530步。
+第二新节点留待PPT全数据阶段获授权；现有PPT入口本已兼容H100/H200。
+终局：reports/foundir_novel_ppt_trainfit_v1_terminal_2026-10-27.md。
+
 ## MILESTONE: MoE control complete; treatment log stale — 2026-10-27
 
 截至2026-10-27T14:46Z，共享日志证明两组在同一台8×H200上顺序启动。
