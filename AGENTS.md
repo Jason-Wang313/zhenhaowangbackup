@@ -1,5 +1,46 @@
 # Project agent instructions
 
+## ACTIVE: two retry GPU entry points ready, not launched — 2026-10-27
+
+用户的“execute both”现已落实为两个独立入口。本节覆盖下面“没有新启动器”
+以及旧 Rain-only、Generalist-first、energy 永久冻结等过时优先级；保留全部历史失败。
+不能把执行准备完成说成训练已启动。当前 Codex 检查为 0 个 CUDA 设备，无远端执行通道。
+
+A. MoE/VLM：运行不更新权重的训练来源诊断，而非再盲训 router。
+冻结两个 step10000 模型，各检查16个 Rain 和16个 Blur训练来源。
+比较7项损失在代表性共享LoRA/专家输出矩阵上的梯度强弱和方向。
+L2范数为所选张量的精确值；余弦为固定坐标抽样，不是完整网络的精确梯度。
+零 optimizer steps，不读开发/受保护像素，不据此直接宣布泛化或调好损失。
+入口：bash smoke/start_foundir_dual_retry_v1_tmux.sh moe diagnostic_v1
+预算 .25–.75 普通小时、2–6 allocated GPU-hours。
+
+B. Novel PPT Approach：冻结强 Noise proposal 和 step8530 residual basis，
+训练634032参数的候选相关能量模型；同一能量既排序又通过图像梯度修图。
+使用规范化残差坐标、空间能量求和求梯度、detach后的质量标签、完整三步训练，
+以及真实错误专家/重复恢复/不足或过度恢复候选，不是七档alpha选择器。
+先25步GPU工程验收：32张开发子集，仅查数值、显存、checkpoint和完整推理；
+不能用这25步判定方向成败。训练池54585条/1755来源，正式预设8530步、
+每1706步验证固定256张。正式预算须由验收速度推算，不能自动启动，
+不能从资格权重续训；正式入口要求匹配成功资格receipt，从零energy初始化。
+入口：bash smoke/start_foundir_dual_retry_v1_tmux.sh ppt qualification_v1
+资格预算 .25–1.0 普通小时、2–8 allocated GPU-hours。
+
+两任务各占一台同型号8×H100/H200；两台空闲节点可并行，一台则顺序。
+启动器有节点锁、空闲显存检查、180秒有界NCCL检查和新ID防覆盖。
+两入口均已通过真实权重/数据元信息预检查（零图片读取），7项CPU测试及
+完整三步能量二阶反传的双CPU-rank同步测试通过。CUDA显存/二阶反传仍待实测。
+本轮实际GPU消耗0小时/0 GPU-hours，未产生新的科学结果。
+
+不能把原Fidelity收益算作energy收益。分别报告原proposal、Fidelity、
+1/2/3步修图和能量自主选择结果。绝对目标仍为43.424160178005695 PSNR、
+LPIPS<=.045362067760033824；还须单独证明相对匹配Fidelity的PSNR提高且LPIPS不差。
+最低能量和soft no-harm只是训练/选择机制，不是画质安全保证或novelty证明。
+详见 reports/foundir_dual_retry_v1_readiness_2026-10-27.md。
+冻结配置 configs/foundir_dual_retry_execution_v1.json：
+69db2e2f8a0e2dd3675bb7999968d4109ac4abb708151f909045dfb8578426ef。
+不得修改正在运行的绑定代码/配置。保留脏工作树、保护像素禁令、简明中文汇报，
+并在启动准备、关键验证和终局结果时focused commit/push。
+
 ## ACTIVE: VLM/MoE diagnosis AND Novel PPT Approach retry — 2026-10-27
 
 用户已明确授权同时推进两条路线，先分析实际瓶颈、阅读原 PPT 和旧试验。
