@@ -53,6 +53,9 @@
 !patches/*.patch
 !presentations/
 !presentations/*.pptx
+!presentations/original_unworked/
+!presentations/original_unworked/README.md
+!presentations/original_unworked/*.pptx
 
 # Explicitly excluded even if a parent directory is later whitelisted.
 checkpoints/
