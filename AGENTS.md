@@ -1,5 +1,36 @@
 # Project agent instructions
 
+## ACTIVE: PPT train-only fixed32/300-step learnability check — 2026-10-27
+
+用户明确授权执行“能否学会修图”检查。当前PPT下一步不是8530步正式，
+也不是继续25步资格权重：从零energy初始化，固定32训练来源的32个256裁块，
+每步各曝光一次，训练300步，第0/100/200/300步检查相同训练裁块。
+保留原energy/完整三步/loss/AdamW/100步warmup/8530步LR跨度，
+只固定训练数据并缓存冻结输出。不得读取开发或受保护像素；原split元信息排重继续。
+此实验只诊断训练拟合能力，不作泛化/论文成绩，权重永不初始化正式。
+不自动开启1706或8530步。若学不动先分析目标/优化/容量；若能学再决定全数据阶段。
+
+入口：bash smoke/start_foundir_novel_ppt_trainfit_v1_tmux.sh trainfit_v1
+单节点同型号8×H100/H200，预算2.0–2.5普通小时/16–20 allocated GPU-hours，
+缓存可能减少耗时，须看实测。旧速度下step100训练部分约36.4分钟，另加启动/检查。
+逐项报告Fidelity、1/2/3步、自主选择的MSE/PSNR/LPIPS、梯度方向与改变量、
+固定相近候选的真实质量排序准确率（同时报参与对数和step0基线）。
+能量下降或都选最后一步不构成画质/自验证证据。10%近质量分组仅用于诊断读数，
+不作用于训练/推理，不进行阈值调优；零有效对时结果为null。
+5项CPU回归测试、语法与真实来源/权重预检查通过；未执行新GPU任务。
+Codex无GPU/远端执行通道，需用户在空闲节点输入命令，不能声称已启动。
+配置：configs/foundir_novel_ppt_trainfit_v1.json
+SHA-256：dd3a7748f6c821bc870e685c1cd8613ffc113877b64f6a8773f5279a29326cb5。
+详情：reports/foundir_novel_ppt_trainfit_v1_readiness_2026-10-27.md。
+
+并行MoE diagnostic_v2已于11:14:22Z正常完成，status=0、64条完整记录，
+8×H200耗331秒/.09194444444444444小时/.7355555555555555 GPU-hours。
+全部51项来源绑定核验一致；零优化步。不要重跑它或把诊断成功说成MoE性能改善。
+解释梯度结果属于下一步分析，尚未确定Blur唯一瓶颈。
+终局：reports/foundir_moe_gradient_diagnostic_v2_terminal_2026-10-27.md。
+PPT25步资格亦已结束，历史指标/成本不变。新文件隔离新增，旧绑定代码保持不动。
+简明中文、保护数据、唯一HDD3运行根和专用Python、focused GitHub tracking规则继续适用。
+
 ## ACTIVE: isolated MoE diagnostic V2 retry; PPT qualification complete — 2026-10-27
 
 用户要求监测两任务至终局，并在MoE错误后明确要求修复执行、重新给GPU命令。
