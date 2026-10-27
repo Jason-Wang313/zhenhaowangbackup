@@ -1,5 +1,34 @@
 # Project agent instructions
 
+## ACTIVE: same-node matched MoE Blur-LPIPS continuation — 2026-10-27
+
+用户批准MoE修复对照，并明确两组必须在同一节点。不要按原配方重跑10k，
+不要拆成两个4卡任务或放到两台节点。使用同一台同型号8×H100/H200，
+control完成后顺序运行blur_lpips4x，每组独占8卡。
+两组均从原image-only formal_v1的step10000恢复权重、Adam、每rank RNG和
+样本位置320000，新增1000步到11000；第二组不能继承第一组结果。
+唯一科学改动：Blur LPIPS系数.05→.20；Rain仍.05；其他损失、学习率、
+数据、采样、架构和image-only router不变。不重置优化器或warmup。
+
+入口：bash smoke/start_foundir_moe_blur_lpips_pair_v1_tmux.sh pair_v1
+配置：configs/foundir_moe_blur_lpips_continuation_v1.json
+配置SHA：f9840280eabc089567168ab55d7ce8f6431772f6fcb94ddbd208a3ff16449d20。
+同节点顺序总预算2–3普通小时/16–24 allocated GPU-hours，依实际速度更新。
+固定10500/11000完整评估Rain100和Blur2595，保持原裁块/指标。
+只用11000判断，不挑中期最好，不按开发集搜索新权重，不自动扩训。
+修改版Blur LPIPS相对control的来源bootstrap上界<0、Blur PSNR>=25.9、
+Rain通过34.2/.08才是继续研究信号；Blur LPIPS<=.18仍是独立绝对目标。
+不要把改善、工程通过或GPU利用率说成完整达标/VLM贡献/novelty。
+
+启动器全程持有PPT/MoE和Rain/Blur节点锁，核对hostname及实体GPU UUID，
+禁止与已运行PPT争卡；不得自动停止、恢复或修改PPT任务。
+PPT fixed32/300-step检查的授权与历史不变，旧绑定源文件保持不动。
+本轮7项CPU测试及语法通过，真实父权重/Adam/来源/数据元信息预检查通过，
+预检查零图片读取；GPU尚未启动，CUDA工程行为仍须实际运行确认。
+Codex无GPU执行通道，需要用户在空闲节点输入上述一个命令。
+报告：reports/foundir_moe_blur_lpips_continuation_v1_readiness_2026-10-27.md。
+继续严格保护数据、保留脏目录、简明中文汇报并focused commit/push。
+
 ## ACTIVE: PPT train-only fixed32/300-step learnability check — 2026-10-27
 
 用户明确授权执行“能否学会修图”检查。当前PPT下一步不是8530步正式，
