@@ -1,5 +1,28 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: PPT only; MoE deferred until PPT outcome — 2026-10-27
+
+用户报告节点2被不明人员停止，并明确改为一次只推进一个实验。
+唯一active research job现在是Novel PPT Approach全数据stage1。
+这覆盖下面“两节点并行”、MoE改进优先级及其他旧active表述。
+MoE的已完成11000步结果完整保留；不重启旧MoE，不启动新的梯度诊断、
+LPIPS .20/.40对照或VLM训练。上一轮提出的MoE两组各2000步仅是建议，未执行。
+只有PPT在来源隔离开发集验证有效，或用户明确决定放弃PPT后，才重新讨论MoE；
+不得将tmux启动、工程验收或32张训练拟合成功当作PPT已work而自动启动MoE。
+
+PPT stage1_v1日志最后停在加载冻结模型，只有launch.json，没有训练步记录、
+validation文件或完整checkpoint/receipt，故没有可恢复的优化状态。
+没有异常栈/END标记；停止由用户报告，具体原因和操作者未知，不能归因代码或外部管理员。
+保留旧日志与目录不动，不宣称已远程核实旧节点PID。
+在用户确认旧任务停止的节点2，用新ID重新从零启动相同冻结配方：
+bash smoke/start_foundir_novel_ppt_full_data_stage1_v1_tmux.sh stage1_retry1
+
+单机同型号8×H100/H200，完整54585条/1755来源训练池、固定256开发条目。
+仍只到1706步，不加载trainfit/qualification权重，不自动扩到8530。
+预计10.5–13普通小时/84–104 allocated GPU-hours，每100步保存完整恢复状态。
+这是重新启动命令，不是假称从某训练步续训；Codex没有替用户启动GPU。
+源码/config不改，节点锁及空闲显存检查继续拒绝同节点重复占卡。
+
 ## TERMINAL: migrated MoE finished; Blur LPIPS still short — 2026-10-27
 
 节点1resume_v1已于17:28:57Z正常结束，status=0，10500→11000共500步。
