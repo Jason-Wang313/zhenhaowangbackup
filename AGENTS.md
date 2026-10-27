@@ -1,5 +1,43 @@
 # Project agent instructions
 
+## ACTIVE: FLUX-only energy qualification ready; sampler guidance conditional — 2026-10-27
+
+用户授权先执行冻结FLUX输出上的energy修图接入与25步工程验收。
+只有后续独立开发验证证明energy判断可靠、且像素修正导致纹理损伤限制收益，
+才考虑引导FLUX最后少量采样步骤；当前不实现、不启动该备选。
+未来必须匹配总计算预算的无energy FLUX对照，计入energy前向/反向与VAE开销，
+不能只匹配采样步数。MoE继续暂缓，一次一个GPU任务，不恢复旧Restormer-energy。
+
+新入口：smoke/start_foundir_flux_energy_qualification_v1_tmux.sh。
+配置：configs/foundir_flux_energy_qualification_v1.json。
+先单GPU离线BF16解量化Qwen生成Noise/Haze文本缓存，退出后八卡生成真实FLUX候选；
+再退出全部FLUX/AE进程，仅八卡训练energy。不得使用Rain提示词缓存。
+32条来自32个training source的固定512裁图；训练256同步裁图，验收512。
+Noise step400、50步、先量化raw再固定alpha=.30再量化，保留原部署基线。
+真实wrong-Haze expert、人工不足/过度恢复和低通损坏、训练GT、完整1/2/3步轨迹
+均有明确身份。GT只用于训练/评分，不进入trajectory或推理选择。
+不加载额外residual Restormer，不训练直接refiner。
+
+只做fresh 25步工程验收；32张训练图上的指标不是泛化结果，不自动formal、
+不允许用qualification权重seed正式训练。内部NAF beta/gamma初始化为.1，
+输出head仍为0，初始energy轨迹必须严格等于FLUX基线；这是解除初始化退化，
+不是已证明的画质提升。后续科学目标仍是energy独立增加>=.30dB并降低LPIPS
+>=9.928107050377874%，正式匹配协议仍1859条/34来源/512，不拿旧43.x指标抵扣。
+源/配置、权重、提示词、数据、裁图与候选缓存都有身份检查；训练/heldout来源和GT哈希隔离。
+
+CPU单测、双rank Gloo二阶反传和真实权重/元数据预检已通过；GPU验收尚未执行。
+预检确认54585训练条目/1755来源全部满足512尺寸，未读取图片。
+单机同型号8xH100/H200，预计.5–1.5普通小时/4–12 allocated GPU-hours，
+包含串行文本编码、候选生成和energy验收；以实测替换估计，再决定全量缓存预算。
+当前Codex无GPU执行通道，需用户在GPU节点运行入口，不得声称已经启动。
+详见reports/foundir_flux_energy_qualification_v1_readiness_2026-10-27.md。
+
+旧stage1_retry1最新日志仅到580/1706，随后21:55:21Z出现launcher END status=0，
+elapsed_seconds=13182（3.661667小时，29.293333 allocated GPU-hours）。
+没有训练完成标志或最终科学验证，不能把退出码0当作实验成功。
+未核验远端PID、未替用户杀进程；新入口用同节点锁、精确旧进程检查和空闲显存检查防争卡。
+旧未完成nonzero_init Restormer草稿继续禁止启动，所有历史文件保留。
+
 ## ACTIVE: FLUX proposal + energy; measure energy-only relative gains — 2026-10-27
 
 用户最新决定覆盖下面所有Restormer/residual-basis PPT active/live目标。
