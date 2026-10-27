@@ -1,5 +1,23 @@
 # FoundIR current handoff — 2026-09-23
 
+## TERMINAL: migrated MoE finished; Blur LPIPS still short — 2026-10-27
+
+节点1resume_v1已于17:28:57Z正常结束，status=0，10500→11000共500步。
+单机8×H100，launcher1845秒/.5125普通小时/4.1 GPU-hours；
+trainer.45572002159471997小时/3.6457601727577598 GPU-hours。
+不要重启、延长或把完成的MoE当成仍在跑。节点2PPT全数据阶段授权与配方不变。
+
+固定11000步：Rain100条34.41416323292532/.06439921100391074，仍通过34.2/.08。
+Blur2595条26.61952123148184/.18833398326176268，PSNR过25.9，LPIPS未过.18，
+还差约.008334。相对原配方26.74785967610281/.2319519135801782，Blur PSNR
+下降.1283384446209673、LPIPS改善.04361793031841552。
+预先规定的修复信号通过，但联合绝对门槛失败；不是VLM优势或novelty证明。
+旧H200→新H100的迁移和中断恢复必须披露，不称严格同节点消融。
+
+41项源码、终局权重/Adam哈希、逐图汇总和完整记录数已核验，未重跑或读取图片。
+报告：reports/foundir_moe_blur_lpips_resume_v1_terminal_2026-10-27.md。
+result SHA：d11d47c16403e1e70389e33a91ee73de8b3d6d70708660de92c775e986bcdd39。
+
 ## ACTIVE: node2 PPT full-data stage1 authorized — 2026-10-27
 
 用户已在节点1启动MoE迁移，并要求节点2的PPT命令。这覆盖下面“第二节点待授权”。
