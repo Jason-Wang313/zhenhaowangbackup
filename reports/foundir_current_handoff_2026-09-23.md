@@ -1,5 +1,33 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: isolated MoE diagnostic V2 retry; PPT qualification complete — 2026-10-27
+
+用户要求监测两任务至终局，并在MoE错误后明确要求修复执行、重新给GPU命令。
+MoE diagnostic_v1已于10:54:47Z status=1退出，耗234秒/.065小时/.52 H200 GPU-hours。
+首个梯度抽样越界，无完整样本/result.json；零优化步，不能解释为MoE科学失败。
+CPU已用真实3072×9216矩阵尺寸复现：FP32 linspace把合法末端28311551
+舍入为越界28311552。改为int64整数索引是工程修复，不改变训练方案。
+
+不要重启V1。新增隔离V2诊断和专用启动器，4项回归测试与真实权重预检查通过。
+为保护同时运行的PPT源文件绑定，旧V1、共用runtime/config/launchers都保持不变。
+在空闲MoE节点运行：
+bash smoke/start_foundir_moe_gradient_diagnostic_v2_tmux.sh diagnostic_v2
+每任务仍单节点8×H100/H200，预算.25–.75小时/2–6 GPU-hours。
+新ID日志与输出不覆盖V1。Codex无GPU执行通道；V2尚未被共享日志确认启动。
+详见reports/foundir_moe_gradient_diagnostic_v2_repair_2026-10-27.md。
+
+PPT qualification_v1在8×H100完成25/25步，11:03:13Z status=0，
+705秒/.19583333333333333小时/1.5666666666666667 allocated H100 GPU-hours。
+32张Fidelity为42.97121322154999/.03313419208279811；最终energy自主选择为
+42.97113627195358/.03313359947060235。PSNR略降、LPIPS极微下降，没有双指标收益。
+工程通过不等于科学通过；25步/32张不能判定正式8530步/256张方向成败。
+配置/19项来源/checkpoint哈希和逐图重汇总均独立核验通过，旧绑定代码未改变。
+中位21.83572708698921秒/步，8530步单训练外推51.738542236671655小时/
+413.90833789337324 GPU-hours，另需验证等开销。不得自动正式或从资格权重续训。
+先明确实测成本；如优化执行效率则重做匹配资格，不能改配方后沿用旧receipt。
+终局报告：reports/foundir_novel_ppt_energy_v1_qualification_terminal_2026-10-27.md。
+所有历史与保护数据约束继续适用。
+
 ## ACTIVE: two retry GPU entry points ready, not launched — 2026-10-27
 
 用户的“execute both”现已落实为两个独立入口。本节覆盖下面“没有新启动器”
