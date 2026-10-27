@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status": "protocol_frozen_implementation_not_launch_ready",
+  "decision_date": "2026-10-27",
+  "task": "Noise first; no automatic five-task expansion",
+  "pipeline": "frozen deployed FLUX Noise output -> VLM-conditioned energy gradient refinement",
+  "extra_residual_restormer": false,
+  "trainable_proposal_or_direct_refiner": false,
+  "baseline_config": "configs/foundir_noise_flux2_scalar_residual_full_development_v1.json",
+  "baseline_config_sha256": "5e7a356ea89d21f7b60b4b736f851ef26a0216d8555d73846f527b958b5b7dd6",
+  "baseline_checkpoint": "checkpoints/foundir_four_task_flux2_capacity_sanity_v1/noise/step_000400.safetensors",
+  "baseline_checkpoint_sha256": "1b4ed05ad5ad403a3d7fcc633eca97cdb69d00454e357da0c3d3131ac2c3ff1a",
+  "baseline_inference": {
+    "steps": 50,
+    "guidance": 1.0,
+    "reference_time_coordinate": 10,
+    "seed": 2026091604,
+    "seed_namespace": "noise_scalar_full_development_v1",
+    "alpha": 0.3,
+    "quantization": "raw FLUX rounded to uint8, fixed alpha blend then rounded to uint8, exactly as existing deployed baseline",
+    "alpha_is_frozen_arithmetic_not_a_learned_residual_network": true,
+    "do_not_substitute_weaker_raw_flux_alpha1_baseline": true
+  },
+  "development": {
+    "records": 1859,
+    "source_groups": 34,
+    "crop_size": 512,
+    "crop_seed": 2026091602,
+    "same_records_crops_and_uint8_metric_processing_for_both_arms": true,
+    "old_256_record_restormer_metrics_are_not_this_baseline": true,
+    "no_new_development_threshold_or_checkpoint_selection": true
+  },
+  "energy_gate": {
+    "minimum_psnr_gain_db_over_matched_flux": 0.3,
+    "minimum_lpips_relative_reduction": 0.09928107050377874,
+    "lpips_fraction_provenance": "0.005 / 0.050362067760033824; user requested same percentage from the new FLUX baseline",
+    "both_required": true,
+    "count_only_energy_increment": true
+  },
+  "hardware": {"nodes": 1, "gpus": 8, "families": ["H100", "H200"], "homogeneous": true},
+  "pending_before_launch": [
+    "Resolve old PPT job on its actual GPU node; do not overlap, silently kill or alter its bound files",
+    "Audit frozen Noise prompt contexts and full inference import closure; no runtime FP8 downloads",
+    "Reproduce paired frozen FLUX output identity; existing full-development export contains metrics and 16 triptychs, not a complete train proposal cache",
+    "Training-source-only cache throughput and memory qualification; report measured wall and GPU hours before full export",
+    "Implement paired FLUX cache loader and strict crop/source/hash isolation",
+    "Verify initialization-only energy fix and complete action-ranking/three-step gradient training without an extra direct refiner",
+    "New 25-step GPU engineering qualification with real frozen FLUX proposals; no auto formal or reuse of qualification weights"
+  ],
+  "protected_pixels_accessed": false,
+  "auto_launch": false,
+  "auto_stop_existing_job": false,
+  "scientific_success_established": false
+}

@@ -1,5 +1,36 @@
 # Project agent instructions
 
+## ACTIVE: FLUX proposal + energy; measure energy-only relative gains — 2026-10-27
+
+用户最新决定覆盖下面所有Restormer/residual-basis PPT active/live目标。
+主实验先做Noise：冻结当前可用FLUX输出，VLM条件energy通过同一个energy的梯度修图。
+不加额外residual Restormer或可训练直接refiner。MoE仍暂缓。
+用户并非否认Restormer可作为其他实验基线；关键是energy收益必须独立计量。
+
+门槛必须相对匹配FLUX基线重新计算：PSNR增加>=0.30 dB；
+LPIPS降低比例>=0.005/0.050362067760033824=0.09928107050377874（约9.93%）。
+不得沿用43.424160178005695/.045362067760033824，也不得说energy只差.027 dB
+或LPIPS已经完成。基线已有提升不能抵扣energy目标。
+
+保留已验证Noise FLUX step400 + 固定alpha=.30/50步的部署处理。
+alpha只是算术混合，不是residual Restormer；不得换成较弱的raw FLUX制造增益。
+最终比较使用同一1859条/34来源/512 crop/量化/指标/种子协议；旧256条43.x不适用。
+仅当匹配重现旧FLUX基线时，换算目标约40.45055349220034/.062041844133373776。
+这些只是目标，不是新结果。自选优于固定三步、VLM必要性和跨退化证据另行验证。
+
+当前完成的是协议与配对增益检查，不是GPU launch readiness：
+configs/foundir_flux_proposal_energy_noise_v1_plan.json；
+reports/foundir_flux_proposal_energy_noise_v1_decision_2026-10-27.md。
+先核对Noise prompt、现有FLUX输出身份和训练来源缓存吞吐，再接完整PPT候选/三步轨迹，
+冻结预算和资格后才能启动；不直接外推旧Restormer训练速度，不自动全量缓存或长训。
+单节点同型号8xH100/H200，保持全部受保护像素禁令。
+
+旧stage1_retry1最后只读见step565，仍是Restormer-basis energy，不能当FLUX结果。
+该旧任务不再是必须完成的研究前置条件；不自动恢复、延长或切改其绑定代码。
+停止状态需实际GPU节点确认，不在此声称已停止，也不擅自杀进程或与它争卡。
+未测试的nonzero_init_qualification Restormer脚本是已被新方向替代的草稿，禁止启动。
+保留旧权重/日志/草稿，不销毁历史。所有汇报用简明中文，说明数据和增益归属。
+
 ## MILESTONE: PPT step400 checkpoint verified; training near step420 — 2026-10-27
 
 截至20:56Z，stage1_retry1日志到420/1706（24.6189917936694%），持续更新，
