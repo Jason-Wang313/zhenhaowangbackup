@@ -1,5 +1,42 @@
 # FoundIR current handoff — 2026-09-23
 
+## TERMINAL: BOTH joint MoE formal arms complete; joint quality FAIL — 2026-10-27
+
+This supersedes every earlier running/monitoring/pending statement below.
+Both formal_v1 arms finished10000/10000 normally with launcher status0,
+engineering_pass=true and no logged nonfinite loss/gradient, OOM or fatal
+runtime/NCCL failure. image-only ended03:14:25Z on8xH100; VLM03:41:07Z on8xH200.
+The monitoring request is fulfilled. Do not resume, extend, relaunch, retune,
+or start another experiment without a new user decision.
+
+Frozen final Rain100: image34.73973430724847/.06654019097797573;
+VLM34.742482612955634/.06634078806499019. BOTH pass Rain34.2/.08.
+Frozen final FULL Blur2595: image26.655435556096634/.23083898932184047;
+VLM26.61442463761589/.2282890860716721. BOTH pass Blur PSNR25.9, but
+BOTH FAIL LPIPS<=.18. Do not describe engineering completion as joint success.
+
+The existing final comparator passed matched config/all29 sources/data/input
+metrics and recomputed paired rows. Rain VLM benefit is inconclusive (both
+source-bootstrap intervals include zero). Blur VLM-minus-image is
+-.04101091848074167 dB / -.0025499032501683986 LPIPS: perceptual/fidelity
+tradeoff, NOT dominance. This is one seed on different H100/H200 hardware,
+not training-seed uncertainty or a hardware-matched causal proof.
+At identical VLM weights, switching VLM off changes Rain almost negligibly;
+on matched Blur100, VLM on lowers LPIPS but also lowers PSNR. No novelty/SOTA
+or VLM-necessity claim is established. This remains Rain/Blur only, not five
+types, coupled restoration or raw-token conditioning.
+
+Both final weight/Adam file SHA-256 values independently match their
+step10000 resume receipts; next_sample_position320000. Result/metric hashes
+and current bound sources/config were checked. No protected pixels or extra
+GPU evaluation were accessed in this terminal audit.
+Launcher costs: image26910s=7.475h/59.8 H100 GPU-hours;
+VLM27969s=7.769166666666667h/62.153333333333336 H200 GPU-hours.
+Total121.95333333333333 allocated GPU-hours, excluding prior qualifications.
+
+Report: reports/foundir_joint_moe_v2_terminal_2026-10-27.md
+Machine-readable: reports/foundir_joint_moe_v2_final_comparison_2026-10-27.json
+
 ## MILESTONE: image-only step6000 — Rain PASS, Blur still short — 2026-10-26
 
 image-only scheduled step6000: Rain10034.3965064204137/.07232339138630778

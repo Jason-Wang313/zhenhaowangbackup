@@ -1,0 +1,65 @@
+{
+  "status": "matched_final_comparison",
+  "per_task": {
+    "rain": {
+      "records": 100,
+      "source_groups": 100,
+      "image_only": {
+        "psnr": 34.73973430724847,
+        "lpips": 0.06654019097797573
+      },
+      "vlm_assisted": {
+        "psnr": 34.742482612955634,
+        "lpips": 0.06634078806499019
+      },
+      "VLM_minus_image_PSNR": 0.0027483057071596485,
+      "VLM_minus_image_LPIPS": -0.00019940291298553347,
+      "PSNR_source_bootstrap_95pct": [
+        -0.049595261489545864,
+        0.06204663621970313
+      ],
+      "LPIPS_source_bootstrap_95pct": [
+        -0.0011888138362555764,
+        0.0007568351261434138
+      ],
+      "PSNR_win_fraction": 0.51,
+      "LPIPS_win_fraction": 0.5,
+      "interval_caveat": "paired_source_bootstrap_for_one_seed_not_training_seed_uncertainty"
+    },
+    "blur_full": {
+      "records": 2595,
+      "source_groups": 165,
+      "image_only": {
+        "psnr": 26.655435556096634,
+        "lpips": 0.23083898932184047
+      },
+      "vlm_assisted": {
+        "psnr": 26.61442463761589,
+        "lpips": 0.2282890860716721
+      },
+      "VLM_minus_image_PSNR": -0.04101091848074167,
+      "VLM_minus_image_LPIPS": -0.0025499032501683986,
+      "PSNR_source_bootstrap_95pct": [
+        -0.09355003986646254,
+        -0.006007755152468188
+      ],
+      "LPIPS_source_bootstrap_95pct": [
+        -0.0034462775660881535,
+        -0.0015463482827594126
+      ],
+      "PSNR_win_fraction": 0.48940269749518306,
+      "LPIPS_win_fraction": 0.7429672447013488,
+      "interval_caveat": "paired_source_bootstrap_for_one_seed_not_training_seed_uncertainty"
+    }
+  },
+  "absolute_quality_gates": {
+    "image_only": false,
+    "vlm_assisted": false
+  },
+  "macro_PSNR_delta": -0.01913130638679101,
+  "macro_LPIPS_delta": -0.001374653081576966,
+  "VLM_both_metrics_improve_each_task": false,
+  "paper_novelty_or_SOTA_established": false,
+  "frozen_VLM_diagnosis_precompute_cost_excluded_from_restorer_runtime": true,
+  "protected_pixels_accessed": false
+}

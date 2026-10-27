@@ -1,5 +1,11 @@
 # Rain／Blur 联合训练 MoE V2：image-only 与 VLM 对照
 
+最终状态（2026-10-27）：两条formal_v1均已10000步正常结束、退出0，不要再执行下方启动命令。
+Rain两条都达标；完整Blur2595两条PSNR达标但LPIPS未达标。VLM表现为小幅LPIPS改善伴随Blur PSNR下降。
+结果与完整断点已核验，监控任务完成；不自动续训或启动新实验。
+详见 `foundir_joint_moe_v2_terminal_2026-10-27.md` 和 `foundir_joint_moe_v2_final_comparison_2026-10-27.json`。
+以下启动／运行状态仅为历史记录。
+
 最新启动核验（2026-10-26 20:05:52 UTC）：两条正式训练均已实际开始。
 image-only 在8×H100到480步，VLM在8×H200到60步，日志未见运行错误。
 第1000步前尚无训练后质量验证。正式step0输出存在微小跨硬件数值差异，
