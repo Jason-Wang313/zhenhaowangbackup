@@ -1,5 +1,43 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: investigate FLUX tail guidance; abandon output-pixel descent — 2026-10-27
+
+用户最新明确决定：不再继续当前FLUX最终输出上的直接pixel energy descent，
+改为探索引导FLUX最后少量采样步骤。此决定覆盖此前“必须先证明pixel energy有效/
+纹理受损才允许转采样引导”的前置条件；但用户本轮要求先广泛查论文和既有方法，
+不是授权立即新训或把现有25步energy直接接入FLUX。
+旧qualification已完成，无需杀进程；不得自动formal或恢复旧PPT/Restormer/MoE。
+旧25步结果保留为工程通过/量化收益0，不宣称科学上已证伪整条energy路线。
+
+调研依据：reports/foundir_flux_tail_energy_guidance_literature_2026-10-27.md。
+已核查IRED、Reduce Reuse Recycle、CEP、DPS、Universal Guidance、FreeDoM、
+On the Guidance of Flow Matching、D-Flow、FlowChef、Trust Sampling、
+KDS和ResFlow-Tuner等原文方法，并只读检查IRED/FlowChef/flow_guidance公开代码。
+中间态适配有已有解法：t/noise-conditioned energy；predicted-clean preview评分；
+短段真实rollout后评分。不要再把它说成未解决、必须从零发明的障碍。
+但解决输入分布错位不等于已有energy已经可靠或能通过PSNR/LPIPS门槛。
+
+建议下一设计以FLUX实际末段的predicted-clean preview + 条件quality energy为起点，
+保留冻结FLUX及其生成步骤；energy训练数据必须覆盖实际预览/候选分布。
+不是直接复用25步energy，不是把IRED完整conditional score盲目加到已有conditional
+FLUX向量场，不是把DDPM公式或DDPM噪声时标照抄到rectified flow。
+本仓库t=1为噪声、t=0为clean；z0_hat=z_t-t*v(z_t,t)是单步endpoint估计，
+不是精确最终结果；真实shifted schedule而非step_index/50决定t。
+完整输入梯度是准确对照；FlowChef-style跳过FLUX Jacobian是可测试加速近似，
+不是“完全不需要梯度”。可微preview仍需VAE/energy反传。
+
+保留Noise step400/50步/alpha=.30部署基线、最终uint8量化、匹配开发协议和
+energy独立+.30dB / LPIPS相对降低9.928107050377874%的目标。
+不允许换成较弱raw FLUX，也不把GT、未知真实退化算子或perfect noise level当推理条件。
+后续需零引导一致性、原50步基线、匹配总计算预算的无energy对照；
+预算包括前向/反向、解码、评分/搜索，不能仅比步数。末段具体窗口和引导强度尚未冻结。
+文献不证明只引导最后几步一定足够，也不保证同升两个指标。
+
+Novelty边界：FlowChef已有FLUX引导；ResFlow-Tuner已有VLM语义条件/FLUX恢复/
+中间轨迹搜索；普通energy guidance、TTS或其简单组合不能称首次。
+本轮仅文献、代码只读核对及决策文档；无新GPU任务、无实验脚本改动。
+单节点8xH100/H200约束保持；未来实验普通小时/GPU-hours待具体设计资格实测。
+
 ## MILESTONE: FLUX-only energy qualification completed; zero measured gain — 2026-10-27
 
 qualification_v1于22:42:21Z正常结束，25/25步，launcher status=0且
