@@ -1,5 +1,25 @@
 # FoundIR current handoff — 2026-09-23
 
+## MILESTONE: MoE control complete; treatment log stale — 2026-10-27
+
+截至2026-10-27T14:46Z，共享日志证明两组在同一台8×H200上顺序启动。
+control已完成11000步、engineering_pass=true；trainer耗.6895869781746943小时/
+5.516695825397554 GPU-hours。最终Rain为34.496691444868425/.06531600838992745，
+Blur为26.74785967610281/.2319519135801782，Blur LPIPS仍未过.18。
+
+匹配10500步：control Blur26.673934584810702/.22695887966412578，
+blur_lpips4x Blur26.58181729682454/.186522385071396。
+修改版LPIPS改善.04043649459272977、PSNR下降.09211728798616292，
+但PSNR仍过25.9；修改版Rain34.609037982905335/.06519713898887858也通过。
+Blur LPIPS距离.18还差.00652238507139602；这是中期收益，不是最终达标。
+
+第二组最后日志10750步、mtime约13:14Z，检查时已超过90分钟未更新。
+没有异常栈、OOM/NaN、结束标记、11000检查点或comparison.json。
+最后完整可恢复状态为10500。不能说正常运行，也不能断定外部停机或代码故障；
+需要原训练节点进程/GPU状态。不得自动杀进程、重启、续训或延长。
+本次仅核对日志/JSON/来源哈希，不读取新图片，不改变训练代码。
+详见reports/foundir_moe_blur_lpips_pair_v1_status_2026-10-27.md。
+
 ## ACTIVE: same-node matched MoE Blur-LPIPS continuation — 2026-10-27
 
 用户批准MoE修复对照，并明确两组必须在同一节点。不要按原配方重跑10k，
