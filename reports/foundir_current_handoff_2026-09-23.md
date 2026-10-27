@@ -1,5 +1,23 @@
 # FoundIR current handoff — 2026-09-23
 
+## MILESTONE: PPT step400 checkpoint verified; training near step420 — 2026-10-27
+
+截至20:56Z，stage1_retry1日志到420/1706（24.6189917936694%），持续更新，
+无OOM/NaN/NCCL/runtime错误。100/200/300/400步均产生完整pt与JSON receipt。
+step400 SHA82a36b802920972ec234bd217a8a4663f55366d64521620de3fe37692c1604a6
+与receipt一致，23项源码绑定未变，next_sample_step=401。
+这证明实际GPU运行能保存checkpoint；尚未在GPU上演练中断恢复。
+
+320–420步的21个日志采样平均22.325224876484192秒/步，峰值18.720479488372803 GiB。
+从420到1706纯训练外推7.9750664419885195小时；含最终验证暂估8–8.5小时/
+64–68 allocated GPU-hours，依实际速度更新。不改计划或自动扩训。
+
+科学信号仍弱：同一日志窗口平均gradient_cosine=-.0003576330413222552，
+平均update_abs_mean=.00004885955797546904（[-1,1]图像空间）。
+这是训练批次诊断，不是开发集PSNR/LPIPS，不把工程健康说成画质已改善。
+尚无训练后开发验证，不能宣布PPT成功或失败；继续固定1706步验证。
+MoE仍暂缓。本次仅查日志/JSON/哈希，未读取图片或重新运行训练/评价。
+
 ## LIVE: PPT stage1_retry1 is training on 8 H100 — 2026-10-27
 
 stage1_retry1于18:15:39Z启动，八卡硬件/空闲显存、真实数据与源码绑定、
