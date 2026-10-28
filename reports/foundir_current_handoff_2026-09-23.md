@@ -31,8 +31,34 @@
 通用入口smoke/run_foundir_flux_tail_oracle_v1_gpu.sh <fresh_run_id> <4|8>；
 tmux入口smoke/start_foundir_flux_tail_oracle_v1_tmux.sh <fresh_run_id> <4|8>。
 本次预算cap：4卡3普通小时/12 GPU-hours；8卡1.5普通小时/12 GPU-hours，
-另最多30秒清理。这是预算，不是实测ETA。实际GPU验收尚未运行。
+另最多30秒清理。这是预算，不是实测ETA。4×H100已实测完成；8卡/H200尚未验收。
 详细变更见reports/foundir_flux_tail_oracle_4_8gpu_compatibility_2026-10-28.md。
+
+## MILESTONE: four-H100 tail diagnostic complete; joint target NOT met — 2026-10-28
+
+mechanism_4gpu_v1已正常结束，4×NVIDIA H100 80GB，2026-10-28T20:13:53Z–
+20:22:22Z，launcher status=0，TAIL_ORACLE_RESULT_VERIFIED。总509秒/
+.1413888889普通小时/.5655555556使用GPU-hours；纯worker阶段.0938851541小时。
+8训练来源×46个arms完整；8/8基线逐像素复现，16/16 FP32预览/两步rollout
+有限差分通过，最大相对误差.0097435826。单卡峰值22.5287GiB；源码/配置身份一致。
+这实际验证了4×H100路径，不能扩称8卡或H200已完成GPU验收。
+
+原基线39.64431142807007/.07384782587178051。
+最佳PSNR固定arm preview_skip_i46_w0_rms0.005：
+40.46877956390381/.07429557666182518，PSNR+.8244681358dB，但LPIPS恶化.606315%。
+真实两步rollout+联合目标、小幅度.005：
+40.45664739608765/.0739425360225141，PSNR+.8123359680dB，LPIPS仍恶化.128250%。
+最佳LPIPS固定arm preview_skip_i48_w1_rms0.02：
+39.27623128890991/.0733890135306865，LPIPS只降.621294%，PSNR反降.3680801392dB。
+42个引导arms无一同时达到+.30dB和LPIPS下降9.928107%；本8图对应LPIPS目标.0665161347。
+
+结论：GT引导在有限窗口有明确PSNR修正空间，不是简单“FLUX末段改不动”；
+本次单步/权重/幅度配置尚未证明双指标可行，尤其LPIPS不足。
+不是energy学会、不是VLM贡献、不是泛化或论文成功；没有训练energy。
+下一步需先针对LPIPS目标/步幅及实际量化终图对齐提出有边界诊断，
+不能直接据此自动启动energy长训，也不能由8图有限搜索否定全部路线。
+报告：reports/foundir_flux_tail_oracle_v1_terminal_2026-10-28.md。
+result SHA256：4985f367cca8bc1fb730dee173d111eb4929fc6ebda4b9d0db6da223d523f7b1。
 
 ## ACTIVE: Noise FLUX training-only tail mechanism diagnostic — 2026-10-28
 
