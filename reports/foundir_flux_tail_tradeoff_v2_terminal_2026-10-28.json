@@ -1,0 +1,1453 @@
+{
+  "run_id": "tradeoff_4gpu_v1",
+  "status": "engineering_complete_joint_diagnostic_target_not_met",
+  "result_path": "checkpoints/foundir_flux_tail_tradeoff_v2/tradeoff_4gpu_v1/result.json",
+  "result_sha256": "78e442d5f3a4cda82c15b2903b02d66a2ab790ac167df8bc12e9a8bcf1858625",
+  "preflight_sha256": "16724043d11cef2b5b44ccec26d945742c6e862e0cf7d3ae75d32aa8ccc280d3",
+  "config_sha256": "c3d51753ce1d510d4605cd957534b9f7f9e23257e1b55370c371de1276e58e10",
+  "source_sha256": {
+    "configs/foundir_flux_energy_qualification_v1.json": "0b5465cebc289f5cb4b59c87120e838fe77393aed92aca71b4d7f05508a3debf",
+    "configs/foundir_flux_tail_oracle_v1.json": "e2b93892730fefc0dc73eef47c6ba5e3f2626fc995e20a1ef62c2683b9a08578",
+    "configs/foundir_flux_tail_tradeoff_v2.json": "c3d51753ce1d510d4605cd957534b9f7f9e23257e1b55370c371de1276e58e10",
+    "lowlight_restoration/__init__.py": "d4a800a14c28926301505e3d6ab96cf010ea870956ab02f9b8f40d19808e8f76",
+    "lowlight_restoration/data.py": "050995baf74db2b08f837be307b5290b1049121e98689889b9f6f70296ab6a7a",
+    "lowlight_restoration/flow.py": "000e6549a67015d61e7ff0108fd8024afc7004124920fb354a74a616529cae10",
+    "lowlight_restoration/flux2_trajectory_endpoint.py": "8ac507d317d9e323521c7312e2723e46e96ca7ab2d507db19115b730d651ddf9",
+    "lowlight_restoration/flux_energy_gate.py": "07cbbab495b1deadb5b4909d498eed2c57c17cf718261367e479e386e51c9245",
+    "lowlight_restoration/flux_tail_diagnostic.py": "1e006a7e24810e0dd3730eb6728d41904a1b4cafec17b0e0348b75e71d1fb058",
+    "lowlight_restoration/flux_tail_tradeoff.py": "a148d8d83d8b53aa036f64a103219e8cbfaa27397c40bb6332b157809a4e1b1f",
+    "lowlight_restoration/lora.py": "c518c29b42a882a3bd2daee93fdcc55455a2be50297a9bd5d6473a22121ff7e2",
+    "lowlight_restoration/novel_ppt_energy.py": "66d96b9bde3f78b9e2bdc79049330baa4f1d698459d8f231a96de14ef94b5ea6",
+    "lowlight_restoration/novel_ppt_energy_nonzero_init.py": "b7983518eb30338c9f3fce1fa60a6dc6ef64a9a8768be3337ac780e9092cbc28",
+    "lowlight_restoration/proposal_relative_energy.py": "4d5d5768d04d2ecdec0e0e947af888fabaf6f69277b6b254589e476404dde75c",
+    "lowlight_restoration/proposal_relative_energy_v2.py": "4165f2dba48cb9bf696e1a318a05a81de74219627527dc0a017221a27c4ad5a6",
+    "lowlight_restoration/scalar_residual.py": "a61ae2ae382a25848e189c962910780f79beaa9cc5508ee99df56c0434410801",
+    "lowlight_restoration/vlm_energy_restoration.py": "78f9073da563f7be67e5469380f81c0bbb220f06552c28f109cbacdea619f9a2",
+    "smoke/diagnose_foundir_flux_tail_oracle_v1.py": "0468d2029cd4e42cdce78d84064ea1802de47eec89a645683b799883d3a01ea0",
+    "smoke/diagnose_foundir_flux_tail_tradeoff_v2.py": "88c3a9c3992ac625530ea2e34b43add9e8928affc6d08b42fe73ef7ee81d55e2",
+    "smoke/flux_energy_qualification_contract_v1.py": "ea84b0ec679ccf274ed4366ebfacb4013499aad715acbe9461665583b9d5bb70",
+    "smoke/qualify_foundir_flux_energy_v1.py": "2528ca4afe7de5f1517b23accbadc41d55f7a680c4aa03c6e13be3aac162301b",
+    "smoke/run_foundir_flux_energy_qualification_v1_8gpu.sh": "121550148cb5762c2c9c04ea9944bdd5cea89d2576d07aff9f8ff43438fe45e2",
+    "smoke/run_foundir_flux_tail_oracle_v1_8gpu.sh": "1811dd6468292a3b6aec848dcc33c6a9a9967861cb6b76d22d34a9e992a0a05d",
+    "smoke/run_foundir_flux_tail_oracle_v1_gpu.sh": "1e2e7700bbcc7159a6f94339c9d94e86e278b834fb9851114c0fd96e52d81bb1",
+    "smoke/run_foundir_flux_tail_tradeoff_v2_gpu.sh": "28b961cab8ce4d1e4834a66896ac3cac0f6b6dd04a8a4afb147b26bd332ed1ef",
+    "smoke/start_foundir_flux_tail_oracle_v1_tmux.sh": "47ffe3ee28101393f46d63b5838b7e34085e3657ac8c3d5135160e3709555e7c",
+    "smoke/start_foundir_flux_tail_tradeoff_v2_tmux.sh": "4d8aeaf8446a79f1bc4a121cace82329a9e476e6c23d69e6224706cba4cdd12a",
+    "smoke/tmux_launcher_lib.sh": "7597ede8a8dc5584cbf3325387150162b0847dab178c46ee9d9bb7579ee87c69",
+    "third_party/flux2/src/flux2/autoencoder.py": "bb578f78d097a88f6e7e8aa01032c10f55659729b85203ae2d5852a7889ac96a",
+    "third_party/flux2/src/flux2/model.py": "e062691d789ec80a04a5fbc421b09d3b7e264305be1dfcb6da65d68c259e18c1",
+    "third_party/flux2/src/flux2/openrouter_api_client.py": "eda7c4462fa059dc4baf201dc8f3d57114e2c453b59c037d7a57ee883e82a178",
+    "third_party/flux2/src/flux2/sampling.py": "f1a1e89651d450c05ab87840ed65011a2d25b83d811c61853ec6ed38e938d640",
+    "third_party/flux2/src/flux2/system_messages.py": "dc0e33d0ef41967bd5440c8f772e1f816ce3cd3e82be5525ee408d1201159f78",
+    "third_party/flux2/src/flux2/text_encoder.py": "f1e0e26bb2144e442a8fe26f45610f2d8bacf4519115db24fe57b3d50b1700d6",
+    "third_party/flux2/src/flux2/util.py": "ab39e974b1f696f9d51cb64eef9d82086c683771ac63e7ef14b30cced4b089e0",
+    "third_party/flux2/src/flux2/watermark.py": "df82396d09f87731aeb7c2b22e2839cbae4a2c972dbc48d5cfde9f9964df8c7f"
+  },
+  "log_path": "logs/foundir_flux_tail_tradeoff_v2_tradeoff_4gpu_v1.log",
+  "started_utc": "2026-10-28T20:44:07Z",
+  "ended_utc": "2026-10-28T20:47:38Z",
+  "launcher_exit_code": 0,
+  "timing": {
+    "launcher_wall_seconds": 211,
+    "launcher_wall_hours": 0.058611111111111114,
+    "used_gpu_count": 4,
+    "used_gpu_hours": 0.23444444444444446,
+    "worker_wall_hours": 0.044011566978620575,
+    "worker_gpu_hours": 0.1760462679144823,
+    "if_eight_gpu_node_exclusively_reserved_gpu_hours": 0.4688888888888889
+  },
+  "hardware": "4 x NVIDIA H100 80GB HBM3",
+  "peak_allocated_gib_per_gpu": 15.309711933135986,
+  "integrity": {
+    "records": 8,
+    "source_groups": 8,
+    "arms_per_record": 50,
+    "single_update_arms": 40,
+    "trajectory_milestones": 8,
+    "controls": 2,
+    "baseline_parity_pass": true,
+    "ste_forward_exact": true,
+    "all_sample_rank_artifacts_verified": true,
+    "all_bound_source_hashes_verified": true,
+    "arithmetic_means_independently_verified": true
+  },
+  "split": "train",
+  "deployable": false,
+  "energy_trained": false,
+  "vlm_used_for_guidance": false,
+  "uses_gt_for_guidance": true,
+  "uses_gt_for_trial_acceptance": true,
+  "generalization_established": false,
+  "scientific_gate_evaluated": false,
+  "protected_pixels_accessed": false,
+  "targets": {
+    "psnr_gain": 0.3,
+    "lpips_relative_reduction": 0.09928107050377874,
+    "mean_psnr": 39.944311428070066,
+    "mean_lpips": 0.0665161346648535
+  },
+  "passing_guided_arms": [],
+  "means": {
+    "fp32_state_control_48": {
+      "control": "historical_bf16",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07385645364411175,
+      "lpips_reduction_vs_historical": -0.00011683177167887138,
+      "lpips_reduction_vs_precision_control": -0.00011683177167887138,
+      "psnr": 39.644447803497314,
+      "psnr_gain_vs_historical": 0.00013637542724609375,
+      "psnr_gain_vs_precision_control": 0.00013637542724609375
+    },
+    "historical_bf16": {
+      "control": "historical_bf16",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07384782587178051,
+      "lpips_reduction_vs_historical": 0,
+      "lpips_reduction_vs_precision_control": 0,
+      "psnr": 39.64431142807007,
+      "psnr_gain_vs_historical": 0,
+      "psnr_gain_vs_precision_control": 0
+    },
+    "probe_continuous_balanced_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07379191694781184,
+      "lpips_reduction_vs_historical": 0.0007570828701950472,
+      "lpips_reduction_vs_precision_control": 0.0008738125528053864,
+      "psnr": 39.72131681442261,
+      "psnr_gain_vs_historical": 0.07700538635253906,
+      "psnr_gain_vs_precision_control": 0.07686901092529297
+    },
+    "probe_continuous_balanced_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07384660211391747,
+      "lpips_reduction_vs_historical": 0.000016571345853422237,
+      "lpips_reduction_vs_precision_control": 0.00013338753363045797,
+      "psnr": 39.79969882965088,
+      "psnr_gain_vs_historical": 0.15538740158081055,
+      "psnr_gain_vs_precision_control": 0.15525102615356445
+    },
+    "probe_continuous_balanced_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07372664543800056,
+      "lpips_reduction_vs_historical": 0.0016409478864056748,
+      "lpips_reduction_vs_precision_control": 0.001757574317563293,
+      "psnr": 39.9438362121582,
+      "psnr_gain_vs_historical": 0.29952478408813477,
+      "psnr_gain_vs_precision_control": 0.29938840866088867
+    },
+    "probe_continuous_balanced_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0732738038059324,
+      "lpips_reduction_vs_historical": 0.007773039477760202,
+      "lpips_reduction_vs_precision_control": 0.007888949569484272,
+      "psnr": 40.30492639541626,
+      "psnr_gain_vs_historical": 0.6606149673461914,
+      "psnr_gain_vs_precision_control": 0.6604785919189453
+    },
+    "probe_continuous_balanced_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07236605300568044,
+      "lpips_reduction_vs_historical": 0.02006521991145449,
+      "lpips_reduction_vs_precision_control": 0.020179694053725217,
+      "psnr": 40.60098695755005,
+      "psnr_gain_vs_historical": 0.9566755294799805,
+      "psnr_gain_vs_precision_control": 0.9565391540527344
+    },
+    "probe_continuous_legacy_sum_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07391005102545023,
+      "lpips_reduction_vs_historical": -0.0008426132108174667,
+      "lpips_reduction_vs_precision_control": -0.0007256966547126709,
+      "psnr": 39.74782180786133,
+      "psnr_gain_vs_historical": 0.10351037979125977,
+      "psnr_gain_vs_precision_control": 0.10337400436401367
+    },
+    "probe_continuous_legacy_sum_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07398224319331348,
+      "lpips_reduction_vs_historical": -0.0018201933495827216,
+      "lpips_reduction_vs_precision_control": -0.0017031625944006201,
+      "psnr": 39.84766674041748,
+      "psnr_gain_vs_historical": 0.2033553123474121,
+      "psnr_gain_vs_precision_control": 0.20321893692016602
+    },
+    "probe_continuous_legacy_sum_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0741249299608171,
+      "lpips_reduction_vs_historical": -0.0037523662445757555,
+      "lpips_reduction_vs_precision_control": -0.0036351097765814355,
+      "psnr": 40.0324821472168,
+      "psnr_gain_vs_historical": 0.3881707191467285,
+      "psnr_gain_vs_precision_control": 0.3880343437194824
+    },
+    "probe_continuous_legacy_sum_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07394218491390347,
+      "lpips_reduction_vs_historical": -0.0012777497645874991,
+      "lpips_reduction_vs_precision_control": -0.0011607823766468517,
+      "psnr": 40.455230712890625,
+      "psnr_gain_vs_historical": 0.8109192848205566,
+      "psnr_gain_vs_precision_control": 0.8107829093933105
+    },
+    "probe_continuous_legacy_sum_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07301177643239498,
+      "lpips_reduction_vs_historical": 0.011321246489194414,
+      "lpips_reduction_vs_precision_control": 0.01143674208603318,
+      "psnr": 40.59934377670288,
+      "psnr_gain_vs_historical": 0.9550323486328125,
+      "psnr_gain_vs_precision_control": 0.9548959732055664
+    },
+    "probe_continuous_lpips_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07374635781161487,
+      "lpips_reduction_vs_historical": 0.0013740155375978613,
+      "lpips_reduction_vs_precision_control": 0.0014906731512914773,
+      "psnr": 39.65424203872681,
+      "psnr_gain_vs_historical": 0.009930610656738281,
+      "psnr_gain_vs_precision_control": 0.009794235229492188
+    },
+    "probe_continuous_lpips_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07352844439446926,
+      "lpips_reduction_vs_historical": 0.004324859581726681,
+      "lpips_reduction_vs_precision_control": 0.004441172483356071,
+      "psnr": 39.665512561798096,
+      "psnr_gain_vs_historical": 0.021201133728027344,
+      "psnr_gain_vs_precision_control": 0.02106475830078125
+    },
+    "probe_continuous_lpips_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07324352371506393,
+      "lpips_reduction_vs_historical": 0.008183073090950788,
+      "lpips_reduction_vs_precision_control": 0.008298935283317488,
+      "psnr": 39.684675216674805,
+      "psnr_gain_vs_historical": 0.04036378860473633,
+      "psnr_gain_vs_precision_control": 0.040227413177490234
+    },
+    "probe_continuous_lpips_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07246024743653834,
+      "lpips_reduction_vs_historical": 0.018789699207277688,
+      "lpips_reduction_vs_precision_control": 0.018904322353483716,
+      "psnr": 39.740291595458984,
+      "psnr_gain_vs_historical": 0.09598016738891602,
+      "psnr_gain_vs_precision_control": 0.09584379196166992
+    },
+    "probe_continuous_lpips_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07124564237892628,
+      "lpips_reduction_vs_historical": 0.03523710362675159,
+      "lpips_reduction_vs_precision_control": 0.03534980541803501,
+      "psnr": 39.808088302612305,
+      "psnr_gain_vs_historical": 0.16377687454223633,
+      "psnr_gain_vs_precision_control": 0.16364049911499023
+    },
+    "probe_continuous_mse_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07394306920468807,
+      "lpips_reduction_vs_historical": -0.0012897242645020235,
+      "lpips_reduction_vs_precision_control": -0.0011727554777229976,
+      "psnr": 39.74970054626465,
+      "psnr_gain_vs_historical": 0.10538911819458008,
+      "psnr_gain_vs_precision_control": 0.10525274276733398
+    },
+    "probe_continuous_mse_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07404341152869165,
+      "lpips_reduction_vs_historical": -0.002648495803393436,
+      "lpips_reduction_vs_precision_control": -0.0025313682874725796,
+      "psnr": 39.85098218917847,
+      "psnr_gain_vs_historical": 0.20667076110839844,
+      "psnr_gain_vs_precision_control": 0.20653438568115234
+    },
+    "probe_continuous_mse_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0742249267641455,
+      "lpips_reduction_vs_historical": -0.005106458963595406,
+      "lpips_reduction_vs_precision_control": -0.004989044313030266,
+      "psnr": 40.037370681762695,
+      "psnr_gain_vs_historical": 0.39305925369262695,
+      "psnr_gain_vs_precision_control": 0.39292287826538086
+    },
+    "probe_continuous_mse_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07419349765405059,
+      "lpips_reduction_vs_historical": -0.004680866067340306,
+      "lpips_reduction_vs_precision_control": -0.004563501133738823,
+      "psnr": 40.45702934265137,
+      "psnr_gain_vs_historical": 0.8127179145812988,
+      "psnr_gain_vs_precision_control": 0.8125815391540527
+    },
+    "probe_continuous_mse_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07349531073123217,
+      "lpips_reduction_vs_historical": 0.0047735344458266216,
+      "lpips_reduction_vs_precision_control": 0.0048897949341002445,
+      "psnr": 40.56399631500244,
+      "psnr_gain_vs_historical": 0.919684886932373,
+      "psnr_gain_vs_precision_control": 0.919548511505127
+    },
+    "probe_double_round_ste_balanced_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0737864226102829,
+      "lpips_reduction_vs_historical": 0.0008314836729821362,
+      "lpips_reduction_vs_precision_control": 0.0009482046642302899,
+      "psnr": 39.722636699676514,
+      "psnr_gain_vs_historical": 0.07832527160644531,
+      "psnr_gain_vs_precision_control": 0.07818889617919922
+    },
+    "probe_double_round_ste_balanced_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07384838373400271,
+      "lpips_reduction_vs_historical": -0.0000075542132162986775,
+      "lpips_reduction_vs_precision_control": 0.00010926479286332835,
+      "psnr": 39.79899549484253,
+      "psnr_gain_vs_historical": 0.15468406677246094,
+      "psnr_gain_vs_precision_control": 0.15454769134521484
+    },
+    "probe_double_round_ste_balanced_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07374888728372753,
+      "lpips_reduction_vs_historical": 0.0013397630449509812,
+      "lpips_reduction_vs_precision_control": 0.0014564246599565456,
+      "psnr": 39.94493770599365,
+      "psnr_gain_vs_historical": 0.300626277923584,
+      "psnr_gain_vs_precision_control": 0.3004899024963379
+    },
+    "probe_double_round_ste_balanced_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07329116412438452,
+      "lpips_reduction_vs_historical": 0.0075379571547915525,
+      "lpips_reduction_vs_precision_control": 0.0076538947083915065,
+      "psnr": 40.306267738342285,
+      "psnr_gain_vs_historical": 0.6619563102722168,
+      "psnr_gain_vs_precision_control": 0.6618199348449707
+    },
+    "probe_double_round_ste_balanced_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07242214703001082,
+      "lpips_reduction_vs_historical": 0.019305630530613738,
+      "lpips_reduction_vs_precision_control": 0.019420193406690656,
+      "psnr": 40.603578090667725,
+      "psnr_gain_vs_historical": 0.9592666625976562,
+      "psnr_gain_vs_precision_control": 0.9591302871704102
+    },
+    "probe_double_round_ste_legacy_sum_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07391861360520124,
+      "lpips_reduction_vs_historical": -0.0009585621862941984,
+      "lpips_reduction_vs_precision_control": -0.0008416320852475678,
+      "psnr": 39.74850559234619,
+      "psnr_gain_vs_historical": 0.10419416427612305,
+      "psnr_gain_vs_precision_control": 0.10405778884887695
+    },
+    "probe_double_round_ste_legacy_sum_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.074010178912431,
+      "lpips_reduction_vs_historical": -0.002198480980772244,
+      "lpips_reduction_vs_precision_control": -0.0020814060347387198,
+      "psnr": 39.848886489868164,
+      "psnr_gain_vs_historical": 0.2045750617980957,
+      "psnr_gain_vs_precision_control": 0.2044386863708496
+    },
+    "probe_double_round_ste_legacy_sum_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07411661371588707,
+      "lpips_reduction_vs_historical": -0.0036397529776062143,
+      "lpips_reduction_vs_precision_control": -0.003522509664882323,
+      "psnr": 40.03233623504639,
+      "psnr_gain_vs_historical": 0.38802480697631836,
+      "psnr_gain_vs_precision_control": 0.38788843154907227
+    },
+    "probe_double_round_ste_legacy_sum_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07394119026139379,
+      "lpips_reduction_vs_historical": -0.0012642808168161768,
+      "lpips_reduction_vs_precision_control": -0.0011473150022927037,
+      "psnr": 40.45680093765259,
+      "psnr_gain_vs_historical": 0.8124895095825195,
+      "psnr_gain_vs_precision_control": 0.8123531341552734
+    },
+    "probe_double_round_ste_legacy_sum_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07304265233688056,
+      "lpips_reduction_vs_historical": 0.01090314474928411,
+      "lpips_reduction_vs_precision_control": 0.011018689187983655,
+      "psnr": 40.60284614562988,
+      "psnr_gain_vs_historical": 0.9585347175598145,
+      "psnr_gain_vs_precision_control": 0.9583983421325684
+    },
+    "probe_double_round_ste_lpips_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07374037592671812,
+      "lpips_reduction_vs_historical": 0.0014550183948401907,
+      "lpips_reduction_vs_precision_control": 0.0015716665459321044,
+      "psnr": 39.6545786857605,
+      "psnr_gain_vs_historical": 0.010267257690429688,
+      "psnr_gain_vs_precision_control": 0.010130882263183594
+    },
+    "probe_double_round_ste_lpips_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07355396077036858,
+      "lpips_reduction_vs_historical": 0.003979333148171005,
+      "lpips_reduction_vs_precision_control": 0.00409568641355007,
+      "psnr": 39.665310859680176,
+      "psnr_gain_vs_historical": 0.020999431610107422,
+      "psnr_gain_vs_precision_control": 0.020863056182861328
+    },
+    "probe_double_round_ste_lpips_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0732380214612931,
+      "lpips_reduction_vs_historical": 0.00825758109041963,
+      "lpips_reduction_vs_precision_control": 0.008373434578901606,
+      "psnr": 39.68562698364258,
+      "psnr_gain_vs_historical": 0.041315555572509766,
+      "psnr_gain_vs_precision_control": 0.04117918014526367
+    },
+    "probe_double_round_ste_lpips_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07247409876435995,
+      "lpips_reduction_vs_historical": 0.01860213338989447,
+      "lpips_reduction_vs_precision_control": 0.018716778447187332,
+      "psnr": 39.742496490478516,
+      "psnr_gain_vs_historical": 0.09818506240844727,
+      "psnr_gain_vs_precision_control": 0.09804868698120117
+    },
+    "probe_double_round_ste_lpips_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07127355923876166,
+      "lpips_reduction_vs_historical": 0.03485907137589217,
+      "lpips_reduction_vs_precision_control": 0.034971817328193766,
+      "psnr": 39.814547061920166,
+      "psnr_gain_vs_historical": 0.17023563385009766,
+      "psnr_gain_vs_precision_control": 0.17009925842285156
+    },
+    "probe_double_round_ste_mse_0.0005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07393817231059074,
+      "lpips_reduction_vs_historical": -0.0012234136583397781,
+      "lpips_reduction_vs_precision_control": -0.0011064526178412581,
+      "psnr": 39.74876642227173,
+      "psnr_gain_vs_historical": 0.10445499420166016,
+      "psnr_gain_vs_precision_control": 0.10431861877441406
+    },
+    "probe_double_round_ste_mse_0.001": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07404125691391528,
+      "lpips_reduction_vs_historical": -0.002619319388909469,
+      "lpips_reduction_vs_precision_control": -0.002502195281322672,
+      "psnr": 39.849791526794434,
+      "psnr_gain_vs_historical": 0.20548009872436523,
+      "psnr_gain_vs_precision_control": 0.20534372329711914
+    },
+    "probe_double_round_ste_mse_0.002": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07421091571450233,
+      "lpips_reduction_vs_historical": -0.004916730295516647,
+      "lpips_reduction_vs_precision_control": -0.004799337808698567,
+      "psnr": 40.03749084472656,
+      "psnr_gain_vs_historical": 0.39317941665649414,
+      "psnr_gain_vs_precision_control": 0.39304304122924805
+    },
+    "probe_double_round_ste_mse_0.005": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0741823916323483,
+      "lpips_reduction_vs_historical": -0.0045304754286019655,
+      "lpips_reduction_vs_precision_control": -0.004413128063352811,
+      "psnr": 40.45793342590332,
+      "psnr_gain_vs_historical": 0.813621997833252,
+      "psnr_gain_vs_precision_control": 0.8134856224060059
+    },
+    "probe_double_round_ste_mse_0.01": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0735025538597256,
+      "lpips_reduction_vs_historical": 0.004675452634914423,
+      "lpips_reduction_vs_precision_control": 0.004791724580921253,
+      "psnr": 40.566988468170166,
+      "psnr_gain_vs_historical": 0.9226770401000977,
+      "psnr_gain_vs_precision_control": 0.9225406646728516
+    },
+    "trajectory_continuous_step1": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07179593690671027,
+      "lpips_reduction_vs_historical": 0.027785367285326323,
+      "lpips_reduction_vs_precision_control": 0.027898939574466874,
+      "psnr": 40.34329175949097,
+      "psnr_gain_vs_historical": 0.6989803314208984,
+      "psnr_gain_vs_precision_control": 0.6988439559936523
+    },
+    "trajectory_continuous_step2": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07022080454044044,
+      "lpips_reduction_vs_historical": 0.049114801803881836,
+      "lpips_reduction_vs_precision_control": 0.04922588242850412,
+      "psnr": 40.484699726104736,
+      "psnr_gain_vs_historical": 0.840388298034668,
+      "psnr_gain_vs_precision_control": 0.8402519226074219
+    },
+    "trajectory_continuous_step4": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.06995537877082825,
+      "lpips_reduction_vs_historical": 0.05270902772020114,
+      "lpips_reduction_vs_precision_control": 0.05281968847409613,
+      "psnr": 40.51412868499756,
+      "psnr_gain_vs_historical": 0.8698172569274902,
+      "psnr_gain_vs_precision_control": 0.8696808815002441
+    },
+    "trajectory_continuous_step8": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.06995537877082825,
+      "lpips_reduction_vs_historical": 0.05270902772020114,
+      "lpips_reduction_vs_precision_control": 0.05281968847409613,
+      "psnr": 40.51412868499756,
+      "psnr_gain_vs_historical": 0.8698172569274902,
+      "psnr_gain_vs_precision_control": 0.8696808815002441
+    },
+    "trajectory_double_round_ste_step1": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.0718417854513973,
+      "lpips_reduction_vs_historical": 0.027164515633354425,
+      "lpips_reduction_vs_precision_control": 0.027278160449219935,
+      "psnr": 40.344980239868164,
+      "psnr_gain_vs_historical": 0.7006688117980957,
+      "psnr_gain_vs_precision_control": 0.7005324363708496
+    },
+    "trajectory_double_round_ste_step2": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07028557150624692,
+      "lpips_reduction_vs_historical": 0.048237768999707775,
+      "lpips_reduction_vs_precision_control": 0.04834895207765666,
+      "psnr": 40.48203945159912,
+      "psnr_gain_vs_historical": 0.8377280235290527,
+      "psnr_gain_vs_precision_control": 0.8375916481018066
+    },
+    "trajectory_double_round_ste_step4": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07000666065141559,
+      "lpips_reduction_vs_historical": 0.052014601310459874,
+      "lpips_reduction_vs_precision_control": 0.05212534318594508,
+      "psnr": 40.512683391571045,
+      "psnr_gain_vs_historical": 0.8683719635009766,
+      "psnr_gain_vs_precision_control": 0.8682355880737305
+    },
+    "trajectory_double_round_ste_step8": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.07000666065141559,
+      "lpips_reduction_vs_historical": 0.052014601310459874,
+      "lpips_reduction_vs_precision_control": 0.05212534318594508,
+      "psnr": 40.512683391571045,
+      "psnr_gain_vs_historical": 0.8683719635009766,
+      "psnr_gain_vs_precision_control": 0.8682355880737305
+    }
+  },
+  "gradient_summary": {
+    "continuous": {
+      "mse_to_lpips_gradient_rms_ratio": {
+        "min": 1.472054976995923,
+        "median": 6.196998031335546,
+        "max": 42.46592729032036,
+        "mean": 14.594198004880973,
+        "negative_count": 0
+      },
+      "cosine": {
+        "min": -0.0757717713713646,
+        "median": 0.10184621065855026,
+        "max": 0.32706496119499207,
+        "mean": 0.08992719603702426,
+        "negative_count": 3
+      }
+    },
+    "double_round_ste": {
+      "mse_to_lpips_gradient_rms_ratio": {
+        "min": 1.4778367680753368,
+        "median": 6.022972711903156,
+        "max": 42.15707600859997,
+        "mean": 14.544066488772252,
+        "negative_count": 0
+      },
+      "cosine": {
+        "min": -0.0637117326259613,
+        "median": 0.10193773359060287,
+        "max": 0.3278551399707794,
+        "mean": 0.0903177852742374,
+        "negative_count": 3
+      }
+    }
+  },
+  "sample_diagnostics": [
+    {
+      "cache_index": 0,
+      "rank": 0,
+      "baseline": {
+        "lpips": 0.18967905640602112,
+        "psnr": 39.80714416503906
+      },
+      "precision_control": {
+        "lpips": 0.18967057764530182,
+        "psnr": 39.80756759643555
+      },
+      "gradient_records": [
+        {
+          "cosine": 0.32706496119499207,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -1.3716864585876465,
+              "predicted_mse_derivative_along_negative_direction": -40.6252555847168
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -0.6005954742431641,
+              "predicted_mse_derivative_along_negative_direction": -49.848045349121094
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -1.6839289665222168,
+              "predicted_mse_derivative_along_negative_direction": -16.311691284179688
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -0.550754189491272,
+              "predicted_mse_derivative_along_negative_direction": -49.87294006347656
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 29.61700732297259,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.000012847359357692767,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0003805003361776471,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": 0.3278551399707794,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -1.380769968032837,
+              "predicted_mse_derivative_along_negative_direction": -42.17649841308594
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -0.6041462421417236,
+              "predicted_mse_derivative_along_negative_direction": -51.73764419555664
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -1.6945759057998657,
+              "predicted_mse_derivative_along_negative_direction": -16.970401763916016
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -0.5555753707885742,
+              "predicted_mse_derivative_along_negative_direction": -51.76189422607422
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 30.545633202702586,
+          "normalized_lpips": 0.9999999403953552,
+          "normalized_lpips_gradient_rms": 0.000012928587239002809,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.00039491188363172114,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.18591755628585815,
+            "psnr": 40.590415954589844
+          },
+          "continuous_metrics": {
+            "lpips": 0.1905653178691864,
+            "psnr": 40.60197830200195
+          },
+          "psnr_gain": 0.7832717895507812,
+          "lpips_relative_reduction": 0.01983086689397706,
+          "joint_target": false,
+          "accepted_updates": 1,
+          "attempted_updates": 2,
+          "stop_reason": "no_joint_safe_trial_in_frozen_grid"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.18601319193840027,
+            "psnr": 40.59221267700195
+          },
+          "continuous_metrics": {
+            "lpips": 0.1905924677848816,
+            "psnr": 40.6035270690918
+          },
+          "psnr_gain": 0.7850685119628906,
+          "lpips_relative_reduction": 0.019326669676033248,
+          "joint_target": false,
+          "accepted_updates": 1,
+          "attempted_updates": 2,
+          "stop_reason": "no_joint_safe_trial_in_frozen_grid"
+        }
+      }
+    },
+    {
+      "cache_index": 1,
+      "rank": 1,
+      "baseline": {
+        "lpips": 0.038989849388599396,
+        "psnr": 40.77255630493164
+      },
+      "precision_control": {
+        "lpips": 0.03901634365320206,
+        "psnr": 40.77217483520508
+      },
+      "gradient_records": [
+        {
+          "cosine": 0.19025106728076935,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -5.332816123962402,
+              "predicted_mse_derivative_along_negative_direction": -28.68425750732422
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -2.473289966583252,
+              "predicted_mse_derivative_along_negative_direction": -36.617835998535156
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -6.912773132324219,
+              "predicted_mse_derivative_along_negative_direction": -7.07402229309082
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -1.3151624202728271,
+              "predicted_mse_derivative_along_negative_direction": -37.18256378173828
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 5.378819650998652,
+          "normalized_lpips": 0.9999999403953552,
+          "normalized_lpips_gradient_rms": 0.00005274027353152633,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0002836804196704179,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": 0.18804198503494263,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -5.284457206726074,
+              "predicted_mse_derivative_along_negative_direction": -27.057796478271484
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -2.492919921875,
+              "predicted_mse_derivative_along_negative_direction": -34.52076721191406
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -6.856452941894531,
+              "predicted_mse_derivative_along_negative_direction": -6.601557731628418
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -1.2893009185791016,
+              "predicted_mse_derivative_along_negative_direction": -35.1068229675293
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 5.120261447544903,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.000052310577302705497,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.00026784383226186037,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.034616731107234955,
+            "psnr": 41.46343231201172
+          },
+          "continuous_metrics": {
+            "lpips": 0.03516039997339249,
+            "psnr": 41.53669357299805
+          },
+          "psnr_gain": 0.6908760070800781,
+          "lpips_relative_reduction": 0.11216043021297584,
+          "joint_target": true,
+          "accepted_updates": 2,
+          "attempted_updates": 2,
+          "stop_reason": "gt_only_joint_target_reached"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.034784361720085144,
+            "psnr": 41.457855224609375
+          },
+          "continuous_metrics": {
+            "lpips": 0.03520076349377632,
+            "psnr": 41.53235626220703
+          },
+          "psnr_gain": 0.6852989196777344,
+          "lpips_relative_reduction": 0.10786109037250946,
+          "joint_target": true,
+          "accepted_updates": 2,
+          "attempted_updates": 2,
+          "stop_reason": "gt_only_joint_target_reached"
+        }
+      }
+    },
+    {
+      "cache_index": 2,
+      "rank": 2,
+      "baseline": {
+        "lpips": 0.09384902566671371,
+        "psnr": 37.67483139038086
+      },
+      "precision_control": {
+        "lpips": 0.0939006507396698,
+        "psnr": 37.67429733276367
+      },
+      "gradient_records": [
+        {
+          "cosine": -0.0757717713713646,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -2.2300736904144287,
+              "predicted_mse_derivative_along_negative_direction": -49.813316345214844
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": 0.10189677774906158,
+              "predicted_mse_derivative_along_negative_direction": -73.20384216308594
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -3.280534267425537,
+              "predicted_mse_derivative_along_negative_direction": 5.5523681640625
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": 0.24857188761234283,
+              "predicted_mse_derivative_along_negative_direction": -73.27752685546875
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 22.33707100184468,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.000025028490199474618,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0005590631626546383,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": -0.05787423625588417,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -2.27683162689209,
+              "predicted_mse_derivative_along_negative_direction": -49.964969635009766
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": 0.040860071778297424,
+              "predicted_mse_derivative_along_negative_direction": -72.7232666015625
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -3.317351818084717,
+              "predicted_mse_derivative_along_negative_direction": 4.213193893432617
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": 0.19198919832706451,
+              "predicted_mse_derivative_along_negative_direction": -72.79912567138672
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 21.944955652878928,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00002530938400013838,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0005554133094847202,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.0939006507396698,
+            "psnr": 37.67429733276367
+          },
+          "continuous_metrics": {
+            "lpips": 0.0961158275604248,
+            "psnr": 37.7196159362793
+          },
+          "psnr_gain": -0.0005340576171875,
+          "lpips_relative_reduction": -0.0005500864030216768,
+          "joint_target": false,
+          "accepted_updates": 0,
+          "attempted_updates": 1,
+          "stop_reason": "no_joint_safe_trial_in_frozen_grid"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.0939006507396698,
+            "psnr": 37.67429733276367
+          },
+          "continuous_metrics": {
+            "lpips": 0.0961158275604248,
+            "psnr": 37.7196159362793
+          },
+          "psnr_gain": -0.0005340576171875,
+          "lpips_relative_reduction": -0.0005500864030216768,
+          "joint_target": false,
+          "accepted_updates": 0,
+          "attempted_updates": 1,
+          "stop_reason": "no_joint_safe_trial_in_frozen_grid"
+        }
+      }
+    },
+    {
+      "cache_index": 3,
+      "rank": 3,
+      "baseline": {
+        "lpips": 0.022498004138469696,
+        "psnr": 38.72948455810547
+      },
+      "precision_control": {
+        "lpips": 0.022506555542349815,
+        "psnr": 38.73023986816406
+      },
+      "gradient_records": [
+        {
+          "cosine": -0.04730967804789543,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -8.143123626708984,
+              "predicted_mse_derivative_along_negative_direction": -11.987126350402832
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -6.308332920074463,
+              "predicted_mse_derivative_along_negative_direction": -14.221187591552734
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -11.798590660095215,
+              "predicted_mse_derivative_along_negative_direction": 0.8216828107833862
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": 0.5581876039505005,
+              "predicted_mse_derivative_along_negative_direction": -17.368175506591797
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 1.472054976995923,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00009001611033454537,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.00013250866322778165,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": -0.05674068629741669,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -8.102590560913086,
+              "predicted_mse_derivative_along_negative_direction": -11.974308013916016
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -6.223903656005859,
+              "predicted_mse_derivative_along_negative_direction": -14.266727447509766
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -11.798406600952148,
+              "predicted_mse_derivative_along_negative_direction": 0.9893373250961304
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": 0.6694496870040894,
+              "predicted_mse_derivative_along_negative_direction": -17.436119079589844
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 1.4778367680753368,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00009001469879876822,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.00013302703155204654,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.01914202980697155,
+            "psnr": 39.04261016845703
+          },
+          "continuous_metrics": {
+            "lpips": 0.019232962280511856,
+            "psnr": 39.0831413269043
+          },
+          "psnr_gain": 0.3131256103515625,
+          "lpips_relative_reduction": 0.1491676466429176,
+          "joint_target": true,
+          "accepted_updates": 3,
+          "attempted_updates": 3,
+          "stop_reason": "gt_only_joint_target_reached"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.019156942144036293,
+            "psnr": 39.041664123535156
+          },
+          "continuous_metrics": {
+            "lpips": 0.019275791943073273,
+            "psnr": 39.08158874511719
+          },
+          "psnr_gain": 0.3121795654296875,
+          "lpips_relative_reduction": 0.1485048173104595,
+          "joint_target": true,
+          "accepted_updates": 3,
+          "attempted_updates": 3,
+          "stop_reason": "gt_only_joint_target_reached"
+        }
+      }
+    },
+    {
+      "cache_index": 4,
+      "rank": 0,
+      "baseline": {
+        "lpips": 0.024878760799765587,
+        "psnr": 40.57902908325195
+      },
+      "precision_control": {
+        "lpips": 0.024872586131095886,
+        "psnr": 40.577964782714844
+      },
+      "gradient_records": [
+        {
+          "cosine": 0.13521787524223328,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -6.486605167388916,
+              "predicted_mse_derivative_along_negative_direction": -41.34976577758789
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -2.434468984603882,
+              "predicted_mse_derivative_along_negative_direction": -54.25938415527344
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -8.609796524047852,
+              "predicted_mse_derivative_along_negative_direction": -7.421343803405762
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -1.164198398590088,
+              "predicted_mse_derivative_along_negative_direction": -54.88434600830078
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 6.37463870839539,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00006568753451574594,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0004187343001831323,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": 0.13462191820144653,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -6.416694641113281,
+              "predicted_mse_derivative_along_negative_direction": -39.95825958251953
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -2.4325621128082275,
+              "predicted_mse_derivative_along_negative_direction": -52.418922424316406
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -8.519238471984863,
+              "predicted_mse_derivative_along_negative_direction": -7.141867160797119
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -1.1468762159347534,
+              "predicted_mse_derivative_along_negative_direction": -53.051292419433594
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 6.227234559589767,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00006499663140857592,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0004047492693644017,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.0223169457167387,
+            "psnr": 41.737510681152344
+          },
+          "continuous_metrics": {
+            "lpips": 0.022600486874580383,
+            "psnr": 41.812782287597656
+          },
+          "psnr_gain": 1.1584815979003906,
+          "lpips_relative_reduction": 0.10297197290674642,
+          "joint_target": true,
+          "accepted_updates": 2,
+          "attempted_updates": 2,
+          "stop_reason": "gt_only_joint_target_reached"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.022352177649736404,
+            "psnr": 41.728416442871094
+          },
+          "continuous_metrics": {
+            "lpips": 0.022633446380496025,
+            "psnr": 41.80368423461914
+          },
+          "psnr_gain": 1.1493873596191406,
+          "lpips_relative_reduction": 0.10155582789529405,
+          "joint_target": true,
+          "accepted_updates": 2,
+          "attempted_updates": 2,
+          "stop_reason": "gt_only_joint_target_reached"
+        }
+      }
+    },
+    {
+      "cache_index": 5,
+      "rank": 1,
+      "baseline": {
+        "lpips": 0.025407515466213226,
+        "psnr": 40.593597412109375
+      },
+      "precision_control": {
+        "lpips": 0.025388281792402267,
+        "psnr": 40.59431457519531
+      },
+      "gradient_records": [
+        {
+          "cosine": 0.18368443846702576,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -7.3854217529296875,
+              "predicted_mse_derivative_along_negative_direction": -44.45549774169922
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -3.2187604904174805,
+              "predicted_mse_derivative_along_negative_direction": -57.073429107666016
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -9.60002326965332,
+              "predicted_mse_derivative_along_negative_direction": -10.614384651184082
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -1.7633750438690186,
+              "predicted_mse_derivative_along_negative_direction": -57.785980224609375
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 6.019357354275703,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.0000732423723093234,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.00044087201240472496,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": 0.18109634518623352,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -7.3847455978393555,
+              "predicted_mse_derivative_along_negative_direction": -42.969703674316406
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -3.246065616607666,
+              "predicted_mse_derivative_along_negative_direction": -55.179237365722656
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -9.609657287597656,
+              "predicted_mse_derivative_along_negative_direction": -10.126150131225586
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -1.7402738332748413,
+              "predicted_mse_derivative_along_negative_direction": -55.91581726074219
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 5.818710864216546,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00007331586675718427,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0004266038304194808,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.02179647982120514,
+            "psnr": 41.627201080322266
+          },
+          "continuous_metrics": {
+            "lpips": 0.021842122077941895,
+            "psnr": 41.70793151855469
+          },
+          "psnr_gain": 1.0336036682128906,
+          "lpips_relative_reduction": 0.14212470518063924,
+          "joint_target": true,
+          "accepted_updates": 4,
+          "attempted_updates": 4,
+          "stop_reason": "gt_only_joint_target_reached"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.021768877282738686,
+            "psnr": 41.632537841796875
+          },
+          "continuous_metrics": {
+            "lpips": 0.02188425324857235,
+            "psnr": 41.7107048034668
+          },
+          "psnr_gain": 1.0389404296875,
+          "lpips_relative_reduction": 0.14321109784674468,
+          "joint_target": true,
+          "accepted_updates": 4,
+          "attempted_updates": 4,
+          "stop_reason": "gt_only_joint_target_reached"
+        }
+      }
+    },
+    {
+      "cache_index": 6,
+      "rank": 2,
+      "baseline": {
+        "lpips": 0.034267742186784744,
+        "psnr": 38.30561828613281
+      },
+      "precision_control": {
+        "lpips": 0.03426739573478699,
+        "psnr": 38.30432891845703
+      },
+      "gradient_records": [
+        {
+          "cosine": -0.062193870544433594,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -7.154067039489746,
+              "predicted_mse_derivative_along_negative_direction": -22.096820831298828
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -2.648362874984741,
+              "predicted_mse_derivative_along_negative_direction": -30.64590835571289
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -10.447477340698242,
+              "predicted_mse_derivative_along_negative_direction": 2.0069470405578613
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": 0.6497691869735718,
+              "predicted_mse_derivative_along_negative_direction": -32.269203186035156
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 3.088707733244485,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00007970793376443908,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.00024619451141916215,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": -0.0637117326259613,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -7.161590576171875,
+              "predicted_mse_derivative_along_negative_direction": -21.920360565185547
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -2.667372226715088,
+              "predicted_mse_derivative_along_negative_direction": -30.39647102355957
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -10.466939926147461,
+              "predicted_mse_derivative_along_negative_direction": 2.041161298751831
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": 0.6668667793273926,
+              "predicted_mse_derivative_along_negative_direction": -32.03744888305664
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 3.0608234065699773,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00007985639967955649,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.00024442633730359375,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.029763858765363693,
+            "psnr": 39.03888702392578
+          },
+          "continuous_metrics": {
+            "lpips": 0.029838718473911285,
+            "psnr": 39.08979797363281
+          },
+          "psnr_gain": 0.7332687377929688,
+          "lpips_relative_reduction": 0.1314321613858167,
+          "joint_target": true,
+          "accepted_updates": 2,
+          "attempted_updates": 2,
+          "stop_reason": "gt_only_joint_target_reached"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.029805634170770645,
+            "psnr": 39.032020568847656
+          },
+          "continuous_metrics": {
+            "lpips": 0.029901854693889618,
+            "psnr": 39.08244705200195
+          },
+          "psnr_gain": 0.7264022827148438,
+          "lpips_relative_reduction": 0.1302130730321328,
+          "joint_target": true,
+          "accepted_updates": 2,
+          "attempted_updates": 2,
+          "stop_reason": "gt_only_joint_target_reached"
+        }
+      }
+    },
+    {
+      "cache_index": 7,
+      "rank": 3,
+      "baseline": {
+        "lpips": 0.16121265292167664,
+        "psnr": 40.692230224609375
+      },
+      "precision_control": {
+        "lpips": 0.1612292379140854,
+        "psnr": 40.69469451904297
+      },
+      "gradient_records": [
+        {
+          "cosine": 0.06847454607486725,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -1.4324781894683838,
+              "predicted_mse_derivative_along_negative_direction": -60.83152389526367
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -0.18012814223766327,
+              "predicted_mse_derivative_along_negative_direction": -83.20329284667969
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -1.9598413705825806,
+              "predicted_mse_derivative_along_negative_direction": -5.6988959312438965
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -0.13419924676418304,
+              "predicted_mse_derivative_along_negative_direction": -83.22648620605469
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 42.46592729032036,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.000014952403944334947,
+          "normalized_mse": 0.9999999403953552,
+          "normalized_mse_gradient_rms": 0.0006349676987156272,
+          "surrogate": "continuous"
+        },
+        {
+          "cosine": 0.06925354897975922,
+          "directions": {
+            "balanced": {
+              "predicted_lpips_derivative_along_negative_direction": -1.4004604816436768,
+              "predicted_mse_derivative_along_negative_direction": -59.03932189941406
+            },
+            "legacy_sum": {
+              "predicted_lpips_derivative_along_negative_direction": -0.17782030999660492,
+              "predicted_mse_derivative_along_negative_direction": -80.72225952148438
+            },
+            "lpips": {
+              "predicted_lpips_derivative_along_negative_direction": -1.9153382778167725,
+              "predicted_mse_derivative_along_negative_direction": -5.591882705688477
+            },
+            "mse": {
+              "predicted_lpips_derivative_along_negative_direction": -0.13264399766921997,
+              "predicted_mse_derivative_along_negative_direction": -80.74507141113281
+            }
+          },
+          "mse_to_lpips_gradient_rms_ratio": 42.15707600859997,
+          "normalized_lpips": 1,
+          "normalized_lpips_gradient_rms": 0.00001461287320125848,
+          "normalized_mse": 1,
+          "normalized_mse_gradient_rms": 0.0006160360062494874,
+          "surrogate": "double_round_ste"
+        }
+      ],
+      "final_trajectories": {
+        "continuous": {
+          "metrics": {
+            "lpips": 0.15218877792358398,
+            "psnr": 42.93867492675781
+          },
+          "continuous_metrics": {
+            "lpips": 0.15482255816459656,
+            "psnr": 43.010005950927734
+          },
+          "psnr_gain": 2.2464447021484375,
+          "lpips_relative_reduction": 0.05597497984526567,
+          "joint_target": false,
+          "accepted_updates": 2,
+          "attempted_updates": 3,
+          "stop_reason": "no_joint_safe_trial_in_frozen_grid"
+        },
+        "double_round_ste": {
+          "metrics": {
+            "lpips": 0.15227144956588745,
+            "psnr": 42.94246292114258
+          },
+          "continuous_metrics": {
+            "lpips": 0.15497705340385437,
+            "psnr": 43.013893127441406
+          },
+          "psnr_gain": 2.250232696533203,
+          "lpips_relative_reduction": 0.05546216871781873,
+          "joint_target": false,
+          "accepted_updates": 2,
+          "attempted_updates": 3,
+          "stop_reason": "no_joint_safe_trial_in_frozen_grid"
+        }
+      }
+    }
+  ],
+  "interpretation_limits": [
+    "Eight training sources only; not validation/test generalization.",
+    "No learned energy, VLM guidance or deployment-safe selector was trained.",
+    "All trial acceptance and stopping use GT; computation includes rejected trials.",
+    "No-harm is relative to the FP32-state current output, not a guaranteed fallback to original BF16 output.",
+    "Step-4 and step-8 trajectory reports are identical because all trajectories stopped by step 4.",
+    "STE has exact deployment forward values but approximate derivatives.",
+    "Finite directions, amplitudes and one window are not a global oracle upper bound."
+  ]
+}

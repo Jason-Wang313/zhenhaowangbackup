@@ -34,7 +34,40 @@ V1历史预算cap：4卡3普通小时/12 GPU-hours；8卡1.5普通小时/12 GPU-
 另最多30秒清理。这是预算，不是实测ETA。4×H100已实测完成；8卡/H200尚未验收。
 详细变更见reports/foundir_flux_tail_oracle_4_8gpu_compatibility_2026-10-28.md。
 
-## ACTIVE: GT-only LPIPS/PSNR trade-off diagnostic V2 — 2026-10-28
+## TERMINAL: V2 tail diagnostic complete; joint target still short — 2026-10-28
+
+tradeoff_4gpu_v1 已正常结束，当前没有待续的 V2 任务，不自动启动 energy 训练。
+4×H100 80GB，2026-10-28T20:44:07Z–20:47:38Z，launcher status=0。
+总 211 秒 / .0586111111 普通小时 / .2344444444 使用 GPU-hours；
+若独占整台八卡节点，对应 .4688888889 整机 GPU-hours（是否独占未确认）。
+八训练来源×50报告项完整；基线逐像素复现、STE 前向一致、所有绑定源码/
+配置哈希、sample/rank 完整性及独立均值重算均通过。每卡峰值 15.309712 GiB。
+仅四卡 H100 实测通过；不冒称八卡/H200已实际验收。
+
+原部署基线 39.64431142807007/.07384782587178051。
+连续代理的 GT 安全轨迹最终为 40.51412868499756/.06995537877082825：
+PSNR +.8698172569274902 dB，LPIPS 降 5.270902772020114%。
+双量化 STE 轨迹为 40.512683391571045/.07000666065141559，
+PSNR +.8683719635009766 dB，LPIPS 降 5.201460131045987%。
+总体目标仍是 +.30 dB / LPIPS 降 9.928107050377874%，对应
+39.944311428070066/.0665161346648535；全部48个引导报告项无一同时通过。
+不得把这些 GT 结果当作训练出的 energy、VLM贡献、部署或泛化成绩。
+
+两种代理均五张达到单图目标，三张（索引0/2/7）在固定方向/幅度下无安全
+候选而停住；它们占原LPIPS总和约75.28%。所有轨迹至多接受四次更新，
+step4=step8，不是继续更新没有涨。连续代理初始 MSE/LPIPS 梯度强度比
+中位数6.197、范围1.472–42.466；平衡确实改善LPIPS，但还不够。
+换STE没有解决缺口，不能因此说量化无影响。样本2没有接受修正，
+保留FP32 latent对照，相对历史BF16仍有-.000534dB/+.0000516 LPIPS小差异；
+不得声称每张图相对历史基线绝对无损。
+
+本次证明生成中有双指标改善空间，尚未证明完整目标可行，更未证明energy可学习。
+旧ACTIVE/readiness段落仅为本次历史计划。后续有限诊断或训练需新的用户授权，
+不扩大预算/数据、不更改绑定源码或放宽门槛、不恢复Restormer/MoE/EBT。
+报告及全50项均值：reports/foundir_flux_tail_tradeoff_v2_terminal_2026-10-28.{md,json}。
+原始result SHA256：78e442d5f3a4cda82c15b2903b02d66a2ab790ac167df8bc12e9a8bcf1858625。
+
+## HISTORICAL PLAN: GT-only LPIPS/PSNR trade-off diagnostic V2 — 2026-10-28
 
 用户在看完V1完成结果后授权下一步。只做training-source-only的有限诊断，
 不启动energy训练、不变更已有FLUX权重、不恢复Restormer/MoE/EBT。
