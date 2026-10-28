@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "status": "ready_for_gpu_engineering_qualification_not_launched",
+  "scope": "learned_quality_energy_guiding_frozen_flux_actual_two_step_tail",
+  "training_steps": 25,
+  "qualification_may_seed_formal": false,
+  "auto_formal": false,
+  "parameters": 1010274,
+  "global_batch_candidate_pairs": 32,
+  "candidate_views_per_optimizer_step": 64,
+  "source_partition": {
+    "original_training_records": 54585,
+    "original_source_groups": 1755,
+    "excluded_previous_groups": 32,
+    "energy_train_groups": 1467,
+    "calibration_groups": 128,
+    "engineering_evaluation_groups": 128,
+    "qualification_train_groups": 24,
+    "qualification_evaluation_groups": 8,
+    "calibration_pixels_read": false,
+    "system_unseen_test_claim": false
+  },
+  "protected_pixels_accessed": false,
+  "final_1859_development_pixels_accessed": false,
+  "validation": {
+    "cpu_regression_tests_passed": 46,
+    "cpu_ddp_ranks": 2,
+    "cpu_ddp_second_order_accumulation_equal_parameters": true,
+    "syntax_checks_pass": true,
+    "metadata_weight_preflight_gpu_counts": [
+      4,
+      8
+    ],
+    "preflight_decodes_source_images": false,
+    "gpu_qualification_run": false,
+    "visual_review": false
+  },
+  "hardware": {
+    "single_node": true,
+    "allowed_gpu_counts": [
+      4,
+      8
+    ],
+    "allowed_gpu_families": [
+      "H100",
+      "H200"
+    ],
+    "homogeneous_required": true,
+    "min_visible_vram_gib": 75,
+    "gpu_available_to_codex": false
+  },
+  "budget": {
+    "four_h100_estimate_wall_hours": [
+      0.5,
+      1
+    ],
+    "four_h100_estimate_used_gpu_hours": [
+      2,
+      4
+    ],
+    "dedicated_eight_gpu_node_using_four_estimate_allocated_gpu_hours": [
+      4,
+      8
+    ],
+    "wall_cap_seconds_by_gpus": {
+      "4": 5400,
+      "8": 2700
+    },
+    "used_gpu_hours_cap": 6,
+    "cleanup_allowance_seconds": 30,
+    "measured_new_gpu_hours": 0
+  },
+  "scientific_targets": {
+    "psnr_gain_db": 0.3,
+    "lpips_relative_reduction": 0.09928107050377874,
+    "engineering_eval_not_scientific_gate": true
+  },
+  "inference": {
+    "gt_used_for_selection_or_stopping": false,
+    "gt_used_only_for_after_guidance_metrics": true,
+    "start_index": 48,
+    "total_flux_steps": 50,
+    "max_updates": 16,
+    "milestones": [
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "primary_endpoint": 16,
+    "predicted_safety_is_not_guaranteed_no_harm": true
+  },
+  "parent_result_sha256": "37f13289195eb6abd4fc4127f797008f7e6843ebd11957123b7245fcfa735137",
+  "sha256": {
+    "configs/foundir_flux_tail_energy_qualification_v1.json": "22da9b3fb51f4705cc917b3d3c8bd1e1fea8bdd3193fff205e198c57ef462c71",
+    "lowlight_restoration/flux_tail_learned_energy.py": "d5513aa7fbecfd436fc7077fbc764e3bc04058cfdf9e7244dcaa1a2ba98081ca",
+    "smoke/flux_tail_energy_contract_v1.py": "7e4ab007c120ebf5d703aa1efab8fd467fc486ce6a48ff12e0e300f8c3dce70d",
+    "smoke/flux_tail_energy_runtime_v1.py": "2ca4d726f89610a5a7ba4ebca6bfc828d1b252f08d33ff06cd1af6a9f56770ef",
+    "smoke/qualify_foundir_flux_tail_energy_v1.py": "4ede9ffd0ad64bf4f8900eacc75168f9c184fcfeca30a78cccaefbf1a70d2411",
+    "smoke/run_foundir_flux_tail_energy_qualification_v1_gpu.sh": "6e58bc7c57ca534c504a30d87b107e3271a05f330adbbaafed48343257bbffe5",
+    "smoke/start_foundir_flux_tail_energy_qualification_v1_tmux.sh": "77dbf80c21f572c07bd1f8dce7ef3f316041ffcc4e82c6f9b1f69de69a61ca19"
+  }
+}

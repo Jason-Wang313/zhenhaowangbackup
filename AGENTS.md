@@ -1,5 +1,53 @@
 # Project agent instructions
 
+## ACTIVE: learned FLUX-tail quality energy — 25-step qualification — 2026-10-28
+
+用户在24来源GT确认完成后明确授权“下一步，执行”。本节覆盖下面全部历史
+ACTIVE/TERMINAL中的优先级：当前只执行新energy的25步工程资格，不重跑GT诊断，
+不恢复Restormer residual、MoE或旧EBT Generalist，不自动正式训练。
+上一阶段GT平均+.98618dB/LPIPS下降31.562%只是可行性，不是energy已学会。
+
+冻结FLUX/LoRA、VAE和LPIPS。新1,010,274参数条件quality energy预测log MSE与
+log LPIPS，输入LQ、原FLUX结果、候选、差分、真实每图Qwen退化等级及shifted t。
+同时监督分数、候选图像梯度和同来源候选排序；二阶训练只穿过小energy。
+它不输出RGB，不加Restormer；推理梯度经真实FLUX末两步/VAE传回index48 latent。
+候选接受/停止只看预测energy；GT仅在完整推理结束后算评价指标。
+预测安全不等于实际no-harm，必须如实报告退步，不能用GT挑回好图。
+
+保持Noise step400/50步/512裁图/原seed/CFG1/reference time10/alpha=.30/双uint8。
+原54,585条Noise training记录、1,755来源排除旧32来源后，冻结来源划分：
+train1467、calibration128、engineering_evaluation128。资格仅用24新训练来源、
+8新检查来源，校准池不读像素。检查来源只对energy训练分离，FLUX可能见过，
+不是系统未见过测试集。最终1859开发集及official/sealed/internal/parent-test禁止。
+训练缓存包含连续与实际量化候选、随机latent扰动及固定GT轨迹；检查图无训练轨迹。
+全部源码/数据/权重绑定，旧V1/V2/V3/24图确认文件与结果不改。
+
+25 optimizer steps，fresh AdamW lr1e-4，warmup5，global batch32候选对/64视图。
+4卡每rank累积8对，8卡累积4对；完整512训练，不改科学口径。
+同一energy引导五种方向混合、五种步幅，最多16轮；报告1/2/4/8/16，主终点16。
+真正目标仍为相对匹配FLUX PSNR+.30dB、LPIPS下降9.928107050377874%。
+25步及8图均为工程检查，不是正式科学结论；不据此挑配方或自动长训。
+资格checkpoint明确不得seed正式训练；后续规模须由实测吞吐及独立方案决定。
+
+已完成：46项CPU回归、两进程真实CPU DDP二阶反传/累积一致性、
+Python/shell静态检查、4/8完整真实权重与数据元数据预检（不解码图片）。
+GPU尚未启动；Codex节点无GPU，不把CPU通过当CUDA显存/性能/指标通过。
+单节点同型号4/8×H100/H200，每卡至少75GiB；不混卡、不跨节点。
+四卡H100粗估30–60分钟，2–4使用GPU-hours；独占八卡时另计4–8整机GPU-hours。
+硬cap四卡5400秒/八卡2700秒，均6使用GPU-hours，另最多30秒清理。
+八卡/H200没有本任务实测，不承诺精确加速；不覆盖已有run，不同时跑两套。
+
+四卡启动：
+bash smoke/start_foundir_flux_tail_energy_qualification_v1_tmux.sh qualification_4gpu_v1 4
+入口显式传CUDA_VISIBLE_DEVICES；八卡须新ID及参数8。
+阶段hardware→prepare→cache→train→evaluate→verify；无自动formal。
+日志logs/foundir_flux_tail_energy_qualification_v1_<id>.log；
+输出checkpoints/foundir_flux_tail_energy_qualification_v1/<id>/。
+必须看到TAIL_ENERGY_RESULT_VERIFIED和TAIL_ENERGY_LAUNCH_END status=0；
+tmux创建不等于训练开始。当前无新GPU结果或实测成本。
+配置SHA256：22da9b3fb51f4705cc917b3d3c8bd1e1fea8bdd3193fff205e198c57ef462c71。
+详见reports/foundir_flux_tail_energy_qualification_v1_readiness_2026-10-28.{md,json}。
+
 ## TERMINAL: fixed GT policy passes on 24 separate training sources — 2026-10-28
 
 confirm24_4gpu_v1 已正常结束，不再启动/续跑。下面ACTIVE/readiness记录均为历史；
