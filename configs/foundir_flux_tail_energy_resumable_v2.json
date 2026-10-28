@@ -1,0 +1,19 @@
+{
+  "mode": "same_25_step_qualification_cached_resumable_execution",
+  "cache_root": "checkpoints/foundir_flux_tail_energy_qualification_v1/qualification_4gpu_v1",
+  "cache_preflight_sha256": "8768875674ee250b4f5c56207cc3007108096379f33c89b521396c216a251488",
+  "cache_complete_sha256": "741fadb665d394406618aa4540b5cd03715b0095d0dc10ea72f0c7b1e5333e80",
+  "output_root": "checkpoints/foundir_flux_tail_energy_resumable_v2",
+  "default_gpu_count": 8,
+  "allowed_gpu_counts": [4, 8],
+  "training_steps": 25,
+  "checkpoint_every_optimizer_step": 1,
+  "resume_requires_same_world_size": true,
+  "reuse_cache_without_regeneration": true,
+  "legacy_unsaved_optimizer_steps_replayed_from_initialization": true,
+  "budget_wall_seconds_by_gpus": {"4": 10800, "8": 5400},
+  "per_attempt_used_gpu_hours_cap": 12,
+  "auto_restart": false,
+  "auto_formal": false,
+  "qualification_may_seed_formal": false
+}

@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-28",
+  "status": "eight_gpu_cache_prepared_cpu_resume_verified_gpu_not_launched",
+  "scientific_recipe_changed": false,
+  "qualification_steps": 25,
+  "global_batch_candidate_pairs": 32,
+  "default_gpu_count": 8,
+  "compatible_gpu_counts": [
+    4,
+    8
+  ],
+  "homogeneous_families": [
+    "H100",
+    "H200"
+  ],
+  "cache_records_reused": 32,
+  "training_sources": 24,
+  "engineering_evaluation_sources": 8,
+  "cache_regenerated": false,
+  "protected_pixels_accessed": false,
+  "legacy_run": "qualification_4gpu_v1",
+  "legacy_memory_only_optimizer_state_recoverable": false,
+  "legacy_unsaved_steps_must_be_recomputed": true,
+  "legacy_files_preserved": true,
+  "new_run": "qualification_8gpu_v2",
+  "checkpoints": {
+    "every_completed_optimizer_step": 1,
+    "initial_step_saved": true,
+    "atomic_fsync": true,
+    "immutable_step_history": true,
+    "model": true,
+    "adam": true,
+    "rank_python_torch_cpu_cuda_rng": true,
+    "warmup_position": true,
+    "next_global_sample_slot": true,
+    "incomplete_inflight_step_may_need_replay": true,
+    "same_world_size_resume_only": true,
+    "complete_evaluation_records_reused": true
+  },
+  "validation": {
+    "cpu_regression_count": 52,
+    "cpu_tests_pass": true,
+    "cpu_ddp_ranks": 2,
+    "cpu_ddp_second_order_resume_exact_next_parameters": true,
+    "adam_and_rng_resume_test_pass": true,
+    "metadata_sha_preflight_gpu_count": 8,
+    "gpu_started": false,
+    "gpu_checkpoint_resume_qualified": false
+  },
+  "estimate": {
+    "eight_gpu_wall_minutes": [
+      55,
+      75
+    ],
+    "eight_gpu_used_hours": [
+      7.3,
+      10
+    ],
+    "speedup_measured": false,
+    "legacy_cost_additional": true,
+    "wall_cap_seconds_by_gpus": {
+      "4": 10800,
+      "8": 5400
+    },
+    "per_attempt_used_gpu_hours_cap": 12,
+    "cleanup_allowance_seconds": 30,
+    "auto_restart": false
+  },
+  "auto_formal": false,
+  "qualification_may_seed_formal": false,
+  "sha256": {
+    "configs/foundir_flux_tail_energy_resumable_v2.json": "80876ab88fba9b3a603e536dc73ac03e81a6ba3e28a4d00fa2d963379e32b227",
+    "smoke/flux_tail_checkpoint_v2.py": "f9b092bd076653f4c5e5fe3d1f51b618aa23e9d6e40b8a9b5e690350b3a07710",
+    "smoke/qualify_foundir_flux_tail_energy_resumable_v2.py": "8909cdb96d9296a140d8a3071dc4065a06f33b3efc0b94c2500e12ae56b50fa8",
+    "smoke/manage_flux_tail_energy_jobs_v2.py": "a4b0f72f59872390d6b259f332a1631e44e24c5e31ce70f271ee864d6128b19e",
+    "smoke/run_foundir_flux_tail_energy_resumable_v2_gpu.sh": "da9190c3548769d6feda5ab80192cc627ad299eeee273692057a743438cf252f",
+    "smoke/start_foundir_flux_tail_energy_resumable_v2_tmux.sh": "e983d48257e9fb2d160cf95aeee1731dd106757f199826e5f30276a85d633765"
+  }
+}

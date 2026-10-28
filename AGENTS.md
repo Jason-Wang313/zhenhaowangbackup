@@ -1,5 +1,55 @@
 # Project agent instructions
 
+## ACTIVE: use all eight GPUs; durable per-step FLUX-tail energy qualification — 2026-10-28
+
+用户明确要求切换到八卡并保存进度。本节覆盖下面四卡首轮资格的执行优先级；
+科学方案仍是同一个25-step learned-energy qualification，不扩训练规模、不自动formal。
+默认单节点8×H100/H200，显式CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7。
+仍保留4卡兼容入口，但兼容4卡不等于默认只用4卡；整机八卡空闲时默认用满八卡。
+
+旧qualification_4gpu_v1已完成全部32图缓存（24训练/8检查），四卡训练实测
+每步约246–250秒；原30–60分钟全程估算与90分钟旧超时不足，不能继续照此估算。
+旧程序只在step25保存权重，当前中间optimizer状态只在GPU进程内，无法热补保存。
+不要谎称换八卡是旧中间状态的无损续训。全部旧缓存/日志保留；新入口复用缓存，
+从同初始化重算旧未保存训练步。切换时记录旧最终日志步数及日志快照，不包装重算。
+Codex无GPU/远程进程控制通道；截至准备完成，尚未停止旧GPU进程或启动新八卡任务。
+
+新任务：checkpoints/foundir_flux_tail_energy_resumable_v2/qualification_8gpu_v2。
+已完成元数据与全部32缓存SHA核验，只链接原缓存，不重新生成、不读保护像素。
+旧绑定源码/配置/缓存均不修改。新元数据同时记录原producer和新consumer代码身份。
+global batch仍32候选对；八卡每rank累积4对，四卡累积8对。损失、lr、512裁图、
+25步、来源划分、无GT推理和+.30dB/LPIPS下降9.928107050377874%目标不变。
+
+每个完整optimizer step（含step0）原子保存模型、Adam、各rank Python/torchCPU/CUDA
+RNG、显式warmup状态、next_global_slot、累计训练日志及哈希。fsync后发布不可变
+checkpoint/receipt，再更新latest指针；旧步全保留。读取最高完整receipt，不因latest
+指针滞后丢进度；损坏校验失败时禁止悄悄回退。未完成的一步可能需要重算，不承诺
+断电瞬间未落盘计算可恢复。默认相同run-ID重复命令恢复最后完整步，不能新建ID
+冒充续训。当前已验证同world_size恢复；换world_size恢复明确拒绝，不能冒称bitwise等价。
+每张评价图完成后原子保存结果，重启跳过校验通过的已完成图；GT仍只在选择结束后计分。
+
+已通过52项CPU回归，以及两进程真实二阶DDP的Adam/RNG恢复：
+恢复后下一步参数与不中断路径逐元素相同。八卡缓存导入真实预检通过。
+这不是八卡CUDA资格通过；新八卡训练、显存、吞吐、指标均待用户节点运行。
+不因25步指标无收益就宣称路线终判，也不因CPU通过就声称科学成功。
+
+八卡重算25步+评价粗估55–75分钟，约7.3–10.0使用GPU-hours（未实测八卡加速）；
+旧四卡已消耗成本另计。新每次尝试硬cap：八卡5400秒、四卡10800秒，均12使用GPU-hours，
+另最多30秒清理；超时保留所有已提交步骤，不自动重启/扩预算。若独占八卡仅用四卡，
+须另计整机资源成本。整个历史累计成本不得被新run-ID清零。
+
+用户GPU节点一条命令：
+bash smoke/start_foundir_flux_tail_energy_resumable_v2_tmux.sh
+默认run-ID qualification_8gpu_v2、8卡；同命令将来用于断点恢复。
+启动器先准备/核验缓存，再通过精确脚本名、train phase、run-ID、4卡参数和cwd识别
+旧进程，核对GPU没有无关任务，只SIGTERM该旧torchrun并等待退出，不使用宽泛pkill。
+旧内存权重无法保存的事实会明确打印并记录；如果旧step25 checkpoint意外已经存在，
+拒绝丢弃/重算，必须先处理其迁移。旧日志快照保存到新run目录，旧目录不删除。
+随后获取节点锁、检查全部八卡空闲，执行train→evaluate→verify。
+日志logs/foundir_flux_tail_energy_resumable_v2_qualification_8gpu_v2.log追加保存各次尝试。
+终态需要TAIL_ENERGY_V2_RESULT_VERIFIED和TAIL_ENERGY_V2_LAUNCH_END status=0。
+报告reports/foundir_flux_tail_energy_resumable_v2_readiness_2026-10-28.{md,json}。
+
 ## ACTIVE: learned FLUX-tail quality energy — 25-step qualification — 2026-10-28
 
 用户在24来源GT确认完成后明确授权“下一步，执行”。本节覆盖下面全部历史
