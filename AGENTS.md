@@ -1,5 +1,32 @@
 # Project agent instructions
 
+## REVIEW: FLUX tail-guidance deep paper/code audit — 2026-10-28
+
+用户本轮要求先细读关键论文和代码，再复述计划；不是授权启动新GPU实验。
+完成报告：reports/foundir_flux_tail_energy_guidance_deep_audit_2026-10-28.md。
+12篇指定版本的正文/公式/实质附录已分段细读；9个官方仓库相关调用链做了静态核查。
+不能说已复现全部论文、检查了所有图像或排除了所有bug；ResFlow-Tuner未找到方法代码，
+D-Flow/KDS本轮只核原文/算法，明确保留实现核验缺口。
+
+继续以冻结Noise FLUX生成过程中的条件energy引导为唯一当前方向，
+不恢复最终pixel descent、Restormer residual、MoE或从零EBT。
+零引导需复现50步/alpha=.30/两次uint8量化；保护全部封存/测试像素。
+当前入口inference_mode不能直接启用输入梯度；需独立可微入口。
+真实shifted t下预览为z_t-t*v，导数为I-t*J_v；完整预览梯度不等于真实终点梯度。
+FlowChef跳过Jacobian是近似，并在公开路径复用旧velocity；不要宣称等价。
+KDS附录关闭t/T<.3引导，FreeDoM使用中段窗口，故不能默认最后2–4步最佳。
+IRED仍有二阶导；更低energy不保证正确；CEP有限候选目标不保证exact。
+
+建议下次实施顺序（本轮未实施）：零引导一致性/梯度检查 →
+training-source-only GT目标的真实tail可改进空间诊断 →
+训练真实FLUX预览分布上的energy（排序和方向）→ 实际量化终图配对评估。
+GT oracle只诊断，不得进入部署，oracle可行不证明可学习；小范围失败也不证伪全部方向。
+保留energy独立+.30dB/LPIPS相对降低9.928107050377874%的原目标。
+不默认复用25步energy，也不把32张工程资格当科学规模；先实测再冻结正式规模。
+固定预算引导先于未校准的自适应停止；同一energy自验证仍须证据。
+比较原基线及相同总计算/精度的无energy控制，计入全部反向、VAE和rollout。
+本轮仅文档，无新训练代码/GPU任务，GPU-hours=0；窗口、预算、正式配方尚未冻结。
+
 ## ACTIVE: investigate FLUX tail guidance; abandon output-pixel descent — 2026-10-27
 
 用户最新明确决定：不再继续当前FLUX最终输出上的直接pixel energy descent，
