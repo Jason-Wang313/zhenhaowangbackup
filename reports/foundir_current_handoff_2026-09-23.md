@@ -1,5 +1,39 @@
 # FoundIR current handoff — 2026-09-23
 
+## MANDATORY: all future experiments support single-node 4/8 H100 or H200 — 2026-10-28
+
+用户明确要求：从本次开始，所有后续实验、训练、评价、诊断和启动脚本都必须支持
+单节点4×H100、4×H200、8×H100、8×H200。此规则覆盖历史“必须8卡”的操作限制，
+但不是授权恢复旧实验或更改当前研究方向；历史脚本不因此自动视为已兼容。
+每次只用同型号GPU，不混H100/H200，不跨节点。不得根据节点名推断型号。
+当前实现以每卡至少75GiB可见显存为验收条件；其他显存规格须单独验证，不冒称已支持。
+
+新agent必须遵守：
+- 启动器显式接受4/8卡，检查实际CUDA可见数量、型号一致性和空闲状态；
+  不把world_size、gather列表、样本分片、日志或GPU-hours硬编码成8。
+  tmux必须显式传入卡数和CUDA_VISIBLE_DEVICES，不能依赖旧server环境。
+- 训练用梯度累积保持原global batch、loss归一化、数据曝光量和optimizer-step口径；
+  卡数减少不自动改学习率、裁图、loss、验证集、科学门槛或训练规模。
+  若不能保持等价，必须先解释差异并取得用户确认，不能静默降低实验标准。
+- 评价/诊断保持同一完整记录集合、crop、seed、指标、量化与权重；4卡顺序处理
+  更多记录，不能丢掉一半数据。汇总防漏样本和重复计数。
+- 换卡数续训必须核验optimizer/scheduler、RNG及sampler进度的可恢复性；
+  不把重新初始化或数据顺序变化冒充严格续训，不覆盖已有run/artifacts。
+- 每个新入口都测试4/8两种分片/汇总及CPU静态路径；分别记录实际GPU资格状态。
+  “代码支持”不等于“4卡和8卡都已跑通”；无GPU时必须明确标待GPU验收。
+- 分别报普通wall hours及实际使用卡数×耗时的GPU-hours。4卡可能更慢，
+  不承诺精确2倍耗时；若实际占用整台8卡节点而只用4卡，还须另报8卡资源占用成本。
+- 未来沿用通用命名/参数入口；历史_8gpu入口只能明确作兼容wrapper，
+  不要让fresh agent误以为还必须8卡。保留历史结果，修改后focused commit/push。
+
+当前Noise FLUX诊断已实现4/8支持，仍是固定8训练来源、同46个arms、无新训练：
+4卡每rank处理2张（先后独立加载、释放模型，不增加单卡batch），8卡每rank1张。
+通用入口smoke/run_foundir_flux_tail_oracle_v1_gpu.sh <fresh_run_id> <4|8>；
+tmux入口smoke/start_foundir_flux_tail_oracle_v1_tmux.sh <fresh_run_id> <4|8>。
+本次预算cap：4卡3普通小时/12 GPU-hours；8卡1.5普通小时/12 GPU-hours，
+另最多30秒清理。这是预算，不是实测ETA。实际GPU验收尚未运行。
+详细变更见reports/foundir_flux_tail_oracle_4_8gpu_compatibility_2026-10-28.md。
+
 ## ACTIVE: Noise FLUX training-only tail mechanism diagnostic — 2026-10-28
 
 用户明确授权执行最小机制诊断；此节覆盖下面所有旧Rain/Generalist/MoE/residual优先级。
@@ -24,9 +58,9 @@ FP32完整预览及两步rollout均须通过有限差分，不能把skip-J叫精
 GT诊断成功不保证energy可学习；8来源失败也不证伪所有窗口/训练方案。
 VLM等级仅记录来源，本诊断不用VLM引导，不能算VLM必要性证据。
 
-单节点同型号8xH100/H200，一次一个任务；硬件空闲检查、节点锁、fresh ID、
-输出不覆盖、源码/数据哈希绑定和timeout均启用。预算上限1.5普通小时/
-12 allocated GPU-hours，另最多30秒进程清理；是上限，不是实测ETA。
+单节点同型号4或8张H100/H200，一次一个任务；硬件空闲检查、节点锁、fresh ID、
+输出不覆盖、源码/数据哈希绑定和timeout均启用。4卡上限3普通小时，
+8卡上限1.5普通小时，均12 GPU-hours，另最多30秒清理；不是实测ETA。
 记录实际forward/block recompute/backward/解码计数、显存和运行时间。
 Codex当前无GPU设备；CPU/static及预检不等于实际GPU验收，不能说任务已启动。
 正式energy仍须新决策/冻结配方，独立目标+.30dB及LPIPS降低9.928107050377874%不变。

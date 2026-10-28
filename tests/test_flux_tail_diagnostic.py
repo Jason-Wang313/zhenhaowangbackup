@@ -11,7 +11,7 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / 'third_party/flux2/src'))
 from flux2.sampling import denoise_cfg
 from lowlight_restoration.flux_tail_diagnostic import Tail, preview, finite_difference, rms_direction, continuous_blend, checkpoint_blocks
-from smoke.diagnose_foundir_flux_tail_oracle_v1 import validate_spec, aggregate
+from smoke.diagnose_foundir_flux_tail_oracle_v1 import validate_spec, aggregate, assigned_indices
 
 
 class Model(torch.nn.Module):
@@ -123,6 +123,37 @@ def test_frozen_scope():
                          ('rms_latent_steps', [.2]), ('finite_difference_required_passes', 0)]:
         with unittest.TestCase().assertRaises(RuntimeError):
             validate_spec(spec | {field: value})
+
+
+def test_four_eight_gpu_partition_preserves_all_eight_samples():
+    for world_size in (4, 8):
+        shards = [assigned_indices(rank, world_size) for rank in range(world_size)]
+        assert sorted(sum(shards, [])) == list(range(8))
+        assert all(len(shard) == 8//world_size for shard in shards)
+    assert assigned_indices(0, 4) == [0, 4]
+    assert assigned_indices(3, 4) == [3, 7]
+    for rank, world in [(0, 2), (4, 4), (-1, 8)]:
+        with unittest.TestCase().assertRaises(ValueError):
+            assigned_indices(rank, world)
+    spec = json.loads((ROOT/'configs/foundir_flux_tail_oracle_v1.json').read_text())
+    for count in (4, 8):
+        assert count * spec['budget_wall_hours_cap_by_gpus'][str(count)] == 12
+    for field, value in [('allowed_world_sizes', [8]), ('budget_wall_hours_cap_by_gpus', {'4': 1.5, '8': 1.5})]:
+        with unittest.TestCase().assertRaises(RuntimeError):
+            validate_spec(spec | {field: value})
+
+
+def test_four_eight_gpu_aggregation_is_identical():
+    rows = [dict(record_id=str(i), source_group=str(i), baseline_parity_pass=True,
+            finite_difference_pass=True, arms={'historical_bf16': dict(
+            metrics=dict(psnr=40.+i/10, lpips=.05+i/1000), control='historical_bf16')}) for i in range(8)]
+    spec = json.loads((ROOT/'configs/foundir_flux_tail_oracle_v1.json').read_text())
+    results = []
+    for world_size in (4, 8):
+        parts = [[rows[i] for i in assigned_indices(rank, world_size)] for rank in range(world_size)]
+        restored = sorted(sum(parts, []), key=lambda row: int(row['record_id']))
+        results.append(aggregate(restored, spec))
+    assert results[0] == results[1]
 
 
 def test_aggregate_keeps_failures_and_precision_control_separate():

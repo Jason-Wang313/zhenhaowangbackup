@@ -76,19 +76,23 @@ CPU/static/元数据结果不等同GPU实际资格。实测GPU耗时和质量结
 
 ## 运行与预算
 
-单节点同型号8×H100/H200，每rank一张图，无跨节点训练。
-预算cap为1.5普通小时/12 allocated GPU-hours，额外最多30秒清理。
+更新：单节点同型号4/8×H100/H200。固定8张，4卡每rank顺序两张，8卡每rank一张。
+每张使用独立模型生命周期，结束后回收显存；不增大单卡batch，无跨节点。
+预算cap为4卡3普通小时、8卡1.5普通小时，均12 GPU-hours，额外最多30秒清理。
 此处没有编造吞吐/ETA；完成后用launcher实际秒数和峰值显存替换估计。
 报告模型forward、物理block调用（含checkpoint重算）、目标backward与VAE解码，
 原始restore额外50个forward和encode/decode单列。LPIPS/其他操作的成本包含在实测时间内。
 不自动启动energy或长训、不覆盖旧结果、不杀已有其他任务。
 
 ```bash
-cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && bash smoke/start_foundir_flux_tail_oracle_v1_tmux.sh mechanism_v1
+cd /inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang && CUDA_VISIBLE_DEVICES=0,1,2,3 bash smoke/start_foundir_flux_tail_oracle_v1_tmux.sh mechanism_4gpu_v1 4
 ```
 
-日志：`logs/foundir_flux_tail_oracle_v1_mechanism_v1.log`。
-输出：`checkpoints/foundir_flux_tail_oracle_v1/mechanism_v1/`。
+八卡可用`CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7`、fresh ID和第二参数`8`。
+通用run入口为`smoke/run_foundir_flux_tail_oracle_v1_gpu.sh`；旧`_8gpu.sh`仅兼容wrapper。
+日志：`logs/foundir_flux_tail_oracle_v1_mechanism_4gpu_v1.log`。
+输出：`checkpoints/foundir_flux_tail_oracle_v1/mechanism_4gpu_v1/`。
+每条保存独立sample000–007.json，rank文件仅记录分片/耗时，不能把rank数当样本数。
 结束须有完整8条、全部46个arms、梯度/基线通过及`TAIL_ORACLE_RESULT_VERIFIED`，
 不能仅凭tmux创建或退出码0宣布成功。中断保留partial，重试必须fresh ID。
 
