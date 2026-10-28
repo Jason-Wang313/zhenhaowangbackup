@@ -1,5 +1,46 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: fixed-policy GT confirmation on 24 other training sources — 2026-10-28
+
+用户已授权执行。当前唯一新任务是固定 V3 的 mixed_psnr_budget、最多16次更新，
+在原缓存索引8–31的24个训练来源上确认；此前V3终态/历史计划不再是待执行任务。
+不重新挑方向/步幅/窗口/检查点，不恢复旧Restormer/MoE/EBT或最终像素下降，
+不训练energy、不自动长训。V1/V2/V3绑定源码、配置、结果保持不动。
+
+复用V3原始diagnose_record及trajectory核验，不改梯度、rollout、量化或接受规则。
+保持Noise step400、50步、512裁图/seed、CFG1、reference time10、alpha=.30、
+双uint8量化、index48真实两步rollout、BF16模型和FP32 latent。
+只保留mixed五方向与psnr_budget一条轨迹，仍按原25候选/轮、最多16轮；
+报告1/2/4/8/16及两个对照共7项，主终点唯一mixed_psnr_budget_step16。
+目标相对这24图自己的原部署基线：PSNR+.30dB、LPIPS下降9.928107050377874%。
+不沿用八图绝对数值、不把八图混入均值、不逐图挑最佳检查点。
+未接受修正仍保留FP32无引导结果，禁止GT事后换回历史图美化指标。
+
+24来源与原八图的source、GT/LQ哈希、record ID均分离；元数据预检不解码图片。
+这些来源曾参加旧32图工程资格，不是未用过的正式测试集。
+全部方向/候选/停止仍依赖GT；只是训练来源机制确认，不是energy学会、
+VLM贡献、部署、泛化或论文成功。全部测试/封存像素及最终1859条开发集仍禁止。
+成功不自动授权后续训练；全部候选及拒绝/forward/backward成本继续记录，
+不能将16轮更新说成只多16次前向，也不能保证LPIPS提升等于视觉自然。
+
+单节点同型号4/8×H100/H200，每卡至少75GiB，4卡每rank六张/8卡每rank三张。
+34项CPU回归、Python/shell静态检查、真实权重与全部24缓存的4/8卡预检均通过；
+新任务GPU未启动，Codex无GPU。仅旧V3四卡H100实测，不扩称本任务GPU验收。
+暂估四卡H100 15–30分钟（.25–.50普通小时，1–2使用GPU-hours），
+若独占八卡整机仅用四卡另计2–4整机GPU-hours；这是粗估，不是实测。
+硬cap：4卡1小时/8卡.5小时，均4使用GPU-hours，另最多30秒清理。
+独占八卡只用四卡时，cap对应8整机GPU-hours；八卡/H200未有本任务实测ETA。
+四卡命令：bash smoke/start_foundir_flux_tail_confirmation_v1_tmux.sh confirm24_4gpu_v1 4
+八卡可用独立ID confirm24_8gpu_v1 8；二选一，不重复同时跑。
+日志logs/foundir_flux_tail_confirmation_v1_<id>.log；
+结果checkpoints/foundir_flux_tail_confirmation_v1/<id>/result.json。
+必须核验CONFIRMATION_RESULT_VERIFIED及CONFIRMATION_LAUNCH_END status=0，
+tmux创建不等于GPU开始。全部结束前不自动扩大任务。
+
+配置SHA256：c3ac68f96f2231a434d90b5fa733948d3c9dbe3bb08bfc8f86f839e4b97d3dcf。
+V3父结果SHA256：06eed91ab7c2c0942b221a14d4c295d1e269bf57b17a8d79354ec9be074d24e4。
+详见reports/foundir_flux_tail_confirmation_v1_readiness_2026-10-28.{md,json}。
+
 ## MANDATORY: all future experiments support single-node 4/8 H100 or H200 — 2026-10-28
 
 用户明确要求：从本次开始，所有后续实验、训练、评价、诊断和启动脚本都必须支持

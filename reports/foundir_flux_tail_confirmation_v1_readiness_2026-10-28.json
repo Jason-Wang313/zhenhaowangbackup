@@ -1,0 +1,91 @@
+{
+  "status": "launch_ready_cpu_and_metadata_only",
+  "date": "2026-10-28",
+  "experiment": "foundir_flux_tail_confirmation_v1",
+  "config_sha256": "c3ac68f96f2231a434d90b5fa733948d3c9dbe3bb08bfc8f86f839e4b97d3dcf",
+  "parent_result_sha256": "06eed91ab7c2c0942b221a14d4c295d1e269bf57b17a8d79354ec9be074d24e4",
+  "source_sha256": {
+    "smoke/diagnose_foundir_flux_tail_confirmation_v1.py": "fc4ff8c0c9a55612914c63580bc08e031872a6582378849fe5d64cd47c1a319a",
+    "smoke/run_foundir_flux_tail_confirmation_v1_gpu.sh": "095b034d5f3094c1c0bfe2e5e702c1875af0e68d2918392006832e0cbc38b77e",
+    "smoke/start_foundir_flux_tail_confirmation_v1_tmux.sh": "3ae53b44f2d6a95792baa760ada6b33367fb555690754de708482bb6e1d56718"
+  },
+  "cache_indices": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "excluded_diagnostic_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "records": 24,
+  "sources": 24,
+  "primary_endpoint": "mixed_psnr_budget_step16",
+  "report_arms": 7,
+  "psnr_gain_target": 0.3,
+  "lpips_relative_reduction_target": 0.09928107050377874,
+  "cpu_tests_passed": 34,
+  "new_confirmation_tests": 6,
+  "python_shell_static_checks_pass": true,
+  "real_artifact_metadata_preflight_pass_world_sizes": [
+    4,
+    8
+  ],
+  "new_gpu_qualification_completed": false,
+  "gpu_started": false,
+  "used_gpu_hours": 0,
+  "energy_trained": false,
+  "deployable": false,
+  "generalization_established": false,
+  "protected_pixels_accessed": false,
+  "images_decoded": 0,
+  "source_and_content_disjoint_from_v3": true,
+  "training_sources_previously_used_in_engineering_qualification": true,
+  "four_h100_estimate_wall_hours": [
+    0.25,
+    0.5
+  ],
+  "four_h100_estimate_used_gpu_hours": [
+    1,
+    2
+  ],
+  "if_exclusive_eight_gpu_node_four_used_estimate_node_gpu_hours": [
+    2,
+    4
+  ],
+  "budget_wall_seconds_by_gpus": {
+    "4": 3600,
+    "8": 1800
+  },
+  "budget_used_gpu_hours_cap": 4,
+  "cleanup_allowance_seconds": 30,
+  "auto_train": false,
+  "auto_expand": false
+}
