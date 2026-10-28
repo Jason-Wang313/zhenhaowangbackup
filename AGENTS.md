@@ -34,6 +34,50 @@ V1历史预算cap：4卡3普通小时/12 GPU-hours；8卡1.5普通小时/12 GPU-
 另最多30秒清理。这是预算，不是实测ETA。4×H100已实测完成；8卡/H200尚未验收。
 详细变更见reports/foundir_flux_tail_oracle_4_8gpu_compatibility_2026-10-28.md。
 
+## ACTIVE: GT-only PSNR-budget / direction diagnosis V3 — 2026-10-28
+
+用户明确授权：先解决 GT 诊断仍未通过双目标的问题，再检查更多来源；
+不直接启动正式 energy 训练。此节覆盖下面终态/历史计划，不恢复其它分支。
+V3 保持同八个 training sources、512裁图/seed、Noise step400、50步、
+alpha=.30、双uint8量化；仅 index48 latent 真实两步rollout。
+不只挑困难三图，不访问任何测试/封存像素及最终1859条开发集。
+V1/V2绑定源码与结果不修改，新输出根 foundir_flux_tail_budget_v3。
+
+四组匹配对照：balanced/mixed 方向 × monotone/psnr_budget 接受规则。
+balanced 为 MSE/LPIPS 梯度各自RMS归一化后等权混合；mixed 同时试
+LPIPS权重0/.25/.5/.75/1。共同步幅.0005/.001/.002/.005/.01。
+monotone 不允许PSNR低于当前值；budget 达到原基线+.30dB后才允许
+用掉超额PSNR，不能跌破目标；尚未达到时保持PSNR进度。
+两组均不接受LPIPS恶化，并要求不损害原基线；先缩小PSNR目标缺口，
+可行候选中优先最低量化LPIPS，再较高PSNR/较小步幅，固定顺序破平局。
+最多16次尝试更新，1/2/4/8/16报告；达到目标不提前停，
+无合法候选才停。共20轨迹报告项+2对照，全部尝试与拒绝保留。
+
+四组共享排序及迭代上限；mixed每次25候选而balanced为5，
+计算量不同，必须记录所有前向、重算、反向、解码和拒绝试步成本，
+不能宣称等算力部署TTS优势。未接受更新时保留FP32 latent对照，
+可能与历史BF16有极小差异，不用GT事后换回较好图来美化均值。
+接受/停止直接用GT，仍不是可部署方法、energy学习或泛化证据。
+原目标+.30dB与LPIPS相对下降9.928107050377874%不变，不承诺一定通过。
+
+单节点同型号4/8 H100/H200；4卡顺序每rank两张，8卡每rank一张。
+上限4卡1小时、8卡.5小时，均4 GPU-hours，另最多30秒清理；
+这是cap不是ETA。独占八卡但用四卡须另报整机成本。
+入口 smoke/start_foundir_flux_tail_budget_v3_tmux.sh <fresh_id> <4|8>；
+建议四卡ID budget_4gpu_v1。Codex无GPU，不得把代码/CPU/preflight通过
+说成GPU任务已经启动。无自动重训/数据扩展；不覆盖已有run。
+
+更多来源计划：先检查八图双指标余量；通过后冻结单个方案，再检查
+现有缓存中另外24个训练来源（索引8–31）。它们不是最终泛化测试，
+本次V3不读取其像素，不自动扩展，也不逐图挑最佳方案冒充统一方法。
+八图通过不能保证正式训练成功；学习和泛化仍须后续独立证据。
+详见 reports/foundir_flux_tail_budget_v3_readiness_2026-10-28.md。
+
+V3最终28项CPU测试、Python/shell静态检查和4/8卡权重/缓存元数据预检通过，
+未解码原图。配置SHA256：
+58ebc99b3bc92b4db4eaf80b3489bd3047bd0f6014e8ca26dbcdabe25a54ef9d。
+GPU运行仍未启动，等待用户在GPU节点执行上述tmux入口。
+
 ## TERMINAL: V2 tail diagnostic complete; joint target still short — 2026-10-28
 
 tradeoff_4gpu_v1 已正常结束，当前没有待续的 V2 任务，不自动启动 energy 训练。
