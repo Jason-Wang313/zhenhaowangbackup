@@ -1,5 +1,28 @@
 # FoundIR current handoff — 2026-09-23
 
+## LIVE: eight-H100 training and per-step save verified — 2026-10-28
+
+qualification_8gpu_v2 已在用户节点真实启动，不再是“待GPU运行”。
+2026-10-28T23:53:14Z启动；八张卡均实测为H100 80GB，rank0–7全部参与。
+旧四卡任务已精确停止：最后日志step7，23:53:44Z以status1结束，属主动切换，
+不是新八卡训练崩溃。32图缓存全部复用，旧日志及快照保留；旧step1–7从未
+保存optimizer checkpoint，不能恢复，当前是同初始化重算而不是无损续训。
+
+已独立读取并核验step0/1/2不可变文件的SHA256；step2模型参数有限且已更新，
+Adam共236个参数状态均为step2，next_global_slot=64，8份CPU/CUDA RNG齐全，
+八卡参数一致。每卡峰值allocated显存31.8915GiB。前两步分别125.5294/124.6914秒，
+接近旧四卡246–250秒的两倍速度；global batch/科学方案不变。
+核验时2/25步，剩余训练约48分钟（约6.4使用GPU-hours），评价时间另计。
+旧四卡已消耗3376秒/.9378普通小时/3.7511使用GPU-hours；若计整台八卡占用，
+为7.5022整机GPU-hours。不得从历史账中删除这笔成本。
+
+这是八卡启动、有限训练和逐步落盘验收，不是25步完成或科学成功。
+GPU中断后真正重启尚未实测；仅CPU二阶DDP的精确恢复测试通过。
+不要为测试恢复而打断正常任务，不改正在运行的绑定源码/配置。
+同run-ID启动命令可恢复最后完整步，未完成的一步可能重算；不自动formal/扩预算。
+当前未有新PSNR/LPIPS结果，早期gradient cosine接近零，不宣称energy已学会。
+详见reports/foundir_flux_tail_energy_resumable_v2_live_2026-10-28.{md,json}。
+
 ## ACTIVE: use all eight GPUs; durable per-step FLUX-tail energy qualification — 2026-10-28
 
 用户明确要求切换到八卡并保存进度。本节覆盖下面四卡首轮资格的执行优先级；

@@ -1,0 +1,62 @@
+{
+  "status": "live_training_and_durable_save_verified_not_qualification_complete",
+  "run_id": "qualification_8gpu_v2",
+  "startup_utc": "2026-10-28T23:53:14Z",
+  "verified_step": 2,
+  "total_steps": 25,
+  "world_size": 8,
+  "gpu_model": "NVIDIA H100 80GB HBM3",
+  "cache_records_reused": 32,
+  "cache_regenerated": false,
+  "legacy": {
+    "run_id": "qualification_4gpu_v1",
+    "last_logged_step": 7,
+    "end_utc": "2026-10-28T23:53:44Z",
+    "launcher_status": 1,
+    "stop_reason": "user_authorized_eight_gpu_switch",
+    "unsaved_optimizer_steps_replayed": true,
+    "elapsed_seconds": 3376,
+    "used_gpu_hours": 3.7511111111111113,
+    "eight_gpu_node_hours_if_exclusive": 7.502222222222223
+  },
+  "checks": {
+    "all_rank_parameter_hashes_agree": true,
+    "all_saved_file_sha256_match": true,
+    "model_parameters_finite": true,
+    "model_changed_from_initial": true,
+    "adam_parameter_states": 236,
+    "adam_steps": [
+      2
+    ],
+    "next_global_slot": 64,
+    "rank_rng_count": 8,
+    "cuda_rng_count": 8,
+    "cpu_ddp_exact_resume_test_pass": true,
+    "gpu_interruption_resume_tested": false
+  },
+  "step_seconds": [
+    125.52943746501114,
+    124.69140653300565
+  ],
+  "peak_allocated_gib_per_rank": [
+    31.891518115997314,
+    31.891518115997314,
+    31.891518115997314,
+    31.891518115997314,
+    31.891518115997314,
+    31.891518115997314,
+    31.891518115997314,
+    31.891518115997314
+  ],
+  "checkpoint_step_sha256": {
+    "0": "336b87a6c9234a58a0d43ae979ebe9682b4139327daaec3c5484ab5046bbac43",
+    "1": "e6f1dbe659942140d4a74b2b614c603b96c5b1a611a579fa2c4edcce754296f0",
+    "2": "9cec1b0b3c0c2452873688036d7268c43c87e8476f59a97cd014ea3a63fae4d9"
+  },
+  "remaining_train_seconds_at_step2": 2877.539705977193,
+  "evaluation_time_not_in_remaining_train_estimate": true,
+  "scientific_gate_evaluated": false,
+  "formal_authorized": false,
+  "bound_running_sources_modified": false,
+  "launch_source_commit": "d2c6f6bf8cbe82e82f58105bee4ca21652ae21e0"
+}
