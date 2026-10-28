@@ -26,13 +26,44 @@
 - 未来沿用通用命名/参数入口；历史_8gpu入口只能明确作兼容wrapper，
   不要让fresh agent误以为还必须8卡。保留历史结果，修改后focused commit/push。
 
-当前Noise FLUX诊断已实现4/8支持，仍是固定8训练来源、同46个arms、无新训练：
+历史Noise FLUX V1诊断已实现4/8支持，固定8训练来源、同46个arms、无新训练：
 4卡每rank处理2张（先后独立加载、释放模型，不增加单卡batch），8卡每rank1张。
 通用入口smoke/run_foundir_flux_tail_oracle_v1_gpu.sh <fresh_run_id> <4|8>；
 tmux入口smoke/start_foundir_flux_tail_oracle_v1_tmux.sh <fresh_run_id> <4|8>。
-本次预算cap：4卡3普通小时/12 GPU-hours；8卡1.5普通小时/12 GPU-hours，
+V1历史预算cap：4卡3普通小时/12 GPU-hours；8卡1.5普通小时/12 GPU-hours，
 另最多30秒清理。这是预算，不是实测ETA。4×H100已实测完成；8卡/H200尚未验收。
 详细变更见reports/foundir_flux_tail_oracle_4_8gpu_compatibility_2026-10-28.md。
+
+## ACTIVE: GT-only LPIPS/PSNR trade-off diagnostic V2 — 2026-10-28
+
+用户在看完V1完成结果后授权下一步。只做training-source-only的有限诊断，
+不启动energy训练、不变更已有FLUX权重、不恢复Restormer/MoE/EBT。
+V1结果及绑定源码保持不动；新入口/输出根为foundir_flux_tail_tradeoff_v2。
+入口：smoke/start_foundir_flux_tail_tradeoff_v2_tmux.sh <fresh_id> <4|8>。
+
+使用完全相同8训练来源/512裁图/seed/Noise step400/50步/alpha=.30/双uint8量化。
+仅index48的真实剩余两步rollout，不再同时扫多个窗口，避免把预览误差混入。
+先分开测normalized MSE与LPIPS的梯度RMS、比值和夹角，再比较：
+MSE-only、LPIPS-only、原联合loss梯度、两种梯度各自归一化后的平衡方向。
+原联合loss通过单独的联合backward获得，不用两个BF16 backward相加冒充原实现。
+幅度冻结.0005/.001/.002/.005/.01；所有40个single-update arms保留。
+
+两种目标：原continuous blend；保留真实双round前向但使用straight-through近似梯度。
+STE不是取整的真实导数，不能宣称其通过有限差分。每个实际输出仍按真实量化评分，
+并核验STE前向逐像素等于deployed_proposal，记录连续指标与量化指标差异。
+每种目标额外一个最多8次的balanced GT-only轨迹：每次用同5步长试完，
+只接受量化PSNR/LPIPS都不损害当前结果且至少一项改善的候选；
+无安全候选或达到原双目标则停止，保留1/2/4/8步报告及全部接受/拒绝记录。
+这依赖GT，不是可部署TTS/自验证，也不证明energy可学习。严格no-harm有限搜索失败
+不能证明不存在需暂时权衡指标的其他路径，8训练图也不证明泛化。
+
+共50报告arms；原BF16及同精度无引导control仍保留。
+相对匹配FLUX的+.30dB/LPIPS下降9.928107050377874%目标不变，不以旧Restormer抵扣。
+单机4/8同型号H100/H200；4卡每rank顺序2张，8卡每rank1张。
+预算cap：4卡1小时，8卡.5小时，均4 GPU-hours，另最多30秒清理；
+这是上限，不是已实测ETA。Codex无GPU，本轮只完成实现/CPU及元数据预检，
+不声称新GPU任务已启动。完成前不得自动扩大数据或启动energy长训。
+报告：reports/foundir_flux_tail_tradeoff_v2_readiness_2026-10-28.md。
 
 ## MILESTONE: four-H100 tail diagnostic complete; joint target NOT met — 2026-10-28
 
