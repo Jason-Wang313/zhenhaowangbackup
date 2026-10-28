@@ -1,5 +1,37 @@
 # Project agent instructions
 
+## ACTIVE: Noise FLUX training-only tail mechanism diagnostic — 2026-10-28
+
+用户明确授权执行最小机制诊断；此节覆盖下面所有旧Rain/Generalist/MoE/residual优先级。
+唯一当前工作是冻结Noise FLUX生成过程的GT-only机制诊断，不训练energy或修改LoRA，
+不恢复最终pixel descent、Restormer residual、MoE、EBT Generalist，不自动长训。
+报告：reports/foundir_flux_tail_oracle_v1_readiness_2026-10-28.md。
+入口：smoke/start_foundir_flux_tail_oracle_v1_tmux.sh mechanism_v1。
+
+冻结复用已绑定qualification_v1缓存的前8条（8个training sources），512裁图；
+不是最终1859条开发集，也不是泛化证据。GT只用于非部署诊断，全部测试像素仍禁止。
+保持Noise step400、50步真实shifted schedule、reference time10、CFG1、alpha=.30、
+两次uint8量化。零引导必须逐像素复现历史入口和缓存，否则立即失败。
+仅在梯度数值检查阶段把模型转换FP32并关闭TF32，随后恢复原参数/buffer精度及TF32。
+引导使用FP32 latent累积/BF16 FLUX；每个窗口都有同精度无引导control。
+
+比较零基索引40/46/48处的一次预览梯度修正（完整及skip-J近似），
+48处另做真实两步rollout梯度；不是默认最后几步最佳。
+预先固定latent RMS幅度.005/.02/.08，目标为归一化MSE或MSE+LPIPS。
+实际修改后重新计算FLUX velocity并完成剩余轨迹，按真实量化终图评分。
+FP32完整预览及两步rollout均须通过有限差分，不能把skip-J叫精确梯度。
+逐arm报告失败和收益，不用GT选优隐藏失败，不把有限搜索叫全局上界。
+GT诊断成功不保证energy可学习；8来源失败也不证伪所有窗口/训练方案。
+VLM等级仅记录来源，本诊断不用VLM引导，不能算VLM必要性证据。
+
+单节点同型号8xH100/H200，一次一个任务；硬件空闲检查、节点锁、fresh ID、
+输出不覆盖、源码/数据哈希绑定和timeout均启用。预算上限1.5普通小时/
+12 allocated GPU-hours，另最多30秒进程清理；是上限，不是实测ETA。
+记录实际forward/block recompute/backward/解码计数、显存和运行时间。
+Codex当前无GPU设备；CPU/static及预检不等于实际GPU验收，不能说任务已启动。
+正式energy仍须新决策/冻结配方，独立目标+.30dB及LPIPS降低9.928107050377874%不变。
+继续简明中文汇报；每个实质节点focused commit/push并核验远端。
+
 ## REVIEW: FLUX tail-guidance deep paper/code audit — 2026-10-28
 
 用户本轮要求先细读关键论文和代码，再复述计划；不是授权启动新GPU实验。
