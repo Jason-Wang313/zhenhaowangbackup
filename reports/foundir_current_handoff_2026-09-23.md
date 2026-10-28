@@ -1,6 +1,42 @@
 # FoundIR current handoff — 2026-09-23
 
-## ACTIVE: fixed-policy GT confirmation on 24 other training sources — 2026-10-28
+## TERMINAL: fixed GT policy passes on 24 separate training sources — 2026-10-28
+
+confirm24_4gpu_v1 已正常结束，不再启动/续跑。下面ACTIVE/readiness记录均为历史；
+当前没有待完成GPU任务，不自动启动energy训练或恢复旧Restormer/MoE/EBT。
+4×H100 80GB，2026-10-28T21:58:30Z–2026-10-28T22:17:00Z，launcher status=0，
+CONFIRMATION_RESULT_VERIFIED及独立标准库重算均通过。
+共1110秒/18分30秒/.3083333333普通小时/1.2333333333使用GPU-hours；
+若独占八卡整机则2.4666666667整机GPU-hours（是否独占未确认）。
+峰值allocated显存15.306301593780518GiB。仅本任务四卡H100实测通过。
+
+24个来源、缓存索引8–31、7个报告项完整，24/24基线逐像素复现。
+来源/GT/LQ哈希与旧八图分离；不把八图混入平均值，不在24图重新挑方案。
+固定唯一主终点mixed_psnr_budget_step16：
+原部署FLUX为40.669039726257324/.05249165142110238，
+GT引导为41.655218760172524/.03592422348447144，
+即PSNR+.9861790339151995dB、LPIPS下降31.56202460410801%。
+超过+.30dB/LPIPS下降9.928107050377874%的原平均双目标。
+
+22/24单图通过，24/24两项均未比历史基线变差，但不是每张有充足余量。
+索引24接受0次，仅FP32无引导精度差异（+.0002479553dB/LPIPS降.0151213%），
+不能归为引导收益；索引27接受1次，仅+.0255088806dB/降.0884384%，也未过。
+索引17 PSNR仅比目标高.0007125854dB，索引18 LPIPS降10.7094849%，边际仍小。
+4/8轮平均也过，但只是预定描述性报告，主终点仍16轮，不事后挑最优。
+
+独立核验334次尝试、8350候选、327次接受、8023次拒绝，逐次选择/停止、
+全部均值、源码配置哈希、sample/rank及trace一致。V1/V2/V3绑定文件未改。
+policy含18704次FLUX forward（包括checkpoint重算）、668次目标backward，
+不是廉价16次前向。成本和全部逐图结果均保留。
+仍是训练来源GT确认：所有方向/接受/停止用GT，没有训练energy，没有VLM引导，
+不是部署、泛化或论文创新成功。这24来源曾参加旧32图工程资格，不是未用过的测试集。
+没有读取保护/最终1859条开发集像素，没有恢复图像定性审核。
+后续energy学习需独立冻结方案和用户决策；禁止把本GT成绩当可部署收益。
+
+结果SHA256：37f13289195eb6abd4fc4127f797008f7e6843ebd11957123b7245fcfa735137。
+报告：reports/foundir_flux_tail_confirmation_v1_terminal_2026-10-28.{md,json}。
+
+## HISTORICAL PLAN: fixed-policy GT confirmation on 24 other training sources — 2026-10-28
 
 用户已授权执行。当前唯一新任务是固定 V3 的 mixed_psnr_budget、最多16次更新，
 在原缓存索引8–31的24个训练来源上确认；此前V3终态/历史计划不再是待执行任务。

@@ -1,0 +1,583 @@
+{
+  "status": "independent_terminal_audit_pass",
+  "result_sha256": "37f13289195eb6abd4fc4127f797008f7e6843ebd11957123b7245fcfa735137",
+  "config_sha256": "c3ac68f96f2231a434d90b5fa733948d3c9dbe3bb08bfc8f86f839e4b97d3dcf",
+  "started_utc": "2026-10-28T21:58:30Z",
+  "finished_utc": "2026-10-28T22:17:00Z",
+  "wall_seconds": 1110,
+  "wall_hours": 0.30833333333333335,
+  "used_gpu_hours": 1.2333333333333334,
+  "if_exclusive_8gpu_node_gpu_hours": 2.466666666666667,
+  "actual_hardware": "4 x NVIDIA H100 80GB HBM3",
+  "means": {
+    "fp32_state_control_48": {
+      "control": "historical_bf16",
+      "joint_target_vs_historical": false,
+      "lpips": 0.052492495956054576,
+      "lpips_reduction_vs_historical": -0.000016088938513680873,
+      "lpips_reduction_vs_precision_control": -0.000016088938513680873,
+      "psnr": 40.66935141881307,
+      "psnr_gain_vs_historical": 0.0003116925557478112,
+      "psnr_gain_vs_precision_control": 0.0003116925557478112
+    },
+    "historical_bf16": {
+      "control": "historical_bf16",
+      "joint_target_vs_historical": false,
+      "lpips": 0.05249165142110238,
+      "lpips_reduction_vs_historical": 0,
+      "lpips_reduction_vs_precision_control": 0,
+      "psnr": 40.669039726257324,
+      "psnr_gain_vs_historical": 0,
+      "psnr_gain_vs_precision_control": 0
+    },
+    "mixed_psnr_budget_step1": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.05024271229437242,
+      "lpips_reduction_vs_historical": 0.04284374878375152,
+      "lpips_reduction_vs_precision_control": 0.042859148164065664,
+      "psnr": 41.507161935170494,
+      "psnr_gain_vs_historical": 0.8381222089131697,
+      "psnr_gain_vs_precision_control": 0.8378105163574219
+    },
+    "mixed_psnr_budget_step16": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": true,
+      "lpips": 0.03592422348447144,
+      "lpips_reduction_vs_historical": 0.3156202460410801,
+      "lpips_reduction_vs_precision_control": 0.31563125680770987,
+      "psnr": 41.655218760172524,
+      "psnr_gain_vs_historical": 0.9861790339151995,
+      "psnr_gain_vs_precision_control": 0.9858673413594516
+    },
+    "mixed_psnr_budget_step2": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": false,
+      "lpips": 0.04828207249132296,
+      "lpips_reduction_vs_historical": 0.08019520849151862,
+      "lpips_reduction_vs_precision_control": 0.08021000693616254,
+      "psnr": 41.76095994313558,
+      "psnr_gain_vs_historical": 1.0919202168782576,
+      "psnr_gain_vs_precision_control": 1.0916085243225098
+    },
+    "mixed_psnr_budget_step4": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": true,
+      "lpips": 0.04486975276571078,
+      "lpips_reduction_vs_historical": 0.1452021121272533,
+      "lpips_reduction_vs_precision_control": 0.1452158646966486,
+      "psnr": 41.82664712270101,
+      "psnr_gain_vs_historical": 1.1576073964436873,
+      "psnr_gain_vs_precision_control": 1.1572957038879395
+    },
+    "mixed_psnr_budget_step8": {
+      "control": "fp32_state_control_48",
+      "joint_target_vs_historical": true,
+      "lpips": 0.04044036803922305,
+      "lpips_reduction_vs_historical": 0.22958476358841595,
+      "lpips_reduction_vs_precision_control": 0.22959715855236273,
+      "psnr": 41.72385708491007,
+      "psnr_gain_vs_historical": 1.0548173586527483,
+      "psnr_gain_vs_precision_control": 1.0545056660970005
+    }
+  },
+  "primary": "mixed_psnr_budget_step16",
+  "primary_pass": true,
+  "per_image": [
+    {
+      "index": 8,
+      "baseline": {
+        "lpips": 0.13243120908737183,
+        "psnr": 38.70768737792969
+      },
+      "endpoint": {
+        "lpips": 0.10335281491279602,
+        "psnr": 40.686038970947266
+      },
+      "psnr_gain": 1.9783515930175781,
+      "lpips_reduction": 0.2195735761605202,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 9,
+      "baseline": {
+        "lpips": 0.06796541064977646,
+        "psnr": 39.06533432006836
+      },
+      "endpoint": {
+        "lpips": 0.039489105343818665,
+        "psnr": 39.619564056396484
+      },
+      "psnr_gain": 0.554229736328125,
+      "lpips_reduction": 0.41898231811906894,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 10,
+      "baseline": {
+        "lpips": 0.03589003160595894,
+        "psnr": 43.67368698120117
+      },
+      "endpoint": {
+        "lpips": 0.027659665793180466,
+        "psnr": 44.11747741699219
+      },
+      "psnr_gain": 0.4437904357910156,
+      "lpips_reduction": 0.2293217766743888,
+      "pass_joint": true,
+      "accepted": 8,
+      "attempted": 9,
+      "stop": "no_eligible_trial_in_frozen_grid"
+    },
+    {
+      "index": 11,
+      "baseline": {
+        "lpips": 0.057676639407873154,
+        "psnr": 39.986846923828125
+      },
+      "endpoint": {
+        "lpips": 0.025128256529569626,
+        "psnr": 41.162757873535156
+      },
+      "psnr_gain": 1.1759109497070312,
+      "lpips_reduction": 0.5643252313667309,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 12,
+      "baseline": {
+        "lpips": 0.101018525660038,
+        "psnr": 42.56157684326172
+      },
+      "endpoint": {
+        "lpips": 0.07918112725019455,
+        "psnr": 43.059078216552734
+      },
+      "psnr_gain": 0.4975013732910156,
+      "lpips_reduction": 0.2161722146226306,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 13,
+      "baseline": {
+        "lpips": 0.11188320070505142,
+        "psnr": 40.31967544555664
+      },
+      "endpoint": {
+        "lpips": 0.08558350801467896,
+        "psnr": 40.63488006591797
+      },
+      "psnr_gain": 0.3152046203613281,
+      "lpips_reduction": 0.2350638212407259,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 14,
+      "baseline": {
+        "lpips": 0.01738273724913597,
+        "psnr": 36.923797607421875
+      },
+      "endpoint": {
+        "lpips": 0.006706338841468096,
+        "psnr": 37.33381271362305
+      },
+      "psnr_gain": 0.4100151062011719,
+      "lpips_reduction": 0.6141954661483799,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 15,
+      "baseline": {
+        "lpips": 0.016748055815696716,
+        "psnr": 41.923583984375
+      },
+      "endpoint": {
+        "lpips": 0.005170314572751522,
+        "psnr": 42.22700119018555
+      },
+      "psnr_gain": 0.3034172058105469,
+      "lpips_reduction": 0.6912886707777885,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 16,
+      "baseline": {
+        "lpips": 0.010888487100601196,
+        "psnr": 44.16947937011719
+      },
+      "endpoint": {
+        "lpips": 0.0021830725017935038,
+        "psnr": 46.59978485107422
+      },
+      "psnr_gain": 2.4303054809570312,
+      "lpips_reduction": 0.7995063518353283,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 17,
+      "baseline": {
+        "lpips": 0.03159381449222565,
+        "psnr": 42.63457489013672
+      },
+      "endpoint": {
+        "lpips": 0.025099854916334152,
+        "psnr": 42.93528747558594
+      },
+      "psnr_gain": 0.30071258544921875,
+      "lpips_reduction": 0.20554528410899786,
+      "pass_joint": true,
+      "accepted": 15,
+      "attempted": 16,
+      "stop": "no_eligible_trial_in_frozen_grid"
+    },
+    {
+      "index": 18,
+      "baseline": {
+        "lpips": 0.12363974004983902,
+        "psnr": 43.78216552734375
+      },
+      "endpoint": {
+        "lpips": 0.1103985607624054,
+        "psnr": 44.087120056152344
+      },
+      "psnr_gain": 0.30495452880859375,
+      "lpips_reduction": 0.10709484897085775,
+      "pass_joint": true,
+      "accepted": 10,
+      "attempted": 11,
+      "stop": "no_eligible_trial_in_frozen_grid"
+    },
+    {
+      "index": 19,
+      "baseline": {
+        "lpips": 0.005967765115201473,
+        "psnr": 40.89984130859375
+      },
+      "endpoint": {
+        "lpips": 0.002783888252452016,
+        "psnr": 46.038047790527344
+      },
+      "psnr_gain": 5.138206481933594,
+      "lpips_reduction": 0.5335124290732023,
+      "pass_joint": true,
+      "accepted": 10,
+      "attempted": 11,
+      "stop": "no_eligible_trial_in_frozen_grid"
+    },
+    {
+      "index": 20,
+      "baseline": {
+        "lpips": 0.018883859738707542,
+        "psnr": 41.55109405517578
+      },
+      "endpoint": {
+        "lpips": 0.006408867426216602,
+        "psnr": 42.50292205810547
+      },
+      "psnr_gain": 0.9518280029296875,
+      "lpips_reduction": 0.6606166580934771,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 21,
+      "baseline": {
+        "lpips": 0.11511317640542984,
+        "psnr": 37.35787582397461
+      },
+      "endpoint": {
+        "lpips": 0.07416679710149765,
+        "psnr": 37.98256301879883
+      },
+      "psnr_gain": 0.6246871948242188,
+      "lpips_reduction": 0.3557054073438005,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 22,
+      "baseline": {
+        "lpips": 0.03085220418870449,
+        "psnr": 36.695091247558594
+      },
+      "endpoint": {
+        "lpips": 0.010992541909217834,
+        "psnr": 37.74671173095703
+      },
+      "psnr_gain": 1.0516204833984375,
+      "lpips_reduction": 0.6437031908001443,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 23,
+      "baseline": {
+        "lpips": 0.026299217715859413,
+        "psnr": 40.67111587524414
+      },
+      "endpoint": {
+        "lpips": 0.010535414330661297,
+        "psnr": 41.194740295410156
+      },
+      "psnr_gain": 0.5236244201660156,
+      "lpips_reduction": 0.5994019881318353,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 24,
+      "baseline": {
+        "lpips": 0.017947321757674217,
+        "psnr": 39.35429000854492
+      },
+      "endpoint": {
+        "lpips": 0.017944607883691788,
+        "psnr": 39.35453796386719
+      },
+      "psnr_gain": 0.000247955322265625,
+      "lpips_reduction": 0.0001512133129986104,
+      "pass_joint": false,
+      "accepted": 0,
+      "attempted": 1,
+      "stop": "no_eligible_trial_in_frozen_grid"
+    },
+    {
+      "index": 25,
+      "baseline": {
+        "lpips": 0.019707785919308662,
+        "psnr": 43.79921340942383
+      },
+      "endpoint": {
+        "lpips": 0.003996440675109625,
+        "psnr": 46.449623107910156
+      },
+      "psnr_gain": 2.650409698486328,
+      "lpips_reduction": 0.7972151366230278,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 26,
+      "baseline": {
+        "lpips": 0.0688677579164505,
+        "psnr": 42.744873046875
+      },
+      "endpoint": {
+        "lpips": 0.04368670657277107,
+        "psnr": 43.06633758544922
+      },
+      "psnr_gain": 0.32146453857421875,
+      "lpips_reduction": 0.3656435479463229,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 27,
+      "baseline": {
+        "lpips": 0.09182816743850708,
+        "psnr": 38.46591567993164
+      },
+      "endpoint": {
+        "lpips": 0.09174695611000061,
+        "psnr": 38.491424560546875
+      },
+      "psnr_gain": 0.025508880615234375,
+      "lpips_reduction": 0.0008843836349108347,
+      "pass_joint": false,
+      "accepted": 1,
+      "attempted": 2,
+      "stop": "no_eligible_trial_in_frozen_grid"
+    },
+    {
+      "index": 28,
+      "baseline": {
+        "lpips": 0.015887178480625153,
+        "psnr": 35.37396240234375
+      },
+      "endpoint": {
+        "lpips": 0.0026105637662112713,
+        "psnr": 36.17599105834961
+      },
+      "psnr_gain": 0.8020286560058594,
+      "lpips_reduction": 0.8356810953313752,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 29,
+      "baseline": {
+        "lpips": 0.045187387615442276,
+        "psnr": 44.51614761352539
+      },
+      "endpoint": {
+        "lpips": 0.03627195581793785,
+        "psnr": 46.21010208129883
+      },
+      "psnr_gain": 1.6939544677734375,
+      "lpips_reduction": 0.19729911968749614,
+      "pass_joint": true,
+      "accepted": 11,
+      "attempted": 12,
+      "stop": "no_eligible_trial_in_frozen_grid"
+    },
+    {
+      "index": 30,
+      "baseline": {
+        "lpips": 0.04031424969434738,
+        "psnr": 36.31020736694336
+      },
+      "endpoint": {
+        "lpips": 0.015624519437551498,
+        "psnr": 36.64686584472656
+      },
+      "psnr_gain": 0.3366584777832031,
+      "lpips_reduction": 0.6124318434297371,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    },
+    {
+      "index": 31,
+      "baseline": {
+        "lpips": 0.05582571029663086,
+        "psnr": 44.56891632080078
+      },
+      "endpoint": {
+        "lpips": 0.0354594849050045,
+        "psnr": 45.40258026123047
+      },
+      "psnr_gain": 0.8336639404296875,
+      "lpips_reduction": 0.3648180253042921,
+      "pass_joint": true,
+      "accepted": 16,
+      "attempted": 16,
+      "stop": null
+    }
+  ],
+  "counts": {
+    "attempted_updates": 334,
+    "trial_candidates": 8350,
+    "accepted_updates": 327,
+    "rejected_trial_candidates": 8023
+  },
+  "policy_calls": {
+    "flux_block_forward": 501000,
+    "flux_forward": 18704,
+    "objective_backward": 668,
+    "vae_decode": 9352
+  },
+  "all_record_calls": {
+    "flux_block_forward": 562200,
+    "flux_forward": 19952,
+    "objective_backward": 668,
+    "vae_decode": 9400
+  },
+  "peak_memory_gib": 15.306301593780518,
+  "baseline_parity_pass_count": 24,
+  "joint_pass_count": 22,
+  "both_no_harm_count": 24,
+  "primary_targets": {
+    "psnr": 40.96903972625732,
+    "lpips": 0.04728022407550414
+  },
+  "energy_trained": false,
+  "deployable": false,
+  "generalization_established": false,
+  "protected_pixels_accessed": false,
+  "sources": 24,
+  "report_arms": 7,
+  "all_trial_decisions_reverified": true,
+  "run_id": "confirm24_4gpu_v1",
+  "date": "2026-10-28",
+  "original_result": "checkpoints/foundir_flux_tail_confirmation_v1/confirm24_4gpu_v1/result.json",
+  "parent_result_sha256": "06eed91ab7c2c0942b221a14d4c295d1e269bf57b17a8d79354ec9be074d24e4",
+  "cache_indices": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "excluded_diagnostic_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "data_role": "source-disjoint-from-V3 training-source GT mechanism confirmation; previously used in 32-image engineering qualification",
+  "uses_gt_for_guidance": true,
+  "uses_gt_for_trial_acceptance": true,
+  "vlm_used_for_guidance": false,
+  "launcher_exit_status": 0,
+  "independent_mean_trace_identity_audit_pass": true,
+  "visual_outputs_reviewed": false,
+  "auto_train": false,
+  "auto_expand": false,
+  "hardware_qualification_boundary": "Only four H100 GPUs tested for this run; eight GPUs and H200 remain unverified",
+  "remaining_failure_indices": [
+    24,
+    27
+  ]
+}
