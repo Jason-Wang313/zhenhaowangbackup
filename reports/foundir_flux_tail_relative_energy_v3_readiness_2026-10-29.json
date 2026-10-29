@@ -1,0 +1,77 @@
+{
+  "status": "implementation_cpu_qualified_gpu_not_started",
+  "active_stage": "train_only_learnability_repair",
+  "mode": "qualification",
+  "run_id": "qualification_v1",
+  "train_sources": 24,
+  "probe_training_sources": 8,
+  "qualification_steps": 8,
+  "trainfit_steps": 200,
+  "qualification_refresh_steps": [
+    4
+  ],
+  "trainfit_refresh_steps": [
+    50,
+    100,
+    150
+  ],
+  "default_gpus": 8,
+  "supported_gpus": [
+    4,
+    8
+  ],
+  "supported_hardware": [
+    "H100 >=75GiB",
+    "H200 >=75GiB"
+  ],
+  "global_batch_pairs": 32,
+  "qualification_may_seed_trainfit": false,
+  "old_checkpoint_used_only_for_negative_generation": true,
+  "extra_restoration_network": false,
+  "independent_calibration_implemented": false,
+  "generalization_evaluation_implemented": false,
+  "protected_pixels_accessed": false,
+  "old_evaluation_pixels_used_for_new_training": false,
+  "cpu_regression_tests_passed": 67,
+  "new_tests": 15,
+  "cpu_ddp_exact_resume_passed": true,
+  "gpu_started": false,
+  "cuda_qualified": false,
+  "qualification_estimate_8gpu_wall_hours": [
+    0.5833333333333334,
+    1.25
+  ],
+  "qualification_estimate_8gpu_used_gpu_hours": [
+    4.666666666666667,
+    10
+  ],
+  "qualification_wall_cap_seconds": {
+    "4": 10800,
+    "8": 5400
+  },
+  "trainfit_estimate_8gpu_wall_hours": [
+    7,
+    10
+  ],
+  "trainfit_estimate_8gpu_gpu_hours": [
+    56,
+    80
+  ],
+  "trainfit_wall_cap_seconds": {
+    "4": 72000,
+    "8": 36000
+  },
+  "approximate_storage_gib": [
+    25,
+    40
+  ],
+  "config_sha256": "7d6e2b505df8a86bd231cc5be00e2e86fb78f58d4dda8d65e4ad7c68e0f957f8",
+  "trainer_sha256": "12304fd92ca338cb540e544d47f93db4482feba3cc7dc5d7a3499ced27a299eb",
+  "energy_sha256": "55799a11ad5545eb4470854aa01060841e7ebb36eb6ebeb9d871f0997775db05",
+  "final_goal": {
+    "psnr_gain": 0.3,
+    "lpips_relative_reduction": 0.09928107050377874
+  },
+  "no_auto_trainfit": true,
+  "no_auto_formal": true
+}

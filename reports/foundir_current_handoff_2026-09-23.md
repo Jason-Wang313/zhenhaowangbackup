@@ -1,5 +1,58 @@
 # FoundIR current handoff — 2026-09-23
 
+## ACTIVE: train-only relative FLUX-tail energy repair V3 — 2026-10-29
+
+用户在第一性原理分析后明确授权execute。本节覆盖旧V2终态的“没有新任务授权”；
+不恢复旧25步任务、Restormer、MoE或EBT Generalist。当前执行修复的第一阶段：
+先确认energy在训练来源上能学会一次正确修改；不是直接上正式泛化训练。
+
+保持冻结Noise FLUX step400、50步、512图、alpha=.30和双uint8口径。
+energy architecture保持原1,010,274参数，不加RGB输出网络。仅原24训练来源可读，
+旧8张检查图、calibration池、最终1859开发集及所有保护像素均不读。
+所有训练集probe明确标记training_fit_only，不得包装为来源分离/泛化指标。
+用户最终+.30dB和LPIPS下降9.928107050377874%的双目标不变。
+
+新训练从fresh模型/Adam开始；旧V2 step25只作为冻结反例生成器，绝不seed新训练。
+初始反例在24训练来源上由旧energy自行走4步生成，再用训练GT标注好坏；
+不先假定所有生成候选都是坏图。学习期间也刷新当前模型自身产生的4步压力轨迹，
+这些无边界轨迹只是训练反例采集，不是部署时允许连续走4步。
+现有候选的log MSE/log LPIPS与真实RGB导数只计算一次，FP32缓存。
+一半训练pair含self-mined候选；加强同图数值差分监督、保留低权重绝对分数、
+梯度幅值拟合，并增加有零梯度保护的方向监督。记录各loss的真实参数梯度范数。
+
+qualification_v1：8工程步，step4刷新当前模型反例，最后做8训练图的一次真实FLUX尾段probe。
+这8步只验收链路、显存、保存、反例刷新；未改善不能当整条路线失败。
+trainfit_v1：独立fresh200步，50/100/150刷新反例，最终做相同训练图probe。
+代码已具备此入口，但必须先有hash匹配的qualification工程通过结果，并手动启动；
+不能自动接续，不能从qualification权重初始化，不因工程通过就声称科学可行。
+
+同时报告原FLUX、FP32无引导、原始一次建议及受限一次建议；受限版本最多一次，
+限制相对原proposal的RGB RMS和通道均值偏移，界限从训练GT轨迹首步的95分位×1.25
+导出并保留1/255量化下限。这只是训练侧防失控约束，未经独立校准，不是no-harm保证。
+无候选时原样返回原FLUX；全部拒绝=没有收益。独立校准、来源分离确认与多步扩展
+留到训练侧学会之后，当前没有实现/启动它们，不得暗中用检查图选阈值。
+
+默认用满单节点8×H100/H200，同时支持同型号4卡；global batch32对保持不变。
+每完整optimizer step原子保存模型/Adam/每rank RNG/采样位置/哈希；相同命令恢复，
+不同world_size严格恢复不支持。每张候选缓存/probe独立落盘，可跳过已核验记录；
+异常中断留下的孤立tensor文件保留，重试用新唯一文件名，不覆盖。旧目录不动。
+67项CPU回归和两进程真实二阶DDP精确恢复已通过；真实训练缓存预检通过。
+Codex没有GPU，尚未启动本轮GPU；4/8和H100/H200的CUDA显存/速度仍待实测。
+
+八卡资格粗估35–75分钟（4.67–10使用GPU-hours），硬cap90分钟/12使用GPU-hours。
+四卡暂估70–150分钟（同GPU-hours），硬cap180分钟；不是实测倍速保证。
+八卡200步训练拟合粗估7–10小时/56–80使用GPU-hours，硬cap10小时；
+四卡硬cap20小时/80使用GPU-hours。须按新资格实测更新，不能自动扩预算。
+FP32标签/导数/反例/逐步checkpoint预计占25–40GiB，不能上传这些大文件至GitHub。
+
+默认八卡资格命令：
+bash smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh
+四卡须独立ID：
+bash smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh qualification qualification_4gpu_v1 4
+未来trainfit第四参数可明确指定通过的qualification ID，不把四卡绑定八卡目录。
+终态须TAIL_RELATIVE_V3_RESULT_VERIFIED和TAIL_RELATIVE_V3_END status=0。
+详见reports/foundir_flux_tail_relative_energy_v3_readiness_2026-10-29.{md,json}。
+
 ## TERMINAL RUN: FLUX-tail qualification complete; learned guidance harms quality — 2026-10-29
 
 本节覆盖下方LIVE状态：qualification_8gpu_v2已于2026-10-29T00:50:19Z正常结束，
