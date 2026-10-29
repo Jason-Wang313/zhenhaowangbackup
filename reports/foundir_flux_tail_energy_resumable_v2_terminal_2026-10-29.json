@@ -1,0 +1,88 @@
+{
+  "run_id": "qualification_8gpu_v2",
+  "status": "completed_engineering_pass_quality_failure",
+  "start_utc": "2026-10-28T23:53:14Z",
+  "end_utc": "2026-10-29T00:50:19Z",
+  "launcher_exit_status": 0,
+  "gpu_model": "NVIDIA H100 80GB HBM3",
+  "gpus": 8,
+  "training_steps": 25,
+  "training_sources": 24,
+  "engineering_evaluation_sources": 8,
+  "elapsed_seconds": 3425,
+  "wall_hours": 0.9513888888888888,
+  "used_gpu_hours": 7.611111111111111,
+  "legacy_used_gpu_hours": 3.7511111111111113,
+  "cumulative_used_gpu_hours": 11.362222222222222,
+  "mean_training_step_seconds": 124.46874691748293,
+  "peak_allocated_gib_per_rank": 31.89207410812378,
+  "means": {
+    "historical_bf16": {
+      "psnr": 38.61099290847778,
+      "lpips": 0.07752364664338529
+    },
+    "fp32_control": {
+      "psnr": 38.61125135421753,
+      "lpips": 0.07753595290705562
+    },
+    "energy_step1": {
+      "psnr": 36.7593092918396,
+      "lpips": 0.07801964320242405
+    },
+    "energy_step2": {
+      "psnr": 34.27629733085632,
+      "lpips": 0.07878601527772844
+    },
+    "energy_step4": {
+      "psnr": 30.239007234573364,
+      "lpips": 0.0804395223967731
+    },
+    "energy_step8": {
+      "psnr": 25.05378794670105,
+      "lpips": 0.08789787092246115
+    },
+    "energy_step16": {
+      "psnr": 19.7870512008667,
+      "lpips": 0.1126827890984714
+    }
+  },
+  "primary_endpoint": "energy_step16",
+  "primary_psnr_gain": -18.823941707611084,
+  "primary_lpips_relative_increase": 0.45352797472003425,
+  "step1_psnr_harmed_images": 8,
+  "primary_both_metrics_harmed_images": 8,
+  "accepted_updates": 128,
+  "accepted_max_amplitude_updates": 128,
+  "max_amplitude": 0.01,
+  "training_last5_mean": {
+    "gradient_loss": 1.0005841363221406,
+    "mse_gradient_cosine": -0.051905098068527875,
+    "lpips_gradient_cosine": -0.0011866101785017237,
+    "mse_gradient_rms_ratio": 0.01032093320391141,
+    "lpips_gradient_rms_ratio": 0.0010905955972702942
+  },
+  "checks": {
+    "saved_checkpoints_sha_verified": 26,
+    "evaluation_outputs_sha_verified": 8,
+    "source_binding_verified": true,
+    "mean_arms_independently_verified": 7,
+    "gpu_launcher_checkpoint_readback_pass": true,
+    "independent_cpu_final_checkpoint_readback_pass": true,
+    "adam_parameter_states": 236,
+    "adam_step": 25,
+    "rank_rng_count": 8,
+    "next_global_slot": 800,
+    "all_rank_final_parameter_hashes_equal": true
+  },
+  "hashes": {
+    "result": "fb7a0e6e8a7e2edba46e18f862b26ba2a1b9980965bea6b2d76cbe3bcb8e3a36",
+    "checkpoint": "2eebdafb0b6a30829de48792b8eced1037cbfcfc3e0114ee986f1f8b70da4ed1",
+    "training_complete": "7e5d9c3153a81ae8c2eebad1f78954fb751efc6acf0afd7a7332b05dae6d6fa3"
+  },
+  "gt_used_for_guidance": false,
+  "protected_pixels_accessed": false,
+  "formal_started": false,
+  "may_seed_formal": false,
+  "family_level_impossibility_established": false,
+  "root_cause_fully_isolated": false
+}

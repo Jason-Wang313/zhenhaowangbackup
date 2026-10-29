@@ -1,5 +1,35 @@
 # FoundIR current handoff — 2026-09-23
 
+## TERMINAL RUN: FLUX-tail qualification complete; learned guidance harms quality — 2026-10-29
+
+本节覆盖下方LIVE状态：qualification_8gpu_v2已于2026-10-29T00:50:19Z正常结束，
+8×H100，25/25训练步、8/8工程检查图、RESULT_VERIFIED、launcher status0。
+3425秒=57分05秒=.95139普通小时/7.61111使用GPU-hours；旧四卡成本另计，
+两次合计11.36222使用GPU-hours。没有待续训任务，不自动formal或扩大预算。
+
+独立核验了step0–25共26份检查点文件SHA、全部8图结果文件SHA、源码绑定及7个
+报告项的均值。每个完成步均保存；最终checkpoint SHA256为
+2eebdafb0b6a30829de48792b8eced1037cbfcfc3e0114ee986f1f8b70da4ed1。
+训练均值124.46875秒/步，八卡参数一致，峰值allocated显存31.8921GiB/卡。
+
+工程通过不等于恢复有效。八图原FLUX为38.6109929085/.07752364664；
+energy一次为36.7593092918/.07801964320；预定16次终点为
+19.7870512009/.11268278910，即PSNR下降18.82394dB、LPIPS变差45.3528%。
+无引导FP32对照38.6112513542/.07753595291，排除精度路径本身造成这种量级崩坏。
+8/8图第一次PSNR就下降，16次后8/8两项都恶化；128次更新全被接受且全选.01最大步幅。
+预测评分却认为质量改善：当前energy判断与真实质量脱节，自检未能拦住有害更新。
+
+训练末5步梯度匹配loss均值1.000584、MSE/LPIPS方向cosine约-.051905/-.001187。
+这些是训练采样诊断，不是评价图梯度测量；显示25步后尚无学会正确修正方向的证据。
+推理将非零梯度归一化，因此微弱但错误的方向仍能触发大步更新；同一不准energy
+再给更新打分，产生反复错误接受。完整根因尚未隔离，不能说已排除所有实现问题。
+
+此次仅24来源/25步工程资格，不能据此宣判所有learned-energy路线不可能，也不能
+因工程通过直接正式长训。资格权重不可seed formal。所有历史结果、缓存、模型保留。
+后续应先确认训练侧的梯度/排序能否真正学会，再决定训练规模和部署约束；本次检查
+未授权新GPU任务、调整阈值或改写已绑定实验。
+报告：reports/foundir_flux_tail_energy_resumable_v2_terminal_2026-10-29.{md,json}。
+
 ## LIVE: eight-H100 training and per-step save verified — 2026-10-28
 
 qualification_8gpu_v2 已在用户节点真实启动，不再是“待GPU运行”。
