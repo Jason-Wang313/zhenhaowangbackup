@@ -1,5 +1,28 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT AUTHORITY: short work on one two-GPU node — 2026-10-30
+
+User now requests single-node TWO-GPU execution for short diagnostics/jobs;
+reserve cross-node execution for long-running work. This overrides older
+4/8-only and blanket 3x2-default rules for short work. Mixed H100/H200 remains
+allowed with actual identity checks. Do not reduce global batch or silently
+reinterpret six-rank training checkpoints as two-rank resumes. Current V3
+qualification/trainfit launchers remain 3x2/1x4/1x8; this update adds a separate
+short diagnostic, not an unverified two-rank training mode.
+
+User said to continue with the next diagnostic: one original training source,
+two repeats on each of two local GPUs, original frozen baseline only. Read
+`reports/foundir_flux_tail_baseline_parity_readiness_2026-10-30.md`.
+Entry: `smoke/run_flux_tail_baseline_parity_2gpu_v1.sh` with explicit qualified
+FLUX_TAIL_V3_PYTHON, CUDA_VISIBLE_DEVICES=0,1. No tmux, torchrun, MASTER_ADDR,
+NODE_RANK or inter-node networking required. Estimated 3–8 minutes (unmeasured),
+cap900 seconds/.5 used GPU-hours plus30s cleanup. Fresh diagnostic output root;
+all old V3 bound code/cache/contracts remain unchanged. No learning, GT tensor
+decode, parity relaxation, baseline substitution or automatic qualification.
+CPU observer cannot launch on GPU nodes; GPU diagnostic remains pending until
+its actual log/results appear. Status2 with DIAGNOSTIC_COMPLETE means measured
+historical mismatch, not missing diagnostic evidence. Partial/error runs remain.
+
 ## CURRENT TERMINAL: V3 first 3x2 attempt stopped at baseline parity — 2026-10-30
 
 Read `reports/foundir_flux_tail_v3_cluster_baseline_failure_2026-10-30.{md,json}`.
