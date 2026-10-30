@@ -1,0 +1,215 @@
+{
+  "utc": "2026-10-30T20:27:02.537005+00:00",
+  "run_id": "qualification_3x2_direct_v1",
+  "source_commit": "7e3c8fbc0323239e91487b8bdb5cba1894542b97",
+  "protocol_sha256": "277e9b5ced376b6b1ea290e261356bd33f64e68919230825a43daeede36d614d",
+  "latest_checkpoint": {
+    "file": "steps/energy_000005_1793391933397078338.pt",
+    "protocol_sha256": "277e9b5ced376b6b1ea290e261356bd33f64e68919230825a43daeede36d614d",
+    "sha256": "5511ceb9ea561512e5571d6f60120d7835b4db38d24863ef5d74d6ffa20f480a",
+    "step": 5
+  },
+  "latest_checkpoint_file_sha_verified": true,
+  "nodes": [
+    {
+      "node_rank": 0,
+      "log": "logs/foundir_flux_tail_relative_energy_v3_qualification_3x2_direct_v1_node0.log",
+      "last_log_utc": "2026-10-30T20:26:35.944959+00:00",
+      "errors": [],
+      "end_markers": [],
+      "last_micro": [
+        "TAIL_RELATIVE_V3_MICRO step=6 done=2/6"
+      ]
+    },
+    {
+      "node_rank": 1,
+      "log": "logs/foundir_flux_tail_relative_energy_v3_qualification_3x2_direct_v1_node1.log",
+      "last_log_utc": "2026-10-30T20:21:01.768606+00:00",
+      "errors": [],
+      "end_markers": [],
+      "last_micro": []
+    },
+    {
+      "node_rank": 2,
+      "log": "logs/foundir_flux_tail_relative_energy_v3_qualification_3x2_direct_v1_node2.log",
+      "last_log_utc": "2026-10-30T20:21:01.946493+00:00",
+      "errors": [],
+      "end_markers": [],
+      "last_micro": []
+    }
+  ],
+  "training_log": [
+    {
+      "step": 1,
+      "lr": 2e-05,
+      "generation": 0,
+      "rank0_seconds": 187.25512384064496,
+      "max_rank_seconds": 187.25390023272485,
+      "pairs_by_rank": [
+        6,
+        6,
+        5,
+        5,
+        5,
+        5
+      ],
+      "gradient_norm": 9.414092063903809,
+      "global_mean_stats": {
+        "absolute": 0.5445277268299833,
+        "direction": 0.9876621067523956,
+        "gradient": 0.9999617114663124,
+        "loss": 2.6336850225925446,
+        "lpips_cosine": 0.00017123835880283877,
+        "lpips_rms_ratio": 0.00012795721272595983,
+        "mse_cosine": 0.02450454241625266,
+        "mse_rms_ratio": 0.001097152102374821,
+        "rank_correct": 1.3125,
+        "rank_valid": 1.84375,
+        "relative": 0.5916084347810795
+      },
+      "saved": true
+    },
+    {
+      "step": 2,
+      "lr": 4e-05,
+      "generation": 0,
+      "rank0_seconds": 187.95314274728298,
+      "max_rank_seconds": 187.95261564385146,
+      "pairs_by_rank": [
+        6,
+        6,
+        5,
+        5,
+        5,
+        5
+      ],
+      "gradient_norm": 10.865765571594238,
+      "global_mean_stats": {
+        "absolute": 0.4577837261604145,
+        "direction": 0.9698780272156,
+        "gradient": 0.9999047257006168,
+        "loss": 2.5970726422965527,
+        "lpips_cosine": 0.00036709013090785447,
+        "lpips_rms_ratio": 0.00015860018754665361,
+        "mse_cosine": 0.05987683107377961,
+        "mse_rms_ratio": 0.0012138170040998375,
+        "rank_correct": 1.375,
+        "rank_valid": 1.8125,
+        "relative": 0.5815115389112293
+      },
+      "saved": true
+    },
+    {
+      "step": 3,
+      "lr": 6e-05,
+      "generation": 0,
+      "rank0_seconds": 187.4344449006021,
+      "max_rank_seconds": 187.43391906656325,
+      "pairs_by_rank": [
+        6,
+        6,
+        5,
+        5,
+        5,
+        5
+      ],
+      "gradient_norm": 9.146004676818848,
+      "global_mean_stats": {
+        "absolute": 0.44330409658141434,
+        "direction": 0.9465309530496597,
+        "gradient": 0.999836890026927,
+        "loss": 2.4327859953045845,
+        "lpips_cosine": 0.00027208205688111775,
+        "lpips_rms_ratio": 0.00014012706787980278,
+        "mse_cosine": 0.10666602710261941,
+        "mse_rms_ratio": 0.001145489171904046,
+        "rank_correct": 1.53125,
+        "rank_valid": 1.875,
+        "relative": 0.44208777304450564
+      },
+      "saved": true
+    },
+    {
+      "step": 4,
+      "lr": 8e-05,
+      "generation": 0,
+      "rank0_seconds": 186.89307051338255,
+      "max_rank_seconds": 186.8924417262897,
+      "pairs_by_rank": [
+        6,
+        6,
+        5,
+        5,
+        5,
+        5
+      ],
+      "gradient_norm": 6.882381439208984,
+      "global_mean_stats": {
+        "absolute": 0.5894938581623137,
+        "direction": 0.9156165439635515,
+        "gradient": 0.9996591452509165,
+        "loss": 2.48637630417943,
+        "lpips_cosine": 0.0004717493051771271,
+        "lpips_rms_ratio": 0.00015191097668321163,
+        "mse_cosine": 0.16829516418511048,
+        "mse_rms_ratio": 0.0014167021636239951,
+        "rank_correct": 1.40625,
+        "rank_valid": 1.78125,
+        "relative": 0.5121512351094282
+      },
+      "saved": true
+    },
+    {
+      "step": 5,
+      "lr": 0.0001,
+      "generation": 4,
+      "rank0_seconds": 187.23874176107347,
+      "max_rank_seconds": 187.23662879504263,
+      "pairs_by_rank": [
+        6,
+        6,
+        5,
+        5,
+        5,
+        5
+      ],
+      "gradient_norm": 1.7122505903244019,
+      "global_mean_stats": {
+        "absolute": 0.5605526911094785,
+        "direction": 1.0434097740799189,
+        "gradient": 1.0002040714025497,
+        "loss": 2.5563526079058647,
+        "lpips_cosine": 0.0003683033445653905,
+        "lpips_rms_ratio": 0.00014725240566804132,
+        "mse_cosine": -0.08718784619122744,
+        "mse_rms_ratio": 0.0015161974388320232,
+        "rank_correct": 0.875,
+        "rank_valid": 1.90625,
+        "relative": 0.4566834591241786
+      },
+      "saved": true
+    }
+  ],
+  "parameter_gradient_audits": [
+    {
+      "relative": 0.08457614396673967,
+      "absolute": 0.12716392236226048,
+      "gradient": 0.03010981709553693,
+      "direction": 9.481687400802773
+    },
+    {
+      "relative": 0.0734800152445071,
+      "absolute": 0.12993371950680885,
+      "gradient": 0.017165372110865412,
+      "direction": 2.522167757675638
+    }
+  ],
+  "bootstrap_records": 24,
+  "step4_mining_records": 24,
+  "bootstrap_complete": true,
+  "step4_mining_complete": true,
+  "training_complete_exists": false,
+  "result_exists": false,
+  "gpu_processes_directly_inspected": false,
+  "changes_to_running_job": false
+}
