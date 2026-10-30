@@ -1,5 +1,18 @@
 # Project agent instructions
 
+## REQUIRED CONTEXT: design history and failure reasoning — 2026-10-30
+
+Before interpreting V3 quality results or changing its scientific recipe, read
+`reports/foundir_energy_design_history_and_failure_playbook_2026-10-30.md`.
+It connects the original PPT, residual/selector attempts, FLUX-tail GT evidence,
+failed learned V2 and current V3; it records what each result does and does not
+establish and how to localize the next failure. Do not restart old experiments
+or count residual/GT gains as learned-energy gains. Do not interrupt a live job
+merely to read it. This context requirement does NOT override the current
+hardware/runtime authority immediately below or authorize additional trials.
+At each material milestone, append evidence and the next falsifiable decision
+to the reasoning record as well as the runtime handoff; push focused updates.
+
 ## CURRENT AUTHORITY: user-authorized 3x2 cross-node V3, mixed Hopper allowed — 2026-10-30
 
 The user explicitly changed the available allocation to three nodes with two

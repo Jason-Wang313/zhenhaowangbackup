@@ -1,5 +1,13 @@
 # 新工作区交接：先完成迁移核验，再运行 V3
 
+## 后续更新：本文是迁移前快照，不覆盖最新执行状态
+
+迁移CPU验收与三节点执行适配后来已由新代理提交。实际当前计划以最新AGENTS.md、
+current handoff及 `foundir_flux_tail_v3_cluster_readiness_2026-10-30.md` 为准；
+下文“启动器仍写死旧目录”等是修复前事实，不要重复迁移或覆盖新代码。
+研究依据另见 [设计演变与失败排查记录](foundir_energy_design_history_and_failure_playbook_2026-10-30.md)：
+接手时除了命令，还须理解已证明的可达空间、尚未学会的方向，以及不能重复的失败。
+
 日期：2026-10-30。此文与 AGENTS.md 顶部为当前操作依据；旧报告中的 ACTIVE/LIVE
 只表示当时状态，不能覆盖本次迁移和最新 V3 任务。不要从历史 Rain / MoE / EBT 任务重新开始。
 

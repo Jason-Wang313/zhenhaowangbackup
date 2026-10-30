@@ -1,5 +1,14 @@
 # FoundIR current handoff — 2026-09-23
 
+## READ WITH CURRENT STATE: why this design and how to diagnose failure — 2026-10-30
+
+新代理先读 `reports/foundir_energy_design_history_and_failure_playbook_2026-10-30.md`。
+它串起原PPT → residual与候选选择 → FLUX输出energy → GT尾段可行性 → learned V2失败
+→ 当前V3，每项都有证据、解释边界和后续排错分支，避免从零重新试错。
+这不是新实验授权，也不改变下方最新三节点执行计划；无须为阅读而中断运行。
+重点：辅助residual/GT收益不算energy贡献；先判断方向能否学会，再判断选择与泛化；
+每轮失败先定位具体环节，不自动堆步数、放宽限制或重启旧分支。
+
 ## CURRENT: V3 三节点各两卡，允许 H100/H200 混用 — 2026-10-30
 
 用户明确将分配改为3×2=6卡，授权跨节点和H100/H200混用，覆盖旧单节点/同型号限制。
