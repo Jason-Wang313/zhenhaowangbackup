@@ -10,12 +10,15 @@ The old copied local checkout may be stale; do not blindly pull/reset over it.
 All operational priorities, old workspace paths and mandatory old-handoff
 reading orders BELOW are historical wherever superseded by those documents.
 Do not restart an old Rain/MoE/Restormer/EBT/25-step task from this legacy file.
-Next: read the latest AGENTS.md direct-V3/sync-only section and
-reports/foundir_flux_tail_v3_direct_sync_2026-10-30.md. Historical bitwise parity
-is now recorded, not a launch gate. Do not repeat the completed diagnostics.
+Next: read the latest AGENTS.md completed-qualification/200-step section and
+reports/foundir_flux_tail_v3_direct_trainfit_readiness_2026-10-30.md.
+The eight-step 3x2 qualification completed; the user approved an independent
+fresh 200-step trainfit, not a repeat qualification or restored qualification weights.
+Historical bitwise parity is recorded, not a launch gate. Do not repeat diagnostics.
 The source-session agent leads decisions/code; the destination agent only
 synchronizes the specified files to the shared root and verifies hashes.
-This delivery does not authorize GPU launch or scientific changes.
+The destination CPU observer does not launch GPU jobs; the user launches the
+approved trainfit on the GPU nodes. No source/config/recipe changes are needed.
 No new-root GPU verification has been done by the source-workspace agent.
 Preserve safety/protected-data restrictions and unrelated files; speak Mandarin.
 

@@ -1,5 +1,32 @@
 # Project agent instructions
 
+## CURRENT:8步资格完成；用户授权推进独立200步拟合 — 2026-10-30
+
+用户在检查终态后明确要求continue。本节覆盖下面本次只同步/尚无GPU结果的旧状态。
+下一任务是 `trainfit_3x2_direct_v1`，mode=trainfit，沿用刚成功的3节点各2张H200，
+引用 `qualification_3x2_direct_v1` 的工程结果；fresh模型/Adam，不能加载资格权重。
+不修改已经验收的源码、配置、24来源、损失、学习率、global batch32和单步probe。
+200步在50/100/150刷新反例，每完整step保存；真实图片指标仅在200步结束后计算。
+不要把中途loss日志或反例刷新说成中途PSNR/LPIPS验证。
+
+资格终态见 `reports/foundir_flux_tail_v3_direct_terminal_2026-10-30.{md,json}`：
+三节点status0，8/8步与8/8训练probe；bounded相对当前FLUX +.608392dB，
+LPIPS仅降2.596406%，联合目标未过；3/8图PSNR退步、3/8图LPIPS退步。
+总38分58秒、3.894444使用GPU-hours。主代理重算均值并核对59项Git内源码SHA一致；
+8项third_party源码及远端checkpoint本体不在本地主仓库，不能冒称本地全量重验。
+
+读 `reports/foundir_flux_tail_v3_direct_trainfit_readiness_2026-10-30.md` 执行后续交接。
+六H200预计11–13普通小时/66–78使用GPU-hours；硬上限13小时20分/80使用GPU-hours。
+这是按187.332秒/step外推，不是已完成时长。硬上限或外部中断后保留全部进度，
+恢复必须同拓扑/设备/运行环境；不自动重试或扩大总预算。
+主代理不能访问新GPU节点；本次只准备并push交接，没有声称200步已启动。
+目的地CPU代理继续只同步/回报，不自行启动GPU；用户在GPU节点启动已批准任务。
+不重跑8步资格、GT搜索或历史基线诊断，也不恢复Rain/MoE/EBT/Restormer分支。
+
+旧“三关都未通过”说法已过时：GT多轮搜索已在另24来源确认平均双目标，22/24单图通过；
+它不是当前单步energy的同预算上界或泛化证明。下一步先检验学习，不再重复GT关卡。
+200步后若可学习性成立，再单独冻结未参与拟合/选参的来源评估；不是本次自动任务。
+
 ## CURRENT AUTHORITY:直接推进 V3；本次交付只同步代码、不启动 — 2026-10-30
 
 用户明确取消额外的历史基线诊断/迁移验收前置关卡，要求直接推进训练。

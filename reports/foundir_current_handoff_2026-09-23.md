@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT:资格完成，下一步是独立200步trainfit — 2026-10-30
+
+用户已要求continue。读 `foundir_flux_tail_v3_direct_trainfit_readiness_2026-10-30.md`。
+run=`trainfit_3x2_direct_v1`，mode=trainfit，6GPU=3x2，qualification来源为
+`qualification_3x2_direct_v1`。沿用已验收源码/config与全局batch32，fresh模型/Adam；
+不是资格step8续训，不加载其权重；本次不启动独立来源评估或新增GT实验。
+资格三节点status0，8步/8图完成，bounded +.608392dB、LPIPS降2.596406%；
+LPIPS平均改善主要来自一图，3/8图在各指标分别退步，不能说科学双目标通过。
+记录见 `foundir_flux_tail_v3_direct_terminal_2026-10-30.{md,json}`，Git db03d94。
+预计六H200 11–13小时/66–78使用GPU-hours，硬上限13小时20分/80使用GPU-hours。
+50/100/150只是反例刷新，200步才跑真实8图probe；每完整step继续保存。
+主代理未挂载新执行根，不声称已启动。CPU代理同步文档/核对既有代码并回报，
+用户在GPU节点启动；不重复工程资格、历史基线诊断或旧GT搜索。
+GT多轮方案已在另外24来源通过；还缺learned energy拟合与独立来源泛化，
+且多轮GT结果不能证明单步energy必过。最顺利还需拟合+独立来源评估两轮，
+现实可按3–4轮规划（可能增加扩大训练/校准），不是保证通过或授权全部自动运行。
+
 ## CURRENT:取消历史相等前置关卡；交付代码后仅同步 — 2026-10-30
 
 用户已明确取消额外迁移诊断，授权直接推进V3；随后要求本轮只推代码并给新代理
