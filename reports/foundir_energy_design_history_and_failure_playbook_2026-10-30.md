@@ -286,3 +286,22 @@ Oracle 知道真实干净图；energy 只看退化图、候选和 VLM 条件。
 - [L] [learned-tail V2：压暗、自批最大步幅、导数学习失败](foundir_flux_tail_energy_resumable_v2_terminal_2026-10-29.md)。
 - [M] [relative-energy V3的科学设计与准备](foundir_flux_tail_relative_energy_v3_readiness_2026-10-29.md)。
 - [N] [迁移后的最新三节点执行准备](foundir_flux_tail_v3_cluster_readiness_2026-10-30.md)。
+
+## 11. 决策记录：三节点首轮停在历史基线复现 — 2026-10-30
+
+- **本轮问题：** 迁移后3×2 H200能否完成V3八步工程资格；先满足原FLUX基线一致。
+- **不变量：** 原24训练来源、冻结Noise step400/50步/512/alpha=.30/双uint8，
+  energy架构/损失/global batch32和8步计划不变。无新增保护像素访问。
+- **观察/证据：** [终态报告](foundir_flux_tail_v3_cluster_baseline_failure_2026-10-30.md)
+  及同名JSON。六rank共享存储/NCCL启动通过，24基础记录完成；六rank在初始挖掘
+  的历史proposal逐像素比较失败。0训练步、0probe，三节点status1，.3944444 GPU-hours。
+- **排除与未排除：** 已经过网络启动阶段，66绑定源码SHA仍匹配；尚无energy学习结果。
+  未保存输出差异幅度，不能归因H200、量化或运行时变化，亦未排除推理接线错误。
+  基础metadata身份/SHA已复核；本次状态审计未重算全部tensor内容SHA。
+- **最小下一验证/停止条件：** 建议单个合法训练来源比较历史/新基线及分阶段输出、
+  像素误差和运行时指纹，定位首个分歧；取得区分原因的证据或触及预定预算即停。
+  不靠新弱基线、关闭相等检查或训练energy绕过问题。此诊断尚未实现/启动。
+- **授权及预算：** 本次为读远端设计记录、核验进度及记录终态；不自动新开GPU任务。
+  原资格cap12 GPU-hours保留历史消耗，新诊断须单独冻结范围/预算，未获本轮状态请求授权。
+- **Git提交：** 本条与终态报告同一focused docs提交，以285e73a为父版本；
+  可用 `git log -- reports/foundir_flux_tail_v3_cluster_baseline_failure_2026-10-30.md` 定位。

@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT TERMINAL: V3 first 3x2 attempt stopped at baseline parity — 2026-10-30
+
+Read `reports/foundir_flux_tail_v3_cluster_baseline_failure_2026-10-30.{md,json}`.
+qualification_3x2_v1 ended on all nodes at 18:00:14–15 UTC, status=1.
+Six H200 ranks passed startup shared-storage/NCCL checks and completed 24 base
+records (1706 frames), then all failed `cached historical baseline changed`
+in initial mining, before energy-guided updates. Zero optimizer steps/probes,
+no training checkpoint/result. This is not evidence of energy learning failure.
+66 source hashes and 24 base metadata hashes/identities rechecked successfully;
+tensor contents were not rehashed in this terminal status audit. Difference
+magnitude was not saved; runtime/kernel/hardware/path cause remains unisolated.
+Total used cost: 1420 GPU-seconds = .3944444 GPU-hours; wall span 239 seconds.
+Preserve everything. No auto-retry, relaxed parity, cache replacement or trainfit.
+Next proposal is one allowed training-source baseline-localization diagnostic,
+with separately scoped command/budget; none started by this status audit.
+This terminal snapshot supersedes older GPU-pending statements, not 3x2 authority.
+
 ## READ WITH CURRENT STATE: why this design and how to diagnose failure — 2026-10-30
 
 新代理先读 `reports/foundir_energy_design_history_and_failure_playbook_2026-10-30.md`。

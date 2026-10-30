@@ -1,0 +1,112 @@
+{
+  "audit_utc": "2026-10-30T18:27:18.268146+00:00",
+  "read_design_commit": "285e73a",
+  "run_id": "qualification_3x2_v1",
+  "status": "failed_before_training",
+  "failure": "cached historical baseline changed",
+  "failure_site": "smoke/flux_tail_energy_runtime_v1.py:53",
+  "failure_ranks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "layout": [
+    3,
+    2
+  ],
+  "gpu_families": [
+    "H200"
+  ],
+  "mixed_h100_h200_tested": false,
+  "nodes": [
+    {
+      "node_rank": 0,
+      "start_utc": "2026-10-30T17:56:16Z",
+      "end_utc": "2026-10-30T18:00:14Z",
+      "status": 1,
+      "elapsed_seconds": 238,
+      "local_gpu_seconds": 476,
+      "log": "logs/foundir_flux_tail_relative_energy_v3_qualification_3x2_v1_node0.log",
+      "log_sha256": "6384ee90014b68cafd8314f348e91cf8a11a26984f944c6a86606444f84871d1"
+    },
+    {
+      "node_rank": 1,
+      "start_utc": "2026-10-30T17:56:18Z",
+      "end_utc": "2026-10-30T18:00:15Z",
+      "status": 1,
+      "elapsed_seconds": 237,
+      "local_gpu_seconds": 474,
+      "log": "logs/foundir_flux_tail_relative_energy_v3_qualification_3x2_v1_node1.log",
+      "log_sha256": "3dadf7287ec3b0adabdb0d385496da09083cf0414f5864e9769e28a43c74ea9d"
+    },
+    {
+      "node_rank": 2,
+      "start_utc": "2026-10-30T17:56:19Z",
+      "end_utc": "2026-10-30T18:00:14Z",
+      "status": 1,
+      "elapsed_seconds": 235,
+      "local_gpu_seconds": 470,
+      "log": "logs/foundir_flux_tail_relative_energy_v3_qualification_3x2_v1_node2.log",
+      "log_sha256": "6ece6ff180dd8fd2477b89bcb19993b9f7a1bcf12ebea7ed009d35d753659ced"
+    }
+  ],
+  "wall_span_seconds": 239,
+  "wall_hours": 0.06638888888888889,
+  "used_gpu_seconds": 1420,
+  "used_gpu_hours": 0.39444444444444443,
+  "base_records": 24,
+  "base_frames": 1706,
+  "mined_records": 0,
+  "optimizer_steps": 0,
+  "planned_optimizer_steps": 8,
+  "probe_records": 0,
+  "result_exists": false,
+  "source_hash_checks": 66,
+  "source_hash_mismatches": [],
+  "base_metadata_hash_checks": 24,
+  "base_tensor_content_rehashed_in_this_audit": false,
+  "execution_sha256": "e3438f08b877cd60a63e35386049e66956e1fe8399ca6fa68097c82bc85168dc",
+  "runtime": {
+    "cuda": "12.8",
+    "nccl": [
+      2,
+      26,
+      2
+    ],
+    "packages": {
+      "einops": "0.8.1",
+      "numpy": "1.26.4",
+      "safetensors": "0.8.0",
+      "torchmetrics": "1.9.0",
+      "torchvision": "0.22.0+cu128",
+      "transformers": "5.14.1"
+    },
+    "python": "3.12.13",
+    "torch": "2.7.0+cu128"
+  },
+  "communication": [
+    {
+      "bytes": 4,
+      "max_rank_seconds": 0.10151059459894896
+    },
+    {
+      "bytes": 4194304,
+      "max_rank_seconds": 0.11241946800146252
+    }
+  ],
+  "evidence_sha256": {
+    "checkpoints/foundir_flux_tail_relative_energy_v3_cluster/qualification_3x2_v1/preflight.json": "515b38e0e96b3db10071a2e882473e86bc12c5d54c220404ff4021f0e544119a",
+    "checkpoints/foundir_flux_tail_relative_energy_v3_cluster/qualification_3x2_v1/execution.json": "e3438f08b877cd60a63e35386049e66956e1fe8399ca6fa68097c82bc85168dc",
+    "checkpoints/foundir_flux_tail_relative_energy_v3_cluster/qualification_3x2_v1/attempts/b2b76ff1592446e4a51fb18065fdeb90/connectivity.json": "e337195997f8e2ad19d89dfd055eec57ac594ce77aae401927c611439914842c",
+    "checkpoints/foundir_flux_tail_relative_energy_v3_cluster/cache_v1/base/complete.json": "de84f911a8d078eeff961f7605abb0a53297825429894e8a43a0f3ef1eb93b75",
+    "checkpoints/foundir_flux_tail_relative_energy_v3_cluster/cache_v1/contract.json": "5a007a24cacc949d91596f094e9b73503bcd404f310b8959f73e1c4743514471"
+  },
+  "quality_metrics": null,
+  "baseline_difference_magnitude": null,
+  "root_cause": "not_isolated",
+  "new_gpu_work_started_by_audit": false,
+  "next_diagnostic": "Proposed only: one allowed training source, historical baseline parity localization; capture pixel differences and stage/runtime identities. Do not weaken baseline or auto-restart."
+}
