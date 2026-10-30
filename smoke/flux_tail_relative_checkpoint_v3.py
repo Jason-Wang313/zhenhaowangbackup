@@ -17,6 +17,7 @@ def commit(output,model,optimizer,step,receipt,rank_states,log,elapsed_seconds):
         model=cpu_tree(model.state_dict()),optimizer=cpu_tree(optimizer.state_dict()),
         rank_states=cpu_tree(rank_states),training_log=log,elapsed_training_seconds=elapsed_seconds,
         protocol_sha256=receipt['protocol_sha256'],world_size=receipt['world_size'],
+        execution_sha256=receipt.get('execution_sha256'),
         parameter_sha256=parameter_hash(model),mode=receipt['mode'],
         scheduler=dict(warmup_steps=5,last_step=step,base_lr=receipt['spec']['learning_rate']),
         may_seed_other_run=False)
@@ -44,6 +45,7 @@ def load(output,receipt,requested_step=None):
         or state['step']!=record['step'] or state['next_global_slot']!=step*32
         or state['mode']!=receipt['mode'] or state['world_size']!=world
         or state['protocol_sha256']!=receipt['protocol_sha256']
+        or state.get('execution_sha256')!=receipt.get('execution_sha256')
         or record['protocol_sha256']!=receipt['protocol_sha256']
         or state['may_seed_other_run'] or len(state['training_log'])!=step
         or len(state['rank_states'])!=world

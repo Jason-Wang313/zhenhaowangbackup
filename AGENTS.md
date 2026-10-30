@@ -1,5 +1,53 @@
 # Project agent instructions
 
+## CURRENT AUTHORITY: user-authorized 3x2 cross-node V3, mixed Hopper allowed — 2026-10-30
+
+The user explicitly changed the available allocation to three nodes with two
+GPUs each and authorized cross-node H100/H200 mixing. This supersedes ALL
+older single-node / homogeneous-only / default-eight-GPU restrictions for V3.
+Latest supplied node evidence: all three currently expose two H200s, >=75GiB,
+with the same GPFS project mount and executable project-local Python.
+Map node ranks 0/1/2 to 10.247.94.142 / 10.246.88.49 / 10.244.58.183.
+These are user-provided identities, not an agent-run CUDA/NCCL qualification.
+
+Read `reports/foundir_flux_tail_v3_cluster_readiness_2026-10-30.{md,json}`.
+V3 now defaults to 3x2=6 ranks, retaining 1x4 and 1x8; mixed H100/H200 SM90
+with >=75GiB each is allowed, including within a node. All nodes require the
+same code/runtime and shared project storage. No architecture/loss/metric,
+source, crop, seed, threshold or training-step changes are authorized here.
+Global batch remains 32: rank counts 6/6/5/5/5/5, EACH pair weighted world/32
+before DDP's rank average. Never drop/pad pairs or average rank means equally.
+
+Default run is qualification_3x2_v1, eight steps with mining refresh at four.
+New output root is checkpoints/foundir_flux_tail_relative_energy_v3_cluster;
+all prior V3 artifacts remain frozen in their old root. Five V3 bound files
+changed and two helpers were added; 59 prior bound files, including all V1/V2
+producers and the energy architecture/loss, retain their prior hashes.
+One torchrun/group spans all stages; only global rank zero locks/writes shared
+preparation metadata. Each node has its own locks and appended log. Fresh
+per-rank shared-storage tokens and actual NCCL reductions precede data access.
+Resume binds global/local ranks, host/GPU UUID/model and runtime identities;
+changing the mapping requires separate audit, not a claimed exact resume.
+Same-topology CPU resume is exact; mixed-GPU CUDA bitwise equivalence is NOT
+claimed. Keep every complete-step checkpoint and all six rank RNG states.
+
+75 CPU regressions and a real six-rank Gloo test via three two-worker torchrun
+agents passed: serial 32-pair mean/gradient equivalence, durable model/Adam/RNG
+exact resume, rank agreement and rejection of incompatible resume. That test
+ran on ONE physical CPU host. 4/6/8 train-only metadata/hash preflights passed.
+Actual three-node CUDA/NCCL, memory, throughput and FLUX parity remain pending;
+no GPU job was started by this preparation, no training-fit metrics exist.
+
+Launch the same run on all three user GPU nodes with explicit NODE_RANK=0/1/2,
+NNODES=3, MASTER_ADDR=10.247.94.142, MASTER_PORT=29683 and the qualified
+FLUX_TAIL_V3_PYTHON. Commands are in the readiness report. No automatic SSH,
+remote job kills, retries, trainfit or formal training. Six-card qualification
+hard cap is 7200 seconds / 12 total used GPU-hours (+30s cleanup), preserving
+the prior GPU budget. Count SUM(2*node_elapsed) across three node logs, not
+six times each log. Startup/rendezvous waiting counts against each node cap.
+Do not promise the old single-node ETA. Independent/manual fresh trainfit is
+still gated by matching qualification; six-card cap 48000 seconds / 80 GPU-hours.
+
 ## CURRENT VERIFIED: destination CPU migration complete; GPU pending — 2026-10-30
 
 This section updates the migration prerequisites below. Read

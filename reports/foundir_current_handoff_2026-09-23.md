@@ -1,5 +1,25 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT: V3 三节点各两卡，允许 H100/H200 混用 — 2026-10-30
+
+用户明确将分配改为3×2=6卡，授权跨节点和H100/H200混用，覆盖旧单节点/同型号限制。
+用户贴出的三台目前都是双H200：rank0=10.247.94.142，rank1=10.246.88.49，
+rank2=10.244.58.183；共享GPFS路径，Python可执行。实际网络/NCCL尚待GPU端验收。
+
+入口已适配，默认qualification_3x2_v1，仍8步、step4刷新、32对global batch。
+每rank 6/6/5/5/5/5对，按world/32加权后DDP平均；没有改学习率/科学口径。
+75项CPU回归和三agent×两worker真实六rank Gloo测试通过，包括单进程梯度对照、
+持久模型/Adam/RNG精确恢复。测试在一个CPU物理节点运行，不冒充三节点CUDA通过。
+4/6/8真实训练缓存SHA预检通过。此次没有启动GPU或长训。
+
+新输出根checkpoints/foundir_flux_tail_relative_energy_v3_cluster；旧V3目录和全部
+历史资产保留。每节点显式NODE_RANK/MASTER_ADDR，单次torchrun贯穿全流程，
+启动先查共享存储、源码/环境、GPU身份和NCCL；只允许相同设备映射恢复。
+六卡资格cap7200秒/12GPU-hours（另30秒清理），各节点local_gpu_seconds相加。
+无三节点实测ETA、不自动trainfit/formal。准确命令和证据：
+`reports/foundir_flux_tail_v3_cluster_readiness_2026-10-30.{md,json}`。
+
+
 ## CURRENT VERIFIED: new-root CPU migration passed; GPU pending — 2026-10-30
 
 新根已实际核验：147项SHA、67项CPU回归、两进程二阶DDP精确恢复、4/8卡

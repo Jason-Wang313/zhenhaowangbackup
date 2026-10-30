@@ -26,6 +26,7 @@ from smoke import qualify_foundir_flux_tail_energy_resumable_v2 as parent
 from smoke import qualify_foundir_flux_tail_energy_v1 as core
 from smoke import flux_tail_checkpoint_v2 as atomic
 from smoke import diagnose_foundir_flux_tail_oracle_v1 as base
+from smoke import flux_tail_distributed_v3 as distributed
 
 CONFIG=ROOT/'configs/foundir_flux_tail_relative_energy_v3.json'
 FILES=['configs/foundir_flux_tail_relative_energy_v3.json',
@@ -34,14 +35,17 @@ FILES=['configs/foundir_flux_tail_relative_energy_v3.json',
     'smoke/run_foundir_flux_tail_relative_energy_v3.py',
     'smoke/run_foundir_flux_tail_relative_energy_v3_gpu.sh',
     'smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh']
+FILES += ['smoke/flux_tail_distributed_v3.py','smoke/flux_tail_v3_launcher_lib.sh']
 
 
 def spec():
     value=json.loads(CONFIG.read_text())
     if (value['schema']!=3 or value['train_indices']!=list(range(24))
         or value['probe_indices']!=list(range(8)) or value['crop']!=512
-        or value['global_batch_pairs']!=32 or value['default_gpu_count']!=8
-        or value['allowed_gpu_counts']!=[4,8] or value['mining_updates']!=4
+        or value['global_batch_pairs']!=32 or value['default_gpu_count']!=6
+        or value['allowed_gpu_counts']!=[4,6,8] or value['mining_updates']!=4
+        or value['execution_layouts']!={'4':[1,4],'6':[3,2],'8':[1,8]}
+        or not value['mixed_h100_h200_allowed']
         or value['probe_updates']!=1 or value['auto_formal'] or value['auto_trainfit']
         or value['read_calibration_or_evaluation_pixels'] or value['extra_restoration_network']
         or value['qualification_may_seed_trainfit']
@@ -66,7 +70,7 @@ def immutable_json(path,value):
 
 
 def prepare(output,mode,world,qualification_id='qualification_v1'):
-    s=spec();old_contract.assigned([],0,world)
+    s=spec();distributed.assigned([],0,world)
     root=common.path(s['parent_run'])
     common.bound(str(root/'result.json'),s['parent_result_sha256'])
     common.bound(str(root/'energy_step_000025.pt'),s['negative_generator_sha256'])
@@ -91,7 +95,7 @@ def prepare(output,mode,world,qualification_id='qualification_v1'):
         if not q['engineering_pass'] or q['source_sha256']!=sources or q['mode']!='qualification':
             raise RuntimeError('qualification binding/pass mismatch')
         qualification_result_sha256=common.sha(qualification)
-    receipt=dict(spec=s,mode=mode,world_size=world,source_sha256=sources,
+    receipt=dict(spec=s,mode=mode,world_size=world,execution_layout=list(distributed.topology(world)),source_sha256=sources,
         parent_preflight_sha256=cache_contract['parent_preflight_sha256'],cache_contract_sha256=common.sha(cache/'contract.json'),
         cache_root=str(cache.relative_to(ROOT)),selected=rows,
         qualification_result_sha256=qualification_result_sha256,
@@ -110,6 +114,11 @@ def load_receipt(output,world):
         or r['protocol_sha256']!=digest(check)):
         raise RuntimeError('run source/config/world changed')
     common.bound(str(common.path(r['cache_root'])/'contract.json'),r['cache_contract_sha256'])
+    if (output/'execution.json').exists():
+        execution=json.loads((output/'execution.json').read_text())
+        if execution['protocol_sha256']!=r['protocol_sha256']:
+            raise RuntimeError('execution identity protocol mismatch')
+        r['execution_sha256']=common.sha(output/'execution.json')
     return r
 
 
@@ -153,12 +162,12 @@ def cache_base(output,r):
     import torch.distributed as dist
     from safetensors import safe_open
     from lowlight_restoration.flux_tail_relative_energy_v3 import edit_stats,trust_limits
-    world=r['world_size'];rank,device=base.setup_ddp(world)
+    world=r['world_size'];rank,device=distributed.setup_ddp(world)
     directory=common.path(r['cache_root'])/'base';directory.mkdir(exist_ok=True)
     try:
         previous=old_receipt(r);source=common.path(r['spec']['parent_run'])
         perceptual=core.perceptual_model(device)
-        for i in old_contract.assigned(range(24),rank,world):
+        for i in distributed.assigned(range(24),rank,world):
             if (directory/f'record_{i:03d}.json').exists():
                 verify_meta(directory,i,r);continue
             meta=old_contract.cache_meta(source,previous,i,'train')
@@ -188,7 +197,7 @@ def cache_base(output,r):
                 trust_limits=limits,trust_is_calibrated=False,source_sha256=r['source_sha256']))
             print('TAIL_RELATIVE_V3_BASE_COMPLETE '+json.dumps(dict(records=24,limits=limits)),flush=True)
         dist.barrier()
-    finally:dist.destroy_process_group()
+    finally:distributed.finish_phase()
 
 
 def mining_directory(output,r,generation):
@@ -203,7 +212,7 @@ def mine(output,r,generation):
     from lowlight_restoration.flux_tail_learned_energy import TailQualityEnergy
     from smoke.flux_tail_energy_runtime_v1 import FrozenFlow,learned_guidance
     from smoke import flux_tail_relative_checkpoint_v3 as checkpoints
-    rank,device=base.setup_ddp(r['world_size']);directory=mining_directory(output,r,generation)
+    rank,device=distributed.setup_ddp(r['world_size']);directory=mining_directory(output,r,generation)
     directory.mkdir(parents=True,exist_ok=True)
     try:
         previous=old_receipt(r)
@@ -218,7 +227,7 @@ def mine(output,r,generation):
         energy=TailQualityEnergy(**r['spec']['energy']).to(device)
         energy.load_state_dict(state['model'],strict=True);energy.eval().requires_grad_(False)
         pending=[]
-        for i in old_contract.assigned(range(24),rank,r['world_size']):
+        for i in distributed.assigned(range(24),rank,r['world_size']):
             if (directory/f'record_{i:03d}.json').exists():
                 m=verify_meta(directory,i,r)
                 if m['generator_sha256']!=model_sha:raise RuntimeError('mining generator changed')
@@ -278,7 +287,7 @@ def mine(output,r,generation):
                 source_sha256=r['source_sha256'],frames=sum(v['frames'] for v in rows)))
             print(f'TAIL_RELATIVE_V3_MINING_COMPLETE generation={generation}',flush=True)
         dist.barrier()
-    finally:dist.destroy_process_group()
+    finally:distributed.finish_phase()
 
 
 def training_metadata(output,r,generation):
@@ -323,7 +332,7 @@ def train(output,r,until):
     from lowlight_restoration.flux_tail_learned_energy import TailQualityEnergy
     from lowlight_restoration.flux_tail_relative_energy_v3 import relative_loss,generation_for_step,parameter_gradient_audit
     from smoke import flux_tail_relative_checkpoint_v3 as checkpoints
-    mode=r['spec']['modes'][r['mode']];world=r['world_size'];rank,device=base.setup_ddp(world)
+    mode=r['spec']['modes'][r['mode']];world=r['world_size'];rank,device=distributed.setup_ddp(world)
     stop=[False]
     def mark_stop(*_):stop[0]=True
     handlers={s:signal.signal(s,mark_stop) for s in (signal.SIGINT,signal.SIGTERM,signal.SIGHUP)}
@@ -372,15 +381,15 @@ def train(output,r,until):
             tick=time.monotonic();optimizer.zero_grad(set_to_none=True)
             lr=r['spec']['learning_rate']*min(step/r['spec']['warmup_steps'],1.)
             for group in optimizer.param_groups:group['lr']=lr
-            slots=old_contract.training_slots(step,rank,world);statistics={}
+            slots=distributed.training_slots(step,rank,world);statistics={}
             for micro,slot in enumerate(slots):
                 inputs,labels=load_pair(r,metadata,slot,device)
                 with wrapped.no_sync() if micro<len(slots)-1 else nullcontext():
                     loss,diagnostics,parts=relative_loss(wrapped(*inputs),labels,r['spec']['loss'])
                     if not bool(loss.isfinite()):raise RuntimeError('nonfinite loss')
-                    (loss/len(slots)).backward()
+                    (loss*distributed.pair_loss_weight(world)).backward()
                 for key,value in dict(loss=loss.detach(),**diagnostics).items():
-                    statistics[key]=statistics.get(key,0.)+float(value)/len(slots)
+                    statistics[key]=statistics.get(key,0.)+float(value)*distributed.pair_loss_weight(world)
                 del inputs,labels,loss,diagnostics,parts
                 if rank==0:print(f'TAIL_RELATIVE_V3_MICRO step={step} done={micro+1}/{len(slots)}',flush=True)
             if any(p.grad is None or not bool(p.grad.isfinite().all()) for p in model.parameters()):
@@ -389,7 +398,10 @@ def train(output,r,until):
             optimizer.step();torch.cuda.synchronize()
             names=sorted(statistics);values=torch.tensor([statistics[k] for k in names],device=device,dtype=torch.float64)
             dist.all_reduce(values);values/=world
+            seconds=torch.tensor(time.monotonic()-tick,device=device,dtype=torch.float64)
+            dist.all_reduce(seconds,op=dist.ReduceOp.MAX)
             row=dict(step=step,lr=lr,generation=generation,rank0_seconds=time.monotonic()-tick,
+                     max_rank_seconds=float(seconds),pairs_by_rank=[len(distributed.training_slots(step,i,world)) for i in range(world)],
                      gradient_norm=float(norm),global_mean_stats=dict(zip(names,values.tolist(),strict=True)))
             log.append(row);save(step)
             if rank==0:print('TAIL_RELATIVE_V3_TRAIN '+json.dumps(row|dict(saved=True)),flush=True)
@@ -401,14 +413,14 @@ def train(output,r,until):
         if until==mode['steps'] and rank==0:
             final,record=checkpoints.load(output,r)
             immutable_json(output/'training_complete.json',dict(steps=until,checkpoint=record,
-                mean_step_seconds=sum(v['rank0_seconds'] for v in log)/len(log),
+                mean_step_seconds=sum(v['max_rank_seconds'] for v in log)/len(log),
                 rank_states_peak_gib=[v['peak_gib'] for v in final['rank_states']],
                 protocol_sha256=r['protocol_sha256'],source_sha256=r['source_sha256'],may_seed_other_run=False))
             print(f'TAIL_RELATIVE_V3_TRAIN_COMPLETE steps={until}',flush=True)
         dist.barrier();return True
     finally:
         for s,h in handlers.items():signal.signal(s,h)
-        dist.destroy_process_group()
+        distributed.finish_phase()
 
 
 def probe(output,r):
@@ -419,7 +431,7 @@ def probe(output,r):
     from lowlight_restoration.flux_tail_relative_energy_v3 import bounded_one_step
     from smoke.flux_tail_energy_runtime_v1 import FrozenFlow,measured_metrics
     from smoke import flux_tail_relative_checkpoint_v3 as checkpoints
-    rank,device=base.setup_ddp(r['world_size'])
+    rank,device=distributed.setup_ddp(r['world_size'])
     try:
         state,record=checkpoints.load(output,r)
         if state is None or state['step']!=r['spec']['modes'][r['mode']]['steps']:
@@ -429,7 +441,7 @@ def probe(output,r):
         previous=old_receipt(r);source=common.path(r['spec']['parent_run'])
         limits=json.loads((common.path(r['cache_root'])/'base'/'complete.json').read_text())['trust_limits']
         pending=[]
-        for i in old_contract.assigned(r['spec']['probe_indices'],rank,r['world_size']):
+        for i in distributed.assigned(r['spec']['probe_indices'],rank,r['world_size']):
             if (output/f'probe_{i:03d}.json').exists():
                 row=json.loads((output/f'probe_{i:03d}.json').read_text())
                 if row['checkpoint_sha256']!=record['sha256'] or row['identity']!=r['selected'][i]:
@@ -472,6 +484,7 @@ def probe(output,r):
                 value['joint_target']=value['psnr_gain']>=r['spec']['psnr_gain_target'] and value['lpips_relative_reduction']>=r['spec']['lpips_relative_reduction_target']
             result=dict(status='training_fit_probe_complete_not_generalization',mode=r['mode'],
                 engineering_pass=True,steps=state['step'],world_size=r['world_size'],means=means,
+                execution_sha256=r.get('execution_sha256'),
                 bounded_accepted_images=sum(row['bounded_choice'] is not None for row in rows),
                 raw_accepted_images=sum(row['raw_choice'] is not None for row in rows),
                 rows=rows,trust_limits=limits,trust_is_calibrated=False,
@@ -481,7 +494,7 @@ def probe(output,r):
             immutable_json(output/'result.json',result)
             print('TAIL_RELATIVE_V3_PROBE_COMPLETE '+json.dumps(means),flush=True)
         dist.barrier()
-    finally:dist.destroy_process_group()
+    finally:distributed.finish_phase()
 
 
 def verify(output,r):
@@ -490,6 +503,7 @@ def verify(output,r):
     if (state['step']!=r['spec']['modes'][r['mode']]['steps']
         or result['checkpoint_sha256']!=record['sha256']
         or result['source_sha256']!=r['source_sha256'] or result['protocol_sha256']!=r['protocol_sha256']
+        or result.get('execution_sha256')!=r.get('execution_sha256')
         or result['gt_used_for_selection'] or result['evaluation_pixels_accessed']
         or result['protected_pixels_accessed'] or result['generalization_established']):
         raise RuntimeError('result protocol violation')
@@ -507,28 +521,93 @@ def verify(output,r):
     print('TAIL_RELATIVE_V3_RESULT_VERIFIED engineering_only_no_auto_training',flush=True)
 
 
+def pipeline(output,mode,world,qualification_id,connectivity_only=False):
+    """One torchrun/group for the entire attempt; no inter-phase rendezvous race."""
+    import fcntl
+    import gc
+    import torch
+    import torch.distributed as dist
+    started=time.monotonic();lock=None
+    with distributed.persistent_group(world) as (rank,device):
+        try:
+            local=dict(mode=mode,run_id=output.name,source_sha256=binding(),root=str(ROOT),
+                       python=str(Path(sys.executable).resolve()),prefix=sys.prefix,
+                       qualification_id=qualification_id,connectivity_only=connectivity_only)
+            descriptions=[None]*world;dist.all_gather_object(descriptions,local)
+            if any(value!=local for value in descriptions):
+                raise RuntimeError('nodes disagree on code/config/run/root/Python')
+            # All ranks must import the real runtime before any cache computation.
+            error=None
+            try:
+                from flux2 import util as flux_util
+                from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
+            except Exception as exc:error=f'{type(exc).__name__}: {exc}'
+            errors=[None]*world;dist.all_gather_object(errors,error)
+            if any(errors):raise RuntimeError('runtime imports failed: '+repr(errors))
+            def take_lock():
+                nonlocal lock
+                output.parent.mkdir(parents=True,exist_ok=True)
+                lock=(output.parent/'.active.lock').open('a')
+                fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+            distributed.leader_call(take_lock)
+            attempt=distributed.shared_storage_probe(output/'attempts')
+            communication=distributed.communication_probe(device)
+            distributed.leader_call(lambda:atomic.atomic_json(attempt/'connectivity.json',dict(
+                source_sha256=binding(),identities=distributed.identities(),communication=communication,
+                shared_storage_verified=True,model_or_dataset_accessed=False)))
+            if rank==0:print('TAIL_RELATIVE_V3_CONNECTIVITY_PASS '+json.dumps(dict(world=world,
+                nodes=distributed.topology(world)[0],families=sorted({v['family'] for v in distributed.identities()}))),flush=True)
+            if connectivity_only:return
+            distributed.leader_call(lambda:prepare(output,mode,world,qualification_id))
+            r=load_receipt(output,world)
+            execution=dict(protocol_sha256=r['protocol_sha256'],layout=list(distributed.topology(world)),
+                           identities=distributed.identities(),mixed_h100_h200_allowed=True,
+                           exact_cuda_resume_not_claimed=True)
+            # Reject a different rank-to-device/runtime mapping on resume.
+            distributed.leader_call(lambda:immutable_json(output/'execution.json',execution))
+            r=load_receipt(output,world)
+            if (output/'STOP_AFTER_STEP').exists():raise RuntimeError('explicit stop marker exists')
+            if not (output/'result.json').exists():
+                def stage(function,*args):
+                    function(*args)
+                    gc.collect();torch.cuda.empty_cache();dist.barrier()
+                stage(cache_base,output,r)
+                stage(mine,output,r,0)
+                milestones=r['spec']['modes'][mode]['refresh_steps']+[r['spec']['modes'][mode]['steps']]
+                for step in milestones:
+                    if not train(output,r,step):raise SystemExit(75)
+                    gc.collect();torch.cuda.empty_cache();dist.barrier()
+                    if step!=milestones[-1]:stage(mine,output,r,step)
+                stage(probe,output,r)
+            distributed.leader_call(lambda:verify(output,r))
+            duration=time.monotonic()-started;durations=[None]*world
+            dist.all_gather_object(durations,duration)
+            distributed.leader_call(lambda:atomic.atomic_json(attempt/'completed.json',dict(
+                status=0,rank_elapsed_seconds=durations,wall_hours=max(durations)/3600,
+                used_gpu_hours=sum(durations)/3600,world_size=world,
+                excludes_launcher_and_rendezvous_wait=True,
+                full_node_attempt_cost_in_launcher_logs=True,execution_sha256=r['execution_sha256'])))
+        finally:
+            if lock is not None:lock.close()
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('phase',choices=['hardware','prepare','cache','mine','train','probe','verify'])
+    parser.add_argument('phase',choices=['hardware','prepare','pipeline','verify'])
     parser.add_argument('--mode',choices=['qualification','trainfit'],default='qualification')
-    parser.add_argument('--run-id',default='qualification_v1');parser.add_argument('--gpus',type=int,choices=[4,8],default=8)
-    parser.add_argument('--qualification-run-id',default='qualification_v1')
-    parser.add_argument('--generation',type=int,default=0);parser.add_argument('--until',type=int)
+    parser.add_argument('--run-id',default='qualification_3x2_v1');parser.add_argument('--gpus',type=int,choices=[4,6,8],default=6)
+    parser.add_argument('--qualification-run-id',default='qualification_3x2_v1')
+    parser.add_argument('--connectivity-only',action='store_true')
     args=parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9_-]+',args.run_id):raise ValueError('invalid run ID')
     output=common.path(spec()['output_root'])/args.run_id
-    if args.phase=='hardware':base.hardware(args.gpus);return
+    if args.phase=='hardware':distributed.hardware(distributed.topology(args.gpus)[1]);return
     if args.phase=='prepare':prepare(output,args.mode,args.gpus,args.qualification_run_id);return
+    if args.phase=='pipeline':
+        pipeline(output,args.mode,args.gpus,args.qualification_run_id,args.connectivity_only);return
     r=load_receipt(output,args.gpus)
     if r['mode']!=args.mode:raise RuntimeError('mode changed for existing run')
-    if args.phase=='cache':cache_base(output,r)
-    elif args.phase=='mine':
-        if args.generation not in [0]+r['spec']['modes'][r['mode']]['refresh_steps']:raise ValueError('undeclared refresh')
-        mine(output,r,args.generation)
-    elif args.phase=='train':
-        if not train(output,r,args.until):raise SystemExit(75)
-    elif args.phase=='probe':probe(output,r)
-    else:verify(output,r)
+    verify(output,r)
 
 
 if __name__=='__main__':main()
