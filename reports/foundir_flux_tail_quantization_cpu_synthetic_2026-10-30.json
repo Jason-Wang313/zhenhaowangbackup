@@ -1,0 +1,29 @@
+{
+  "baseline_changed": false,
+  "cuda_initialized": false,
+  "elapsed_seconds": 1.8943403828889132,
+  "gpu_qualification_pass": false,
+  "gt_tensor_decoded": false,
+  "kind": "synthetic_only",
+  "protected_pixels_accessed": false,
+  "root_cause": "not_established",
+  "script_sha256": "e9a29e2d937f14a3e00f1751ea031e6b12d1973ec8a7f00b594a532d9fa11036",
+  "synthetic": {
+    "disagreements_at_exact_ties": 1422,
+    "disagreements_off_exact_ties": 0,
+    "floating_vs_exact": {
+      "different_elements": 1422,
+      "different_rgb_pixels": 1422,
+      "elements": 65536,
+      "max_abs": 1.0,
+      "mean_abs": 0.021697998046875,
+      "rms": 0.14730240339816253,
+      "signed_mean": 0.014068603515625
+    },
+    "interpretation": "Synthetic arithmetic sensitivity, NOT the historical-run root cause.",
+    "uint8_pairs": 65536
+  },
+  "torch": "2.7.0+cu128",
+  "training_steps": 0,
+  "used_gpu_hours": 0
+}

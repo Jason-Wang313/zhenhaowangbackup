@@ -1,5 +1,23 @@
 # Project agent instructions
 
+## CURRENT:主代理决策，目的地代理只同步和回报；只读 CPU 核对 — 2026-10-30
+
+用户明确保留原会话代理为主代理：负责方案、代码、结果判断和 focused GitHub push。
+新工作区代理负责安全同步主代理指定的文件、执行明确交付的检查、采集实际结果，
+将小型 JSON/简短报告推送 GitHub；不得自行改方案、参数、基线或启动/重试 GPU。
+直接的新用户指令优先于此分工。GitHub 是异步报告渠道，不是实时进程控制通道。
+远端日志不可见时如实说明，不据此宣称任务已停止、正常或被监控。
+
+本次用户要求 CPU 检查由主代理自行做。主代理已完成本地浮点量化穷举和旧缓存
+SHA 检查，但新工作根及新 diagnostic tensors 在主代理挂载中不可见。
+不要把“有 CPU”误写成“已经拿到新张量”。无需新增 GPU 实验。
+下一步只运行 `smoke/replay_flux_tail_quantization_cpu_v1.py`，读取已保存的单一
+原训练来源 index0，核对两次取整；只解码 observation/proposal 与四个已保存阶段，
+不读 GT，不加载模型，不初始化 CUDA，不改旧代码/缓存/基线。详细一次性命令与
+回报范围见 `reports/foundir_flux_tail_cpu_replay_and_observer_handoff_2026-10-30.md`。
+新节点结果尚未由主代理核对，不能把 synthetic-only 报告说成真实张量核对通过。
+该检查不授权放宽历史相等断言、重建缓存或重启资格/训练。
+
 ## CURRENT RESULT: two-GPU baseline diagnostic finished — 2026-10-30
 
 Read `reports/foundir_flux_tail_baseline_parity_terminal_2026-10-30.{md,json}`.

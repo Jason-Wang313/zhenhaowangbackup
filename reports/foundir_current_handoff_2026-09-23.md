@@ -1,5 +1,19 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT: CPU 量化核对与主代理／回报代理分工 — 2026-10-30
+
+用户要求主代理继续负责方案、修改、判断和推送；新目录代理只同步指定文件、
+执行明确交付的检查、采集日志/结果并推小报告，不自主改方案或启动 GPU。
+新用户的直接指令优先。GitHub 回报不是实时监控；没有日志不能推断进程状态。
+
+主代理已在 CPU 穷举65536组灰度：现有FP32与精确有理数取整1422组差1级，
+全部在半整数边界；这是算术敏感性证据，不是实际历史偏差的根因证明。
+旧index0缓存SHA已确认一致。新节点四份trace未挂载到主代理，真实重放仍待执行。
+只读脚本、固定单来源命令、允许同步的文件和回报字段见：
+`reports/foundir_flux_tail_cpu_replay_and_observer_handoff_2026-10-30.md`。
+当前无需GPU；不改旧缓存/基线/训练配置，不恢复V3。收到真实CPU报告后由主代理
+决定修复。不要重复双卡生成诊断，也不要让 synthetic-only 结果冒充真实重放结果。
+
 ## CURRENT RESULT: two-GPU baseline diagnostic finished — 2026-10-30
 
 Read `reports/foundir_flux_tail_baseline_parity_terminal_2026-10-30.{md,json}`.

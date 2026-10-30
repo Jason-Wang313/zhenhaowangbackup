@@ -10,8 +10,10 @@ The old copied local checkout may be stale; do not blindly pull/reset over it.
 All operational priorities, old workspace paths and mandatory old-handoff
 reading orders BELOW are historical wherever superseded by those documents.
 Do not restart an old Rain/MoE/Restormer/EBT/25-step task from this legacy file.
-Next: verify/qualify relocation, then V3 8-step engineering qualification;
-only afterward consider an independent fresh 200-step train-fit run.
+Next: read the latest AGENTS.md CPU-replay/reporting section. Migration and
+the two-GPU diagnostic have already run; do not repeat them. The source-session
+agent leads decisions/code; the destination agent synchronizes specified files
+and reports actual results. No autonomous GPU retry or scientific changes.
 No new-root GPU verification has been done by the source-workspace agent.
 Preserve safety/protected-data restrictions and unrelated files; speak Mandarin.
 
