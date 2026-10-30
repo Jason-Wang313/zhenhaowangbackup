@@ -1,0 +1,191 @@
+{
+  "baseline_changed": false,
+  "cuda_initialized": false,
+  "elapsed_seconds": 1.873016830533743,
+  "evidence": {
+    "cache_sha256": "148c100714395865b7c2ad89ee252f95fa1ccd92751004256290a43351b818b4",
+    "other_three_traces_rehashed": false,
+    "parent_preflight_sha256": "1cb45e9dbb28e4f9fb12d14d7693f5cba7d1e09f393152013d27c5e82d0258af",
+    "result_sha256": "62945a5abf462f889aebd8fa667fd92b56f30deaa7798df76c48462b245b3228",
+    "role": "train",
+    "scalar_source_sha256": "a61ae2ae382a25848e189c962910780f79beaa9cc5508ee99df56c0434410801",
+    "selected_index": 0,
+    "tensors_decoded": [
+      "observation_normalized",
+      "raw_clamped",
+      "raw_uint8",
+      "proposal_uint8",
+      "observation",
+      "proposal"
+    ],
+    "trace_sha256": "54998b694f4b0271b5efc0d55657e4b572276daa36e2e0de744f0df7bdaff847"
+  },
+  "gpu_qualification_pass": false,
+  "gt_tensor_decoded": false,
+  "kind": "saved_tensor_cpu_replay",
+  "protected_pixels_accessed": false,
+  "root_cause": "not_established",
+  "saved_tensor_replay": {
+    "first_quantization_cpu_vs_saved": {
+      "different_elements": 0,
+      "different_rgb_pixels": 0,
+      "elements": 786432,
+      "max_abs": 0.0,
+      "mean_abs": 0.0,
+      "rms": 0.0,
+      "signed_mean": 0.0
+    },
+    "history_gap_elements_at_exact_ties": 1214,
+    "history_gap_elements_off_exact_ties": 2416,
+    "interpretation": "No old raw tensor exists. Matching one arithmetic control does not alone identify the old generation path or authorize a baseline change.",
+    "observation_normalization": {
+      "different_elements": 786429,
+      "different_rgb_pixels": 262144,
+      "elements": 786432,
+      "max_abs": 1.1920928955078125e-07,
+      "mean_abs": 1.1920883480343036e-07,
+      "rms": 1.1920906217688897e-07,
+      "signed_mean": -1.1920883480343036e-07
+    },
+    "saved_vs_historical": {
+      "different_elements": 3630,
+      "different_rgb_pixels": 3591,
+      "elements": 786432,
+      "max_abs": 1.0,
+      "mean_abs": 0.00461578369140625,
+      "rms": 0.06793955910518003,
+      "signed_mean": 0.004109700520833333
+    },
+    "variants": {
+      "cpu_full_replay": {
+        "historical_gap_matches": 0,
+        "new_mismatches_on_previously_equal": 0,
+        "vs_historical": {
+          "different_elements": 3630,
+          "different_rgb_pixels": 3591,
+          "elements": 786432,
+          "max_abs": 1.0,
+          "mean_abs": 0.00461578369140625,
+          "rms": 0.06793955910518003,
+          "signed_mean": 0.004109700520833333
+        },
+        "vs_saved_gpu": {
+          "different_elements": 0,
+          "different_rgb_pixels": 0,
+          "elements": 786432,
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "rms": 0.0,
+          "signed_mean": 0.0
+        }
+      },
+      "cpu_second_cpu_observation": {
+        "historical_gap_matches": 0,
+        "new_mismatches_on_previously_equal": 0,
+        "vs_historical": {
+          "different_elements": 3630,
+          "different_rgb_pixels": 3591,
+          "elements": 786432,
+          "max_abs": 1.0,
+          "mean_abs": 0.00461578369140625,
+          "rms": 0.06793955910518003,
+          "signed_mean": 0.004109700520833333
+        },
+        "vs_saved_gpu": {
+          "different_elements": 0,
+          "different_rgb_pixels": 0,
+          "elements": 786432,
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "rms": 0.0,
+          "signed_mean": 0.0
+        }
+      },
+      "cpu_second_saved_observation": {
+        "historical_gap_matches": 0,
+        "new_mismatches_on_previously_equal": 0,
+        "vs_historical": {
+          "different_elements": 3630,
+          "different_rgb_pixels": 3591,
+          "elements": 786432,
+          "max_abs": 1.0,
+          "mean_abs": 0.00461578369140625,
+          "rms": 0.06793955910518003,
+          "signed_mean": 0.004109700520833333
+        },
+        "vs_saved_gpu": {
+          "different_elements": 0,
+          "different_rgb_pixels": 0,
+          "elements": 786432,
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "rms": 0.0,
+          "signed_mean": 0.0
+        }
+      },
+      "diagnostic_exact_rational_second_only": {
+        "historical_gap_matches": 616,
+        "new_mismatches_on_previously_equal": 45527,
+        "vs_historical": {
+          "different_elements": 48541,
+          "different_rgb_pixels": 34115,
+          "elements": 786432,
+          "max_abs": 1.0,
+          "mean_abs": 0.06172307332356771,
+          "rms": 0.24844128747768096,
+          "signed_mean": -0.05456415812174479
+        },
+        "vs_saved_gpu": {
+          "different_elements": 46143,
+          "different_rgb_pixels": 31522,
+          "elements": 786432,
+          "max_abs": 1.0,
+          "mean_abs": 0.058673858642578125,
+          "rms": 0.2422268743194655,
+          "signed_mean": -0.058673858642578125
+        }
+      },
+      "diagnostic_float64_second_only": {
+        "historical_gap_matches": 401,
+        "new_mismatches_on_previously_equal": 26178,
+        "vs_historical": {
+          "different_elements": 29407,
+          "different_rgb_pixels": 23758,
+          "elements": 786432,
+          "max_abs": 1.0,
+          "mean_abs": 0.03739293416341146,
+          "rms": 0.19337252690961934,
+          "signed_mean": -0.029687245686848957
+        },
+        "vs_saved_gpu": {
+          "different_elements": 26579,
+          "different_rgb_pixels": 20955,
+          "elements": 786432,
+          "max_abs": 1.0,
+          "mean_abs": 0.03379694620768229,
+          "rms": 0.18383945770068594,
+          "signed_mean": -0.03379694620768229
+        }
+      }
+    }
+  },
+  "script_sha256": "e9a29e2d937f14a3e00f1751ea031e6b12d1973ec8a7f00b594a532d9fa11036",
+  "synthetic": {
+    "disagreements_at_exact_ties": 1422,
+    "disagreements_off_exact_ties": 0,
+    "floating_vs_exact": {
+      "different_elements": 1422,
+      "different_rgb_pixels": 1422,
+      "elements": 65536,
+      "max_abs": 1.0,
+      "mean_abs": 0.021697998046875,
+      "rms": 0.14730240339816253,
+      "signed_mean": 0.014068603515625
+    },
+    "interpretation": "Synthetic arithmetic sensitivity, NOT the historical-run root cause.",
+    "uint8_pairs": 65536
+  },
+  "torch": "2.7.0+cu128",
+  "training_steps": 0,
+  "used_gpu_hours": 0
+}
