@@ -1,5 +1,31 @@
 # Project agent instructions
 
+## CURRENT VERIFIED: destination CPU migration complete; GPU pending — 2026-10-30
+
+This section updates the migration prerequisites below. Read
+`reports/foundir_flux_tail_v3_workspace_migration_2026-10-30.{md,json}`.
+The new workspace was actually checked: 147 SHA checks, 67 CPU tests,
+two-rank second-order exact resume, and regenerated 4/8-GPU source/cache
+preflights passed. V3 had only CPU metadata; old metadata was archived,
+not rewritten. No V3 GPU run/result exists from this session; CUDA count=0.
+
+The two V3 launchers now derive ROOT from their script location and require
+an explicit `FLUX_TAIL_V3_PYTHON`; they no longer hardcode the old workspace.
+The destination's `.conda/gpu-train-stable/bin/python` passed CPU runtime
+checks (Python 3.12.13, torch 2.7.0+cu128). Only this copied interpreter's
+execute permission was restored, 0644→0755; dependencies were not changed.
+Its CUDA execution and baseline parity are still unqualified. Do not use the
+stale `.venv` configurations or silently substitute system Python.
+
+On the user's homogeneous eight-H100/H200 node, from the new root, the
+prepared engineering command is:
+`FLUX_TAIL_V3_PYTHON="$PWD/.conda/gpu-train-stable/bin/python" bash smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh qualification qualification_v1 8`.
+This session prepared the command only; no GPU task or long training started.
+Keep the 5400-second / 12-used-GPU-hour qualification cap and all train-only
+restrictions. No automatic trainfit/formal. Four-GPU compatibility remains.
+Unrelated local changes and all runtime assets remain; the main checkout was
+not reset/pulled, and focused updates are committed from an isolated worktree.
+
 ## CURRENT AUTHORITY: new-workspace migration and V3 handoff — 2026-10-30
 
 - The sole active project root is now

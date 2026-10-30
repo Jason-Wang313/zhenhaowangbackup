@@ -1,0 +1,199 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-30",
+  "status": "destination_cpu_migration_qualified_gpu_pending",
+  "active_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "fetched_origin_main": "280c4909ad83119df906e61feaa4013af728f083",
+  "local_head_preserved": "9ff45228ebb795feb733744fea5f28866df52f54",
+  "backup_directory": "checkpoints/foundir_workspace_migration_v3/20261030T131929Z",
+  "dirty_files_at_start": {
+    "tracked_modified": 230,
+    "untracked": 1112
+  },
+  "sync": "64 bound sources already matched; 2 new handoff documents added; current authority prepended without removing local legacy content",
+  "source_before_match_count": 64,
+  "source_unchanged_after": 62,
+  "source_changes": {
+    "smoke/run_foundir_flux_tail_relative_energy_v3_gpu.sh": {
+      "before": "3df5e267c22889fb438c20ba0bc6641a9b9532e84eb130aa346917d64e0f1aec",
+      "after": "03fdaa19fe83e1145ebd31a7801dbb4c7bdb42e44a54e1320a493b561987ea78"
+    },
+    "smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh": {
+      "before": "a1577040610667d089d11aa2a23a2bb68c2c955fc485880b85bd9435f2900dd9",
+      "after": "ad1b21ee9c1e9a02f3e0ca2de7ffbd7bff2e1827038e9d8828377728dd4c9e52"
+    }
+  },
+  "asset_audit": {
+    "passed": true,
+    "checks": 147,
+    "training_sources": 24,
+    "parent_training_cache_files": 24,
+    "parent_training_cache_symlinks": 0,
+    "training_gt_lq_files_hashed": 48,
+    "training_images_decoded": 0,
+    "all_checked_paths_inside_active_root": true,
+    "noise_prompt": {
+      "file": "checkpoints/foundir_flux_energy_qualification_v1/qualification_v1/prompt_noise.safetensors",
+      "sha256": "3c2c8ef6fbc1fc52eb35f75f1c3f717a8c87d921854c3b7b2acfe1dab53d74a4",
+      "bytes": 15761816,
+      "inside_active_root": true
+    }
+  },
+  "third_party_license": [
+    {
+      "file": "third_party/flux2/LICENSE.md",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    }
+  ],
+  "runtime": {
+    "executable": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+    "prefix": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable",
+    "python": "3.12.13 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:38:16) [GCC 14.3.0]",
+    "modules": {
+      "torch": {
+        "version": "2.7.0+cu128",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/torch/__init__.py"
+      },
+      "torchvision": {
+        "version": "0.22.0+cu128",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/torchvision/__init__.py"
+      },
+      "torchmetrics": {
+        "version": "1.9.0",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/torchmetrics/__init__.py"
+      },
+      "safetensors": {
+        "version": "0.8.0",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/safetensors/__init__.py"
+      },
+      "PIL": {
+        "version": "11.1.0",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/PIL/__init__.py"
+      },
+      "numpy": {
+        "version": "1.26.4",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/numpy/__init__.py"
+      },
+      "einops": {
+        "version": "0.8.1",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/einops/__init__.py"
+      },
+      "transformers": {
+        "version": "5.14.1",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/transformers/__init__.py"
+      },
+      "huggingface_hub": {
+        "version": "1.26.0",
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/lib/python3.12/site-packages/huggingface_hub/__init__.py"
+      },
+      "flux2.util": {
+        "version": null,
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/third_party/flux2/src/flux2/util.py"
+      },
+      "smoke.flux_tail_energy_runtime_v1": {
+        "version": null,
+        "file": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/smoke/flux_tail_energy_runtime_v1.py"
+      }
+    },
+    "errors": [],
+    "lpips_cpu_forward_backward": {
+      "pass": true,
+      "value": 0.0048559121787548065,
+      "gradient_norm": 0.03317338600754738
+    },
+    "cuda_available": false,
+    "cuda_count": 0,
+    "torch_cuda": "12.8",
+    "status": "pass"
+  },
+  "interpreter_permission_change": {
+    "before": "0644",
+    "after": "0755",
+    "contents_unchanged": true,
+    "sha256": "59a95d7bce74176e30854d19d680f8988a580692d568b5ef9de28e64763c7b11",
+    "reason": "copied interpreter lost executable permission; only this interpreter mode restored"
+  },
+  "cpu_regression": {
+    "passed": true,
+    "tests": 67,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 1.84872430190444
+  },
+  "cpu_ddp": {
+    "passed": true,
+    "returncode": 0,
+    "elapsed_seconds": 17.49043283239007
+  },
+  "static_launcher_checks": {
+    "static_files": 64,
+    "launcher_checks": [
+      "start_foundir_flux_tail_relative_energy_v3_tmux.sh: rejects missing interpreter before launch",
+      "run_foundir_flux_tail_relative_energy_v3_gpu.sh: rejects missing interpreter before launch",
+      "4 GPUs: root/Python/visible devices/mode/run/qualification survive detached command quoting and stale environment",
+      "8 GPUs: root/Python/visible devices/mode/run/qualification survive detached command quoting and stale environment"
+    ],
+    "gpu_jobs_started": false
+  },
+  "metadata_archive": [
+    {
+      "original": "checkpoints/foundir_flux_tail_relative_energy_v3/cache_v1/contract.json",
+      "archive": "checkpoints/foundir_flux_tail_relative_energy_v3/cache_v1/pre_migration_20261030T131929Z_contract.json",
+      "sha256": "41fb07d0a2850e013cd832de0fb9a7ed2ba957b7b92a461006af6adc1c58a951"
+    },
+    {
+      "original": "checkpoints/foundir_flux_tail_relative_energy_v3/qualification_v1/preflight.json",
+      "archive": "checkpoints/foundir_flux_tail_relative_energy_v3/qualification_v1/pre_migration_20261030T131929Z_preflight.json",
+      "sha256": "0744c0e63fb6cfaa73fbeeb75101a922685bb65b5223c8ebbdd971b920f6c8a5"
+    },
+    {
+      "original": "checkpoints/foundir_flux_tail_relative_energy_v3/qualification_4gpu_v1/preflight.json",
+      "archive": "checkpoints/foundir_flux_tail_relative_energy_v3/qualification_4gpu_v1/pre_migration_20261030T131929Z_preflight.json",
+      "sha256": "9546e20ab5ef9251c49f99a694af2767deb51f94b9b3f737538e9d8fa8e77b5b"
+    }
+  ],
+  "preflights": {
+    "8": {
+      "file": "checkpoints/foundir_flux_tail_relative_energy_v3/qualification_v1/preflight.json",
+      "file_sha256": "19932a25790ba1f081a36247467a79bf0d90951e8b93081117db42a55984d2ac",
+      "protocol_sha256": "d601c20665b7a9ab55f6edf3f903150bf4f89567747624ff6216220cdecccb2b",
+      "cache_contract_sha256": "4480ff341818550c026ff05cb27c73469e722b555fc23e444efa451cc6bb079e"
+    },
+    "4": {
+      "file": "checkpoints/foundir_flux_tail_relative_energy_v3/qualification_4gpu_v1/preflight.json",
+      "file_sha256": "136aadc339293ddece73de5b13d0fee37747216aef2345e87635e804f10b41cb",
+      "protocol_sha256": "b016e8446ae50332f28dd4aa0114783194250989d4b35abc7ce14d971eaf52f4",
+      "cache_contract_sha256": "4480ff341818550c026ff05cb27c73469e722b555fc23e444efa451cc6bb079e"
+    }
+  },
+  "local_evidence": {
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/asset_audit.json": "2800d4ffcd318ce10990a11fc2271c64f4f334ea54d6cff35620d4a9fd5bf912",
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/runtime_audit.json": "e85c86d392d91197ad92d68441f8f1a59a1681acfd00e06875c1d4253e522d19",
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/cpu_regression.log": "cb9a874848bd2963f35480abf2a39c6f9db833c44da49c20392eab818c089758",
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/cpu_ddp.log": "8141f6765fdc3c4819a8be38c27dab24e5aae1a496c6a80de096f2387b9094e6",
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/static_launcher_checks.json": "0a521a78c1dd7e4f8717078094e1c9e5f834c2b383618430e117e6d1e6afdde9",
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/additional_source_comparison.json": "32ca69987f9a7a48246d6f13a6c2e57f02e5ba4ab6ac0f89cf73d05ee0609612",
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/original_files.json": "5dff997ebf30c48102d91a303fa65e90ca149366989f3305a828d8bf300d61bb",
+    "checkpoints/foundir_workspace_migration_v3/20261030T131929Z/metadata_archive.json": "906868dd31a74eac12d469df29a977bf6d07ec6b3a1a6cda3c49707785392b06"
+  },
+  "gpu_started": false,
+  "cuda_qualified": false,
+  "gpu_count_observed": 0,
+  "gpu_hours_consumed": 0,
+  "old_evaluation_pixels_accessed": false,
+  "calibration_pixels_accessed": false,
+  "protected_pixels_accessed": false,
+  "auto_trainfit": false,
+  "auto_formal": false,
+  "qualification_steps": 8,
+  "qualification_refresh_steps": [
+    4
+  ],
+  "global_batch_pairs": 32,
+  "qualification_caps_seconds": {
+    "8": 5400,
+    "4": 10800
+  },
+  "qualifying_python_environment_only_cpu": true
+}

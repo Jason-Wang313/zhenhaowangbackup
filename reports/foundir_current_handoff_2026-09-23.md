@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT VERIFIED: new-root CPU migration passed; GPU pending — 2026-10-30
+
+新根已实际核验：147项SHA、67项CPU回归、两进程二阶DDP精确恢复、4/8卡
+来源和缓存预检通过。两个V3启动器已迁移，旧CPU元数据归档后重建；没有GPU
+训练产物被改写。本次未启动GPU或200步训练，当前节点CUDA数量为0。
+
+使用新根 `.conda/gpu-train-stable/bin/python`（Python3.12.13/torch2.7.0+cu128），
+CPU依赖/LPIPS已验收，CUDA/速度/显存及历史基线复现待GPU实测。仅恢复这一个
+解释器执行位，没有升级依赖。旧venv和旧sibling路径不能当作已验收环境。
+
+八卡8步入口（本次只交付，不执行）：
+`FLUX_TAIL_V3_PYTHON="$PWD/.conda/gpu-train-stable/bin/python" bash smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh qualification qualification_v1 8`
+须在新根运行；硬cap90分钟/12使用GPU-hours，不自动trainfit/formal。
+详情：`reports/foundir_flux_tail_v3_workspace_migration_2026-10-30.{md,json}`。
+下节“启动器仍硬编码”和“新目录尚未核验”是迁移前记录，已由本节更新。
+
+
 ## CURRENT: migration to multimodal-discrete-diffusion workspace — 2026-10-30
 
 唯一工作根改为：

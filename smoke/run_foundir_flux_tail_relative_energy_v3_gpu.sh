@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ROOT=/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang
-PYTHON=/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3/bin/python
+ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd -P)
+PYTHON=${FLUX_TAIL_V3_PYTHON:-}
+if [[ "$PYTHON" != /* || ! -f "$PYTHON" || ! -x "$PYTHON" ]]; then
+  echo 'ERROR: set FLUX_TAIL_V3_PYTHON to the absolute executable path of the qualified V3 Python' >&2
+  exit 2
+fi
+unset PYTHONHOME
+export PYTHONNOUSERSITE=1
 MODE=${1:-qualification}
 RUN_ID=${2:-qualification_v1}
 GPU_COUNT=${3:-8}
@@ -40,6 +46,7 @@ STARTED=$SECONDS
 WALL_CAP=$((CAP8*8/GPU_COUNT))
 trap 'status=$?; elapsed=$((SECONDS-STARTED)); echo "TAIL_RELATIVE_V3_END status=$status elapsed_seconds=$elapsed used_gpu_seconds=$((GPU_COUNT*elapsed)) utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"' EXIT
 echo "TAIL_RELATIVE_V3_START mode=$MODE run_id=$RUN_ID gpus=$GPU_COUNT utc=$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+echo "TAIL_RELATIVE_V3_RUNTIME root=$ROOT python=$PYTHON"
 echo "TAIL_RELATIVE_V3_BUDGET wall_cap_seconds=$WALL_CAP used_gpu_hours_cap=$((CAP8*8/3600)) no_auto_trainfit no_auto_formal"
 SCRIPT=smoke/run_foundir_flux_tail_relative_energy_v3.py
 ARGS=(--mode "$MODE" --run-id "$RUN_ID" --gpus "$GPU_COUNT" --qualification-run-id "$QUALIFICATION_RUN_ID")
