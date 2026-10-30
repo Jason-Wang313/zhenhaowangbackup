@@ -1,0 +1,62 @@
+{
+  "utc": "2026-10-30T21:20:51.562468+00:00",
+  "run_id": "trainfit_3x2_direct_v1",
+  "protocol_sha256": "c47620eb566c525d69f3546dd42e5d04b01ed0db355fa291e02d9d7343addda1",
+  "mode": "trainfit",
+  "world_size": 6,
+  "steps": 200,
+  "qualification_checkpoint_loaded": false,
+  "qualification_result_sha256": "e35f33204d4496fb095e28f41f2cd11ef770c2c4b60cf0a1f88a0bd0300d5a92",
+  "latest_checkpoint": {
+    "file": "steps/energy_000000_1793395188569585650.pt",
+    "protocol_sha256": "c47620eb566c525d69f3546dd42e5d04b01ed0db355fa291e02d9d7343addda1",
+    "sha256": "053610cf3613d2c376cc725713916cd8db2ceef7c77d5b3df894db4af67a2f02",
+    "step": 0
+  },
+  "checkpoint_sha_verified": true,
+  "bootstrap_records": 24,
+  "bootstrap_complete": true,
+  "nodes": [
+    {
+      "node_rank": 0,
+      "start": [
+        "TAIL_RELATIVE_V3_START mode=trainfit run_id=trainfit_3x2_direct_v1 node_rank=0 nodes=3 local_gpus=2 world=6 utc=2026-10-30T21:13:54Z"
+      ],
+      "last_log_utc": "2026-10-30T21:20:50.565240+00:00",
+      "errors": [],
+      "end": [],
+      "resume": []
+    },
+    {
+      "node_rank": 1,
+      "start": [
+        "TAIL_RELATIVE_V3_START mode=trainfit run_id=trainfit_3x2_direct_v1 node_rank=1 nodes=3 local_gpus=2 world=6 utc=2026-10-30T21:13:55Z"
+      ],
+      "last_log_utc": "2026-10-30T21:18:24.275931+00:00",
+      "errors": [],
+      "end": [],
+      "resume": []
+    },
+    {
+      "node_rank": 2,
+      "start": [
+        "TAIL_RELATIVE_V3_START mode=trainfit run_id=trainfit_3x2_direct_v1 node_rank=2 nodes=3 local_gpus=2 world=6 utc=2026-10-30T21:13:56Z"
+      ],
+      "last_log_utc": "2026-10-30T21:18:23.935495+00:00",
+      "errors": [],
+      "end": [],
+      "resume": []
+    }
+  ],
+  "rank0_progress_markers": [
+    "TAIL_RELATIVE_V3_CONNECTIVITY_PASS {\"world\": 6, \"nodes\": 3, \"families\": [\"H200\"]}",
+    "TAIL_RELATIVE_V3_PREPARED {\"mode\": \"trainfit\", \"gpus\": 6, \"train_sources\": 24, \"steps\": 200, \"evaluation_pixels_accessed\": false}",
+    "TAIL_RELATIVE_V3_MINING_COMPLETE generation=0",
+    "TAIL_RELATIVE_V3_TRAIN_READY world=6 generation=0 next_step=1",
+    "TAIL_RELATIVE_V3_CHECKPOINT {\"step\": 0, \"file\": \"steps/energy_000000_1793395188569585650.pt\", \"sha256\": \"053610cf3613d2c376cc725713916cd8db2ceef7c77d5b3df894db4af67a2f02\", \"protocol_sha256\": \"c47620eb566c525d69f3546dd42e5d04b01ed0db355fa291e02d9d7343addda1\"}",
+    "TAIL_RELATIVE_V3_MICRO step=1 done=1/6",
+    "TAIL_RELATIVE_V3_MICRO step=1 done=2/6"
+  ],
+  "training_metrics_available": false,
+  "changes_to_running_job": false
+}
