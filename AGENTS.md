@@ -1,5 +1,29 @@
 # Project agent instructions
 
+## CURRENT AUTHORITY:直接推进 V3；本次交付只同步代码、不启动 — 2026-10-30
+
+用户明确取消额外的历史基线诊断/迁移验收前置关卡，要求直接推进训练。
+随后又明确本次交付范围：主代理只修改、测试、推送代码并给CPU代理同步提示词；
+不向用户提供GPU启动命令，不让接收代理自动运行GPU。此节覆盖下方所有
+“历史逐像素必须一致／先审批迁移契约／再重复诊断”的旧要求。
+
+本版V3以当前run的原始FLUX输出为proposal。旧图差异只记录，不阻断；
+同环境原始入口与BF16尾段一致性、当前run内参考图一致性、数据/SHA/finite/
+checkpoint保护仍保留。旧标量量化、FrozenFlow及V1/V2绑定源码未改。
+训练条件和成对比较中的proposal候选/标签/导数使用同一当前参考；其他历史
+候选仍是合法训练样本，保留其真实质量监督，不把旧proposal条件混入新候选。
+最终同时报告当前原FLUX、历史图、FP32零引导、raw/bounded energy结果，
+分别给出增益，不能把环境/精度收益记到energy名下。不读取保护图像。
+
+新输出根 `checkpoints/foundir_flux_tail_relative_energy_v3_direct`；旧输出/缓存
+不覆盖。bootstrap按run保存，不跨硬件任务共用。仍fresh 8步、step4刷新；
+200步仍为之后独立手动fresh任务，不自动接续；每完整optimizer step保存不变。
+默认单节点2卡H100/H200，保留1x4、1x8、3x2兼容；global batch32不变，
+两卡每rank16对，pair loss权重world/32。单节点忽略遗留跨节点rendezvous变量。
+CPU代理只按 `reports/foundir_flux_tail_v3_direct_sync_2026-10-30.md` 和对应SHA清单
+同步到新共享工作根、核对文件；不重跑基线诊断、不改配方、不启动训练。
+当前没有新GPU结果，CPU通过不等于CUDA资格通过；收到用户后续启动请求再行动。
+
 ## CURRENT:主代理决策，目的地代理只同步和回报；只读 CPU 核对 — 2026-10-30
 
 用户明确保留原会话代理为主代理：负责方案、代码、结果判断和 focused GitHub push。

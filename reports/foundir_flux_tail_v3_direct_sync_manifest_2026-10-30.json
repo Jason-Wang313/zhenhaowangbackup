@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "purpose": "sync_only_no_gpu_launch",
+  "source_parent_commit": "4dca9f2ecfb83b3189577fa9604a069748443c26",
+  "destination_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "allowed_actions": [
+    "sync_explicit_files_preserving_unrelated_changes",
+    "verify_sha256_and_static_syntax",
+    "publish_small_sync_receipt"
+  ],
+  "gpu_launch_authorized": false,
+  "baseline_diagnostic_required": false,
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "ab4edf2efa81fd75db7dd21364ae415941c3457499573fa9756dd7b52c6a1e7c"
+    },
+    {
+      "path": "agents.md",
+      "sha256": "d97e5362506ff3ca22327b91b8d44a32d752b405b9ad27b40d58af0bbd850ddc"
+    },
+    {
+      "path": "configs/foundir_flux_tail_relative_energy_v3.json",
+      "sha256": "9335e8cbe9469bbfaec468159c1c7899a4f6768fc23bfeb562558ceb4e4856c5"
+    },
+    {
+      "path": "smoke/flux_tail_current_baseline_v3.py",
+      "sha256": "d051894d63feedd45b3c13a52c22c1192f7331789b6cab0e98b87a437d19533d"
+    },
+    {
+      "path": "smoke/flux_tail_distributed_v3.py",
+      "sha256": "e2beebabd5601620f5a0ef84925929e69232fb9a0eeb8b56d5da9a31e01f06ab"
+    },
+    {
+      "path": "smoke/flux_tail_v3_launcher_lib.sh",
+      "sha256": "6fbc2cc72f43699c895943dc4663f406ba3f065f1a747baf4253ee8202e60407"
+    },
+    {
+      "path": "smoke/run_foundir_flux_tail_relative_energy_v3.py",
+      "sha256": "ca711f0baba46b3956ea4ca5d02119c817c9f357b4f1c8b7c80a4bb1c032bf37"
+    },
+    {
+      "path": "smoke/run_foundir_flux_tail_relative_energy_v3_gpu.sh",
+      "sha256": "001910309378f5c46007a709a9e55555c853e162e876d0953b60491cf8c88c9a"
+    },
+    {
+      "path": "smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh",
+      "sha256": "d8bea848b847ea6b86af258ea2681e12a95680634d3ab6e5c278d44a81f8e61a"
+    },
+    {
+      "path": "smoke/flux_tail_relative_checkpoint_v3.py",
+      "sha256": "0049ca025b07fb0dbf09d158ed8fff0d1517a38e192f823fd225be1964a893a8"
+    },
+    {
+      "path": "smoke/smoke_flux_tail_relative_energy_v3_cpu_ddp.py",
+      "sha256": "ab39cfbc467be500dacce0aad8b16f70fc766959c02f637add9c2bc4ac8b4385"
+    },
+    {
+      "path": "tests/test_flux_tail_current_baseline_v3.py",
+      "sha256": "0fc56808dee5308b2dfaabb00a4d1b3d25fd0e8282db2f4fd63df102b05ebec2"
+    },
+    {
+      "path": "tests/test_flux_tail_relative_energy_v3.py",
+      "sha256": "195ab7ada219d071371c32916010d2571a4da72bda160291167700591a8465d4"
+    },
+    {
+      "path": "tests/test_flux_tail_distributed_v3.py",
+      "sha256": "f992e12b74f7620d859f42f508c75b8f2df5c22dca2cf91e77588f4b28d2cd5e"
+    },
+    {
+      "path": "reports/foundir_current_handoff_2026-09-23.md",
+      "sha256": "cccfc70706e5a48e62a9c842b4008cd6d810e96bae84b6c7c2cb44359f2e3955"
+    },
+    {
+      "path": "reports/foundir_energy_design_history_and_failure_playbook_2026-10-30.md",
+      "sha256": "2d27a6be26f22c3661f4c0df8f5cf0f1860be523d949c78466e58bf1ddb35057"
+    },
+    {
+      "path": "reports/foundir_flux_tail_cpu_replay_and_observer_handoff_2026-10-30.md",
+      "sha256": "b8200716b8e6b4dd1eaaed2ebc72bda3f714255259f5ca40a9ae8e154d4b10c2"
+    },
+    {
+      "path": "reports/foundir_flux_tail_v3_direct_sync_2026-10-30.md",
+      "sha256": "66475d14d60a99b2e5eaa0bbde2983035beca6aed47699e5ef67b49bf3877af6"
+    }
+  ]
+}

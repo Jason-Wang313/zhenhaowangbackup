@@ -8,18 +8,24 @@ configure_tail_v3() {
     return 2
   fi
   MODE=${1:-qualification}
-  GPU_COUNT=${3:-6}
+  GPU_COUNT=${3:-2}
   case "$GPU_COUNT" in
     6) EXPECTED_NODES=3; LOCAL_GPUS=2; DEFAULT_VISIBLE=0,1; LAYOUT=3x2 ;;
+    2) EXPECTED_NODES=1; LOCAL_GPUS=2; DEFAULT_VISIBLE=0,1; LAYOUT=1x2 ;;
     4|8) EXPECTED_NODES=1; LOCAL_GPUS=$GPU_COUNT; LAYOUT=1x${GPU_COUNT}
       DEFAULT_VISIBLE=0,1,2,3
       [[ "$GPU_COUNT" != 8 ]] || DEFAULT_VISIBLE=0,1,2,3,4,5,6,7 ;;
-    *) echo 'ERROR: supported layouts: 3x2=6, 1x4, 1x8' >&2; return 2 ;;
+    *) echo 'ERROR: supported layouts: 1x2, 3x2=6, 1x4, 1x8' >&2; return 2 ;;
   esac
-  NNODES=${NNODES:-$EXPECTED_NODES}
+  # A local launch must not inherit a dead cluster's rendezvous variables.
+  if [[ "$EXPECTED_NODES" == 1 ]]; then
+    NNODES=1; NODE_RANK=0; MASTER_ADDR=127.0.0.1
+  else
+    NNODES=${NNODES:-$EXPECTED_NODES}
+  fi
   [[ "$NNODES" == "$EXPECTED_NODES" ]] || { echo 'ERROR: NNODES/layout mismatch' >&2; return 2; }
-  RUN_ID=${2:-${MODE}_${LAYOUT}_v1}
-  QUALIFICATION_RUN_ID=${4:-qualification_${LAYOUT}_v1}
+  RUN_ID=${2:-${MODE}_${LAYOUT}_direct_v1}
+  QUALIFICATION_RUN_ID=${4:-qualification_${LAYOUT}_direct_v1}
   [[ "$RUN_ID" =~ ^[A-Za-z0-9_-]+$ && "$QUALIFICATION_RUN_ID" =~ ^[A-Za-z0-9_-]+$ ]] || return 2
   case "$MODE" in
     qualification) TRAIN_MODE=qualification; WALL_CAP=$((43200/GPU_COUNT)); EXTRA_ARGS=() ;;

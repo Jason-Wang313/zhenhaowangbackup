@@ -10,7 +10,6 @@ from contextlib import nullcontext
 import copy
 import hashlib
 import json
-import math
 import os
 from pathlib import Path
 import re
@@ -27,6 +26,7 @@ from smoke import qualify_foundir_flux_tail_energy_v1 as core
 from smoke import flux_tail_checkpoint_v2 as atomic
 from smoke import diagnose_foundir_flux_tail_oracle_v1 as base
 from smoke import flux_tail_distributed_v3 as distributed
+from smoke import flux_tail_current_baseline_v3 as baseline_policy
 
 CONFIG=ROOT/'configs/foundir_flux_tail_relative_energy_v3.json'
 FILES=['configs/foundir_flux_tail_relative_energy_v3.json',
@@ -36,15 +36,19 @@ FILES=['configs/foundir_flux_tail_relative_energy_v3.json',
     'smoke/run_foundir_flux_tail_relative_energy_v3_gpu.sh',
     'smoke/start_foundir_flux_tail_relative_energy_v3_tmux.sh']
 FILES += ['smoke/flux_tail_distributed_v3.py','smoke/flux_tail_v3_launcher_lib.sh']
+FILES += ['smoke/flux_tail_current_baseline_v3.py']
 
 
 def spec():
     value=json.loads(CONFIG.read_text())
     if (value['schema']!=3 or value['train_indices']!=list(range(24))
         or value['probe_indices']!=list(range(8)) or value['crop']!=512
-        or value['global_batch_pairs']!=32 or value['default_gpu_count']!=6
-        or value['allowed_gpu_counts']!=[4,6,8] or value['mining_updates']!=4
-        or value['execution_layouts']!={'4':[1,4],'6':[3,2],'8':[1,8]}
+        or value['global_batch_pairs']!=32 or value['default_gpu_count']!=2
+        or value['allowed_gpu_counts']!=[2,4,6,8] or value['mining_updates']!=4
+        or value['execution_layouts']!={'2':[1,2],'4':[1,4],'6':[3,2],'8':[1,8]}
+        or value['historical_parity_policy']!='record_not_gate'
+        or value['proposal_reference']!='current_run_bootstrap'
+        or value['output_root']!='checkpoints/foundir_flux_tail_relative_energy_v3_direct'
         or not value['mixed_h100_h200_allowed']
         or value['probe_updates']!=1 or value['auto_formal'] or value['auto_trainfit']
         or value['read_calibration_or_evaluation_pixels'] or value['extra_restoration_network']
@@ -201,8 +205,21 @@ def cache_base(output,r):
 
 
 def mining_directory(output,r,generation):
-    return (common.path(r['cache_root'])/'bootstrap' if generation==0
+    # A current-environment reference belongs to this execution, not to a
+    # shared cache potentially generated on a different GPU/runtime layout.
+    return (output/'mining'/'bootstrap' if generation==0
             else output/'mining'/f'step_{generation:06d}')
+
+
+def run_proposal(output,r,index):
+    from safetensors import safe_open
+    directory=mining_directory(output,r,0)
+    meta=verify_meta(directory,index,r)
+    with safe_open(str(directory/meta['file']),framework='pt',device='cpu') as h:
+        value=h.get_tensor('proposal')
+    if baseline_policy.image_sha(value)!=meta['baseline_drift']['current_sha256']:
+        raise RuntimeError('bootstrap reference identity changed')
+    return value
 
 
 def mine(output,r,generation):
@@ -246,7 +263,9 @@ def mine(output,r,generation):
             source=common.path(r['spec']['parent_run']);meta=old_contract.cache_meta(source,previous,i,'train')
             with safe_open(str(source/meta['file']),framework='pt',device='cpu') as h:
                 x=h.get_tensor('observation');p=h.get_tensor('proposal');gt=h.get_tensor('target')
-            session=flow.session(x,meta['identity']['seed'],expected_proposal=p)
+            expected=None if generation==0 else run_proposal(output,r,i)
+            session,current,drift=baseline_policy.current_session(flow,x,meta['identity']['seed'],p,expected)
+            print('TAIL_RELATIVE_V3_BASELINE '+json.dumps(dict(index=i,generation=generation,**drift)),flush=True)
             descriptor=torch.tensor([common.descriptor(meta['identity']['row'])],device=device)
             stress=copy.deepcopy(previous['spec']);stress['guidance_max_updates']=r['spec']['mining_updates']
             stress['milestones']=list(range(1,r['spec']['mining_updates']+1))
@@ -271,11 +290,17 @@ def mine(output,r,generation):
             # GT is used only now, to LABEL training-source generated images.
             candidates=torch.stack(selected)
             labeled=labeled_frames(candidates,gt[None].to(device).float()/127.5-1,perceptual,device)
+            # Existing candidate quality/derivatives depend on candidate+GT,
+            # not on the proposal. Reuse those candidates; replace only the
+            # anchor pair and conditioning by the actual current-run proposal.
+            reference=labeled_frames(session.proposal.detach().cpu(),gt[None].to(device).float()/127.5-1,perceptual,device)
+            labeled.update(baseline_policy.reference_tensors(session,current,reference))
             file=f'record_{i:03d}_{time.time_ns()}.safetensors';sha=tensor_file(directory/file,labeled)
             atomic.atomic_json(directory/f'record_{i:03d}.json',dict(identity=r['selected'][i],file=file,
                 sha256=sha,frames=len(candidates),generator_sha256=model_sha,generation=generation,
                 generated_without_gt=True,labels_use_training_gt=True,accepted=guidance['accepted_updates'],
-                source_sha256=r['source_sha256']))
+                source_sha256=r['source_sha256'],baseline_drift=drift,
+                proposal_reference='current_run_bootstrap'))
             flow.assert_frozen()
             print(f'TAIL_RELATIVE_V3_MINED generation={generation} index={i} frames={len(candidates)}',flush=True)
             del session,rendered,candidates,labeled,guidance
@@ -312,9 +337,16 @@ def load_pair(r,metadata,slot,device):
     identity=r['selected'][index]
     if identity['role']!='train' or identity['row']['split']!='train':raise RuntimeError('not a training source')
     with safe_open(str(root/bases[index]['file']),framework='pt',device='cpu') as h:
-        x,p=[h.get_tensor(k)[None].float()/127.5-1 for k in ('observation','proposal')]
+        x=h.get_tensor('observation')[None].float()/127.5-1
+    with safe_open(str(mined/negatives[index]['file']),framework='pt',device='cpu') as h:
+        p=h.get_tensor('proposal_normalized')[None]
+        reference=dict(candidates=p[0],scores=h.get_tensor('proposal_scores'),
+                       gm=h.get_tensor('proposal_gm'),gp=h.get_tensor('proposal_gp'))
     values={k:[] for k in ('candidates','scores','gm','gp')}
     for kind,frame in choices:
+        if kind=='base' and frame==bases[index]['proposal_index']:
+            for key in values:values[key].append(reference[key])
+            continue
         directory,meta=(root,bases[index]) if kind=='base' else (mined,negatives[index])
         with safe_open(str(directory/meta['file']),framework='pt',device='cpu') as h:
             for key in values:values[key].append(h.get_slice(key)[frame].float())
@@ -456,10 +488,12 @@ def probe(output,r):
             meta=old_contract.cache_meta(source,previous,i,'train')
             with safe_open(str(source/meta['file']),framework='pt',device='cpu') as h:
                 x=h.get_tensor('observation');p=h.get_tensor('proposal')
-            session=flow.session(x,meta['identity']['seed'],expected_proposal=p)
+            session,current,drift=baseline_policy.current_session(
+                flow,x,meta['identity']['seed'],p,run_proposal(output,r,i))
             condition=torch.tensor([common.descriptor(meta['identity']['row'])],device=device)
             result=bounded_one_step(session,energy,condition,previous['spec'],limits)
             flow.assert_frozen()
+            result['outputs']['historical']=p[None]
             # These are training-fit probes; still do not expose GT to selection.
             with safe_open(str(source/meta['file']),framework='pt',device='cpu') as h:
                 target=h.get_tensor('target')[None].to(device).float()/127.5-1
@@ -469,19 +503,14 @@ def probe(output,r):
             sha=tensor_file(output/file,result.pop('outputs'))
             row=dict(index=i,identity=r['selected'][i],metrics=metrics,outputs_file=file,outputs_sha256=sha,
                 checkpoint_sha256=record['sha256'],protocol_sha256=r['protocol_sha256'],
-                gt_loaded_after_selection=True,probe_role=r['spec']['probe_role'],**result)
+                gt_loaded_after_selection=True,probe_role=r['spec']['probe_role'],
+                baseline_drift=drift,original_is_current_environment=True,**result)
             atomic.atomic_json(output/f'probe_{i:03d}.json',row)
             print('TAIL_RELATIVE_V3_PROBE '+json.dumps(dict(index=i,metrics=metrics,bounded_choice=row['bounded_choice'])),flush=True)
         dist.barrier()
         if rank==0:
             rows=[json.loads((output/f'probe_{i:03d}.json').read_text()) for i in r['spec']['probe_indices']]
-            means={name:{metric:sum(row['metrics'][name][metric] for row in rows)/len(rows)
-                         for metric in ('psnr','lpips')} for name in rows[0]['metrics']}
-            baseline=means['original']
-            for name,value in means.items():
-                value['psnr_gain']=value['psnr']-baseline['psnr']
-                value['lpips_relative_reduction']=1-value['lpips']/baseline['lpips']
-                value['joint_target']=value['psnr_gain']>=r['spec']['psnr_gain_target'] and value['lpips_relative_reduction']>=r['spec']['lpips_relative_reduction_target']
+            means=baseline_policy.aggregate_metrics(rows,r['spec'])
             result=dict(status='training_fit_probe_complete_not_generalization',mode=r['mode'],
                 engineering_pass=True,steps=state['step'],world_size=r['world_size'],means=means,
                 execution_sha256=r.get('execution_sha256'),
@@ -490,7 +519,8 @@ def probe(output,r):
                 rows=rows,trust_limits=limits,trust_is_calibrated=False,
                 checkpoint_sha256=record['sha256'],protocol_sha256=r['protocol_sha256'],source_sha256=r['source_sha256'],
                 protected_pixels_accessed=False,evaluation_pixels_accessed=False,gt_used_for_selection=False,
-                formal_authorized=False,auto_trainfit=False,generalization_established=False)
+                formal_authorized=False,auto_trainfit=False,generalization_established=False,
+                historical_parity_policy='record_not_gate',original_is_current_environment=True)
             immutable_json(output/'result.json',result)
             print('TAIL_RELATIVE_V3_PROBE_COMPLETE '+json.dumps(means),flush=True)
         dist.barrier()
@@ -505,19 +535,20 @@ def verify(output,r):
         or result['source_sha256']!=r['source_sha256'] or result['protocol_sha256']!=r['protocol_sha256']
         or result.get('execution_sha256')!=r.get('execution_sha256')
         or result['gt_used_for_selection'] or result['evaluation_pixels_accessed']
-        or result['protected_pixels_accessed'] or result['generalization_established']):
+        or result['protected_pixels_accessed'] or result['generalization_established']
+        or result.get('historical_parity_policy')!='record_not_gate'
+        or result.get('original_is_current_environment') is not True):
         raise RuntimeError('result protocol violation')
     if [row['index'] for row in result['rows']]!=list(range(8)):raise RuntimeError('missing/duplicate probes')
     for row in result['rows']:
         i=row['index']
         if (row['identity']!=r['selected'][i] or row['identity']['role']!='train'
             or row['gt_used_for_selection'] or not row['gt_loaded_after_selection']
-            or row['checkpoint_sha256']!=record['sha256']):raise RuntimeError('probe protocol violation')
+            or row['checkpoint_sha256']!=record['sha256']
+            or row.get('original_is_current_environment') is not True):raise RuntimeError('probe protocol violation')
         common.bound(str(output/row['outputs_file']),row['outputs_sha256'])
-    for name,metrics in result['means'].items():
-        for key in ('psnr','lpips'):
-            actual=sum(row['metrics'][name][key] for row in result['rows'])/8
-            if not math.isfinite(actual) or abs(actual-metrics[key])>1e-10:raise RuntimeError('aggregate mismatch')
+    if result['means']!=baseline_policy.aggregate_metrics(result['rows'],r['spec']):
+        raise RuntimeError('matched-control aggregate mismatch')
     print('TAIL_RELATIVE_V3_RESULT_VERIFIED engineering_only_no_auto_training',flush=True)
 
 
@@ -595,8 +626,8 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('phase',choices=['hardware','prepare','pipeline','verify'])
     parser.add_argument('--mode',choices=['qualification','trainfit'],default='qualification')
-    parser.add_argument('--run-id',default='qualification_3x2_v1');parser.add_argument('--gpus',type=int,choices=[4,6,8],default=6)
-    parser.add_argument('--qualification-run-id',default='qualification_3x2_v1')
+    parser.add_argument('--run-id',default='qualification_1x2_direct_v1');parser.add_argument('--gpus',type=int,choices=[2,4,6,8],default=2)
+    parser.add_argument('--qualification-run-id',default='qualification_1x2_direct_v1')
     parser.add_argument('--connectivity-only',action='store_true')
     args=parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9_-]+',args.run_id):raise ValueError('invalid run ID')

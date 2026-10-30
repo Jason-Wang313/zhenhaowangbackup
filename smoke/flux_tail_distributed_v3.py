@@ -1,4 +1,4 @@
-"""V3 execution only: 1x4, 3x2 or 1x8 ranks, including mixed H100/H200.
+"""V3 execution only: 1x2, 1x4, 3x2 or 1x8 ranks, including mixed H100/H200.
 
 The 32-pair stream is unchanged. DDP averages ranks, so EACH pair's loss
 must be multiplied by world/32, even when rank sample counts differ.
@@ -16,8 +16,8 @@ _identities = None
 
 
 def topology(world):
-    if world not in (4, 6, 8):
-        raise ValueError('supported layouts are 1x4, 3x2 and 1x8')
+    if world not in (2, 4, 6, 8):
+        raise ValueError('supported layouts are 1x2, 1x4, 3x2 and 1x8')
     return (3, 2) if world == 6 else (1, world)
 
 

@@ -10,10 +10,12 @@ The old copied local checkout may be stale; do not blindly pull/reset over it.
 All operational priorities, old workspace paths and mandatory old-handoff
 reading orders BELOW are historical wherever superseded by those documents.
 Do not restart an old Rain/MoE/Restormer/EBT/25-step task from this legacy file.
-Next: read the latest AGENTS.md CPU-replay/reporting section. Migration and
-the two-GPU diagnostic have already run; do not repeat them. The source-session
-agent leads decisions/code; the destination agent synchronizes specified files
-and reports actual results. No autonomous GPU retry or scientific changes.
+Next: read the latest AGENTS.md direct-V3/sync-only section and
+reports/foundir_flux_tail_v3_direct_sync_2026-10-30.md. Historical bitwise parity
+is now recorded, not a launch gate. Do not repeat the completed diagnostics.
+The source-session agent leads decisions/code; the destination agent only
+synchronizes the specified files to the shared root and verifies hashes.
+This delivery does not authorize GPU launch or scientific changes.
 No new-root GPU verification has been done by the source-workspace agent.
 Preserve safety/protected-data restrictions and unrelated files; speak Mandarin.
 

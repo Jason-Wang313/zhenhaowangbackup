@@ -3,6 +3,19 @@
 更新：2026-10-30。面向接手代理，不依赖旧聊天窗口。
 这份文件保存可复核的事实、设计理由、失败经验与未解问题，不把假设补写成定论。
 
+### 最新用户决定：不继续追历史bitwise，直接推进；本次只交付同步
+
+用户明确取消额外基线迁移诊断前置要求。当前V3 wrapper不再将历史proposal送入
+旧runtime的严格expected_proposal检查，而记录差异；旧runtime及量化函数本身不改。
+新run的原始FLUX作为实际proposal，按run保存；训练条件与成对proposal监督一致。
+理由：`quality_targets(candidate, GT)`的分数/导数不依赖proposal，所以旧候选仍可
+作为训练样本；但作为参考的proposal条件与proposal候选必须成套换成当前run输出。
+因此只替换这一参考及其标签，不重跑历史GT/FLUX候选生成，也不换损失/模型。
+当前原始入口与tail零引导检查保留；probe同时对历史/current/FP32控制报告指标。
+这允许开始验证学习，不等于证明迁移对画质无影响，更不是energy已经有效。
+用户随后要求本轮只push并交付CPU代理同步提示词：不得自动GPU启动、不得提供
+GPU运行命令。详见 `foundir_flux_tail_v3_direct_sync_2026-10-30.md`。
+
 ### 最新工程进展：训练前的历史基线不一致
 
 V3三节点首次资格在initial mining的历史baseline检查退出，0训练步。

@@ -154,7 +154,11 @@ class RelativeEnergyTests(unittest.TestCase):
             values=dict(candidates=torch.randn(8,3,8,8)*.1,scores=torch.randn(8,2),
                         gm=torch.randn(8,3,8,8),gp=torch.randn(8,3,8,8))
             save_file(values|dict(observation=image,proposal=image.clone()),str(bases/'x.safetensors'))
-            save_file(values,str(mined/'x.safetensors'))
+            current=torch.full_like(image,131).float()/127.5-1
+            scores,gradients=quality_targets(current[None],torch.zeros(1,3,8,8),perceptual)
+            save_file(values|dict(proposal_normalized=current,proposal_scores=scores[0],
+                                  proposal_gm=gradients[0][0],proposal_gp=gradients[1][0]),
+                      str(mined/'x.safetensors'))
             levels=json.dumps(dict(blur=1,noise=3,rain=1,haze=1,low_light=1))
             r=dict(mode='qualification',spec=runner.spec(),selected=[dict(role='train',row=dict(split='train',qwen_levels_json=levels)) for _ in range(24)])
             bm=[dict(file='x.safetensors',frames=8,proposal_index=1,teacher_indices=[3,5,7],timestep=.2) for _ in range(24)]
@@ -163,6 +167,13 @@ class RelativeEnergyTests(unittest.TestCase):
             for slot in range(4):
                 inputs,labels=runner.load_pair(r,metadata,slot,'cpu')
                 self.assertEqual(inputs[2].shape,(2,3,8,8));self.assertEqual(labels[0].shape,(2,2))
+                self.assertTrue(torch.equal(inputs[1],current[None].repeat(2,1,1,1)))
+                if slot%4 in (0,1):
+                    anchor=[i for i in range(2) if torch.equal(inputs[2][i],current)]
+                    self.assertEqual(len(anchor),1)
+                    self.assertTrue(torch.equal(labels[0][anchor[0]],scores[0]))
+                    self.assertTrue(torch.equal(labels[1][0][anchor[0]],gradients[0][0]))
+                    self.assertTrue(torch.equal(labels[1][1][anchor[0]],gradients[1][0]))
             for row in r['selected']:row['role']='engineering_evaluation'
             with self.assertRaises(RuntimeError):runner.load_pair(r,metadata,0,'cpu')
 
