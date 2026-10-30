@@ -1,0 +1,68 @@
+{
+  "utc": "2026-10-30T21:10:46.429062+00:00",
+  "target_commit": "098e4e4778d6d5000e24bc7a849e06936baad410",
+  "destination_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "backup_directory": "/tmp/foundir-trainfit-doc-sync-20261030T211046Z",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "expected_sha256": "aa6b4f80bcb179b93b6cf70a0e932917f82746bb3cd5ffef12a2c7286d4577f5",
+      "actual_sha256": "aa6b4f80bcb179b93b6cf70a0e932917f82746bb3cd5ffef12a2c7286d4577f5",
+      "preserved_local_merge": false,
+      "matches_target": true
+    },
+    {
+      "path": "agents.md",
+      "expected_sha256": "53d1b423e3bb42e4bfabf697a63c51179ac8f54568235d2a1492a8938bb65521",
+      "actual_sha256": "16c93caf66f24745242ec5a5a85aa92d8f1c7b9c7febb6670e7187b30b3f4606",
+      "preserved_local_merge": true,
+      "matches_target": false
+    },
+    {
+      "path": "reports/foundir_current_handoff_2026-09-23.md",
+      "expected_sha256": "a1c553155b95bf8fbfa192dc417ae3117072d3229bd4c9c5c047b31553fcad9a",
+      "actual_sha256": "a1c553155b95bf8fbfa192dc417ae3117072d3229bd4c9c5c047b31553fcad9a",
+      "preserved_local_merge": false,
+      "matches_target": true
+    },
+    {
+      "path": "reports/foundir_energy_design_history_and_failure_playbook_2026-10-30.md",
+      "expected_sha256": "d6294bc35e2c435a5b596165874806d0941382b00210427f3663c3a4d31c33e0",
+      "actual_sha256": "d6294bc35e2c435a5b596165874806d0941382b00210427f3663c3a4d31c33e0",
+      "preserved_local_merge": false,
+      "matches_target": true
+    },
+    {
+      "path": "reports/foundir_flux_tail_v3_direct_trainfit_readiness_2026-10-30.md",
+      "expected_sha256": "6c07a25c70acab619f8516dca96b9f860a665562aa5f6c977870b61d2f827fb7",
+      "actual_sha256": "6c07a25c70acab619f8516dca96b9f860a665562aa5f6c977870b61d2f827fb7",
+      "preserved_local_merge": false,
+      "matches_target": true
+    }
+  ],
+  "qualification_result_sha256": "e35f33204d4496fb095e28f41f2cd11ef770c2c4b60cf0a1f88a0bd0300d5a92",
+  "qualification_engineering_pass": true,
+  "bound_sources_verified": 67,
+  "configuration_sha_verified": true,
+  "trainfit_run_id": "trainfit_3x2_direct_v1",
+  "trainfit_directory_exists": false,
+  "gpu_started": false,
+  "code_config_data_cache_environment_modified": false,
+  "dry_run_plans": [
+    {
+      "node_rank": 0,
+      "status": "passed",
+      "dry_run_output": "ROOT=/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang\nLOG=/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/logs/foundir_flux_tail_relative_energy_v3_trainfit_3x2_direct_v1_node0.log\nWALL_CAP=48000 LOCAL_GPUS=2 WORLD=6\n/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -u -m torch.distributed.run --nnodes=3 --nproc_per_node=2 --node_rank=0 --master_addr=10.247.94.142 --master_port=29683 --rdzv_conf=timeout=180 --max-restarts=0 /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/smoke/run_foundir_flux_tail_relative_energy_v3.py pipeline --mode trainfit --run-id trainfit_3x2_direct_v1 --gpus 6 --qualification-run-id qualification_3x2_direct_v1 \n"
+    },
+    {
+      "node_rank": 1,
+      "status": "passed",
+      "dry_run_output": "ROOT=/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang\nLOG=/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/logs/foundir_flux_tail_relative_energy_v3_trainfit_3x2_direct_v1_node1.log\nWALL_CAP=48000 LOCAL_GPUS=2 WORLD=6\n/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -u -m torch.distributed.run --nnodes=3 --nproc_per_node=2 --node_rank=1 --master_addr=10.247.94.142 --master_port=29683 --rdzv_conf=timeout=180 --max-restarts=0 /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/smoke/run_foundir_flux_tail_relative_energy_v3.py pipeline --mode trainfit --run-id trainfit_3x2_direct_v1 --gpus 6 --qualification-run-id qualification_3x2_direct_v1 \n"
+    },
+    {
+      "node_rank": 2,
+      "status": "passed",
+      "dry_run_output": "ROOT=/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang\nLOG=/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/logs/foundir_flux_tail_relative_energy_v3_trainfit_3x2_direct_v1_node2.log\nWALL_CAP=48000 LOCAL_GPUS=2 WORLD=6\n/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -u -m torch.distributed.run --nnodes=3 --nproc_per_node=2 --node_rank=2 --master_addr=10.247.94.142 --master_port=29683 --rdzv_conf=timeout=180 --max-restarts=0 /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/smoke/run_foundir_flux_tail_relative_energy_v3.py pipeline --mode trainfit --run-id trainfit_3x2_direct_v1 --gpus 6 --qualification-run-id qualification_3x2_direct_v1 \n"
+    }
+  ]
+}
