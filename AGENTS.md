@@ -11,12 +11,17 @@
 本次用户要求 CPU 检查由主代理自行做。主代理已完成本地浮点量化穷举和旧缓存
 SHA 检查，但新工作根及新 diagnostic tensors 在主代理挂载中不可见。
 不要把“有 CPU”误写成“已经拿到新张量”。无需新增 GPU 实验。
-下一步只运行 `smoke/replay_flux_tail_quantization_cpu_v1.py`，读取已保存的单一
-原训练来源 index0，核对两次取整；只解码 observation/proposal 与四个已保存阶段，
-不读 GT，不加载模型，不初始化 CUDA，不改旧代码/缓存/基线。详细一次性命令与
-回报范围见 `reports/foundir_flux_tail_cpu_replay_and_observer_handoff_2026-10-30.md`。
-新节点结果尚未由主代理核对，不能把 synthetic-only 报告说成真实张量核对通过。
-该检查不授权放宽历史相等断言、重建缓存或重启资格/训练。
+新节点已执行 `smoke/replay_flux_tail_quantization_cpu_v1.py`，报告提交0b93b95。
+主代理已收到真实重放JSON（SHA02b4990d0be484ce8dd72e7641153375ea5d5059208db26d7714f506539d40a8），
+核对报告/源码身份与统计关系；原始远端tensor仍未在主代理重新读取。
+两次CPU取整及完整重放与新GPU图差异均为0，仍与历史图相差3630通道元素。
+改FP64/精确有理数反而扩大历史差异，不能用这些替代算法修复或替换基线。
+CPU/GPU输入归一化存在约1.19e-7差异，但只替换第二次取整输入没有改变结果；
+它是否通过上游生成放大尚未知，不能声称归一化/H200/内核已确定为根因。
+此CPU检查已完成，不重复命令或双卡生成诊断；energy仍0训练步。
+分析与下一步建议见 `reports/foundir_flux_tail_cpu_replay_and_observer_handoff_2026-10-30.md`。
+建议下一步明确冻结新环境的匹配对照及受影响缓存迁移办法，保留旧基线对照；
+这是待批准的工程迁移建议，不授权删相等断言、重建缓存或重启资格/训练。
 
 ## CURRENT RESULT: two-GPU baseline diagnostic finished — 2026-10-30
 
