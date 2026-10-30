@@ -1,5 +1,51 @@
 # Project agent instructions
 
+## CURRENT AUTHORITY: new-workspace migration and V3 handoff — 2026-10-30
+
+- The sole active project root is now
+  `/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang`.
+  This explicitly supersedes all older HDD3 / agent-driven-world-model workspace
+  rules below. The old workspace is a frozen migration source, not a fallback
+  execution directory. Do not launch or resume jobs there.
+- GitHub `Jason-Wang313/zhenhaowangbackup`, `origin/main`, is the authoritative
+  source for code, decisions and handoff updates. The user already copied the
+  files to the new root; subsequent edits in the old root do NOT synchronize.
+  Preserve copied weights/data/caches and all unrelated dirty files. GitHub
+  does not contain those large runtime assets and cannot replace their copy.
+- Read `reports/foundir_workspace_migration_handoff_2026-10-30.md` FIRST, then
+  the top of `reports/foundir_current_handoff_2026-09-23.md` and the V3 readiness
+  report. Lowercase `agents.md` and all older ACTIVE/LIVE headings are historical
+  wherever they conflict with this section. Never revive their old priorities.
+- Immediate next action: safely synchronize the relevant GitHub files, verify
+  the copied assets, fix and qualify relocation of paths/runtime/cache links,
+  then run the V3 **8-step engineering qualification** on one 8xH100/H200 node.
+  Do NOT run the current launcher verbatim: its ROOT/PYTHON still reference the
+  old workspace, and changing bound files requires a recorded migration.
+- V3 is the train-only relative FLUX-tail energy repair, NOT the failed V2
+  25-step run, old GT-only oracle, Restormer residual, MoE, Rain or EBT Generalist.
+  Latest verified evidence at this handoff: 67 CPU tests and CPU DDP exact
+  resume passed before migration; no V3 GPU log/result was found in the source
+  workspace. Inspect the destination before assuming no newer run exists.
+- Only after a matching qualification passes may a separately/manual-launched,
+  fresh 200-step train-fit run be considered. No qualification-weight reuse,
+  no automatic formal training, no automatic budget increase. Final energy-only
+  goals remain +0.30 dB PSNR and 9.928107050377874% relative LPIPS reduction.
+- Default: all eight GPUs on one homogeneous H100/H200 node; retain four-GPU
+  compatibility. No cross-node jobs. 15 CPU cores / 500GB RAM is acceptable to
+  qualify, not a measured zero-slowdown guarantee. Preserve global batch 32.
+- The last validated Python environment was
+  `/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3`.
+  Its availability on the new node is UNKNOWN, and copying the project folder
+  does not copy this sibling environment. Verify the interpreter/dependencies;
+  do not guess a new environment path or silently use system Python. A missing
+  runtime blocks GPU launch until an equivalent environment is qualified.
+- Never use official/sealed/internal/parent-test or final-1859 development
+  pixels for training, tuning or selection. V3 currently uses only its original
+  24 training sources; all probes are training fit, not generalization evidence.
+- Report in simple Mandarin: outcome first, facts versus hypotheses separated.
+  Commit/push focused milestones using explicit file lists and secret scanning;
+  never upload checkpoints, datasets, caches, credentials or live logs.
+
 ## ACTIVE: train-only relative FLUX-tail energy repair V3 — 2026-10-29
 
 用户在第一性原理分析后明确授权execute。本节覆盖旧V2终态的“没有新任务授权”；
@@ -2037,10 +2083,10 @@ See `reports/foundir_rain_precision_qualification_2026-10-25.md` for evidence.
 
 ## Active workspace and runtime
 
-- The sole active project root is `/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/zhenhaowang`.
-- Use `/inspire/hdd3/project/agent-driven-world-model/liuxiaohong-25080/.envs/gpu-train-stable-hdd3` for all Python work.
+- The sole active project root is `/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang` (migration decision 2026-10-30).
+- Use the validated project Python environment; its last known location and the required new-node verification are stated in the CURRENT AUTHORITY section above. Do not silently substitute system Python.
 - Preserve all dirty and untracked project files. Do not reset, clean, or overwrite unrelated work.
-- Keep the old HDD workspace untouched.
+- Keep prior workspaces frozen; no execution or automatic synchronization back to them. Historical paths below are provenance, not active workspace choices.
 - Never use official, sealed, parent-test, or internal-test pixels for training, hyperparameter selection, checkpoint selection, or early stopping.
 
 ## ACTIVE: Rain FLUX precision repair and training-fit diagnosis — 2026-10-25

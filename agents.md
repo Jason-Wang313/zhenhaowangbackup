@@ -1,3 +1,22 @@
+# Legacy instructions — current authority moved to AGENTS.md
+
+## READ FIRST: workspace handoff, 2026-10-30
+
+The sole active root is
+`/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang`.
+Fetch `origin/main` and read its `AGENTS.md` and
+`reports/foundir_workspace_migration_handoff_2026-10-30.md` before acting.
+The old copied local checkout may be stale; do not blindly pull/reset over it.
+All operational priorities, old workspace paths and mandatory old-handoff
+reading orders BELOW are historical wherever superseded by those documents.
+Do not restart an old Rain/MoE/Restormer/EBT/25-step task from this legacy file.
+Next: verify/qualify relocation, then V3 8-step engineering qualification;
+only afterward consider an independent fresh 200-step train-fit run.
+No new-root GPU verification has been done by the source-workspace agent.
+Preserve safety/protected-data restrictions and unrelated files; speak Mandarin.
+
+---
+
 No interference with any other folders at all.
 
 Before every work session, explicitly tell the user: "I am working in zhenhaowang, which is the correct workspace."
@@ -166,7 +185,7 @@ You are the execution agent for the image-restoration synthetic-data quality gat
 Read and obey the existing AGENTS.md first.
 
 WORKSPACE BOUNDARY
-Only work inside /inspire/hdd/global_user/liuxiaohong-25080/zhenhaowang unless the user explicitly asks otherwise. Do not inspect, modify, or run commands in other users' folders.
+Only work inside /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang unless the user explicitly asks otherwise. Do not inspect, modify, or run commands in other users' folders.
 
 
 Do not inspect, modify, delete, or execute commands in any other user's directory. Do not reuse previous project paths, datasets, checkpoints, environments, manifests, or results unless directly verified inside this workspace.

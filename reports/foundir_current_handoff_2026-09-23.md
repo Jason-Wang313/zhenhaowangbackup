@@ -1,5 +1,26 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT: migration to multimodal-discrete-diffusion workspace — 2026-10-30
+
+唯一工作根改为：
+`/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang`。
+用户已复制文件；旧目录后续修改不会同步。代码和决策以GitHub origin/main为准，
+数据/权重/缓存以已复制文件及SHA核验为准，不上传大文件。
+
+先读 `reports/foundir_workspace_migration_handoff_2026-10-30.md`。
+下一步是：安全同步关键文件 → 核验Python、数据和缓存链接 → 完成路径迁移及预检
+→ 单节点默认八卡V3 8步工程验收 → 通过后才考虑独立fresh 200步train-fit。
+当前启动器仍硬编码旧ROOT/PYTHON；不能在新目录直接运行旧命令，也不能为迁移
+盲目替换所有路径/重写旧SHA记录。此交接没有启动任何GPU任务。
+
+截至本次旧目录检查，V3只有CPU预检JSON，没有GPU日志、训练checkpoint或result。
+67项CPU测试/二阶DDP精确恢复是迁移前证据，不是新节点验收。新代理须检查复制目的地
+是否有更新进度，再决定首次启动还是恢复；不要覆盖已存在的有效工作。
+
+只继续V3训练侧可学习性修复。下方历史ACTIVE/LIVE、旧25步和Rain/MoE/Restormer/
+EBT优先级均不能恢复。energy独立+.30dB、LPIPS相对下降9.928107050377874%目标不变；
+没有新增Restormer，没有泛化成功证据，不自动长训。
+
 ## ACTIVE: train-only relative FLUX-tail energy repair V3 — 2026-10-29
 
 用户在第一性原理分析后明确授权execute。本节覆盖旧V2终态的“没有新任务授权”；
