@@ -1,0 +1,87 @@
+{
+  "run_id": "baseline_parity_2gpu_v1",
+  "audit_utc": "2026-10-30T18:42:52.537108+00:00",
+  "diagnostic_complete": true,
+  "launcher_status": 2,
+  "historical_baseline_parity_pass": false,
+  "qualification_pass": false,
+  "start_utc": "2026-10-30T18:38:52Z",
+  "end_utc": "2026-10-30T18:40:24Z",
+  "wall_seconds": 92,
+  "wall_hours": 0.025555555555555557,
+  "used_gpu_seconds": 184,
+  "used_gpu_hours": 0.051111111111111114,
+  "cluster_attempt_plus_diagnostic_used_gpu_hours": 0.44555555555555554,
+  "gpus": 2,
+  "gpu_family": "H200",
+  "nodes": 1,
+  "unique_training_sources": 1,
+  "index": 0,
+  "repeats_per_gpu": 2,
+  "training_steps": 0,
+  "gt_tensor_decoded": false,
+  "protected_pixels_accessed": false,
+  "result_path": "checkpoints/foundir_flux_tail_baseline_parity_v1/baseline_parity_2gpu_v1/result.json",
+  "result_sha256": "62945a5abf462f889aebd8fa667fd92b56f30deaa7798df76c48462b245b3228",
+  "four_trace_files_byte_identical": true,
+  "trace_file_sha256": "54998b694f4b0271b5efc0d55657e4b572276daa36e2e0de744f0df7bdaff847",
+  "stages_per_trace": 160,
+  "comparison_first_different_stage": {
+    "across_gpus_repeat0": null,
+    "gpu0_repeat": null,
+    "gpu1_repeat": null
+  },
+  "historical_difference": {
+    "different_elements": 3630,
+    "different_fraction": 0.00461578369140625,
+    "different_rgb_pixel_fraction": 0.013698577880859375,
+    "different_rgb_pixels": 3591,
+    "elements": 786432,
+    "equal": false,
+    "max_abs": 1.0,
+    "mean_abs": 0.00461578369140625,
+    "rms": 0.06793955910518003,
+    "signed_mean": 0.004109700520833333
+  },
+  "signed_uint8_difference_counts": {
+    "-1": 199,
+    "0": 782802,
+    "1": 3431
+  },
+  "independent_verification": {
+    "artifact_hashes": 14,
+    "source_hashes": 68,
+    "parent_cache_content_hash": true,
+    "stdlib_uint8_counts_recomputed": true
+  },
+  "peak_memory_gib_by_gpu": [
+    8.808523654937744,
+    8.808523654937744
+  ],
+  "runtime": {
+    "hostname": "qwen-copy-copy-copy--b1d1656a8b28-pxbopopcbo",
+    "name": "NVIDIA H200",
+    "torch": "2.7.0+cu128",
+    "cuda": "12.8",
+    "cudnn": 90701,
+    "driver_versions": [
+      "GPU-b0d1a21c-5aff-922d-e513-8b16e61ca2dd, 570.124.06",
+      "GPU-8cd7d810-7af9-a269-c04e-2faf7e65afad, 570.124.06"
+    ],
+    "packages": {
+      "einops": "0.8.1",
+      "numpy": "1.26.4",
+      "safetensors": "0.8.0",
+      "torchmetrics": "1.9.0",
+      "torchvision": "0.22.0+cu128",
+      "transformers": "5.14.1"
+    },
+    "matmul_tf32": true,
+    "cudnn_tf32": true,
+    "cudnn_benchmark": false,
+    "deterministic_algorithms": false
+  },
+  "root_cause": "not_isolated",
+  "next_step": "Read-only replay of saved quantization inputs and historical runtime provenance; do not weaken parity or change the baseline.",
+  "log_sha256": "710cfd3f6b5c516e9674d441fca3242e804848e790572d31445f52e10dd3e056"
+}

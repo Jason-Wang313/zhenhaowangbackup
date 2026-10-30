@@ -1,5 +1,22 @@
 # FoundIR current handoff — 2026-09-23
 
+## CURRENT RESULT: two-GPU baseline diagnostic finished — 2026-10-30
+
+Read `reports/foundir_flux_tail_baseline_parity_terminal_2026-10-30.{md,json}`.
+Single-node two-H200 baseline_parity_2gpu_v1 completed at18:40:24 UTC,
+DIAGNOSTIC_COMPLETE and status2 (expected historical mismatch, not a crash).
+One original training source, two repeats/GPU: all four full trace files are
+byte-identical, all160 stages agree. Historical image differs at3591/262144
+RGB pixels (1.369858%), maximum1 uint8 level;3630 channel elements differ.
+14 artifact hashes,68 source hashes and parent cache hash independently checked;
+uint8 counts independently recomputed without GT decoding. No energy training.
+Cost92 wall seconds/184 GPU-seconds=.0511111 used GPU-hours; including prior
+three-node failure=.4455556 GPU-hours. Peak allocated8.80852GiB per GPU.
+This does not locate the historical root cause or qualify mixed GPUs/all24
+sources. Preserve exact parity and the old baseline. Next minimal step is
+read-only quantization replay from saved tensors and old runtime provenance;
+no new GPU job was started by this monitoring turn. Short work remains1x2.
+
 ## CURRENT AUTHORITY: short work on one two-GPU node — 2026-10-30
 
 User now requests single-node TWO-GPU execution for short diagnostics/jobs;
