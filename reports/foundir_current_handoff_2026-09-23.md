@@ -1,5 +1,15 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前：FLUX-only验收入口已实现，等待GPU节点实际启动 — 2026-10-31
+
+读 `foundir_flux_native_energy_v1_readiness_2026-10-31.md`。用户已要求start，主会话
+无GPU/新根不可见，故本地只完成实现和9项CPU测试，不能冒称已开跑。
+新入口为`smoke/start_foundir_flux_native_energy_v1_tmux.sh qualification_v1 8 fresh`，
+单机4/8张H100/H200，全局batch8，512图/完整3次更新/25步；不自动200步。
+原生FLUX内部LoRA产生energy，无CNN/Restormer；真实wrong-FLUX等完整候选。
+每step保存Adam/RNG/采样/参数，2小时GPU阶段上限。CPU通过不是4B CUDA通过。
+目的地先同步明确文件，用户在GPU节点运行；旧V3/CNN仍禁止，历史结果不删除。
+
 ## 唯一当前交接：FLUX-only energy 重做 — 2026-10-31
 
 用户明确禁止外挂CNN energy和Restormer。旧200步已结束，不再续训/启动旧V3。
@@ -8,8 +18,8 @@
 VLM条件投影；直接训练真实1/2/3次尾段修后的MSE/LPIPS及动作排序。
 禁止把旧SpatialConditionalEnergy/TailQualityEnergy重命名或偷偷接回去。
 原生冻结VAE、固定LPIPS保留；不加CNN/Restormer恢复器，也不用其teacher。
-当前只完成PPT与设计交接，训练器尚未实现/未启动GPU，不提供旧启动器冒充新实验。
-下一步是实现并验收全三步二阶梯度、显存、输出和resume，之后再独立fresh拟合。
+同日实施状态以顶部更新为准：训练器已实现、CPU通过、未启动GPU，不用旧启动器冒充。
+下一步是真实4B GPU验收全三步二阶梯度、显存、输出和resume，之后再独立fresh拟合。
 不重复历史基线迁移诊断/GT搜索；目的地代理只同步指定文件和回报。
 旧CNN结果：8个训练来源PSNR+1.06034dB、LPIPS降2.48595%，联合失败，3/8 LPIPS
 变差；不是泛化。最终目标仍是energy独立+.30dB/LPIPS相对降9.92810705%。

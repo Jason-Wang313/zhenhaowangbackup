@@ -410,3 +410,31 @@ Oracle 知道真实干净图；energy 只看退化图、候选和 VLM 条件。
   本监测未新开GPU任务、不接续资格/训练、不放宽parity。
 - **Git提交：** 与本终态报告同一focused docs提交；
   `git log -- reports/foundir_flux_tail_baseline_parity_terminal_2026-10-30.md` 可定位。
+
+## 14. 决策记录：停止外挂CNN，实施FLUX原生energy — 2026-10-31
+
+- **用户决定：** 只用预训练FLUX作为可训练图像主干；禁止外挂CNN energy、Restormer、
+  residual refiner及其蒸馏。用户已要求execute/start。不重跑历史灰度差异或GT搜索。
+  本节覆盖上文所有继续V3/CNN及历史基线诊断的下一步；保留旧证据，不删旧成果。
+- **已有证据：** 旧CNN的200步已结束。8个训练来源bounded PSNR增加1.060337543dB，
+  LPIPS只降2.485951%，3/8图LPIPS退步，联合失败；不是源外泛化。
+  不能把它说成“两个指标都差一点”，不能推断“改FLUX必然成功”。
+- **问题到改动：** 复用FLUX图像表示，新增内部energy LoRA和线性读出；不从零训练
+  独立图像评分网络。完整展开三次energy梯度更新，穿过冻结FLUX尾两步/VAE，用实际
+  修后图像的MSE/LPIPS及同图动作排序训练；不只拟合缓存分数或导数。
+- **不变量/显式变化：** Noise训练来源身份、512、原LoRA、50步、alpha=.30、双uint8
+  与最终+.30dB/LPIPS相对降9.92810705%不变。新候选只由FLUX/固定图像处理构造；
+  不继承旧CNN轨迹/权重。新工程global batch8、单机4/8卡，不冒充旧batch32协议。
+- **已测/未测：** 小尺寸真实FLUX块的9项CPU测试通过，含三步能量更新经冻结生成尾段
+  反传、有限差分、原生成不变、Adam/RNG续训。真实4B+VAE+LPIPS CUDA未运行；
+  新GPU节点在主会话不可见。不能把PPT/源码就绪说成已启动或工程资格通过。
+- **下一最小验证：** 新25步工程资格，8个训练来源probe报告0/1/2/3步和energy自选。
+  检查真实梯度、显存、保存恢复及实际图像；8图不是泛化。GPU阶段上限2小时含缓存，
+  8卡至多16、4卡至多8 GPU-hours，CPU核对和退出清理另计实际分配时间；不是耗时预测。
+  不自动200步或正式训练，不因OOM暗换CNN/裁图/截断轨迹。
+- **失败后如何判断：** 工程错误先定位实际栈；评分能排序但修图差则检查输入梯度和
+  rollout一致性；PSNR改善而LPIPS停滞则是感知修正的有效方向仍未学会，不能直接
+  推断容量不足或继续加步数。只有拟合证明有效后，才另冻独立来源检验与规模计划。
+- **实施与Git：** 读 `foundir_flux_native_energy_v1_readiness_2026-10-31.md`。
+  本条与native-energy代码/测试/交接同一focused提交；
+  `git log -- smoke/train_foundir_flux_native_energy_v1.py` 可定位。

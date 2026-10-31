@@ -146,7 +146,7 @@ def slide_base(prs, title, subtitle):
     textbox(slide, .57, 1.03, 12.1, .55, subtitle, 16, GRAY)
     slide.append(dict(x=.6, y=1.66, w=12.1, h=.035, fill=BLUE))
     textbox(slide, .6, 7.05, 11.4, .25,
-            "2026-10-31 修订草案｜仅 FLUX 可训练主干｜尚未实现/训练，不是已验证结果", 10, GRAY)
+            "2026-10-31 修订草案｜仅 FLUX 可训练主干｜代码已实现，CPU通过；GPU尚未验收", 10, GRAY)
     textbox(slide, 12.0, 7.02, .7, .3, str(len(prs.slides)), 12, GRAY, center=True)
     return slide
 
@@ -232,7 +232,7 @@ def build(output):
     s = slide_base(prs, "什么已确定，什么还没有？", "本版是明确的重做计划，不是对成功率、成本或创新性的保证。")
     panel(s, .6, 1.95, 5.9, 3.8, "已确定", "只用预训练 FLUX 可训练主干\n不再用外挂 CNN 或 Restormer\n保留原恢复能力、基线和评价口径\n直接训练修后质量，不重复旧诊断", size=22)
     panel(s, 6.75, 1.95, 5.95, 3.8, "仍需实测", "完整3步二阶反传能否装下显存\nFLUX energy 能否学会 LPIPS 方向\n更大数据与新来源能否保留收益\n速度 / GPU-hours / VLM实际贡献", TEAL, 22)
-    textbox(s, .75, 5.98, 11.8, .72, "状态：FLUX-only 训练器尚未实现，未启动 GPU。\n先按单机4/8张H100/H200兼容目标验收；资源和时长按实测冻结，不暗换配方。", 19, RED)
+    textbox(s, .75, 5.98, 11.8, .72, "状态：FLUX-only 25步入口已实现，9项CPU测试通过，未启动 GPU。\n单机4/8张H100/H200；512图、三次更新、全局batch8。显存/速度仍需实测。", 19, RED)
 
     output.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(output))

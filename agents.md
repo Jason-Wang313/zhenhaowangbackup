@@ -1,11 +1,15 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+最新实施状态：FLUX-only 25步代码已实现、9项CPU测试通过，尚未GPU启动/验收。
+读 `reports/foundir_flux_native_energy_v1_readiness_2026-10-31.md`，不得运行旧CNN/V3。
+先同步，再在GPU节点运行新native-energy入口；不自动200步。
+
 ## 2026-10-31 最新覆盖：FLUX-only，禁止外挂 CNN / Restormer
 
 只按 AGENTS.md 顶部和 `reports/foundir_flux_only_energy_redesign_2026-10-31.md`
 执行。旧CNN的200步已完成；不得续训/重启SpatialConditionalEnergy或TailQualityEnergy，
 不得使用Restormer/refiner/其蒸馏。当前为FLUX自身Transformer表示上的energy重做，
-训练器尚未实现、未启动GPU。下方旧“下一步200步/继续V3”全部失效。
+训练器已实现、CPU通过、未启动GPU。下方旧“下一步200步/继续V3”全部失效。
 原生冻结FLUX VAE及固定LPIPS保留；它们不是新增可训练CNN。历史代码/结果不删除。
 
 ## READ FIRST: workspace handoff, 2026-10-30

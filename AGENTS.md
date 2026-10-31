@@ -1,5 +1,24 @@
 # Project agent instructions
 
+## 当前执行：FLUX-only 25步入口已实现；CPU通过，GPU未启动 — 2026-10-31
+
+用户已要求execute/start。读 `reports/foundir_flux_native_energy_v1_readiness_2026-10-31.md`。
+本节只更新实施状态，不取消下方FLUX-only禁令。新代码用FLUX内部rank16 LoRA和
+线性energy读出，完整三次latent更新及实际MSE/LPIPS训练；没有外挂CNN/Restormer。
+9项CPU小尺寸真实FLUX块/二阶梯度/Adam续训测试通过，未验证真实4B CUDA显存/速度。
+主会话没有GPU且新根未挂载，不能声称已启动；先同步GitHub文件，再由GPU节点启动。
+
+唯一新入口：`smoke/start_foundir_flux_native_energy_v1_tmux.sh qualification_v1 8 fresh`。
+支持单机4/8张H100或H200；全局batch8，4卡累积2/8卡累积1，512图、完整3次更新。
+先25步工程验收；不自动200步/正式训练。GPU阶段上限2小时（含缓存，不含CPU核对），
+不是预计耗时。每完整step持久保存Adam/参数/RNG/采样，严格同身份resume。
+新权重只含FLUX energy LoRA/条件投影/读出；不继承CNN权重或CNN反例。
+来源沿用24个已审计训练来源；8个probe是训练来源，不能称泛化。旧GT/历史基线诊断
+不重跑，旧CNN/V3启动命令仍禁用。真实GPU错误必须如实记录，不暗换骨干/截断反传。
+
+源码/启动配置已准备不等于GPU资格通过；TMUX_CREATED不等于训练开始。
+目的地CPU代理只同步/回报；用户有GPU访问时执行新入口。不要直接跑旧CNN命令。
+
 ## 唯一当前任务：FLUX-only energy 重做；禁止 CNN / Restormer — 2026-10-31
 
 本节覆盖下方所有历史 CURRENT/ACTIVE/下一步200步。用户明确要求只用 FLUX，
@@ -23,8 +42,8 @@ Restormer/residual Restormer/pixel refiner，也禁止用它们蒸馏本次模�
 保持原FLUX基线/双uint8/alpha=.30，目标仍是energy独立+.30dB与LPIPS相对
 下降9.928107050377874%，必须最终在独立来源验证。禁止保护测试像素泄漏。
 
-当前状态：仅修订PPT/方案/交接，FLUX-only训练器尚未实现、GPU尚未启动。
-下一步是实施新接口与完整三步二阶梯度/显存/resume检查，不是运行旧V3命令。
+实施状态以顶部同日更新为准：FLUX-only训练器已实现、CPU检查通过，GPU尚未启动。
+下一步是新25步入口的真实4B二阶梯度/显存/resume验收，不是运行旧V3命令。
 先定向工程资格，再独立fresh拟合；通过才扩合规训练数据和独立来源评估。
 更大FLUX不保证成功，也不能说旧CNN已接近联合过关（LPIPS仅降2.49%）。
 不再重复历史基线差1灰度级诊断/GT搜索；保留旧证据，不删除历史代码和结果。
