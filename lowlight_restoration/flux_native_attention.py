@@ -14,15 +14,15 @@ from torch.utils.checkpoint import checkpoint
 
 def _native_vjp(q, k, v, grad_out, function, create_graph):
     with torch.enable_grad(), sdpa_kernel(SDPBackend.MATH):
-        # Constants need temporary grad-enabled inputs for autograd.grad. A
-        # live differentiable input is passed through unchanged, never detached.
-        inputs = tuple(x if x.requires_grad else x.detach().requires_grad_(True) for x in (q,k,v))
+        # Q/K/V share projection/view ancestors. autograd.grad targeting those
+        # non-leaf edges can visit the caller's upstream graph while computing
+        # this local VJP. Give each input a distinct identity edge. clone keeps
+        # the higher-order connection (unlike detach), and its backward is the
+        # identity. Constants alone get temporary grad-enabled leaves.
+        inputs = tuple(x.clone() if x.requires_grad else x.detach().clone().requires_grad_(True)
+                       for x in (q,k,v))
         output = function(*inputs)
-        # Q/K/V may share view ancestors in the caller's live graph. Inner
-        # autograd must not release those buffers before outer backward uses
-        # them. The temporary native output graph dies on return unless needed
-        # by the requested higher-order graph.
-        return torch.autograd.grad(output, inputs, grad_out, create_graph=create_graph, retain_graph=True)
+        return torch.autograd.grad(output, inputs, grad_out, create_graph=create_graph)
 
 
 class _AttentionWithCheckpointedVJP(torch.autograd.Function):

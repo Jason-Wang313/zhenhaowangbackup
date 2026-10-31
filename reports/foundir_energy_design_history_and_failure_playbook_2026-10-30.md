@@ -1,5 +1,16 @@
 # PPT energy → FLUX 尾段引导：设计演变、证据与排错决策记录
 
+## 当前：一阶数值已匹配，隔离局部VJP输入边界待GPU — 2026-10-31
+
+memory_native_vjp_v4真实4B分数与一阶梯度差均为0，但首个高阶更新仍OOM，
+峰值136.81GiB，50秒后status1。完整记录memory_v4_terminal报告；无训练步。
+CPU已复现内层求导沿共享Q/K/V祖先额外回溯。现为局部VJP各输入加可微clone，
+不detach活跃梯度，不改原attention运算/配方；外层高阶梯度连接保留，26项CPU测试通过。
+新短诊断：`bash smoke/run_foundir_flux_native_energy_memory_v1_gpu.sh memory_isolated_vjp_v5`，
+单个空闲H200，CUDA_VISIBLE_DEVICES=0，原1%数值门槛、完整三步与1200秒cap不变。
+无optimizer更新、无自动资格/长训，旧缓存/失败/step0全保留。真实CUDA容量仍待测。
+详见reports/foundir_flux_native_energy_isolated_vjp_readiness_2026-10-31.md。
+
 ## 当前：保留原attention与autograd，仅逐attention重计算导数 — 2026-10-31
 
 memory_heads_v3的真实4B梯度差8.1279%，仍未过1%，39秒后停止；完整报告315a09e。

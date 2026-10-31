@@ -3,7 +3,7 @@ import unittest
 import torch
 from torch.nn import functional as F
 from torch.nn.attention import SDPBackend, sdpa_kernel
-from lowlight_restoration.flux_native_attention import checkpointed_attention
+from lowlight_restoration.flux_native_attention import checkpointed_attention, _native_vjp
 
 
 class AttentionTests(unittest.TestCase):
@@ -72,6 +72,22 @@ class AttentionTests(unittest.TestCase):
             error=float((a.float()-b.float()).norm()/a.float().norm().clamp_min(1e-12))
             print('BF16_H24_D128_RELATIVE_L2',i,error,flush=True)
             self.assertLess(error,.01)
+
+    def test_local_vjp_does_not_visit_shared_projection_ancestors(self):
+        for higher_order in (False,True):
+            base=torch.randn(1,2,7,12,dtype=torch.float64,requires_grad=True)
+            qraw,kraw,v=base.chunk(3,dim=-1)
+            visited=[]
+            qraw.register_hook(lambda g:visited.append('q'))
+            kraw.register_hook(lambda g:visited.append('k'))
+            q,k=qraw.sin(),kraw.cos()
+            gradients=_native_vjp(q,k,v,torch.ones_like(q),F.scaled_dot_product_attention,higher_order)
+            self.assertEqual(visited,[], 'local VJP escaped into the caller graph')
+            if higher_order:
+                sum(g.square().sum() for g in gradients).backward()
+                self.assertTrue(visited, 'identity clones must retain higher-order upstream gradients')
+                self.assertTrue(bool(base.grad.isfinite().all()))
+                self.assertGreater(float(base.grad.abs().sum()),0.)
 
     def test_empty_or_invalid_rejected(self):
         with self.assertRaises(ValueError):

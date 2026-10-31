@@ -1,5 +1,8 @@
 # 原生attention VJP逐层重计算：CPU通过，GPU待测
 
+GPU更新：v4数值差均0，但首个高阶更新OOM。最新输入边界修复与命令见
+foundir_flux_native_energy_isolated_vjp_readiness_2026-10-31.md。
+
 2026-10-31，继续用户已授权的内存修复。当前仅新的单卡容量诊断，不是训练启动。
 
 ## 已测失败与边界

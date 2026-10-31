@@ -204,7 +204,7 @@ class FluxNativeEnergy(nn.Module):
         return dict(backbone='pretrained_FLUX.2_Klein_base_4B',
                     energy_adapters=sum(isinstance(m, EnergyAdapterLinear) for m in self.modules()),
                     trainable_parameters=sum(trainable.values()), trainable=trainable,
-                    energy_attention='native_full_math_attention_checkpointed_autograd_vjp',
+                    energy_attention='native_full_math_attention_isolated_autograd_vjp',
                     external_image_backbone=False, cnn_energy=False, restormer=False)
 
     def trainable_state(self):
