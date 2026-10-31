@@ -1,4 +1,4 @@
-"""Frozen data/initialization contract for the right-diagram MoE qualification."""
+"""Frozen data/initialization contracts for right-diagram MoE runs."""
 from __future__ import annotations
 
 import csv
@@ -16,6 +16,7 @@ from lowlight_restoration.rain_blur_moe_data import load_protocol, digest
 from lowlight_restoration.rain_full_data import RainSourceSchedule, crop_pair
 
 CONFIG = 'configs/foundir_token_residual_moe_v1.json'
+FORMAL_CONFIG = 'configs/foundir_token_residual_moe_formal_v1.json'
 TASKS = ('rain', 'blur')
 
 
@@ -57,18 +58,75 @@ def write_once(path, payload):
         temp.unlink()
 
 
-def contract(root, config_path=None):
+def load_run_config(root, config_path=None):
     root = Path(root)
     # Optional separate config path is only for read-only CPU migration audits.
     cfg = json.loads(Path(config_path or root / CONFIG).read_text())
+    if cfg.get('mode') == 'formal':
+        required = {'mode', 'qualification_config', 'qualification_config_sha256',
+            'qualification_report', 'qualification_report_sha256', 'steps', 'save_every',
+            'milestones', 'full_evaluation_steps', 'output_root', 'wall_hours_estimate',
+            'allocated_gpu_hours_estimate', 'hard_wall_seconds_per_launch',
+            'minimum_free_gib', 'automatic_extension'}
+        if set(cfg) != required or cfg['steps'] != 1000 or cfg['save_every'] != 100:
+            raise RuntimeError('formal profile changed; no hidden hyperparameter overrides')
+        if cfg['milestones'] != [250, 500, 1000] or cfg['full_evaluation_steps'] != [0, 1000] or cfg['automatic_extension']:
+            raise RuntimeError('formal evaluation/extension contract changed')
+        qualification = bound_json(root, cfg['qualification_config'], cfg['qualification_config_sha256'])
+        cfg = {**qualification, **cfg}
+    else:
+        cfg = {**cfg, 'mode': 'qualification', 'milestones': [25], 'full_evaluation_steps': []}
+    steps = 1000 if cfg['mode'] == 'formal' else 25
     if (cfg['steps'], cfg['global_batch'], cfg['world_size'], cfg['nodes'], cfg['gpus_per_node'],
-            cfg['feature_dim'], cfg['sampling_start']) != (25, 32, 8, 4, 2, 3584, 352000):
-        raise RuntimeError('qualification/topology changed')
+            cfg['feature_dim'], cfg['sampling_start']) != (steps, 32, 8, 4, 2, 3584, 352000):
+        raise RuntimeError('schedule/topology changed')
     if (cfg['crop'] != 512 or cfg['vlm_scale'] != 1.0 or not cfg['vlm_output_zero_init']
             or cfg['experts_per_block'] != 2 or cfg['ffn_blocks'] != list(range(5))
             or cfg['automatic_formal'] or cfg['qualification_may_seed_formal']
             or cfg['restore_old_optimizer'] or not cfg['fresh_optimizer']):
         raise RuntimeError('right-diagram initialization/scope changed')
+    return cfg
+
+
+def verify_qualification(root, cfg, *, artifacts=True, sources=True):
+    """Authorize formal from audited qualification, NEVER load its model state.
+
+    The only allowed changes from qualified runtime code are orchestration in
+    this helper/trainer. The model, optimizer-state code, loss and FLUX/Qwen
+    implementation must still match the actual GPU qualification's hashes.
+    """
+    if cfg['mode'] != 'formal':
+        return None
+    report = bound_json(root, cfg['qualification_report'], cfg['qualification_report_sha256'])
+    result = report['full_result']
+    if not (report['status'] == 'qualification_terminal_engineering_pass'
+            and result['status'] == 'engineering_pass' and result['steps'] == 25
+            and result['initial_parity_max_abs'] <= 1e-5
+            and len(result['observations']) == 8 and all(r['changed'] for r in result['observations'])
+            and result['binding']['config_sha256'] == cfg['qualification_config_sha256']
+            and report['final_checkpoint_sha_verified'] and not result['protected_pixels_accessed']
+            and report['topology']['nodes'] == 4 and report['topology']['world_size'] == 8):
+        raise RuntimeError('a complete matching 4x2 engineering qualification is required')
+    if sources:
+        allowed_changes = {'smoke/token_residual_moe_v1.py', 'smoke/train_foundir_token_residual_moe_v1.py'}
+        for name, expected in result['binding']['source_sha256'].items():
+            if name not in allowed_changes and sha(root / name) != expected:
+                raise RuntimeError('qualified scientific implementation changed: ' + name)
+    if artifacts:
+        # Validate small result/receipt evidence. Large qualification tensors were
+        # independently hashed in the audited report and are NOT initialization.
+        for name, expected in report['artifact_hashes'].items():
+            if name.endswith('/result.json') or name.endswith('/step_000025.resume.json'):
+                if sha(root / name) != expected['sha256']:
+                    raise RuntimeError('qualification result/receipt changed: ' + name)
+    return {'report_sha256': cfg['qualification_report_sha256'],
+            'qualified_source_commit': report['source_commit'],
+            'qualified_data': result['binding']['data']}
+
+
+def contract(root, config_path=None):
+    root = Path(root)
+    cfg = load_run_config(root, config_path)
     parent = bound_json(root, cfg['parent_config'], cfg['parent_config_sha256'])
     pc = bound_json(root, parent['parent_config'], parent['parent_config_sha256'])
     base = bound_json(root, cfg['base_config'], cfg['base_config_sha256'])
@@ -120,6 +178,8 @@ class Samples:
         self.schedules = {task: RainSourceSchedule(training[task], cfg['seed'] + i)
                           for i, task in enumerate(TASKS)}
         self.development = {'rain': development['rain'], 'blur_preview': development['blur_preview']}
+        if cfg.get('mode') == 'formal':
+            self.development['blur_full'] = development['blur_full']
         self.verified = {}
 
     def train_spec(self, offset):
@@ -136,13 +196,22 @@ class Samples:
 
     def all_specs(self):
         specs = [self.train_spec(i) for i in range(self.cfg['steps'] * 32)]
-        for split, rows in self.development.items():
+        splits = ('rain', 'blur_full') if self.cfg.get('mode') == 'formal' else ('rain', 'blur_preview')
+        for split in splits:
+            rows = self.development[split]
             for row in rows:
                 if row['split'] != 'validation':
                     raise RuntimeError('only frozen development rows may be evaluated')
                 specs.append({'key': f'{split}_{row["record_id"]}', 'kind': 'validation',
                               'split': split, 'row': row})
         return specs
+
+    def evaluation_specs(self, specs, *, full=False):
+        preview_ids = {r['record_id'] for r in self.development['blur_preview']}
+        # Retain canonical spec and key for token-cache binding. A preview row
+        # is a view of the full row, not a second, inconsistently bound feature.
+        return [s for s in specs if s['kind'] == 'validation'
+                and (full or s['split'] == 'rain' or s['row']['record_id'] in preview_ids)]
 
     def pair(self, spec):
         row = spec['row']
@@ -199,7 +268,7 @@ def save_feature(path, feature, binding):
         temp.unlink()
 
 
-def source_hashes(root):
+def source_hashes(root, config_relative=CONFIG):
     # Bind scientific implementation, feature extraction and native FLUX code.
     paths = [CONFIG, 'lowlight_restoration/token_residual_moe.py',
         'smoke/token_residual_moe_v1.py', 'smoke/run_foundir_token_residual_moe_v1_4x2.sh',
@@ -215,4 +284,6 @@ def source_hashes(root):
         'third_party/flux2/src/flux2/model.py',
         'third_party/flux2/src/flux2/autoencoder.py', 'third_party/flux2/src/flux2/sampling.py',
         'third_party/flux2/src/flux2/util.py']
+    if config_relative != CONFIG:
+        paths.extend([config_relative, 'smoke/run_foundir_token_residual_moe_formal_v1_4x2.sh'])
     return {p: sha(root / p) for p in paths}

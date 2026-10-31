@@ -1,5 +1,29 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前执行：已批准右图③ MoE 正式训练1000步 — 2026-10-31
+
+本节覆盖下面“未来正式规模需另定／未获正式批准”的旧说明。用户已授权正式训练；
+25步资格已结束，不重跑，不从资格权重继续。**本次只实现、核验、推送正式入口，
+本会话尚未启动GPU。**目的地代理同步后做CPU preflight，再给用户四节点启动命令。
+
+正式配置：`configs/foundir_token_residual_moe_formal_v1.json`；
+入口：`smoke/run_foundir_token_residual_moe_formal_v1_4x2.sh`。
+只做右图③，4节点×每节点2张H100/H200，共8卡；节点内同型号，跨节点允许混用。
+共享运行根仍是
+`/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang`。
+从原image-only step11000权重初始化，VLM末层归零、fresh Adam，
+保留原数据、batch32、损失和学习率；不加CNN/Restormer，不扩展其他对照。
+step0与1000评估完整Rain100＋Blur2595，250/500评估Rain100＋固定Blur preview100。
+每100步及250步保存权重、Adam、八rank RNG；中断用新run ID和同模式完整收据恢复，
+保留原step0基线，最终步支持只补评估，不自动延长训练。
+
+估计2–3小时/16–24 GPU-hours（不是保证；资格纯训练中位5.946秒/步）。
+正式需新提取34,695份特征；每次启动4小时硬上限，至少160GiB新空间，禁止删旧资产腾空间。
+资格只证明工程可运行，未证明指标改善；正式即使过绝对门槛也不等于已证明VLM贡献。
+详细核验、同步和恢复说明：
+`reports/foundir_token_residual_moe_formal_v1_readiness_2026-10-31.md`。
+另一位代理的FLUX energy显存工作保持独立，不修改/停止其代码或任务。
+
 ## 当前：右图token residual MoE四节点25步资格结束 — 2026-10-31
 
 qualification_4x2_v1已于四节点8×H200正常结束，25/25步、四节点launcher status0、

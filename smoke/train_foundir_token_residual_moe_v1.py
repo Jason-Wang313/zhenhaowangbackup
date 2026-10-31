@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Only right-diagram VLM residual routing; four nodes x two GPUs, qualification."""
+"""Only right-diagram VLM residual routing; four nodes x two GPUs."""
 from __future__ import annotations
 
 import argparse
@@ -25,7 +25,7 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from safetensors.torch import load_file
 
-from smoke.token_residual_moe_v1 import (CONFIG, TASKS, Samples, contract, verify_assets,
+from smoke.token_residual_moe_v1 import (CONFIG, TASKS, Samples, contract, verify_assets, verify_qualification,
     source_hashes, sha, digest, write_once, feature_binding, read_feature, save_feature)
 from lowlight_restoration.token_residual_moe import attach_token_router, token_conditioning, batch_slot
 from lowlight_restoration.joint_vlm_moe import install_joint_moe, enable_block_checkpointing, restoration_loss
@@ -156,14 +156,14 @@ def parameter_groups(model, parent):
             for key, values in groups.items()]
 
 
-def resume_qualification(model, optimizer, path, binding, rank):
+def resume_training(model, optimizer, path, binding, rank, *, mode, total_steps):
     receipt = json.loads(path.read_text())
-    if not (receipt['mode'] == 'qualification' and receipt['arm'] == 'token_residual'
+    if not (receipt['mode'] == mode and receipt['arm'] == 'token_residual'
             and receipt['config_sha256'] == binding['config_sha256']
             and receipt['source_sha256'] == binding['source_sha256']
-            and receipt['world_size'] == 8 and 0 < receipt['step'] < 25
+            and receipt['world_size'] == 8 and 0 < receipt['step'] <= total_steps
             and receipt['next_sample_position'] == receipt['step'] * 32):
-        raise RuntimeError('only matching incomplete 4x2 qualification may resume')
+        raise RuntimeError('only matching same-mode 4x2 state may resume; qualification cannot seed formal')
     launch = json.loads((path.parent / 'launch.json').read_text())
     if launch['binding'] != binding:
         raise RuntimeError('resume data/cache/initialization mismatch')
@@ -186,16 +186,26 @@ def resume_qualification(model, optimizer, path, binding, rank):
     return receipt['step']
 
 
+def resume_qualification(model, optimizer, path, binding, rank):
+    return resume_training(model, optimizer, path, binding, rank, mode='qualification', total_steps=25)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--phase', choices=('features', 'train', 'preflight'), required=True)
     parser.add_argument('--run-id', default='qualification_4x2_v1')
     parser.add_argument('--resume', type=Path)
+    parser.add_argument('--config', type=Path, default=ROOT / CONFIG)
     args = parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9_-]+', args.run_id):
         raise ValueError('unsafe run ID')
-    cfg, parent, base, qwen, qcfg, training, development, data = contract(ROOT)
-    config_sha, sources = sha(ROOT / CONFIG), source_hashes(ROOT)
+    cfg, parent, base, qwen, qcfg, training, development, data = contract(ROOT, args.config)
+    config_relative = str(args.config.resolve().relative_to(ROOT))
+    config_sha, sources = sha(args.config), source_hashes(ROOT, config_relative)
+    mode = cfg['mode']
+    qualification = verify_qualification(ROOT, cfg)
+    if qualification and qualification['qualified_data'] != data:
+        raise RuntimeError('formal training pool changed from qualified source-disjoint protocol')
     samples = Samples(ROOT, cfg, training, development)
     specs = samples.all_specs()
     binding = {'config_sha256': config_sha, 'source_sha256': sources,
@@ -204,8 +214,13 @@ def main():
     output = ROOT / cfg['output_root'] / args.run_id
     if args.phase == 'preflight':
         verify_assets(ROOT, cfg, base, qwen)
+        if mode == 'formal':
+            import shutil
+            if shutil.disk_usage(ROOT).free < cfg['minimum_free_gib'] * 1024**3:
+                raise RuntimeError('formal requires 160GiB free for new checkpoints; do not delete old assets')
         print(json.dumps({'status': 'cpu_preflight_pass', 'binding': binding,
-            'sample_presentations': 800, 'validation_records': 200,
+            'sample_presentations': cfg['steps'] * 32,
+            'validation_records': sum(s['kind'] == 'validation' for s in specs), 'mode': mode,
             'GPU_started': False, 'protected_pixels_accessed': False}), flush=True)
         return
     os.environ.update(HF_HUB_OFFLINE='1', TRANSFORMERS_OFFLINE='1',
@@ -219,6 +234,12 @@ def main():
     try:
         rank0(lambda: verify_assets(ROOT, cfg, base, qwen))
         if args.phase == 'features':
+            if mode == 'formal' and not args.resume:
+                def check_space():
+                    import shutil
+                    if shutil.disk_usage(ROOT).free < cfg['minimum_free_gib'] * 1024**3:
+                        raise RuntimeError('formal requires 160GiB free; no automatic deletion')
+                rank0(check_space)
             extract(samples, specs, cache_dir, config_sha, qwen, qcfg, rank, device, binding)
             return
         cache_receipt = json.loads((cache_dir / 'receipt.json').read_text())
@@ -239,7 +260,13 @@ def main():
             output.mkdir(parents=True, exist_ok=False)
             write_once(output / 'launch.json', {'binding': binding, 'hardware': hardware,
                 'initialization': 'image_only_step11000_weights_fresh_Adam',
-                'resume': str(args.resume) if args.resume else None, 'mode': 'qualification'})
+                'resume': str(args.resume) if args.resume else None, 'mode': mode,
+                'qualification': qualification})
+            if mode == 'formal' and args.resume:
+                baseline = json.loads((args.resume.parent / 'baseline.json').read_text())
+                if sha(ROOT / baseline['path']) != baseline['sha256']:
+                    raise RuntimeError('original same-environment baseline changed')
+                write_once(output / 'baseline.json', baseline)
         rank0(prepare)
         random.seed(cfg['seed']); np.random.seed(cfg['seed']); torch.manual_seed(cfg['seed'])
         torch.cuda.manual_seed_all(cfg['seed'])
@@ -275,13 +302,14 @@ def main():
         groups = parameter_groups(model, parent)
         optimizer = torch.optim.AdamW(groups, weight_decay=0, fused=True)
         metric = LearnedPerceptualImagePatchSimilarity(net_type='alex', normalize=True).to(device).eval().requires_grad_(False)
-        start_step = resume_qualification(model, optimizer, args.resume, binding, rank) if args.resume else 0
+        initial_vlm = {n: p.detach().cpu().clone() for n, p in model.named_parameters() if '.vlm_projector.' in n}
+        start_step = resume_training(model, optimizer, args.resume, binding, rank,
+            mode=mode, total_steps=cfg['steps']) if args.resume else 0
         restored_rng = rng_state()
         wrapped = DDP(model, device_ids=[local], broadcast_buffers=False, gradient_as_bucket_view=True)
         params = [p for g in groups for p in g['params']]
-        initial_vlm = {n: p.detach().cpu().clone() for n, p in model.named_parameters() if '.vlm_projector.' in n}
-        dev_specs = [s for s in specs if s['kind'] == 'validation']
-        def evaluate(step):
+        def evaluate(step, *, full=False):
+            dev_specs = samples.evaluation_specs(specs, full=full)
             model.eval(); rows = []
             for spec in dev_specs[rank::8]:
                 lq, gt = [v[None].to(device) for v in samples.pair(spec)]
@@ -293,22 +321,35 @@ def main():
                     lpips = float(metric((quantized + 1) * .5, (gt + 1) * .5))
                     if not math.isfinite(psnr + lpips):
                         raise RuntimeError('nonfinite evaluation')
-                    rows.append({'record_id': spec['row']['record_id'], 'split': spec['split'],
+                    report_split = 'blur_preview' if spec['split'] == 'blur_full' and not full else spec['split']
+                    rows.append({'record_id': spec['row']['record_id'], 'source_group': spec['row']['source_group'],
+                        'split': report_split,
                         'psnr': psnr, 'lpips': lpips,
                         'weights': {k: m.last_weights[0].cpu().tolist() for k, m in modules.items()}})
             gathered = [None] * 8
             dist.all_gather_object(gathered, rows)
             def save_metrics():
                 all_rows = sorted([r for part in gathered for r in part], key=lambda r: r['record_id'])
-                if len(all_rows) != 200 or len({r['record_id'] for r in all_rows}) != 200:
+                if (len(all_rows) != len(dev_specs)
+                        or {r['record_id'] for r in all_rows} != {s['row']['record_id'] for s in dev_specs}):
                     raise RuntimeError('evaluation record mismatch')
+                evaluated_splits = sorted({r['split'] for r in all_rows})
                 summary = {split: {m: float(np.mean([r[m] for r in all_rows if r['split'] == split]))
-                          for m in ('psnr', 'lpips')} for split in samples.development}
+                          for m in ('psnr', 'lpips')} for split in evaluated_splits}
+                if full and mode == 'formal':
+                    preview_ids = {r['record_id'] for r in samples.development['blur_preview']}
+                    summary['blur_preview'] = {m: float(np.mean([r[m] for r in all_rows
+                        if r['record_id'] in preview_ids])) for m in ('psnr', 'lpips')}
                 write_once(output / f'metrics_{step:06d}.json', {'step': step, 'rows': all_rows,
-                    'summary': summary, 'GT_used_for_routing': False, 'full_Blur_gate': False})
+                    'summary': summary, 'GT_used_for_routing': False, 'full_Blur_gate': full and mode == 'formal'})
                 print('TOKEN_MOE_METRICS ' + json.dumps({'step': step, **summary}), flush=True)
             rank0(save_metrics)
-        evaluate(start_step)
+        evaluate(start_step, full=start_step in cfg['full_evaluation_steps'])
+        if mode == 'formal' and not args.resume:
+            def bind_baseline():
+                path = output / 'metrics_000000.json'
+                write_once(output / 'baseline.json', {'path': str(path.relative_to(ROOT)), 'sha256': sha(path)})
+            rank0(bind_baseline)
         restore_rng(restored_rng)
         times, checkpoints = [], []
         for step in range(start_step, cfg['steps']):
@@ -348,19 +389,22 @@ def main():
             dist.all_reduce(values); values /= 8
             completed = step + 1
             if rank == 0:
-                print('TOKEN_MOE_TRAIN ' + json.dumps({'step': completed, 'steps': 25,
+                print('TOKEN_MOE_TRAIN ' + json.dumps({'step': completed, 'steps': cfg['steps'], 'mode': mode,
                     'loss': float(values[0]), 'mean_rank_max_vlm_adjustment': float(values[1]),
                     'vlm_grad_norm_after_clip': float(values[2]), 'seconds': times[-1],
                     'peak_memory_gib': torch.cuda.max_memory_allocated() / 1024**3}), flush=True)
-            if completed % cfg['save_every'] == 0:
+            if completed % cfg['save_every'] == 0 or completed in cfg['milestones']:
                 states = [None] * 8
                 dist.all_gather_object(states, rng_state())
                 def save():
                     checkpoints.append(save_state(model, optimizer, output, step=completed,
-                        mode='qualification', arm='token_residual', config_sha=config_sha,
+                        mode=mode, arm='token_residual', config_sha=config_sha,
                         sources=sources, rank_rng=states))
                 rank0(save)
-        evaluate(cfg['steps'])
+            if completed in cfg['milestones']:
+                before_eval = rng_state()
+                evaluate(completed, full=completed in cfg['full_evaluation_steps'])
+                restore_rng(before_eval)
         changed = any(not torch.equal(p.detach().cpu(), initial_vlm[n])
                       for n, p in model.named_parameters() if n in initial_vlm)
         observations = [None] * 8
@@ -370,14 +414,27 @@ def main():
             if not all(v['changed'] for v in observations):
                 raise RuntimeError('VLM score branch did not update')
             hours = (time.monotonic() - started) / 3600
-            write_once(output / 'result.json', {'status': 'engineering_pass', 'binding': binding,
-                'steps': 25, 'start_step': start_step, 'initial_parity_max_abs': float(error),
+            scientific = {'absolute_quality_gate_pass': None, 'gain_vs_start': None}
+            if mode == 'formal':
+                reference = json.loads((output / 'baseline.json').read_text())
+                if sha(ROOT / reference['path']) != reference['sha256']:
+                    raise RuntimeError('initial full baseline identity changed')
+                baseline = json.loads((ROOT / reference['path']).read_text())['summary']
+                final = json.loads((output / f'metrics_{cfg["steps"]:06d}.json').read_text())['summary']
+                scientific['absolute_quality_gate_pass'] = (final['rain']['psnr'] >= 34.2
+                    and final['rain']['lpips'] <= .08 and final['blur_full']['psnr'] >= 25.9
+                    and final['blur_full']['lpips'] <= .18)
+                scientific['gain_vs_start'] = {split: {m: final[split][m]-baseline[split][m]
+                    for m in ('psnr', 'lpips')} for split in ('rain', 'blur_full')}
+            write_once(output / 'result.json', {'status': 'complete' if mode == 'formal' else 'engineering_pass',
+                'engineering_pass': True, 'mode': mode, 'binding': binding, **scientific,
+                'steps': cfg['steps'], 'start_step': start_step, 'initial_parity_max_abs': float(error),
                 'checkpoints': checkpoints, 'observations': observations,
-                'median_training_seconds': float(np.median(times)), 'training_wall_hours': hours,
+                'median_training_seconds': float(np.median(times)) if times else None, 'training_wall_hours': hours,
                 'training_allocated_gpu_hours': hours * 8,
                 'scientific_gate_proven': False, 'VLM_advantage_proven': False,
                 'automatic_formal': False, 'protected_pixels_accessed': False})
-            print('TOKEN_MOE_QUALIFICATION_PASS', flush=True)
+            print('TOKEN_MOE_FORMAL_COMPLETE' if mode == 'formal' else 'TOKEN_MOE_QUALIFICATION_PASS', flush=True)
         rank0(finish)
     finally:
         dist.destroy_process_group()

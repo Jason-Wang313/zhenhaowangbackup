@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Eight-process CPU/Gloo batch32, exact state restore and numerical continuation."""
 import copy
+import argparse
 from contextlib import nullcontext
 from pathlib import Path
 import sys
@@ -18,7 +19,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 from test_token_residual_moe_v1 import model
 from lowlight_restoration.token_residual_moe import batch_slot, token_conditioning
 from lowlight_restoration.joint_moe_state import save_state, rng_state
-from smoke.train_foundir_token_residual_moe_v1 import resume_qualification
+from smoke.train_foundir_token_residual_moe_v1 import resume_training
 from smoke.token_residual_moe_v1 import write_once
 
 
@@ -32,7 +33,7 @@ def step(net, wrapped, optimizer, x, f, rank):
     optimizer.step()
 
 
-def worker(rank, directory):
+def worker(rank, directory, mode):
     torch.set_num_threads(1)
     path = Path(directory)
     dist.init_process_group('gloo', init_method=(path / 'rendezvous').as_uri(), rank=rank, world_size=8)
@@ -50,14 +51,15 @@ def worker(rank, directory):
         binding = {'config_sha256': 'toy', 'source_sha256': {'toy': 'test'}, 'data': 'test'}
         if rank == 0:
             write_once(path / 'launch.json', {'binding': binding})
-            save_state(net, optimizer, path, step=1, mode='qualification', arm='token_residual',
+            save_state(net, optimizer, path, step=1, mode=mode, arm='token_residual',
                        config_sha='toy', sources=binding['source_sha256'], rank_rng=states)
         dist.barrier()
         expected_rng_draw = torch.rand(9)
         step(net, wrapped, optimizer, x, f, rank)
         resumed = model()
         opt = torch.optim.AdamW(resumed.parameters(), lr=1e-3, weight_decay=0)
-        assert resume_qualification(resumed, opt, path / 'step_000001.resume.json', binding, rank) == 1
+        assert resume_training(resumed, opt, path / 'step_000001.resume.json', binding, rank,
+                               mode=mode, total_steps=1000 if mode == 'formal' else 25) == 1
         for value, expected in zip(resumed.parameters(), first_weights):
             torch.testing.assert_close(value, expected, atol=0, rtol=0)
         for actual, expected in zip(opt.state.values(), first_states):
@@ -84,12 +86,15 @@ def worker(rank, directory):
             for a, b in zip(net.parameters(), serial.parameters()):
                 torch.testing.assert_close(a, b, atol=2e-6, rtol=2e-5)
             difference = max(float((a-b).abs().max()) for a,b in zip(net.parameters(), resumed.parameters()))
-            print(f'TOKEN_ROUTER_CPU_8RANK_DDP_BATCH32_STATE_RESTORE_CONTINUATION_PASS max_abs={difference}', flush=True)
+            print(f'TOKEN_ROUTER_CPU_8RANK_DDP_BATCH32_STATE_RESTORE_CONTINUATION_PASS mode={mode} max_abs={difference}', flush=True)
         dist.barrier()
     finally:
         dist.destroy_process_group()
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--mode', choices=('qualification', 'formal'), default='qualification')
+    args = parser.parse_args()
     with tempfile.TemporaryDirectory(prefix='token-router-gloo-') as directory:
-        mp.spawn(worker, args=(directory,), nprocs=8, join=True)
+        mp.spawn(worker, args=(directory, args.mode), nprocs=8, join=True)

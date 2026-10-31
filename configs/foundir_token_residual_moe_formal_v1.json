@@ -1,0 +1,17 @@
+{
+  "mode": "formal",
+  "qualification_config": "configs/foundir_token_residual_moe_v1.json",
+  "qualification_config_sha256": "33eb1672b92e7ad03dec9f148cc656d39012d9e6c8b1aa5b5ef262abefa39dc2",
+  "qualification_report": "reports/foundir_token_residual_moe_v1_qualification_4x2_terminal_2026-10-31.json",
+  "qualification_report_sha256": "59c78faa3d5201f1718bb37b5ea6fba49945a8bc59d071f9bb00bf56c2285638",
+  "steps": 1000,
+  "save_every": 100,
+  "milestones": [250, 500, 1000],
+  "full_evaluation_steps": [0, 1000],
+  "output_root": "checkpoints/foundir_token_residual_moe_formal_v1",
+  "wall_hours_estimate": [2.0, 3.0],
+  "allocated_gpu_hours_estimate": [16.0, 24.0],
+  "hard_wall_seconds_per_launch": 14400,
+  "minimum_free_gib": 160,
+  "automatic_extension": false
+}
