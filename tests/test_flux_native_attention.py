@@ -3,7 +3,7 @@ import unittest
 import torch
 from torch.nn import functional as F
 from torch.nn.attention import SDPBackend, sdpa_kernel
-from lowlight_restoration.flux_native_attention import tiled_attention
+from lowlight_restoration.flux_native_attention import checkpointed_attention
 
 
 class AttentionTests(unittest.TestCase):
@@ -13,26 +13,26 @@ class AttentionTests(unittest.TestCase):
 
     def test_output_and_first_second_derivatives_match(self):
         outputs=[]
-        for tiled in (False,True):
+        for optimized in (False,True):
             args=tuple(x.detach().clone().requires_grad_(True) for x in self.inputs)
             with sdpa_kernel(SDPBackend.MATH):
-                y=tiled_attention(*args,chunk=1) if tiled else F.scaled_dot_product_attention(*args)
+                y=checkpointed_attention(*args,F.scaled_dot_product_attention) if optimized else F.scaled_dot_product_attention(*args)
                 first=torch.autograd.grad(y.sin().sum(),args,create_graph=True)
                 second=torch.autograd.grad(sum(x.square().sum() for x in first),args)
             outputs.append((y,*first,*second))
         for a,b in zip(*outputs):torch.testing.assert_close(a,b,rtol=1e-10,atol=1e-11)
 
     def test_gradcheck_and_gradgradcheck(self):
-        f=lambda *args:tiled_attention(*args,chunk=1)
+        f=lambda *args:checkpointed_attention(*args,F.scaled_dot_product_attention)
         self.assertTrue(torch.autograd.gradcheck(f,self.inputs,fast_mode=True))
         self.assertTrue(torch.autograd.gradgradcheck(f,self.inputs,fast_mode=True))
 
     def test_bfloat16_values_and_gradients(self):
         outputs=[]
-        for tiled in (False,True):
+        for optimized in (False,True):
             args=tuple(x.detach().to(torch.bfloat16).requires_grad_(True) for x in self.inputs)
             with sdpa_kernel(SDPBackend.MATH):
-                y=tiled_attention(*args,chunk=1) if tiled else F.scaled_dot_product_attention(*args)
+                y=checkpointed_attention(*args,F.scaled_dot_product_attention) if optimized else F.scaled_dot_product_attention(*args)
                 first=torch.autograd.grad(y.float().square().sum(),args,create_graph=True)
                 second=torch.autograd.grad(sum(x.float().square().sum() for x in first),args)
             outputs.append((y,*first,*second))
@@ -43,14 +43,14 @@ class AttentionTests(unittest.TestCase):
 
     def test_higher_order_graph_does_not_save_full_attention_matrix(self):
         saved=[]
-        for tiled in (False,True):
+        for optimized in (False,True):
             shapes=[]
             args=tuple(x.detach().clone().requires_grad_(True) for x in self.inputs)
             def pack(t):
                 shapes.append(tuple(t.shape))
                 return t
             with torch.autograd.graph.saved_tensors_hooks(pack,lambda t:t), sdpa_kernel(SDPBackend.MATH):
-                y=tiled_attention(*args,chunk=1) if tiled else F.scaled_dot_product_attention(*args)
+                y=checkpointed_attention(*args,F.scaled_dot_product_attention) if optimized else F.scaled_dot_product_attention(*args)
                 gradients=torch.autograd.grad(y.square().sum(),args,create_graph=True)
             saved.append(shapes)
             sum(g.square().sum() for g in gradients).backward()
@@ -62,10 +62,10 @@ class AttentionTests(unittest.TestCase):
         # cover those dimensions with shorter sequences on CPU.
         data=tuple((torch.randn(1,24,n,128)*2).to(torch.bfloat16) for n in (129,137,137))
         outputs=[]
-        for tiled in (False,True):
+        for optimized in (False,True):
             args=tuple(x.clone().requires_grad_(True) for x in data)
             with sdpa_kernel(SDPBackend.MATH):
-                y=tiled_attention(*args) if tiled else F.scaled_dot_product_attention(*args)
+                y=checkpointed_attention(*args,F.scaled_dot_product_attention) if optimized else F.scaled_dot_product_attention(*args)
                 gradients=torch.autograd.grad(y.float().square().mean(),args)
             outputs.append((y,*gradients))
         for i,(a,b) in enumerate(zip(*outputs)):
@@ -74,8 +74,8 @@ class AttentionTests(unittest.TestCase):
             self.assertLess(error,.01)
 
     def test_empty_or_invalid_rejected(self):
-        with self.assertRaises(ValueError):tiled_attention(*self.inputs,chunk=0)
-        with self.assertRaises(ValueError):tiled_attention(self.inputs[0][...,:0,:],*self.inputs[1:])
+        with self.assertRaises(ValueError):
+            checkpointed_attention(self.inputs[0][...,:0,:],*self.inputs[1:],F.scaled_dot_product_attention)
 
 
 if __name__=='__main__':unittest.main()

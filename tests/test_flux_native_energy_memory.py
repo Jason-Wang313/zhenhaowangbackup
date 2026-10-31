@@ -1,6 +1,5 @@
 """Numerical parity and retained-tensor checks; no CUDA capacity claim."""
 import unittest
-from unittest.mock import patch
 import torch
 from torch.nn.attention import SDPBackend, sdpa_kernel
 from tests import test_flux_native_energy as native_tests
@@ -45,9 +44,7 @@ class MemoryTests(unittest.TestCase):
                     if isinstance(m, EnergyAdapterLinear): m.energy_b.weight.normal_(std=.01)
             parameters = [p for p in self.model.parameters() if p.requires_grad]
             optimizer = torch.optim.AdamW(parameters, lr=1e-4)
-            from lowlight_restoration.flux_native_attention import tiled_attention
-            tiled_small = lambda q,k,v: tiled_attention(q,k,v,chunk=1)
-            with patch('lowlight_restoration.flux_native_attention.tiled_attention', new=tiled_small), energy_attention_mode(recompute), sdpa_kernel(SDPBackend.MATH):
+            with energy_attention_mode(recompute), sdpa_kernel(SDPBackend.MATH):
                 loss, states, scores = self.rendered_loss(recompute)
                 loss.backward()
             gradients = {n:p.grad.clone() for n,p in self.model.named_parameters() if p.requires_grad}

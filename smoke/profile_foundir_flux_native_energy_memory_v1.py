@@ -53,7 +53,7 @@ def run(run_id, cache_run):
         gpu_name=props.name,gpu_uuid=str(props.uuid),total_gib=total/1024**3,
         torch=torch.__version__,cuda=torch.version.cuda,python=sys.version,
         cache_run=cache_run,stages=rows,recipe_changed=False,
-        numerical_implementation='full_softmax_head_tiles_1_checkpointed_vjp',
+        numerical_implementation='native_full_math_attention_checkpointed_autograd_vjp',
         numerical_settings=dict(float32_matmul_precision=torch.get_float32_matmul_precision(),
             allow_tf32=torch.backends.cuda.matmul.allow_tf32,
             math_sdp_low_precision_reduction=torch.backends.cuda.fp16_bf16_reduction_math_sdp_allowed(),
@@ -97,13 +97,13 @@ def run(run_id, cache_run):
         # Same real 4B/BF16 state: compare first derivatives without constructing
         # the old large higher-order graph. This is numerical validation only.
         parity=[]
-        for tiled in (False,True):
+        for optimized in (False,True):
             z=record['initial'].float().detach().requires_grad_(True)
-            with energy_attention_mode(tiled):
+            with energy_attention_mode(optimized):
                 score=model(z,**args)
                 gradient=torch.autograd.grad(score.sum(),z,create_graph=False)[0]
             parity.append((score.detach(),gradient.detach()))
-            observe('tiled_first_gradient' if tiled else 'reference_first_gradient')
+            observe('checkpointed_first_gradient' if optimized else 'reference_first_gradient')
         ref_score,ref_grad=parity[0];new_score,new_grad=parity[1]
         relative_error=float((new_grad-ref_grad).norm()/ref_grad.norm().clamp_min(1e-12))
         result['attention_parity']=dict(score_abs_error=float((new_score-ref_score).abs().max()),

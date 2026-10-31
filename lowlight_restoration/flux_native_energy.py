@@ -20,16 +20,16 @@ from torch.utils.checkpoint import checkpoint
 from .lora import LoRALinear
 
 _ENERGY_MODE = ContextVar('flux_native_energy_mode', default=False)
-_TILED_ENERGY_ATTENTION = ContextVar('flux_native_tiled_attention', default=True)
+_CHECKPOINTED_ENERGY_ATTENTION = ContextVar('flux_native_checkpointed_attention', default=True)
 
 
 @contextmanager
-def energy_attention_mode(tiled):
-    token = _TILED_ENERGY_ATTENTION.set(bool(tiled))
+def energy_attention_mode(checkpointed):
+    token = _CHECKPOINTED_ENERGY_ATTENTION.set(bool(checkpointed))
     try:
         yield
     finally:
-        _TILED_ENERGY_ATTENTION.reset(token)
+        _CHECKPOINTED_ENERGY_ATTENTION.reset(token)
 
 
 def install_energy_attention():
@@ -42,13 +42,15 @@ def install_energy_attention():
     original = native.causal_attn_fn
 
     def dispatch(q, k, v, num_txt_tokens, num_ref_tokens, kv_cache=None):
-        if not _ENERGY_MODE.get() or not _TILED_ENERGY_ATTENTION.get():
+        if not _ENERGY_MODE.get() or not _CHECKPOINTED_ENERGY_ATTENTION.get():
             return original(q, k, v, num_txt_tokens, num_ref_tokens, kv_cache)
         if num_ref_tokens != 0 or kv_cache is not None:
             raise RuntimeError('energy attention requires full keys without reference KV cache')
-        from .flux_native_attention import tiled_attention
-        out = tiled_attention(q, k, v)
-        return out.transpose(1, 2).reshape(out.shape[0], out.shape[2], -1)
+        from .flux_native_attention import checkpointed_attention
+        # Preserve the exact native concatenation/layout path as well as SDPA.
+        def native_call(q, k, v):
+            return original(q, k, v, num_txt_tokens, num_ref_tokens, kv_cache)
+        return checkpointed_attention(q, k, v, native_call)
 
     dispatch._native_energy_dispatch = True
     native.causal_attn_fn = dispatch
@@ -98,11 +100,11 @@ def install_checkpointing(flow, counters):
 
         def wrapped(*args, _original=original, **kwargs):
             enabled = _ENERGY_MODE.get()
-            tiled = _TILED_ENERGY_ATTENTION.get()
+            checkpointed = _CHECKPOINTED_ENERGY_ATTENTION.get()
 
             def call(*values, **options):
                 counters['block_forward'] += 1
-                with adapter_mode(enabled), energy_attention_mode(tiled), (sdpa_kernel(SDPBackend.MATH) if enabled else nullcontext()):
+                with adapter_mode(enabled), energy_attention_mode(checkpointed), (sdpa_kernel(SDPBackend.MATH) if enabled else nullcontext()):
                     return _original(*values, **options)
 
             if torch.is_grad_enabled():
@@ -202,7 +204,7 @@ class FluxNativeEnergy(nn.Module):
         return dict(backbone='pretrained_FLUX.2_Klein_base_4B',
                     energy_adapters=sum(isinstance(m, EnergyAdapterLinear) for m in self.modules()),
                     trainable_parameters=sum(trainable.values()), trainable=trainable,
-                    energy_attention='full_softmax_head_tiles_1_checkpointed_vjp',
+                    energy_attention='native_full_math_attention_checkpointed_autograd_vjp',
                     external_image_backbone=False, cnn_energy=False, restormer=False)
 
     def trainable_state(self):

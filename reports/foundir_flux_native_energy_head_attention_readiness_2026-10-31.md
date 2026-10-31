@@ -1,5 +1,8 @@
 # 按独立head分块：CPU通过，待4B CUDA同门槛检查
 
+GPU更新：本版梯度差8.1279%，未过1%，已停止。最新状态与命令见
+foundir_flux_native_energy_native_vjp_readiness_2026-10-31.md；下方为历史候选记录。
+
 2026-10-31。继续用户已授权的内存修复，候选版本，不是GPU通过结论。
 上版memory_tiled_v2的一阶梯度relative-L2差11.4771%，虽然其区间显存9.3973GiB，
 仍按原1%门槛失败停止，未执行三步或最终反传。完整报告aa02a0c，失败结果不覆盖。

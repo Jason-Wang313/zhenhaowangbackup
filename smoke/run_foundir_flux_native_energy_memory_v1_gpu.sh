@@ -2,7 +2,7 @@
 set -euo pipefail
 ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)
 cd "$ROOT"
-RUN_ID=${1:-memory_heads_v3}
+RUN_ID=${1:-memory_native_vjp_v4}
 [[ "$RUN_ID" =~ ^[A-Za-z0-9_-]+$ ]] || exit 2
 PYTHON=${FLUX_NATIVE_PYTHON:-"$ROOT/.conda/gpu-train-stable/bin/python"}
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0}

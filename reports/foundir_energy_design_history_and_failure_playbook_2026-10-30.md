@@ -1,5 +1,18 @@
 # PPT energy → FLUX 尾段引导：设计演变、证据与排错决策记录
 
+## 当前：保留原attention与autograd，仅逐attention重计算导数 — 2026-10-31
+
+memory_heads_v3的真实4B梯度差8.1279%，仍未过1%，39秒后停止；完整报告315a09e。
+下一候选撤去query/head分块与手写VJP，原native attention callable、拼接/矩阵形状、
+math SDPA和原生autograd保留，只用自定义autograd边界与checkpoint重算各attention的VJP。
+不更改TF32/matmul设置，不放宽数值门槛，不截断三步，不改配方。
+25项CPU回归通过；真实4B/BF16数值与最终反传显存仍待GPU。
+唯一下一短任务：一个空闲H200、CUDA_VISIBLE_DEVICES=0，
+`bash smoke/run_foundir_flux_native_energy_memory_v1_gpu.sh memory_native_vjp_v4`。
+仍先同状态1%梯度对照，再完整三步/真实尾段/全部loss反传，无Adam更新。
+cap1200秒加30秒清理，无自动25步/长训。旧失败记录与资产全保留，不resume旧源码。
+读reports/foundir_flux_native_energy_native_vjp_readiness_2026-10-31.md。
+
 ## 当前：query分块数值不合格；head分块待同门槛单卡检查 — 2026-10-31
 
 memory_tiled_v2单H200运行38秒后status1，实际4B一阶latent梯度relative-L2差11.4771%，
