@@ -1,5 +1,28 @@
 # Project agent instructions
 
+## 最新用户授权：只做右图 VLM residual-router；资源最终为4×2 — 2026-10-31
+
+用户在3×2与4×2之间更正后，最后确认使用8卡：**4个节点，每节点2张H100或H200**。
+这是跨节点八卡，不是单节点八卡；覆盖下方旧3×2默认。后续非轻量GPU工作默认4×2，
+轻量CPU/单卡诊断例外不变。节点间可分别为H100/H200，每节点内两卡同型号。
+不要复用历史node0 IP；启动需当前地址与NODE_RANK=0/1/2/3，global batch仍32。
+
+用户已授权现在只实现/验证右图③：保留image router，冻结VLM的视觉token均值
+经过小MLP后加到专家logits，再softmax混合同一套FLUX FFN experts。
+不同时训练image-only/concatenation两组，不添加energy、CNN、Restormer或新专家库。
+从image-only MoE step11000权重初始化，VLM末层零初始化、fresh Adam；
+这不是旧八卡任务的精确续训。保留Rain LPIPS .05 / Blur .20及原端点监督。
+先做25步工程资格，工程通过不等于科学达标，资格权重不得seed正式训练。
+范围仅Rain/Blur；不能声称已覆盖五类或混合退化，不能将已有image-only收益归给VLM。
+
+当前代码与同步清单见
+`reports/foundir_token_residual_moe_v1_readiness_2026-10-31.md`。
+GPU未启动，本会话看不到迁移后的GPU目录。先安全同步、目的地CPU资产核验、
+获取四节点地址后再给用户命令；不擅自启动正式长训或补两组消融。
+另一位代理仍负责FLUX-native energy显存排查，不改动/覆盖他的代码，不擅自停止其任务；
+其下方状态记录属于另一条工作线，不是阻止本次MoE实现的优先级门槛。
+现有energy三节点启动器不会因资源文字更正自动变成四节点；未来重训练须单独适配验收。
+
 ## 当前：v6快照采集成功；计算仍OOM，未开始训练 — 2026-10-31
 
 memory_alloc_trace_v6单H200运行54秒后status1，首个高阶更新OOM，峰值137.6805GiB。
