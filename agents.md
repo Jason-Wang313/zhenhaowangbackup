@@ -1,5 +1,14 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 当前：右图token residual MoE四节点25步资格结束 — 2026-10-31
+
+qualification_4x2_v1已于四节点8×H200正常结束，25/25步、四节点launcher status0、
+step0/25各Rain100与Blur preview100、五份恢复收据齐全。工程通过，正式训练未启动。
+Rain step25相对step0 PSNR -0.055246dB、LPIPS +3.773%；Blur preview PSNR +0.007440dB、
+LPIPS +0.509%。预览指标无联合改善，不可宣称VLM贡献或完整Blur门槛通过。
+完整日志与限制见reports/foundir_token_residual_moe_v1_qualification_4x2_terminal_2026-10-31.{md,json}。
+资格权重不能seed正式训练；未来正式规模需另定，不自动长训。energy显存线保持原状。
+
 ## 最新用户授权：只做右图 VLM residual-router；资源最终为4×2 — 2026-10-31
 
 用户在3×2与4×2之间更正后，最后确认使用8卡：**4个节点，每节点2张H100或H200**。

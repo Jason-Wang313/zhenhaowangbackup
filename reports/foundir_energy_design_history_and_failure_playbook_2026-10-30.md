@@ -1,5 +1,14 @@
 # PPT energy → FLUX 尾段引导：设计演变、证据与排错决策记录
 
+## 当前：右图token residual MoE四节点25步资格结束 — 2026-10-31
+
+qualification_4x2_v1已于四节点8×H200正常结束，25/25步、四节点launcher status0、
+step0/25各Rain100与Blur preview100、五份恢复收据齐全。工程通过，正式训练未启动。
+Rain step25相对step0 PSNR -0.055246dB、LPIPS +3.773%；Blur preview PSNR +0.007440dB、
+LPIPS +0.509%。预览指标无联合改善，不可宣称VLM贡献或完整Blur门槛通过。
+完整日志与限制见reports/foundir_token_residual_moe_v1_qualification_4x2_terminal_2026-10-31.{md,json}。
+资格权重不能seed正式训练；未来正式规模需另定，不自动长训。energy显存线保持原状。
+
 ## 当前：v6快照采集成功；计算仍OOM，未开始训练 — 2026-10-31
 
 memory_alloc_trace_v6单H200运行54秒后status1，首个高阶更新OOM，峰值137.6805GiB。
