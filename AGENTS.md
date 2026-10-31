@@ -1,5 +1,41 @@
 # Project agent instructions
 
+## 唯一当前任务：FLUX-only energy 重做；禁止 CNN / Restormer — 2026-10-31
+
+本节覆盖下方所有历史 CURRENT/ACTIVE/下一步200步。用户明确要求只用 FLUX，
+放弃外挂 CNN energy 和 Restormer。当前旧 CNN 200步已结束，不得续训/重启。
+必须先读 `reports/foundir_flux_only_energy_redesign_2026-10-31.md`。
+
+硬边界：可训练图像主干只能是预训练 FLUX.2 Klein base 4B。
+此禁令适用于当前及后续所有新恢复/energy实验，除非用户明确撤销；不是仅本轮偏好。
+禁止 SpatialConditionalEnergy、TailQualityEnergy、任何外挂CNN energy/scorer、
+Restormer/residual Restormer/pixel refiner，也禁止用它们蒸馏本次模型。
+不能换名字保留CNN；不能只给旧CNN加FLUX输入就称为FLUX-only。
+允许FLUX内部energy LoRA、线性读出和VLM条件投影。原生冻结VAE及固定LPIPS
+损失/指标保留，内部卷积不是新增恢复器；不得声称全计算图零卷积。
+原FLUX恢复LoRA保持冻结作为生成路径；新增energy LoRA在FLUX Transformer内
+训练，energy必须读取FLUX内部图像tokens。共享底座、显式区分生成/energy模式，
+不能在反传图存活时原地换权重。旧CNN权重/梯度/反例轨迹不初始化新实验。
+
+训练要直接监督energy引导后的实际图像（MSE+LPIPS，完整1/2/3步展开），并含
+同图不同恢复动作的质量排序；不再仅拟合缓存分数/导数冒充完整PPT。
+最终图t=0和真实尾段t48状态分开建模，不能混同。GT仅在训练/离线评估使用。
+保持原FLUX基线/双uint8/alpha=.30，目标仍是energy独立+.30dB与LPIPS相对
+下降9.928107050377874%，必须最终在独立来源验证。禁止保护测试像素泄漏。
+
+当前状态：仅修订PPT/方案/交接，FLUX-only训练器尚未实现、GPU尚未启动。
+下一步是实施新接口与完整三步二阶梯度/显存/resume检查，不是运行旧V3命令。
+先定向工程资格，再独立fresh拟合；通过才扩合规训练数据和独立来源评估。
+更大FLUX不保证成功，也不能说旧CNN已接近联合过关（LPIPS仅降2.49%）。
+不再重复历史基线差1灰度级诊断/GT搜索；保留旧证据，不删除历史代码和结果。
+单机4/8张H100/H200兼容是新实现目标；按用户实际资源冻结拓扑，不自动跨节点。
+时长和GPU-hours由新架构实测后报告，禁止继承CNN速度或隐瞒二阶反传成本。
+
+执行根仍是 `/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang`。
+GitHub是交付源；目的地代理只同步指定文件/回报，不自动运行GPU。
+旧workspace/旧ACTIVE/Generalist/Rain/MoE优先级均不能覆盖本节。
+报告必须用通俗中文，明确“实际实现 / 待实现 / 已测结果 / 假设”，不得再省略主干身份。
+
 ## CURRENT:8步资格完成；用户授权推进独立200步拟合 — 2026-10-30
 
 用户在检查终态后明确要求continue。本节覆盖下面本次只同步/尚无GPU结果的旧状态。

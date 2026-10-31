@@ -1,5 +1,17 @@
 # PPT energy → FLUX 尾段引导：设计演变、证据与排错决策记录
 
+## 2026-10-31 覆盖：停止CNN路线，FLUX-only重做
+
+读 `foundir_flux_only_energy_redesign_2026-10-31.md`。用户明确禁用外挂CNN energy、
+Restormer/refiner/其蒸馏；不是只改命名。旧CNN 200步已完成：8个训练来源
+PSNR+1.06034dB，LPIPS降2.48595%（目标9.92811%），3/8图LPIPS受损。
+这支持继续检验FLUX尾段修正空间，不证明FLUX energy必然容易成功。
+旧CNN SpatialConditionalEnergy于10月15日引入，10月28日被FLUX-tail复用，
+10月29日V3沿用。原PPT允许冻结proposal但未指定CNN；此前架构/目标变化未讲清。
+新方案必须用FLUX内部tokens和energy LoRA，并直接监督真实修正后的图像；
+不恢复旧CNN或用旧权重初始化。原生冻结VAE与固定LPIPS不属于新增恢复器。
+本次仅设计/PPT/交接，尚无新训练器或GPU结果。下方旧下一步/状态都是历史。
+
 更新：2026-10-30。面向接手代理，不依赖旧聊天窗口。
 这份文件保存可复核的事实、设计理由、失败经验与未解问题，不把假设补写成定论。
 

@@ -1,5 +1,20 @@
 # FoundIR current handoff — 2026-09-23
 
+## 唯一当前交接：FLUX-only energy 重做 — 2026-10-31
+
+用户明确禁止外挂CNN energy和Restormer。旧200步已结束，不再续训/启动旧V3。
+先读 `foundir_flux_only_energy_redesign_2026-10-31.md` 和 AGENTS.md 顶部。
+新方案：同一预训练FLUX底座，固定生成LoRA，新增FLUX内部energy LoRA/线性读出/
+VLM条件投影；直接训练真实1/2/3次尾段修后的MSE/LPIPS及动作排序。
+禁止把旧SpatialConditionalEnergy/TailQualityEnergy重命名或偷偷接回去。
+原生冻结VAE、固定LPIPS保留；不加CNN/Restormer恢复器，也不用其teacher。
+当前只完成PPT与设计交接，训练器尚未实现/未启动GPU，不提供旧启动器冒充新实验。
+下一步是实现并验收全三步二阶梯度、显存、输出和resume，之后再独立fresh拟合。
+不重复历史基线迁移诊断/GT搜索；目的地代理只同步指定文件和回报。
+旧CNN结果：8个训练来源PSNR+1.06034dB、LPIPS降2.48595%，联合失败，3/8 LPIPS
+变差；不是泛化。最终目标仍是energy独立+.30dB/LPIPS相对降9.92810705%。
+所有下方“当前/下一步200步/继续V3”等是历史，不得覆盖本节。
+
 ## CURRENT:资格完成，下一步是独立200步trainfit — 2026-10-30
 
 用户已要求continue。读 `foundir_flux_tail_v3_direct_trainfit_readiness_2026-10-30.md`。
