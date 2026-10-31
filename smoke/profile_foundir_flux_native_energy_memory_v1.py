@@ -29,7 +29,27 @@ def validate_cache_receipt(previous, current):
         if previous[key]!=current[key]:raise RuntimeError('cache producer differs in '+key)
 
 
-def run(run_id, cache_run):
+def summarize_memory_snapshot(snapshot):
+    """Describe live blocks at capture; exception unwinding may have freed some."""
+    groups={}
+    totals={'active_allocated':0,'active_awaiting_free':0}
+    for segment in snapshot['segments']:
+        for block in segment['blocks']:
+            state=block['state']
+            if state not in totals:continue
+            size=block['size'];totals[state]+=size
+            frames=block.get('frames',[])
+            key=(state,tuple((f.get('filename',''),f.get('line',0),f.get('name','')) for f in frames))
+            group=groups.setdefault(key,dict(state=state,bytes=0,blocks=0,frames=frames))
+            group['bytes']+=size;group['blocks']+=1
+    traces=snapshot.get('device_traces',[])
+    return dict(capture_scope='post_exception_or_completion_not_peak',live_bytes_by_state=totals,
+        largest_live_stacks=sorted(groups.values(),key=lambda r:r['bytes'],reverse=True)[:40],
+        device_trace_entry_counts=[len(t) for t in traces],
+        oom_events=[dict(device=d,**e) for d,events in enumerate(traces) for e in events if e['action']=='oom'])
+
+
+def run(run_id, cache_run, memory_trace=False):
     import torch
     from flux2.sampling import get_schedule
     from lowlight_restoration.flux_native_energy import (
@@ -47,12 +67,12 @@ def run(run_id, cache_run):
     contract.run_path(run_id);cache=contract.run_path(cache_run)
     output=ROOT/'checkpoints/foundir_flux_native_energy_memory_v1'/run_id
     output.mkdir(parents=True,exist_ok=False)
-    started=time.monotonic();rows=[]
+    started=time.monotonic();rows=[];trace_enabled=False
     result=dict(status='running',diagnostic_only=True,optimizer_updates=0,
         training_steps_completed=0,qualification_pass=False,run_id=run_id,
         gpu_name=props.name,gpu_uuid=str(props.uuid),total_gib=total/1024**3,
         torch=torch.__version__,cuda=torch.version.cuda,python=sys.version,
-        cache_run=cache_run,stages=rows,recipe_changed=False,
+        cache_run=cache_run,stages=rows,recipe_changed=False,memory_trace_requested=memory_trace,
         numerical_implementation='native_full_math_attention_isolated_autograd_vjp',
         numerical_settings=dict(float32_matmul_precision=torch.get_float32_matmul_precision(),
             allow_tf32=torch.backends.cuda.matmul.allow_tf32,
@@ -114,6 +134,10 @@ def run(run_id, cache_run):
             raise RuntimeError('real BF16 attention gradient parity exceeded fixed 1% tolerance')
         print('NATIVE_ENERGY_ATTENTION_PARITY '+json.dumps(result['attention_parity']),flush=True)
         del parity,z,score,gradient,ref_score,ref_grad,new_score,new_grad
+        if memory_trace:
+            torch.cuda.memory._record_memory_history(enabled='all',context='all',stacks='all',max_entries=30000)
+            trace_enabled=True
+            print('NATIVE_ENERGY_MEMORY_TRACE_ENABLED max_entries=30000; unchanged v5 computation',flush=True)
         states,scores=unroll(lambda z:model(z,**args),record['initial'].float(),training=True,
             updates=spec['updates'],step_size=spec['step_size'],radius=spec['latent_rms_radius'],
             observe=observe)
@@ -157,6 +181,23 @@ def run(run_id, cache_run):
             (output/'cuda_memory_summary.txt').write_text(torch.cuda.memory_summary(device=device))
         raise
     finally:
+        if trace_enabled:
+            try:
+                import pickle
+                snapshot=torch.cuda.memory._snapshot()
+                name='cuda_memory_snapshot.pickle'
+                runtime.atomic_write(output/name,lambda handle:pickle.dump(snapshot,handle,pickle.HIGHEST_PROTOCOL))
+                summary=summarize_memory_snapshot(snapshot)
+                runtime.atomic_json(output/'allocation_summary.json',summary)
+                result['allocation_trace']=dict(file=name,sha256=contract.sha(output/name),
+                    size_bytes=(output/name).stat().st_size,summary=summary)
+                print('NATIVE_ENERGY_MEMORY_SNAPSHOT_SAVED '+str(output/name),flush=True)
+            except Exception as trace_error:
+                result['allocation_trace_error']=repr(trace_error)
+                print('NATIVE_ENERGY_MEMORY_SNAPSHOT_FAILED '+repr(trace_error),flush=True)
+            finally:
+                try:torch.cuda.memory._record_memory_history(enabled=None)
+                except Exception as stop_error:result['trace_stop_error']=repr(stop_error)
         result['wall_seconds']=time.monotonic()-started
         runtime.atomic_json(output/'result.json',result)
         print('NATIVE_ENERGY_MEMORY_RESULT '+str(output/'result.json'),flush=True)
@@ -171,4 +212,5 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--run-id',required=True)
     parser.add_argument('--cache-run',default='qualification_3x2_v1')
-    options=parser.parse_args();run(options.run_id,options.cache_run)
+    parser.add_argument('--memory-trace',action='store_true',help='collect allocator stacks; does not fix or change the computation')
+    options=parser.parse_args();run(options.run_id,options.cache_run,options.memory_trace)

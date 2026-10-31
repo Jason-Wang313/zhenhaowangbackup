@@ -1,5 +1,16 @@
 # PPT energy → FLUX 尾段引导：设计演变、证据与排错决策记录
 
+## 当前：v5仍OOM；下一步仅采集真实分配栈 — 2026-10-31
+
+memory_isolated_vjp_v5的一阶数值差均0，首个高阶更新仍OOM（137.68GiB），
+42秒status1；完整记录memory_v5_terminal报告。不能称OOM已解决或开始训练。
+当前运算模块保持8e78eb9不变，只给单卡诊断加可选allocator历史/快照采集。
+新ID=`memory_alloc_trace_v6`，FLUX_NATIVE_MEMORY_TRACE=1，CUDA_VISIBLE_DEVICES=0。
+预计复现同一失败，目的是保存实际占用栈，不是新的候选修复/训练；没有optimizer更新。
+cap仍1200秒加30秒清理，不自动执行。快照仅留共享目录，不上传GitHub。
+采集成功看MEMORY_SNAPSHOT_SAVED及文件SHA；status1仍是原计算失败，不能包装通过。
+读reports/foundir_flux_native_energy_allocation_trace_readiness_2026-10-31.md。
+
 ## 当前：一阶数值已匹配，隔离局部VJP输入边界待GPU — 2026-10-31
 
 memory_native_vjp_v4真实4B分数与一阶梯度差均为0，但首个高阶更新仍OOM，

@@ -1,0 +1,17 @@
+{
+  "status": "trace_instrumentation_ready_gpu_not_started",
+  "core_identical_to": "8e78eb9",
+  "core_files": [
+    "lowlight_restoration/flux_native_attention.py",
+    "lowlight_restoration/flux_native_energy.py",
+    "smoke/train_foundir_flux_native_energy_v1.py",
+    "configs/foundir_flux_native_energy_v1.json"
+  ],
+  "new_cpu_tests": 2,
+  "max_trace_entries": 30000,
+  "cuda_snapshot_verified": false,
+  "next_run": "memory_alloc_trace_v6",
+  "cap_seconds": 1200,
+  "optimizer_updates": 0,
+  "expected_compute_outcome": "same_oom_possible_or_expected_not_a_new_fix"
+}
