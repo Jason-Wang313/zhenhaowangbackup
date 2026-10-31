@@ -1,5 +1,18 @@
 # PPT energy → FLUX 尾段引导：设计演变、证据与排错决策记录
 
+## 当前：query分块数值不合格；head分块待同门槛单卡检查 — 2026-10-31
+
+memory_tiled_v2单H200运行38秒后status1，实际4B一阶latent梯度relative-L2差11.4771%，
+超过1%门槛，故未做三步和完整反传。完整结果aa02a0c；不得放宽阈值或称显存已修复。
+现改为每次一个独立attention head，保留每head完整Q/K矩阵和归约范围，
+不用query分块的跨块K/V梯度累加。仍是完整softmax，保留全部三步和原配方。
+25项CPU检查通过，含24heads/128head_dim的BF16检查；不能代替真实4B CUDA对照。
+新单卡短诊断ID=`memory_heads_v3`，命令为
+`bash smoke/run_foundir_flux_native_energy_memory_v1_gpu.sh memory_heads_v3`。
+一个空闲H200、CUDA_VISIBLE_DEVICES=0，原1%梯度门槛和1200秒cap不变，无Adam更新。
+旧数据/缓存/失败记录保留；不自动重启GPU或25步，不resume旧源码step0。
+详见reports/foundir_flux_native_energy_head_attention_readiness_2026-10-31.md。
+
 ## 当前：最终反传仍OOM；energy attention分块版本待单卡验证 — 2026-10-31
 
 memory_recompute_v1于18:14:37 UTC以status1退出，110秒/0.030556 GPU-hours；

@@ -202,7 +202,7 @@ class FluxNativeEnergy(nn.Module):
         return dict(backbone='pretrained_FLUX.2_Klein_base_4B',
                     energy_adapters=sum(isinstance(m, EnergyAdapterLinear) for m in self.modules()),
                     trainable_parameters=sum(trainable.values()), trainable=trainable,
-                    energy_attention='full_softmax_query_tiles_128_checkpointed_vjp',
+                    energy_attention='full_softmax_head_tiles_1_checkpointed_vjp',
                     external_image_backbone=False, cnn_energy=False, restormer=False)
 
     def trainable_state(self):

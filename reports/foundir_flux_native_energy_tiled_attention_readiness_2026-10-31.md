@@ -1,5 +1,8 @@
 # energy attention分块：CPU通过，待GPU
 
+GPU实测更新：本query分块版实际梯度差11.4771%，未过1%门槛，已停止。
+最新候选与命令改读foundir_flux_native_energy_head_attention_readiness_2026-10-31.md。
+
 2026-10-31。继续用户明确授权的内存优化，不增加训练任务或改变科学配方。
 
 ## 实测问题

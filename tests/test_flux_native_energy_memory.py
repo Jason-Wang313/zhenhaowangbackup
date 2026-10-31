@@ -46,7 +46,7 @@ class MemoryTests(unittest.TestCase):
             parameters = [p for p in self.model.parameters() if p.requires_grad]
             optimizer = torch.optim.AdamW(parameters, lr=1e-4)
             from lowlight_restoration.flux_native_attention import tiled_attention
-            tiled_small = lambda q,k,v: tiled_attention(q,k,v,chunk=3)
+            tiled_small = lambda q,k,v: tiled_attention(q,k,v,chunk=1)
             with patch('lowlight_restoration.flux_native_attention.tiled_attention', new=tiled_small), energy_attention_mode(recompute), sdpa_kernel(SDPBackend.MATH):
                 loss, states, scores = self.rendered_loss(recompute)
                 loss.backward()

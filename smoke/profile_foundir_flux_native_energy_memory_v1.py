@@ -53,7 +53,11 @@ def run(run_id, cache_run):
         gpu_name=props.name,gpu_uuid=str(props.uuid),total_gib=total/1024**3,
         torch=torch.__version__,cuda=torch.version.cuda,python=sys.version,
         cache_run=cache_run,stages=rows,recipe_changed=False,
-        numerical_implementation='full_softmax_query_tiles_128_checkpointed_vjp')
+        numerical_implementation='full_softmax_head_tiles_1_checkpointed_vjp',
+        numerical_settings=dict(float32_matmul_precision=torch.get_float32_matmul_precision(),
+            allow_tf32=torch.backends.cuda.matmul.allow_tf32,
+            math_sdp_low_precision_reduction=torch.backends.cuda.fp16_bf16_reduction_math_sdp_allowed(),
+            nvidia_tf32_override=os.environ.get('NVIDIA_TF32_OVERRIDE','')))
     def observe(stage):
         torch.cuda.synchronize(device)
         row=dict(stage=stage,seconds=time.monotonic()-started,

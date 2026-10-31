@@ -16,14 +16,14 @@ class AttentionTests(unittest.TestCase):
         for tiled in (False,True):
             args=tuple(x.detach().clone().requires_grad_(True) for x in self.inputs)
             with sdpa_kernel(SDPBackend.MATH):
-                y=tiled_attention(*args,chunk=3) if tiled else F.scaled_dot_product_attention(*args)
+                y=tiled_attention(*args,chunk=1) if tiled else F.scaled_dot_product_attention(*args)
                 first=torch.autograd.grad(y.sin().sum(),args,create_graph=True)
                 second=torch.autograd.grad(sum(x.square().sum() for x in first),args)
             outputs.append((y,*first,*second))
         for a,b in zip(*outputs):torch.testing.assert_close(a,b,rtol=1e-10,atol=1e-11)
 
     def test_gradcheck_and_gradgradcheck(self):
-        f=lambda *args:tiled_attention(*args,chunk=3)
+        f=lambda *args:tiled_attention(*args,chunk=1)
         self.assertTrue(torch.autograd.gradcheck(f,self.inputs,fast_mode=True))
         self.assertTrue(torch.autograd.gradgradcheck(f,self.inputs,fast_mode=True))
 
@@ -32,7 +32,7 @@ class AttentionTests(unittest.TestCase):
         for tiled in (False,True):
             args=tuple(x.detach().to(torch.bfloat16).requires_grad_(True) for x in self.inputs)
             with sdpa_kernel(SDPBackend.MATH):
-                y=tiled_attention(*args,chunk=3) if tiled else F.scaled_dot_product_attention(*args)
+                y=tiled_attention(*args,chunk=1) if tiled else F.scaled_dot_product_attention(*args)
                 first=torch.autograd.grad(y.float().square().sum(),args,create_graph=True)
                 second=torch.autograd.grad(sum(x.float().square().sum() for x in first),args)
             outputs.append((y,*first,*second))
@@ -50,12 +50,28 @@ class AttentionTests(unittest.TestCase):
                 shapes.append(tuple(t.shape))
                 return t
             with torch.autograd.graph.saved_tensors_hooks(pack,lambda t:t), sdpa_kernel(SDPBackend.MATH):
-                y=tiled_attention(*args,chunk=3) if tiled else F.scaled_dot_product_attention(*args)
+                y=tiled_attention(*args,chunk=1) if tiled else F.scaled_dot_product_attention(*args)
                 gradients=torch.autograd.grad(y.square().sum(),args,create_graph=True)
             saved.append(shapes)
             sum(g.square().sum() for g in gradients).backward()
         self.assertTrue(any(s[-2:]==(7,9) for s in saved[0]))
         self.assertFalse(any(s[-2:]==(7,9) for s in saved[1]))
+
+    def test_bfloat16_real_head_width_and_many_heads(self):
+        # The original tiny test used D=4. Klein uses D=128 and H=24;
+        # cover those dimensions with shorter sequences on CPU.
+        data=tuple((torch.randn(1,24,n,128)*2).to(torch.bfloat16) for n in (129,137,137))
+        outputs=[]
+        for tiled in (False,True):
+            args=tuple(x.clone().requires_grad_(True) for x in data)
+            with sdpa_kernel(SDPBackend.MATH):
+                y=tiled_attention(*args) if tiled else F.scaled_dot_product_attention(*args)
+                gradients=torch.autograd.grad(y.float().square().mean(),args)
+            outputs.append((y,*gradients))
+        for i,(a,b) in enumerate(zip(*outputs)):
+            error=float((a.float()-b.float()).norm()/a.float().norm().clamp_min(1e-12))
+            print('BF16_H24_D128_RELATIVE_L2',i,error,flush=True)
+            self.assertLess(error,.01)
 
     def test_empty_or_invalid_rejected(self):
         with self.assertRaises(ValueError):tiled_attention(*self.inputs,chunk=0)
