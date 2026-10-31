@@ -1,5 +1,19 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前：最终反传仍OOM；energy attention分块版本待单卡验证 — 2026-10-31
+
+memory_recompute_v1于18:14:37 UTC以status1退出，110秒/0.030556 GPU-hours；
+三步更新/解码/loss已完成，但最终backward仍升至135.30GiB并OOM。记录ddaa5f0。
+继续用户已授权的内存修复：energy full-softmax attention按128个query分块，
+每块仍关注所有keys；导数逐块重算，生成路径继续原实现。没有稀疏化/截断三步。
+24项CPU测试通过，包括完整三步旧新梯度/Adam、gradcheck/gradgradcheck及BF16检查。
+数学等价不代表BF16逐位一致；实际4B输入梯度对照与CUDA容量仍待实测。
+下一命令：`bash smoke/run_foundir_flux_native_energy_memory_v1_gpu.sh memory_tiled_v2`，
+一个空闲H200、CUDA_VISIBLE_DEVICES=0，独立新ID；cap1200秒加30秒清理。
+先同状态对照旧/新attention分数和一阶梯度，再完整三步/全loss反传；无optimizer更新。
+不自动重启25步、不resume旧源码checkpoint。全部旧资产保留，非轻量训练默认仍3×2。
+读reports/foundir_flux_native_energy_tiled_attention_readiness_2026-10-31.md。
+
 ## 当前：FLUX-native首步OOM；导数图重计算待GPU短诊断 — 2026-10-31
 
 用户明确授权执行内存优化。旧3×2资格24候选缓存完成，首步OOM，三节点status1；

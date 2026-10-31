@@ -33,7 +33,7 @@ def run(run_id, cache_run):
     import torch
     from flux2.sampling import get_schedule
     from lowlight_restoration.flux_native_energy import (
-        FluxNativeEnergy,unroll,direct_quality_loss,pareto_ranking_loss,
+        FluxNativeEnergy,unroll,direct_quality_loss,pareto_ranking_loss,energy_attention_mode,
     )
     from smoke import flux_native_energy_runtime_v1 as runtime
     from smoke.train_foundir_flux_native_energy_v1 import sample_index,action_pair
@@ -52,7 +52,8 @@ def run(run_id, cache_run):
         training_steps_completed=0,qualification_pass=False,run_id=run_id,
         gpu_name=props.name,gpu_uuid=str(props.uuid),total_gib=total/1024**3,
         torch=torch.__version__,cuda=torch.version.cuda,python=sys.version,
-        cache_run=cache_run,stages=rows,recipe_changed=False)
+        cache_run=cache_run,stages=rows,recipe_changed=False,
+        numerical_implementation='full_softmax_query_tiles_128_checkpointed_vjp')
     def observe(stage):
         torch.cuda.synchronize(device)
         row=dict(stage=stage,seconds=time.monotonic()-started,
@@ -89,6 +90,26 @@ def run(run_id, cache_run):
         observe('energy_and_record_loaded')
         t=get_schedule(50,record['initial'].shape[1])[48]
         args=runtime.energy_arguments(record,contexts,t)
+        # Same real 4B/BF16 state: compare first derivatives without constructing
+        # the old large higher-order graph. This is numerical validation only.
+        parity=[]
+        for tiled in (False,True):
+            z=record['initial'].float().detach().requires_grad_(True)
+            with energy_attention_mode(tiled):
+                score=model(z,**args)
+                gradient=torch.autograd.grad(score.sum(),z,create_graph=False)[0]
+            parity.append((score.detach(),gradient.detach()))
+            observe('tiled_first_gradient' if tiled else 'reference_first_gradient')
+        ref_score,ref_grad=parity[0];new_score,new_grad=parity[1]
+        relative_error=float((new_grad-ref_grad).norm()/ref_grad.norm().clamp_min(1e-12))
+        result['attention_parity']=dict(score_abs_error=float((new_score-ref_score).abs().max()),
+            gradient_relative_l2_error=relative_error,gradient_relative_l2_limit=.01,
+            score_atol=1e-5,score_rtol=.01)
+        torch.testing.assert_close(new_score,ref_score,atol=1e-5,rtol=.01)
+        if not bool(ref_grad.isfinite().all() and new_grad.isfinite().all()) or relative_error>.01:
+            raise RuntimeError('real BF16 attention gradient parity exceeded fixed 1% tolerance')
+        print('NATIVE_ENERGY_ATTENTION_PARITY '+json.dumps(result['attention_parity']),flush=True)
+        del parity,z,score,gradient,ref_score,ref_grad,new_score,new_grad
         states,scores=unroll(lambda z:model(z,**args),record['initial'].float(),training=True,
             updates=spec['updates'],step_size=spec['step_size'],radius=spec['latent_rms_radius'],
             observe=observe)

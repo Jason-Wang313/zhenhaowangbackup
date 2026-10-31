@@ -10,7 +10,8 @@ ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT/'configs/foundir_flux_native_energy_v1.json'
 ORDER = ('blur','noise','rain','haze','low_light')
 FILES = ('configs/foundir_flux_native_energy_v1.json',
-         'lowlight_restoration/flux_native_energy.py', 'lowlight_restoration/lora.py',
+         'lowlight_restoration/flux_native_energy.py', 'lowlight_restoration/flux_native_attention.py',
+         'lowlight_restoration/lora.py',
          'lowlight_restoration/scalar_residual.py','lowlight_restoration/flux2_trajectory_endpoint.py',
          'smoke/flux_native_energy_contract_v1.py', 'smoke/flux_native_energy_runtime_v1.py',
          'smoke/train_foundir_flux_native_energy_v1.py',

@@ -1,5 +1,8 @@
 # FLUX-native 导数图重计算：CPU通过，待GPU显存实测
 
+实际GPU更新：本版最终backward仍OOM，见同日memory_v1_terminal报告。
+下一入口及数值边界改读foundir_flux_native_energy_tiled_attention_readiness_2026-10-31.md。
+
 日期：2026-10-31。用户在OOM分析后明确要求执行内存优化。
 本次实际实现：对energy分数及其输入梯度整体使用非reentrant checkpoint，
 保留已有逐层checkpoint。完整三步、数学attention、参数/损失/512图/全局batch8不变。

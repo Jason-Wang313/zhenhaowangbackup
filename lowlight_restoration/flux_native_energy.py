@@ -20,6 +20,38 @@ from torch.utils.checkpoint import checkpoint
 from .lora import LoRALinear
 
 _ENERGY_MODE = ContextVar('flux_native_energy_mode', default=False)
+_TILED_ENERGY_ATTENTION = ContextVar('flux_native_tiled_attention', default=True)
+
+
+@contextmanager
+def energy_attention_mode(tiled):
+    token = _TILED_ENERGY_ATTENTION.set(bool(tiled))
+    try:
+        yield
+    finally:
+        _TILED_ENERGY_ATTENTION.reset(token)
+
+
+def install_energy_attention():
+    # A context-local dispatch at the native attention boundary. Frozen
+    # generation calls the original function unchanged, even while an energy
+    # graph lives. Never patch torch's global SDPA or mutate native source.
+    import flux2.model as native
+    if getattr(native.causal_attn_fn, '_native_energy_dispatch', False):
+        return
+    original = native.causal_attn_fn
+
+    def dispatch(q, k, v, num_txt_tokens, num_ref_tokens, kv_cache=None):
+        if not _ENERGY_MODE.get() or not _TILED_ENERGY_ATTENTION.get():
+            return original(q, k, v, num_txt_tokens, num_ref_tokens, kv_cache)
+        if num_ref_tokens != 0 or kv_cache is not None:
+            raise RuntimeError('energy attention requires full keys without reference KV cache')
+        from .flux_native_attention import tiled_attention
+        out = tiled_attention(q, k, v)
+        return out.transpose(1, 2).reshape(out.shape[0], out.shape[2], -1)
+
+    dispatch._native_energy_dispatch = True
+    native.causal_attn_fn = dispatch
 
 
 @contextmanager
@@ -66,10 +98,11 @@ def install_checkpointing(flow, counters):
 
         def wrapped(*args, _original=original, **kwargs):
             enabled = _ENERGY_MODE.get()
+            tiled = _TILED_ENERGY_ATTENTION.get()
 
             def call(*values, **options):
                 counters['block_forward'] += 1
-                with adapter_mode(enabled), (sdpa_kernel(SDPBackend.MATH) if enabled else nullcontext()):
+                with adapter_mode(enabled), energy_attention_mode(tiled), (sdpa_kernel(SDPBackend.MATH) if enabled else nullcontext()):
                     return _original(*values, **options)
 
             if torch.is_grad_enabled():
@@ -84,6 +117,7 @@ class FluxNativeEnergy(nn.Module):
     def __init__(self, flow, rank=16, alpha=16, *, expected_adapters=50,
                  checkpoint_blocks=True):
         super().__init__()
+        install_energy_attention()
         self.flow = flow.eval().requires_grad_(False)
         names = [n for n, m in flow.named_modules() if isinstance(m, LoRALinear)]
         if len(names) != expected_adapters:
@@ -168,6 +202,7 @@ class FluxNativeEnergy(nn.Module):
         return dict(backbone='pretrained_FLUX.2_Klein_base_4B',
                     energy_adapters=sum(isinstance(m, EnergyAdapterLinear) for m in self.modules()),
                     trainable_parameters=sum(trainable.values()), trainable=trainable,
+                    energy_attention='full_softmax_query_tiles_128_checkpointed_vjp',
                     external_image_backbone=False, cnn_energy=False, restormer=False)
 
     def trainable_state(self):

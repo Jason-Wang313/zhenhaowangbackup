@@ -1,11 +1,12 @@
 """Numerical parity and retained-tensor checks; no CUDA capacity claim."""
 import unittest
+from unittest.mock import patch
 import torch
 from torch.nn.attention import SDPBackend, sdpa_kernel
 from tests import test_flux_native_energy as native_tests
 from lowlight_restoration.flux_native_energy import (
     EnergyAdapterLinear, energy_value_and_gradient, unroll, direct_quality_loss,
-    pareto_ranking_loss,
+    pareto_ranking_loss, energy_attention_mode,
 )
 
 
@@ -44,7 +45,9 @@ class MemoryTests(unittest.TestCase):
                     if isinstance(m, EnergyAdapterLinear): m.energy_b.weight.normal_(std=.01)
             parameters = [p for p in self.model.parameters() if p.requires_grad]
             optimizer = torch.optim.AdamW(parameters, lr=1e-4)
-            with sdpa_kernel(SDPBackend.MATH):
+            from lowlight_restoration.flux_native_attention import tiled_attention
+            tiled_small = lambda q,k,v: tiled_attention(q,k,v,chunk=3)
+            with patch('lowlight_restoration.flux_native_attention.tiled_attention', new=tiled_small), energy_attention_mode(recompute), sdpa_kernel(SDPBackend.MATH):
                 loss, states, scores = self.rendered_loss(recompute)
                 loss.backward()
             gradients = {n:p.grad.clone() for n,p in self.model.named_parameters() if p.requires_grad}
@@ -55,15 +58,15 @@ class MemoryTests(unittest.TestCase):
             if isinstance(left, dict):
                 for k in left: torch.testing.assert_close(left[k], right[k], rtol=1e-9, atol=1e-11)
             elif isinstance(left, list):
-                for a,b in zip(left,right): torch.testing.assert_close(a,b,rtol=0,atol=0)
-            else: torch.testing.assert_close(left,right,rtol=0,atol=0)
+                for a,b in zip(left,right): torch.testing.assert_close(a,b,rtol=1e-10,atol=1e-11)
+            else: torch.testing.assert_close(left,right,rtol=1e-10,atol=1e-11)
 
     def test_gradient_and_double_backward_match(self):
         results=[]
         for recompute in (False,True):
             self.setUp()
             z=self.state.clone().requires_grad_(True)
-            with sdpa_kernel(SDPBackend.MATH):
+            with energy_attention_mode(recompute), sdpa_kernel(SDPBackend.MATH):
                 score,g=energy_value_and_gradient(self.energy,z,training=True,recompute_derivative=recompute)
                 first=torch.autograd.grad(g.square().sum()+score.sum(),z,create_graph=True)[0]
                 second=torch.autograd.grad(first.sum(),z)[0]
