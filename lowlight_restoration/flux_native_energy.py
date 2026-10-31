@@ -184,7 +184,27 @@ class FluxNativeEnergy(nn.Module):
                 parameter.copy_(state[name].to(parameter))
 
 
-def unroll(energy, initial, *, updates=3, step_size=.005, radius=.02, training):
+def energy_value_and_gradient(energy, state, *, training, recompute_derivative=True):
+    """Checkpoint the differentiable VJP, not only the energy forward blocks.
+
+    Block checkpointing alone does not discard tensors saved by create_graph's
+    derivative operations. An outer non-reentrant checkpoint also rematerializes
+    those operations when the training loss backpropagates. Nothing is detached;
+    closed-over energy parameters remain differentiable.
+    """
+    def value_and_gradient(value):
+        with torch.enable_grad():
+            score = energy(value)
+            gradient = torch.autograd.grad(score.sum(), value, create_graph=training)[0]
+        return score, gradient
+
+    if training and recompute_derivative:
+        return checkpoint(value_and_gradient, state, use_reentrant=False)
+    return value_and_gradient(state)
+
+
+def unroll(energy, initial, *, updates=3, step_size=.005, radius=.02, training,
+           recompute_derivative=True, observe=None):
     """Same target-free update at training/inference; no training detach."""
     if updates != 3 or not 0 < step_size <= radius:
         raise ValueError('requires the declared full three-update trajectory')
@@ -193,9 +213,11 @@ def unroll(energy, initial, *, updates=3, step_size=.005, radius=.02, training):
     states = [state]
     scores = []
     with torch.enable_grad():
-        for _ in range(updates):
-            score = energy(state)
-            gradient = torch.autograd.grad(score.sum(), state, create_graph=training)[0]
+        for update in range(updates):
+            if observe is not None:
+                observe(f'unroll_{update+1}_start')
+            score, gradient = energy_value_and_gradient(
+                energy, state, training=training, recompute_derivative=recompute_derivative)
             if not bool(torch.isfinite(score).all() and torch.isfinite(gradient).all()):
                 raise RuntimeError('nonfinite native FLUX energy/latent gradient')
             axes = tuple(range(1, gradient.ndim))
@@ -207,6 +229,8 @@ def unroll(energy, initial, *, updates=3, step_size=.005, radius=.02, training):
                 state = state.detach().requires_grad_(True)
             states.append(state)
             scores.append(score)
+            if observe is not None:
+                observe(f'unroll_{update+1}_done')
         scores.append(energy(state))
     return states, scores
 

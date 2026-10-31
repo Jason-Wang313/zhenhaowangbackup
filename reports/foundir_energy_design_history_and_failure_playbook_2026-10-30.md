@@ -1,5 +1,19 @@
 # PPT energy → FLUX 尾段引导：设计演变、证据与排错决策记录
 
+## 当前：FLUX-native首步OOM；导数图重计算待GPU短诊断 — 2026-10-31
+
+用户明确授权执行内存优化。旧3×2资格24候选缓存完成，首步OOM，三节点status1；
+只有step0，0/25训练步，不能按下方“等待启动”重跑。完整日志已回传d039d3f。
+新实现对energy及其create_graph输入梯度整体checkpoint，完整三步及配方不变。
+19项CPU回归/数值对比通过；真实4B/BF16显存尚未实测，不能宣称OOM已解决。
+当前只准备一个GPU的单样本全反传显存诊断，明确属于短容量测量例外：
+`bash smoke/run_foundir_flux_native_energy_memory_v1_gpu.sh memory_recompute_v1`。
+CUDA_VISIBLE_DEVICES=0，优先空闲H200，cap1200秒加30秒清理。无optimizer更新、
+无训练步、无自动25/200步；原global batch8没有改为1。旧缓存/权重/日志保留。
+旧qualification源码身份已变，不能直接resume旧step0。非轻量训练仍默认3×2。
+详见reports/foundir_flux_native_energy_memory_readiness_2026-10-31.md。
+目的地代理负责实现/CPU核验/同步本次获授权优化；用户执行GPU诊断。
+
 ## 2026-10-31 覆盖：停止CNN路线，FLUX-only重做
 
 读 `foundir_flux_only_energy_redesign_2026-10-31.md`。用户明确禁用外挂CNN energy、
