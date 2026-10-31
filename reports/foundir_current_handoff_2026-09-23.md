@@ -1,5 +1,15 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前：v6快照采集成功；计算仍OOM，未开始训练 — 2026-10-31
+
+memory_alloc_trace_v6单H200运行54秒后status1，首个高阶更新OOM，峰值137.6805GiB。
+一阶分数/梯度差均0；训练/optimizer更新0。快照8,521,833字节及26项源码SHA已核验。
+异常后存活133.9051GiB，其中125.3557GiB分配栈含局部VJP与外层梯度checkpoint重计算；
+这是实际分配证据，具体保留根因尚未隔离。历史30000事件已截断，捕获量不能当峰值。
+完整日志/result/CPU摘要：reports/foundir_flux_native_energy_memory_v6_terminal_2026-10-31.{md,json}。
+原pickle只留共享目录；所有旧资产保留。本轮无计算改动、无新GPU命令或自动重试。
+下一工程排查应在CPU隔离嵌套checkpoint/VJP保留关系，不把采集成功当资格通过。
+
 ## 当前：v5仍OOM；下一步仅采集真实分配栈 — 2026-10-31
 
 memory_isolated_vjp_v5的一阶数值差均0，首个高阶更新仍OOM（137.68GiB），
