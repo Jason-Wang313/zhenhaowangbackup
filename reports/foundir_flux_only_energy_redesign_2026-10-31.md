@@ -1,5 +1,9 @@
 # FLUX-only energy：重做方案与当前交接
 
+**最新资源规则：所有非轻量GPU工作默认3节点×每节点2张H100/H200，总6卡。
+当前实施见 `foundir_flux_native_energy_3x2_readiness_2026-10-31.md`；覆盖本文单机4/8卡
+默认。全局batch8及科学方案不变；真实三节点CUDA尚未验收，不直接恢复旧拓扑断点。**
+
 **实施更新（同日）：** 用户已要求启动。新25步训练器/候选缓存/4或8卡tmux入口
 已实现，9项CPU测试通过；真实4B GPU尚未启动/验收。见
 `foundir_flux_native_energy_v1_readiness_2026-10-31.md`，下文“尚未实现”是方案冻结

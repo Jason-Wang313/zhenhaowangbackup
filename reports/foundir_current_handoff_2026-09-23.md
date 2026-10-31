@@ -1,5 +1,20 @@
 # FoundIR current handoff — 2026-09-23
 
+## 最新资源与交接：默认三节点，每节点两卡 — 2026-10-31
+
+用户要求当前及全部后续非轻量GPU工作默认3×2 H100/H200，总6卡；不同节点可混用，
+当前每节点两卡需同型号。只有确实轻量任务可少卡，不自动回退单机，也不偷偷改batch。
+当前readiness改读 `foundir_flux_native_energy_3x2_readiness_2026-10-31.md`；
+fresh run=`qualification_3x2_v1`，三节点rank0/1/2、相同node0地址/端口、每节点可见两卡。
+全局batch8/512/25步/完整三次更新/损失/原FLUX-only边界和双指标不变。
+六rank不等量样本按样本加权，额外样本轮换；共享存储、环境身份、每step六rank保存。
+旧4/8卡checkpoint不删除、不迁移冒充resume；新3×2同身份中断可严格恢复。
+GPU阶段上限2小时/12 GPU-hours（CPU核对及清理另计），速度未实测。
+本轮只改代码/CPU测试/推送；主会话无GPU，真实三节点CUDA/NCCL未验收。
+16项CPU测试通过，含六进程Gloo样本加权及真实Adam/RNG恢复；不能说三节点GPU通过。
+目的地CPU代理同步本次提交的明确文件并回报，不能擅启旧CNN或单机默认任务。
+下方单机4/8卡说明是初版快照，不覆盖本节。
+
 ## 当前：FLUX-only验收入口已实现，等待GPU节点实际启动 — 2026-10-31
 
 读 `foundir_flux_native_energy_v1_readiness_2026-10-31.md`。用户已要求start，主会话

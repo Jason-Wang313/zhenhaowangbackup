@@ -438,3 +438,18 @@ Oracle 知道真实干净图；energy 只看退化图、候选和 VLM 条件。
 - **实施与Git：** 读 `foundir_flux_native_energy_v1_readiness_2026-10-31.md`。
   本条与native-energy代码/测试/交接同一focused提交；
   `git log -- smoke/train_foundir_flux_native_energy_v1.py` 可定位。
+
+## 15. 决策记录：所有非轻量GPU实验默认改为3×2 — 2026-10-31
+
+- 用户要求当前及后续非轻量GPU任务使用3节点，每节点2张H100/H200；允许节点间混用。
+  轻量任务可少卡。此资源规则覆盖上文单机4/8卡和早期多节点默认，不改变FLUX-only边界。
+- 当前资格仍25步/512/完整三次更新/global batch8。同一步两rank各2样本、其余各1样本，
+  跨步轮换，按样本加权all-reduce；不默改batch=6/12。额外GPU不等于更低单卡显存。
+- 所有节点须共享代码/资产/输出，身份和存储核对在加载4B前完成；日志锁按node rank
+  区分，global rank0写主checkpoint，各rank RNG全部保存。旧checkpoint保留，不以
+  改拓扑重启冒充精确续训。新fresh ID为qualification_3x2_v1。
+- 本轮16项CPU测试通过，六进程Gloo对串行batch8一致、Adam/RNG恢复一致。
+  这不是三台GPU主机；CUDA/NCCL/显存/真实吞吐仍需实际资格。没有启动GPU任务。
+- GPU阶段每节点上限2小时，六卡上限12 GPU-hours，CPU核对和退出清理另计实际成本；
+  不预测网络会加速、不自动长训。读 `foundir_flux_native_energy_3x2_readiness_2026-10-31.md`。
+- 本条与3×2启动器/配置/测试/交接同一focused提交，用该readiness的git历史定位。

@@ -25,24 +25,38 @@ from smoke import flux_native_energy_contract_v1 as contract
 
 def hardware(world):
     import torch
-    if world not in (4,8) or not torch.cuda.is_available() or torch.cuda.device_count()!=world:
-        raise RuntimeError('expose exactly four or eight GPUs on one node')
-    devices=[torch.cuda.get_device_properties(i) for i in range(world)]
+    _,local_gpus=contract.topology(world)
+    if not torch.cuda.is_available() or torch.cuda.device_count()!=local_gpus:
+        raise RuntimeError(f'expose exactly {local_gpus} local GPUs for total world={world}')
+    devices=[torch.cuda.get_device_properties(i) for i in range(local_gpus)]
     if len({p.name for p in devices})!=1 or any(not any(k in p.name for k in ('H100','H200'))
                                               or p.total_memory<75*1024**3 for p in devices):
         raise RuntimeError('requires homogeneous H100/H200 devices, at least 75 GiB each')
-    if len({str(p.uuid) for p in devices})!=world:
+    if len({str(p.uuid) for p in devices})!=local_gpus:
         raise RuntimeError('duplicate CUDA device identities')
-    for i in range(world):
+    for i in range(local_gpus):
         free,total=torch.cuda.mem_get_info(i)
         if total-free>2*1024**3:
             raise RuntimeError(f'GPU {i} is busy; do not overlap or kill another job')
     print('NATIVE_ENERGY_HARDWARE_PASS '+json.dumps([p.name for p in devices]),flush=True)
 
 
-def prepare(output,world,resume):
+def prepare(output,world,resume,node_rank=0):
     from smoke.flux_native_energy_runtime_v1 import atomic_json
+    nodes,_=contract.topology(world)
+    if not 0<=node_rank<nodes:raise ValueError('node rank outside layout')
     receipt=contract.preflight(world)
+    if node_rank:
+        deadline=time.monotonic()+900
+        print(f'NATIVE_ENERGY_WAIT_NODE0_RECEIPT node_rank={node_rank}',flush=True)
+        while not (output/'preflight.json').exists():
+            if time.monotonic()>=deadline:raise TimeoutError('node0 receipt not visible; check shared root/node0 log')
+            time.sleep(1)
+        if json.loads((output/'preflight.json').read_text())!=receipt:
+            raise RuntimeError('node source/config/assets/topology differ from node0')
+        if (output/'result.json').exists():raise RuntimeError('completed qualification must not be relaunched')
+        print(f'NATIVE_ENERGY_PREPARED node_rank={node_rank} '+receipt['protocol_sha256'],flush=True)
+        return
     if output.exists():
         if not resume: raise FileExistsError('use a fresh run ID or explicit resume')
         if json.loads((output/'preflight.json').read_text())!=receipt:
@@ -84,6 +98,59 @@ def action_pair(slot):
     # GT positive is training-only and never enters inference selection.
     options=[(0,i) for i in (1,2,3,4,5,6,7)]+[(2,i) for i in (1,3,4,5,6,7)]
     return options[slot%len(options)]
+
+
+def sample_slots(step,rank,world):
+    """Exactly eight samples, rotating the two extra slots for world=6."""
+    if step<1 or not 0<=rank<world or world not in (2,4,6,8):
+        raise ValueError('invalid sample assignment')
+    logical=(rank+step-1)%world
+    return range((step-1)*8+logical,step*8,world)
+
+
+def average_gradients(parameters,world):
+    """Each local sample loss is scaled world/8, so this is global sample mean."""
+    import torch
+    import torch.distributed as dist
+    for parameter in parameters:
+        if parameter.grad is None:parameter.grad=torch.zeros_like(parameter)
+        dist.all_reduce(parameter.grad);parameter.grad.div_(world)
+
+
+def validate_execution(devices,world):
+    nodes,local_gpus=contract.topology(world)
+    if len(devices)!=world or [d['rank'] for d in devices]!=list(range(world)):
+        raise RuntimeError('missing/duplicate global ranks')
+    if len({d['uuid'] for d in devices})!=world:
+        raise RuntimeError('same GPU assigned more than once')
+    if len({d['host'] for d in devices})!=nodes:
+        raise RuntimeError('expected distinct node hostnames for the requested layout')
+    for node in range(nodes):
+        subset=devices[node*local_gpus:(node+1)*local_gpus]
+        if (len({d['host'] for d in subset})!=1 or len({d['name'] for d in subset})!=1
+            or [d['local_rank'] for d in subset]!=list(range(local_gpus))
+            or any(d['node_rank']!=node for d in subset)):
+            raise RuntimeError('per-node rank/GPU family mapping mismatch')
+    # H100/H200 may differ across nodes, but the software and code root may not.
+    for field in ('torch','cuda','python','packages','root','transport','launch_mode'):
+        if any(d[field]!=devices[0][field] for d in devices):
+            raise RuntimeError('cross-node environment mismatch: '+field)
+
+
+def shared_storage_check(output,receipt,rank,world):
+    import uuid
+    import torch.distributed as dist
+    from smoke.flux_native_energy_runtime_v1 import atomic_json
+    nonce=[uuid.uuid4().hex if rank==0 else None]
+    dist.broadcast_object_list(nonce,src=0)
+    folder=output/'coordination'/nonce[0];folder.mkdir(parents=True,exist_ok=True)
+    atomic_json(folder/f'rank_{rank}.json',dict(rank=rank,nonce=nonce[0],protocol=receipt['protocol_sha256']))
+    dist.barrier()
+    for peer in range(world):
+        if json.loads((folder/f'rank_{peer}.json').read_text())!=dict(rank=peer,nonce=nonce[0],protocol=receipt['protocol_sha256']):
+            raise RuntimeError('ranks do not see the same shared run directory')
+    dist.barrier()
+    if rank==0:print(f'NATIVE_ENERGY_SHARED_STORAGE_AND_COLLECTIVES_PASS ranks={world}',flush=True)
 
 
 def save_step(output,model,optimizer,step,receipt,rank,world,device,elapsed,loss_log):
@@ -167,32 +234,39 @@ def probe(output,receipt,model,ae,perceptual,contexts,rank,world,device):
     return sorted([row for group in gathered for row in group],key=lambda x:x['index'])
 
 
-def run(output,world):
+def run(output,world,resume=False):
     import torch
     import torch.distributed as dist
     from flux2.sampling import get_schedule
     from lowlight_restoration.flux_native_energy import FluxNativeEnergy,unroll,direct_quality_loss,pareto_ranking_loss
     from smoke import flux_native_energy_runtime_v1 as runtime
-    if int(os.environ['WORLD_SIZE'])!=world or int(os.environ['LOCAL_WORLD_SIZE'])!=world:
-        raise RuntimeError('single-node topology required')
+    nodes,local_gpus=contract.topology(world)
+    if int(os.environ['WORLD_SIZE'])!=world or int(os.environ['LOCAL_WORLD_SIZE'])!=local_gpus:
+        raise RuntimeError('torchrun topology differs from frozen layout')
     local=int(os.environ['LOCAL_RANK']);torch.cuda.set_device(local);device=torch.device('cuda',local)
     dist.init_process_group('nccl',device_id=device,timeout=timedelta(minutes=45));rank=dist.get_rank()
     receipt=json.loads((output/'preflight.json').read_text())
     unsigned=dict(receipt);unsigned.pop('protocol_sha256')
     if (receipt['sources']!=contract.binding() or receipt['config_sha256']!=contract.sha(contract.CONFIG)
         or receipt['spec']!=contract.load_spec() or receipt['world_size']!=world
+        or receipt['topology']!=[nodes,local_gpus]
         or hashlib.sha256(json.dumps(unsigned,sort_keys=True).encode()).hexdigest()!=receipt['protocol_sha256']):
         raise RuntimeError('implementation changed after preflight')
     spec=receipt['spec'];start=time.monotonic()
     try:
         props=torch.cuda.get_device_properties(device)
         from importlib.metadata import version
-        identity=dict(host=socket.gethostname(),rank=rank,name=props.name,uuid=str(props.uuid),
+        identity=dict(host=socket.gethostname(),rank=rank,local_rank=local,node_rank=rank//local_gpus,
+                      name=props.name,uuid=str(props.uuid),root=str(ROOT),launch_mode='resume' if resume else 'fresh',
                       torch=torch.__version__,cuda=torch.version.cuda,python=sys.version,
-                      packages={k:version(k) for k in ('torchmetrics','safetensors','transformers','torchvision')})
+                      packages={k:version(k) for k in ('torchmetrics','safetensors','transformers','torchvision')},
+                      transport={k:os.environ.get(k,'') for k in ('NCCL_IB_DISABLE','NCCL_NVLS_ENABLE',
+                          'NCCL_SOCKET_IFNAME','GLOO_SOCKET_IFNAME')})
         hosts=[None]*world;dist.all_gather_object(hosts,identity)
-        if len({v['host'] for v in hosts})!=1:raise RuntimeError('cross-node not allowed')
-        execution=dict(protocol_sha256=receipt['protocol_sha256'],devices=hosts)
+        validate_execution(hosts,world)
+        shared_storage_check(output,receipt,rank,world)
+        execution=dict(protocol_sha256=receipt['protocol_sha256'],
+                       devices=[{k:v for k,v in h.items() if k!='launch_mode'} for h in hosts])
         if rank==0:
             if (output/'execution.json').exists():
                 if json.loads((output/'execution.json').read_text())!=execution:
@@ -230,7 +304,7 @@ def run(output,world):
             learning_rate=spec['learning_rate']*min(1.,next_step/spec['warmup_steps'])
             for group in optimizer.param_groups:group['lr']=learning_rate
             local_loss=0.
-            for slot in range((next_step-1)*8+rank,next_step*8,world):
+            for slot in sample_slots(next_step,rank,world):
                 index=sample_index(slot,spec['seed']);record=runtime.load_record(output,receipt,index,device)
                 t=get_schedule(50,record['initial'].shape[1])[48]
                 args=runtime.energy_arguments(record,contexts,t)
@@ -251,9 +325,7 @@ def run(output,world):
                 del states,scores,images,direct,loss,action_scores,trajectory_rank,action_rank,record
             # Explicit reduction, not DDP's unsupported autograd.grad hook path.
             # Every parameter participates in identical order even for a zero rank loss.
-            for parameter in parameters:
-                if parameter.grad is None:parameter.grad=torch.zeros_like(parameter)
-                dist.all_reduce(parameter.grad);parameter.grad.div_(world)
+            average_gradients(parameters,world)
             if any(not bool(p.grad.isfinite().all()) for p in parameters):raise RuntimeError('nonfinite parameter gradient')
             lora_norm=sum(float(p.grad.square().sum()) for n,p in model.named_parameters()
                           if '.energy_b.' in n and p.grad is not None)**.5
@@ -261,9 +333,14 @@ def run(output,world):
             norm=float(torch.nn.utils.clip_grad_norm_(parameters,spec['gradient_clip']))
             optimizer.step();model.architecture_receipt()
             value=torch.tensor(local_loss,device=device);dist.all_reduce(value);value/=world
+            step_time=torch.tensor(time.monotonic()-tick,device=device)
+            peak=torch.tensor(torch.cuda.max_memory_allocated(device)/1024**3,device=device)
+            dist.all_reduce(step_time,op=dist.ReduceOp.MAX);dist.all_reduce(peak,op=dist.ReduceOp.MAX)
             log=dict(step=next_step,loss=float(value),gradient_norm=norm,energy_lora_gradient_norm=lora_norm,
                      learning_rate=learning_rate,step_seconds=time.monotonic()-tick,
-                     peak_allocated_gib=torch.cuda.max_memory_allocated(device)/1024**3)
+                     slowest_rank_compute_seconds=float(step_time),
+                     samples_per_rank=[len(sample_slots(next_step,r,world)) for r in range(world)],
+                     peak_allocated_gib=float(peak))
             loss_log.append(log)
             elapsed=elapsed_before+time.monotonic()-training_start
             save_step(output,model,optimizer,next_step,receipt,rank,world,device,elapsed,loss_log)
@@ -276,6 +353,9 @@ def run(output,world):
             raise RuntimeError('final real-device checkpoint reload mismatch')
         optimizer.zero_grad(set_to_none=True)
         rows=probe(output,receipt,model,ae,perceptual,contexts,rank,world,device)
+        attempt_duration=torch.tensor(time.monotonic()-start,device=device)
+        attempt_durations=[torch.zeros_like(attempt_duration) for _ in range(world)]
+        dist.all_gather(attempt_durations,attempt_duration)
         if rank==0:
             if len(rows)!=8 or [r['index'] for r in rows]!=list(range(8)):raise RuntimeError('incomplete probes')
             arms={}
@@ -292,7 +372,8 @@ def run(output,world):
                 generalization_established=False,probe_role=spec['probe_role'],auto_trainfit=False,
                 final_checkpoint_reloaded=True,
                 protected_pixels_accessed=False,cnn_or_restormer_used=False,
-                attempt_wall_seconds=time.monotonic()-start,attempt_gpu_hours=(time.monotonic()-start)*world/3600,
+                topology=[nodes,local_gpus],attempt_wall_seconds=max(float(v) for v in attempt_durations),
+                attempt_gpu_hours=sum(float(v) for v in attempt_durations)/3600,
                 train_log=loss_log,checkpoint=json.loads((output/'latest.json').read_text()))
             runtime.atomic_json(output/'result.json',result)
             print('NATIVE_ENERGY_QUALIFICATION_COMPLETE '+json.dumps(arms),flush=True)
@@ -303,16 +384,17 @@ def run(output,world):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--run-id',default='qualification_v1')
-    parser.add_argument('--world-size',type=int,choices=(4,8),default=8)
+    parser.add_argument('--run-id',default='qualification_3x2_v1')
+    parser.add_argument('--world-size',type=int,choices=(2,4,6,8),default=6)
+    parser.add_argument('--node-rank',type=int,default=0)
     parser.add_argument('--hardware',action='store_true')
     parser.add_argument('--prepare',action='store_true')
     parser.add_argument('--resume',action='store_true')
     args=parser.parse_args()
     if args.hardware:hardware(args.world_size);return
     output=contract.run_path(args.run_id)
-    if args.prepare:prepare(output,args.world_size,args.resume)
-    else:run(output,args.world_size)
+    if args.prepare:prepare(output,args.world_size,args.resume,args.node_rank)
+    else:run(output,args.world_size,args.resume)
 
 
 if __name__=='__main__':main()

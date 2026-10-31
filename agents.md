@@ -1,5 +1,11 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+**最新永久资源规则：所有当前/后续非轻量GPU工作默认3节点×每节点2张H100/H200，
+总6卡，允许节点间混用。轻量任务才可少卡；不能按旧段落退回单机8卡。**
+读AGENTS.md顶部和 `reports/foundir_flux_native_energy_3x2_readiness_2026-10-31.md`。
+当前fresh run为qualification_3x2_v1，全局batch8不变；原4/8卡ID不可直接resume。
+下方4/8卡启动设定均为历史，GPU尚未启动。
+
 最新实施状态：FLUX-only 25步代码已实现、9项CPU测试通过，尚未GPU启动/验收。
 读 `reports/foundir_flux_native_energy_v1_readiness_2026-10-31.md`，不得运行旧CNN/V3。
 先同步，再在GPU节点运行新native-energy入口；不自动200步。

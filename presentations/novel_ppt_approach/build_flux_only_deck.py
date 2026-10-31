@@ -232,7 +232,7 @@ def build(output):
     s = slide_base(prs, "什么已确定，什么还没有？", "本版是明确的重做计划，不是对成功率、成本或创新性的保证。")
     panel(s, .6, 1.95, 5.9, 3.8, "已确定", "只用预训练 FLUX 可训练主干\n不再用外挂 CNN 或 Restormer\n保留原恢复能力、基线和评价口径\n直接训练修后质量，不重复旧诊断", size=22)
     panel(s, 6.75, 1.95, 5.95, 3.8, "仍需实测", "完整3步二阶反传能否装下显存\nFLUX energy 能否学会 LPIPS 方向\n更大数据与新来源能否保留收益\n速度 / GPU-hours / VLM实际贡献", TEAL, 22)
-    textbox(s, .75, 5.98, 11.8, .72, "状态：FLUX-only 25步入口已实现，9项CPU测试通过，未启动 GPU。\n单机4/8张H100/H200；512图、三次更新、全局batch8。显存/速度仍需实测。", 19, RED)
+    textbox(s, .75, 5.98, 11.8, .72, "状态：FLUX-only 25步入口已实现，16项CPU测试通过，未启动 GPU。\n默认3节点×2张H100/H200；512图、三次更新、全局batch8。GPU性能待实测。", 19, RED)
 
     output.parent.mkdir(parents=True, exist_ok=True)
     prs.save(str(output))

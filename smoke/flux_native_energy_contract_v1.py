@@ -15,6 +15,7 @@ FILES = ('configs/foundir_flux_native_energy_v1.json',
          'smoke/flux_native_energy_contract_v1.py', 'smoke/flux_native_energy_runtime_v1.py',
          'smoke/train_foundir_flux_native_energy_v1.py',
          'smoke/run_foundir_flux_native_energy_v1_gpu.sh',
+         'smoke/flux_native_energy_launcher_lib.sh',
          'smoke/start_foundir_flux_native_energy_v1_tmux.sh','smoke/tmux_launcher_lib.sh')
 
 
@@ -54,12 +55,23 @@ def binding():
 def load_spec():
     spec=json.loads(CONFIG.read_text())
     if (spec['mode']!='qualification_only' or spec['steps']!=25 or spec['updates']!=3
-        or spec['crop']!=512 or spec['global_batch']!=8 or spec['allowed_gpu_counts']!=[4,8]
+        or spec['crop']!=512 or spec['global_batch']!=8 or spec['allowed_gpu_counts']!=[2,4,6,8]
+        or spec['default_topology']!='3x2'
+        or spec['allowed_topologies']!={'2':[1,2],'4':[1,4],'6':[3,2],'8':[1,8]}
+        or not spec['mixed_gpu_families_across_nodes_allowed']
+        or spec['sample_assignment']!='rotate_uneven_rank_slots_preserving_global_batch_8'
         or spec['training_indices']!=list(range(24)) or spec['probe_indices']!=list(range(8))
         or spec['auto_trainfit'] or spec['qualification_may_seed_trainfit']
         or spec['cnn_or_restormer_allowed'] or spec['protected_pixels_allowed']):
         raise ValueError('qualification scope changed')
     return spec
+
+
+def topology(world):
+    layouts={2:(1,2),4:(1,4),6:(3,2),8:(1,8)}
+    if world not in layouts:
+        raise ValueError('supported layouts: 3x2 default; explicit 1x2/1x4/1x8')
+    return layouts[world]
 
 
 def source_metadata():
@@ -91,7 +103,7 @@ def source_metadata():
 def preflight(world):
     spec,previous,selected=source_metadata()
     if world not in spec['allowed_gpu_counts']:
-        raise ValueError('one 4/8 GPU node required')
+        raise ValueError('unsupported total GPU count')
     assets={}
     for field in ('flow','ae','wrong_expert'):
         name=previous['base_spec'][field]
@@ -109,6 +121,7 @@ def preflight(world):
         bound(name,expected)
     receipt=dict(spec=spec,selected=selected,assets=assets,base_spec=previous['base_spec'],
         plan=previous['plan'],prompt_root=previous['parent_cache'],world_size=world,
+        topology=list(topology(world)),
         sources=binding(),config_sha256=sha(CONFIG),protected_pixels_accessed=False,
         cnn_checkpoint_loaded=False,qualification_checkpoint_loaded=False)
     receipt['protocol_sha256']=hashlib.sha256(json.dumps(receipt,sort_keys=True).encode()).hexdigest()
