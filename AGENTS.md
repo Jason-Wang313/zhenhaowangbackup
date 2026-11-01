@@ -1,5 +1,37 @@
 # Project agent instructions
 
+## 当前授权：扩展五类single，再接入现有混合退化 — 2026-11-01
+
+本节覆盖下方“仅限Rain/Blur”“下一步续训到2000”及更早Rain/EBT优先级。
+用户已批准扩展右图③：五类接入验收 → 五类适应训练 → 五类single＋现有五种double、
+一种triple联合训练。暂不做image-only消融，不另训五个独立专家，不加CNN/Restormer/energy。
+无需五类全部先过SOW才允许混合阶段；先确认新增任务能学习且旧任务没有严重退化。
+另一代理的FLUX-native energy显存线独立，不修改其代码或停止其任务。
+
+本次交付只到五类25步工程验收，CPU已通过，GPU尚未启动；正式规模在实测后冻结，
+不自动formal或mixed。从已成功的VLM step2000恢复权重、Adam和8rank RNG到2025，
+不是重置VLM/fresh Adam，不从旧step11000重新训。五类新采样＋取消原两类router CE
+是明确的阶段变化，不能冒称原两类配方原样续训。仍每块两个FLUX FFN专家，
+不是五类各一个专家；路由由恢复损失学习，不输入GT类别。
+Rain/Blur LPIPS权重.05/.20不变，新增三类.05；其余loss/LR、一步端点和batch32不变。
+
+可用五类训练池311,921条；本次每类160次曝光、各100张固定开发预览。
+Noise/Low-light预览仅34/21个来源，不是各100独立来源。预览不能替代完整五类门槛。
+每5步保存完整状态；本次资格权重不能seed正式训练，formal仍从成功step2000出发。
+step2000历史完整结果Rain34.610111/.064487、Blur26.755594/.176108保留；
+均过最低门槛，但未证明VLM独立贡献，Blur LPIPS仍不如原独立50步专家.151993。
+
+资源仍4节点×每节点2张H100/H200，共8卡；节点内同型号，跨节点可混用。
+GPU共享运行根仍为 /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang。
+不要复用旧IP、不要在旧agent-driven-world-model目录启动。
+主代理在隔离worktree实现/测试/push；目的地CPU代理安全同步、资产预检后给用户GPU命令。
+保留本地dirty、全部旧资产和energy工作；GitHub是代码/决策交付源，不含大权重/数据。
+预算.3–.8小时/2.4–6.4 GPU-hours，每次启动1小时硬cap，至少80GiB空闲，不自动删文件。
+入口 smoke/run_foundir_token_moe_five_single_v1_4x2.sh；
+配置 configs/foundir_token_moe_five_single_qualification_v1.json。
+精确同步、恢复、数据与测试说明：
+reports/foundir_token_moe_five_single_v1_readiness_2026-11-01.md。
+
 ## 当前：VLM-token MoE续训2000步完成；完整开发最低双任务门槛通过 — 2026-11-01
 
 continue_4x2_v1真续训从父step1000恢复，四节点8×H200，1000个新步到全局2000，

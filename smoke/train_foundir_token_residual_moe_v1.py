@@ -190,6 +190,15 @@ def resume_qualification(model, optimizer, path, binding, rank):
     return resume_training(model, optimizer, path, binding, rank, mode='qualification', total_steps=25)
 
 
+def training_objective(loss, model, spec, parent, cfg, device):
+    if cfg.get('experiment') == 'five_single_qualification_v1':
+        if cfg['router_ce_weight'] != 0:
+            raise RuntimeError('five tasks cannot supervise two experts with class-index CE')
+        return loss
+    labels = torch.tensor([spec['task_id']], device=device)
+    return loss + parent['training']['router_ce_weight'] * router_classification_loss(model, labels)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--phase', choices=('features', 'train', 'preflight'), required=True)
@@ -199,21 +208,35 @@ def main():
     args = parser.parse_args()
     if not re.fullmatch(r'[A-Za-z0-9_-]+', args.run_id):
         raise ValueError('unsafe run ID')
-    cfg, parent, base, qwen, qcfg, training, development, data = contract(ROOT, args.config)
     config_relative = str(args.config.resolve().relative_to(ROOT))
-    config_sha, sources = sha(args.config), source_hashes(ROOT, config_relative)
-    mode = cfg['mode']
-    qualification = verify_qualification(ROOT, cfg)
-    if qualification and qualification['qualified_data'] != data:
-        raise RuntimeError('formal training pool changed from qualified source-disjoint protocol')
-    lineage = None
-    if 'continuation' in cfg:
-        from smoke.token_residual_moe_continuation_v1 import verify_continuation
-        lineage = verify_continuation(ROOT, cfg, tensors=args.phase == 'preflight')
-        if lineage['binding']['data'] != data:
-            raise RuntimeError('continuation data changed')
+    experiment = json.loads(args.config.read_text()).get('experiment')
+    expansion = experiment == 'five_single_qualification_v1'
+    if experiment and not expansion:
+        raise RuntimeError('unsupported experiment profile')
+    if expansion:
+        from smoke.token_moe_five_single_v1 import load_contract, verify_parent, experiment_sources, FiveSamples
+        cfg, parent, base, qwen, qcfg, training, development, data = load_contract(ROOT, args.config)
+        lineage = verify_parent(ROOT, cfg, tensors=args.phase == 'preflight')
+        if lineage['binding']['data'] != data['parent_two_task_data']:
+            raise RuntimeError('expanded data do not descend from the audited two-task protocol')
+        sources = experiment_sources(ROOT, config_relative, lineage)
+        qualification = None
+        samples = FiveSamples(ROOT, cfg, training, development)
+    else:
+        cfg, parent, base, qwen, qcfg, training, development, data = contract(ROOT, args.config)
+        sources = source_hashes(ROOT, config_relative)
+        qualification = verify_qualification(ROOT, cfg)
+        if qualification and qualification['qualified_data'] != data:
+            raise RuntimeError('formal training pool changed from qualified source-disjoint protocol')
+        lineage = None
+        if 'continuation' in cfg:
+            from smoke.token_residual_moe_continuation_v1 import verify_continuation
+            lineage = verify_continuation(ROOT, cfg, tensors=args.phase == 'preflight')
+            if lineage['binding']['data'] != data:
+                raise RuntimeError('continuation data changed')
+        samples = Samples(ROOT, cfg, training, development)
+    config_sha, mode = sha(args.config), cfg['mode']
     restore_path = args.resume or (ROOT / lineage['receipt'] if lineage else None)
-    samples = Samples(ROOT, cfg, training, development)
     specs = samples.all_specs()
     binding = {'config_sha256': config_sha, 'source_sha256': sources,
                'data': data, 'samples_sha256': digest(specs)}
@@ -221,10 +244,10 @@ def main():
     output = ROOT / cfg['output_root'] / args.run_id
     if args.phase == 'preflight':
         verify_assets(ROOT, cfg, base, qwen)
-        if mode == 'formal':
+        if mode == 'formal' or expansion:
             import shutil
             if shutil.disk_usage(ROOT).free < cfg['minimum_free_gib'] * 1024**3:
-                raise RuntimeError('formal requires 160GiB free for new checkpoints; do not delete old assets')
+                raise RuntimeError(f"requires {cfg['minimum_free_gib']}GiB free; do not delete old assets")
         print(json.dumps({'status': 'cpu_preflight_pass', 'binding': binding,
             'sample_presentations': (cfg['steps'] - cfg.get('training_start_step', 0)) * 32,
             'continuation': lineage,
@@ -242,11 +265,11 @@ def main():
     try:
         rank0(lambda: verify_assets(ROOT, cfg, base, qwen))
         if args.phase == 'features':
-            if mode == 'formal' and not args.resume:
+            if (mode == 'formal' or expansion) and not args.resume:
                 def check_space():
                     import shutil
                     if shutil.disk_usage(ROOT).free < cfg['minimum_free_gib'] * 1024**3:
-                        raise RuntimeError('formal requires 160GiB free; no automatic deletion')
+                        raise RuntimeError(f"requires {cfg['minimum_free_gib']}GiB free; no automatic deletion")
                 rank0(check_space)
             extract(samples, specs, cache_dir, config_sha, qwen, qcfg, rank, device, binding)
             return
@@ -320,11 +343,12 @@ def main():
         # still require the current code/config/cache identity without exceptions.
         restore_binding = lineage['binding'] if lineage and not args.resume else binding
         restore_limit = lineage['start_step'] if lineage and not args.resume else cfg['steps']
+        restore_mode = lineage.get('mode', mode) if lineage and not args.resume else mode
         start_step = resume_training(model, optimizer, restore_path, restore_binding, rank,
-            mode=mode, total_steps=restore_limit) if restore_path else 0
+            mode=restore_mode, total_steps=restore_limit) if restore_path else 0
         if lineage:
             if start_step < lineage['start_step']:
-                raise RuntimeError('continuation must start at or after step1000')
+                raise RuntimeError('cannot restore before the declared phase start')
             initial_vlm = {n: p.detach().cpu().clone() for n, p in model.named_parameters() if '.vlm_projector.' in n}
         restored_rng = rng_state()
         wrapped = DDP(model, device_ids=[local], broadcast_buffers=False, gradient_as_bucket_view=True)
@@ -378,6 +402,7 @@ def main():
             rank0(bind_stage_baseline)
         restore_rng(restored_rng)
         times, checkpoints = [], []
+        task_presentations = {t: 0 for t in cfg.get('tasks', TASKS)}
         for step in range(start_step, cfg['steps']):
             tick = time.monotonic()
             model.train(); optimizer.zero_grad(set_to_none=True)
@@ -388,16 +413,19 @@ def main():
                 lq, gt = [v[None].to(device) for v in samples.pair(spec)]
                 condition = feature(spec)
                 weights = dict(parent['training']['losses'])
-                weights['lpips'] = cfg['rain_lpips_weight'] if spec['task_id'] == 0 else cfg['blur_lpips_weight']
+                task = spec['task'] if expansion else TASKS[spec['task_id']]
+                task_presentations[task] += 1
+                weights['lpips'] = (cfg['lpips_by_task'][task] if expansion else
+                    (cfg['rain_lpips_weight'] if spec['task_id'] == 0 else cfg['blur_lpips_weight']))
                 with torch.no_grad():
                     clean = ae.encode(gt.float()).float()
                 with wrapped.no_sync() if micro < 3 else nullcontext():
                     with token_conditioning(model, condition):
                         result = restore_endpoint(wrapped, ae, lq, context, ids, batched_prc_img)
                         loss, terms = restoration_loss(result, clean, gt, metric, batched_prc_img, weights)
-                        # Historical training-only auxiliary CE, never a hard routing input.
-                        labels = torch.tensor([spec['task_id']], device=device)
-                        objective = loss + parent['training']['router_ce_weight'] * router_classification_loss(model, labels)
+                        # Five-task profile uses restoration gradients only. The
+                        # historical two-class auxiliary is retained for old runs.
+                        objective = training_objective(loss, model, spec, parent, cfg, device)
                         if not torch.isfinite(objective):
                             raise RuntimeError('nonfinite loss')
                         max_adjustment = max(max_adjustment, max(float(m.last_adjustment.detach().abs().max()) for m in modules.values()))
@@ -435,12 +463,22 @@ def main():
                       for n, p in model.named_parameters() if n in initial_vlm) if times else None
         observations = [None] * 8
         dist.all_gather_object(observations, {'changed': changed,
+            'task_presentations_this_launch': task_presentations,
             'peak_memory_gib': torch.cuda.max_memory_allocated() / 1024**3})
         def finish():
             if times and not all(v['changed'] for v in observations):
                 raise RuntimeError('VLM score branch did not update')
             hours = (time.monotonic() - started) / 3600
             scientific = {'absolute_quality_gate_pass': None, 'gain_vs_start': None}
+            if expansion:
+                totals = {t: sum(o['task_presentations_this_launch'][t] for o in observations) for t in cfg['tasks']}
+                expected = {t: 0 for t in cfg['tasks']}
+                for offset in range(start_step * 32, cfg['steps'] * 32):
+                    expected[samples.train_spec(offset)['task']] += 1
+                if totals != expected:
+                    raise RuntimeError('five-task qualification sample exposure mismatch')
+                scientific.update(task_presentations_this_launch=totals, full_five_type_gate=False,
+                    mixed_training=False, qualification_may_seed_formal=False)
             if mode == 'formal':
                 reference = json.loads((output / 'baseline.json').read_text())
                 if sha(ROOT / reference['path']) != reference['sha256']:
@@ -468,7 +506,9 @@ def main():
                 'training_allocated_gpu_hours': hours * 8,
                 'scientific_gate_proven': False, 'VLM_advantage_proven': False,
                 'automatic_formal': False, 'protected_pixels_accessed': False})
-            print('TOKEN_MOE_FORMAL_COMPLETE' if mode == 'formal' else 'TOKEN_MOE_QUALIFICATION_PASS', flush=True)
+            marker = ('TOKEN_MOE_FIVE_SINGLE_QUALIFICATION_PASS' if expansion else
+                      ('TOKEN_MOE_FORMAL_COMPLETE' if mode == 'formal' else 'TOKEN_MOE_QUALIFICATION_PASS'))
+            print(marker, flush=True)
         rank0(finish)
     finally:
         dist.destroy_process_group()

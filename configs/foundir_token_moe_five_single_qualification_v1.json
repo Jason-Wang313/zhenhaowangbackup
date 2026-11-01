@@ -1,0 +1,32 @@
+{
+  "experiment": "five_single_qualification_v1",
+  "parent_config": "configs/foundir_token_residual_moe_continue_v1.json",
+  "parent_config_sha256": "2b1d04a6ddec12d3ccdf0e56603698025e45d8400dab10838d66f0d0702a8a9f",
+  "parent_report": "reports/foundir_token_residual_moe_continue_v1_terminal_2026-11-01.json",
+  "parent_report_sha256": "6f6ce25fdd485e15a9f231170b09e9dac8e9029733bd9315a0a01d39ff8c9032",
+  "parent_receipt": "checkpoints/foundir_token_residual_moe_continue_v1/continue_4x2_v1/step_002000.resume.json",
+  "parent_receipt_sha256": "d5eb06cd745fd62741c0f7cc90ebd3c1538d53a57770acef0c6e7b1aada55174",
+  "mode": "qualification",
+  "seed": 2026110105,
+  "training_start_step": 2000,
+  "steps": 2025,
+  "save_every": 5,
+  "milestones": [2025],
+  "full_evaluation_steps": [],
+  "tasks": ["rain", "blur", "noise", "haze", "low_light"],
+  "lpips_by_task": {"rain": 0.05, "blur": 0.20, "noise": 0.05, "haze": 0.05, "low_light": 0.05},
+  "router_ce_weight": 0.0,
+  "preview_records_per_task": 100,
+  "reference_protocols": {
+    "noise": {"path": "configs/foundir_noise_flux2_scalar_residual_full_development_v1.json", "sha256": "5e7a356ea89d21f7b60b4b736f851ef26a0216d8555d73846f527b958b5b7dd6"},
+    "haze": {"path": "configs/foundir_haze_flux2_step3000_full_development_v1.json", "sha256": "a285c102fb63e1716aeb5ae7131b66037e188903c42aaa54caecc3bbae442b71"},
+    "low_light": {"path": "configs/foundir_lowlight_flux2_scalar_residual_full_development_v1.json", "sha256": "fea0227d13b6d572897d683a8833e2312047cf28be2d4cf12462ddf95092856e"}
+  },
+  "output_root": "checkpoints/foundir_token_moe_five_single_qualification_v1",
+  "minimum_free_gib": 80,
+  "wall_hours_estimate": [0.3, 0.8],
+  "allocated_gpu_hours_estimate": [2.4, 6.4],
+  "hard_wall_seconds_per_launch": 3600,
+  "automatic_formal": false,
+  "qualification_may_seed_formal": false
+}
