@@ -1,5 +1,17 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 当前：VLM-token MoE续训2000步完成；完整开发最低双任务门槛通过 — 2026-11-01
+
+continue_4x2_v1真续训从父step1000恢复，四节点8×H200，1000个新步到全局2000，
+四节点status0；1000/1500/2000完整Rain100＋Blur2595及10份收据齐全。
+终态Rain34.610111/.064487、Blur26.755594/.176108，均过预设绝对门槛。
+相对同运行step1000，Rain PSNR+.336425dB、LPIPS变差.002326；
+Blur PSNR+.050452dB、LPIPS改善.007321。原step0基线另行保留并核验。
+最低联合门槛通过不等于VLM独立贡献或独立来源泛化；无匹配消融，
+历史独立50步Blur LPIPS=.151993仍优于本次.176108。
+node0墙钟10597秒，合计23.541111使用GPU-hours。终态已停，不自动加步。
+完整日志与核验：reports/foundir_token_residual_moe_continue_v1_terminal_2026-11-01.{md,json}。
+
 ## 当前授权：优先改善VLM-token性能，真续训1000→2000 — 2026-11-01
 
 用户选择暂不做image-only匹配对照，继续当前右图③。不得擅自启动对照、改架构、
