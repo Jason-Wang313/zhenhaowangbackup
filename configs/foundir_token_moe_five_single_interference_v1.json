@@ -1,0 +1,20 @@
+{
+  "experiment": "five_single_interference_v1",
+  "qualification_config": "configs/foundir_token_moe_five_single_qualification_v1.json",
+  "qualification_config_sha256": "31a1e89fbb774405c864f46a70345faeb14a1f2434b9a1c2fcdd0bbff166d05c",
+  "terminal_report": "reports/foundir_token_moe_five_single_v1_terminal_2026-11-01.json",
+  "terminal_report_sha256": "27430079d43e176d8ed1f09758f343a9411f68298f33dfd9b7306137ba816f83",
+  "old_step": 2000,
+  "new_step": 2025,
+  "records_per_task": 100,
+  "arms": ["old_body_old_gates", "old_body_new_gates", "new_body_old_gates", "new_body_new_gates"],
+  "self_replay_max_abs": 0.00001,
+  "self_replay_uint8_exact": true,
+  "output_root": "checkpoints/foundir_token_moe_five_single_interference_v1",
+  "minimum_free_gib": 5,
+  "wall_hours_estimate": [0.2, 0.5],
+  "allocated_gpu_hours_estimate": [1.6, 4.0],
+  "hard_wall_seconds_per_launch": 3600,
+  "optimizer_updates": 0,
+  "automatic_training": false
+}

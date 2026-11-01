@@ -1,5 +1,29 @@
 # Project agent instructions
 
+## 当前授权：定位五类退步，只做零训练交叉检查 — 2026-11-01
+
+用户授权检查上一轮退步原因，不是照原配方正式长训。五类25步已结束，不重跑、
+不续训2025、不启动mixed；成功step2000及全部历史资产保留。
+本地回传CPU审计已完成：Rain/Blur/Noise分别99%/96%/74%的预览图PSNR退步；
+Rain后四层仍几乎全选原专家0，不能仅归为“选错专家”。Low-light起点平均像素MSE
+约为Rain的109.52倍，这是开发误差尺度，不是训练梯度主导的证明。唯一根因尚未确定。
+
+下一步是同一500张开发预览的四组只读干预：旧/新修图权重 × 旧/新每图每块专家比例。
+先从两个原模型记录实际soft比例，再固定比例重放，避免仅换router参数但上游特征仍变。
+两模型各500张自重放必须浮点最大差≤1e-5且uint8一致。GT只用于评分；
+跨组合是诊断，不是可部署提升，不能用其最佳指标宣称科学成功或VLM贡献。
+不创建optimizer、不反传、不写权重，不加CNN/Restormer/专家，不做image-only消融。
+
+新入口 smoke/run_foundir_token_moe_five_single_interference_v1_4x2.sh；
+配置 configs/foundir_token_moe_five_single_interference_v1.json。
+生产MoE/资格训练器和另一代理energy源码保持不变。GPU诊断尚未启动；
+主代理实现/测试/push，目的地代理安全同步、CPU资产预检后给用户GPU命令。
+资源仍4节点×每节点2张H100/H200；迁移后multimodal-discrete-diffusion共享根不变。
+预算.2–.5小时/1.6–4.0 GPU-hours，每次1小时cap，至少5GiB新空间，不删旧文件。
+完成后依据四组结果决定优先处理路由漂移还是共享权重干扰，不自动更改训练配方。
+详见 reports/foundir_token_moe_interference_v1_readiness_2026-11-01.md；
+已执行CPU证据在 reports/foundir_token_moe_interference_cpu_audit_2026-11-01.json。
+
 ## 当前：五类single 25步工程验收结束；旧任务明显退步 — 2026-11-01
 
 qualification_4x2_v1四节点8×H200，全局2000→2025、新增25步，四节点status0。
