@@ -1,5 +1,15 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 当前：右图③正式1000步结束；联合画质门槛未过 — 2026-11-01
+
+formal_4x2_v1四节点8×H200正常结束，1000/1000步、11份恢复收据、四节点status0。
+同运行step0→1000：Rain100 PSNR -0.143334dB、LPIPS下降3.453%；
+Blur2595 PSNR +0.085780dB、LPIPS下降2.602%。Rain绝对门槛通过；
+完整Blur LPIPS=.1834295仍高于.18，联合门槛失败。没有匹配消融，VLM贡献未证明。
+墙钟node0 9431秒，四节点合计20.951667使用GPU-hours。
+完整日志/结果与核验见reports/foundir_token_residual_moe_formal_v1_terminal_2026-11-01.{md,json}。
+正式训练已终止，不自动延长或启动其他分支；energy源码保持原状。
+
 ## 当前执行：已批准右图③ MoE 正式训练1000步 — 2026-10-31
 
 本节覆盖下面“未来正式规模需另定／未获正式批准”的旧说明。用户已授权正式训练；
