@@ -1,5 +1,17 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前：五类single 25步工程验收结束；旧任务明显退步 — 2026-11-01
+
+qualification_4x2_v1四节点8×H200，全局2000→2025、新增25步，四节点status0。
+每类160次曝光、五份完整收据、两次各500张固定预览；工程PASS。
+Rain PSNR -7.253410dB / LPIPS +.025153；Blur预览 -3.654619 / +.051980；
+Noise预览 -1.540234 / +.022325。Haze预览 +2.702537 / -.102344，
+Low-light预览 +8.642499 / -.258797。旧任务明显退步，不以新任务改善掩盖。
+这不是完整五类门槛通过或VLM独立贡献；25步不能作路线终判。
+node0墙钟747秒，四节点合计1.652222 GPU-hours；最终模型/Adam SHA核验通过。
+终态不自动formal/mixed/加步，不改配方；资格权重不得seed formal，保留成功父step2000。
+完整日志与逐图核验：reports/foundir_token_moe_five_single_v1_terminal_2026-11-01.{md,json}。
+
 ## 当前授权：扩展五类single，再接入现有混合退化 — 2026-11-01
 
 本节覆盖下方“仅限Rain/Blur”“下一步续训到2000”及更早Rain/EBT优先级。
