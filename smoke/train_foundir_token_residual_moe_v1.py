@@ -206,6 +206,13 @@ def main():
     qualification = verify_qualification(ROOT, cfg)
     if qualification and qualification['qualified_data'] != data:
         raise RuntimeError('formal training pool changed from qualified source-disjoint protocol')
+    lineage = None
+    if 'continuation' in cfg:
+        from smoke.token_residual_moe_continuation_v1 import verify_continuation
+        lineage = verify_continuation(ROOT, cfg, tensors=args.phase == 'preflight')
+        if lineage['binding']['data'] != data:
+            raise RuntimeError('continuation data changed')
+    restore_path = args.resume or (ROOT / lineage['receipt'] if lineage else None)
     samples = Samples(ROOT, cfg, training, development)
     specs = samples.all_specs()
     binding = {'config_sha256': config_sha, 'source_sha256': sources,
@@ -219,7 +226,8 @@ def main():
             if shutil.disk_usage(ROOT).free < cfg['minimum_free_gib'] * 1024**3:
                 raise RuntimeError('formal requires 160GiB free for new checkpoints; do not delete old assets')
         print(json.dumps({'status': 'cpu_preflight_pass', 'binding': binding,
-            'sample_presentations': cfg['steps'] * 32,
+            'sample_presentations': (cfg['steps'] - cfg.get('training_start_step', 0)) * 32,
+            'continuation': lineage,
             'validation_records': sum(s['kind'] == 'validation' for s in specs), 'mode': mode,
             'GPU_started': False, 'protected_pixels_accessed': False}), flush=True)
         return
@@ -228,7 +236,7 @@ def main():
         KLEIN_4B_BASE_MODEL_PATH=str(ROOT / base['model']['flow_weights']),
         AE_MODEL_PATH=str(ROOT / base['model']['autoencoder_weights']))
     phase_binding = {**binding, 'run_id': args.run_id, 'phase': args.phase,
-                     'resume': str(args.resume) if args.resume else None}
+                     'resume': str(restore_path) if restore_path else None}
     rank, local, device, hardware = distributed_start(phase_binding, ROOT / cfg['output_root'])
     started = time.monotonic()
     try:
@@ -259,14 +267,19 @@ def main():
         def prepare():
             output.mkdir(parents=True, exist_ok=False)
             write_once(output / 'launch.json', {'binding': binding, 'hardware': hardware,
-                'initialization': 'image_only_step11000_weights_fresh_Adam',
-                'resume': str(args.resume) if args.resume else None, 'mode': mode,
-                'qualification': qualification})
-            if mode == 'formal' and args.resume:
-                baseline = json.loads((args.resume.parent / 'baseline.json').read_text())
+                'initialization': 'restore_full_formal_state' if restore_path else 'image_only_step11000_weights_fresh_Adam',
+                'resume': str(restore_path) if restore_path else None, 'mode': mode,
+                'qualification': qualification, 'continuation': lineage})
+            if mode == 'formal' and restore_path:
+                baseline = json.loads((restore_path.parent / 'baseline.json').read_text())
                 if sha(ROOT / baseline['path']) != baseline['sha256']:
                     raise RuntimeError('original same-environment baseline changed')
                 write_once(output / 'baseline.json', baseline)
+            if lineage and args.resume:
+                stage = json.loads((args.resume.parent / 'stage_baseline.json').read_text())
+                if sha(ROOT / stage['path']) != stage['sha256']:
+                    raise RuntimeError('continuation starting metrics changed')
+                write_once(output / 'stage_baseline.json', stage)
         rank0(prepare)
         random.seed(cfg['seed']); np.random.seed(cfg['seed']); torch.manual_seed(cfg['seed'])
         torch.cuda.manual_seed_all(cfg['seed'])
@@ -285,7 +298,7 @@ def main():
         install_joint_moe(model, arm='image_only', indices=cfg['ffn_blocks'])
         load_expert_state(model, ROOT / cfg['initial_weights'])
         model.eval()
-        probe = samples.train_spec(rank)
+        probe = samples.train_spec(cfg.get('training_start_step', 0) * 32 + rank)
         lq = samples.pair(probe)[0][None].to(device)
         with torch.inference_mode():
             expected = restore_endpoint(model, ae, lq, context, ids, batched_prc_img)['decoded']
@@ -303,8 +316,16 @@ def main():
         optimizer = torch.optim.AdamW(groups, weight_decay=0, fused=True)
         metric = LearnedPerceptualImagePatchSimilarity(net_type='alex', normalize=True).to(device).eval().requires_grad_(False)
         initial_vlm = {n: p.detach().cpu().clone() for n, p in model.named_parameters() if '.vlm_projector.' in n}
-        start_step = resume_training(model, optimizer, args.resume, binding, rank,
-            mode=mode, total_steps=cfg['steps']) if args.resume else 0
+        # Only this audited transition may read the old binding; normal resumes
+        # still require the current code/config/cache identity without exceptions.
+        restore_binding = lineage['binding'] if lineage and not args.resume else binding
+        restore_limit = lineage['start_step'] if lineage and not args.resume else cfg['steps']
+        start_step = resume_training(model, optimizer, restore_path, restore_binding, rank,
+            mode=mode, total_steps=restore_limit) if restore_path else 0
+        if lineage:
+            if start_step < lineage['start_step']:
+                raise RuntimeError('continuation must start at or after step1000')
+            initial_vlm = {n: p.detach().cpu().clone() for n, p in model.named_parameters() if '.vlm_projector.' in n}
         restored_rng = rng_state()
         wrapped = DDP(model, device_ids=[local], broadcast_buffers=False, gradient_as_bucket_view=True)
         params = [p for g in groups for p in g['params']]
@@ -345,11 +366,16 @@ def main():
                 print('TOKEN_MOE_METRICS ' + json.dumps({'step': step, **summary}), flush=True)
             rank0(save_metrics)
         evaluate(start_step, full=start_step in cfg['full_evaluation_steps'])
-        if mode == 'formal' and not args.resume:
+        if mode == 'formal' and not restore_path:
             def bind_baseline():
                 path = output / 'metrics_000000.json'
                 write_once(output / 'baseline.json', {'path': str(path.relative_to(ROOT)), 'sha256': sha(path)})
             rank0(bind_baseline)
+        if lineage and not args.resume:
+            def bind_stage_baseline():
+                path = output / f'metrics_{start_step:06d}.json'
+                write_once(output / 'stage_baseline.json', {'path': str(path.relative_to(ROOT)), 'sha256': sha(path)})
+            rank0(bind_stage_baseline)
         restore_rng(restored_rng)
         times, checkpoints = [], []
         for step in range(start_step, cfg['steps']):
@@ -406,12 +432,12 @@ def main():
                 evaluate(completed, full=completed in cfg['full_evaluation_steps'])
                 restore_rng(before_eval)
         changed = any(not torch.equal(p.detach().cpu(), initial_vlm[n])
-                      for n, p in model.named_parameters() if n in initial_vlm)
+                      for n, p in model.named_parameters() if n in initial_vlm) if times else None
         observations = [None] * 8
         dist.all_gather_object(observations, {'changed': changed,
             'peak_memory_gib': torch.cuda.max_memory_allocated() / 1024**3})
         def finish():
-            if not all(v['changed'] for v in observations):
+            if times and not all(v['changed'] for v in observations):
                 raise RuntimeError('VLM score branch did not update')
             hours = (time.monotonic() - started) / 3600
             scientific = {'absolute_quality_gate_pass': None, 'gain_vs_start': None}
@@ -426,9 +452,17 @@ def main():
                     and final['blur_full']['lpips'] <= .18)
                 scientific['gain_vs_start'] = {split: {m: final[split][m]-baseline[split][m]
                     for m in ('psnr', 'lpips')} for split in ('rain', 'blur_full')}
+                if lineage:
+                    stage_ref = json.loads((output / 'stage_baseline.json').read_text())
+                    if sha(ROOT / stage_ref['path']) != stage_ref['sha256']:
+                        raise RuntimeError('continuation starting metrics changed')
+                    stage = json.loads((ROOT / stage_ref['path']).read_text())['summary']
+                    scientific['gain_vs_continuation_start'] = {split: {m: final[split][m]-stage[split][m]
+                        for m in ('psnr', 'lpips')} for split in ('rain', 'blur_full')}
             write_once(output / 'result.json', {'status': 'complete' if mode == 'formal' else 'engineering_pass',
                 'engineering_pass': True, 'mode': mode, 'binding': binding, **scientific,
                 'steps': cfg['steps'], 'start_step': start_step, 'initial_parity_max_abs': float(error),
+                'optimizer_updates_this_launch': len(times), 'continuation': lineage,
                 'checkpoints': checkpoints, 'observations': observations,
                 'median_training_seconds': float(np.median(times)) if times else None, 'training_wall_hours': hours,
                 'training_allocated_gpu_hours': hours * 8,

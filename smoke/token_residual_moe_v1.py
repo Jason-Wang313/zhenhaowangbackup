@@ -17,6 +17,7 @@ from lowlight_restoration.rain_full_data import RainSourceSchedule, crop_pair
 
 CONFIG = 'configs/foundir_token_residual_moe_v1.json'
 FORMAL_CONFIG = 'configs/foundir_token_residual_moe_formal_v1.json'
+CONTINUATION_CONFIG = 'configs/foundir_token_residual_moe_continue_v1.json'
 TASKS = ('rain', 'blur')
 
 
@@ -68,15 +69,20 @@ def load_run_config(root, config_path=None):
             'milestones', 'full_evaluation_steps', 'output_root', 'wall_hours_estimate',
             'allocated_gpu_hours_estimate', 'hard_wall_seconds_per_launch',
             'minimum_free_gib', 'automatic_extension'}
-        if set(cfg) != required or cfg['steps'] != 1000 or cfg['save_every'] != 100:
+        continuing = 'continuation' in cfg
+        if continuing:
+            required.add('continuation')
+        if set(cfg) != required or cfg['steps'] != (2000 if continuing else 1000) or cfg['save_every'] != 100:
             raise RuntimeError('formal profile changed; no hidden hyperparameter overrides')
-        if cfg['milestones'] != [250, 500, 1000] or cfg['full_evaluation_steps'] != [0, 1000] or cfg['automatic_extension']:
+        if (cfg['milestones'] != ([1500, 2000] if continuing else [250, 500, 1000])
+                or cfg['full_evaluation_steps'] != ([1000, 1500, 2000] if continuing else [0, 1000])
+                or cfg['automatic_extension']):
             raise RuntimeError('formal evaluation/extension contract changed')
         qualification = bound_json(root, cfg['qualification_config'], cfg['qualification_config_sha256'])
         cfg = {**qualification, **cfg}
     else:
         cfg = {**cfg, 'mode': 'qualification', 'milestones': [25], 'full_evaluation_steps': []}
-    steps = 1000 if cfg['mode'] == 'formal' else 25
+    steps = 2000 if 'continuation' in cfg else (1000 if cfg['mode'] == 'formal' else 25)
     if (cfg['steps'], cfg['global_batch'], cfg['world_size'], cfg['nodes'], cfg['gpus_per_node'],
             cfg['feature_dim'], cfg['sampling_start']) != (steps, 32, 8, 4, 2, 3584, 352000):
         raise RuntimeError('schedule/topology changed')
@@ -85,6 +91,9 @@ def load_run_config(root, config_path=None):
             or cfg['automatic_formal'] or cfg['qualification_may_seed_formal']
             or cfg['restore_old_optimizer'] or not cfg['fresh_optimizer']):
         raise RuntimeError('right-diagram initialization/scope changed')
+    if 'continuation' in cfg:
+        # The inherited fresh-Adam flags describe only the original step0.
+        cfg.update(fresh_optimizer=False, restore_old_optimizer=True, training_start_step=1000)
     return cfg
 
 
@@ -195,7 +204,8 @@ class Samples:
                 'position': position, 'seed': self.cfg['seed'] + task_id, 'row': row}
 
     def all_specs(self):
-        specs = [self.train_spec(i) for i in range(self.cfg['steps'] * 32)]
+        specs = [self.train_spec(i) for i in range(self.cfg.get('training_start_step', 0) * 32,
+                                                  self.cfg['steps'] * 32)]
         splits = ('rain', 'blur_full') if self.cfg.get('mode') == 'formal' else ('rain', 'blur_preview')
         for split in splits:
             rows = self.development[split]
@@ -286,4 +296,7 @@ def source_hashes(root, config_relative=CONFIG):
         'third_party/flux2/src/flux2/util.py']
     if config_relative != CONFIG:
         paths.extend([config_relative, 'smoke/run_foundir_token_residual_moe_formal_v1_4x2.sh'])
+    if config_relative == CONTINUATION_CONFIG:
+        paths.extend([FORMAL_CONFIG, 'smoke/token_residual_moe_continuation_v1.py',
+                      'smoke/run_foundir_token_residual_moe_continue_v1_4x2.sh'])
     return {p: sha(root / p) for p in paths}

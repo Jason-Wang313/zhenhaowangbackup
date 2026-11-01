@@ -1,0 +1,25 @@
+{
+  "mode": "formal",
+  "qualification_config": "configs/foundir_token_residual_moe_v1.json",
+  "qualification_config_sha256": "33eb1672b92e7ad03dec9f148cc656d39012d9e6c8b1aa5b5ef262abefa39dc2",
+  "qualification_report": "reports/foundir_token_residual_moe_v1_qualification_4x2_terminal_2026-10-31.json",
+  "qualification_report_sha256": "59c78faa3d5201f1718bb37b5ea6fba49945a8bc59d071f9bb00bf56c2285638",
+  "continuation": {
+    "previous_config": "configs/foundir_token_residual_moe_formal_v1.json",
+    "previous_config_sha256": "a9b701cdc862532627bfd73740448a1fdfdd886c46b9f52ee314940d6f03db07",
+    "report": "reports/foundir_token_residual_moe_formal_v1_terminal_2026-11-01.json",
+    "report_sha256": "8ddd2e58d7b4fdda424a39f4dfd99a75b804dd9b8ed7682b3ecdf29921d87923",
+    "receipt": "checkpoints/foundir_token_residual_moe_formal_v1/formal_4x2_v1/step_001000.resume.json",
+    "receipt_sha256": "e8d2f068eb4f436bb7420d8eeb4b973372bbb22c234a51f689cc5a8afeb9af35"
+  },
+  "steps": 2000,
+  "save_every": 100,
+  "milestones": [1500, 2000],
+  "full_evaluation_steps": [1000, 1500, 2000],
+  "output_root": "checkpoints/foundir_token_residual_moe_continue_v1",
+  "wall_hours_estimate": [2.5, 3.5],
+  "allocated_gpu_hours_estimate": [20.0, 28.0],
+  "hard_wall_seconds_per_launch": 14400,
+  "minimum_free_gib": 160,
+  "automatic_extension": false
+}

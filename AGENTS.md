@@ -1,5 +1,33 @@
 # Project agent instructions
 
+## 当前授权：优先改善VLM-token性能，真续训1000→2000 — 2026-11-01
+
+用户选择暂不做image-only匹配对照，继续当前右图③。不得擅自启动对照、改架构、
+加CNN/Restormer或触碰另一代理的energy显存工作。本次主代理准备代码/测试/push，
+目的地CPU代理安全同步并预检后给用户GPU命令；这里尚未启动GPU。
+
+下一步固定从formal_4x2_v1 step1000恢复权重、Adam、八rank RNG和采样进度，
+再训练1000步到总step2000；不是fresh Adam、不是从原step11000或25步资格重新训练。
+原数据、损失、学习率、batch32和VLM加性router不变。资源仍4节点×2张H100/H200；
+节点内同型号、节点间可混用。共享根仍为multimodal-discrete-diffusion的新目录。
+续训起点1000以及1500/2000均评估完整Rain100＋Blur2595，每100步完整保存。
+Rain≥34.2/≤.08，Blur≥25.9/≤.18仍是最低质量门槛；续训不能保证通过。
+终态同时报告相对原step0和本次step1000的变化，不以换分母掩盖退步。
+
+必须分清三者：原独立50步Blur FLUX＋.75固定输出混合=26.559141/.151993，
+已经通过SOW平均指标（另有最差单图安全检查失败）；接VLM前image-only MoE
+=26.619521/.188334；当前VLM一步MoE=26.705142/.183430。
+当前只比MoE起点改善，LPIPS仍不如原独立Blur；不是“原Blur一直没过SOW”。
+统一一步MoE未加载原50步Blur LoRA，不能把其旧能力视为已被完整继承。
+暂无匹配消融，不能把所有收益归给VLM；原独立专家保留为历史性能参照。
+
+入口/配置：`smoke/run_foundir_token_residual_moe_continue_v1_4x2.sh` /
+`configs/foundir_token_residual_moe_continue_v1.json`。
+预算2.5–3.5小时、20–28 GPU-hours；每次启动4小时硬cap，至少160GiB新空间，
+不删旧checkpoint/cache。首次自动加载唯一hash-bound step1000；中断后新run ID
+和第四参数指定本次continuation完整收据。到2000停止，不自动延长。
+详见`reports/foundir_token_residual_moe_continue_v1_readiness_2026-11-01.md`。
+
 ## 当前：右图③正式1000步结束；联合画质门槛未过 — 2026-11-01
 
 formal_4x2_v1四节点8×H200正常结束，1000/1000步、11份恢复收据、四节点status0。
