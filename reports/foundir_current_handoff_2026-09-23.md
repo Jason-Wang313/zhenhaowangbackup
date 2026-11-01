@@ -1,5 +1,17 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前：retention资格通过，旧任务保持；正式入口待交付 — 2026-11-01
+
+四节点qualification_4x2_v1均status0，25步batch40、每类200次、五收据齐全。
+Rain/Blur/Noise PSNR分别+.081055/+.020909/+1.306323dB，LPIPS均改善；
+Low-light+.049010dB且LPIPS改善，Haze-.010419dB但LPIPS改善，新增任务适应仍有限。
+未复现旧配方数dB遗忘；不等于完整五类门槛或VLM贡献证明。
+总墙钟863秒，四节点1.912222 GPU-hours；最终模型/Adam SHA已核验。
+下一计划独立正式1000步batch40，从原成功step2000＋fresh Adam开始，资格不得seed正式。
+目前正式入口仍禁用，需确认预算并交付新正式配置/launcher，不手改资格步数。
+未启动新GPU、不自动mixed；全部资产和energy保留。
+完整逐图/逐步/原始日志：reports/foundir_token_moe_retention_v1_terminal_2026-11-01.{md,json}。
+
 ## 当前执行：五类MoE保护训练修订，先25步验收 — 2026-11-01
 
 本节覆盖下方“只读诊断／尚未改配方／旧五类25步入口”的MoE执行指令。
