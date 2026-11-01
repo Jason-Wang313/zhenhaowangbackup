@@ -1,0 +1,29 @@
+{
+  "experiment": "five_single_retention_v1",
+  "protocol_config": "configs/foundir_token_moe_five_single_qualification_v1.json",
+  "mode": "qualification",
+  "seed": 2026110105,
+  "steps": 25,
+  "global_batch": 40,
+  "accumulation": 5,
+  "save_every": 5,
+  "milestones": [5, 25],
+  "shared_lora_lr": 0.000001,
+  "expert_lr": 0.000001,
+  "router_lr": 0.0001,
+  "objective": {
+    "weighted_reference_floor": 0.0001,
+    "rgb_mse_floor": 0.000004,
+    "lpips_floor": 0.001,
+    "regression_weight": 5.0
+  },
+  "output_root": "checkpoints/foundir_token_moe_retention_qualification_v1",
+  "minimum_free_gib": 80,
+  "wall_hours_estimate": [0.3, 0.8],
+  "allocated_gpu_hours_estimate": [2.4, 6.4],
+  "hard_wall_seconds_per_launch": 5400,
+  "automatic_formal": false,
+  "qualification_may_seed_formal": false,
+  "planned_formal_steps": 1000,
+  "formal_entry_enabled": false
+}

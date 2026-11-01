@@ -1,5 +1,36 @@
 # Project agent instructions
 
+## 当前执行：五类MoE保护训练修订，先25步验收 — 2026-11-01
+
+本节覆盖下方“只读诊断／尚未改配方／旧五类25步入口”的MoE执行指令。
+用户已授权从成功VLM step2000修订训练；旧诊断完成，不重复，不续训退步step2025。
+当前只有新25步资格入口，GPU未启动；主代理实现/测试/push，目的地CPU代理同步、
+预检后给用户四节点命令，不能自动formal/mixed或触碰另一代理energy工作。
+
+保持五块、每块两个FLUX FFN专家＋一套共享LoRA＋VLM加性router，不加CNN/Restormer。
+加载step2000全部权重，包括既有VLM；fresh Adam，新阶段0→25，不冒称原优化轨迹续训。
+每步五类各8张，batch40=8rank×5累积；LoRA/专家LR降到1e-6，router/VLM仍1e-4。
+旧模型只对相同训练裁图生成六项误差标量。当前损失除以旧加权总误差，并分别惩罚
+MSE/LPIPS超过旧误差；不是旧router蒸馏，不增加第二个常驻模型，不把GT输入router。
+这是假设驱动的修复，尚未证明改善，不能承诺开发集绝不退步或宣称VLM独立贡献。
+
+25步每类200次曝光；阶段0/5/25沿用各100张预览。每5步保存新batch40完整
+权重/Adam/8rank Python、NumPy、PyTorch、CUDA随机状态及采样位置；旧batch32收据拒绝。
+资格不seed正式。下一计划正式1000步、40k曝光、每类8k，须看资格后确认预算和入口，
+不把25步当最终能力判决，也不照失败配方自动长训。
+
+训练与开发按来源及相同GT哈希隔离；路径在MillionIRData/Train不代表开发图参与训练。
+参照只读训练GT；开发GT只评分。official/sealed/internal/parent-test像素不进入本次工作。
+官方测试留到方案/超参/checkpoint冻结后，开发达标不等于官方达标或SOTA。
+
+资源4节点×2张H100/H200，共8卡，节点内同型号；GPU共享根仍
+/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang。
+入口 smoke/run_foundir_token_moe_retention_v1_4x2.sh（不要用旧five_single入口），
+配置 configs/foundir_token_moe_retention_qualification_v1.json。
+资格暂估.3–.8小时/2.4–6.4 GPU-hours，单次1.5小时cap、80GiB空闲；未实测不保证。
+完整配方、理由、数据边界、CPU验收及同步/恢复说明：
+reports/foundir_token_moe_retention_v1_readiness_2026-11-01.md。
+
 ## 当前：五类干扰诊断完成，必须处理body变化 — 2026-11-01
 
 四节点diagnosis_4x2_v1均status0，零训练更新，1000次自重放最大差0。
