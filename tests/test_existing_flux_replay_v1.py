@@ -96,11 +96,12 @@ class ContractTests(unittest.TestCase):
 
     def test_hardware_policy_and_no_training(self):
         config = c.read(c.ROOT / c.CONFIG)
-        self.assertEqual(config["world_sizes"], [4,8])
+        self.assertEqual(config["world_sizes"], [8])
+        self.assertEqual(config["topology"], c.TOPOLOGY)
         self.assertFalse(config["training"])
         self.assertFalse(config["read_gt"])
         self.assertFalse(config["automatic_follow_on"])
-        for world in (4, 8):
+        for world in (8,):
             self.assertEqual(config["wall_cap_seconds"][str(world)] * world, 57600)
 
 

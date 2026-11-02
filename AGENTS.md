@@ -1,5 +1,26 @@
 # Project agent instructions
 
+## 最新资源纠正：四节点×每节点两卡，总八卡 — 2026-11-02
+
+用户明确纠正：当前已有FLUX专家继承/MoE路线必须使用 **4 nodes × 2 GPUs = 8 GPUs**，
+不是单节点八卡，也不是四节点各八卡。此节覆盖下方单节点4/8卡文字及旧迁移默认；
+`dbd8b29` 的单节点交付是配置错误，没有启动GPU，不应继续使用它的命令。
+另一代理energy工作不改，不借此重启旧任务。
+
+已改为四节点torchrun，每节点只见CUDA 0,1；node_rank=0/1/2/3，global_rank=node_rank*2+local_rank。
+每节点两卡同型号H100或H200、每卡≥75GiB；节点之间可以不同系列，但同图原入口/bank
+必须在同一rank/GPU系列和绑定环境比较。四节点必须共享新根和输出目录，使用当前node0地址，
+绝不复用历史IP。旧资产审计config中的single_node字段是历史策略，不改其哈希冒充新审计；
+当前执行拓扑以 `configs/foundir_existing_flux_replay_v1.json` 为准。
+
+本轮仍是128训练LQ、四类各32、零训练静态单选重放；科学口径、权重与像素权限不变。
+每节点保存独立runtime/日志/成本，node0仅在四节点完成后汇总全部128图；没有四节点完成标记
+不能报告成功。每次启动四节点共用同一fresh launch ID，恢复保留run ID但换launch ID，
+核验逐图存档后跳过完成项；拒绝旧单节点receipt。预算每节点2h，总计最多16 GPU-hours加清理；
+成本按四份每节点2×耗时相加，不把每个节点误算八卡。CUDA/实际跨节点网络尚待验收。
+主代理推送后只给同步提示；目的地代理保留脏文件安全同步、CPU检查，取得当前node0地址后
+给四条分节点命令。详见 `reports/foundir_existing_flux_replay_4node_readiness_2026-11-02.md`。
+
 ## 当前入口：四类已有LoRA完整50步单选重放 — 2026-11-02
 
 用户已授权继续。目的地39e4575资产审计和12项CPU测试通过，retention日志SHA差异

@@ -12,6 +12,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = "configs/foundir_existing_flux_replay_v1.json"
 SOURCES = [CONFIG, "configs/foundir_existing_flux_experts_v1.json",
+    "smoke/existing_flux_replay_cluster_v1.py",
     "smoke/existing_flux_replay_contract_v1.py", "smoke/replay_foundir_existing_flux_experts_v1.py",
     "smoke/run_foundir_existing_flux_replay_v1_gpu.sh", "smoke/start_foundir_existing_flux_replay_v1_tmux.sh",
     "lowlight_restoration/existing_flux_experts.py", "lowlight_restoration/lora.py",
@@ -19,6 +20,19 @@ SOURCES = [CONFIG, "configs/foundir_existing_flux_experts_v1.json",
     "smoke/evaluate_foundir_blur_only_flux2_full_development_ddp.py",
     "smoke/train_foundir_blur_only_flux2_overfit_ddp.py"]
 CATEGORIES = dict(blur="01Blur", noise="05Noise", haze="08Haze", lowlight="14Lowlight")
+TOPOLOGY = {"nnodes": 4, "nproc_per_node": 2, "world_size": 8}
+
+
+def worker_rank(node, local, world, local_world, rank):
+    if (node not in range(4) or local not in range(2) or world != 8
+            or local_world != 2 or rank != node * 2 + local):
+        raise ValueError("requires four nodes x two GPUs; invalid rank mapping")
+    return rank, local
+
+
+def validate_topology(receipt):
+    if receipt.get("topology") != TOPOLOGY or receipt.get("world") != 8:
+        raise ValueError("requires four-node topology; old single-node receipt rejected")
 
 
 def sha(path):
@@ -77,7 +91,7 @@ def run_path(root, run_id):
 
 def assigned(tasks, rows, rank, world):
     if world not in (4, 8) or not 0 <= rank < world or len(tasks) != 4:
-        raise ValueError("single-node 4/8 ranks required")
+        raise ValueError("invalid total rank partition")
     task = tasks[rank % 4]
     return task, rows[task][rank // 4::world // 4]
 
@@ -133,7 +147,7 @@ def select_rows(manifest, config, experts):
 
 def make_receipt(root, assets_root, world):
     cfg = read(root / CONFIG)
-    if world not in cfg["world_sizes"] or cfg["read_gt"] or cfg["training"]:
+    if world not in cfg["world_sizes"] or cfg["topology"] != TOPOLOGY or cfg["read_gt"] or cfg["training"]:
         raise ValueError("invalid replay scope")
     audit_path = path(root, cfg["asset_audit"])
     if sha(audit_path) != cfg["asset_audit_sha256"]:
@@ -170,7 +184,7 @@ def make_receipt(root, assets_root, world):
         for r in pool:
             if not path(assets_root, r["lq_path"]).is_file():
                 raise FileNotFoundError(r["lq_path"])
-    return {"schema_version": 1, "config": cfg, "world": world, "sources": sources,
+    return {"schema_version": 2, "config": cfg, "world": world, "topology": TOPOLOGY, "sources": sources,
             "assets": bindings, "asset_stats": asset_stats, "experts": audit["experts"], "rows": rows,
             "selection_digest": digest(rows), "gt_pixels_read": False,
             "historical_pixel_reproduction_claimed": False,
@@ -181,6 +195,7 @@ def load_receipt(root, output, world):
     receipt = read(output / "receipt.json")
     if receipt["world"] != world:
         raise ValueError("resume at different world size is not qualified")
+    validate_topology(receipt)
     for p, expected in receipt["sources"].items():
         if sha(path(root, p)) != expected:
             raise ValueError(f"run source changed: {p}")

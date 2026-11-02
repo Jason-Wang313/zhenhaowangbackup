@@ -15,10 +15,11 @@
   "require_uint8_equal": true,
   "read_gt": false,
   "training": false,
-  "world_sizes": [4, 8],
+  "world_sizes": [8],
+  "topology": {"nnodes": 4, "nproc_per_node": 2, "world_size": 8},
   "default_world_size": 8,
   "minimum_memory_gib": 75,
-  "wall_cap_seconds": {"4": 14400, "8": 7200},
+  "wall_cap_seconds": {"8": 7200},
   "resume_same_world_only": true,
   "automatic_follow_on": false,
   "qwen_artifacts": {

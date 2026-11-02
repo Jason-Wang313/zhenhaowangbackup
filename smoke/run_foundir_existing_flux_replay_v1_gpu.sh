@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-EXPECTED_ROOT=/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang
-[[ "$ROOT" == "$EXPECTED_ROOT" ]] || { echo 'ERROR: use migrated GPU workspace'; exit 2; }
+[[ "$ROOT" == /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang ]] || { echo 'ERROR: use migrated GPU workspace'; exit 2; }
 cd "$ROOT"
-RUN_ID=${1:-replay8_v1}
-GPU_COUNT=${2:-8}
-[[ "$RUN_ID" =~ ^[A-Za-z0-9_-]{1,80}$ ]] || { echo 'ERROR: invalid run ID'; exit 2; }
-case "$GPU_COUNT" in
-  4) export CUDA_VISIBLE_DEVICES=0,1,2,3; WALL_CAP=14400 ;;
-  8) export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7; WALL_CAP=7200 ;;
-  *) echo 'ERROR: use 4 or 8 GPUs'; exit 2 ;;
-esac
-# Verified on destination in 39e4575; an explicit override still must exist.
+[[ $# == 4 ]] || { echo 'Usage: launcher <node_rank 0..3> <current_node0_address> <run_id> <fresh_shared_launch_id>'; exit 2; }
+NODE_RANK=$1 MASTER_ADDR=$2 RUN_ID=$3 LAUNCH_ID=$4
+[[ "$NODE_RANK" =~ ^[0-3]$ && "$MASTER_ADDR" =~ ^[A-Za-z0-9][A-Za-z0-9.-]*$ ]] || exit 2
+[[ "$RUN_ID" =~ ^[A-Za-z0-9_-]{1,80}$ && "$LAUNCH_ID" =~ ^[A-Za-z0-9_-]{1,80}$ ]] || exit 2
+MASTER_PORT=${REPLAY_MASTER_PORT:-29681}
+[[ "$MASTER_PORT" =~ ^[0-9]{4,5}$ ]] && ((10#$MASTER_PORT <= 65535)) || exit 2
+export REPLAY_NODE_RANK="$NODE_RANK" REPLAY_MASTER_ADDR="$MASTER_ADDR" REPLAY_MASTER_PORT="$MASTER_PORT"
+export CUDA_VISIBLE_DEVICES=0,1
 PYTHON="${PROJECT_PYTHON:-$ROOT/.conda/gpu-train-stable/bin/python}"
-[[ -x "$PYTHON" ]] || { echo 'ERROR: verified Python unavailable; set PROJECT_PYTHON'; exit 2; }
+[[ -x "$PYTHON" ]] || { echo 'ERROR: verified Python unavailable'; exit 2; }
 export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 NCCL_NVLS_ENABLE=0
 export TORCH_HOME="$ROOT/models/torch" PYTHONPATH="$ROOT:$ROOT/third_party/flux2/src"
@@ -23,33 +21,71 @@ command -v timeout >/dev/null
 OUTPUT="$ROOT/checkpoints/foundir_existing_flux_replay_v1/$RUN_ID"
 mkdir -p "$OUTPUT/attempts" logs
 exec 9>/tmp/zhenhaowang_existing_flux_replay.lock
-flock -n 9 || { echo 'ERROR: replay already active on node'; exit 3; }
-exec 8>"$OUTPUT/run.lock"
-flock -n 8 || { echo 'ERROR: same run already active'; exit 3; }
-LOG="$ROOT/logs/foundir_existing_flux_replay_v1_${RUN_ID}.log"
+flock -n 9 || { echo 'ERROR: replay already active on this node'; exit 3; }
+exec 8>"$OUTPUT/node${NODE_RANK}.lock"
+flock -n 8 || { echo 'ERROR: same node rank already active'; exit 3; }
+LOG="$ROOT/logs/foundir_existing_flux_replay_v1_${RUN_ID}_node${NODE_RANK}.log"
 exec > >(tee -a "$LOG") 2>&1
 START=$SECONDS
-ATTEMPT_ID="$(date -u +%Y%m%dT%H%M%SZ)_$$"
+WALL_CAP=7200
+CLUSTER=("$PYTHON" -u -m smoke.existing_flux_replay_cluster_v1)
+COMMON=(--run-id "$RUN_ID" --launch-id "$LAUNCH_ID" --node-rank "$NODE_RANK")
+step() {
+  local remaining=$((WALL_CAP-SECONDS+START))
+  ((remaining > 0)) || return 124
+  timeout --signal=TERM --kill-after=30s "${remaining}s" "$@" &
+  local task_pid=$!
+  while kill -0 "$task_pid" 2>/dev/null; do
+    if compgen -G "$OUTPUT/launches/$LAUNCH_ID/failed_node*.json" >/dev/null; then
+      echo 'ERROR: another node failed; stopping only this launcher child'
+      # GNU timeout forwards TERM to its own process group, not unrelated jobs.
+      kill -TERM "$task_pid" 2>/dev/null || true
+      wait "$task_pid" || true
+      return 1
+    fi
+    sleep 2
+  done
+  wait "$task_pid"
+}
+# Duplicate attempt must not poison the active launch.
+step "${CLUSTER[@]}" publish boot "${COMMON[@]}"
 finish() {
   status=$?
   elapsed=$((SECONDS-START))
-  printf 'EXPERT_REPLAY_END status=%s elapsed_seconds=%s allocated_gpu_seconds=%s attempt=%s\n' "$status" "$elapsed" "$((GPU_COUNT*elapsed))" "$ATTEMPT_ID"
-  (set -o noclobber; printf '{"status":%s,"seconds":%s,"allocated_gpu_seconds":%s,"gpus":%s}\n' "$status" "$elapsed" "$((GPU_COUNT*elapsed))" "$GPU_COUNT" > "$OUTPUT/attempts/$ATTEMPT_ID.json")
+  trap - EXIT
+  if ((status != 0)); then
+    timeout --kill-after=5s 15s "${CLUSTER[@]}" publish failed "${COMMON[@]}" || true
+  fi
+  printf 'EXPERT_REPLAY_NODE_END node=%s status=%s elapsed_seconds=%s allocated_gpu_seconds=%s launch=%s\n' "$NODE_RANK" "$status" "$elapsed" "$((2*elapsed))" "$LAUNCH_ID"
+  (set -o noclobber; printf '{"node":%s,"status":%s,"seconds":%s,"allocated_gpu_seconds":%s,"gpus":2}\n' "$NODE_RANK" "$status" "$elapsed" "$((2*elapsed))" > "$OUTPUT/attempts/${LAUNCH_ID}_node${NODE_RANK}.json")
+  exit "$status"
 }
 trap finish EXIT
-echo "EXPERT_REPLAY_START run=$RUN_ID gpus=$GPU_COUNT resume=verified_records_only no_training=true"
-echo 'ESTIMATE 8GPU=0.5_to_1.5_hours 4GPU=1_to_3_hours allocated_GPU_hours=4_to_12 unmeasured; hard_cap=16_GPU_hours_per_attempt_plus_30s_cleanup'
+echo "EXPERT_REPLAY_START run=$RUN_ID nodes=4 local_gpus=2 total_gpus=8 node=$NODE_RANK launch=$LAUNCH_ID no_training=true"
+echo 'ESTIMATE cluster=0.5_to_1.5_hours total=4_to_12_GPU_hours unmeasured; cap=2h_per_node, sum_4_nodes<=16_GPU_hours_plus_cleanup'
 SCRIPT=smoke/replay_foundir_existing_flux_experts_v1.py
-step() {
-  remaining=$((WALL_CAP-SECONDS+START))
-  ((remaining > 0)) || return 124
-  timeout --signal=TERM --kill-after=30s "${remaining}s" "$@"
-}
-step "$PYTHON" -u "$SCRIPT" hardware --gpus "$GPU_COUNT"
-step "$PYTHON" -u "$SCRIPT" prepare --run-id "$RUN_ID" --gpus "$GPU_COUNT"
-# Only GPU0 briefly encodes four fixed texts. Account for all allocated GPUs.
-step "$PYTHON" -u "$SCRIPT" prompts --run-id "$RUN_ID" --gpus "$GPU_COUNT"
-step "$PYTHON" -u -m torch.distributed.run --standalone --nproc_per_node="$GPU_COUNT" --max_restarts=0 \
-  "$SCRIPT" run --run-id "$RUN_ID" --gpus "$GPU_COUNT"
-step "$PYTHON" -u "$SCRIPT" verify --run-id "$RUN_ID" --gpus "$GPU_COUNT"
-# Never launch Rain training, retention, mixed training, or energy here.
+step "${CLUSTER[@]}" wait boot "${COMMON[@]}"
+step "$PYTHON" -u "$SCRIPT" hardware "${COMMON[@]}"
+if [[ "$NODE_RANK" == 0 ]]; then
+  step "$PYTHON" -u "$SCRIPT" prepare "${COMMON[@]}"
+  step "${CLUSTER[@]}" publish prepared "${COMMON[@]}"
+fi
+step "${CLUSTER[@]}" wait prepared "${COMMON[@]}"
+step "$PYTHON" -u "$SCRIPT" runtime "${COMMON[@]}"
+step "${CLUSTER[@]}" publish ready "${COMMON[@]}"
+step "${CLUSTER[@]}" wait ready "${COMMON[@]}"
+# Only node0 encodes four fixed texts; rendezvous waits for it.
+if [[ "$NODE_RANK" == 0 ]]; then
+  step "$PYTHON" -u "$SCRIPT" prompts "${COMMON[@]}"
+fi
+step "$PYTHON" -u -m torch.distributed.run --nnodes=4 --nproc_per_node=2 --node_rank="$NODE_RANK" \
+  --master_addr="$MASTER_ADDR" --master_port="$MASTER_PORT" --rdzv_conf=timeout=7200 --max_restarts=0 \
+  "$SCRIPT" run "${COMMON[@]}"
+step "${CLUSTER[@]}" publish done "${COMMON[@]}"
+step "${CLUSTER[@]}" wait done "${COMMON[@]}"
+if [[ "$NODE_RANK" == 0 ]]; then
+  step "$PYTHON" -u "$SCRIPT" verify "${COMMON[@]}"
+  step "${CLUSTER[@]}" publish verified "${COMMON[@]}"
+fi
+step "${CLUSTER[@]}" wait verified "${COMMON[@]}"
+# Never auto-launch Rain, retention, mixed training, or energy.

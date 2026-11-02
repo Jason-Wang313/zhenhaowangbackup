@@ -37,9 +37,9 @@ def save_tensors(output, prefix, tensors):
 
 def hardware(world, *, require_idle):
     import torch
-    if world not in (4, 8) or torch.cuda.device_count() != world:
-        raise ValueError("expose exactly 4 or 8 CUDA GPUs")
-    props = [torch.cuda.get_device_properties(i) for i in range(world)]
+    if world != 8 or torch.cuda.device_count() != 2:
+        raise ValueError("four nodes x two GPUs: expose exactly two local CUDA GPUs")
+    props = [torch.cuda.get_device_properties(i) for i in range(2)]
     if len({p.name for p in props}) != 1 or any(
             not any(f in p.name for f in ("H100", "H200")) or p.total_memory < 75 * 1024**3 for p in props):
         raise ValueError("homogeneous H100/H200, >=75 GiB per device required")
@@ -51,12 +51,12 @@ def hardware(world, *, require_idle):
             gpu, pid = [x.strip() for x in line.split(",")]
             if gpu.lower().removeprefix("gpu-") in visible_ids and int(pid) != os.getpid():
                 raise ValueError(f"visible GPU has another compute process {pid}; do not terminate it")
-        for i in range(world):
+        for i in range(2):
             free, total = torch.cuda.mem_get_info(i)
             if total - free > 2 * 1024**3:
                 raise ValueError(f"GPU {i} is occupied; no automatic termination")
     import transformers
-    return {"gpu_name": props[0].name, "world": world, "torch": str(torch.__version__),
+    return {"gpu_name": props[0].name, "world": world, "local_gpus": 2, "torch": str(torch.__version__),
             "torch_cuda": torch.version.cuda, "cudnn": torch.backends.cudnn.version(),
             "transformers": transformers.__version__,
             "nvidia_driver": Path("/proc/driver/nvidia/version").read_text().strip()}
@@ -147,9 +147,12 @@ def quantize(task, lq, raw, alpha):
     return quantized_scalar_residual(lq, first, alpha)[0]
 
 
-def identity_for(task, row, receipt_sha, prompts_sha, rank):
-    return {"key": f"{task}_{row['record_id']}", "task": task, "row": row,
+def identity_for(task, row, receipt_sha, prompts_sha, rank, runtime_sha=None):
+    result = {"key": f"{task}_{row['record_id']}", "task": task, "row": row,
             "receipt_sha256": receipt_sha, "prompts_sha256": prompts_sha, "rank": rank}
+    if runtime_sha is not None:
+        result["node_runtime_sha256"] = runtime_sha
+    return result
 
 
 def run(output, receipt, world):
@@ -163,11 +166,10 @@ def run(output, receipt, world):
     from smoke.evaluate_foundir_blur_only_flux2_full_development_ddp import restore_batch
 
     rank = int(os.environ["RANK"])
-    if (int(os.environ["WORLD_SIZE"]) != world or int(os.environ["LOCAL_WORLD_SIZE"]) != world
-            or int(os.environ["LOCAL_RANK"]) != rank):
-        raise ValueError("single-node torchrun only")
-    torch.cuda.set_device(rank)
-    device = torch.device("cuda", rank)
+    rank, local = c.worker_rank(int(os.environ["REPLAY_NODE_RANK"]), int(os.environ["LOCAL_RANK"]),
+                                int(os.environ["WORLD_SIZE"]), int(os.environ["LOCAL_WORLD_SIZE"]), rank)
+    torch.cuda.set_device(local)
+    device = torch.device("cuda", local)
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     torch.backends.cudnn.benchmark = False
@@ -175,7 +177,8 @@ def run(output, receipt, world):
     receipt_sha = c.sha(output / "receipt.json")
     prompt_data = prompt_info(output, receipt)
     prompt_sha = c.sha(output / "prompts.json")
-    identities = {r["record_id"]: identity_for(task, r, receipt_sha, prompt_sha, rank) for r in rows}
+    runtime_sha = c.sha(output / f"runtime_node{rank // 2}.json")
+    identities = {r["record_id"]: identity_for(task, r, receipt_sha, prompt_sha, rank, runtime_sha) for r in rows}
     # Validate committed progress before skipping it. Never trust mere file existence.
     pending = []
     for r in rows:
@@ -272,8 +275,10 @@ def verify(output, receipt):
     prompt_info(output, receipt)
     for rank in range(receipt["world"]):
         task, rows = c.assigned(receipt["config"]["tasks"], receipt["rows"], rank, receipt["world"])
+        runtime_sha = (c.sha(output / f"runtime_node{rank // 2}.json")
+                       if receipt.get("topology") == c.TOPOLOGY else None)
         for row in rows:
-            ident = identity_for(task, row, receipt_sha, prompts_sha, rank)
+            ident = identity_for(task, row, receipt_sha, prompts_sha, rank, runtime_sha)
             key = ident["key"]
             original_path, bank_path = output / "original" / f"{key}.json", output / "bank" / f"{key}.json"
             original, bank = c.read(original_path), c.read(bank_path)
@@ -304,6 +309,12 @@ def verify(output, receipt):
                   for t in receipt["config"]["tasks"]}, "comparisons": records,
               "gt_pixels_read": False, "training": False, "scientific_quality_gate_claimed": False,
               "rain_adapted": False, "dynamic_or_soft_router_qualified": False}
+    if receipt.get("topology") == c.TOPOLOGY:
+        result["topology"] = c.TOPOLOGY
+        result["node_runtimes"] = {str(node): {
+            "sha256": c.sha(output / f"runtime_node{node}.json"),
+            "runtime": c.read(output / f"runtime_node{node}.json")}
+            for node in range(4)}
     c.write_new(output / "result.json", result)
     print(f"EXPERT_REPLAY_RESULT_VERIFIED pass={passed} records={len(records)}", flush=True)
     return 0 if passed else 2
@@ -311,15 +322,17 @@ def verify(output, receipt):
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("phase", choices=["preflight", "hardware", "prepare", "prompts", "run", "verify"])
-    p.add_argument("--run-id", default="replay8_v1")
-    p.add_argument("--gpus", type=int, choices=[4, 8], default=8)
+    p.add_argument("phase", choices=["preflight", "hardware", "prepare", "runtime", "prompts", "run", "verify"])
+    p.add_argument("--run-id", default="replay4nodes_v1")
+    p.add_argument("--gpus", type=int, choices=[8], default=8)
+    p.add_argument("--node-rank", type=int, choices=range(4), default=0)
+    p.add_argument("--launch-id")
     p.add_argument("--asset-root", type=Path)
     p.add_argument("--report", type=Path)
     args = p.parse_args()
     if args.phase == "preflight":
         receipt = c.make_receipt(ROOT, args.asset_root or ROOT, args.gpus)
-        result = {"status": "EXPERT_REPLAY_CPU_PREFLIGHT_PASS", "world": args.gpus,
+        result = {"status": "EXPERT_REPLAY_CPU_PREFLIGHT_PASS", "world": args.gpus, "topology": c.TOPOLOGY,
                   "selection_digest": receipt["selection_digest"], "sources": receipt["sources"],
                   "records": {t: len(v) for t, v in receipt["rows"].items()},
                   "selected_record_ids": {t: [r["record_id"] for r in v] for t,v in receipt["rows"].items()},
@@ -338,18 +351,23 @@ def main():
         print("EXPERT_REPLAY_HARDWARE_PASS " + json.dumps(hardware(args.gpus, require_idle=True)), flush=True)
         return 0
     output = c.run_path(ROOT, args.run_id)
+    if args.phase in ("prepare", "prompts", "verify") and args.node_rank != 0:
+        raise ValueError("only node0 prepares shared inputs or verifies full result")
     if args.phase == "prepare":
         import shutil
         if shutil.disk_usage(ROOT).free < 5 * 1024**3:
             raise ValueError("replay needs at least 5 GiB free; do not delete historical artifacts")
         receipt = c.make_receipt(ROOT, ROOT, args.gpus)
         c.write_new(output / "receipt.json", receipt)
-        c.write_new(output / "runtime.json", hardware(args.gpus, require_idle=True))
         print("EXPERT_REPLAY_PREPARE_PASS", flush=True)
         return 0
     receipt = c.load_receipt(ROOT, output, args.gpus)
+    runtime_path = output / f"runtime_node{args.node_rank}.json"
+    if args.phase == "runtime":
+        c.write_new(runtime_path, hardware(args.gpus, require_idle=True))
+        return 0
     if args.phase in ("prompts", "run"):
-        if hardware(args.gpus, require_idle=False) != c.read(output / "runtime.json"):
+        if hardware(args.gpus, require_idle=False) != c.read(runtime_path):
             raise ValueError("runtime/GPU family changed; do not mix execution environments")
         os.environ.update(KLEIN_4B_BASE_MODEL_PATH=str(c.path(ROOT, "models/flux2-klein-base-4b/flux-2-klein-base-4b.safetensors")),
                           AE_MODEL_PATH=str(c.path(ROOT, "models/flux2-klein-base-4b/ae.safetensors")),
@@ -357,8 +375,13 @@ def main():
     if args.phase == "prompts":
         prompts(output, receipt)
     elif args.phase == "run":
+        if int(os.environ["REPLAY_NODE_RANK"]) != args.node_rank:
+            raise ValueError("launcher/node rank mismatch")
         run(output, receipt, args.gpus)
     else:
+        from smoke.existing_flux_replay_cluster_v1 import check
+        if not args.launch_id or not check(output, args.launch_id, "done"):
+            raise ValueError("all four nodes must finish before full verification")
         return verify(output, receipt)
     return 0
 
