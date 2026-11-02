@@ -1,5 +1,16 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 2026-11-02：已有LoRA复用是当前MoE方向
+
+用户已批准保留Blur/Noise/Haze/Low-light原多步FLUX，单独适配Rain，再内部VLM残差路由。
+旧五类retention正式1000步不启动；另一代理energy不动。右图未规定FFN或采样步数。
+已交付CPU资产审计/LoRA混合算子/静态单选安装器；不是完整GPU重放或Rain训练器。
+不要恢复下方历史优先级。原成功一步Rain只读保留，不把其直接当flow速度专家。
+最新方案/边界见AGENTS.md顶部和reports/foundir_existing_flux_experts_plan_2026-11-02.md。
+唯一GPU根为新的multimodal-discrete-diffusion目录；旧根仅只读。默认单节点8卡、
+兼容4卡同型号H100/H200，不沿用旧跨节点命令。下一步目的地安全同步/CPU审计回传，
+无新GPU命令、不自动formal、不读取保护或最终1859 Noise像素。
+
 ## 当前：retention资格通过，旧任务保持；正式入口待交付 — 2026-11-01
 
 四节点qualification_4x2_v1均status0，25步batch40、每类200次、五收据齐全。

@@ -1,5 +1,24 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前用户决定：复用已有FLUX LoRA，Rain单独适配 — 2026-11-02
+
+不要执行下方retention1000步计划。用户选择保留四类已有50步能力＋独立Rain多步适配，
+再接右图VLM修正image-router分数。右图没有FFN/禁止LoRA/固定50步的要求；旧代码
+双FFN实现不能冒充已经装入五个独立专家。新实现明确改成LoRA expert bank。
+
+本次已完成旧资产只读哈希/真实张量和来源元数据核验，新增冻结LoRA混合算子、
+静态单专家重放安装器及CPU测试。报告：
+reports/foundir_existing_flux_experts_source_audit_v2_2026-11-02.json。
+精确方案与后续步骤：reports/foundir_existing_flux_experts_plan_2026-11-02.md。
+尚未实现/运行完整GPU重放、Rain新训练器或动态VLM-router；无新质量结果。
+先新节点CPU核验，再原协议重放，再冻结共同prompt/输出处理和Rain训练配置。
+原一步Rain保留；四类参数不改。Rain原FP32与四类BF16不悄悄转换；不运行Restormer/CNN。
+
+主代理隔离实现/推送，目的地CPU代理安全同步和回传小报告；新GPU共享根不变。
+按用户最新资源规则单节点同型号8卡、保留4卡H100/H200兼容，不继续旧四节点入口。
+不碰另一代理energy，不读取任何保护像素或最终1859 Noise像素，不自动formal。
+历史retention报告内日志文本SHA不一致仍待核原文件，不能声称该项已通过。
+
 ## 当前：retention资格通过，旧任务保持；正式入口待交付 — 2026-11-01
 
 四节点qualification_4x2_v1均status0，25步batch40、每类200次、五收据齐全。

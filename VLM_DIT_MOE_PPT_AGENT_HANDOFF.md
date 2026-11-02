@@ -1,5 +1,28 @@
 # VLM-guided DiT-MoE PPT agent handoff
 
+## 2026-11-02 user-approved implementation update: reuse existing LoRA experts
+
+The PNG `moe novelty.png` does NOT specify FFN experts, ban LoRA, or require
+50 sampling steps. Do not attribute those restrictions to the diagram.
+The user now explicitly authorizes a shared FLUX backbone with the four existing
+multi-step LoRA experts, a separately adapted Rain flow branch, and subsequently
+the same image-router + additive VLM score-correction mechanism in the right panel.
+This supersedes the older no-LoRA implementation restriction below, not the
+minimal VLM-to-router idea. It is a changed expert implementation; do not claim
+that all implementation details were separately approved by the advisor.
+
+Original one-step Rain remains immutable and may supply training demonstrations;
+paired GT remains primary supervision. It cannot be directly installed as a
+noise-to-clean flow expert. Four existing experts retain original prompts,
+sampling and output coefficients during inheritance checks. Common prompt/output
+handling and Rain learning are open engineering/scientific issues, not solved by
+setting every sampler to 50 steps. No CNN/Restormer module is added or run.
+
+Only CPU asset checks, a frozen LoRA mixing primitive and hard-selection replay
+installer are implemented at this milestone. No complete GPU replay, Rain
+training, new metrics, or novelty success is claimed. See
+`reports/foundir_existing_flux_experts_plan_2026-11-02.md` for the exact handoff.
+
 ## STOP — advisor-approved simplification on 2026-10-25
 
 This update supersedes the older constrained-LoRA/block-time proposal later in

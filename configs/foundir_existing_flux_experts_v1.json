@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "phase": "asset_and_operator_audit_only",
+  "active_gpu_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "flow_expert_order": ["blur", "noise", "haze", "lowlight"],
+  "common_flow_contract": "native_reference_noise_to_clean_velocity_v1",
+  "initial_sampling_steps": 50,
+  "rain_policy": "frozen_endpoint_teacher_not_a_flow_expert",
+  "experts": {
+    "blur": {
+      "evidence_config": "configs/foundir_blur_only_flux2_scalar_residual_full_development_v1.json",
+      "training_config": "configs/foundir_blur_only_flux2_full_v1.json",
+      "category": "01Blur",
+      "output_alpha": 0.75
+    },
+    "noise": {
+      "evidence_config": "configs/foundir_noise_flux2_scalar_residual_full_development_v1.json",
+      "training_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "category": "05Noise",
+      "output_alpha": 0.30
+    },
+    "haze": {
+      "evidence_config": "configs/foundir_haze_flux2_step3000_full_development_v1.json",
+      "training_config": "configs/foundir_haze_flux2_source_diverse_continuation_v1.json",
+      "category": "08Haze",
+      "output_alpha": 1.0
+    },
+    "lowlight": {
+      "evidence_config": "configs/foundir_lowlight_flux2_scalar_residual_full_development_v1.json",
+      "training_config": "configs/foundir_four_task_flux2_capacity_sanity_v1.json",
+      "category": "14Lowlight",
+      "output_alpha": 0.925
+    }
+  },
+  "rain_teacher": {
+    "evidence_config": "configs/foundir_rain_blur_image_moe_v1.json",
+    "training_config": "configs/foundir_rain_flux2_direct_endpoint_distillation_formal_v1.json",
+    "precision_config": "configs/foundir_rain_flux2_precision_full_v1.json",
+    "category": "10Rain",
+    "original_steps": 1,
+    "contract": "degraded_endpoint_t1_zero_noise_v1"
+  },
+  "historical_training_manifests": {
+    "capacity": {
+      "path": "manifests/foundir_four_task_flux2_capacity_sanity_v1.csv",
+      "sha256": "3abbaad9bb7a476d9fd673f76542a984471c72f265a5914170efe8151e30ec98"
+    },
+    "haze": {
+      "path": "manifests/foundir_haze_flux2_source_diverse_pilot_v1.csv",
+      "sha256": "3fa9f4333c375fb0a329dac68f67344d430984a9ff9d5bd60577e105b209c531"
+    }
+  },
+  "gpu_policy": {
+    "topology": "single_node",
+    "allowed_world_sizes": [4, 8],
+    "default_world_size": 8,
+    "homogeneous_families": ["H100", "H200"],
+    "automatic_training": false
+  },
+  "forbidden": ["restormer", "cnn_refiner", "averaging_lora_factors", "endpoint_in_flow_bank", "protected_pixel_access"]
+}

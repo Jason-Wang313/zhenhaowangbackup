@@ -1,5 +1,30 @@
 # Project agent instructions
 
+## 当前用户授权：已有LoRA专家库＋Rain多步适配 — 2026-11-02
+
+本节覆盖旧五类retention正式1000步计划及更旧“唯一energy/Rain/EBT”优先级。
+用户批准保留四类成功50步FLUX专家，单独适配Rain，最后接右图内部VLM残差router。
+不续训失败2025，不启动旧retention正式；另一代理FLUX-native energy工作不动。
+右图没有规定FFN、禁止LoRA或50步。新expert bank明确不同于旧双FFN＋共享LoRA。
+旧PPT handoff的no-LoRA约束在此被用户新决定覆盖，不宣称导师已额外批准所有实现细节。
+
+第一阶段已交付CPU资产审计、冻结LoRA混合算子和静态单专家重放安装器；
+还没有完整GPU重放/动态router/Rain训练器，不冒称已训练或新指标达标。
+按原安装位置保存各LoRA，混合B_i(A_i(x))，不平均A/B因子；Rain endpoint暂时拒绝进入
+flow bank。原一步Rain只读保留，作为未来训练示范，GT仍主要监督；不运行Restormer/CNN。
+四类提示词与输出alpha不同，需先原协议单选等价、再确认共同条件，不能只凭都是50步
+就混合。计划Rain从成功step4000的独立副本适配，fresh Adam，不是严格续训或随机底座。
+详见 reports/foundir_existing_flux_experts_plan_2026-11-02.md。
+
+唯一GPU根仍为 /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang。
+旧目录只读迁移来源；主代理在隔离worktree提交，目的地代理同步并核验新目录资产。
+本轮遵守用户最新资源规则：单节点同型号8×H100/H200，保留4卡兼容，不沿用旧四节点IP。
+当前没有GPU启动命令/耗时实测，不借用旧一步MoE吞吐估算50步。
+official/sealed/internal/parent-test及最终1859 Noise像素不读；本轮仅核验manifest元数据。
+历史训练池隔离检查不等于FLUX预训练数据审计；CPU算子等价不等于完整CUDA恢复等价。
+下一步：目的地安全同步并执行只读CPU审计、回传小报告；再交付原协议GPU重放和Rain资格。
+禁止按下方旧标题自动启动旧任务。按focused allowlist提交/push，不上传权重/数据/实时日志。
+
 ## 当前：retention资格通过，旧任务保持；正式入口待交付 — 2026-11-01
 
 四节点qualification_4x2_v1均status0，25步batch40、每类200次、五收据齐全。
