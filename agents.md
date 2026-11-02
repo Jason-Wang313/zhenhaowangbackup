@@ -1,5 +1,14 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 必须回传GPU终态简报 — 2026-11-02
+
+用户明确要求：每次GPU任务结束后，目的地代理必须核验日志、结果和退出状态，
+将简短的真实报告提交并推送至GitHub main，核验远端提交后告知用户；口头汇报不能替代推送。
+成功、失败、超时或中断都应记录，不隐瞒退步；报告包含run/launch ID、完成量、指标、
+耗时和GPU-hours、核验边界、日志路径及SHA。不得上传权重、图片、tensor或原始/live日志。
+保留本地修改和全部运行资产，不因报告而自动启动、重试或接续训练。
+
+
 ## 当前授权：独立Rain多步适配25步资格，四节点H200 — 2026-11-02
 
 用户在protocol_routed工程通过后明确execute。本节覆盖下方“Rain训练器尚未交付”；
