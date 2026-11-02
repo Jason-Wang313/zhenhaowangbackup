@@ -1,5 +1,37 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前执行：保留主专家原协议的内部混合验收 — 2026-11-02
+
+用户在共同prompt／alpha=1损害原能力之后授权execute。本节覆盖下方“下一步待制定”；
+不重跑共同协议对照，不续训旧五类模型，不直接启动Rain或正式MoE，也不动另一代理energy。
+
+新接口接收显式专家比例：全部比例用于FLUX原50处LoRA增量的内部混合；
+比例最大的主专家决定它原来的prompt、alpha和uint8顺序。平局按固定专家顺序。
+不平均alpha、不强制共同prompt、不生成多张图再融合；一条50步FLUX轨迹只生成一张图。
+Blur/Noise/Low-light保留.75/.30/.925和双uint8，Haze为1与单uint8。
+目标是保留单选时原能力，完整GPU仍待验收；主专家切换不连续，soft质量未知，不承诺no-harm。
+
+本轮仅8张父任务training图、每类前两张，固定选取不看指标，每rank一张。
+两组为one_hot和主专家.9／另三份各.1/3；全是手工工程比例，不是学会的image/VLM router。
+单选必须decoded最大差≤1e-6且uint8完全一致；soft只验有限输出、原协议绑定与可运行性，
+照实报告原/单选/soft三组PSNR和LPIPS。各类只有2张，不能当泛化、SoW或VLM贡献证据。
+GT只在该图两组输出保存后评分；开发/official/sealed/internal/parent-test等保护像素不读。
+恢复模型仅FLUX＋原生VAE；AlexNet只评分，不加CNN/Restormer恢复器或教师。
+
+资源固定4节点×2张H200、总8卡，每卡≥139GiB；继承上轮对应节点软件/硬件环境。
+入口smoke/start_foundir_protocol_routed_flux_v1_tmux.sh，参数为node_rank、当前node0地址、
+run_id、fresh共用launch_id，默认端口29683。新输出根foundir_protocol_routed_flux_v1；
+逐arm保存并校验恢复，四节点联动，结果汇总重新读tensor验证单选，不只信pass字段。
+复用父四条prompt缓存，不重新运行Qwen。全部原权重、源码、缓存和结果不修改。
+预计5–15分钟/.67–2 GPU-hours，尚未实测；cap每节点30分钟、合计4 GPU-hours加清理。
+本地61项CPU回归、源资产预检及47份源码绑定复核通过；GPU未启动。
+实际显存与完整soft采样仍待目的地验收，本地主代理看不到目的地父缓存。
+
+主代理focused push；目的地代理安全同步、CPU --require-parent预检后给四节点命令，
+保留脏文件和运行资产，不复用旧IP、不自动启动。通过后再依据soft结果准备Rain25步资格，
+Rain适配训练器尚未交付，工程通过不自动授权长训。
+详见reports/foundir_protocol_routed_flux_v1_readiness_2026-11-02.md。
+
 ## 当前终态：共同prompt／alpha=1未保住四类能力 — 2026-11-02
 
 common_protocol_4x2_v1四节点H200 status0，128条×4组评分与最终核验齐全。
