@@ -1,0 +1,174 @@
+{
+  "run_id": "qualification_4x2_v1",
+  "launch_id": "launch_ccecd3a_v1",
+  "source_commit": "ccecd3afeb59275c48ee70af6abc9f7ee1380ed6",
+  "status": "failed_before_training_runtime_check",
+  "nodes": [
+    {
+      "node": 0,
+      "status": 1,
+      "elapsed_seconds": 88,
+      "allocated_gpu_seconds": 176,
+      "log_path": "logs/foundir_rain_flow_adaptation_v1_qualification_4x2_v1_node0.log",
+      "log_sha256": "e9f372aca06829ce8b4dc76abb89fc911906e109c8d6f6b20efae5d143c7d4d8",
+      "runtime_sha256": "eb63ba247409666f5128ad183eea9a1786d75bfcc6a839ccf7475cda9f06568c"
+    },
+    {
+      "node": 1,
+      "status": 1,
+      "elapsed_seconds": 86,
+      "allocated_gpu_seconds": 172,
+      "log_path": "logs/foundir_rain_flow_adaptation_v1_qualification_4x2_v1_node1.log",
+      "log_sha256": "8504fc99804441f4f9d0ce7b7ff0658fe31e6acc093d08490cfe0da8ff47c5a7",
+      "runtime_sha256": "5d9a663dbda58cc0ac80c493d8c6ccbd5d5ffebf07f55d7a5832158379291844"
+    },
+    {
+      "node": 2,
+      "status": 1,
+      "elapsed_seconds": 84,
+      "allocated_gpu_seconds": 168,
+      "log_path": "logs/foundir_rain_flow_adaptation_v1_qualification_4x2_v1_node2.log",
+      "log_sha256": "dfaec7dd16e01f1d210f696e79b084f70bb26c0e1de8d06f1af6406b84f87d4e",
+      "runtime_sha256": "5d9a663dbda58cc0ac80c493d8c6ccbd5d5ffebf07f55d7a5832158379291844"
+    },
+    {
+      "node": 3,
+      "status": 1,
+      "elapsed_seconds": 80,
+      "allocated_gpu_seconds": 160,
+      "log_path": "logs/foundir_rain_flow_adaptation_v1_qualification_4x2_v1_node3.log",
+      "log_sha256": "f3a5c9b724a4b212d1aeef2ac36fde9ea5a9c70088294834691bdb7b4d59da9e",
+      "runtime_sha256": "5d9a663dbda58cc0ac80c493d8c6ccbd5d5ffebf07f55d7a5832158379291844"
+    }
+  ],
+  "completed_optimizer_steps": 0,
+  "cache_json_count": 0,
+  "result_exists": false,
+  "allocated_gpu_hours": 0.18777777777777777,
+  "runtime_differences": {
+    "nvidia_driver": [
+      "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04)",
+      "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)"
+    ]
+  },
+  "node_runtimes": [
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    }
+  ],
+  "receipt_sha256": "06083c93291b183f6a0063369d1556e0f528881c02f9e8bc0d6fa248672a7cfc",
+  "error": "all four training nodes must share GPU family and exact runtime/metric versions",
+  "cause": "check_runtimes compares entire runtime dictionaries; nvidia_driver includes differing GCC Ubuntu build suffix, despite identical NVIDIA driver 570.124.06 and all other recorded fields",
+  "boundary": "Failure before dist.init_process_group and prepare_cache; no NCCL training, CUDA backward, throughput or quality qualification established. No OOM recorded. No code/recipe changes or automatic retry. All assets retained.",
+  "artifact_paths": [
+    "node3.lock",
+    "runtime_node2.json",
+    "node2.lock",
+    "runtime_node1.json",
+    "node1.lock",
+    "node0.lock",
+    "runtime_node3.json",
+    "runtime_node0.json",
+    "receipt.json",
+    "attempts/launch_ccecd3a_v1_node0.json",
+    "attempts/launch_ccecd3a_v1_node3.json",
+    "attempts/launch_ccecd3a_v1_node1.json",
+    "attempts/launch_ccecd3a_v1_node2.json",
+    "launches/launch_ccecd3a_v1/boot_node0.json",
+    "launches/launch_ccecd3a_v1/failed_node1.json",
+    "launches/launch_ccecd3a_v1/boot_node2.json",
+    "launches/launch_ccecd3a_v1/claim_node1",
+    "launches/launch_ccecd3a_v1/boot_node1.json",
+    "launches/launch_ccecd3a_v1/failed_node0.json",
+    "launches/launch_ccecd3a_v1/boot_node3.json",
+    "launches/launch_ccecd3a_v1/ready_node1.json",
+    "launches/launch_ccecd3a_v1/claim_node0",
+    "launches/launch_ccecd3a_v1/claim_node3",
+    "launches/launch_ccecd3a_v1/ready_node0.json",
+    "launches/launch_ccecd3a_v1/failed_node3.json",
+    "launches/launch_ccecd3a_v1/claim_node2",
+    "launches/launch_ccecd3a_v1/prepared_node0.json",
+    "launches/launch_ccecd3a_v1/ready_node3.json",
+    "launches/launch_ccecd3a_v1/ready_node2.json",
+    "launches/launch_ccecd3a_v1/failed_node2.json"
+  ]
+}
