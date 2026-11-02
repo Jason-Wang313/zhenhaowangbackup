@@ -1,5 +1,55 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前授权：原生50步Rain起点，匹配训练首200步 — 2026-11-02
+
+用户明确要求先把已有原生50步Rain改好，再考虑内部MoE。本节覆盖下方旧endpoint转flow
+stage1的待执行状态；不恢复其训练，也不动另一代理energy、四个原专家或旧结果。
+旧stage1已200步/6400曝光/528评价完成，但最终核验超时，没有RESULT_VERIFIED。
+开发28.946285/.099400，低于同图一步教师34.226794/.073640；累计8.722777778
+GPU-hours（含旧资格）保留，不能把8GPU-hours说成8个普通小时。
+
+新起点固定旧native source_diverse_pilot step2000，SHA
+2c4537258783f51ad15163b1a3377ce811d1418d51b4da68b5d75ef502bd45af。
+它原100图30.859952/.083477，未达标；不是那个达标的一步Rain。
+旧100图与当前100图的record/source/文件哈希/crop一致，旧1580训练来源与它们分离。
+但seed与FP32 LoRA计算路径变了，旧指标只作历史参考，必须重算当前step0。
+
+当前任务复制原生50步BF16 LoRA并无损提升到FP32，fresh Adam；不是原optimizer轨迹续训，
+也不继承一步模型、旧资格或新200步转换模型的权重。训练目标仍GT为主＋冻结一步FLUX
+弱RGB示范，恢复模型只有FLUX/原生VAE；LPIPS仅损失/评分，不加CNN/Restormer恢复器。
+沿用上一轮完整38334条/5780来源池、lr1e-5、global32、512随机裁图/D4、全部loss系数、
+采样顺序和noise/t种子。首200步6400曝光，5012条/3867来源；不是全池已经遍历。
+
+只改变初始化；step0/50/100/200各评价32训练诊断＋100开发图，分别汇总。
+目标仍同一checkpoint开发PSNR>=34.2且LPIPS<=.08；开发只评价，官方/封存像素禁止。
+不承诺200步过线；结束后人工决定是否续训，不自动加步、改loss或启动MoE。
+
+明确复用父formal_stage1_4x2_v1的6532份缓存，不复制/重命名冒充新缓存。
+新receipt绑定父receipt SHA 8b2209f880307af41eec03c571a8c98cf0661f7714ac8d4f63d63cd96dfb75ae；
+逐张核对行身份、裁图、教师、tensor SHA、有限值/形状，评价GT latent仍必须为零。
+主代理看不到目的地缓存，CPU源资产通过不等于目的地缓存可用；目的地必须--require-cache。
+若缺失或不匹配就回报，不能自动重生成整池/换缓存/扩大预算。
+
+仍4节点×每节点2H200=8卡，>=139GiB/卡，不是4卡/单节点，也未资格H10080GB。
+新入口smoke/start_foundir_rain_native50_warmstart_v1_tmux.sh，
+参数node_rank、当前node0地址、run_id、fresh共享launch_id；端口29688。
+run_id=native50_stage1_4x2_v1，首次launch_id=launch_native50_stage1_v1。
+每步保存LoRA/Adam/各rank RNG/采样进度，201份；同ID＋fresh launch恢复本段。
+新磁盘约75–85GiB，至少100GiB空闲，父缓存必须保留；不删旧资产。
+
+GPU阶段粗估25–55分钟/3.33–7.33使用GPU-hours，未实测；仍cap60分钟/8GPU-hours加清理。
+GPU输出GPU_COMPLETE且四节点status0只表示训练/评价完成，CPU_VERIFICATION_PENDING。
+不要让八卡等待CPU全量核验。目的地CPU代理随后运行
+smoke/verify_foundir_rain_native50_warmstart_v1_cpu.sh <run_id> <launch_id>，
+CUDA_VISIBLE_DEVICES空，cap90分钟，无新采样/训练；CPU耗时另报，不假定平台自动停止计费。
+必须最终有RAIN_NATIVE50_WARMSTART_RESULT_VERIFIED及CPU_VERIFY_END status0才称完整核验通过；
+质量门槛仍单独判断。无论成功/失败/超时都回传小报告到GitHub，不上传tensor/实时日志。
+主代理实现/CPU测试/push；目的地安全同步、检查资产并给当前IP的四节点命令。
+已通过19项CPU回归、两进程DDP下一步精确恢复、真实旧LoRA100张量FP32加载一致性，
+及60份源码绑定的源资产预检；目的地缓存/CUDA仍待验收。
+本地没有GPU和新根挂载，不能声称已启动。详见
+reports/foundir_rain_native50_warmstart_readiness_2026-11-02.md。
+
 ## 当前授权：Rain正式数据训练前200步，嵌入早期评价 — 2026-11-02
 
 用户明确取消独立32图过拟合阶段，要求进入下一阶段训练、在50/100/200步检查真实输出。
