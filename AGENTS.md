@@ -1,5 +1,44 @@
 # Project agent instructions
 
+## 当前授权：独立Rain多步适配25步资格，四节点H200 — 2026-11-02
+
+用户在protocol_routed工程通过后明确execute。本节覆盖下方“Rain训练器尚未交付”；
+当前交付独立新Rain资格，不训练router、不重跑旧五类或共同协议，不改另一代理energy。
+旧protocol_routed_4x2_v1四节点status0，8/8单选像素完全相同、soft可执行；
+固定.9混合使六图至少一指标变差，只有Low-light两图均改善，不能当普遍无损或VLM贡献。
+
+新Rain从成功precision_resume continue_v1 step4000的FP32 LoRA复制初始化，fresh Adam；
+不是随机重训、不是原优化轨迹续训，也不是把一步残差重复50次。原Rain只读保留，
+作为冻结FLUX教师在固定训练裁图上生成一次RGB示范，缓存后释放；不加载Restormer。
+四个原50步专家和共享base/VAE全部冻结，不加载为可训练参数，不改变其任何权重文件。
+
+新分支学习native reference noise-to-clean：
+z_t=(1-t)*z_GT+t*noise，目标v=noise-z_GT，预测clean=z_t-t*v。
+GT主要监督：flow MSE1、latent L1 .25、RGB MSE10、LPIPS .05；
+原Rain RGB示范只加L1 .1辅助，不当所有t的速度真值。预测clean减法、LoRA、Adam为FP32，
+FLUX计算BF16。真实forward_kv_extract按块重算，VAE decode也重算，无新增修图网络。
+LPIPS AlexNet只作为损失/评分；不加CNN energy、Restormer恢复器或额外教师。
+
+只从原38334训练记录中按固定哈希取32个不同来源，512中心裁图、不增强；
+完整主manifest非训练source/GT哈希隔离复查。每步32图各一次，micro1×累积4×8rank，
+25步共800曝光，只是工程资格。前8张训练图在step0/25跑真实50步，
+并同时报告同图冻结一步Rain；是training_fit_only，不是开发、泛化或正式34.2/.08达标。
+保留Rain原prompt、CFG1/ref10、最终一次uint8/alpha1，不搜索输出系数。
+只看随机t loss下降不能判成功；必须报告真实50步两指标，差就如实报，25步不作路线终判。
+
+4节点×2张H200、共8卡，每卡≥139GiB。仍用唯一迁移后的multimodal-discrete-diffusion根。
+入口smoke/start_foundir_rain_flow_adaptation_v1_tmux.sh，四参数node_rank、当前node0地址、
+run_id、fresh共享launch_id，默认端口29684。预计10–30分钟/1.33–4 GPU-hours未实测；
+每节点cap60分钟、总8 GPU-hours加清理，不自动扩预算。至少20GiB新空间，不删旧资产。
+每完整step原子发布LoRA/Adam/各rank RNG/采样位置及SHA；同run_id换fresh launch_id恢复，
+未落盘一步可能重算，不支持换world/runtime严格恢复。资格权重不得seed正式。
+缓存逐图、probe逐图保存；四节点失败联动。原step4000始终保留。
+
+主代理实现/测试/推送；目的地代理安全同步、CPU资产预检后给四节点命令，不能自行改配方。
+36项CPU检查、两进程DDP下一步精确恢复、真实源资产预检及44份源码绑定复核通过。
+GPU尚未启动，显存/速度/四节点NCCL训练仍待实测；通过后不自动正式长训、MoE或energy。
+详见reports/foundir_rain_flow_adaptation_v1_readiness_2026-11-02.md。
+
 ## 当前执行：保留主专家原协议的内部混合验收 — 2026-11-02
 
 用户在共同prompt／alpha=1损害原能力之后授权execute。本节覆盖下方“下一步待制定”；
