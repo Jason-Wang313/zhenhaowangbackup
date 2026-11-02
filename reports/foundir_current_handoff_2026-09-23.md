@@ -1,5 +1,30 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前执行：共同提示词／输出协议对照，四节点H200 — 2026-11-02
+
+用户在128/128静态继承通过后明确授权下一步，并确认四节点全部是H200。
+当前只执行方案B：固定共同提示词与输出处理的训练侧2×2对照；不再为H100兼容阻塞，
+本入口明确要求4节点×每节点2张H200（每卡≥139GiB），总8卡。不动已完成重放及另一代理energy。
+旧“没有下一任务授权”在本节被覆盖；这不是自动正式MoE或Rain训练授权。
+
+复用 `replay_4x2_v1` 原128张已保存输出；相同权重/50步/512/crop/seed，只新增共同提示词采样。
+四组：原提示词＋原输出；共同提示词＋原输出；原提示词＋统一输出；共同提示词＋统一输出。
+统一输出候选仅alpha=1、一次uint8，不再混LQ；这是待检验的最简单候选，不是已经决定抛弃
+原任务alpha，也不预设所有类型不退步。不做alpha搜索、逐图GT选方案、soft混合或router训练。
+
+为比较质量，本轮新增读取这128条相同training记录的配对GT，仅算PSNR/LPIPS；元数据逐项核对，
+同crop、GT哈希和路径严格绑定，所有开发/official/sealed/internal/parent-test及最终1859像素仍不读。
+这些图已被原FLUX微调见过，结果只描述训练侧接口影响，不是泛化/SoW/论文成功。
+恢复模型仍只有FLUX＋原生VAE；LPIPS AlexNet只评分，不是新增CNN恢复器/教师/energy。
+
+入口 `smoke/start_foundir_existing_flux_common_protocol_v1_tmux.sh`，四必填参数仍为
+node_rank、当前node0地址、run_id、fresh共用launch_id。默认端口29682；新输出根完全隔离。
+原输出复用要求各node保持父任务对应runtime；新节点/环境不匹配则拒绝，不偷偷换弱基线。
+逐图保存、失败联动、四节点done后汇总；结果完成不自动选共同协议，不自动启动Rain或长训。
+预计15–30分钟／2–4GPU-hours（新任务未实测）；每节点硬cap1小时，总8GPU-hours加清理。
+主代理推送代码；目的地代理安全同步、检查共享父缓存和LPIPS依赖后给四节点命令，不冒称本地已启动。
+详见 `reports/foundir_existing_flux_common_protocol_v1_readiness_2026-11-02.md`。
+
 ## 当前终态：四节点H200静态单选重放128/128通过 — 2026-11-02
 
 replay_4x2_v1 / launch_3d22527_v1四节点status0；四份done及verified齐全。
