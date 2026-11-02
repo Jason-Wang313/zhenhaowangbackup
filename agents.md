@@ -1,5 +1,51 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 当前授权：Rain正式数据训练前200步，嵌入早期评价 — 2026-11-02
+
+用户明确取消独立32图过拟合阶段，要求进入下一阶段训练、在50/100/200步检查真实输出。
+本节覆盖下面旧25步待重试、单独trainfit计划及其它历史ACTIVE优先级。未发布的trainfit草稿
+已移除，没有启动/产物；不恢复energy/旧MoE/router，不把正式训练重命名成32图拟合。
+
+父qualification_4x2_driverfix_v1已四节点status0，25步、800曝光、26快照齐全；
+同8训练图：原一步Rain33.696391/.034100，新多步step0为9.972354/.816801，
+step25为16.417211/.394619，8/8双指标弱于教师。工程通过不是质量通过，旧失败
+加资格累计.721666667 GPU-hours不清零。原模型与全部旧结果保持不动。
+
+当前新入口smoke/start_foundir_rain_flow_formal_stage1_v1_tmux.sh，四参数node_rank、
+当前node0地址、run_id、fresh共享launch_id；端口29686。
+资源仍4节点×2H200=8卡，每卡>=139GiB，唯一GPU根为迁移后的multimodal-discrete-diffusion。
+run_id=formal_stage1_4x2_v1，首次launch_id=launch_formal_stage1_v1；不复用旧IP或旧run。
+主代理无法启动目的地GPU；负责实现/CPU测试/push，目的地安全同步/资产预检/给用户命令。
+
+这是正式训练的首200 optimizer steps，不是200步完整训练已足够的承诺；到200停止，
+不自动扩大步数。从原成功Rain step4000 FP32 LoRA复制初始化、fresh Adam，
+不复用旧资格step25权重；新的正式checkpoint/Adam/RNG可在后续明确授权后继续，
+不必再做一次资格或重新初始化。当前同ID/fresh launch恢复本段中断，源代码/world/runtime变更拒绝。
+
+使用完整38334条、5780来源的原Rain训练池，均匀选来源再选记录；
+512随机裁图与D4增强，小图reflect padding（池中35条）；GT仍主要监督，
+冻结原一步FLUX仅弱RGB示范，不加载Restormer。模型/loss/lr/global batch32不变。
+本段固定6400次曝光，5012不同记录、3867来源，不声称已遍历全池。
+按绝对position固定采样/增强/noise/t，缓存6532份（6400训练+32训练诊断+100开发评价）。
+缓存逐张保存、逐张核验；不把整套缓存复制进每个rank内存。
+
+step0/50/100/200评估同32训练图和原冻结100来源Rain开发图，分别汇总；
+开发裁图沿manifest原crop_x/y，单uint8及PSNR/LPIPS算术与原Rain口径一致；
+开发图绝不进入反传，GT latent仅训练记录编码，评价GT只评分。开发是可调参开发集，
+不是官方/封存测试，也不代表FLUX底座预训练没见过。其他保护像素仍禁止。
+目标仍开发PSNR>=34.2且LPIPS<=.08；比较同图原一步教师，不能拿训练均值替代开发成绩。
+早期开发两指标都未改善则milestone标review_required并回传检查，不自动改loss或扩大预算；
+首200步不要求50步就过门槛。目的地代理在50/100步核验已提交摘要并回传小报告，
+终态无论成功/失败/超时都必须回传GitHub，不上传实时日志/tensor/权重。
+
+每完整步原子保存LoRA/Adam/8rank RNG/采样进度，共201份；评价保持训练RNG，
+中断后先补完当前milestone再训练，已保存评价跳过。新缓存+快照预计约160GiB量级，
+启动前至少220GiB可用空间，保留全部旧资产。额外缓存与开发评价吞吐未实测；
+粗估25–50分钟/3.33–6.67使用GPU-hours，硬cap每节点60分钟、合计8GPU-hours加清理，
+超时保留进度，不自动续跑/扩预算。前25步训练本体实测均值1.509秒不含保存/评价/新缓存，
+不能据此保证新全程只需5分钟。CPU通过不等于新CUDA/NCCL运行已通过。
+详见reports/foundir_rain_flow_formal_stage1_readiness_2026-11-02.md。
+
 ## Rain资格驱动检查修复 — 2026-11-02
 
 以AGENTS.md顶部新修复为准：旧qualification_4x2_v1训练前失败，0步，无质量结果。
