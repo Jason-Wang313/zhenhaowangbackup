@@ -1,0 +1,351 @@
+{
+  "run_id": "protocol_routed_4x2_v1",
+  "launch_id": "launch_6ff9c30_v1",
+  "source_commit": "6ff9c30de83360d0a79759b2a82152627b33b1b1",
+  "status": "protocol_routed_engineering_pass",
+  "gpu_topology": "4 nodes x 2 H200",
+  "nodes": [
+    {
+      "node": 0,
+      "status": 0,
+      "elapsed_seconds": 179,
+      "allocated_gpu_seconds": 358,
+      "log": "logs/foundir_protocol_routed_flux_v1_protocol_routed_4x2_v1_node0.log",
+      "log_sha256": "7d0c2c31e687e4be3e73302f1bb42709aa5ff0641cbba89b1555e054041c0974"
+    },
+    {
+      "node": 1,
+      "status": 0,
+      "elapsed_seconds": 172,
+      "allocated_gpu_seconds": 344,
+      "log": "logs/foundir_protocol_routed_flux_v1_protocol_routed_4x2_v1_node1.log",
+      "log_sha256": "418172bd0367853f6d4be61aec7d00420384afb61b80cb0bce141af4fd8da652"
+    },
+    {
+      "node": 2,
+      "status": 0,
+      "elapsed_seconds": 170,
+      "allocated_gpu_seconds": 340,
+      "log": "logs/foundir_protocol_routed_flux_v1_protocol_routed_4x2_v1_node2.log",
+      "log_sha256": "b632b19024e40b0d39a883c1b8690e1c71d5824da0ec9704c144ac79bd893761"
+    },
+    {
+      "node": 3,
+      "status": 0,
+      "elapsed_seconds": 166,
+      "allocated_gpu_seconds": 332,
+      "log": "logs/foundir_protocol_routed_flux_v1_protocol_routed_4x2_v1_node3.log",
+      "log_sha256": "f91700fb256c6599e99e9d5005e7d1ab396c1ce3fa02d8db013a16a3db4cd0a6"
+    }
+  ],
+  "node0_wall_seconds": 179,
+  "allocated_gpu_hours": 0.38166666666666665,
+  "peak_allocated_gib": 137.7335958480835,
+  "result_path": "checkpoints/foundir_protocol_routed_flux_v1/protocol_routed_4x2_v1/result.json",
+  "result_sha256": "ef84216ec6faa506834a015f0de1fa45bdc7affd1ce2acc34f1e50d99c71ce9a",
+  "receipt_sha256": "16a75cb80267b1b9c5b6491a600e80498c8d0f5a6ab35e2d85a004198be4a2d8",
+  "source_hashes_verified": 47,
+  "independent_cpu_audit": {
+    "original_tensors_loaded": 8,
+    "new_tensors_loaded": 16,
+    "saved_one_hot_parity": [
+      {
+        "key": "blur_foundir_train_0094131",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      },
+      {
+        "key": "noise_foundir_train_0183727",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      },
+      {
+        "key": "haze_foundir_train_0209885",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      },
+      {
+        "key": "lowlight_foundir_train_0514086",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      },
+      {
+        "key": "blur_foundir_train_0085774",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      },
+      {
+        "key": "noise_foundir_train_0155601",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      },
+      {
+        "key": "haze_foundir_train_0245677",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      },
+      {
+        "key": "lowlight_foundir_train_0500527",
+        "max_abs_rgb": 0.0,
+        "uint8_equal": true,
+        "pass": true
+      }
+    ],
+    "summary_recomputed": true,
+    "lpips_reexecuted": false,
+    "gpu_used": false
+  },
+  "by_task": {
+    "blur": {
+      "records": 2,
+      "means": {
+        "original": {
+          "psnr": 24.842218593715693,
+          "lpips": 0.1470482237637043
+        },
+        "one_hot": {
+          "psnr": 24.842218593715693,
+          "lpips": 0.1470482237637043
+        },
+        "near_one_hot": {
+          "psnr": 24.892763358958703,
+          "lpips": 0.15864966809749603
+        }
+      },
+      "near_one_hot_minus_original": {
+        "psnr": 0.05054476524301066,
+        "lpips": 0.011601444333791733
+      },
+      "near_one_hot_harmed_images": 2
+    },
+    "noise": {
+      "records": 2,
+      "means": {
+        "original": {
+          "psnr": 40.69705777979506,
+          "lpips": 0.053422782802954316
+        },
+        "one_hot": {
+          "psnr": 40.69705777979506,
+          "lpips": 0.053422782802954316
+        },
+        "near_one_hot": {
+          "psnr": 40.875497931733065,
+          "lpips": 0.056893130764365196
+        }
+      },
+      "near_one_hot_minus_original": {
+        "psnr": 0.17844015193800544,
+        "lpips": 0.00347034796141088
+      },
+      "near_one_hot_harmed_images": 2
+    },
+    "haze": {
+      "records": 2,
+      "means": {
+        "original": {
+          "psnr": 19.877379535650107,
+          "lpips": 0.1506437286734581
+        },
+        "one_hot": {
+          "psnr": 19.877379535650107,
+          "lpips": 0.1506437286734581
+        },
+        "near_one_hot": {
+          "psnr": 18.25173968713851,
+          "lpips": 0.16695275157690048
+        }
+      },
+      "near_one_hot_minus_original": {
+        "psnr": -1.6256398485115966,
+        "lpips": 0.016309022903442383
+      },
+      "near_one_hot_harmed_images": 2
+    },
+    "lowlight": {
+      "records": 2,
+      "means": {
+        "original": {
+          "psnr": 17.015077255129633,
+          "lpips": 0.19855942577123642
+        },
+        "one_hot": {
+          "psnr": 17.015077255129633,
+          "lpips": 0.19855942577123642
+        },
+        "near_one_hot": {
+          "psnr": 20.37456231105304,
+          "lpips": 0.1645539104938507
+        }
+      },
+      "near_one_hot_minus_original": {
+        "psnr": 3.3594850559234075,
+        "lpips": -0.03400551527738571
+      },
+      "near_one_hot_harmed_images": 0
+    }
+  },
+  "per_record": [
+    {
+      "key": "blur_foundir_train_0094131",
+      "task": "blur",
+      "rank": 0,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.17954522371292114,
+          "psnr": 23.880877564449058
+        },
+        "one_hot": {
+          "lpips": 0.17072246968746185,
+          "psnr": 23.623242471224835
+        },
+        "original": {
+          "lpips": 0.17072246968746185,
+          "psnr": 23.623242471224835
+        }
+      }
+    },
+    {
+      "key": "noise_foundir_train_0183727",
+      "task": "noise",
+      "rank": 1,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.005785878747701645,
+          "psnr": 39.052883455766356
+        },
+        "one_hot": {
+          "lpips": 0.0057419841177761555,
+          "psnr": 38.09316976310385
+        },
+        "original": {
+          "lpips": 0.0057419841177761555,
+          "psnr": 38.09316976310385
+        }
+      }
+    },
+    {
+      "key": "haze_foundir_train_0209885",
+      "task": "haze",
+      "rank": 2,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.13663288950920105,
+          "psnr": 18.859499966614624
+        },
+        "one_hot": {
+          "lpips": 0.13587944209575653,
+          "psnr": 19.14017624369952
+        },
+        "original": {
+          "lpips": 0.13587944209575653,
+          "psnr": 19.14017624369952
+        }
+      }
+    },
+    {
+      "key": "lowlight_foundir_train_0514086",
+      "task": "lowlight",
+      "rank": 3,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.24131669104099274,
+          "psnr": 13.85655953392558
+        },
+        "one_hot": {
+          "lpips": 0.29797837138175964,
+          "psnr": 12.340576610319172
+        },
+        "original": {
+          "lpips": 0.29797837138175964,
+          "psnr": 12.340576610319172
+        }
+      }
+    },
+    {
+      "key": "blur_foundir_train_0085774",
+      "task": "blur",
+      "rank": 4,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.13775411248207092,
+          "psnr": 25.904649153468352
+        },
+        "one_hot": {
+          "lpips": 0.12337397783994675,
+          "psnr": 26.061194716206554
+        },
+        "original": {
+          "lpips": 0.12337397783994675,
+          "psnr": 26.061194716206554
+        }
+      }
+    },
+    {
+      "key": "noise_foundir_train_0155601",
+      "task": "noise",
+      "rank": 5,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.10800038278102875,
+          "psnr": 42.69811240769977
+        },
+        "one_hot": {
+          "lpips": 0.10110358148813248,
+          "psnr": 43.30094579648627
+        },
+        "original": {
+          "lpips": 0.10110358148813248,
+          "psnr": 43.30094579648627
+        }
+      }
+    },
+    {
+      "key": "haze_foundir_train_0245677",
+      "task": "haze",
+      "rank": 6,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.19727261364459991,
+          "psnr": 17.6439794076624
+        },
+        "one_hot": {
+          "lpips": 0.16540801525115967,
+          "psnr": 20.614582827600696
+        },
+        "original": {
+          "lpips": 0.16540801525115967,
+          "psnr": 20.614582827600696
+        }
+      }
+    },
+    {
+      "key": "lowlight_foundir_train_0500527",
+      "task": "lowlight",
+      "rank": 7,
+      "metrics": {
+        "near_one_hot": {
+          "lpips": 0.08779112994670868,
+          "psnr": 26.892565088180497
+        },
+        "one_hot": {
+          "lpips": 0.0991404801607132,
+          "psnr": 21.68957789994009
+        },
+        "original": {
+          "lpips": 0.0991404801607132,
+          "psnr": 21.68957789994009
+        }
+      }
+    }
+  ],
+  "scope": "8 fixed training images; manual routing fixtures; no training, learned router, VLM contribution or generalization claim",
+  "decision": "Single-selection preservation and internal soft execution pass. Fixed soft routing harms at least one metric on six images; do not claim universal quality preservation. Rain trainer remains undelivered; no automatic follow-up or long training."
+}
