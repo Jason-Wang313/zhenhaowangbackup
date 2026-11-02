@@ -1,0 +1,2036 @@
+{
+  "run_id": "formal_stage1_4x2_v1",
+  "launch_id": "launch_formal_stage1_v1",
+  "step": 100,
+  "milestone": {
+    "count": 132,
+    "development_change_from_step": 50,
+    "development_delta": {
+      "lpips": -0.039360530371777724,
+      "psnr": 2.0816901191773454
+    },
+    "development_gate_pass": false,
+    "official_test_accessed": false,
+    "quality_gate_evaluated": true,
+    "receipt_sha256": "8b2209f880307af41eec03c571a8c98cf0661f7714ac8d4f63d63cd96dfb75ae",
+    "review_required": false,
+    "splits": {
+      "development": {
+        "count": 100,
+        "means": {
+          "student_50_step": {
+            "lpips": 0.10599238478578626,
+            "psnr": 28.251969205850834
+          },
+          "teacher_one_step": {
+            "lpips": 0.07364026844967157,
+            "psnr": 34.2267938486823
+          }
+        }
+      },
+      "train_probe": {
+        "count": 32,
+        "means": {
+          "student_50_step": {
+            "lpips": 0.10433064372045919,
+            "psnr": 27.09477272484819
+          },
+          "teacher_one_step": {
+            "lpips": 0.06611489731585607,
+            "psnr": 32.74079225925681
+          }
+        }
+      }
+    },
+    "step": 100
+  },
+  "per_image_metrics": [
+    {
+      "index": 6400,
+      "record_id": "foundir_train_0384433",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05948008969426155,
+          "psnr": 26.4395622549649
+        },
+        "teacher_one_step": {
+          "lpips": 0.025494815781712532,
+          "psnr": 31.893731516383397
+        }
+      }
+    },
+    {
+      "index": 6401,
+      "record_id": "foundir_train_0390930",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.10698601603507996,
+          "psnr": 24.38340690832056
+        },
+        "teacher_one_step": {
+          "lpips": 0.07302337139844894,
+          "psnr": 27.269210597194004
+        }
+      }
+    },
+    {
+      "index": 6402,
+      "record_id": "foundir_train_0368560",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05784699320793152,
+          "psnr": 30.78206691695658
+        },
+        "teacher_one_step": {
+          "lpips": 0.029581908136606216,
+          "psnr": 36.71206706345113
+        }
+      }
+    },
+    {
+      "index": 6403,
+      "record_id": "foundir_train_0378494",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.027044445276260376,
+          "psnr": 27.180061853275518
+        },
+        "teacher_one_step": {
+          "lpips": 0.012990300543606281,
+          "psnr": 36.61841797711168
+        }
+      }
+    },
+    {
+      "index": 6404,
+      "record_id": "foundir_train_0378559",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09495843946933746,
+          "psnr": 26.506526646851412
+        },
+        "teacher_one_step": {
+          "lpips": 0.04901329427957535,
+          "psnr": 33.287337659532874
+        }
+      }
+    },
+    {
+      "index": 6405,
+      "record_id": "foundir_train_0383174",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.028582947328686714,
+          "psnr": 23.374205130392333
+        },
+        "teacher_one_step": {
+          "lpips": 0.012633186765015125,
+          "psnr": 35.42578346525768
+        }
+      }
+    },
+    {
+      "index": 6406,
+      "record_id": "foundir_train_0382942",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.044016215950250626,
+          "psnr": 27.79024889710005
+        },
+        "teacher_one_step": {
+          "lpips": 0.026824776083230972,
+          "psnr": 33.66831574714645
+        }
+      }
+    },
+    {
+      "index": 6407,
+      "record_id": "foundir_train_0368975",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07274007797241211,
+          "psnr": 26.42663016935375
+        },
+        "teacher_one_step": {
+          "lpips": 0.04323916509747505,
+          "psnr": 34.69626115117514
+        }
+      }
+    },
+    {
+      "index": 6408,
+      "record_id": "foundir_train_0395958",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08463232964277267,
+          "psnr": 26.182121963150628
+        },
+        "teacher_one_step": {
+          "lpips": 0.03255324438214302,
+          "psnr": 35.29303380818823
+        }
+      }
+    },
+    {
+      "index": 6409,
+      "record_id": "foundir_train_0395119",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11292243003845215,
+          "psnr": 23.428757208668017
+        },
+        "teacher_one_step": {
+          "lpips": 0.08432291448116302,
+          "psnr": 26.939257917978185
+        }
+      }
+    },
+    {
+      "index": 6410,
+      "record_id": "foundir_train_0371849",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06839053332805634,
+          "psnr": 27.495637389896604
+        },
+        "teacher_one_step": {
+          "lpips": 0.039424531161785126,
+          "psnr": 36.09663974336824
+        }
+      }
+    },
+    {
+      "index": 6411,
+      "record_id": "foundir_train_0393013",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.32678288221359253,
+          "psnr": 27.039383690454848
+        },
+        "teacher_one_step": {
+          "lpips": 0.20811408758163452,
+          "psnr": 30.750278660982225
+        }
+      }
+    },
+    {
+      "index": 6412,
+      "record_id": "foundir_train_0373029",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04143544286489487,
+          "psnr": 35.02083282524445
+        },
+        "teacher_one_step": {
+          "lpips": 0.030774421989917755,
+          "psnr": 38.175680061699424
+        }
+      }
+    },
+    {
+      "index": 6413,
+      "record_id": "foundir_train_0391522",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.0731314942240715,
+          "psnr": 30.3263456325791
+        },
+        "teacher_one_step": {
+          "lpips": 0.031042512506246567,
+          "psnr": 34.9112981555007
+        }
+      }
+    },
+    {
+      "index": 6414,
+      "record_id": "foundir_train_0379495",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.057504720985889435,
+          "psnr": 30.400568790276616
+        },
+        "teacher_one_step": {
+          "lpips": 0.030389033257961273,
+          "psnr": 36.14819491369345
+        }
+      }
+    },
+    {
+      "index": 6415,
+      "record_id": "foundir_train_0375537",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.13064485788345337,
+          "psnr": 26.846070552899555
+        },
+        "teacher_one_step": {
+          "lpips": 0.0826931968331337,
+          "psnr": 31.729530854055422
+        }
+      }
+    },
+    {
+      "index": 6416,
+      "record_id": "foundir_train_0372406",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06039726734161377,
+          "psnr": 27.977007869938284
+        },
+        "teacher_one_step": {
+          "lpips": 0.03072866052389145,
+          "psnr": 33.2429062143686
+        }
+      }
+    },
+    {
+      "index": 6417,
+      "record_id": "foundir_train_0383261",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1290508508682251,
+          "psnr": 26.315219933421226
+        },
+        "teacher_one_step": {
+          "lpips": 0.11128716170787811,
+          "psnr": 30.053549012377744
+        }
+      }
+    },
+    {
+      "index": 6418,
+      "record_id": "foundir_train_0371137",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.31900566816329956,
+          "psnr": 25.973218717580355
+        },
+        "teacher_one_step": {
+          "lpips": 0.25105494260787964,
+          "psnr": 30.576508985458766
+        }
+      }
+    },
+    {
+      "index": 6419,
+      "record_id": "foundir_train_0384047",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.051654912531375885,
+          "psnr": 26.366736692178296
+        },
+        "teacher_one_step": {
+          "lpips": 0.030200254172086716,
+          "psnr": 32.416403706581264
+        }
+      }
+    },
+    {
+      "index": 6420,
+      "record_id": "foundir_train_0368300",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05461445078253746,
+          "psnr": 27.843710692863716
+        },
+        "teacher_one_step": {
+          "lpips": 0.03571479022502899,
+          "psnr": 33.206549019313016
+        }
+      }
+    },
+    {
+      "index": 6421,
+      "record_id": "foundir_train_0364849",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04005848243832588,
+          "psnr": 28.990849113044707
+        },
+        "teacher_one_step": {
+          "lpips": 0.02118811011314392,
+          "psnr": 34.72887763456002
+        }
+      }
+    },
+    {
+      "index": 6422,
+      "record_id": "foundir_train_0358757",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.2550446391105652,
+          "psnr": 22.26942784092555
+        },
+        "teacher_one_step": {
+          "lpips": 0.17238746583461761,
+          "psnr": 25.77352859108607
+        }
+      }
+    },
+    {
+      "index": 6423,
+      "record_id": "foundir_train_0392234",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07292533665895462,
+          "psnr": 27.96705295203845
+        },
+        "teacher_one_step": {
+          "lpips": 0.026487061753869057,
+          "psnr": 35.48017179079456
+        }
+      }
+    },
+    {
+      "index": 6424,
+      "record_id": "foundir_train_0381587",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08563828468322754,
+          "psnr": 26.992903901553433
+        },
+        "teacher_one_step": {
+          "lpips": 0.049932703375816345,
+          "psnr": 31.686395040188614
+        }
+      }
+    },
+    {
+      "index": 6425,
+      "record_id": "foundir_train_0374471",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07643219828605652,
+          "psnr": 31.324390742690248
+        },
+        "teacher_one_step": {
+          "lpips": 0.03588499873876572,
+          "psnr": 38.59199555146618
+        }
+      }
+    },
+    {
+      "index": 6426,
+      "record_id": "foundir_train_0381105",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11870849132537842,
+          "psnr": 24.02225114896162
+        },
+        "teacher_one_step": {
+          "lpips": 0.1056782603263855,
+          "psnr": 26.805145567415973
+        }
+      }
+    },
+    {
+      "index": 6427,
+      "record_id": "foundir_train_0384336",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.0984129011631012,
+          "psnr": 25.344113792131648
+        },
+        "teacher_one_step": {
+          "lpips": 0.0457363985478878,
+          "psnr": 31.57018521216945
+        }
+      }
+    },
+    {
+      "index": 6428,
+      "record_id": "foundir_train_0378114",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11989466845989227,
+          "psnr": 24.93418176452188
+        },
+        "teacher_one_step": {
+          "lpips": 0.06507329642772675,
+          "psnr": 30.35009794044573
+        }
+      }
+    },
+    {
+      "index": 6429,
+      "record_id": "foundir_train_0385484",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.2861558198928833,
+          "psnr": 27.124158593884257
+        },
+        "teacher_one_step": {
+          "lpips": 0.17596644163131714,
+          "psnr": 28.914173369004125
+        }
+      }
+    },
+    {
+      "index": 6430,
+      "record_id": "foundir_train_0373573",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.03971440717577934,
+          "psnr": 28.351795739024226
+        },
+        "teacher_one_step": {
+          "lpips": 0.017310913652181625,
+          "psnr": 35.4513821806478
+        }
+      }
+    },
+    {
+      "index": 6431,
+      "record_id": "foundir_train_0391275",
+      "usage": "train_probe",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.14377230405807495,
+          "psnr": 25.61328086999935
+        },
+        "teacher_one_step": {
+          "lpips": 0.1289304941892624,
+          "psnr": 29.242443187621625
+        }
+      }
+    },
+    {
+      "index": 6432,
+      "record_id": "foundir_train_0357245",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.10570105910301208,
+          "psnr": 25.834003149794455
+        },
+        "teacher_one_step": {
+          "lpips": 0.07747754454612732,
+          "psnr": 28.804356412568293
+        }
+      }
+    },
+    {
+      "index": 6433,
+      "record_id": "foundir_train_0358547",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06030106171965599,
+          "psnr": 28.619506855265623
+        },
+        "teacher_one_step": {
+          "lpips": 0.02469629794359207,
+          "psnr": 34.943509355343046
+        }
+      }
+    },
+    {
+      "index": 6434,
+      "record_id": "foundir_train_0359048",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.2314957231283188,
+          "psnr": 25.67629666778329
+        },
+        "teacher_one_step": {
+          "lpips": 0.1312786340713501,
+          "psnr": 35.40746598999205
+        }
+      }
+    },
+    {
+      "index": 6435,
+      "record_id": "foundir_train_0359525",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07595871388912201,
+          "psnr": 29.49478475491583
+        },
+        "teacher_one_step": {
+          "lpips": 0.04716864228248596,
+          "psnr": 34.20339942758264
+        }
+      }
+    },
+    {
+      "index": 6436,
+      "record_id": "foundir_train_0360047",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.10665066540241241,
+          "psnr": 27.284935524381133
+        },
+        "teacher_one_step": {
+          "lpips": 0.07279945909976959,
+          "psnr": 33.04729075039157
+        }
+      }
+    },
+    {
+      "index": 6437,
+      "record_id": "foundir_train_0360725",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.12536907196044922,
+          "psnr": 24.932888454442498
+        },
+        "teacher_one_step": {
+          "lpips": 0.06668131798505783,
+          "psnr": 29.62572236023633
+        }
+      }
+    },
+    {
+      "index": 6438,
+      "record_id": "foundir_train_0361213",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.18605908751487732,
+          "psnr": 28.622745697129133
+        },
+        "teacher_one_step": {
+          "lpips": 0.20192892849445343,
+          "psnr": 33.319158055271615
+        }
+      }
+    },
+    {
+      "index": 6439,
+      "record_id": "foundir_train_0361264",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.2001495659351349,
+          "psnr": 25.093652484498747
+        },
+        "teacher_one_step": {
+          "lpips": 0.1875104010105133,
+          "psnr": 29.164232475621507
+        }
+      }
+    },
+    {
+      "index": 6440,
+      "record_id": "foundir_train_0361446",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09755735099315643,
+          "psnr": 25.443743596934677
+        },
+        "teacher_one_step": {
+          "lpips": 0.06118328124284744,
+          "psnr": 30.2109911919181
+        }
+      }
+    },
+    {
+      "index": 6441,
+      "record_id": "foundir_train_0361897",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1428375244140625,
+          "psnr": 25.778595137658137
+        },
+        "teacher_one_step": {
+          "lpips": 0.12099220603704453,
+          "psnr": 30.48859784892285
+        }
+      }
+    },
+    {
+      "index": 6442,
+      "record_id": "foundir_train_0361947",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05350441485643387,
+          "psnr": 27.13565686145296
+        },
+        "teacher_one_step": {
+          "lpips": 0.02738214284181595,
+          "psnr": 34.38723598467155
+        }
+      }
+    },
+    {
+      "index": 6443,
+      "record_id": "foundir_train_0362499",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.10736487805843353,
+          "psnr": 21.800124814383672
+        },
+        "teacher_one_step": {
+          "lpips": 0.08595138043165207,
+          "psnr": 25.660202065133106
+        }
+      }
+    },
+    {
+      "index": 6444,
+      "record_id": "foundir_train_0363249",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.15350843966007233,
+          "psnr": 25.51578632263723
+        },
+        "teacher_one_step": {
+          "lpips": 0.10157465934753418,
+          "psnr": 33.6268943059883
+        }
+      }
+    },
+    {
+      "index": 6445,
+      "record_id": "foundir_train_0363457",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11609861254692078,
+          "psnr": 25.17190070916033
+        },
+        "teacher_one_step": {
+          "lpips": 0.06757578253746033,
+          "psnr": 30.82739490720579
+        }
+      }
+    },
+    {
+      "index": 6446,
+      "record_id": "foundir_train_0364161",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04504910111427307,
+          "psnr": 31.370625774186415
+        },
+        "teacher_one_step": {
+          "lpips": 0.030446238815784454,
+          "psnr": 35.86047235482572
+        }
+      }
+    },
+    {
+      "index": 6447,
+      "record_id": "foundir_train_0364180",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.0910368412733078,
+          "psnr": 27.061395420462667
+        },
+        "teacher_one_step": {
+          "lpips": 0.04848907142877579,
+          "psnr": 30.967940076432015
+        }
+      }
+    },
+    {
+      "index": 6448,
+      "record_id": "foundir_train_0364446",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08256945013999939,
+          "psnr": 31.483715255010956
+        },
+        "teacher_one_step": {
+          "lpips": 0.045042455196380615,
+          "psnr": 36.57461937010618
+        }
+      }
+    },
+    {
+      "index": 6449,
+      "record_id": "foundir_train_0364879",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06691914796829224,
+          "psnr": 25.424165588971334
+        },
+        "teacher_one_step": {
+          "lpips": 0.03957221657037735,
+          "psnr": 30.46376775778281
+        }
+      }
+    },
+    {
+      "index": 6450,
+      "record_id": "foundir_train_0364947",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.20065414905548096,
+          "psnr": 25.958087694075633
+        },
+        "teacher_one_step": {
+          "lpips": 0.1799614578485489,
+          "psnr": 27.01372535176378
+        }
+      }
+    },
+    {
+      "index": 6451,
+      "record_id": "foundir_train_0365557",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1923137754201889,
+          "psnr": 31.498641870930268
+        },
+        "teacher_one_step": {
+          "lpips": 0.32081422209739685,
+          "psnr": 32.0481048294731
+        }
+      }
+    },
+    {
+      "index": 6452,
+      "record_id": "foundir_train_0365732",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.042171332985162735,
+          "psnr": 32.15960418945719
+        },
+        "teacher_one_step": {
+          "lpips": 0.02071547694504261,
+          "psnr": 37.961857780486575
+        }
+      }
+    },
+    {
+      "index": 6453,
+      "record_id": "foundir_train_0365934",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05786116048693657,
+          "psnr": 33.139509302091135
+        },
+        "teacher_one_step": {
+          "lpips": 0.06306365132331848,
+          "psnr": 38.2322511744464
+        }
+      }
+    },
+    {
+      "index": 6454,
+      "record_id": "foundir_train_0365974",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06970342248678207,
+          "psnr": 36.26681108758688
+        },
+        "teacher_one_step": {
+          "lpips": 0.048148851841688156,
+          "psnr": 42.56419172944053
+        }
+      }
+    },
+    {
+      "index": 6455,
+      "record_id": "foundir_train_0366157",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08397766947746277,
+          "psnr": 28.073874777367806
+        },
+        "teacher_one_step": {
+          "lpips": 0.029440339654684067,
+          "psnr": 37.37406141894888
+        }
+      }
+    },
+    {
+      "index": 6456,
+      "record_id": "foundir_train_0366464",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04028060659766197,
+          "psnr": 27.435523998986703
+        },
+        "teacher_one_step": {
+          "lpips": 0.010413821786642075,
+          "psnr": 36.42858423490533
+        }
+      }
+    },
+    {
+      "index": 6457,
+      "record_id": "foundir_train_0366992",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09479114413261414,
+          "psnr": 25.28713761463826
+        },
+        "teacher_one_step": {
+          "lpips": 0.048385463654994965,
+          "psnr": 31.457662475910073
+        }
+      }
+    },
+    {
+      "index": 6458,
+      "record_id": "foundir_train_0367115",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08218030631542206,
+          "psnr": 30.092086304753998
+        },
+        "teacher_one_step": {
+          "lpips": 0.11358291655778885,
+          "psnr": 35.137585922252946
+        }
+      }
+    },
+    {
+      "index": 6459,
+      "record_id": "foundir_train_0367329",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09480372071266174,
+          "psnr": 26.02952486841934
+        },
+        "teacher_one_step": {
+          "lpips": 0.06298381835222244,
+          "psnr": 31.46007763070285
+        }
+      }
+    },
+    {
+      "index": 6460,
+      "record_id": "foundir_train_0367487",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05208360031247139,
+          "psnr": 28.788353442568308
+        },
+        "teacher_one_step": {
+          "lpips": 0.027401631698012352,
+          "psnr": 33.828936907558514
+        }
+      }
+    },
+    {
+      "index": 6461,
+      "record_id": "foundir_train_0367659",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.17700150609016418,
+          "psnr": 25.00475011893108
+        },
+        "teacher_one_step": {
+          "lpips": 0.08084206283092499,
+          "psnr": 30.03548478074768
+        }
+      }
+    },
+    {
+      "index": 6462,
+      "record_id": "foundir_train_0368058",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.029423028230667114,
+          "psnr": 26.53552085962311
+        },
+        "teacher_one_step": {
+          "lpips": 0.015403468161821365,
+          "psnr": 36.63075570081459
+        }
+      }
+    },
+    {
+      "index": 6463,
+      "record_id": "foundir_train_0368227",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.617009162902832,
+          "psnr": 10.084975324370165
+        },
+        "teacher_one_step": {
+          "lpips": 0.6303039789199829,
+          "psnr": 9.85471796759885
+        }
+      }
+    },
+    {
+      "index": 6464,
+      "record_id": "foundir_train_0368551",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06419699639081955,
+          "psnr": 29.86791090121445
+        },
+        "teacher_one_step": {
+          "lpips": 0.0342116579413414,
+          "psnr": 36.10631001503303
+        }
+      }
+    },
+    {
+      "index": 6465,
+      "record_id": "foundir_train_0368662",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.009866843931376934,
+          "psnr": 34.363941331725655
+        },
+        "teacher_one_step": {
+          "lpips": 0.007120613940060139,
+          "psnr": 39.73051412262839
+        }
+      }
+    },
+    {
+      "index": 6466,
+      "record_id": "foundir_train_0368916",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1695614457130432,
+          "psnr": 28.106226754200826
+        },
+        "teacher_one_step": {
+          "lpips": 0.11694733798503876,
+          "psnr": 30.385084419904477
+        }
+      }
+    },
+    {
+      "index": 6467,
+      "record_id": "foundir_train_0369015",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11696402728557587,
+          "psnr": 27.47392682924975
+        },
+        "teacher_one_step": {
+          "lpips": 0.06217653676867485,
+          "psnr": 30.890542113493403
+        }
+      }
+    },
+    {
+      "index": 6468,
+      "record_id": "foundir_train_0369138",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.12421513348817825,
+          "psnr": 29.518763104400307
+        },
+        "teacher_one_step": {
+          "lpips": 0.056853052228689194,
+          "psnr": 34.17315359200601
+        }
+      }
+    },
+    {
+      "index": 6469,
+      "record_id": "foundir_train_0369244",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.025896871462464333,
+          "psnr": 28.39297584392551
+        },
+        "teacher_one_step": {
+          "lpips": 0.0110686756670475,
+          "psnr": 38.12450899081296
+        }
+      }
+    },
+    {
+      "index": 6470,
+      "record_id": "foundir_train_0369361",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06609983742237091,
+          "psnr": 26.57471529198292
+        },
+        "teacher_one_step": {
+          "lpips": 0.07526981085538864,
+          "psnr": 27.390510851644958
+        }
+      }
+    },
+    {
+      "index": 6471,
+      "record_id": "foundir_train_0369607",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06628306210041046,
+          "psnr": 33.134479211118375
+        },
+        "teacher_one_step": {
+          "lpips": 0.0250931978225708,
+          "psnr": 44.70899599016421
+        }
+      }
+    },
+    {
+      "index": 6472,
+      "record_id": "foundir_train_0370143",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05630294606089592,
+          "psnr": 31.1599040987228
+        },
+        "teacher_one_step": {
+          "lpips": 0.03182004392147064,
+          "psnr": 40.806196567453725
+        }
+      }
+    },
+    {
+      "index": 6473,
+      "record_id": "foundir_train_0370849",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09112600237131119,
+          "psnr": 31.70092480026106
+        },
+        "teacher_one_step": {
+          "lpips": 0.035476282238960266,
+          "psnr": 39.657076700190174
+        }
+      }
+    },
+    {
+      "index": 6474,
+      "record_id": "foundir_train_0371052",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.048625413328409195,
+          "psnr": 27.549791452538173
+        },
+        "teacher_one_step": {
+          "lpips": 0.02026340924203396,
+          "psnr": 35.526251963197566
+        }
+      }
+    },
+    {
+      "index": 6475,
+      "record_id": "foundir_train_0371355",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09201090037822723,
+          "psnr": 32.111939266954266
+        },
+        "teacher_one_step": {
+          "lpips": 0.04163331910967827,
+          "psnr": 40.819032395239894
+        }
+      }
+    },
+    {
+      "index": 6476,
+      "record_id": "foundir_train_0373110",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.03611601144075394,
+          "psnr": 31.384484432789606
+        },
+        "teacher_one_step": {
+          "lpips": 0.014302043244242668,
+          "psnr": 44.690157431748574
+        }
+      }
+    },
+    {
+      "index": 6477,
+      "record_id": "foundir_train_0373184",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05480850860476494,
+          "psnr": 28.533086177082264
+        },
+        "teacher_one_step": {
+          "lpips": 0.027722623199224472,
+          "psnr": 36.56311579233793
+        }
+      }
+    },
+    {
+      "index": 6478,
+      "record_id": "foundir_train_0373226",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11925974488258362,
+          "psnr": 29.077620132725755
+        },
+        "teacher_one_step": {
+          "lpips": 0.06908052414655685,
+          "psnr": 35.69496646265601
+        }
+      }
+    },
+    {
+      "index": 6479,
+      "record_id": "foundir_train_0373360",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08971355110406876,
+          "psnr": 27.994476108350213
+        },
+        "teacher_one_step": {
+          "lpips": 0.034894268959760666,
+          "psnr": 36.143728649244956
+        }
+      }
+    },
+    {
+      "index": 6480,
+      "record_id": "foundir_train_0373890",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.052542753517627716,
+          "psnr": 35.857632907779625
+        },
+        "teacher_one_step": {
+          "lpips": 0.02409329265356064,
+          "psnr": 40.55072723214056
+        }
+      }
+    },
+    {
+      "index": 6481,
+      "record_id": "foundir_train_0374004",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07828220725059509,
+          "psnr": 28.55053658262831
+        },
+        "teacher_one_step": {
+          "lpips": 0.027394697070121765,
+          "psnr": 38.62245704773236
+        }
+      }
+    },
+    {
+      "index": 6482,
+      "record_id": "foundir_train_0374075",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04368766024708748,
+          "psnr": 28.148881761495417
+        },
+        "teacher_one_step": {
+          "lpips": 0.022473467513918877,
+          "psnr": 36.11304152955365
+        }
+      }
+    },
+    {
+      "index": 6483,
+      "record_id": "foundir_train_0374213",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07083797454833984,
+          "psnr": 25.53381851336791
+        },
+        "teacher_one_step": {
+          "lpips": 0.03687132149934769,
+          "psnr": 30.576261594508047
+        }
+      }
+    },
+    {
+      "index": 6484,
+      "record_id": "foundir_train_0374560",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05564603582024574,
+          "psnr": 32.610523128170776
+        },
+        "teacher_one_step": {
+          "lpips": 0.03824169561266899,
+          "psnr": 40.094232366501984
+        }
+      }
+    },
+    {
+      "index": 6485,
+      "record_id": "foundir_train_0375047",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.028392693027853966,
+          "psnr": 29.509514150018887
+        },
+        "teacher_one_step": {
+          "lpips": 0.014066647738218307,
+          "psnr": 34.54540088508705
+        }
+      }
+    },
+    {
+      "index": 6486,
+      "record_id": "foundir_train_0375632",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.0413467101752758,
+          "psnr": 26.970326110924432
+        },
+        "teacher_one_step": {
+          "lpips": 0.014748341403901577,
+          "psnr": 33.37381876572282
+        }
+      }
+    },
+    {
+      "index": 6487,
+      "record_id": "foundir_train_0376892",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.16276685893535614,
+          "psnr": 26.877040438908328
+        },
+        "teacher_one_step": {
+          "lpips": 0.07735081017017365,
+          "psnr": 31.03586043278666
+        }
+      }
+    },
+    {
+      "index": 6488,
+      "record_id": "foundir_train_0377015",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.03062203899025917,
+          "psnr": 27.35007445843828
+        },
+        "teacher_one_step": {
+          "lpips": 0.00986933521926403,
+          "psnr": 40.69304529386702
+        }
+      }
+    },
+    {
+      "index": 6489,
+      "record_id": "foundir_train_0377282",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.15280543267726898,
+          "psnr": 30.99835025362176
+        },
+        "teacher_one_step": {
+          "lpips": 0.06880153715610504,
+          "psnr": 39.95206032919883
+        }
+      }
+    },
+    {
+      "index": 6490,
+      "record_id": "foundir_train_0377315",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.22241458296775818,
+          "psnr": 26.573923167140215
+        },
+        "teacher_one_step": {
+          "lpips": 0.12533961236476898,
+          "psnr": 32.38070079253128
+        }
+      }
+    },
+    {
+      "index": 6491,
+      "record_id": "foundir_train_0377670",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.049756720662117004,
+          "psnr": 31.30438961534981
+        },
+        "teacher_one_step": {
+          "lpips": 0.024645013734698296,
+          "psnr": 37.42417569930245
+        }
+      }
+    },
+    {
+      "index": 6492,
+      "record_id": "foundir_train_0378540",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.03810112178325653,
+          "psnr": 30.119635684493673
+        },
+        "teacher_one_step": {
+          "lpips": 0.019826387986540794,
+          "psnr": 37.63042395208319
+        }
+      }
+    },
+    {
+      "index": 6493,
+      "record_id": "foundir_train_0378715",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.13332875072956085,
+          "psnr": 24.69605721396682
+        },
+        "teacher_one_step": {
+          "lpips": 0.048496995121240616,
+          "psnr": 30.951196813741582
+        }
+      }
+    },
+    {
+      "index": 6494,
+      "record_id": "foundir_train_0379360",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04977937787771225,
+          "psnr": 30.42212293527904
+        },
+        "teacher_one_step": {
+          "lpips": 0.018807267770171165,
+          "psnr": 37.15100712446033
+        }
+      }
+    },
+    {
+      "index": 6495,
+      "record_id": "foundir_train_0380162",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08134035021066666,
+          "psnr": 36.561254120514334
+        },
+        "teacher_one_step": {
+          "lpips": 0.06550686061382294,
+          "psnr": 39.70333222835108
+        }
+      }
+    },
+    {
+      "index": 6496,
+      "record_id": "foundir_train_0380333",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06476783752441406,
+          "psnr": 28.0169240846178
+        },
+        "teacher_one_step": {
+          "lpips": 0.042054757475852966,
+          "psnr": 32.47661724318937
+        }
+      }
+    },
+    {
+      "index": 6497,
+      "record_id": "foundir_train_0380387",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.038848474621772766,
+          "psnr": 31.56180603289299
+        },
+        "teacher_one_step": {
+          "lpips": 0.026761837303638458,
+          "psnr": 37.22604773080469
+        }
+      }
+    },
+    {
+      "index": 6498,
+      "record_id": "foundir_train_0380617",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.16731514036655426,
+          "psnr": 28.27551988762819
+        },
+        "teacher_one_step": {
+          "lpips": 0.13208197057247162,
+          "psnr": 33.30101782921347
+        }
+      }
+    },
+    {
+      "index": 6499,
+      "record_id": "foundir_train_0380971",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04482447728514671,
+          "psnr": 31.538787215323385
+        },
+        "teacher_one_step": {
+          "lpips": 0.028111256659030914,
+          "psnr": 36.163941883155935
+        }
+      }
+    },
+    {
+      "index": 6500,
+      "record_id": "foundir_train_0381453",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04801797866821289,
+          "psnr": 27.719516117930976
+        },
+        "teacher_one_step": {
+          "lpips": 0.02457205392420292,
+          "psnr": 37.62356925556467
+        }
+      }
+    },
+    {
+      "index": 6501,
+      "record_id": "foundir_train_0381747",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.00824466161429882,
+          "psnr": 41.36193623007537
+        },
+        "teacher_one_step": {
+          "lpips": 0.004313244018703699,
+          "psnr": 47.498232494647574
+        }
+      }
+    },
+    {
+      "index": 6502,
+      "record_id": "foundir_train_0382489",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.051801323890686035,
+          "psnr": 31.124237316209737
+        },
+        "teacher_one_step": {
+          "lpips": 0.03143607825040817,
+          "psnr": 38.22418077400616
+        }
+      }
+    },
+    {
+      "index": 6503,
+      "record_id": "foundir_train_0383007",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.05659396946430206,
+          "psnr": 29.126794272557277
+        },
+        "teacher_one_step": {
+          "lpips": 0.035377275198698044,
+          "psnr": 34.43672459875409
+        }
+      }
+    },
+    {
+      "index": 6504,
+      "record_id": "foundir_train_0385016",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09297044575214386,
+          "psnr": 29.064903312772962
+        },
+        "teacher_one_step": {
+          "lpips": 0.058920685201883316,
+          "psnr": 35.17599889937066
+        }
+      }
+    },
+    {
+      "index": 6505,
+      "record_id": "foundir_train_0385344",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11400219053030014,
+          "psnr": 24.332564514719095
+        },
+        "teacher_one_step": {
+          "lpips": 0.0822204053401947,
+          "psnr": 28.075502651608968
+        }
+      }
+    },
+    {
+      "index": 6506,
+      "record_id": "foundir_train_0385405",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.06896045058965683,
+          "psnr": 25.622215530531168
+        },
+        "teacher_one_step": {
+          "lpips": 0.060485392808914185,
+          "psnr": 33.53128861743093
+        }
+      }
+    },
+    {
+      "index": 6507,
+      "record_id": "foundir_train_0385726",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.2223070114850998,
+          "psnr": 25.211121168094355
+        },
+        "teacher_one_step": {
+          "lpips": 0.21572120487689972,
+          "psnr": 29.2682591039086
+        }
+      }
+    },
+    {
+      "index": 6508,
+      "record_id": "foundir_train_0385885",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09419616311788559,
+          "psnr": 25.42418427503451
+        },
+        "teacher_one_step": {
+          "lpips": 0.06127050891518593,
+          "psnr": 30.615044612224157
+        }
+      }
+    },
+    {
+      "index": 6509,
+      "record_id": "foundir_train_0386166",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.16049984097480774,
+          "psnr": 26.73972210227799
+        },
+        "teacher_one_step": {
+          "lpips": 0.10041804611682892,
+          "psnr": 29.92513308369743
+        }
+      }
+    },
+    {
+      "index": 6510,
+      "record_id": "foundir_train_0386702",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.13985316455364227,
+          "psnr": 23.78293185012761
+        },
+        "teacher_one_step": {
+          "lpips": 0.09428517520427704,
+          "psnr": 27.83199073848916
+        }
+      }
+    },
+    {
+      "index": 6511,
+      "record_id": "foundir_train_0386818",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.21488788723945618,
+          "psnr": 27.410576156550878
+        },
+        "teacher_one_step": {
+          "lpips": 0.27231764793395996,
+          "psnr": 31.543666018183146
+        }
+      }
+    },
+    {
+      "index": 6512,
+      "record_id": "foundir_train_0387024",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1057140901684761,
+          "psnr": 25.269423763039644
+        },
+        "teacher_one_step": {
+          "lpips": 0.08152645826339722,
+          "psnr": 30.47140056643031
+        }
+      }
+    },
+    {
+      "index": 6513,
+      "record_id": "foundir_train_0388512",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1381673514842987,
+          "psnr": 29.313583772331675
+        },
+        "teacher_one_step": {
+          "lpips": 0.11903953552246094,
+          "psnr": 35.525246827752646
+        }
+      }
+    },
+    {
+      "index": 6514,
+      "record_id": "foundir_train_0389124",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.14215373992919922,
+          "psnr": 29.137788628400347
+        },
+        "teacher_one_step": {
+          "lpips": 0.10565095394849777,
+          "psnr": 33.1119924783403
+        }
+      }
+    },
+    {
+      "index": 6515,
+      "record_id": "foundir_train_0389242",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1440245509147644,
+          "psnr": 24.095574347589682
+        },
+        "teacher_one_step": {
+          "lpips": 0.10711105167865753,
+          "psnr": 28.728372651687522
+        }
+      }
+    },
+    {
+      "index": 6516,
+      "record_id": "foundir_train_0389965",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07111936062574387,
+          "psnr": 26.10714691260487
+        },
+        "teacher_one_step": {
+          "lpips": 0.030137499794363976,
+          "psnr": 31.44813628779964
+        }
+      }
+    },
+    {
+      "index": 6517,
+      "record_id": "foundir_train_0390966",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.12182433158159256,
+          "psnr": 29.566403631170225
+        },
+        "teacher_one_step": {
+          "lpips": 0.06500023603439331,
+          "psnr": 33.94530248408437
+        }
+      }
+    },
+    {
+      "index": 6518,
+      "record_id": "foundir_train_0391078",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.07438582926988602,
+          "psnr": 26.785568855183172
+        },
+        "teacher_one_step": {
+          "lpips": 0.02648579142987728,
+          "psnr": 35.41464457476808
+        }
+      }
+    },
+    {
+      "index": 6519,
+      "record_id": "foundir_train_0391222",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.22204434871673584,
+          "psnr": 24.942099279917276
+        },
+        "teacher_one_step": {
+          "lpips": 0.25977563858032227,
+          "psnr": 27.824452819617957
+        }
+      }
+    },
+    {
+      "index": 6520,
+      "record_id": "foundir_train_0391288",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.0872269794344902,
+          "psnr": 32.16565648738315
+        },
+        "teacher_one_step": {
+          "lpips": 0.04267309606075287,
+          "psnr": 40.62140941670778
+        }
+      }
+    },
+    {
+      "index": 6521,
+      "record_id": "foundir_train_0391957",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.08347493410110474,
+          "psnr": 27.82607655345117
+        },
+        "teacher_one_step": {
+          "lpips": 0.06441681832075119,
+          "psnr": 33.800326244149254
+        }
+      }
+    },
+    {
+      "index": 6522,
+      "record_id": "foundir_train_0393288",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.17635726928710938,
+          "psnr": 23.485140119618798
+        },
+        "teacher_one_step": {
+          "lpips": 0.11794355511665344,
+          "psnr": 35.96314799893364
+        }
+      }
+    },
+    {
+      "index": 6523,
+      "record_id": "foundir_train_0394376",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.0643138661980629,
+          "psnr": 30.829550744637825
+        },
+        "teacher_one_step": {
+          "lpips": 0.040367670357227325,
+          "psnr": 35.57022210604957
+        }
+      }
+    },
+    {
+      "index": 6524,
+      "record_id": "foundir_train_0395256",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.14928008615970612,
+          "psnr": 25.097450426545254
+        },
+        "teacher_one_step": {
+          "lpips": 0.055100955069065094,
+          "psnr": 32.35126050559418
+        }
+      }
+    },
+    {
+      "index": 6525,
+      "record_id": "foundir_train_0395323",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.11482897400856018,
+          "psnr": 27.16927883373507
+        },
+        "teacher_one_step": {
+          "lpips": 0.05531008541584015,
+          "psnr": 32.49617990707446
+        }
+      }
+    },
+    {
+      "index": 6526,
+      "record_id": "foundir_train_0395823",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.09129445254802704,
+          "psnr": 30.18527995367595
+        },
+        "teacher_one_step": {
+          "lpips": 0.04810066521167755,
+          "psnr": 36.055221801426015
+        }
+      }
+    },
+    {
+      "index": 6527,
+      "record_id": "foundir_train_0396191",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.049407586455345154,
+          "psnr": 29.09687099361346
+        },
+        "teacher_one_step": {
+          "lpips": 0.029906367883086205,
+          "psnr": 34.800712597898375
+        }
+      }
+    },
+    {
+      "index": 6528,
+      "record_id": "foundir_train_0396262",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.15103945136070251,
+          "psnr": 24.220938280812952
+        },
+        "teacher_one_step": {
+          "lpips": 0.12025132775306702,
+          "psnr": 26.953622388787192
+        }
+      }
+    },
+    {
+      "index": 6529,
+      "record_id": "foundir_train_0396524",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.44261300563812256,
+          "psnr": 24.64865686853686
+        },
+        "teacher_one_step": {
+          "lpips": 0.2300696074962616,
+          "psnr": 30.866510024247496
+        }
+      }
+    },
+    {
+      "index": 6530,
+      "record_id": "foundir_train_0396630",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.1361004263162613,
+          "psnr": 28.91871046526143
+        },
+        "teacher_one_step": {
+          "lpips": 0.0835288017988205,
+          "psnr": 31.71885331146351
+        }
+      }
+    },
+    {
+      "index": 6531,
+      "record_id": "foundir_train_0396835",
+      "usage": "development",
+      "metrics": {
+        "student_50_step": {
+          "lpips": 0.04069296643137932,
+          "psnr": 32.89381029802184
+        },
+        "teacher_one_step": {
+          "lpips": 0.021604686975479126,
+          "psnr": 42.276017600799335
+        }
+      }
+    }
+  ],
+  "audit": {
+    "checkpoint_file_sha_verified": true,
+    "probe_file_sha_and_identity_verified": 132,
+    "split_means_recomputed": true,
+    "lpips_reexecuted": false
+  },
+  "late_publication": "100-step metrics first relayed during running; dedicated GitHub report published with terminal audit after interrupted prior turn."
+}
