@@ -1,0 +1,73 @@
+{
+  "source_commit": "a9208f38d4298824282a0d0aa6310158e1d313a6",
+  "asset_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "audit_report": "reports/foundir_existing_flux_experts_destination_audit_2026-11-02.json",
+  "audit_sha256": "b927744fb85f4cc28c40bac07c48b5419b1fa314ed38e136c082bdd22bec20e7",
+  "project_python": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+  "CUDA_VISIBLE_DEVICES": "",
+  "CPU_unit_tests": {
+    "passed": 12,
+    "seconds_excluding_import": 0.152,
+    "log_sha256": "ad81b448c8c21c0a172e367bac7537f2f90d537be5921e327d111562c96c681d"
+  },
+  "audit_matches_original_source_report_assets_and_experts": true,
+  "source_bindings_match_fixed_commit": 13,
+  "energy_sources_unchanged": 26,
+  "retention_report_sha256_unchanged": "662e9935c7dddc7f11d170f7f7930b53a9a44a224b4c073e63123d7cf07d4b1d",
+  "retention_log_hash_followup": {
+    "finding": "Recorded hashes match exact original raw files. Embedded JSON strings normalize CR/CRLF to LF via Path.read_text; their UTF8 bytes differ from the raw files. No raw log or historical report was modified.",
+    "logs": [
+      {
+        "path": "logs/token_moe_retention_qualification_4x2_v1_node0_20261101T204001Z.log",
+        "recorded_raw_sha256": "a6d07c2ae23bbddba180bbd870b20a38686372128d371a203d2b05bec80f0802",
+        "current_raw_sha256": "a6d07c2ae23bbddba180bbd870b20a38686372128d371a203d2b05bec80f0802",
+        "embedded_utf8_sha256": "11fb5d7d36034300f7a0266e0f78c9c757a15ac8b7a967233ecbbd9aa1a1575f",
+        "normalized_raw_sha256": "11fb5d7d36034300f7a0266e0f78c9c757a15ac8b7a967233ecbbd9aa1a1575f",
+        "raw_CR_count": 4,
+        "raw_bytes": 34984,
+        "embedded_utf8_bytes": 34984,
+        "raw_hash_matches_recorded": true,
+        "normalized_text_matches_embedded": true
+      },
+      {
+        "path": "logs/token_moe_retention_qualification_4x2_v1_node1_20261101T204003Z.log",
+        "recorded_raw_sha256": "2890da473ec98350ec1b9ea43a2eca953d1583a9b5573d9d685a3534ee6c7e4a",
+        "current_raw_sha256": "2890da473ec98350ec1b9ea43a2eca953d1583a9b5573d9d685a3534ee6c7e4a",
+        "embedded_utf8_sha256": "c8d578969a98ca5a3585b3827a592badeb1940ac8c37dd8e94e7db156fa7e7de",
+        "normalized_raw_sha256": "c8d578969a98ca5a3585b3827a592badeb1940ac8c37dd8e94e7db156fa7e7de",
+        "raw_CR_count": 4,
+        "raw_bytes": 7186,
+        "embedded_utf8_bytes": 7186,
+        "raw_hash_matches_recorded": true,
+        "normalized_text_matches_embedded": true
+      },
+      {
+        "path": "logs/token_moe_retention_qualification_4x2_v1_node2_20261101T204004Z.log",
+        "recorded_raw_sha256": "bdcc0d6150d037389c7bbf197c9cad92833c5f41ecda9aaed7ac2ea9f6de8511",
+        "current_raw_sha256": "bdcc0d6150d037389c7bbf197c9cad92833c5f41ecda9aaed7ac2ea9f6de8511",
+        "embedded_utf8_sha256": "1ad54d19b5ef1595af8fafed1c67a28c732e64caf405a22b14044091e41f019c",
+        "normalized_raw_sha256": "1ad54d19b5ef1595af8fafed1c67a28c732e64caf405a22b14044091e41f019c",
+        "raw_CR_count": 5,
+        "raw_bytes": 7268,
+        "embedded_utf8_bytes": 7268,
+        "raw_hash_matches_recorded": true,
+        "normalized_text_matches_embedded": true
+      },
+      {
+        "path": "logs/token_moe_retention_qualification_4x2_v1_node3_20261101T204006Z.log",
+        "recorded_raw_sha256": "8fd2caf39b29e4ee9c85e87f5cf000c51b24cef5019f928bff3d22a41ff4bdb3",
+        "current_raw_sha256": "8fd2caf39b29e4ee9c85e87f5cf000c51b24cef5019f928bff3d22a41ff4bdb3",
+        "embedded_utf8_sha256": "511374603daac90dbf2b18be636c1d90cf475d727aab8a9a9b982b50c9e72d08",
+        "normalized_raw_sha256": "511374603daac90dbf2b18be636c1d90cf475d727aab8a9a9b982b50c9e72d08",
+        "raw_CR_count": 4,
+        "raw_bytes": 7186,
+        "embedded_utf8_bytes": 7186,
+        "raw_hash_matches_recorded": true,
+        "normalized_text_matches_embedded": true
+      }
+    ]
+  },
+  "GPU_used": false,
+  "pixels_read": 0,
+  "training_launched": false
+}
