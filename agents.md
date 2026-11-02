@@ -1,5 +1,14 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## Rain资格驱动检查修复 — 2026-11-02
+
+以AGENTS.md顶部新修复为准：旧qualification_4x2_v1训练前失败，0步，无质量结果。
+只修正跨节点驱动描述比较，保留实际驱动版本/全部软件评分环境检查和严格断点恢复。
+同步后重新CPU预检，新run_id=qualification_4x2_driverfix_v1、launch_id=launch_driverfix_v1，
+由目的地代理使用当前node0地址给四节点×两张H200的原25步命令，不覆盖旧收据/运行目录。
+本地主代理未启动GPU，不自动formal或其它路线。详见AGENTS.md与
+reports/foundir_rain_flow_runtime_guard_fix_2026-11-02.md。
+
 ## 必须回传GPU终态简报 — 2026-11-02
 
 用户明确要求：每次GPU任务结束后，目的地代理必须核验日志、结果和退出状态，

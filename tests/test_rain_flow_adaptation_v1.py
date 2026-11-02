@@ -121,11 +121,53 @@ class RainFlowTests(unittest.TestCase):
         from smoke.train_foundir_rain_flow_adaptation_v1 import check_runtimes
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
-            value={"gpu_name":"H200","torch":"test","metrics":{"head":"same"}}
+            value={"gpu_name":"H200","torch":"test","metrics":{"head":"same"},
+                   "nvidia_driver":"NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  build date\nGCC version: test"}
             for n in range(4):c.write_new(root/f"runtime_node{n}.json",value)
             self.assertEqual(check_runtimes(root),value["metrics"])
             with mock.patch.object(c,"read",side_effect=[value,value,value,{**value,"torch":"different"}]):
                 with self.assertRaises(ValueError):check_runtimes(root)
+
+    def test_reported_driver_build_difference_passes_without_mutating_receipts(self):
+        from smoke.train_foundir_rain_flow_adaptation_v1 import check_runtimes,runtime_compatibility
+        report=c.read(c.ROOT/"reports/foundir_rain_flow_adaptation_runtime_failure_2026-11-02.json")
+        values=report["node_runtimes"];before=copy.deepcopy(values)
+        self.assertNotEqual(values[0],values[1])
+        self.assertEqual(runtime_compatibility(values[0]),runtime_compatibility(values[1]))
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp)
+            for n,value in enumerate(values):c.write_new(root/f"runtime_node{n}.json",value)
+            hashes=[c.sha(root/f"runtime_node{n}.json") for n in range(4)]
+            self.assertEqual(check_runtimes(root),values[0]["metrics"])
+            self.assertEqual(hashes,[c.sha(root/f"runtime_node{n}.json") for n in range(4)])
+        self.assertEqual(values,before)
+
+    def test_actual_driver_and_other_runtime_differences_still_fail(self):
+        from smoke.train_foundir_rain_flow_adaptation_v1 import check_runtimes
+        value=c.read(c.ROOT/"reports/foundir_rain_flow_adaptation_runtime_failure_2026-11-02.json")["node_runtimes"][0]
+        changes={"nvidia_driver":value["nvidia_driver"].replace("570.124.06","570.124.07"),
+                 "gpu_name":"NVIDIA H100","torch":"different","torch_cuda":"different",
+                 "cudnn":0,"transformers":"different","world":4,"local_gpus":1,
+                 "metrics":{**value["metrics"],"lpips_implementation_sha256":"different"}}
+        for key,replacement in changes.items():
+            with self.subTest(field=key),mock.patch.object(c,"read",side_effect=[value,value,value,{**value,key:replacement}]):
+                with self.assertRaises(ValueError):check_runtimes(Path("unused"))
+
+    def test_unknown_driver_description_fails_closed(self):
+        from smoke.train_foundir_rain_flow_adaptation_v1 import runtime_compatibility
+        for raw in (None,"","unknown","570.124.06","GCC version: 570.124.06"):
+            with self.subTest(raw=raw),self.assertRaises(ValueError):
+                runtime_compatibility({"nvidia_driver":raw})
+
+    def test_same_node_resume_still_requires_exact_raw_runtime(self):
+        from smoke.train_foundir_rain_flow_adaptation_v1 import runtime
+        report=c.read(c.ROOT/"reports/foundir_rain_flow_adaptation_runtime_failure_2026-11-02.json")
+        old,new=report["node_runtimes"][:2]
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);c.write_new(root/"runtime_node0.json",old)
+            with mock.patch("smoke.train_foundir_rain_flow_adaptation_v1.metric_impl.hardware",return_value=copy.deepcopy(new)),mock.patch("smoke.train_foundir_rain_flow_adaptation_v1.metric_impl.metric_runtime",return_value=new["metrics"]):
+                with self.assertRaisesRegex(ValueError,"resume runtime changed"):
+                    runtime(root,{"metric":{}},0,False)
 
     def test_manifest_source_separation_and_fixed_selection(self):
         def row(i,train=True):

@@ -1,5 +1,23 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前修复：Rain资格驱动描述误拦截 — 2026-11-02
+
+用户已授权修复。旧qualification_4x2_v1 / launch_ccecd3a_v1四节点在训练前失败，
+0步、0缓存、无指标，总.187777778 GPU-hours；不能写成OOM或Rain学习失败。
+四节点驱动实际同为570.124.06，仅GCC构建后缀22.04/22.04.2不同。
+现在跨节点比较解析出的NVIDIA驱动版本，其余runtime/metric字段仍严格一致；
+未知驱动格式拒绝启动，原始完整runtime收据保留，同节点恢复仍要求原始环境完全一致。
+此补丁不改25步、32来源、loss、学习率、模型、数据或四节点×两张H200资源规格。
+
+源码绑定已变化，禁止原地改旧receipt哈希或覆盖旧run。目的地代理安全同步最新main，
+保留本地修改及所有资产，重新执行本轮CPU preflight并写新报告路径；
+通过后提供同入口四节点命令，统一新run_id=qualification_4x2_driverfix_v1、
+新launch_id=launch_driverfix_v1，使用当前node0地址，不沿用历史IP。
+原qualification_4x2_v1全部保留；新ID不是续训，无旧训练步可继承。
+本地主代理只修复/测试/推送，不能直接启动目的地GPU；CUDA/NCCL及训练质量仍待验收。
+只重试同一25步资格，不自动formal、router/MoE训练或energy任务。
+细节见reports/foundir_rain_flow_runtime_guard_fix_2026-11-02.md。
+
 ## 必须回传GPU终态简报 — 2026-11-02
 
 用户明确要求：每次GPU任务结束后，目的地代理必须核验日志、结果和退出状态，

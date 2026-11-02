@@ -9,6 +9,7 @@ import math
 import os
 from pathlib import Path
 import random
+import re
 import sys
 import time
 
@@ -35,10 +36,23 @@ def runtime(output,receipt,node,idle):
     return actual
 
 
+def runtime_compatibility(value):
+    """Compare driver release, not its GCC build description; retain raw receipts."""
+    description=value.get("nvidia_driver")
+    if not isinstance(description,str):
+        raise ValueError("missing NVIDIA driver description")
+    matches=re.findall(r"^NVRM version:\s+NVIDIA UNIX x86_64 Kernel Module\s+(\d+\.\d+(?:\.\d+)?)\s+[^\n]+$",
+                       description,re.MULTILINE)
+    if len(matches)!=1:
+        raise ValueError("unrecognized NVIDIA driver description")
+    return {**value,"nvidia_driver":matches[0]}
+
+
 def check_runtimes(output):
     values=[c.read(output/f"runtime_node{n}.json") for n in range(4)]
-    if any(v!=values[0] for v in values[1:]):
-        raise ValueError("all four training nodes must share GPU family and exact runtime/metric versions")
+    signatures=[runtime_compatibility(v) for v in values]
+    if any(v!=signatures[0] for v in signatures[1:]):
+        raise ValueError("all four training nodes must share GPU family, NVIDIA driver release and exact runtime/metric versions")
     return metric_impl.check_metric_runtimes(output)
 
 
