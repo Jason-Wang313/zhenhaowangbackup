@@ -1,5 +1,23 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前交付：四类50步单专家重放，等待目的地同步 — 2026-11-02
+
+39e4575新根CPU资产已核验通过；主代理独立核验报告SHA/13源码绑定/资产摘要。
+旧retention日志差异已核实为CR→LF，原始SHA一致，旧文“仍待核”不再是阻碍。
+用户授权继续，已实现无训练完整采样重放入口，不是Rain新训练或旧五类1000步。
+四类各32独立训练来源，只读LQ、512、原50步/CFG1/ref10/任务prompt/seed/原输出alpha。
+原入口与四LoRA bank固定单选比较；每图decoded差≤1e-6且uint8完全一致才通过。
+两份输出逐图不可变保存/校验恢复，汇聚重新读tensor核对128/128，不只信pass字段。
+Rain教师和四份原权重不变，不读GT/测试像素，不加载CNN/Restormer或触碰energy代理。
+
+文件：configs/foundir_existing_flux_replay_v1.json，smoke/existing_flux_replay_contract_v1.py，
+smoke/replay_foundir_existing_flux_experts_v1.py，smoke/run_foundir_existing_flux_replay_v1_gpu.sh，
+smoke/start_foundir_existing_flux_replay_v1_tmux.sh。单节点同型号4/8H100/H200，默认8，不使用旧跨节点命令。
+目的地代理安全同步、CPU两种卡数预检后给用户命令；主代理未启动GPU、没有新指标。
+四卡独立ID，严格恢复仅同world/环境；8卡cap2h/16GPUh，4卡cap4h/16GPUh，不自动重启。
+详见 reports/foundir_existing_flux_replay_v1_readiness_2026-11-02.md。
+通过后才继续共同条件处理和Rain适配；静态继承通过不等于MoE/VLM贡献证明。
+
 ## 当前用户决定：复用已有FLUX LoRA，Rain单独适配 — 2026-11-02
 
 不要执行下方retention1000步计划。用户选择保留四类已有50步能力＋独立Rain多步适配，

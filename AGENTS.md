@@ -1,5 +1,22 @@
 # Project agent instructions
 
+## 当前入口：四类已有LoRA完整50步单选重放 — 2026-11-02
+
+用户已授权继续。目的地39e4575资产审计和12项CPU测试通过，retention日志SHA差异
+已核实为CR换行归一化，原文件SHA一致，不再阻塞。当前交付零训练GPU重放，不启动Rain训练。
+四类各32训练来源、128张512 LQ；同prompt/seed/crop/量化比较原单LoRA与四分支bank固定单选。
+不读GT/开发/保护像素，不算新PSNR/LPIPS，不把静态单选通过当动态VLM路由或科学成功。
+入口 smoke/start_foundir_existing_flux_replay_v1_tmux.sh；配置 configs/foundir_existing_flux_replay_v1.json。
+主代理先推送，目的地安全同步/4与8卡CPU预检后给用户GPU命令，不假称已启动。
+默认单节点8卡、保留4卡同型号H100/H200；绝不复用旧跨节点地址。每图原输出/bank输出
+和SHA不可变保存，同ID同world/运行环境核验恢复，不能自动换卡数混合已有结果。
+每图decoded最大差≤1e-6且uint8完全一致；128/128汇总从保存tensor独立复算。
+离线Qwen短暂生成四个固定prompt后退出，FLUX阶段无Qwen/Restormer/CNN/LPIPS模型。
+无自动后续训练。8卡未实测估计.5–1.5小时/4–12 GPU-hours，硬cap2小时/16GPU-hours；
+4卡粗估1–3小时，同GPU-hours，硬cap4小时。每次attempt成本保存，旧失败成本不清零。
+完整边界、恢复、CPU代理操作见 reports/foundir_existing_flux_replay_v1_readiness_2026-11-02.md。
+下一步是本重放验收；Rain多步适配训练器及共同prompt/输出协议仍未交付。
+
 ## 当前用户授权：已有LoRA专家库＋Rain多步适配 — 2026-11-02
 
 本节覆盖旧五类retention正式1000步计划及更旧“唯一energy/Rain/EBT”优先级。

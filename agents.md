@@ -1,5 +1,14 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 2026-11-02最新：零训练完整50步专家单选重放
+
+目的地资产已通过；当前入口 smoke/start_foundir_existing_flux_replay_v1_tmux.sh，
+不是旧retention/Rain/energy。四类各32训练LQ，原单LoRA对四分支bank固定单选，
+不读GT或最终开发像素，不训练，逐图保存并独立复算。默认单节点8卡，兼容4卡H100/H200。
+尚无GPU结果；目的地同步/CPU预检后再给用户命令。完整说明见
+reports/foundir_existing_flux_replay_v1_readiness_2026-11-02.md及AGENTS.md顶部。
+Rain适配和动态VLM路由未交付，不从下方旧历史指令启动其他任务。
+
 ## 2026-11-02：已有LoRA复用是当前MoE方向
 
 用户已批准保留Blur/Noise/Haze/Low-light原多步FLUX，单独适配Rain，再内部VLM残差路由。
