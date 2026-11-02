@@ -1,5 +1,18 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前终态：共同prompt／alpha=1未保住四类能力 — 2026-11-02
+
+common_protocol_4x2_v1四节点H200 status0，128条×4组评分与最终核验齐全。
+只换共同prompt影响较小但仍无四类平均双指标全不退步；统一alpha=1损害明显。
+仅换输出Noise/Low-light/Blur PSNR为-4.983307/-.909835/-.825348dB；
+两者都换为-4.795476/-1.001667/-.894802dB。不能用部分LPIPS收益遮住PSNR损失。
+Haze逐图输出处理控制通过。协议未选定，不在当前共同方案上直接启动Rain训练。
+node0墙钟386秒，四节点.844444 GPU-hours；峰值137.738088GiB，均H200。
+256份原/新tensor SHA及汇总/受损数独立复算通过，未独立重跑LPIPS。
+只读同128条训练GT评分，training_fit_only，不是泛化/SoW或router贡献。
+下一步先制定输出协议兼容方案，保留原分母；不自动搜索、训练或修改energy。
+小报告：reports/foundir_existing_flux_common_protocol_v1_terminal_2026-11-02.{md,json}。
+
 ## 当前执行：共同提示词／输出协议对照，四节点H200 — 2026-11-02
 
 用户在128/128静态继承通过后明确授权下一步，并确认四节点全部是H200。
