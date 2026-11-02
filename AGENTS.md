@@ -1,5 +1,16 @@
 # Project agent instructions
 
+## 当前终态：四节点H200静态单选重放128/128通过 — 2026-11-02
+
+replay_4x2_v1 / launch_3d22527_v1四节点status0；四份done及verified齐全。
+四类各32张原入口与bank完整50步对照，decoded最大差0、uint8全部一致。
+目的地CPU独立重读256tensor及SHA并重算128对，全部通过；32源码/26energy哈希未变。
+各节点592/588/584/584秒，node0墙钟9分52秒，总1.304444 allocated GPU-hours。
+实测均为H200，峰值allocated137.734817GiB；H10080GB未通过，不能从旧≥75GiB门槛扩称兼容。
+只证明静态单选继承；无GT/新质量指标、无soft/router或Rain训练验收，不自动下一任务。
+下一步共同prompt/输出处理及Rain多步适配仍待交付；全部资产保留。
+小结果/身份/成本：reports/foundir_existing_flux_replay_4node_terminal_2026-11-02.{md,json}。
+
 ## 最新资源纠正：四节点×每节点两卡，总八卡 — 2026-11-02
 
 用户明确纠正：当前已有FLUX专家继承/MoE路线必须使用 **4 nodes × 2 GPUs = 8 GPUs**，
