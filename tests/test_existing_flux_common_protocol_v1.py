@@ -12,6 +12,27 @@ from smoke import existing_flux_replay_contract_v1 as c
 
 
 class ProtocolContractTests(unittest.TestCase):
+    def test_parent_artifact_hash_and_size_receipts(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            artifact = root / "artifact.json"
+            artifact.write_bytes(b"parent evidence\n")
+            expected = {"sha256": c.sha(artifact), "bytes": artifact.stat().st_size}
+            report = {"run_id": "parent", "artifact_hashes": {artifact.name: expected}}
+            with patch.object(c, "load_receipt", return_value={"verified": True}) as loader:
+                self.assertEqual(p.check_parent(root, report), {"verified": True})
+                loader.assert_called_once()
+                loader.reset_mock()
+                for bad in ({**expected, "sha256": "bad"},
+                            {**expected, "bytes": expected["bytes"] + 1},
+                            {**expected, "bytes": str(expected["bytes"])},
+                            {"bytes": expected["bytes"]}):
+                    with self.subTest(receipt=bad), self.assertRaises(ValueError):
+                        p.check_parent(root, {**report, "artifact_hashes": {artifact.name: bad}})
+                loader.assert_not_called()
+                self.assertEqual(p.check_parent(root, {**report, "artifact_hashes": {
+                    artifact.name: expected["sha256"]}}), {"verified": True})
+
     def test_config_keeps_scope_and_topology(self):
         cfg=c.read(c.ROOT/p.CONFIG)
         self.assertEqual(cfg["topology"],c.TOPOLOGY)

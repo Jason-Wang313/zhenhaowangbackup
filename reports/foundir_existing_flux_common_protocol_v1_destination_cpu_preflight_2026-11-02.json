@@ -1,0 +1,84 @@
+{
+  "base_commit": "b781988",
+  "checked_utc": "2026-11-02T17:22:16.304889+00:00",
+  "preflight": {
+    "gpu_used": false,
+    "gt_metadata_records": 128,
+    "parent_runtime_artifacts_verified": true,
+    "pixels_decoded": false,
+    "records": 128,
+    "selection_digest": "2682b41f653d2e3bc69d1a5964895da8e1cf20f0d7cec0d08762b5dc52c03b36",
+    "source_bindings": {
+      "configs/foundir_blur_only_flux2_full_v1.json": "ba5e2975ba36c9300d454c573882312ddda7415a3de370efcef707899512b61c",
+      "configs/foundir_blur_only_flux2_scalar_residual_full_development_v1.json": "b756c7b223d8aed8e2a7018eec8e2e395042f772e477584b79ba2a98c7a12da5",
+      "configs/foundir_existing_flux_common_protocol_v1.json": "301f21641e081f777c804d3b5a555a35193d8906cb54b48ce6464ad94e24924d",
+      "configs/foundir_existing_flux_experts_v1.json": "c3f46704dbb55cabce666f79a8a0366091e031fbe0ddef716644f1672eacb632",
+      "configs/foundir_existing_flux_replay_v1.json": "cd95b5711be1c0a1c888de1233454ddd870f45f7373f6f355059882dc35e919d",
+      "configs/foundir_four_task_flux2_capacity_sanity_v1.json": "995eae82efd24306139b2d91680beff9a5fa82076c34ec7f1b8821e74ffcd21c",
+      "configs/foundir_haze_flux2_source_diverse_continuation_v1.json": "f98ae254db5a39b751654269870d037dd75f844cfaa2210d3e47123bf3596c86",
+      "configs/foundir_haze_flux2_step3000_full_development_v1.json": "a285c102fb63e1716aeb5ae7131b66037e188903c42aaa54caecc3bbae442b71",
+      "configs/foundir_lowlight_flux2_scalar_residual_full_development_v1.json": "fea0227d13b6d572897d683a8833e2312047cf28be2d4cf12462ddf95092856e",
+      "configs/foundir_noise_flux2_scalar_residual_full_development_v1.json": "5e7a356ea89d21f7b60b4b736f851ef26a0216d8555d73846f527b958b5b7dd6",
+      "configs/foundir_rain_blur_image_moe_v1.json": "8988e2374ad736f3e406945f1d9db83ae14587d0aba28a04dbf9cdc900ab5f12",
+      "configs/foundir_rain_flux2_direct_endpoint_distillation_formal_v1.json": "d82a3b4a8c0d46a0766c07a51894098b351bd4bf805fd6ad619ced4a43a5fdf3",
+      "configs/foundir_rain_flux2_precision_full_v1.json": "382bb767dfc6dae743f8c70d690f2307b640acc1eb1ff06d25ce557aef981237",
+      "lowlight_restoration/existing_flux_experts.py": "3f54c2afa15e8c63c6a3029b66d968918f58208bb7c9cd82c163b8a53571fc07",
+      "lowlight_restoration/flow.py": "000e6549a67015d61e7ff0108fd8024afc7004124920fb354a74a616529cae10",
+      "lowlight_restoration/lora.py": "c518c29b42a882a3bd2daee93fdcc55455a2be50297a9bd5d6473a22121ff7e2",
+      "lowlight_restoration/scalar_residual.py": "a61ae2ae382a25848e189c962910780f79beaa9cc5508ee99df56c0434410801",
+      "reports/foundir_existing_flux_replay_4node_terminal_2026-11-02.json": "be18efd0610848e23b4d589c667072429f0a81116073364f9a3429e943c4d22f",
+      "smoke/audit_foundir_existing_flux_experts_v1.py": "11ea5db20dbf3aa8ab237a6448a0132e7e3f34f2656aa539acc54914fa26d689",
+      "smoke/diagnose_foundir_existing_flux_common_protocol_v1.py": "b7da7e8f8b801cda0b55dbae3ab9caba564a16babe20b2953aeb7ecd53166238",
+      "smoke/evaluate_foundir_blur_only_flux2_full_development_ddp.py": "8e1b2508b79626a15e02d12cec9064db000ec04d98f4dab7ba5907ea670d10cb",
+      "smoke/existing_flux_common_protocol_cluster_v1.py": "8c2ce4ab48784a1a357f889a16842361fcaeed8f4ba0c4d73c40dd4172cf0d20",
+      "smoke/existing_flux_common_protocol_contract_v1.py": "720e8292b272e504ab7b8f2223295bcbd57c9716fec0991568604089d4a43652",
+      "smoke/existing_flux_replay_cluster_v1.py": "fe9f3aeb26d4bf62ede63ab9297c67af8a201f918ea32609c6f185044f5fb46d",
+      "smoke/existing_flux_replay_contract_v1.py": "83c95323703335bf71dc432bf52982eafd04a8792d79e2175aa825a5e3426dc1",
+      "smoke/replay_foundir_existing_flux_experts_v1.py": "a6c4afd946f9ccb7515cf5028aae95c456e27b4a5c45e65cd0e858303e4a210a",
+      "smoke/run_foundir_existing_flux_common_protocol_v1_gpu.sh": "832d1dc48a4f41df9fd07ce592152ce2443c29dfa343cd570247f07af5b13d80",
+      "smoke/run_foundir_existing_flux_replay_v1_gpu.sh": "4dd3cb5a1591ea4b2ea99702223a9a2d9eadf69d2e671b1daaa59f029930f44c",
+      "smoke/start_foundir_existing_flux_common_protocol_v1_tmux.sh": "c3ee7bfcf71abc8a049b646ce9af993338039c5f82877e4ec3bb5ca8c6dfe13a",
+      "smoke/start_foundir_existing_flux_replay_v1_tmux.sh": "11bce5a3d825b80412e68560f626dece1b8075ad08775cdaa80dfeed55f1ec1b",
+      "smoke/train_foundir_blur_only_flux2_overfit_ddp.py": "3fe132acc56ebbdafc06c51ea3228492030ea04324e0dee2bff762aeb37da43f",
+      "third_party/flux2/src/flux2/autoencoder.py": "bb578f78d097a88f6e7e8aa01032c10f55659729b85203ae2d5852a7889ac96a",
+      "third_party/flux2/src/flux2/model.py": "e062691d789ec80a04a5fbc421b09d3b7e264305be1dfcb6da65d68c259e18c1",
+      "third_party/flux2/src/flux2/openrouter_api_client.py": "eda7c4462fa059dc4baf201dc8f3d57114e2c453b59c037d7a57ee883e82a178",
+      "third_party/flux2/src/flux2/sampling.py": "f1a1e89651d450c05ab87840ed65011a2d25b83d811c61853ec6ed38e938d640",
+      "third_party/flux2/src/flux2/system_messages.py": "dc0e33d0ef41967bd5440c8f772e1f816ce3cd3e82be5525ee408d1201159f78",
+      "third_party/flux2/src/flux2/text_encoder.py": "f1e0e26bb2144e442a8fe26f45610f2d8bacf4519115db24fe57b3d50b1700d6",
+      "third_party/flux2/src/flux2/util.py": "ab39e974b1f696f9d51cb64eef9d82086c683771ac63e7ef14b30cced4b089e0",
+      "third_party/flux2/src/flux2/watermark.py": "df82396d09f87731aeb7c2b22e2839cbae4a2c972dbc48d5cfde9f9964df8c7f"
+    },
+    "status": "COMMON_PROTOCOL_CPU_PREFLIGHT_PASS",
+    "topology": {
+      "nnodes": 4,
+      "nproc_per_node": 2,
+      "world_size": 8
+    }
+  },
+  "parent_tensor_audit": {
+    "tensor_hashes_verified": 256,
+    "receipt_count": 256,
+    "parent_artifacts_modified": false
+  },
+  "metric_runtime_CPU": {
+    "packages": {
+      "torchmetrics": "1.9.0",
+      "torchvision": "0.22.0+cu128",
+      "numpy": "1.26.4",
+      "Pillow": "11.1.0"
+    },
+    "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+    "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a"
+  },
+  "cpu_tests": {
+    "passed": 46,
+    "seconds_excluding_import": 4.29
+  },
+  "source_bindings_verified": 39,
+  "energy_sources_unchanged": 26,
+  "GPU_started": false,
+  "training_started": false,
+  "compatibility_fix": "Parent artifact receipts are sha256/bytes dictionaries. Check the exact byte count then the sha256; retain compatibility with sha256-string receipts. Preserve parent files and rejection of changed hashes/sizes.",
+  "runtime_limitation": "Actual GPU node runtime must still match its own parent replay runtime at launch; CPU verification does not assert current GPU idleness or network reachability."
+}

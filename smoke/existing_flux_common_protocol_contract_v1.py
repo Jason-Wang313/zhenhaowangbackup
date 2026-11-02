@@ -96,7 +96,14 @@ def make_receipt(root, assets_root, *, require_parent):
 
 def check_parent(root, report):
     for name, expected in report["artifact_hashes"].items():
-        if c.sha(c.path(root, name)) != expected:
+        path = c.path(root, name)
+        if isinstance(expected, dict):
+            if (set(expected) != {"sha256", "bytes"}
+                    or type(expected["bytes"]) is not int
+                    or path.stat().st_size != expected["bytes"]):
+                raise ValueError(f"parent artifact size/receipt changed: {name}")
+            expected = expected["sha256"]
+        if c.sha(path) != expected:
             raise ValueError(f"parent artifact changed: {name}")
     return c.load_receipt(root, c.run_path(root, report["run_id"]), 8)
 

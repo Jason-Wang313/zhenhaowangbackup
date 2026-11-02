@@ -109,3 +109,14 @@ source/asset绑定，再给用户四节点命令。保留本地脏文件、数�
 CPU测试模块为旧三个`test_existing_flux_*`及新`test_existing_flux_common_protocol_v1`；
 还需新shell语法和Python编译检查。正式跨节点GPU资格尚未发生。
 回传小JSON报告、每类四组均值、逐图差值/身份、四节点状态和成本；不上传权重/缓存/实时日志。
+
+## 目的地实际父缓存核验补充
+
+目的地`preflight --require-parent`首次定位到收据格式兼容错误：父报告的artifact_hashes
+值为`{sha256, bytes}`，旧检查误将整个对象与SHA字符串比较。已最小修正为严格核验bytes
+及sha256，兼容旧字符串收据；不改父报告、缓存或实验配置。新增回归覆盖正确结构、
+错误SHA/字节数/字节数类型/缺字段及旧字符串格式，错误收据仍拒绝。
+修正后46项CPU测试及带父缓存实际预检通过，另外256份父tensor SHA通过；
+离线AlexNet及LPIPS head/实现依赖核验通过，39项源码绑定和26份energy源码未变。
+详细报告：`foundir_existing_flux_common_protocol_v1_destination_cpu_preflight_2026-11-02.json`。
+四节点必须使用同一修正后的提交；尚未启动GPU，真实node runtime/空闲状态由启动器继续检查。
