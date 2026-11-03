@@ -1,0 +1,20 @@
+{
+  "authority": "user_reaffirmation_of_previous_advisor_authorization",
+  "date": "2026-11-03",
+  "historical_record": "reports/advisor_governance/foundir_official_sow600_qwen_authorization_2026-09-21.json",
+  "user_statement": "execute,also, for final test, since we can repeatedly try to improve metrics on the final official test set of foundir, this is permitted, u can check previous history for this",
+  "current_work": "integrate_five_existing_FLUX_experts_then_frozen_expert_router",
+  "official_categories_and_counts": {"01Blur": 150, "05Noise": 100, "08Haze": 200, "10Rain": 100, "14Lowlight": 50},
+  "repeated_official_evaluation_and_parameter_tuning_allowed": true,
+  "applies_to_current_moe_workflow": true,
+  "must_wait_until_entire_moe_and_ablations_frozen": false,
+  "official_training_examples_allowed": false,
+  "official_GT_loss_or_gradient_updates_allowed": false,
+  "GT_based_per_image_routing_or_output_selection_allowed": false,
+  "other_sealed_or_protected_sets_opened": false,
+  "retain_every_round_and_intervening_change": true,
+  "claim_independent_blind_test_after_tuning": false,
+  "official_protocol": "original_resolution_output_and_matched_pyiqa_metrics_not_512_crop_torchmetrics_substitution",
+  "this_engineering_qualification_reads_official_pixels": false,
+  "official_evaluation_entrypoint_ready_in_this_delivery": false
+}

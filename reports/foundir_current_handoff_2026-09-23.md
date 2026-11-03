@@ -1,5 +1,40 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前授权：五类已有 FLUX 专家接入；官方SoW重复评测权限澄清 — 2026-11-03
+
+Rain step800已经正常完成：原100开发图34.30118094/.06186744，同一checkpoint过双门槛；
+不是待续训任务。用户现授权接入新Rain、保留四类原专家、冻结专家训练router的分阶段序列。
+当前先交付五库接入资格；覆盖下方旧“不得转MoE”的阶段限制，不启动其它energy任务。
+
+已有四类原BF16 LoRA＋新Rain FP32 step800，全部冻结，共享原FLUX/VAE；
+不再使用vanilla分支替代已训练权重，无CNN/Restormer/新RGB网络。
+主专家argmax决定原prompt/alpha/量化及读出：Rain按原50步时间表第26次端点输出；
+其它四类保留完整50次。内部混合在0..25次允许五类，26..49次Rain权重置0、其余归一化。
+这是待验证兼容规则，不宣称五库soft已有效；不是平均五张输出，也不统一改26或50步。
+推理计数器禁止用于autograd训练；未来router必须显式传call-index/route。
+
+本轮116输入：四类各2张训练＋Rain8张训练＋原Rain100开发；原入口/one-hot全量，
+仅16训练图加.9主专家/其它各.025手工soft，共248输出。开发只复现Rain历史成绩，不用GT选路。
+单选decoded≤1e-6且uint8一致；报告历史差异，Rain100还需复现历史像素及34.2/.08。
+soft只描述执行/指标/逐图退步，不当已学会router或VLM贡献。未训练、未构建优化器。
+各图原子落盘可恢复；旧绑定源码、所有模型/缓存/结果保留，无自动正式训练或扩预算。
+
+4节点×每节点2张H100/H200，总8卡，单节点同型号>=75GiB；共享已验证运行环境。
+新五库采用Rain的Hopper显存策略；旧四库137.73GiB峰值不冒称H100已过，新五库CUDA待测。
+粗估15–35分钟/2–4.67使用GPU-hours，硬cap1小时/节点、总8GPU-hours加清理。
+入口smoke/start_foundir_five_expert_integration_v1_tmux.sh，rank/当前IP/run/fresh launch四参数，
+run=rain800_bank_4x2_v1，port29701。主代理实现测试push，目的地预检后给四节点命令；
+主代理看不到新GPU挂载，不冒称已启动。终态FIVE_EXPERT_RESULT_VERIFIED和四节点status0。
+
+已找到2026-09-21明确授权：五类官方SoW600允许反复测、重新训练后再测与调参。
+用户本轮重新确认，当前MoE亦按此约定；不要继续说“必须等整套MoE冻结后才准测官方”。
+仅该600范围；官方图/GT不入训练、loss/梯度或GT逐图路由，其他封存集不开放。
+保留每轮结果和修改，反复用过的官方benchmark不叫独立盲测。
+当前接入检查仍不读官方像素；之后官方评测不是必须先五类开发过线才可做。
+官方须原分辨率/匹配pyiqa协议，不能拿本轮512/torchmetrics成绩冒充官方。
+详见reports/foundir_five_expert_integration_readiness_2026-11-03.md及
+reports/advisor_governance/foundir_official_sow600_moe_clarification_2026-11-03.json。
+
 ## 当前授权：Rain同配方step600→800，新增200步 — 2026-11-03
 
 父on-policy任务已正常结束：step600开发33.99953558/.06457076，PSNR还差.20046442dB，
