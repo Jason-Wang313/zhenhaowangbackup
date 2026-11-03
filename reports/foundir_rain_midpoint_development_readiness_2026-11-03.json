@@ -1,0 +1,76 @@
+{
+  "status": "CPU_ready_destination_preflight_and_GPU_run_pending",
+  "date": "2026-11-03",
+  "run_id": "step400_call25_dev100_v1",
+  "launch_id": "launch_midpoint_development_v1",
+  "parent_run": "continue2000_hopper_4x2_v1",
+  "evidence_commit": "9e100cf",
+  "checkpoint_step": 400,
+  "call_index": 25,
+  "prefix_calls": 26,
+  "original_schedule_steps": 50,
+  "development_records": 100,
+  "training_updates": 0,
+  "GT_used_for_output_selection": false,
+  "development_previously_used": true,
+  "new_blind_test": false,
+  "official_or_sealed_pixels_accessed": false,
+  "old_bound_code_modified": false,
+  "gate": {
+    "psnr_minimum": 34.2,
+    "lpips_maximum": 0.08,
+    "both_on_same_fixed_candidate": true
+  },
+  "controls": [
+    "true prefix output matches full trajectory call25 readout",
+    "full50 output matches stored step400 uint8"
+  ],
+  "sources": {
+    "configs/foundir_rain_midpoint_development_v1.json": "345613bd454fe7a2f8d9d2057dbb2516a9baf986259d92d347278a2453327181",
+    "smoke/rain_midpoint_readout_v1.py": "7126646bad4624d528a6590763dc0d820c981097bea92c23af86386a7565e5e3",
+    "smoke/evaluate_foundir_rain_midpoint_development_v1.py": "bdd813912923148ae742197359e9bb3130e3d7286ae331c6b518424fd209c2b3",
+    "smoke/run_foundir_rain_midpoint_development_v1_gpu.sh": "9062d760253287065229fe2fdea23a7a1552840c8d03b0f5918ecd644ffe1c4d",
+    "smoke/start_foundir_rain_midpoint_development_v1_tmux.sh": "9e3fba77f37650541ebaa19880070e37dade1b2b18222139969dd533aa55fde0",
+    "tests/test_rain_midpoint_development_v1.py": "3ec88f7e66b9e4e029db1a5b9a29c1a4772e050bffb4d5a6f11565c1b60a7fe3"
+  },
+  "tests": {
+    "unit_tests_passed": 8,
+    "unit_test_seconds_excluding_initial_environment_import": 8.014,
+    "CPU_official_sampler_prefix_equals_full_trace": true,
+    "exact26_model_calls": true,
+    "endpoint_layout_and_formula_equal": true,
+    "no_GT_or_scorer_generation_interface": true,
+    "all100_records_exactly_once": true,
+    "source_manifest_metadata_scope_pass": true,
+    "source_manifest_pixels_read": false,
+    "python_AST_pass": true,
+    "shell_syntax_pass": true,
+    "secret_asset_scan_pass": true,
+    "destination_asset_preflight_performed": false,
+    "CUDA_test_performed": false
+  },
+  "resources": {
+    "nodes": 4,
+    "gpus_per_node": 2,
+    "allowed_GPU_models": [
+      "H100 80GB",
+      "H200"
+    ],
+    "minimum_visible_gib_per_gpu": 75,
+    "estimated_minutes": [
+      6,
+      15
+    ],
+    "estimate_measured_for_this_run": false,
+    "wall_cap_seconds_per_node": 1800,
+    "GPU_hour_cap_per_attempt_excluding_cleanup": 4,
+    "minimum_free_disk_gib": 10,
+    "evaluation_calls_per_image": 76,
+    "evaluation_total_model_calls": 7600
+  },
+  "gpu_started": false,
+  "new_quality_results": false,
+  "full_historical_tensor_audit": false,
+  "automatic_follow_on": false,
+  "next_action": "Destination safely syncs GitHub, preflights the exact step400 and original100 development cache/output metadata, then supplies four-node launch commands using current node0 IP. No training or sweep. Push compact terminal results."
+}

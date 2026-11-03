@@ -1,0 +1,23 @@
+{
+  "active_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "parent_run": "checkpoints/foundir_rain_native50_continue_v1/continue2000_hopper_4x2_v1",
+  "parent_report": "reports/foundir_rain_native50_continue_milestones_400_1500_2026-11-03.json",
+  "parent_report_sha256": "f32920b1b4d9955b2bbcadd0add812114480905b14dbe922d06da735efaec1c0",
+  "selection_report": "reports/foundir_rain_prediction_gap_terminal_2026-11-03.json",
+  "selection_report_sha256": "d37e31a7bbdd0619ea74ddf1726c5be9608520e5829ac7ee0b404e18ad748107",
+  "checkpoint_step": 400,
+  "call_index": 25,
+  "inference_calls": 26,
+  "schedule_steps": 50,
+  "indices": [64032, 64132],
+  "nodes": 4,
+  "local_gpus": 2,
+  "world_size": 8,
+  "training_updates": 0,
+  "development_pixels_allowed": true,
+  "official_or_sealed_pixels_allowed": false,
+  "psnr_minimum": 34.2,
+  "lpips_maximum": 0.08,
+  "wall_cap_seconds": 1800,
+  "minimum_free_disk_gib": 10
+}

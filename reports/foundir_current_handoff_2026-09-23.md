@@ -1,5 +1,23 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前授权：固定中途终点预测，原100开发图确认 — 2026-11-03
+
+用户授权执行：固定step400、call index25（第26次调用），用50步原时间表的前缀，
+输出x_t−t*v经原生VAE解码的清晰终点。真正26次停止，不是重新安排26步时间表。
+只比较这个固定候选与同权重完整50步及已缓存一步教师，不再扫位置、权重或阈值。
+原32训练来源诊断已正常完成，64/64逐像素复现；本轮允许原100开发图，仅用于评分。
+不读官方/封存/最终测试，不训练、不改旧绑定文件，不自动MoE/energy或继续长训。
+100图是已使用过的开发集，step400此前按开发表现选择；不是新盲测，不能包装为独立测试。
+固定候选同一均值PSNR>=34.2且LPIPS<=.08；报告逐图退步，不拼接最好值，不用GT选输出。
+额外检查真prefix26与full50同位置读出一致、重跑full50与历史图一致；不一致不冒称匹配过门槛。
+仍4节点×2H100/H200=8卡，原runtime/裁图/seed/CFG1/ref10/alpha1/单uint8保持。
+入口smoke/start_foundir_rain_midpoint_development_v1_tmux.sh；
+run_id=step400_call25_dev100_v1，首次launch_id=launch_midpoint_development_v1，端口29694。
+每图保存，同run/fresh共享launch恢复；锁与空闲检查保留，不杀旧进程。粗估6–15分钟，
+cap30分钟/4使用GPU-hours加清理，>=10GiB空闲。执行成功不等于质量通过。
+主代理实现/CPU测试/push；目的地preflight并给用户四节点当前IP命令，轻量终态简报推GitHub。
+详见reports/foundir_rain_midpoint_development_readiness_2026-11-03.md。
+
 ## 当前授权：Rain训练式预测与真实50步诊断 — 2026-11-03
 
 用户授权诊断，不是继续扩大训练。原200→2000训练按原授权收尾，不停进程、不修改绑定代码；
