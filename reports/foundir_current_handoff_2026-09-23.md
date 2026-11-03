@@ -1,5 +1,36 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前授权：Rain同配方step600→800，新增200步 — 2026-11-03
+
+父on-policy任务已正常结束：step600开发33.99953558/.06457076，PSNR还差.20046442dB，
+LPIPS过线；四节点status0，1小时12分32秒/9.64777778GPU-hours。它不再是待运行任务。
+用户已授权保持配方真续训200步；本节覆盖下方旧step400起点/等待GPU的状态。
+
+恢复on-policy父step600完整LoRA/Adam/8rank RNG/600条历史/采样位置19200，
+不是旧native50的step600或2000，不fresh Adam。新增601..800，共6400次呈现，
+槽位19200..25599，复用已有缓存，不重新生成teacher。不改变lr1e-5/global32、
+MSE×10/LPIPS×.05、当前FLUX前25次无梯度＋第26次成图反传、512/CFG1/ref10/alpha1/
+单uint8；仅FLUX和原生VAE恢复，无CNN/Restormer、新机制或其它路线。
+
+700/800各评价固定32训练图和原100开发图，分开均值；训练探针仍12800..12831，
+开发64032..64131，不进新训练。700重算同环境冻结600对照，800复用；保留历史起点。
+同一checkpoint PSNR>=34.2且LPIPS<=.08才过，不拼接不同步；最终800和700各自结果
+都保留，不自动加步或转MoE。官方/封存/最终测试禁止，开发不是新盲测。
+
+仍4节点×每节点2H100/H200=8卡，>=75GiB；单节点同型号，软件/指标环境一致。
+训练核心已8H100实测，新的续训入口/真实CUDA恢复未验收；混卡/H200不冒称已验证。
+预计75–90分钟/10–12GPU-hours，首700约35–45分钟，按本轮实测更新；cap每节点3小时，
+24GPU-hours加清理，不自动扩预算。首次100GiB空闲，600..800每完整步保存，共201份。
+旧文件不改；同run+fresh共同launch恢复，700评价中断先补完，不支持换world_size严格恢复。
+终态轻量查关键状态/导出/均值/退出，不全扫历史tensor，不重算LPIPS。
+
+新入口smoke/start_foundir_rain_onpolicy_continue_v1_tmux.sh，
+run_id=continue600_to800_4x2_v1，首次launch_id=launch_continue600_to800_v1，端口29698。
+主代理实现/CPU测试/push，目的地预检后给当前IP四节点命令；主代理无GPU挂载，未启动。
+目的地首次601..605、700、800及时推小报告，不补造历史发布时间，不上传实时日志/资产。
+终态RAIN_ONPOLICY_CONTINUE_RESULT_VERIFIED＋四节点status0；结果写result.json。
+详见reports/foundir_rain_onpolicy_continue_readiness_2026-11-03.md。
+
 ## 当前授权：Rain实际生成状态训练，step400起新增200步 — 2026-11-03
 
 用户已授权执行新方案；本节覆盖下方“固定中途评价待执行/不训练”的旧状态。

@@ -1,0 +1,61 @@
+{
+  "status": "cpu_ready_destination_preflight_and_GPU_launch_pending",
+  "parent_run": "step400_onpolicy200_4x2_v1",
+  "run_id": "continue600_to800_4x2_v1",
+  "first_launch_id": "launch_continue600_to800_v1",
+  "master_port": 29698,
+  "start_global_step": 600,
+  "end_global_step": 800,
+  "new_updates": 200,
+  "next_global_slot_at_start": 19200,
+  "global_batch": 32,
+  "new_presentations": 6400,
+  "evaluation_global_steps": [
+    700,
+    800
+  ],
+  "train_probe_count_each": 32,
+  "development_count_each": 100,
+  "nodes": 4,
+  "local_gpus": 2,
+  "world_size": 8,
+  "gpu_family": "H100_or_H200",
+  "unit_tests_passed": 8,
+  "two_process_Gloo_exact_resume_pass": true,
+  "training_math_unchanged_from_GPU_qualified_parent": true,
+  "parent_core_H100_GPU_run_completed": true,
+  "new_entrypoint_GPU_started": false,
+  "destination_assets_preflight_performed": false,
+  "python_AST_pass": true,
+  "bash_syntax_pass": true,
+  "parent_report_identity_check_pass": true,
+  "focused_secret_scan_pass": true,
+  "historical_bound_code_or_results_changed": false,
+  "source_sha256": {
+    "configs/foundir_rain_onpolicy_continue_v1.json": "498c3a4046460f72dda0d1dc772f82a7d56edafb238a5546695ea0920e3a998e",
+    "smoke/rain_onpolicy_continue_state_v1.py": "f4bcf3ea77fb8d74e1cd1b94cac804ad171ee412558ca763dbe430a4d55b2f9f",
+    "smoke/train_foundir_rain_onpolicy_continue_v1.py": "2a95984bef65764a1474465797947a1d06ed30a90aa28089d855cf4a899c914e",
+    "smoke/run_foundir_rain_onpolicy_continue_v1_gpu.sh": "795b599866750fa4203d9fe08f9c21ce25e3206eb982eba40c9aceffd8cf7bf7",
+    "smoke/start_foundir_rain_onpolicy_continue_v1_tmux.sh": "47a98aa8baae554648b6cdae6b82a8450d20acc5a52895d5ee2027a1d303242d",
+    "smoke/test_foundir_rain_onpolicy_continue_ddp_v1.py": "2f333d378edaf4f8d6fe9f37bd6b0d29377d2f2329a9411ea7175c9b83097994",
+    "tests/test_rain_onpolicy_continue_v1.py": "8524188873bb0dfa586755902fd5d39ae94819c4f2a4aaba32f8a87294568984"
+  },
+  "wall_estimate_minutes_based_on_parent_H100": [
+    75,
+    90
+  ],
+  "first700_estimate_minutes": [
+    35,
+    45
+  ],
+  "wall_cap_seconds_per_node": 10800,
+  "used_GPU_hours_cap_plus_cleanup": 24,
+  "first_launch_minimum_free_disk_gib": 100,
+  "same_environment_step600_baseline_and_historical_means_preserved": true,
+  "full_tensor_audit_required": false,
+  "automatic_follow_on": false,
+  "goal": {
+    "psnr_minimum": 34.2,
+    "lpips_maximum": 0.08
+  }
+}
