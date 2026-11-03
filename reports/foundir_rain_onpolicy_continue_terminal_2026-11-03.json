@@ -1,0 +1,241 @@
+{
+  "automatic_follow_on": false,
+  "development_gate_pass": true,
+  "final_lora": {
+    "files": {
+      "tensors/rain_onpolicy_continue_step800_3bd0db5e936d43a8b0685372ce01df5b.safetensors": "2fb2538b01d24a3a1ab5db079ea23c0305af2d4f1b67aaa60ae29ab5b4884690"
+    },
+    "parameter_hash": "d958f3a28ba3d20e83754333172cea8c7209cfa3d8a2d0d3710e856100e033c3",
+    "receipt_hash": "a1a13c31b8be413a7495ac74eecd7e294674d9b764264405913d1b51ef20559f",
+    "step": 800,
+    "tensor": "tensors/rain_onpolicy_continue_step800_3bd0db5e936d43a8b0685372ce01df5b.safetensors"
+  },
+  "full_tensor_audit_performed": false,
+  "last_global_step": 800,
+  "latest_checkpoint": {
+    "file": "steps/state_000800_1793742325272201060.pt",
+    "parameter_hash": "d958f3a28ba3d20e83754333172cea8c7209cfa3d8a2d0d3710e856100e033c3",
+    "receipt_hash": "a1a13c31b8be413a7495ac74eecd7e294674d9b764264405913d1b51ef20559f",
+    "sha256": "6f2c0e162e3d868b427308534836f90cbbc72f8d1c1aca4c043183f23fc259c0",
+    "step": 800
+  },
+  "lpips_reexecuted_in_summary": false,
+  "milestones": {
+    "700": {
+      "development_is_previously_used_not_blind_test": true,
+      "groups": {
+        "development": {
+          "both_nonworse_count": 31,
+          "count": 100,
+          "delta_vs_step600_prefix": {
+            "lpips": -0.0006718007847666824,
+            "psnr": 0.014289249070330357
+          },
+          "historical_step600_means": {
+            "lpips": 0.06457075842656196,
+            "psnr": 33.999535576754994
+          },
+          "joint_mean_target_pass": false,
+          "lpips_worse_count": 61,
+          "matched_baseline_minus_historical": {
+            "lpips": 0.0,
+            "psnr": 0.0
+          },
+          "means": {
+            "lpips": 0.06389895764179528,
+            "psnr": 34.013824825825324
+          },
+          "psnr_worse_count": 44,
+          "step600_prefix_means": {
+            "lpips": 0.06457075842656196,
+            "psnr": 33.999535576754994
+          }
+        },
+        "training_fit_only": {
+          "both_nonworse_count": 10,
+          "count": 32,
+          "delta_vs_step600_prefix": {
+            "lpips": -0.0007340755837503821,
+            "psnr": -0.11995858124773662
+          },
+          "historical_step600_means": {
+            "lpips": 0.06163744698278606,
+            "psnr": 34.4724550781553
+          },
+          "joint_mean_target_pass": true,
+          "lpips_worse_count": 19,
+          "matched_baseline_minus_historical": {
+            "lpips": 0.0,
+            "psnr": 0.0
+          },
+          "means": {
+            "lpips": 0.06090337139903568,
+            "psnr": 34.35249649690756
+          },
+          "psnr_worse_count": 13,
+          "step600_prefix_means": {
+            "lpips": 0.06163744698278606,
+            "psnr": 34.4724550781553
+          }
+        }
+      },
+      "new_updates": 100,
+      "receipt_sha256": "a1a13c31b8be413a7495ac74eecd7e294674d9b764264405913d1b51ef20559f",
+      "step": 700,
+      "total_onpolicy_updates": 300
+    },
+    "800": {
+      "development_is_previously_used_not_blind_test": true,
+      "groups": {
+        "development": {
+          "both_nonworse_count": 64,
+          "count": 100,
+          "delta_vs_step600_prefix": {
+            "lpips": -0.002703322526067503,
+            "psnr": 0.30164536646854856
+          },
+          "historical_step600_means": {
+            "lpips": 0.06457075842656196,
+            "psnr": 33.999535576754994
+          },
+          "joint_mean_target_pass": true,
+          "lpips_worse_count": 21,
+          "matched_baseline_minus_historical": {
+            "lpips": 0.0,
+            "psnr": 0.0
+          },
+          "means": {
+            "lpips": 0.061867435900494455,
+            "psnr": 34.30118094322354
+          },
+          "psnr_worse_count": 22,
+          "step600_prefix_means": {
+            "lpips": 0.06457075842656196,
+            "psnr": 33.999535576754994
+          }
+        },
+        "training_fit_only": {
+          "both_nonworse_count": 19,
+          "count": 32,
+          "delta_vs_step600_prefix": {
+            "lpips": -0.002234092098660767,
+            "psnr": 0.24722247241125928
+          },
+          "historical_step600_means": {
+            "lpips": 0.06163744698278606,
+            "psnr": 34.4724550781553
+          },
+          "joint_mean_target_pass": true,
+          "lpips_worse_count": 10,
+          "matched_baseline_minus_historical": {
+            "lpips": 0.0,
+            "psnr": 0.0
+          },
+          "means": {
+            "lpips": 0.05940335488412529,
+            "psnr": 34.71967755056656
+          },
+          "psnr_worse_count": 7,
+          "step600_prefix_means": {
+            "lpips": 0.06163744698278606,
+            "psnr": 34.4724550781553
+          }
+        }
+      },
+      "new_updates": 200,
+      "receipt_sha256": "a1a13c31b8be413a7495ac74eecd7e294674d9b764264405913d1b51ef20559f",
+      "step": 800,
+      "total_onpolicy_updates": 400
+    }
+  },
+  "new_presentations": 6400,
+  "new_updates": 200,
+  "not_a_MoE_compatibility_qualification": true,
+  "official_or_sealed_test_accessed": false,
+  "parent_step": 600,
+  "prefix_derivatives_omitted": true,
+  "qualifying_checkpoint_steps": [
+    800
+  ],
+  "receipt_sha256": "a1a13c31b8be413a7495ac74eecd7e294674d9b764264405913d1b51ef20559f",
+  "status": "rain_onpolicy_continuation_complete",
+  "run_id": "continue600_to800_4x2_v1",
+  "source_commit": "6157d9a",
+  "result_sha256": "722a87f22d0471656d92d1c3936cf6892a79455c6d626d0d1c656851b6a84785",
+  "nodes": [
+    {
+      "node": 0,
+      "status": 0,
+      "seconds": 4482,
+      "allocated_gpu_seconds": 8964,
+      "gpus": 2,
+      "log": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node0.log",
+      "log_sha256": "26bde35682545122352f9460260f4f7a84cf99ff17c5ccb4703551d2cf8ba533"
+    },
+    {
+      "node": 1,
+      "status": 0,
+      "seconds": 4478,
+      "allocated_gpu_seconds": 8956,
+      "gpus": 2,
+      "log": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node1.log",
+      "log_sha256": "508aa04a9e5b96917571d4e1ac8e18e48c42d7ee739a2d57af20828e9efa0478"
+    },
+    {
+      "node": 2,
+      "status": 0,
+      "seconds": 4466,
+      "allocated_gpu_seconds": 8932,
+      "gpus": 2,
+      "log": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node2.log",
+      "log_sha256": "3d4f50e8bdb15815daf5b0de93b77dd384fbd1f7285b8d758cb021ad9f73c85e"
+    },
+    {
+      "node": 3,
+      "status": 0,
+      "seconds": 4464,
+      "allocated_gpu_seconds": 8928,
+      "gpus": 2,
+      "log": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node3.log",
+      "log_sha256": "29dc6d225da0acabdfeaeb49370345eb26a62599b2d073221fbd6fe0df29f911"
+    }
+  ],
+  "wall_seconds_max": 4482,
+  "allocated_gpu_hours": 9.938888888888888,
+  "parent_onpolicy_GPU_hours": 9.647777777777778,
+  "two_onpolicy_runs_GPU_hours": 19.586666666666666,
+  "older_history_not_included_in_this_subtotal": true,
+  "verified_key_files": [
+    {
+      "path": "steps/state_000800_1793742325272201060.pt",
+      "sha256": "6f2c0e162e3d868b427308534836f90cbbc72f8d1c1aca4c043183f23fc259c0"
+    },
+    {
+      "path": "tensors/rain_onpolicy_continue_step800_3bd0db5e936d43a8b0685372ce01df5b.safetensors",
+      "sha256": "2fb2538b01d24a3a1ab5db079ea23c0305af2d4f1b67aaa60ae29ab5b4884690"
+    }
+  ],
+  "training_runtime_summary": {
+    "max_rank_prefix_seconds": 13.549486889839173,
+    "max_rank_step_seconds_excluding_checkpoint": 19.247590761184693,
+    "mean_save_seconds": 1.027415,
+    "peak_allocated_gib": 15.130475044250488
+  },
+  "last_training_record": {
+    "losses": {
+      "gt_lpips": 0.044442804901336785,
+      "gt_rgb_mse": 0.00200774106224344,
+      "total": 0.022299550859315787
+    },
+    "max_rank_grad_norm": 0.08897678554058075,
+    "max_rank_prefix_seconds": 13.531208992004395,
+    "max_rank_step_seconds_excluding_checkpoint": 19.756689071655273,
+    "new_updates": 200,
+    "next_global_slot": 25600,
+    "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS",
+    "peak_allocated_gib": 15.130475044250488,
+    "step": 800,
+    "training_calls_per_presentation": 26
+  },
+  "independent_check": "700/800 metadata indices/identity, means and per-image regression counts independently recomputed against matched600; final state/LoRA SHA and node exit/log SHA verified; no full tensor audit or LPIPS rerun"
+}
