@@ -1,0 +1,173 @@
+{
+  "run_id": "native50_stage1_4x2_v1",
+  "launch_id": "launch_native50_stage1_v1",
+  "gpu_status": "four_nodes_status0_200_steps_complete",
+  "cpu_status": "verification_in_progress",
+  "milestones": {
+    "0": {
+      "count": 132,
+      "development_gate_pass": false,
+      "official_test_accessed": false,
+      "quality_gate_evaluated": true,
+      "receipt_sha256": "ac284c0ed2ffe1d7291c7c4462f31632187036f1885d29d221f41c9333be61c2",
+      "review_required": false,
+      "splits": {
+        "development": {
+          "count": 100,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.0833716990146786,
+              "psnr": 30.78435741335576
+            },
+            "teacher_one_step": {
+              "lpips": 0.07364026844967157,
+              "psnr": 34.2267938486823
+            }
+          }
+        },
+        "train_probe": {
+          "count": 32,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.07253075583139434,
+              "psnr": 30.188884960741323
+            },
+            "teacher_one_step": {
+              "lpips": 0.06611489731585607,
+              "psnr": 32.74079225925681
+            }
+          }
+        }
+      },
+      "step": 0
+    },
+    "50": {
+      "count": 132,
+      "development_change_from_step": 0,
+      "development_delta": {
+        "lpips": -0.00284610543400049,
+        "psnr": 0.07989421603436853
+      },
+      "development_gate_pass": false,
+      "official_test_accessed": false,
+      "quality_gate_evaluated": true,
+      "receipt_sha256": "ac284c0ed2ffe1d7291c7c4462f31632187036f1885d29d221f41c9333be61c2",
+      "review_required": false,
+      "splits": {
+        "development": {
+          "count": 100,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.08052559358067811,
+              "psnr": 30.86425162939013
+            },
+            "teacher_one_step": {
+              "lpips": 0.07364026844967157,
+              "psnr": 34.2267938486823
+            }
+          }
+        },
+        "train_probe": {
+          "count": 32,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.0692199666518718,
+              "psnr": 30.14148967611607
+            },
+            "teacher_one_step": {
+              "lpips": 0.06611489731585607,
+              "psnr": 32.74079225925681
+            }
+          }
+        }
+      },
+      "step": 50
+    },
+    "100": {
+      "count": 132,
+      "development_change_from_step": 50,
+      "development_delta": {
+        "lpips": 0.0030236449511721747,
+        "psnr": -0.12614196674939748
+      },
+      "development_gate_pass": false,
+      "official_test_accessed": false,
+      "quality_gate_evaluated": true,
+      "receipt_sha256": "ac284c0ed2ffe1d7291c7c4462f31632187036f1885d29d221f41c9333be61c2",
+      "review_required": true,
+      "splits": {
+        "development": {
+          "count": 100,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.08354923853185028,
+              "psnr": 30.73810966264073
+            },
+            "teacher_one_step": {
+              "lpips": 0.07364026844967157,
+              "psnr": 34.2267938486823
+            }
+          }
+        },
+        "train_probe": {
+          "count": 32,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.07117300044046715,
+              "psnr": 29.795921296870773
+            },
+            "teacher_one_step": {
+              "lpips": 0.06611489731585607,
+              "psnr": 32.74079225925681
+            }
+          }
+        }
+      },
+      "step": 100
+    },
+    "200": {
+      "count": 132,
+      "development_change_from_step": 100,
+      "development_delta": {
+        "lpips": 5.5331827607002504e-05,
+        "psnr": 0.345990038426212
+      },
+      "development_gate_pass": false,
+      "official_test_accessed": false,
+      "quality_gate_evaluated": true,
+      "receipt_sha256": "ac284c0ed2ffe1d7291c7c4462f31632187036f1885d29d221f41c9333be61c2",
+      "review_required": false,
+      "splits": {
+        "development": {
+          "count": 100,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.08360457035945729,
+              "psnr": 31.084099701066943
+            },
+            "teacher_one_step": {
+              "lpips": 0.07364026844967157,
+              "psnr": 34.2267938486823
+            }
+          }
+        },
+        "train_probe": {
+          "count": 32,
+          "means": {
+            "student_50_step": {
+              "lpips": 0.0721107292920351,
+              "psnr": 30.13416629652371
+            },
+            "teacher_one_step": {
+              "lpips": 0.06611489731585607,
+              "psnr": 32.74079225925681
+            }
+          }
+        }
+      },
+      "step": 200
+    }
+  },
+  "historical_baseline_not_substituted": true,
+  "decision": "step100 review_required=true: both development metrics worsened vs50. Step200 PSNR improves vs0, LPIPS is slightly worse; none meets34.2/.08. No automatic continuation or recipe changes."
+}
