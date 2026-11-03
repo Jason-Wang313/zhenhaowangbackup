@@ -1,0 +1,2818 @@
+{
+  "GT_used_for_output_selection": false,
+  "automatic_follow_on": false,
+  "checkpoint_step": 400,
+  "development_previously_used": true,
+  "fixed_call_index": 25,
+  "full50_historical_exact_count": 100,
+  "full_model_calls_per_image": 50,
+  "full_tensor_audit_performed": false,
+  "lpips_reexecuted_in_summary": false,
+  "matched_comparison_valid": true,
+  "matched_gate_pass": false,
+  "new_blind_test": false,
+  "official_or_sealed_test_accessed": false,
+  "prefix_full_trace_exact_count": 100,
+  "prefix_model_calls_per_image": 26,
+  "receipt_sha256": "2128c3bc0f8402904b8442a5213ca060077efd175d5284fe2b5acc5abf26c920",
+  "status": "fixed_midpoint_development_evaluation_complete",
+  "summary": {
+    "count": 100,
+    "delta_vs_full50": {
+      "lpips": -0.001727910537738353,
+      "psnr": 1.4485041351139394
+    },
+    "means": {
+      "fixed_prefix26": {
+        "lpips": 0.07536413163412363,
+        "psnr": 33.12910503674432
+      },
+      "matched_full50": {
+        "lpips": 0.07709204217186198,
+        "psnr": 31.68060090163038
+      },
+      "original_one_step_teacher": {
+        "lpips": 0.07364026844967157,
+        "psnr": 34.2267938486823
+      }
+    },
+    "per_image_both_nonworse": 70,
+    "per_image_lpips_worse": 26,
+    "per_image_psnr_worse": 9,
+    "quality_gate_pass": false
+  },
+  "total_evaluation_model_calls": 7600,
+  "training_updates": 0,
+  "run_id": "step400_call25_dev100_v1",
+  "source_commit": "fa68c57",
+  "result_path": "checkpoints/foundir_rain_midpoint_development_v1/step400_call25_dev100_v1/result.json",
+  "result_sha256": "1e14d8111dafec95a0bcfcbfbbc69defc25e6fb15aa425e9caab73e1eacdd507",
+  "checkpoint": {
+    "receipt_sha256": "fe451c7cc5142644274bae473be8b010635e5a62306bc6d38f9b3a6da3ebb7e1",
+    "record": {
+      "file": "steps/state_000400_1793709026827370035.pt",
+      "parameter_hash": "b35a27147d08b406441157f65506515a5898151f20b29d5e0d673bc3d64c62ff",
+      "receipt_hash": "bd922f3a9ae031f38ab3e63c60986d64c18ee40871ae10b095f4c5a7fde6edbf",
+      "sha256": "738865b73d3a9e0b57175d3176670d83aa7e549636b41a7438e4ce31717d26d1",
+      "step": 400
+    }
+  },
+  "nodes": [
+    {
+      "node": 0,
+      "status": 0,
+      "seconds": 328,
+      "allocated_gpu_seconds": 656,
+      "gpus": 2,
+      "log": "logs/foundir_rain_midpoint_development_v1_step400_call25_dev100_v1_node0.log",
+      "log_sha256": "4210bf3c0ccef8f497731e02b41d0767d57491d42f885bd6bfe62a74557c58b8"
+    },
+    {
+      "node": 1,
+      "status": 0,
+      "seconds": 324,
+      "allocated_gpu_seconds": 648,
+      "gpus": 2,
+      "log": "logs/foundir_rain_midpoint_development_v1_step400_call25_dev100_v1_node1.log",
+      "log_sha256": "6131c322f7f6b89019196f8b5dac3e9ccb493af3cecdfcf442b5ce64e567e593"
+    },
+    {
+      "node": 2,
+      "status": 0,
+      "seconds": 312,
+      "allocated_gpu_seconds": 624,
+      "gpus": 2,
+      "log": "logs/foundir_rain_midpoint_development_v1_step400_call25_dev100_v1_node2.log",
+      "log_sha256": "12fad9fb7dc0ee7c6997f4b1950bada9e5b82035b8299e46a10717236229b753"
+    },
+    {
+      "node": 3,
+      "status": 0,
+      "seconds": 312,
+      "allocated_gpu_seconds": 624,
+      "gpus": 2,
+      "log": "logs/foundir_rain_midpoint_development_v1_step400_call25_dev100_v1_node3.log",
+      "log_sha256": "140e9a127d1b99a28d01d81ac548d5c90a4c85eedacfc7a6cab480e66e8c8b18"
+    }
+  ],
+  "wall_seconds_max": 328,
+  "allocated_gpu_hours": 0.7088888888888889,
+  "per_image_psnr_worse_indices": [
+    64034,
+    64051,
+    64063,
+    64072,
+    64081,
+    64099,
+    64101,
+    64102,
+    64120
+  ],
+  "per_image_lpips_worse_indices": [
+    64034,
+    64038,
+    64041,
+    64046,
+    64051,
+    64055,
+    64058,
+    64060,
+    64063,
+    64064,
+    64065,
+    64066,
+    64072,
+    64075,
+    64076,
+    64084,
+    64098,
+    64101,
+    64106,
+    64107,
+    64111,
+    64112,
+    64113,
+    64115,
+    64122,
+    64129
+  ],
+  "per_image_both_nonworse_indices": [
+    64032,
+    64033,
+    64035,
+    64036,
+    64037,
+    64039,
+    64040,
+    64042,
+    64043,
+    64044,
+    64045,
+    64047,
+    64048,
+    64049,
+    64050,
+    64052,
+    64053,
+    64054,
+    64056,
+    64057,
+    64059,
+    64061,
+    64062,
+    64067,
+    64068,
+    64069,
+    64070,
+    64071,
+    64073,
+    64074,
+    64077,
+    64078,
+    64079,
+    64080,
+    64082,
+    64083,
+    64085,
+    64086,
+    64087,
+    64088,
+    64089,
+    64090,
+    64091,
+    64092,
+    64093,
+    64094,
+    64095,
+    64096,
+    64097,
+    64100,
+    64103,
+    64104,
+    64105,
+    64108,
+    64109,
+    64110,
+    64114,
+    64116,
+    64117,
+    64118,
+    64119,
+    64121,
+    64123,
+    64124,
+    64125,
+    64126,
+    64127,
+    64128,
+    64130,
+    64131
+  ],
+  "per_image_metrics": [
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64032,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.06671006977558136,
+          "psnr": 29.67206874901042
+        },
+        "matched_full50": {
+          "lpips": 0.07348648458719254,
+          "psnr": 28.01584978438155
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.07747754454612732,
+          "psnr": 28.804356412568293
+        }
+      },
+      "record_id": "foundir_train_0357245"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64033,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.029586978256702423,
+          "psnr": 33.24098532328539
+        },
+        "matched_full50": {
+          "lpips": 0.031836725771427155,
+          "psnr": 32.18599886065801
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.02469629794359207,
+          "psnr": 34.943509355343046
+        }
+      },
+      "record_id": "foundir_train_0358547"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64034,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.14383596181869507,
+          "psnr": 32.14813957456656
+        },
+        "matched_full50": {
+          "lpips": 0.11486928164958954,
+          "psnr": 32.34143852655365
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.1312786340713501,
+          "psnr": 35.40746598999205
+        }
+      },
+      "record_id": "foundir_train_0359048"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64035,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.049440231174230576,
+          "psnr": 33.40082705626291
+        },
+        "matched_full50": {
+          "lpips": 0.05192461609840393,
+          "psnr": 32.25416173188786
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.04716864228248596,
+          "psnr": 34.20339942758264
+        }
+      },
+      "record_id": "foundir_train_0359525"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64036,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.06919577717781067,
+          "psnr": 31.191351064737745
+        },
+        "matched_full50": {
+          "lpips": 0.07590757310390472,
+          "psnr": 30.498922458726646
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.07279945909976959,
+          "psnr": 33.04729075039157
+        }
+      },
+      "record_id": "foundir_train_0360047"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64037,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.07242385298013687,
+          "psnr": 28.78703784682456
+        },
+        "matched_full50": {
+          "lpips": 0.07643841207027435,
+          "psnr": 27.784770095147838
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06668131798505783,
+          "psnr": 29.62572236023633
+        }
+      },
+      "record_id": "foundir_train_0360725"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64038,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.23769211769104004,
+          "psnr": 31.14870059047623
+        },
+        "matched_full50": {
+          "lpips": 0.22743737697601318,
+          "psnr": 28.9313982600124
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.20192892849445343,
+          "psnr": 33.319158055271615
+        }
+      },
+      "record_id": "foundir_train_0361213"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64039,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.1653168797492981,
+          "psnr": 29.38963847399107
+        },
+        "matched_full50": {
+          "lpips": 0.18939915299415588,
+          "psnr": 26.397817709654984
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.1875104010105133,
+          "psnr": 29.164232475621507
+        }
+      },
+      "record_id": "foundir_train_0361264"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64040,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.04053272306919098,
+          "psnr": 30.54207365615522
+        },
+        "matched_full50": {
+          "lpips": 0.046318672597408295,
+          "psnr": 29.05613267070283
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06118328124284744,
+          "psnr": 30.2109911919181
+        }
+      },
+      "record_id": "foundir_train_0361446"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64041,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.13444198668003082,
+          "psnr": 28.80760166928408
+        },
+        "matched_full50": {
+          "lpips": 0.12518849968910217,
+          "psnr": 26.4981007112111
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.12099220603704453,
+          "psnr": 30.48859784892285
+        }
+      },
+      "record_id": "foundir_train_0361897"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64042,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.022170597687363625,
+          "psnr": 34.91149083655563
+        },
+        "matched_full50": {
+          "lpips": 0.025143297389149666,
+          "psnr": 33.57962907993294
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.02738214284181595,
+          "psnr": 34.38723598467155
+        }
+      },
+      "record_id": "foundir_train_0361947"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64043,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.07104092836380005,
+          "psnr": 25.09369953394789
+        },
+        "matched_full50": {
+          "lpips": 0.08184540271759033,
+          "psnr": 23.226364832132905
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.08595138043165207,
+          "psnr": 25.660202065133106
+        }
+      },
+      "record_id": "foundir_train_0362499"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64044,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.1067369133234024,
+          "psnr": 30.564205605005053
+        },
+        "matched_full50": {
+          "lpips": 0.11265768855810165,
+          "psnr": 26.540757273290303
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.10157465934753418,
+          "psnr": 33.6268943059883
+        }
+      },
+      "record_id": "foundir_train_0363249"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64045,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.064191073179245,
+          "psnr": 30.331785547652768
+        },
+        "matched_full50": {
+          "lpips": 0.08084684610366821,
+          "psnr": 28.7350162366053
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06757578253746033,
+          "psnr": 30.82739490720579
+        }
+      },
+      "record_id": "foundir_train_0363457"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64046,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.02781449258327484,
+          "psnr": 35.090576099626645
+        },
+        "matched_full50": {
+          "lpips": 0.026174040511250496,
+          "psnr": 34.38866697795936
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.030446238815784454,
+          "psnr": 35.86047235482572
+        }
+      },
+      "record_id": "foundir_train_0364161"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64047,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.06878510117530823,
+          "psnr": 30.0805745635371
+        },
+        "matched_full50": {
+          "lpips": 0.07057581841945648,
+          "psnr": 28.951169797114822
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.04848907142877579,
+          "psnr": 30.967940076432015
+        }
+      },
+      "record_id": "foundir_train_0364180"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64048,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.05828353017568588,
+          "psnr": 28.846350530213094
+        },
+        "matched_full50": {
+          "lpips": 0.11277774721384048,
+          "psnr": 27.386769812584962
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.045042455196380615,
+          "psnr": 36.57461937010618
+        }
+      },
+      "record_id": "foundir_train_0364446"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64049,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.034564852714538574,
+          "psnr": 30.14745220992607
+        },
+        "matched_full50": {
+          "lpips": 0.038129910826683044,
+          "psnr": 29.649524862200018
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.03957221657037735,
+          "psnr": 30.46376775778281
+        }
+      },
+      "record_id": "foundir_train_0364879"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64050,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.17003315687179565,
+          "psnr": 26.582233883383218
+        },
+        "matched_full50": {
+          "lpips": 0.185954749584198,
+          "psnr": 26.320790070576457
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.1799614578485489,
+          "psnr": 27.01372535176378
+        }
+      },
+      "record_id": "foundir_train_0364947"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64051,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.386702299118042,
+          "psnr": 39.01133769430352
+        },
+        "matched_full50": {
+          "lpips": 0.2640310525894165,
+          "psnr": 39.31313528936336
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.32081422209739685,
+          "psnr": 32.0481048294731
+        }
+      },
+      "record_id": "foundir_train_0365557"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64052,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.02237781509757042,
+          "psnr": 34.628567069522866
+        },
+        "matched_full50": {
+          "lpips": 0.02461637556552887,
+          "psnr": 34.11597272306417
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.02071547694504261,
+          "psnr": 37.961857780486575
+        }
+      },
+      "record_id": "foundir_train_0365732"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64053,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.05115646868944168,
+          "psnr": 35.66826149063062
+        },
+        "matched_full50": {
+          "lpips": 0.05354493856430054,
+          "psnr": 33.58561599519612
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06306365132331848,
+          "psnr": 38.2322511744464
+        }
+      },
+      "record_id": "foundir_train_0365934"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64054,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.03359104320406914,
+          "psnr": 40.68829377302053
+        },
+        "matched_full50": {
+          "lpips": 0.03726130351424217,
+          "psnr": 38.31450377728805
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.048148851841688156,
+          "psnr": 42.56419172944053
+        }
+      },
+      "record_id": "foundir_train_0365974"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64055,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.06700212508440018,
+          "psnr": 34.768590535139815
+        },
+        "matched_full50": {
+          "lpips": 0.059516724199056625,
+          "psnr": 33.60566592561441
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.029440339654684067,
+          "psnr": 37.37406141894888
+        }
+      },
+      "record_id": "foundir_train_0366157"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64056,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.012048700824379921,
+          "psnr": 35.037699531382245
+        },
+        "matched_full50": {
+          "lpips": 0.012605090625584126,
+          "psnr": 34.70693948054447
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.010413821786642075,
+          "psnr": 36.42858423490533
+        }
+      },
+      "record_id": "foundir_train_0366464"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64057,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.04408200830221176,
+          "psnr": 31.36398343825166
+        },
+        "matched_full50": {
+          "lpips": 0.04958292096853256,
+          "psnr": 30.329649836494813
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.048385463654994965,
+          "psnr": 31.457662475910073
+        }
+      },
+      "record_id": "foundir_train_0366992"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64058,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.08714151382446289,
+          "psnr": 34.06270947680052
+        },
+        "matched_full50": {
+          "lpips": 0.08314003050327301,
+          "psnr": 32.03812381873737
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.11358291655778885,
+          "psnr": 35.137585922252946
+        }
+      },
+      "record_id": "foundir_train_0367115"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64059,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.04831423982977867,
+          "psnr": 31.62029270892606
+        },
+        "matched_full50": {
+          "lpips": 0.04852486774325371,
+          "psnr": 30.513085060588693
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06298381835222244,
+          "psnr": 31.46007763070285
+        }
+      },
+      "record_id": "foundir_train_0367329"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64060,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.028361789882183075,
+          "psnr": 33.502649472784526
+        },
+        "matched_full50": {
+          "lpips": 0.02819046750664711,
+          "psnr": 32.736203551102825
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.027401631698012352,
+          "psnr": 33.828936907558514
+        }
+      },
+      "record_id": "foundir_train_0367487"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64061,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.06843290477991104,
+          "psnr": 29.224868674031626
+        },
+        "matched_full50": {
+          "lpips": 0.07728918641805649,
+          "psnr": 28.89104092277919
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.08084206283092499,
+          "psnr": 30.03548478074768
+        }
+      },
+      "record_id": "foundir_train_0367659"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64062,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.015034448355436325,
+          "psnr": 36.158890708842684
+        },
+        "matched_full50": {
+          "lpips": 0.015187057666480541,
+          "psnr": 34.45116148273626
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.015403468161821365,
+          "psnr": 36.63075570081459
+        }
+      },
+      "record_id": "foundir_train_0368058"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64063,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.6321200132369995,
+          "psnr": 9.765278812245867
+        },
+        "matched_full50": {
+          "lpips": 0.6289360523223877,
+          "psnr": 9.860048232712803
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.6303039789199829,
+          "psnr": 9.85471796759885
+        }
+      },
+      "record_id": "foundir_train_0368227"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64064,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.031132202595472336,
+          "psnr": 35.16049121622546
+        },
+        "matched_full50": {
+          "lpips": 0.030132096260786057,
+          "psnr": 33.72525678734768
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.0342116579413414,
+          "psnr": 36.10631001503303
+        }
+      },
+      "record_id": "foundir_train_0368551"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64065,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.006556003354489803,
+          "psnr": 39.217343120885694
+        },
+        "matched_full50": {
+          "lpips": 0.006483708042651415,
+          "psnr": 37.353904964776014
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.007120613940060139,
+          "psnr": 39.73051412262839
+        }
+      },
+      "record_id": "foundir_train_0368662"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64066,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.2238793820142746,
+          "psnr": 28.897088296471996
+        },
+        "matched_full50": {
+          "lpips": 0.18896320462226868,
+          "psnr": 27.07632502656641
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.11694733798503876,
+          "psnr": 30.385084419904477
+        }
+      },
+      "record_id": "foundir_train_0368916"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64067,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.062143631279468536,
+          "psnr": 30.094993689682376
+        },
+        "matched_full50": {
+          "lpips": 0.08083493262529373,
+          "psnr": 29.387486451646826
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06217653676867485,
+          "psnr": 30.890542113493403
+        }
+      },
+      "record_id": "foundir_train_0369015"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64068,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.050446007400751114,
+          "psnr": 34.07743911161376
+        },
+        "matched_full50": {
+          "lpips": 0.060652464628219604,
+          "psnr": 32.29300539893453
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.056853052228689194,
+          "psnr": 34.17315359200601
+        }
+      },
+      "record_id": "foundir_train_0369138"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64069,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.010586606338620186,
+          "psnr": 37.03091354193619
+        },
+        "matched_full50": {
+          "lpips": 0.011542381718754768,
+          "psnr": 36.421483911796756
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.0110686756670475,
+          "psnr": 38.12450899081296
+        }
+      },
+      "record_id": "foundir_train_0369244"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64070,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.08654056489467621,
+          "psnr": 26.428078643298463
+        },
+        "matched_full50": {
+          "lpips": 0.08966963738203049,
+          "psnr": 25.57057726550008
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.07526981085538864,
+          "psnr": 27.390510851644958
+        }
+      },
+      "record_id": "foundir_train_0369361"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64071,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.023271020501852036,
+          "psnr": 45.52869528132041
+        },
+        "matched_full50": {
+          "lpips": 0.024746123701334,
+          "psnr": 40.042023524695686
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.0250931978225708,
+          "psnr": 44.70899599016421
+        }
+      },
+      "record_id": "foundir_train_0369607"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64072,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.025021569803357124,
+          "psnr": 40.72598915362795
+        },
+        "matched_full50": {
+          "lpips": 0.02134278044104576,
+          "psnr": 41.16676824924631
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.03182004392147064,
+          "psnr": 40.806196567453725
+        }
+      },
+      "record_id": "foundir_train_0370143"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64073,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.04386688023805618,
+          "psnr": 37.059818751525086
+        },
+        "matched_full50": {
+          "lpips": 0.04497798904776573,
+          "psnr": 35.23607758224066
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.035476282238960266,
+          "psnr": 39.657076700190174
+        }
+      },
+      "record_id": "foundir_train_0370849"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64074,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.01739523559808731,
+          "psnr": 35.17672653199407
+        },
+        "matched_full50": {
+          "lpips": 0.019132433459162712,
+          "psnr": 34.5683653796616
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.02026340924203396,
+          "psnr": 35.526251963197566
+        }
+      },
+      "record_id": "foundir_train_0371052"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64075,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.03371534124016762,
+          "psnr": 38.36082373524345
+        },
+        "matched_full50": {
+          "lpips": 0.02949366346001625,
+          "psnr": 34.804269510214965
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.04163331910967827,
+          "psnr": 40.819032395239894
+        }
+      },
+      "record_id": "foundir_train_0371355"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64076,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.014039919711649418,
+          "psnr": 42.55652243902567
+        },
+        "matched_full50": {
+          "lpips": 0.013372944667935371,
+          "psnr": 40.95894748130158
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.014302043244242668,
+          "psnr": 44.690157431748574
+        }
+      },
+      "record_id": "foundir_train_0373110"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64077,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.024009672924876213,
+          "psnr": 36.150975605789824
+        },
+        "matched_full50": {
+          "lpips": 0.024256685748696327,
+          "psnr": 35.75089683082733
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.027722623199224472,
+          "psnr": 36.56311579233793
+        }
+      },
+      "record_id": "foundir_train_0373184"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64078,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.07541660964488983,
+          "psnr": 34.925066977068084
+        },
+        "matched_full50": {
+          "lpips": 0.07962461560964584,
+          "psnr": 32.46161629923472
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06908052414655685,
+          "psnr": 35.69496646265601
+        }
+      },
+      "record_id": "foundir_train_0373226"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64079,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.034276917576789856,
+          "psnr": 34.630803757738036
+        },
+        "matched_full50": {
+          "lpips": 0.04041016846895218,
+          "psnr": 33.09748819834528
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.034894268959760666,
+          "psnr": 36.143728649244956
+        }
+      },
+      "record_id": "foundir_train_0373360"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64080,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.021196778863668442,
+          "psnr": 39.14749997134916
+        },
+        "matched_full50": {
+          "lpips": 0.021430542692542076,
+          "psnr": 38.857913438839915
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.02409329265356064,
+          "psnr": 40.55072723214056
+        }
+      },
+      "record_id": "foundir_train_0373890"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64081,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.024942632764577866,
+          "psnr": 35.470635846543544
+        },
+        "matched_full50": {
+          "lpips": 0.027237698435783386,
+          "psnr": 35.7757976173165
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.027394697070121765,
+          "psnr": 38.62245704773236
+        }
+      },
+      "record_id": "foundir_train_0374004"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64082,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.02211572416126728,
+          "psnr": 35.65578746217182
+        },
+        "matched_full50": {
+          "lpips": 0.02212405391037464,
+          "psnr": 34.18812932828167
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.022473467513918877,
+          "psnr": 36.11304152955365
+        }
+      },
+      "record_id": "foundir_train_0374075"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64083,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.029541023075580597,
+          "psnr": 29.47516948395679
+        },
+        "matched_full50": {
+          "lpips": 0.03382556885480881,
+          "psnr": 29.35050873897538
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.03687132149934769,
+          "psnr": 30.576261594508047
+        }
+      },
+      "record_id": "foundir_train_0374213"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64084,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.031000148504972458,
+          "psnr": 39.75944934681608
+        },
+        "matched_full50": {
+          "lpips": 0.027041830122470856,
+          "psnr": 37.10946227819374
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.03824169561266899,
+          "psnr": 40.094232366501984
+        }
+      },
+      "record_id": "foundir_train_0374560"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64085,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.013747818768024445,
+          "psnr": 33.912715234996405
+        },
+        "matched_full50": {
+          "lpips": 0.015857970342040062,
+          "psnr": 32.684278139277914
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.014066647738218307,
+          "psnr": 34.54540088508705
+        }
+      },
+      "record_id": "foundir_train_0375047"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64086,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.01680990867316723,
+          "psnr": 31.74630810943924
+        },
+        "matched_full50": {
+          "lpips": 0.019554778933525085,
+          "psnr": 31.180700206279287
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.014748341403901577,
+          "psnr": 33.37381876572282
+        }
+      },
+      "record_id": "foundir_train_0375632"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64087,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.08312034606933594,
+          "psnr": 29.622341367094904
+        },
+        "matched_full50": {
+          "lpips": 0.11974702775478363,
+          "psnr": 27.848682712574696
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.07735081017017365,
+          "psnr": 31.03586043278666
+        }
+      },
+      "record_id": "foundir_train_0376892"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64088,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.011276262812316418,
+          "psnr": 40.17190255419065
+        },
+        "matched_full50": {
+          "lpips": 0.012823372147977352,
+          "psnr": 37.43723167683686
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.00986933521926403,
+          "psnr": 40.69304529386702
+        }
+      },
+      "record_id": "foundir_train_0377015"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64089,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.0695609375834465,
+          "psnr": 40.46273909237621
+        },
+        "matched_full50": {
+          "lpips": 0.10994400084018707,
+          "psnr": 34.680131198679945
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06880153715610504,
+          "psnr": 39.95206032919883
+        }
+      },
+      "record_id": "foundir_train_0377282"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64090,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.1443597972393036,
+          "psnr": 30.23475720263743
+        },
+        "matched_full50": {
+          "lpips": 0.17306986451148987,
+          "psnr": 28.84527612276117
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.12533961236476898,
+          "psnr": 32.38070079253128
+        }
+      },
+      "record_id": "foundir_train_0377315"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64091,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.027213867753744125,
+          "psnr": 35.011712731372995
+        },
+        "matched_full50": {
+          "lpips": 0.04011085256934166,
+          "psnr": 33.13642902680509
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.024645013734698296,
+          "psnr": 37.42417569930245
+        }
+      },
+      "record_id": "foundir_train_0377670"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64092,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.018686387687921524,
+          "psnr": 36.56758293458296
+        },
+        "matched_full50": {
+          "lpips": 0.02015569433569908,
+          "psnr": 33.97595884014359
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.019826387986540794,
+          "psnr": 37.63042395208319
+        }
+      },
+      "record_id": "foundir_train_0378540"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64093,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.04891685023903847,
+          "psnr": 30.557425694090455
+        },
+        "matched_full50": {
+          "lpips": 0.05779317766427994,
+          "psnr": 29.57358113587341
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.048496995121240616,
+          "psnr": 30.951196813741582
+        }
+      },
+      "record_id": "foundir_train_0378715"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64094,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.01996983401477337,
+          "psnr": 35.89157419961871
+        },
+        "matched_full50": {
+          "lpips": 0.025791829451918602,
+          "psnr": 34.53212293936141
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.018807267770171165,
+          "psnr": 37.15100712446033
+        }
+      },
+      "record_id": "foundir_train_0379360"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64095,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.04600485786795616,
+          "psnr": 40.841805900664454
+        },
+        "matched_full50": {
+          "lpips": 0.05386863648891449,
+          "psnr": 38.50753108819721
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06550686061382294,
+          "psnr": 39.70333222835108
+        }
+      },
+      "record_id": "foundir_train_0380162"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64096,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.036211565136909485,
+          "psnr": 32.08574272910689
+        },
+        "matched_full50": {
+          "lpips": 0.03779301047325134,
+          "psnr": 31.629753464847315
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.042054757475852966,
+          "psnr": 32.47661724318937
+        }
+      },
+      "record_id": "foundir_train_0380333"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64097,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.020274728536605835,
+          "psnr": 35.96246600002901
+        },
+        "matched_full50": {
+          "lpips": 0.022826040163636208,
+          "psnr": 35.281659585944986
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.026761837303638458,
+          "psnr": 37.22604773080469
+        }
+      },
+      "record_id": "foundir_train_0380387"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64098,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.13853389024734497,
+          "psnr": 31.502388789546142
+        },
+        "matched_full50": {
+          "lpips": 0.12754887342453003,
+          "psnr": 30.51333115478791
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.13208197057247162,
+          "psnr": 33.30101782921347
+        }
+      },
+      "record_id": "foundir_train_0380617"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64099,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.025676172226667404,
+          "psnr": 35.80202116571611
+        },
+        "matched_full50": {
+          "lpips": 0.025768989697098732,
+          "psnr": 35.83957779264958
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.028111256659030914,
+          "psnr": 36.163941883155935
+        }
+      },
+      "record_id": "foundir_train_0380971"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64100,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.019074225798249245,
+          "psnr": 36.9015136606441
+        },
+        "matched_full50": {
+          "lpips": 0.019914554432034492,
+          "psnr": 34.04632853684194
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.02457205392420292,
+          "psnr": 37.62356925556467
+        }
+      },
+      "record_id": "foundir_train_0381453"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64101,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.00404237350448966,
+          "psnr": 45.582671886305704
+        },
+        "matched_full50": {
+          "lpips": 0.0026531594339758158,
+          "psnr": 47.414637826879996
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.004313244018703699,
+          "psnr": 47.498232494647574
+        }
+      },
+      "record_id": "foundir_train_0381747"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64102,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.024040890857577324,
+          "psnr": 37.51226118689064
+        },
+        "matched_full50": {
+          "lpips": 0.02423138916492462,
+          "psnr": 37.88073785392318
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.03143607825040817,
+          "psnr": 38.22418077400616
+        }
+      },
+      "record_id": "foundir_train_0382489"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64103,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.029924672096967697,
+          "psnr": 33.984989561584456
+        },
+        "matched_full50": {
+          "lpips": 0.0313471294939518,
+          "psnr": 32.67919364616564
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.035377275198698044,
+          "psnr": 34.43672459875409
+        }
+      },
+      "record_id": "foundir_train_0383007"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64104,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.04576106369495392,
+          "psnr": 34.1564170440052
+        },
+        "matched_full50": {
+          "lpips": 0.0509788915514946,
+          "psnr": 33.178180352023105
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.058920685201883316,
+          "psnr": 35.17599889937066
+        }
+      },
+      "record_id": "foundir_train_0385016"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64105,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.06376640498638153,
+          "psnr": 28.079915843983763
+        },
+        "matched_full50": {
+          "lpips": 0.06852371990680695,
+          "psnr": 26.625504027629372
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.0822204053401947,
+          "psnr": 28.075502651608968
+        }
+      },
+      "record_id": "foundir_train_0385344"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64106,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.0650302991271019,
+          "psnr": 30.233327211100693
+        },
+        "matched_full50": {
+          "lpips": 0.05710475146770477,
+          "psnr": 28.666608826319056
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.060485392808914185,
+          "psnr": 33.53128861743093
+        }
+      },
+      "record_id": "foundir_train_0385405"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64107,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.2112126648426056,
+          "psnr": 28.76084880682706
+        },
+        "matched_full50": {
+          "lpips": 0.1657160222530365,
+          "psnr": 26.41594036123996
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.21572120487689972,
+          "psnr": 29.2682591039086
+        }
+      },
+      "record_id": "foundir_train_0385726"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64108,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.07285326719284058,
+          "psnr": 28.56256353281356
+        },
+        "matched_full50": {
+          "lpips": 0.08328771591186523,
+          "psnr": 26.940904396834682
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06127050891518593,
+          "psnr": 30.615044612224157
+        }
+      },
+      "record_id": "foundir_train_0385885"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64109,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.0852375328540802,
+          "psnr": 29.81086070581995
+        },
+        "matched_full50": {
+          "lpips": 0.09387261420488358,
+          "psnr": 28.49262620862934
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.10041804611682892,
+          "psnr": 29.92513308369743
+        }
+      },
+      "record_id": "foundir_train_0386166"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64110,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.09307868778705597,
+          "psnr": 27.036940385483494
+        },
+        "matched_full50": {
+          "lpips": 0.09592431038618088,
+          "psnr": 26.523263786916015
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.09428517520427704,
+          "psnr": 27.83199073848916
+        }
+      },
+      "record_id": "foundir_train_0386702"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64111,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.27566736936569214,
+          "psnr": 31.96286701344529
+        },
+        "matched_full50": {
+          "lpips": 0.2004787176847458,
+          "psnr": 29.955272742380465
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.27231764793395996,
+          "psnr": 31.543666018183146
+        }
+      },
+      "record_id": "foundir_train_0386818"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64112,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.07346266508102417,
+          "psnr": 29.075061938565394
+        },
+        "matched_full50": {
+          "lpips": 0.06988096237182617,
+          "psnr": 28.65254274000462
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.08152645826339722,
+          "psnr": 30.47140056643031
+        }
+      },
+      "record_id": "foundir_train_0387024"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64113,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.09656483680009842,
+          "psnr": 34.805047889664735
+        },
+        "matched_full50": {
+          "lpips": 0.09646487236022949,
+          "psnr": 30.701745006393757
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.11903953552246094,
+          "psnr": 35.525246827752646
+        }
+      },
+      "record_id": "foundir_train_0388512"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64114,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.08582448959350586,
+          "psnr": 33.62644156243947
+        },
+        "matched_full50": {
+          "lpips": 0.10473453253507614,
+          "psnr": 31.75242785573175
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.10565095394849777,
+          "psnr": 33.1119924783403
+        }
+      },
+      "record_id": "foundir_train_0389124"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64115,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.10599927604198456,
+          "psnr": 28.239255566330968
+        },
+        "matched_full50": {
+          "lpips": 0.10039856284856796,
+          "psnr": 27.15410189289857
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.10711105167865753,
+          "psnr": 28.728372651687522
+        }
+      },
+      "record_id": "foundir_train_0389242"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64116,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.03815307095646858,
+          "psnr": 29.418088521909574
+        },
+        "matched_full50": {
+          "lpips": 0.04164193570613861,
+          "psnr": 29.01496285990824
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.030137499794363976,
+          "psnr": 31.44813628779964
+        }
+      },
+      "record_id": "foundir_train_0389965"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64117,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.06486619263887405,
+          "psnr": 33.001833892000484
+        },
+        "matched_full50": {
+          "lpips": 0.08230794966220856,
+          "psnr": 31.82540687558253
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06500023603439331,
+          "psnr": 33.94530248408437
+        }
+      },
+      "record_id": "foundir_train_0390966"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64118,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.028604552149772644,
+          "psnr": 33.602273558501956
+        },
+        "matched_full50": {
+          "lpips": 0.03521657735109329,
+          "psnr": 31.237227849714884
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.02648579142987728,
+          "psnr": 35.41464457476808
+        }
+      },
+      "record_id": "foundir_train_0391078"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64119,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.18951033055782318,
+          "psnr": 26.690913192762793
+        },
+        "matched_full50": {
+          "lpips": 0.23724982142448425,
+          "psnr": 23.621610692754118
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.25977563858032227,
+          "psnr": 27.824452819617957
+        }
+      },
+      "record_id": "foundir_train_0391222"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64120,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.03631936013698578,
+          "psnr": 37.05512566623759
+        },
+        "matched_full50": {
+          "lpips": 0.03759162873029709,
+          "psnr": 38.343466744535185
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.04267309606075287,
+          "psnr": 40.62140941670778
+        }
+      },
+      "record_id": "foundir_train_0391288"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64121,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.05888226628303528,
+          "psnr": 31.84316796844343
+        },
+        "matched_full50": {
+          "lpips": 0.06626527011394501,
+          "psnr": 30.995206395867893
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.06441681832075119,
+          "psnr": 33.800326244149254
+        }
+      },
+      "record_id": "foundir_train_0391957"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64122,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.13039596378803253,
+          "psnr": 32.94712098285557
+        },
+        "matched_full50": {
+          "lpips": 0.10622956603765488,
+          "psnr": 29.185285823612116
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.11794355511665344,
+          "psnr": 35.96314799893364
+        }
+      },
+      "record_id": "foundir_train_0393288"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64123,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.03918403387069702,
+          "psnr": 34.44491671297004
+        },
+        "matched_full50": {
+          "lpips": 0.045959822833538055,
+          "psnr": 30.98018321222124
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.040367670357227325,
+          "psnr": 35.57022210604957
+        }
+      },
+      "record_id": "foundir_train_0394376"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64124,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.056579820811748505,
+          "psnr": 31.23185200189347
+        },
+        "matched_full50": {
+          "lpips": 0.06309555470943451,
+          "psnr": 30.082584250159027
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.055100955069065094,
+          "psnr": 32.35126050559418
+        }
+      },
+      "record_id": "foundir_train_0395256"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64125,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.05523744970560074,
+          "psnr": 32.068151803544616
+        },
+        "matched_full50": {
+          "lpips": 0.06282640993595123,
+          "psnr": 30.91236437996549
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.05531008541584015,
+          "psnr": 32.49617990707446
+        }
+      },
+      "record_id": "foundir_train_0395323"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64126,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.05035620927810669,
+          "psnr": 34.37213483744293
+        },
+        "matched_full50": {
+          "lpips": 0.0638563483953476,
+          "psnr": 33.0540298478651
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.04810066521167755,
+          "psnr": 36.055221801426015
+        }
+      },
+      "record_id": "foundir_train_0395823"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64127,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.03566564992070198,
+          "psnr": 32.92622845922479
+        },
+        "matched_full50": {
+          "lpips": 0.04871348291635513,
+          "psnr": 30.797701966728994
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.029906367883086205,
+          "psnr": 34.800712597898375
+        }
+      },
+      "record_id": "foundir_train_0396191"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64128,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.11056846380233765,
+          "psnr": 26.608600063917834
+        },
+        "matched_full50": {
+          "lpips": 0.12920022010803223,
+          "psnr": 24.86622577067284
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.12025132775306702,
+          "psnr": 26.953622388787192
+        }
+      },
+      "record_id": "foundir_train_0396262"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64129,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.4133133590221405,
+          "psnr": 27.01515619685731
+        },
+        "matched_full50": {
+          "lpips": 0.3574462831020355,
+          "psnr": 25.624432410454165
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.2300696074962616,
+          "psnr": 30.866510024247496
+        }
+      },
+      "record_id": "foundir_train_0396524"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64130,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.11834746599197388,
+          "psnr": 29.550615910073397
+        },
+        "matched_full50": {
+          "lpips": 0.13873448967933655,
+          "psnr": 28.058237609258466
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.0835288017988205,
+          "psnr": 31.71885331146351
+        }
+      },
+      "record_id": "foundir_train_0396630"
+    },
+    {
+      "controls": {
+        "full_historical_changed_fraction": 0.0,
+        "full_historical_max_uint8_difference": 0,
+        "full_matches_historical_uint8": true,
+        "prefix_full_trace_changed_fraction": 0.0,
+        "prefix_full_trace_max_uint8_difference": 0,
+        "prefix_matches_full_trace_uint8": true
+      },
+      "index": 64131,
+      "metrics": {
+        "fixed_prefix26": {
+          "lpips": 0.018268562853336334,
+          "psnr": 40.42132823982094
+        },
+        "matched_full50": {
+          "lpips": 0.03806894272565842,
+          "psnr": 36.31417221640604
+        },
+        "original_one_step_teacher": {
+          "lpips": 0.021604686975479126,
+          "psnr": 42.276017600799335
+        }
+      },
+      "record_id": "foundir_train_0396835"
+    }
+  ],
+  "timings_ordered_not_randomized": {
+    "prefix_seconds": 3.611209157204721,
+    "full_seconds": 6.792743522692472
+  },
+  "independent_light_check": "100 metadata identities/index coverage, source rows/checkpoint binding, means and regression counts recomputed; controls inspected; tensor presence only; result/receipt/log SHA and four exit markers checked; no tensor or LPIPS rerun"
+}
