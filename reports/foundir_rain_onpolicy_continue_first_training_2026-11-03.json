@@ -1,0 +1,163 @@
+{
+  "run_id": "continue600_to800_4x2_v1",
+  "source_commit": "6157d9a",
+  "checked_at_utc": "2026-11-03T20:57:59.160214+00:00",
+  "status": "running",
+  "last_complete_global_step": 665,
+  "new_updates": 65,
+  "last_checkpoint_receipt": {
+    "file": "steps/state_000665_1793739469159788503.pt",
+    "parameter_hash": "e84f75430aefa94bc9e2dd3e91def05dad2b3d02aa2ee6839515ae4d9c0d69f3",
+    "receipt_hash": "a1a13c31b8be413a7495ac74eecd7e294674d9b764264405913d1b51ef20559f",
+    "sha256": "fcf576f793edea9229287ea7f122bce762ca698b60d08d675c75e43f4fda62cc",
+    "step": 665
+  },
+  "first5_records": [
+    {
+      "losses": {
+        "gt_lpips": 0.07823363575153053,
+        "gt_rgb_mse": 0.003418288486500387,
+        "total": 0.03809456694580149
+      },
+      "max_rank_grad_norm": 0.11695705354213715,
+      "max_rank_prefix_seconds": 15.78091812133789,
+      "max_rank_step_seconds_excluding_checkpoint": 23.922256469726562,
+      "new_updates": 1,
+      "next_global_slot": 19232,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS",
+      "peak_allocated_gib": 15.12516975402832,
+      "step": 601,
+      "training_calls_per_presentation": 26
+    },
+    {
+      "losses": {
+        "gt_lpips": 0.052317972178570926,
+        "gt_rgb_mse": 0.0020154432559138513,
+        "total": 0.022770331481297035
+      },
+      "max_rank_grad_norm": 0.1667567491531372,
+      "max_rank_prefix_seconds": 13.530587196350098,
+      "max_rank_step_seconds_excluding_checkpoint": 19.085880279541016,
+      "new_updates": 2,
+      "next_global_slot": 19264,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS",
+      "peak_allocated_gib": 15.128844261169434,
+      "step": 602,
+      "training_calls_per_presentation": 26
+    },
+    {
+      "losses": {
+        "gt_lpips": 0.04561866064614151,
+        "gt_rgb_mse": 0.00192831642289093,
+        "total": 0.021564097485679667
+      },
+      "max_rank_grad_norm": 0.11236494034528732,
+      "max_rank_prefix_seconds": 13.531183242797852,
+      "max_rank_step_seconds_excluding_checkpoint": 19.144697189331055,
+      "new_updates": 3,
+      "next_global_slot": 19296,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS",
+      "peak_allocated_gib": 15.128844261169434,
+      "step": 603,
+      "training_calls_per_presentation": 26
+    },
+    {
+      "losses": {
+        "gt_lpips": 0.05565306611242704,
+        "gt_rgb_mse": 0.0023965597874848754,
+        "total": 0.026748251155368052
+      },
+      "max_rank_grad_norm": 0.23382945358753204,
+      "max_rank_prefix_seconds": 13.526055335998535,
+      "max_rank_step_seconds_excluding_checkpoint": 19.202531814575195,
+      "new_updates": 4,
+      "next_global_slot": 19328,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS",
+      "peak_allocated_gib": 15.128844261169434,
+      "step": 604,
+      "training_calls_per_presentation": 26
+    },
+    {
+      "losses": {
+        "gt_lpips": 0.055411728913895786,
+        "gt_rgb_mse": 0.0021772512736788485,
+        "total": 0.02454309923996334
+      },
+      "max_rank_grad_norm": 0.13180848956108093,
+      "max_rank_prefix_seconds": 13.53593635559082,
+      "max_rank_step_seconds_excluding_checkpoint": 19.180973052978516,
+      "new_updates": 5,
+      "next_global_slot": 19360,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS",
+      "peak_allocated_gib": 15.128844261169434,
+      "step": 605,
+      "training_calls_per_presentation": 26
+    }
+  ],
+  "first5_save_seconds": {
+    "601": 1.014,
+    "602": 1.024,
+    "603": 0.936,
+    "604": 0.948,
+    "605": 0.959
+  },
+  "first5_mean_train_plus_save_seconds": 21.08346776123047,
+  "recent20_mean_train_plus_save_seconds": 20.398404383850096,
+  "remaining_train_seconds_estimate": 2753.784591819763,
+  "evaluation_time_additional": true,
+  "peak_allocated_gib": 15.128844261169434,
+  "latest_record": {
+    "losses": {
+      "gt_lpips": 0.05263735956395976,
+      "gt_rgb_mse": 0.0032689076815586304,
+      "total": 0.03532094458932988
+    },
+    "max_rank_grad_norm": 0.18578952550888062,
+    "max_rank_prefix_seconds": 13.539405822753906,
+    "max_rank_step_seconds_excluding_checkpoint": 19.563426971435547,
+    "new_updates": 65,
+    "next_global_slot": 21280,
+    "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS",
+    "peak_allocated_gib": 15.128844261169434,
+    "step": 665,
+    "training_calls_per_presentation": 26
+  },
+  "all8_ranks_resumed_step600_slot19200": true,
+  "logs": [
+    {
+      "node": 0,
+      "path": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node0.log",
+      "snapshot_bytes": 47492,
+      "snapshot_sha256": "89beb9bf921385f9d372adc62ed9763094745e7d87fd34784ab5dc13ee52a55a",
+      "terminal": false
+    },
+    {
+      "node": 1,
+      "path": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node1.log",
+      "snapshot_bytes": 5220,
+      "snapshot_sha256": "ff9c9faf38223cf1c43e1c1b14e01567940e537c7ccc4bf687f2310bfc3fe0bc",
+      "terminal": false
+    },
+    {
+      "node": 2,
+      "path": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node2.log",
+      "snapshot_bytes": 5220,
+      "snapshot_sha256": "03b2ba488a66e62325450582fb31bc42956220cadc505e31a4a792aba862749e",
+      "terminal": false
+    },
+    {
+      "node": 3,
+      "path": "logs/foundir_rain_onpolicy_continue_v1_continue600_to800_4x2_v1_node3.log",
+      "snapshot_bytes": 5220,
+      "snapshot_sha256": "4479f625e4bc826debced67ae7105320b8e250bd92c0ba035969c13f7d2e2be0",
+      "terminal": false
+    }
+  ],
+  "new_development_metrics_available": false,
+  "first_report_delayed": true,
+  "reporting_note": "\u672c\u6b21\u9996\u6b21\u68c0\u67e5\u5df2\u523063\u6b65\u4ee5\u4e0a\uff1b601..605\u6570\u636e\u4f9d\u636e\u539f\u4fdd\u5b58\u65e5\u5fd7\u8865\u53d1\uff0c\u4e0d\u4f2a\u9020\u5f53\u65f6\u53d1\u8868\u3002",
+  "actual_GPU_hours_pending_terminal_receipts": true,
+  "parent_GPU_hours": 9.647777777777778,
+  "full_tensor_audit_performed": false,
+  "automatic_follow_on": false
+}
