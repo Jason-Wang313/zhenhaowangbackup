@@ -15,7 +15,7 @@ PARENT={"path":"checkpoints/foundir_rain_native50_warmstart_v1/native50_stage1_4
  "checkpoint_receipt_sha256":"23e62b72b004e8b76714f2114b565d8c10d641c4e349ee307f6b3b53c90fcfcd",
  "checkpoint_sha256":"8fdd6a0d5c6682ab616ba65580477329f3155aecab9da94ec6f1f943720cedcb",
  "result_sha256":"df75640e33bf7725b8f66186fd682953fbf81502228b4b42a2cfcb88e280a0fa"}
-SOURCES=[CONFIG,REPORT,"smoke/rain_native50_continue_contract_v1.py","smoke/rain_native50_continue_state_v1.py",
+SOURCES=[CONFIG,REPORT,"smoke/rain_hopper_memory_v1.py","smoke/rain_native50_continue_contract_v1.py","smoke/rain_native50_continue_state_v1.py",
  "smoke/train_foundir_rain_native50_continue_v1.py","smoke/rain_native50_continue_cluster_v1.py",
  "smoke/run_foundir_rain_native50_continue_v1_gpu.sh","smoke/start_foundir_rain_native50_continue_v1_tmux.sh"]
 validate_row=formal.validate_row
@@ -35,7 +35,8 @@ def validate_config(cfg):
         "probe_steps":[400,700,1000,1500,2000],"wall_cap_seconds":28800,"minimum_free_disk_gib":1800,
         "final_verification":"light_summary_and_key_checkpoint_only_no_exhaustive_CPU_audit",
         "pause_rule":"two_consecutive_milestones_PSNR_nonincreasing_and_LPIPS_nondecreasing",
-        "continuation_parent":PARENT}
+        "continuation_parent":PARENT,"gpu_family":"H100_or_H200", "minimum_memory_gib":75,
+        "memory_policy":"vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB"}
     if cfg!=expected:raise ValueError("frozen continuation scope changed")
 
 

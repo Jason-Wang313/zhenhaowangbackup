@@ -6,8 +6,8 @@
     "nproc_per_node": 2,
     "world_size": 8
   },
-  "gpu_family": "H200",
-  "minimum_memory_gib": 139,
+  "gpu_family": "H100_or_H200",
+  "minimum_memory_gib": 75,
   "parent_report": "reports/foundir_protocol_routed_flux_v1_terminal_2026-11-02.json",
   "parent_report_sha256": "86cc731510490de3ed272c23e228e0ea030c1cbc4bc7b8d5101ace2dd918e146",
   "training_sources": 5780,
@@ -19,7 +19,7 @@
   "global_batch": 32,
   "microbatch": 1,
   "accumulation": 4,
-  "learning_rate": 0.00001,
+  "learning_rate": 1e-05,
   "weight_decay": 0,
   "max_grad_norm": 1,
   "seed": 2026110204,
@@ -90,5 +90,6 @@
     "checkpoint_receipt_sha256": "23e62b72b004e8b76714f2114b565d8c10d641c4e349ee307f6b3b53c90fcfcd",
     "checkpoint_sha256": "8fdd6a0d5c6682ab616ba65580477329f3155aecab9da94ec6f1f943720cedcb",
     "result_sha256": "df75640e33bf7725b8f66186fd682953fbf81502228b4b42a2cfcb88e280a0fa"
-  }
+  },
+  "memory_policy": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB"
 }

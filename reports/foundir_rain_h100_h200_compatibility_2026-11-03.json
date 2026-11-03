@@ -1,0 +1,13 @@
+{
+  "status": "code_and_CPU_tests_pass_CUDA_pending",
+  "supported_topology": "4x2 H100>=75GiB or H200; homogeneous local pair, mixed nodes allowed",
+  "cpu_tests_passed": 16,
+  "gpu_used": false,
+  "H100_CUDA_qualified": false,
+  "mixed_H100_H200_NCCL_qualified": false,
+  "memory_peak_measured": false,
+  "memory_policy": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB",
+  "scientific_recipe_changed": false,
+  "runtime_bitwise_equivalence_claimed": false,
+  "exhaustive_CPU_audit_performed": false
+}

@@ -21,6 +21,8 @@ from smoke import train_foundir_rain_native50_warmstart_v1 as native_impl
 from smoke import train_foundir_rain_flow_formal_stage1_v1 as formal_impl
 from functools import lru_cache
 from smoke import rain_native50_continue_state_v1 as state_io
+from smoke import rain_hopper_memory_v1 as hopper
+hopper.configure_environment()
 from smoke import replay_foundir_existing_flux_experts_v1 as replay
 from smoke import diagnose_foundir_existing_flux_common_protocol_v1 as metric_impl
 from smoke import existing_flux_replay_cluster_v1 as cluster
@@ -36,12 +38,13 @@ def identity(output,row,index):
 
 
 def runtime(output,receipt,node,idle):
-    actual=metric_impl.hardware(idle)
+    actual=hopper.hardware(idle)
     actual["metrics"]=metric_impl.metric_runtime({"metric":receipt["metric"]})
     marker=output/f"runtime_node{node}.json"
     parent_runtime=c.read(c.path(ROOT,p.PARENT["path"])/f"runtime_node{node}.json")
-    if runtime_compatibility(actual)!=runtime_compatibility(parent_runtime):
+    if hopper.execution_signature(actual)!=hopper.execution_signature(parent_runtime):
         raise ValueError("cached teacher/latent runtime differs from current runtime")
+    actual["memory_policy"]=receipt["config"]["memory_policy"]
     if idle:c.write_new(marker,actual)
     elif c.read(marker)!=actual:raise ValueError("resume runtime changed")
     return actual
@@ -61,9 +64,9 @@ def runtime_compatibility(value):
 
 def check_runtimes(output):
     values=[c.read(output/f"runtime_node{n}.json") for n in range(4)]
-    signatures=[runtime_compatibility(v) for v in values]
+    signatures=[hopper.execution_signature(v) for v in values]
     if any(v!=signatures[0] for v in signatures[1:]):
-        raise ValueError("all four training nodes must share GPU family, NVIDIA driver release and exact runtime/metric versions")
+        raise ValueError("H100/H200 nodes must share NVIDIA driver release and exact runtime/metric versions")
     return metric_impl.check_metric_runtimes(output)
 
 
@@ -168,7 +171,7 @@ def prepare_cache(output,receipt,rank,device,start_step,end_step):
     # Teacher is the ORIGINAL frozen one-step model, not the resumed student.
     prompt=load_prompt(receipt,device)
     model=formal_impl.new_model(receipt,device).requires_grad_(False)
-    ae=load_ae("flux.2-klein-base-4b",device=device).eval().requires_grad_(False)
+    ae=hopper.configure_vae(load_ae("flux.2-klein-base-4b",device=device).eval().requires_grad_(False))
     for index in pending:
         row=receipt["rows"][index];lq,gt=load_pair(row,device)
         with torch.inference_mode():
@@ -312,7 +315,7 @@ def train(output,receipt,rank,local,end_step):
     device=torch.device("cuda",local);cfg=receipt["config"];receipt_hash=c.sha(output/"receipt.json")
     random.seed(cfg["seed"]+rank);torch.manual_seed(cfg["seed"]+rank);torch.cuda.manual_seed(cfg["seed"]+rank)
     model=new_model(receipt,device);enable_native_checkpointing(model)
-    ae=load_ae("flux.2-klein-base-4b",device=device).eval().requires_grad_(False)
+    ae=hopper.configure_vae(load_ae("flux.2-klein-base-4b",device=device).eval().requires_grad_(False))
     prompt=load_prompt(receipt,device)
     parameters=[p for p in model.parameters() if p.requires_grad]
     wrapped=DDP(model,device_ids=[local],broadcast_buffers=False,gradient_as_bucket_view=True)
@@ -357,7 +360,7 @@ def train(output,receipt,rank,local,end_step):
             generator=torch.Generator(device=device).manual_seed(cfg["seed"]+1000003*(position+1))
             noise=torch.randn(batch["clean_latent"].shape,device=device,generator=generator,dtype=torch.float32)
             timestep=torch.rand((1,),device=device,generator=generator)*.9998+.0001
-            with wrapped.no_sync() if micro<3 else nullcontext():
+            with hopper.offload_activations(), (wrapped.no_sync() if micro<3 else nullcontext()):
                 loss,terms=training_objective(wrapped,ae,batch,prompt["context"],prompt["context_ids"],
                     batched_prc_img,metric,cfg["loss_weights"],noise=noise,timesteps=timestep)
                 if not torch.isfinite(loss):raise ValueError("nonfinite training loss")
@@ -467,7 +470,7 @@ def main():
     if str(ROOT.resolve())!=cfg["active_root"] or args.asset_root or args.report or args.require_parent:raise ValueError("GPU only in migrated root")
     output=p.run_path(ROOT,args.run_id)
     if args.phase in ("prepare","summarize") and args.node_rank!=0:raise ValueError("node0 only")
-    if args.phase=="hardware":print(json.dumps(metric_impl.hardware(True)),flush=True);return
+    if args.phase=="hardware":print(json.dumps(hopper.hardware(True)),flush=True);return
     if args.phase=="prepare":
         import shutil
         if shutil.disk_usage(ROOT).free<p.required_free_gib(output)*1024**3:raise ValueError("insufficient space for remaining cache/checkpoints; do not delete old assets")

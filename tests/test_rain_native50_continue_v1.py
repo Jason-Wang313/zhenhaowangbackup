@@ -117,6 +117,13 @@ class ContinuationTests(unittest.TestCase):
         for n in ast.walk(a):
             if isinstance(n,ast.Constant) and n.value==6400:n.value=64000
         self.assertEqual(ast.dump(a),ast.dump(b))
+        # Permit ONLY the explicit saved-activation storage context. Every
+        # sampling, loss, normalization and optimizer AST node must still match.
+        for node in ast.walk(after):
+            if isinstance(node,ast.With) and len(node.items)==2:
+                expr=node.items[0].context_expr
+                if ast.dump(expr)==ast.dump(ast.parse('hopper.offload_activations()',mode='eval').body):
+                    node.items=node.items[1:]
         loops=[]
         for tree in (before,after):
             loop=next(n for n in fn(tree,'train').body if isinstance(n,ast.For))
