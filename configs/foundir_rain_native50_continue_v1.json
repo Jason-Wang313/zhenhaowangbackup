@@ -1,0 +1,94 @@
+{
+  "active_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "phase": "rain_native50_exact_continuation_200_to_2000",
+  "topology": {
+    "nnodes": 4,
+    "nproc_per_node": 2,
+    "world_size": 8
+  },
+  "gpu_family": "H200",
+  "minimum_memory_gib": 139,
+  "parent_report": "reports/foundir_protocol_routed_flux_v1_terminal_2026-11-02.json",
+  "parent_report_sha256": "86cc731510490de3ed272c23e228e0ea030c1cbc4bc7b8d5101ace2dd918e146",
+  "training_sources": 5780,
+  "probe_sources": 132,
+  "selection_seed": 2026110203,
+  "crop_size": 512,
+  "augmentation": true,
+  "steps": 2000,
+  "global_batch": 32,
+  "microbatch": 1,
+  "accumulation": 4,
+  "learning_rate": 0.00001,
+  "weight_decay": 0,
+  "max_grad_norm": 1,
+  "seed": 2026110204,
+  "t_sampling": "uniform_0.0001_to_0.9999",
+  "loss_weights": {
+    "flow_mse": 1,
+    "gt_latent_l1": 0.25,
+    "gt_rgb_mse": 10,
+    "gt_lpips": 0.05,
+    "teacher_rgb_l1": 0.1
+  },
+  "initialization": "restore_native50_step200_LoRA_Adam_all_rank_RNG_absolute_position",
+  "teacher": "original_frozen_one_step_Rain_FLUX_cached_on_exact_training_crop",
+  "trainable": "only_new_Rain_LoRA_50_sites_FP32",
+  "flow_contract": "native_reference_noise_to_clean_velocity_v1",
+  "inference_steps": 50,
+  "reference_time": 10,
+  "guidance": 1,
+  "output_alpha": 1,
+  "output_quantization": "one_uint8_no_LQ_blend",
+  "probe_steps": [
+    400,
+    700,
+    1000,
+    1500,
+    2000
+  ],
+  "probe_seed": 2026110205,
+  "checkpoint_every_step": true,
+  "qualification_may_seed_formal": false,
+  "automatic_follow_on": false,
+  "training_fit_only": false,
+  "development_pixels_allowed": true,
+  "official_gate": {
+    "protocol": "frozen_Rain_100_source_disjoint_development",
+    "psnr_minimum": 34.2,
+    "lpips_maximum": 0.08,
+    "evaluated_this_run": true
+  },
+  "wall_cap_seconds": 28800,
+  "minimum_free_disk_gib": 1800,
+  "qualification_report": "reports/foundir_rain_flow_adaptation_driverfix_terminal_2026-11-02.json",
+  "qualification_report_sha256": "e99cdec5329eb6de6c74d230eb301f1eb9148e322a33bd85add53682b77624bb",
+  "training_records": 38334,
+  "training_probe_sources": 32,
+  "development_sources": 100,
+  "sampling": "uniform_source_then_record_absolute_position_random512_d4",
+  "formal_continuation_requires_manual_authorization": true,
+  "native_checkpoint": {
+    "path": "checkpoints/foundir_rain_flux2_source_diverse_pilot_v1/step_002000.safetensors",
+    "sha256": "2c4537258783f51ad15163b1a3377ce811d1418d51b4da68b5d75ef502bd45af"
+  },
+  "native_config": "configs/foundir_rain_flux2_source_diverse_pilot_v1.json",
+  "native_manifest": {
+    "path": "manifests/foundir_rain_flux2_source_diverse_pilot_v1.csv",
+    "sha256": "ace5c8cb6da1a1628fe3ab3f7eec9e0a50feb1a12bb2b26732f06726f552636b"
+  },
+  "cache_parent": {
+    "path": "checkpoints/foundir_rain_flow_formal_stage1_v1/formal_stage1_4x2_v1",
+    "receipt_sha256": "8b2209f880307af41eec03c571a8c98cf0661f7714ac8d4f63d63cd96dfb75ae"
+  },
+  "final_verification": "light_summary_and_key_checkpoint_only_no_exhaustive_CPU_audit",
+  "start_step": 200,
+  "pause_rule": "two_consecutive_milestones_PSNR_nonincreasing_and_LPIPS_nondecreasing",
+  "continuation_parent": {
+    "path": "checkpoints/foundir_rain_native50_warmstart_v1/native50_stage1_4x2_v1",
+    "receipt_sha256": "ac284c0ed2ffe1d7291c7c4462f31632187036f1885d29d221f41c9333be61c2",
+    "checkpoint_receipt_sha256": "23e62b72b004e8b76714f2114b565d8c10d641c4e349ee307f6b3b53c90fcfcd",
+    "checkpoint_sha256": "8fdd6a0d5c6682ab616ba65580477329f3155aecab9da94ec6f1f943720cedcb",
+    "result_sha256": "df75640e33bf7725b8f66186fd682953fbf81502228b4b42a2cfcb88e280a0fa"
+  }
+}

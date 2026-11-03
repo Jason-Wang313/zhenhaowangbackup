@@ -1,5 +1,57 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前授权：原生50步Rain从step200真续训，最多到2000 — 2026-11-03
+
+用户已明确将上限从1000改为2000并要求continue；本节覆盖下方旧200步“待启动”状态。
+不重新做GPU资格、不重训step0、不动另一代理energy或原四个专家，不自动启动MoE。
+父native50_stage1_4x2_v1四节点status0、200步/201快照/528评价和CPU核验已完成；
+开发31.084100/.083605，尚未通过34.2/.08。本路线累计11.972222222 GPU-hours保留。
+
+新任务是恢复该step200的LoRA、Adam完整状态、8rank RNG、历史和next_global_slot=6400。
+旧文件不改；新独立目录从200号快照开始，用新receipt明确记录父身份，不冒称fresh训练。
+父step200状态SHA 8fdd6a0d5c6682ab616ba65580477329f3155aecab9da94ec6f1f943720cedcb；
+父receipt SHA ac284c0ed2ffe1d7291c7c4462f31632187036f1885d29d221f41c9333be61c2。
+新的第一步为201，采样位置6400..6431；不是将原6400曝光重复九遍。
+总上限2000，即最多新增1800步/57600曝光、累计64000；随机来源采样，不称完整1.67轮。
+
+数据池38334记录/5780来源、source-uniform采样、512/D4、global32、lr1e-5、五项loss、
+BF16 FLUX＋FP32 LoRA/Adam、50步/CFG1/ref10/alpha1/单uint8和逐图seed全保持不变。
+仍仅FLUX和原生VAE恢复，冻结一步Rain仅弱监督；不加CNN/Restormer或新机制。
+400/700/1000/1500/2000分别评价同32训练诊断＋100开发图，两组不混均值。
+旧132图缓存复用，step200指标沿已完成父报告，不再重新跑step0/200或旧GPU资格。
+训练图/开发图严格隔离，official/sealed等保护像素不读，开发不是盲测。
+同checkpoint必须PSNR>=34.2且LPIPS<=.08；不能拿不同步最优值拼接。
+连续两次里程碑PSNR不升且LPIPS不降则保存并暂停人工审查；单次波动不停止。
+非有限值/运行错误保留最后完整步并失败退出，不自动改配方/增加步数/恢复质量暂停。
+
+按200→400→700→1000→1500→2000分段，只先生成当前段的新训练缓存；
+原一步FLUX生成后释放，再载入学生完整保存状态，避免两个恢复模型同时占显存。
+分段准备缓存对随机数的影响在恢复rank RNG时消除；CPU精确恢复测试不等于CUDA逐比特保证。
+每完整step存LoRA/Adam/8rank RNG/采样位置，最多200..2000共1801份新快照，旧快照保留。
+全部新增缓存逐张落盘可恢复；不重命名旧缓存充新。中断后先补完当前评价再前进。
+
+仍4节点×每节点2H200、总8卡，每卡>=139GiB；不是单节点8卡，H10080GB未资格。
+入口smoke/start_foundir_rain_native50_continue_v1_tmux.sh，四参数仍node_rank、当前node0地址、
+run_id=continue2000_4x2_v1、首次共用launch_id=launch_continue2000_v1，端口29690。
+同run_id＋fresh launch可恢复工程中断；不能用换ID丢进度，也不能绕过质量暂停。
+本轮全程粗估3–6普通小时/24–48GPU-hours，未实测；每节点cap8小时，
+合计64GPU-hours加清理，不自动扩预算。第一个400步检查粗估30–70分钟，须按实测修正。
+新缓存＋逐步快照估计1.3–1.6TiB，首次要求1800GiB可用；恢复按已提交文件估算余量，
+只是保守工程估算，不保证其它任务写盘时仍充足。空间不足先报告，不删除历史资产。
+
+结束默认只核对退出状态、已提交指标、最新完整恢复状态/最终导出等关键文件；
+不扫描全部历史tensor，不独立重跑LPIPS，不再追加全量CPU核验。
+RAIN_NATIVE50_CONTINUE_LIGHT_CHECK_PASS和四节点status0不是质量达标；
+light_result.json可能是paused_for_quality_review或完成2000，必须据实际last_step报告。
+目的地代理在各里程碑及终态回传简报到GitHub，保留耗时/真实GPU-hours/核验范围；
+不上传权重、数据、tensor、实时日志，不自动续训或扩大任务。
+
+已通过11项CPU回归及两进程Gloo小模型step200迁移、201/202精确恢复；不是CUDA验收。
+主代理负责实现/CPU测试/push，目的地安全同步并执行preflight --require-parent，
+核对所需父step200状态和资产后给用户当前IP的四节点命令。不重做GPU资格。
+本地主代理看不到新GPU挂载，不能声称新GPU任务已启动；详见
+reports/foundir_rain_native50_continue_readiness_2026-11-03.md。
+
 ## 用户沟通与轻量结果检查要求 — 2026-11-03
 
 用户明确要求：始终用中文回复。今后的GPU结束检查默认跳过耗时的全量CPU核验，
