@@ -1,5 +1,40 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前授权：Rain实际生成状态训练，step400起新增200步 — 2026-11-03
+
+用户已授权执行新方案；本节覆盖下方“固定中途评价待执行/不训练”的旧状态。
+100开发图固定prefix26已正常完成：33.129105/.07536413，相比同权重full50提高
+1.448504dB；LPIPS过线，PSNR仍差1.070895dB。不是科学门槛已通过。
+
+当前任务独立恢复step400 LoRA、Adam、8rank RNG、采样位置12800，新增200步到
+全局600。每张图用当前FLUX跑原50步时间表前25次，无梯度；第26次预测x_t−t*v
+与原生VAE解码参与反传。当前模型前缀每次重生成，不复用旧状态；截断前缀导数，
+不宣称全26次端到端训练。只用GT RGB MSE×10和LPIPS×.05；移除旧flow/latent/
+teacher项，lr1e-5/global32不变。是恢复旧状态后改变目标，不冒充原配方连续训练。
+不加CNN/Restormer/energy，不新生成教师，不动其它专家或另一代理任务，不自动MoE。
+
+复用旧槽位12800..19199的6400份缓存；仅LQ/GT进入新流程，不重新扫全池生成缓存。
+新0/50/100/200步检查本轮实际前32训练呈现，明确training_fit_only；训练前32图
+新路径与既有prefix26须逐像素相同。仅最终200步评价原100开发图，和step400
+固定prefix26匹配，报告均值及逐图退步；不用GT选图，不扫读出位置。
+同一输出PSNR>=34.2且LPIPS<=.08才过；开发已使用，不是盲测。
+官方/封存/最终测试像素禁止。新检查点目录独立，历史绑定文件不修改。
+
+仍4节点×每节点2H100/H200=8卡，单节点同型号、>=75GiB，跨节点混用仅代码支持。
+完整CFG双分支末次反传的CUDA显存/速度待测，不把CPU测试当GPU通过。
+原Hopper激活CPU转存/VAE分块/原生checkpoint保留。粗估45–120分钟/6–16GPU-hours，
+每节点cap3小时，合计24GPU-hours加清理；按首5步（含保存开销）更新，不自动扩预算。
+每步保存完整状态，新400..600共201份，首次需100GiB空闲，不删旧资产。
+同run+fresh共同launch恢复；换world_size不支持严格恢复。终态只轻量检查关键状态、
+已提交指标和退出码，不全扫历史tensor，不重跑LPIPS。
+
+新入口smoke/start_foundir_rain_onpolicy_midpoint_v1_tmux.sh；
+run_id=step400_onpolicy200_4x2_v1，首次launch_id=launch_onpolicy_midpoint_v1，端口29696。
+主代理实现/CPU测试/push；目的地安全同步、preflight后给当前IP四节点启动命令。
+主代理看不到新GPU挂载，不声称已启动。首5步/50/100/终态推小报告，不推权重/实时日志。
+终态需RAIN_ONPOLICY_RESULT_VERIFIED及四节点status0；result.json与verified引用一致。
+详见reports/foundir_rain_onpolicy_midpoint_readiness_2026-11-03.md。
+
 ## 当前授权：固定中途终点预测，原100开发图确认 — 2026-11-03
 
 用户授权执行：固定step400、call index25（第26次调用），用50步原时间表的前缀，

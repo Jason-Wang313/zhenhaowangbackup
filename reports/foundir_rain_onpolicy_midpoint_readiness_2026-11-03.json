@@ -1,0 +1,50 @@
+{
+  "status": "cpu_ready_destination_preflight_and_CUDA_pending",
+  "run_id": "step400_onpolicy200_4x2_v1",
+  "first_launch_id": "launch_onpolicy_midpoint_v1",
+  "master_port": 29696,
+  "start_global_step": 400,
+  "end_global_step": 600,
+  "new_updates": 200,
+  "global_batch": 32,
+  "new_presentations": 6400,
+  "nodes": 4,
+  "local_gpus": 2,
+  "world_size": 8,
+  "gpu_family": "H100_or_H200",
+  "unit_tests_passed": 11,
+  "two_process_Gloo_semigradient_DDP_exact_resume_pass": true,
+  "real_FLUX_CUDA_tested": false,
+  "destination_assets_preflight_performed": false,
+  "gpu_started": false,
+  "python_AST_pass": true,
+  "bash_syntax_pass": true,
+  "published_parent_and_baseline_identity_check_pass": true,
+  "focused_secret_scan_pass": true,
+  "historical_bound_code_or_results_changed": false,
+  "source_sha256": {
+    "configs/foundir_rain_onpolicy_midpoint_v1.json": "f22e55de37573ad75bdfeb6e30d134e16fc32ac309ccffa4b1b949e8ae41c49f",
+    "lowlight_restoration/rain_onpolicy_midpoint.py": "f63c20135336767a77d4299311b272e376e1e08831eaeea45d3064407c92b49d",
+    "smoke/rain_onpolicy_midpoint_state_v1.py": "b08df547ef060c29f98e855877ba3da66cdd5fdef012bf662dc5c2160446326c",
+    "smoke/train_foundir_rain_onpolicy_midpoint_v1.py": "934074ebdda0b520f4724a7f0be9a41a548ab4ed3630a2f293b02df528f81e59",
+    "smoke/run_foundir_rain_onpolicy_midpoint_v1_gpu.sh": "2fa472ee0e46e2210959855bd35280504ee54ba3e72b234dc3fdb2ec66ba4aa8",
+    "smoke/start_foundir_rain_onpolicy_midpoint_v1_tmux.sh": "24042b8dcc69c967c50269608007940a0230358289564cfa2fac7a6caea87995",
+    "smoke/test_foundir_rain_onpolicy_midpoint_ddp_v1.py": "d52c08d51d25ab6b675b3d0f55969371841c824a5fda72b96dd7d17d2b578036",
+    "tests/test_rain_onpolicy_midpoint_v1.py": "3855d1b8b842a6c3eade7483a21d8ac3690bc1c2333d43951fae391565cc4903"
+  },
+  "wall_estimate_minutes_unmeasured": [
+    45,
+    120
+  ],
+  "wall_cap_seconds_per_node": 10800,
+  "used_GPU_hours_cap_plus_cleanup": 24,
+  "first_launch_minimum_free_disk_gib": 100,
+  "same_environment_step400_baseline_at_final_evaluation": true,
+  "historical_baseline_preserved": true,
+  "full_tensor_audit_required": false,
+  "automatic_follow_on": false,
+  "goal": {
+    "psnr_minimum": 34.2,
+    "lpips_maximum": 0.08
+  }
+}
