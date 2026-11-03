@@ -1,5 +1,24 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 当前授权：Rain训练式预测与真实50步诊断 — 2026-11-03
+
+用户授权诊断，不是继续扩大训练。原200→2000训练按原授权收尾，不停进程、不修改绑定代码；
+完成且四节点卡空闲后，手动运行独立诊断。固定当前Hopper运行的step400与1500，
+原32训练诊断图，比较GT构造路径一次预测、真实生成状态一次预测及最终50步。
+GT路径含答案，不是部署的一步模型；这些训练来源裁图也不能直接叫过拟合训练图。
+报告实际source/record/crop曝光和GT-VAE误差、CFG/精度控制，不凭单项差异断言根因。
+不读100开发图/官方/封存像素，不训练、不换模型、不自动MoE/energy或进一步长训。
+原始32图指标父报告已确认H100训练到1500；下方“所有H100尚未实测”是旧状态，
+但本新诊断自身仍待CUDA执行。4节点×2H100/H200总8卡，保留软件/评分一致约束。
+入口smoke/start_foundir_rain_prediction_gap_v1_tmux.sh；run_id=trainprobe32_steps400_1500_v1，
+首次launch_id=launch_prediction_gap_v1，当前node0 IP由目的地确认，端口29692。
+每图保存；重启同run/fresh共同launch；与训练共用节点锁，不杀旧任务。粗估10–30分钟，
+硬cap1小时/8使用GPU-hours加清理，>=10GiB空闲；不自动扩预算。
+主代理只实现/CPU测试/push，目的地preflight后给用户四节点命令，结束轻量报告推GitHub。
+静态发现旧续训末尾写light_result.json但verified查result.json；若仅此收尾错误，
+分别报告已完成步骤/评价与退出失败，不重训、不补造status0、不热改绑定文件。
+详见reports/foundir_rain_prediction_gap_readiness_2026-11-03.md。
+
 ## H100/H200显存适配与跨节点混用 — 2026-11-03
 
 用户要求当前Rain续训支持H100。当前续训入口已加入H100 80GB/H200代码路径：

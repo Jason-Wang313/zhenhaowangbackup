@@ -1,0 +1,76 @@
+{
+  "status": "CPU_ready_destination_preflight_and_GPU_run_pending",
+  "date": "2026-11-03",
+  "run_id": "trainprobe32_steps400_1500_v1",
+  "launch_id": "launch_prediction_gap_v1",
+  "parent_run": "continue2000_hopper_4x2_v1",
+  "parent_report_commit": "0b3b273",
+  "checkpoint_steps": [
+    400,
+    1500
+  ],
+  "training_probe_count": 32,
+  "trace_call_indices": [
+    0,
+    10,
+    25,
+    40,
+    49
+  ],
+  "training_updates": 0,
+  "development_pixels_accessed": false,
+  "official_or_sealed_pixels_accessed": false,
+  "GT_path_is_deployable": false,
+  "original_bound_training_code_modified": false,
+  "sources": {
+    "configs/foundir_rain_prediction_gap_v1.json": "3a7c66f96317e6529a316b220d9c1bdc37aaac968efefb846c37d917ab63d615",
+    "smoke/diagnose_foundir_rain_prediction_gap_v1.py": "7675a3059326a306da28b14c2067e9a5e31bca5e314b556570a6b98c0a044824",
+    "smoke/rain_prediction_gap_math_v1.py": "a744bed7daa8440da496720abf0c5f11a97087d437c54a54ed990d155876b14c",
+    "smoke/run_foundir_rain_prediction_gap_v1_gpu.sh": "0c4af32971fb7ca70190598bd65944cba5bc22d5c9ba8e2c2f42377a9c53a2c9",
+    "smoke/start_foundir_rain_prediction_gap_v1_tmux.sh": "82c65e6efb7a2e3afa9e712b1cfb3e66da74fb6f61f44e6cf2ecd369c81eb0c4",
+    "tests/test_rain_prediction_gap_v1.py": "941c7341c029274a74da466f7410311647668ae5cc0e8d4f2d90ad06923ab23c"
+  },
+  "tests": {
+    "unit_tests_passed": 9,
+    "unit_test_seconds_excluding_imports": 1.687,
+    "official_sampler_observer_bitwise_equal_on_CPU_toy_model": true,
+    "python_AST_pass": true,
+    "shell_syntax_pass": true,
+    "secret_and_asset_scan_pass": true,
+    "CUDA_test_performed": false,
+    "destination_asset_preflight_performed": false
+  },
+  "scope": "Frozen same-checkpoint, same-image GT-assisted endpoint / own-state endpoint / real50-step comparison; GT path is not deployable one-step Rain or proof of training convergence.",
+  "controls": [
+    "same deployment noise",
+    "actual model timestep",
+    "single conditional versus CFG arithmetic",
+    "VAE GT roundtrip not an upper bound",
+    "original saved uint8 replay comparison",
+    "source/record/exact-crop exposure metadata"
+  ],
+  "resources": {
+    "nodes": 4,
+    "gpus_per_node": 2,
+    "supported_models": [
+      "H100 80GB",
+      "H200"
+    ],
+    "minimum_visible_gib_per_gpu": 75,
+    "estimated_minutes": [
+      10,
+      30
+    ],
+    "estimate_measured": false,
+    "wall_cap_seconds_per_node": 3600,
+    "GPU_hour_cap_per_attempt_excluding_cleanup": 8,
+    "minimum_free_disk_gib": 10
+  },
+  "resumable_per_image": true,
+  "full_historical_tensor_audit": false,
+  "automatic_follow_on": false,
+  "gpu_started": false,
+  "new_quality_results": false,
+  "known_parent_terminal_issue": "Continuation writes light_result.json but inherited verified marker reads result.json. Report completed training/evaluation separately from terminal marker failure; do not retrain or hot-edit bound code. This diagnostic writes result.json consistently.",
+  "next_action": "Destination safely syncs GitHub, preflights the two bound checkpoints and training probe caches. After existing training exits and GPUs are idle, supply four-node commands using current node0 IP. Return a compact honest report."
+}
