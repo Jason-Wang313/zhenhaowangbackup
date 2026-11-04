@@ -1,5 +1,46 @@
 # Legacy instructions — current authority moved to AGENTS.md
 
+## 当前授权：冻结已有五专家，训练图像路由＋VLM分数修正 — 2026-11-04
+
+本节覆盖下方旧“先五库接入/未训练”状态。用户已授权下一阶段。五库接入已结束：
+116/116单选与同环境原入口逐像素相同，Rain原100开发图34.30118094/.06186744；
+固定90%混合损害Rain/Haze等，不直接部署，也不是可学习router已失败。
+
+当前只运行独立路由工程资格：五份已有FLUX LoRA、底座、原生VAE全部冻结；
+四类BF16和Rain step800 FP32保留，无CNN、Restormer、RGB refiner、vanilla替代或energy。
+图像分数来自冻结FLUX参考token的mean/std6144维；VLM修正来自已适配Qwen2.5-VL
+visual merger token均值3584维。各过小MLP，VLM末层零初始化，分数相加再softmax。
+先400步图像分类初始化（VLM关、lr.001），再8步完整26/50次生成反传（VLM开、lr.0001）；
+global32、同Adam，loss=10 RGB MSE＋LPIPS(Blur .2/其它 .05)＋.1 CE。
+类别仅训练监督，不作为实际router输入或GT选路；不强制给其它专家保留最低比例。
+
+沿用已接入兼容规则：主专家argmax决定prompt/alpha/量化/读出，Rain原50步时间表第26次端点，
+其它50次；第26次之后Rain份额归零、其它归一化。内部混LoRA增量，不是平均五张成图。
+完整生成路径显式call-index/gate重算，禁止复用推理计数器；block重算必须重新绑定gate。
+离散argmax不反传；uint8前向严格原口径、反向STE近似，不宣称是真实取整导数。
+在质量训练前8张训练图覆盖五类，检查新grad路径与原推理像素一致、反传有限；失败停止。
+
+固定每类128训练来源各1条，共640条/634唯一来源；每类8开发来源，共40条/37唯一来源，
+训练与开发按来源/GT分离。Qwen/图像特征只读同一LQ裁图。400/408评价固定40图，
+报告已知类别单选对照与实际router的每类指标、选对情况和退步。单选对照不是部署方法；
+新Rain8图不冒充原Rain100门槛，8步不宣称科学成功或VLM因果贡献。
+本轮无官方像素；官方SoW600重复评测/调参授权仍有效，不另加“整套冻结才准测”的限制。
+官方GT不得入训练/loss/梯度/逐图选路；其它封存集不开放，512开发不能冒充官方原分辨率pyiqa。
+
+4节点×每节点2H100/H200=8GPU，单节点同型号>=75GiB；完整反传CUDA显存/速度待验收。
+每完整步存router/Adam/8rank RNG/slot/hash，0..408共409份，约12GiB，首启需20GiB空闲。
+同run+新共同launch恢复，不支持换world_size；不得用资格权重seed formal，不自动加预算/正式训练。
+每节点cap3h、总24使用GPU-hours加清理；不是实测ETA，不能沿用上轮纯推理6分38秒估算。
+当前无本轮GPU结果；主代理实现测试push，目的地CPU代理同步预检后给当前IP四节点命令。
+唯一GPU根仍为/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang；
+旧HDD3只读资产来源，不能在那里执行GPU。保持所有历史结果及无关脏文件。
+
+新入口smoke/start_foundir_frozen_expert_router_v1_tmux.sh：
+node_rank/current_node0_address/run_id/fresh_shared_launch_id四参数，
+run=qualification_4x2_v1，默认port29703。先目的地CPU preflight，不在旧目录试启动。
+终态FROZEN_ROUTER_RESULT_VERIFIED和四节点status0。轻量核对，不全扫409份历史tensor。
+详见reports/foundir_frozen_expert_router_readiness_2026-11-04.{md,json}。
+
 ## 当前授权：五类已有 FLUX 专家接入；官方SoW重复评测权限澄清 — 2026-11-03
 
 Rain step800已经正常完成：原100开发图34.30118094/.06186744，同一checkpoint过双门槛；

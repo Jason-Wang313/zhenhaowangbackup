@@ -1,0 +1,90 @@
+{
+  "date": "2026-11-04",
+  "status": "implemented_cpu_tested_destination_preflight_and_GPU_pending",
+  "active_root": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang",
+  "base_commit": "5dbffe13668adc2a43bee9a8f9c8da34d8e3b992",
+  "run_id": "qualification_4x2_v1",
+  "topology": {
+    "nodes": 4,
+    "gpus_per_node": 2,
+    "world_size": 8,
+    "gpu_families": [
+      "H100",
+      "H200"
+    ],
+    "minimum_memory_gib": 75
+  },
+  "steps": {
+    "image_only_cross_entropy": 400,
+    "full_trajectory_quality": 8,
+    "total": 408,
+    "global_batch": 32
+  },
+  "training": {
+    "trainable": "two FP32 router MLPs only",
+    "frozen": "FLUX base/native VAE/five existing LoRAs/Qwen/LPIPS",
+    "reuses_all_five_existing_experts": true,
+    "train_new_CNN": false,
+    "train_or_use_Restormer": false,
+    "image_features": "frozen FLUX img_in reference-token mean+std, 6144",
+    "vlm_features": "adapted Qwen2.5-VL visual-merger token mean, 3584",
+    "vlm_final_projection_zero_initialized": true,
+    "full_26_or_50_call_derivative": true,
+    "argmax_has_gradient": false,
+    "quantization_backward": "identity STE surrogate; native uint8 forward",
+    "image_mse_weight": 10,
+    "lpips_weight": {
+      "blur": 0.2,
+      "others": 0.05
+    },
+    "class_ce_weight": 0.1,
+    "qualification_can_seed_formal": false
+  },
+  "data": {
+    "manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+    "train_records": 640,
+    "train_unique_sources": 634,
+    "development_records": 40,
+    "development_unique_sources": 37,
+    "source_and_GT_separated": true,
+    "metadata_selection_checked": true,
+    "pixels_read_locally": false,
+    "official_pixels_in_this_run": false
+  },
+  "tests": {
+    "unit_and_prior_integration_tests_passed": 41,
+    "new_unit_tests": 15,
+    "tiny_upstream_flux_native_sampler_and_backward_pass": true,
+    "cpu_ddp_ranks": 2,
+    "cpu_ddp_global_batch": 32,
+    "cpu_ddp_serial_numerical_agreement": true,
+    "cpu_ddp_rebuilt_model_adam_reducer_exact_next_update": true,
+    "eight_rng_schema_uses_repeated_two_rank_fixture": true,
+    "GPU_qualification": false,
+    "python_compile": true,
+    "shell_syntax": true
+  },
+  "budget": {
+    "wall_cap_seconds_per_node": 10800,
+    "used_gpu_hours_cap": 24,
+    "minimum_free_disk_gib": 20,
+    "checkpoint_count_including_zero": 409,
+    "checkpoint_disk_gib_approx": 12,
+    "ETA": "unmeasured; update from feature stage and first quality optimizer step",
+    "automatic_budget_increase": false
+  },
+  "official_sow600_repeated_evaluation_authorization_preserved": true,
+  "automatic_formal": false,
+  "gpu_started": false,
+  "source_sha256": {
+    "configs/foundir_frozen_expert_router_qualification_v1.json": "39bb1bd4d208d3fed539210e46d71eaf966bd0cd92fcb7591ccb0d69a622bdbf",
+    "lowlight_restoration/frozen_expert_router.py": "2f3d3b74e4b880458cc867fdbcc8f69ddaf9e993e7c0dff9c873a4a752e4be41",
+    "smoke/frozen_expert_router_contract_v1.py": "7a372cfd73aac24b2d7b6f5e1b4c874d7445ef3106026ad35ce1f6d040490c00",
+    "smoke/frozen_expert_router_state_v1.py": "3a51a21b9af0c5fb05b7ce145bfa7e1e231d7b468caf86c7f79940c2631e67e0",
+    "smoke/train_foundir_frozen_expert_router_v1.py": "1f0a00036d383c7c69a540688232cc6a660d8819b9a5370966198945b6d26dfd",
+    "smoke/run_foundir_frozen_expert_router_v1_gpu.sh": "06fa284b16144d9fddd20661e24bf694bd6f0905a7bfc54a00f17dd2277b3eaf",
+    "smoke/start_foundir_frozen_expert_router_v1_tmux.sh": "e7a5a5365656df5afc504556be28db00ae03eb2763f90aa565702331254c4e8d",
+    "smoke/smoke_frozen_expert_router_cpu_ddp_v1.py": "e176953bda794f57867c5c17dd8d38991023a3c888a8617e85a3ab2a568f0336",
+    "tests/test_frozen_expert_router_v1.py": "5f44762758267aeb5c0dc500306a8fe05426b16acabdbe8dda65ed66168807cc"
+  }
+}
