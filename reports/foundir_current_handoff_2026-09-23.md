@@ -1,6 +1,48 @@
 # FoundIR current handoff — 2026-09-23
 
-## 当前授权：一轮冻结图像路由修复＋独立来源验证 — 2026-11-04
+## 当前授权：只修复右图VLM分数修正，CPU训练V3 — 2026-11-04
+
+用户明确坚持PNG右图“图像路由＋VLM token修正分数”。image-only只是冻结分支/诊断对照，
+不是最终替代方案，也不应成为必须先另训一个image-only才能继续的前置条件。
+本节覆盖下方V2待运行及旧energy/EBT/MoE优先级。用户已授权execute本轮V3修复。
+
+V2 expanded_frozen_image_v2已结束，3d6d9fd：独立400图350→374正确，纠正36/误改12，
+Haze76→69、Blur77→76，其余三类改善；每类不降筛选失败，无新PSNR/LPIPS。
+不重跑旧GPU缓存或V2训练。V2真实特征峰值137.473185GiB/卡，不能声称80GB H100已通过。
+
+新preserve_correct_v3仍是原图像MLP冻结＋fresh零输出VLM MLP；五个训练好FLUX专家、
+Qwen、VAE全冻结。只用已有LQ图像6144维/Qwen视觉merger均值3584维特征。
+不加CNN/Restormer/RGB refiner/energy/备用门控，不把视觉tokens说成生成的退化文字标签。
+保留V2的2560训练/400校准、1600步/global32/相同seed顺序/lr.001/wd.01/smoothing.05/clip1。
+新增一个训练惩罚：仅对图像路由原本正确的训练样本，惩罚最终正确类别被错误类别反超；
+具体hinge余量=min(原正确margin,.2)，系数固定1，完整batch平均。图像路由原本错时不保护。
+这是分类CE之外的代价调整，不增加新信息、不保证新图no-harm，也不保证一定改善。
+
+400/800/1200/1600只评校准集。候选须总体正确数高于图像对照、每类不降、CE不升，
+并比V2同校准预测误改更少且纠错不少；符合者中选最低CE，平局最早。
+无符合者仍保留最低CE供失败诊断，screen=false，不能把“VLM什么都不改”当成功。
+旧400 holdout不加载特征、不作选型；不能把校准成绩称独立泛化/画质/官方SoW或混合退化成功。
+没有自动后续GPU或扩大预算。训练2560对冻结基线640仍非数据量匹配VLM消融。
+
+真实manifest元数据已核对：排除旧所有fit/calibration/holdout/旧40与nontrain身份后，
+Lowlight仅剩37来源；固定预留每类20，共100不同来源，source/GT/LQ全隔离。
+预留SHA 57596103ccf992e6f47dbcdb0bce0c1c0d3a8b7ee02e78837fe43b929b6043a7。
+当前只保存元数据，不读其像素/特征、不启动提取。未来确认需单独安排，100图不是论文充分验证，
+也不保证FLUX/Qwen从未见过。不得返回旧400图冒充全新盲测。
+
+唯一执行根/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang，
+环境为其.conda/gpu-train-stable/bin/python。主代理此处无目的地挂载，不能声称已启动训练。
+CPU代理安全同步GitHub保留无关修改/大资产后，执行：
+bash smoke/start_foundir_vlm_preserve_router_v3_tmux.sh
+该入口CPU-only prepare→train→verify，8线程、累计cap1小时、0GPU-hours，无需GPU命令。
+首启需30GiB，0..1600每步保存VLM/Adam/RNG/采样slot，同runtime恢复；旧产物不动。
+完成须VLM_PRESERVE_V3_RESULT_VERIFIED与VLM_PRESERVE_V3_END status=0。
+只回传reports/foundir_vlm_preserve_router_v3_terminal_2026-11-04.json和耗时/退出简报；
+不push权重/特征/图像/live logs，不自行改配方/预算。主代理分析，CPU代理执行与回报。
+继续用简单中文、先结论，区分事实和假设；focused commit/push保证新代理看到同一决定。
+细节及成功/停止边界：reports/foundir_vlm_preserve_router_v3_readiness_2026-11-04.md。
+
+## 历史授权：一轮冻结图像路由修复＋独立来源验证 — 2026-11-04
 
 本节覆盖下方“仅CPU诊断、不启动新训练”。用户明确授权一轮有边界修复与一次独立来源验证。
 7fe87e5审计已结束：680条身份/特征复制/来源分离/20次曝光通过；不要重复该诊断。

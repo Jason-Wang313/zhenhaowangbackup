@@ -1,0 +1,31 @@
+{
+  "status": "real_manifest_metadata_reservation_pass",
+  "manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "previous_items_sha256": "333117f97705c42acefedbbee698098935da143c21a1bb6f176cf409f3fc4ceb",
+  "reserved_items_sha256": "57596103ccf992e6f47dbcdb0bce0c1c0d3a8b7ee02e78837fe43b929b6043a7",
+  "previous_original_records": 680,
+  "previous_expanded_records": 3360,
+  "available_before_cross_class_allocation": {
+    "blur": 6667,
+    "noise": 603,
+    "haze": 6919,
+    "lowlight": 37,
+    "rain": 5066
+  },
+  "reserved_per_task": {
+    "blur": 20,
+    "noise": 20,
+    "haze": 20,
+    "lowlight": 20,
+    "rain": 20
+  },
+  "reserved_records": 100,
+  "reserved_unique_sources": 100,
+  "source_gt_lq_disjoint_from_all_previous_roles": true,
+  "all_manifest_nontrain_identities_excluded": true,
+  "pixels_or_features_read": false,
+  "GPU_started": false,
+  "destination_assets_verified": false,
+  "whole_system_unseen_claim": false,
+  "automatic_confirmation_extraction": false
+}
