@@ -1,0 +1,18 @@
+{
+  "source_base": "8e3d043",
+  "cpu_tests": 4,
+  "actual_four_node_runtime_policy_pass": true,
+  "destination_preflight_pass": true,
+  "gpu_started": false,
+  "old_bound_v1_sources_unchanged": true,
+  "old_training_checkpoints": 0,
+  "budget_resets": false,
+  "source_sha256": {
+    "smoke/frozen_router_runtime_policy_v1.py": "097545c0cae6197910c667ae5ba0806957444f68cc8974df01df2576f9c89837",
+    "smoke/frozen_expert_router_mixed_driver_contract_v1.py": "b911cd36241f6263df012cba14ddaf17f2504cf4ecbed55dd954b0ca34362114",
+    "smoke/train_foundir_frozen_expert_router_mixed_driver_v1.py": "d08b054f1b0276f0c7ff0a811c994023715fca4955a65294f8850aa63c1a3af9",
+    "smoke/run_foundir_frozen_expert_router_mixed_driver_v1_gpu.sh": "5319e954409415889dac2305c0d7b1d5dff22322a7f8769a05d3352e024ede6d",
+    "smoke/start_foundir_frozen_expert_router_mixed_driver_v1_tmux.sh": "42ec09e19cb8af5a97bbb0ba3836573d6c5cdde624e12e06b9a43334e3d3dfc7",
+    "tests/test_frozen_router_mixed_driver_v1.py": "01c67aed7d214f529142936583ba90877c5c35b96c02d24e0dcc03d7b8c80a2f"
+  }
+}
