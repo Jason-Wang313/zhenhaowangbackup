@@ -1,0 +1,242 @@
+{
+  "automatic_training": false,
+  "groups": {
+    "blur_training_fit_only": {
+      "count": 2,
+      "historical_uint8_equal_count": 0,
+      "means": {
+        "near_one_hot": {
+          "lpips": 0.15750697255134583,
+          "psnr": 24.962042231307883
+        },
+        "one_hot": {
+          "lpips": 0.14725003018975258,
+          "psnr": 24.839861899922525
+        },
+        "original": {
+          "lpips": 0.14725003018975258,
+          "psnr": 24.839861899922525
+        }
+      },
+      "regressions_vs_original": {
+        "near_one_hot": {
+          "lpips": 2,
+          "psnr": 1
+        },
+        "one_hot": {
+          "lpips": 0,
+          "psnr": 0
+        }
+      }
+    },
+    "haze_training_fit_only": {
+      "count": 2,
+      "historical_uint8_equal_count": 0,
+      "means": {
+        "near_one_hot": {
+          "lpips": 0.16695261746644974,
+          "psnr": 18.339929145695926
+        },
+        "one_hot": {
+          "lpips": 0.1506590098142624,
+          "psnr": 19.870678023780744
+        },
+        "original": {
+          "lpips": 0.1506590098142624,
+          "psnr": 19.870678023780744
+        }
+      },
+      "regressions_vs_original": {
+        "near_one_hot": {
+          "lpips": 2,
+          "psnr": 2
+        },
+        "one_hot": {
+          "lpips": 0,
+          "psnr": 0
+        }
+      }
+    },
+    "lowlight_training_fit_only": {
+      "count": 2,
+      "historical_uint8_equal_count": 0,
+      "means": {
+        "near_one_hot": {
+          "lpips": 0.16561643034219742,
+          "psnr": 20.139817765872372
+        },
+        "one_hot": {
+          "lpips": 0.19844834133982658,
+          "psnr": 17.017084268945126
+        },
+        "original": {
+          "lpips": 0.19844834133982658,
+          "psnr": 17.017084268945126
+        }
+      },
+      "regressions_vs_original": {
+        "near_one_hot": {
+          "lpips": 0,
+          "psnr": 0
+        },
+        "one_hot": {
+          "lpips": 0,
+          "psnr": 0
+        }
+      }
+    },
+    "noise_training_fit_only": {
+      "count": 2,
+      "historical_uint8_equal_count": 0,
+      "means": {
+        "near_one_hot": {
+          "lpips": 0.05588314263150096,
+          "psnr": 40.882572535920495
+        },
+        "one_hot": {
+          "lpips": 0.05341804004274309,
+          "psnr": 40.695847354893445
+        },
+        "original": {
+          "lpips": 0.05341804004274309,
+          "psnr": 40.695847354893445
+        }
+      },
+      "regressions_vs_original": {
+        "near_one_hot": {
+          "lpips": 2,
+          "psnr": 1
+        },
+        "one_hot": {
+          "lpips": 0,
+          "psnr": 0
+        }
+      }
+    },
+    "rain_development_used_before": {
+      "count": 100,
+      "current_original_minus_history": {
+        "lpips": 0.0,
+        "psnr": 0.0
+      },
+      "historical_step800_means": {
+        "lpips": 0.061867435900494455,
+        "psnr": 34.30118094322354
+      },
+      "historical_uint8_equal_count": 100,
+      "means": {
+        "one_hot": {
+          "lpips": 0.061867435900494455,
+          "psnr": 34.30118094322354
+        },
+        "original": {
+          "lpips": 0.061867435900494455,
+          "psnr": 34.30118094322354
+        }
+      },
+      "regressions_vs_original": {
+        "one_hot": {
+          "lpips": 0,
+          "psnr": 0
+        }
+      }
+    },
+    "rain_training_fit_only": {
+      "count": 8,
+      "historical_uint8_equal_count": 8,
+      "means": {
+        "near_one_hot": {
+          "lpips": 0.07377752312459052,
+          "psnr": 33.348980087527444
+        },
+        "one_hot": {
+          "lpips": 0.07313908124342561,
+          "psnr": 33.91750653004627
+        },
+        "original": {
+          "lpips": 0.07313908124342561,
+          "psnr": 33.91750653004627
+        }
+      },
+      "regressions_vs_original": {
+        "near_one_hot": {
+          "lpips": 5,
+          "psnr": 8
+        },
+        "one_hot": {
+          "lpips": 0,
+          "psnr": 0
+        }
+      }
+    }
+  },
+  "official_pixels_read": false,
+  "rain_development_gate_pass": true,
+  "rain_historical_pixel_reproduction_pass": true,
+  "ready_for_router_design_review": true,
+  "receipt_sha256": "6225b4ede9193049e853304a71103805083a66322aed2638c7a5b0bdb4ca13ff",
+  "single_selection_parity_pass": true,
+  "soft_quality_pass_claimed": false,
+  "soft_weights_are_manual_not_a_router": true,
+  "status": "five_expert_integration_engineering_complete",
+  "run_id": "rain800_bank_4x2_v1",
+  "source_commit": "6f51d12",
+  "result_sha256": "9f2763d9e13be3ae81fd5144c15f386807eed9c4c6c1010bc5dbcef6406fcd2a",
+  "nodes": [
+    {
+      "node": 0,
+      "status": 0,
+      "seconds": 398,
+      "allocated_gpu_seconds": 796,
+      "gpus": 2,
+      "log": "logs/foundir_five_expert_integration_v1_rain800_bank_4x2_v1_node0.log",
+      "log_sha256": "9b93fdfb12a1f1093bc9dfd201d76c68d6f0bc20c68bdd60c5e2fa9b06e6d168"
+    },
+    {
+      "node": 1,
+      "status": 0,
+      "seconds": 395,
+      "allocated_gpu_seconds": 790,
+      "gpus": 2,
+      "log": "logs/foundir_five_expert_integration_v1_rain800_bank_4x2_v1_node1.log",
+      "log_sha256": "1e46e4a6af2fdcabe5cb72364f69f383ee10e64610d3f73eff5846e68d2ece03"
+    },
+    {
+      "node": 2,
+      "status": 0,
+      "seconds": 380,
+      "allocated_gpu_seconds": 760,
+      "gpus": 2,
+      "log": "logs/foundir_five_expert_integration_v1_rain800_bank_4x2_v1_node2.log",
+      "log_sha256": "9f9e2c8b2f3fc9369923dbb793ea2c9c59fcf4850b2c8e3a7959a890fe3bb599"
+    },
+    {
+      "node": 3,
+      "status": 0,
+      "seconds": 378,
+      "allocated_gpu_seconds": 756,
+      "gpus": 2,
+      "log": "logs/foundir_five_expert_integration_v1_rain800_bank_4x2_v1_node3.log",
+      "log_sha256": "f9f9adbb888d4be2bf8b7c7134f7a0a62f478b32275fd062a4ecafa7cd65a77c"
+    }
+  ],
+  "wall_seconds_max": 398,
+  "allocated_gpu_hours": 0.8616666666666667,
+  "peak_allocated_gib": 9.994594097137451,
+  "output_counts": {
+    "original": 116,
+    "one_hot": 116,
+    "near_one_hot": 16
+  },
+  "single_selection_exact_count": 116,
+  "soft_regressions_total": {
+    "count": 16,
+    "psnr": 12,
+    "lpips": 11
+  },
+  "four_old_historical_exact_count": 0,
+  "four_old_historical_compared_count": 8,
+  "first_progress_report_not_published_before_completion": true,
+  "independent_check": "116 metric metadata identities and means/regression counts recomputed; 248 output receipts/identity/tensor presence; parity metadata; result/receipt and four log SHA; no output tensor audit or LPIPS rerun",
+  "full_tensor_audit_performed": false
+}
