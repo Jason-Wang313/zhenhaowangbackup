@@ -1,0 +1,600 @@
+{
+  "GPU_used": false,
+  "architecture_changed": false,
+  "artifact_sha256": {
+    "fit_1600.json": "0196d377cb9083b27cda51160b9f02ee0f049fe3b7d4b8b25182fe1fcb4520e7",
+    "fit_800.json": "9611a62503c38e5fb8159dd0b0365f60aad3944bcc4089ae4e86e628272b308d",
+    "fit_image_only.json": "363493b706b912a1a445c604bf6a94beefb4bd6a150d36e8c96c27d8f35aa7bf",
+    "history_1600.json": "94ee0544d84b8f4a85c9eca353b03137c0ac456c762c6daa2635551f560ca271",
+    "history_800.json": "33102c4574a69434537a16e1324ffe61afb0dc36eca362ee380931b23cccc6b7"
+  },
+  "automatic_next_experiment": false,
+  "calibration_features_loaded": false,
+  "calibration_image_only": {
+    "ce": 0.4590185582637787,
+    "correct": 349,
+    "count": 400,
+    "per_task": {
+      "blur": {
+        "correct": 74,
+        "count": 80
+      },
+      "haze": {
+        "correct": 73,
+        "count": 80
+      },
+      "lowlight": {
+        "correct": 77,
+        "count": 80
+      },
+      "noise": {
+        "correct": 63,
+        "count": 80
+      },
+      "rain": {
+        "correct": 62,
+        "count": 80
+      }
+    }
+  },
+  "checkpoints": {
+    "1600": {
+      "calibration": {
+        "ce": 0.28897225856781006,
+        "correct": 362,
+        "count": 400,
+        "per_task": {
+          "blur": {
+            "correct": 77,
+            "count": 80
+          },
+          "haze": {
+            "correct": 65,
+            "count": 80
+          },
+          "lowlight": {
+            "correct": 75,
+            "count": 80
+          },
+          "noise": {
+            "correct": 71,
+            "count": 80
+          },
+          "rain": {
+            "correct": 74,
+            "count": 80
+          }
+        }
+      },
+      "calibration_diagnostics": {
+        "active_penalty_count": 18,
+        "fix_rate_among_image_wrong": 0.5294117647058824,
+        "harm_rate_among_image_correct": 0.04011461318051576,
+        "minimum_protected_final_margin": -4.5360002517700195,
+        "per_task_rates": {
+          "blur": {
+            "fix": 3,
+            "fix_rate_among_image_wrong": 0.5,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 74,
+            "still_wrong": 3
+          },
+          "haze": {
+            "fix": 2,
+            "fix_rate_among_image_wrong": 0.2857142857142857,
+            "harm": 10,
+            "harm_rate_among_image_correct": 0.136986301369863,
+            "retained_correct": 63,
+            "still_wrong": 5
+          },
+          "lowlight": {
+            "fix": 1,
+            "fix_rate_among_image_wrong": 0.3333333333333333,
+            "harm": 3,
+            "harm_rate_among_image_correct": 0.03896103896103896,
+            "retained_correct": 74,
+            "still_wrong": 2
+          },
+          "noise": {
+            "fix": 9,
+            "fix_rate_among_image_wrong": 0.5294117647058824,
+            "harm": 1,
+            "harm_rate_among_image_correct": 0.015873015873015872,
+            "retained_correct": 62,
+            "still_wrong": 8
+          },
+          "rain": {
+            "fix": 12,
+            "fix_rate_among_image_wrong": 0.6666666666666666,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 62,
+            "still_wrong": 6
+          }
+        },
+        "preserve_penalty_full_population_mean": 0.056100920200347903,
+        "protected_count": 349,
+        "transitions": {
+          "fix": 27,
+          "harm": 14,
+          "per_task": {
+            "blur": {
+              "fix": 3,
+              "harm": 0,
+              "retained_correct": 74,
+              "still_wrong": 3
+            },
+            "haze": {
+              "fix": 2,
+              "harm": 10,
+              "retained_correct": 63,
+              "still_wrong": 5
+            },
+            "lowlight": {
+              "fix": 1,
+              "harm": 3,
+              "retained_correct": 74,
+              "still_wrong": 2
+            },
+            "noise": {
+              "fix": 9,
+              "harm": 1,
+              "retained_correct": 62,
+              "still_wrong": 8
+            },
+            "rain": {
+              "fix": 12,
+              "harm": 0,
+              "retained_correct": 62,
+              "still_wrong": 6
+            }
+          },
+          "retained_correct": 335,
+          "still_wrong": 24
+        }
+      },
+      "calibration_minus_fit_harm_rate": 0.03532575815221798,
+      "checkpoint": {
+        "file": "steps/vlm_001600_1793834103545053028.pt",
+        "identity": "5aba2735d42e4c4f4353a385840210c30bc58a05706bdec4e386c69689104ed4",
+        "parameter_hash": "7668a26bb11a7654e2572386f61697ab71275ddc237ebc0f784ae3585a4f1639",
+        "sha256": "359443982e69150ec849ab42739b1662e6db0ce1acb0c3a29c0a961e74a5471a",
+        "step": 1600
+      },
+      "fit": {
+        "ce": 0.08367558568716049,
+        "correct": 2523,
+        "count": 2560,
+        "per_task": {
+          "blur": {
+            "correct": 512,
+            "count": 512
+          },
+          "haze": {
+            "correct": 497,
+            "count": 512
+          },
+          "lowlight": {
+            "correct": 509,
+            "count": 512
+          },
+          "noise": {
+            "correct": 496,
+            "count": 512
+          },
+          "rain": {
+            "correct": 509,
+            "count": 512
+          }
+        }
+      },
+      "fit_diagnostics": {
+        "active_penalty_count": 13,
+        "fix_rate_among_image_wrong": 0.9011406844106464,
+        "harm_rate_among_image_correct": 0.00478885502829778,
+        "minimum_protected_final_margin": -2.349794387817383,
+        "per_task_rates": {
+          "blur": {
+            "fix": 28,
+            "fix_rate_among_image_wrong": 1.0,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 484,
+            "still_wrong": 0
+          },
+          "haze": {
+            "fix": 22,
+            "fix_rate_among_image_wrong": 0.7586206896551724,
+            "harm": 8,
+            "harm_rate_among_image_correct": 0.016563146997929608,
+            "retained_correct": 475,
+            "still_wrong": 7
+          },
+          "lowlight": {
+            "fix": 15,
+            "fix_rate_among_image_wrong": 0.8823529411764706,
+            "harm": 1,
+            "harm_rate_among_image_correct": 0.00202020202020202,
+            "retained_correct": 494,
+            "still_wrong": 2
+          },
+          "noise": {
+            "fix": 81,
+            "fix_rate_among_image_wrong": 0.8526315789473684,
+            "harm": 2,
+            "harm_rate_among_image_correct": 0.004796163069544364,
+            "retained_correct": 415,
+            "still_wrong": 14
+          },
+          "rain": {
+            "fix": 91,
+            "fix_rate_among_image_wrong": 0.9680851063829787,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 418,
+            "still_wrong": 3
+          }
+        },
+        "preserve_penalty_full_population_mean": 0.004291708618402481,
+        "protected_count": 2297,
+        "transitions": {
+          "fix": 237,
+          "harm": 11,
+          "per_task": {
+            "blur": {
+              "fix": 28,
+              "harm": 0,
+              "retained_correct": 484,
+              "still_wrong": 0
+            },
+            "haze": {
+              "fix": 22,
+              "harm": 8,
+              "retained_correct": 475,
+              "still_wrong": 7
+            },
+            "lowlight": {
+              "fix": 15,
+              "harm": 1,
+              "retained_correct": 494,
+              "still_wrong": 2
+            },
+            "noise": {
+              "fix": 81,
+              "harm": 2,
+              "retained_correct": 415,
+              "still_wrong": 14
+            },
+            "rain": {
+              "fix": 91,
+              "harm": 0,
+              "retained_correct": 418,
+              "still_wrong": 3
+            }
+          },
+          "retained_correct": 2286,
+          "still_wrong": 26
+        }
+      },
+      "historical_last100": {
+        "first_step": 1501,
+        "last_step": 1600,
+        "mean": {
+          "ce": 0.33944409936666486,
+          "harmful_training_overrides": 0.06,
+          "loss": 0.34089132517576215,
+          "preserve_penalty": 0.0014472260558977723,
+          "protected_training_rows": 28.73,
+          "vlm_grad_norm_before_clip": 1.391918223798275
+        },
+        "note": "Historical pre-update minibatch statistics, not current full-training-set evaluation.",
+        "steps": 100
+      }
+    },
+    "800": {
+      "calibration": {
+        "ce": 0.26214173436164856,
+        "correct": 366,
+        "count": 400,
+        "per_task": {
+          "blur": {
+            "correct": 76,
+            "count": 80
+          },
+          "haze": {
+            "correct": 66,
+            "count": 80
+          },
+          "lowlight": {
+            "correct": 76,
+            "count": 80
+          },
+          "noise": {
+            "correct": 74,
+            "count": 80
+          },
+          "rain": {
+            "correct": 74,
+            "count": 80
+          }
+        }
+      },
+      "calibration_diagnostics": {
+        "active_penalty_count": 12,
+        "fix_rate_among_image_wrong": 0.5490196078431373,
+        "harm_rate_among_image_correct": 0.03151862464183381,
+        "minimum_protected_final_margin": -5.253169059753418,
+        "per_task_rates": {
+          "blur": {
+            "fix": 2,
+            "fix_rate_among_image_wrong": 0.3333333333333333,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 74,
+            "still_wrong": 4
+          },
+          "haze": {
+            "fix": 2,
+            "fix_rate_among_image_wrong": 0.2857142857142857,
+            "harm": 9,
+            "harm_rate_among_image_correct": 0.1232876712328767,
+            "retained_correct": 64,
+            "still_wrong": 5
+          },
+          "lowlight": {
+            "fix": 1,
+            "fix_rate_among_image_wrong": 0.3333333333333333,
+            "harm": 2,
+            "harm_rate_among_image_correct": 0.025974025974025976,
+            "retained_correct": 75,
+            "still_wrong": 2
+          },
+          "noise": {
+            "fix": 11,
+            "fix_rate_among_image_wrong": 0.6470588235294118,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 63,
+            "still_wrong": 6
+          },
+          "rain": {
+            "fix": 12,
+            "fix_rate_among_image_wrong": 0.6666666666666666,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 62,
+            "still_wrong": 6
+          }
+        },
+        "preserve_penalty_full_population_mean": 0.05234493005275726,
+        "protected_count": 349,
+        "transitions": {
+          "fix": 28,
+          "harm": 11,
+          "per_task": {
+            "blur": {
+              "fix": 2,
+              "harm": 0,
+              "retained_correct": 74,
+              "still_wrong": 4
+            },
+            "haze": {
+              "fix": 2,
+              "harm": 9,
+              "retained_correct": 64,
+              "still_wrong": 5
+            },
+            "lowlight": {
+              "fix": 1,
+              "harm": 2,
+              "retained_correct": 75,
+              "still_wrong": 2
+            },
+            "noise": {
+              "fix": 11,
+              "harm": 0,
+              "retained_correct": 63,
+              "still_wrong": 6
+            },
+            "rain": {
+              "fix": 12,
+              "harm": 0,
+              "retained_correct": 62,
+              "still_wrong": 6
+            }
+          },
+          "retained_correct": 338,
+          "still_wrong": 23
+        }
+      },
+      "calibration_minus_fit_harm_rate": 0.02585906869930007,
+      "checkpoint": {
+        "file": "steps/vlm_000800_1793833988610202530.pt",
+        "identity": "5aba2735d42e4c4f4353a385840210c30bc58a05706bdec4e386c69689104ed4",
+        "parameter_hash": "8d927b58d4183a306d5dd28e36f62e8bc37dc6d5f27ee1408278c8b1b2640e93",
+        "sha256": "091d1bb10f341f873dc520ade74bc0dbf5de4dd3f7034507395120ff3212d571",
+        "step": 800
+      },
+      "fit": {
+        "ce": 0.10638594627380371,
+        "correct": 2487,
+        "count": 2560,
+        "per_task": {
+          "blur": {
+            "correct": 498,
+            "count": 512
+          },
+          "haze": {
+            "correct": 491,
+            "count": 512
+          },
+          "lowlight": {
+            "correct": 506,
+            "count": 512
+          },
+          "noise": {
+            "correct": 490,
+            "count": 512
+          },
+          "rain": {
+            "correct": 502,
+            "count": 512
+          }
+        }
+      },
+      "fit_diagnostics": {
+        "active_penalty_count": 15,
+        "fix_rate_among_image_wrong": 0.7718631178707225,
+        "harm_rate_among_image_correct": 0.0056595559425337396,
+        "minimum_protected_final_margin": -2.4270811080932617,
+        "per_task_rates": {
+          "blur": {
+            "fix": 17,
+            "fix_rate_among_image_wrong": 0.6071428571428571,
+            "harm": 3,
+            "harm_rate_among_image_correct": 0.006198347107438017,
+            "retained_correct": 481,
+            "still_wrong": 11
+          },
+          "haze": {
+            "fix": 17,
+            "fix_rate_among_image_wrong": 0.5862068965517241,
+            "harm": 9,
+            "harm_rate_among_image_correct": 0.018633540372670808,
+            "retained_correct": 474,
+            "still_wrong": 12
+          },
+          "lowlight": {
+            "fix": 11,
+            "fix_rate_among_image_wrong": 0.6470588235294118,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 495,
+            "still_wrong": 6
+          },
+          "noise": {
+            "fix": 74,
+            "fix_rate_among_image_wrong": 0.7789473684210526,
+            "harm": 1,
+            "harm_rate_among_image_correct": 0.002398081534772182,
+            "retained_correct": 416,
+            "still_wrong": 21
+          },
+          "rain": {
+            "fix": 84,
+            "fix_rate_among_image_wrong": 0.8936170212765957,
+            "harm": 0,
+            "harm_rate_among_image_correct": 0.0,
+            "retained_correct": 418,
+            "still_wrong": 10
+          }
+        },
+        "preserve_penalty_full_population_mean": 0.006961826924234629,
+        "protected_count": 2297,
+        "transitions": {
+          "fix": 203,
+          "harm": 13,
+          "per_task": {
+            "blur": {
+              "fix": 17,
+              "harm": 3,
+              "retained_correct": 481,
+              "still_wrong": 11
+            },
+            "haze": {
+              "fix": 17,
+              "harm": 9,
+              "retained_correct": 474,
+              "still_wrong": 12
+            },
+            "lowlight": {
+              "fix": 11,
+              "harm": 0,
+              "retained_correct": 495,
+              "still_wrong": 6
+            },
+            "noise": {
+              "fix": 74,
+              "harm": 1,
+              "retained_correct": 416,
+              "still_wrong": 21
+            },
+            "rain": {
+              "fix": 84,
+              "harm": 0,
+              "retained_correct": 418,
+              "still_wrong": 10
+            }
+          },
+          "retained_correct": 2284,
+          "still_wrong": 60
+        }
+      },
+      "historical_last100": {
+        "first_step": 701,
+        "last_step": 800,
+        "mean": {
+          "ce": 0.43751177936792374,
+          "harmful_training_overrides": 0.33,
+          "loss": 0.44853889107704165,
+          "preserve_penalty": 0.011027111876755953,
+          "protected_training_rows": 28.73,
+          "vlm_grad_norm_before_clip": 2.9450821271538734
+        },
+        "note": "Historical pre-update minibatch statistics, not current full-training-set evaluation.",
+        "steps": 100
+      }
+    }
+  },
+  "fit_image_only": {
+    "ce": 0.35481715202331543,
+    "correct": 2297,
+    "count": 2560,
+    "per_task": {
+      "blur": {
+        "correct": 484,
+        "count": 512
+      },
+      "haze": {
+        "correct": 483,
+        "count": 512
+      },
+      "lowlight": {
+        "correct": 495,
+        "count": 512
+      },
+      "noise": {
+        "correct": 417,
+        "count": 512
+      },
+      "rain": {
+        "correct": 418,
+        "count": 512
+      }
+    }
+  },
+  "limitations": [
+    "Training-fit diagnostic, not independent generalization confirmation.",
+    "Calibration reused without selecting another checkpoint or tuning thresholds.",
+    "Low training harm with higher calibration harm supports a generalization gap, not a unique root cause.",
+    "Giving the correction head image logits remains a conditional proposal, not an implemented or proven fix."
+  ],
+  "old_holdout_features_loaded": false,
+  "parent_result_sha256": "bebbec6c2c1f967c41b4342bb0dd10819f3ffccbd37f069d6d2f81ce6c5b0c27",
+  "receipt_sha256": "2d157d44c5e051771110807ffa1255e6774403aebcfcab1b085d5f196f603864",
+  "reserved_confirmation_features_loaded": false,
+  "restoration_metrics_measured": false,
+  "run_id": "fit800_1600_v1",
+  "runtime": {
+    "build": "694b2140139990abd201f2d940cf53edd9cf526a89e4b106e87d13525f8f4535",
+    "cpu": "model name\t: INTEL(R) XEON(R) GOLD 6530",
+    "deterministic": true,
+    "interop": 1,
+    "python": "3.12.13",
+    "threads": 8,
+    "torch": "2.7.0+cu128"
+  },
+  "status": "vlm_preserve_training_fit_audit_complete",
+  "training_performed": false
+}
