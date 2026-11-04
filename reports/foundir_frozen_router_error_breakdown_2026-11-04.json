@@ -1,0 +1,4127 @@
+{
+  "GPU_used": false,
+  "automatic_counterfactual_launch": false,
+  "checkpoint_tensors_read": false,
+  "formal_training_started": false,
+  "images_read": false,
+  "input_json_sha256": {
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0001445.json": "5c72e10009a47c299b6ce93f1b77c1d8a09a960f9858db9e20ae4d644e28b407",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0007534.json": "b98facc5c883b836f8739aaabbeaaab0d6718607382769f3298dad51b0cfe7d3",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0009805.json": "24041d10ae1075ef7563f4e6891543c4af989055983a2fb7eb3ba91170b669f0",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0034135.json": "b83d9456d9ffc19196db076afb717512068f8790f58af9754787e7776dde18de",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0062910.json": "5c90211c454caf35f28821244c2b8a86e3ff3e0085571aca146dc245271311a1",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0067975.json": "31a93ceb24e1cd863f1e615d0b5e24f9272a2e98ca6730e0d7c500ffb3debe16",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0091843.json": "abe57c0739e1d95737dfbce530d024f526d6c197f73835546010e25590962d61",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0094664.json": "1c1b781109237c725c6f5594e248782a976ddb6a97b36e3af8f1e27336e324db",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0144583.json": "14f7cdf2ecf6f6e7843370a981fc9fad9e0b36c697f93866ff8148f6ae66fc4b",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0153585.json": "b227a8e571b9eada01e08fb98496ffc3f599d01b5d606051235254e1bcb38a6f",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0177424.json": "723611566610b8b4ed76e90a04daccfa6e121626587282a5b141d13391cb7d6d",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0182272.json": "c175bd77ab601d81378b86b3a0ed767e6df786cb44c565275b9db3cdba06e928",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0187489.json": "75ebfb500086d46f53b9800a29a0394650fd92b8daeb9f0f4cefcc00f284c278",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0189233.json": "132d6547576f44b3eb88b68c1ae155ca58741dde834bd09dcb342facd82e60bf",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0192771.json": "2a36709d51379406176f5bf7990236c7c58e6970005e49786d8afabbf0bf39e1",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0194586.json": "942c43301adf233a37ab0f8cda118dde82d7e7a6ca55710ca1c4715f3aa781fb",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0201705.json": "266f17f5a1dd96235f3fa890ddbebc98a0ecdb13277402a5059d4b496d6010c8",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0208167.json": "8f7b2de95d2f9f489a9c73310a3cc8992ef252c8458b0343a37377606b125d16",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0225021.json": "515c74e27385dc55f13a6390d67d09a42eabdb093cb597907749dc6b0bc6cd1e",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0229347.json": "dbac5af2c710f5891f3dddbe1e2670d5b10358a25f7fceba858d4829a3e9b021",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0235052.json": "8c503ccffc55ba9af98d32fdbd75f19dfeed9ec3bad5b995ab14792553f25891",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0255323.json": "3152cf35d24394bd65ac09e02ee6903019e87b12481f11251789da4690c3fded",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0264740.json": "ad2c2fad05768b2e11c3beb4bd1b80ff3ecb9b0e8e832ddca0ab30d198f57076",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0276837.json": "6fc9c44b62a458497c39d243fb71bbfc2bc9762f530fcf5e119982bc77adbbed",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0358824.json": "bbe8e58df10ec016edb5e589b91e6060a2705867309c93af418537877625cad7",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0361446.json": "d27cf812a4517a0d5c304764f3338fdd03fed83db6a0054be2ac2a353a3db892",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0361904.json": "3b1bbd6400e19244c249b248007a36c2332d951ae0637a2a7d72ae684531299e",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0364881.json": "0a71447ef8f051ecf3019eb840706d333bb52bbc03f9c3f2e101a3747a2ea2ce",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0377282.json": "0a99801f9c2f97a6764c234888f4b5e8d3f9103d8e1598e4f1f98ece1ada72eb",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0377566.json": "18d76bd30cf9bfccf6716fe0a9c57b418950624275c40456b7f8a7154896712d",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0391222.json": "d42fef97c07297b962ac1b54932ea1087458b9885f0a46cec565ab16804c5208",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0394371.json": "de2cd08a4fc68e0711a5eabbecfd09d67fce997ac8680bf1028f1dd51e60580f",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0479048.json": "3f7af00cca60b1eb95cb43471aec602a0eda530edf723db4552cdca1d0d3ef9c",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0482078.json": "a74621cbdc6b7c5ae7e09b28e336eb36691f8366687a5c42c7f9c93efb084c6b",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0485983.json": "87bdcbccdd78bbb706d5486ca20c07289404f094e9a1e773f679714edaf6481f",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0487157.json": "4df9a19597821c0ae322cb41fd0c090e8fb9d3b11954bb517a51c9e6d88069a5",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0493413.json": "ca1bd6ea10503f2771e19f10d6ca5f92351a2c24b43488b1f431273e954e3f3c",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0508782.json": "e39a206f924c2fc08b17d6d1a836bfba175c83c3badae14630d67a7fa0d4d0f2",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0510173.json": "f9d278827d67176ed4391eda0f17a3069ce796f442d44a71fa1f06d660b8d382",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0510520.json": "693765dd2060a5016989c20b9f9e761c654c8a07aee699ef93d83a08adbca139",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0001445.json": "7be9aee6d6983832fb3ee2e2809f75ae4a0b348738f448a9d8c08639216e58c0",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0007534.json": "a3fed5ba5004b81aaa820a17ea0d48c5a27ade2429cfdb7f5171f07f5191d09f",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0009805.json": "f5bac385278c8091adf57a5ff7a9104be96c40c77b581106295a49b6aa839179",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0034135.json": "d3f3a8b35de7e546a89bf00f7bbb5eea63bb7ef4bc4e6e90f1f5b79076787328",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0062910.json": "92e783145c8c09c098564d52802114cc3c12d3e293dd4f809e06054cd84f4edf",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0067975.json": "825d7e12ea6f7321deae12cc3b03ce712279f4e59d29193809588aaa4afc6d3f",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0091843.json": "54adad29a99155e70bd12bad26d6147be6a0e2718e58750eebd8aee2480e356c",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0094664.json": "c4990dd5fabbd8f8785f7d7bd27ea7b0e5063d452ccd528695c2a27bd127bf50",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0144583.json": "d2655467ddde51d5b9c829da4f812ba5235012e7c21d5cf51d130f780862e845",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0153585.json": "3383a9609a4d29aefa514ece3a180abf74df35723240245e50995a2383f1de1e",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0177424.json": "2ce1a21ca5c1afd40464ee51fb17588fcf0c4ec1e4974fbd035072f0be40f1a0",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0182272.json": "648769fe23a2c918d49f6dde9261a1a3a02a37612ea9d5695151a432ea3c18a8",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0187489.json": "40d57c7c3fc25ec534a2c1499c880a947c8a14faa9572f6d5b8c51c90dd215a9",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0189233.json": "372f20d11b62f92c4158f9436bce67bafb93ff1029995324024a33ea1cde254a",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0192771.json": "55321d9592df21cb2340d42d8606dfa948c6edef91d69b18a02cd30b2d2335f7",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0194586.json": "45d268e2e5808f7c5ddeddacfb347d530690d32fabe5042a5d0838b6d6791d96",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0201705.json": "b9c58ad3b8fda49c9d6a69aaa6dccd34bd5260351384c505ad725ef11f6c2887",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0208167.json": "9a50ba0e4f72400261d7115b7f71a0f2c5e739bb967440d64458f07c7d9e2d23",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0225021.json": "34184dc462f3e1a529597ed51db2cc55b6c8f39fd48cf00cb262c8561f85edd2",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0229347.json": "efaa15667d09b9baddb381bb96c06c5b1e33a9a78cfde0b4896d90cf68457297",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0235052.json": "182327bac6f8b238417a2efc80662eba6859b105698214ff1492b0e0bae6e951",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0255323.json": "348e7ad3cafb64b6bafed5184833f18193d3dc8ce07e0d6ef5e0dcc831042e32",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0264740.json": "56a37374f2f67632514f4e157b279d89d6369a2ad6993e0c0de15390d9e72d4e",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0276837.json": "898a4a292e5618c78cfbbd3e534a9b84060b5438ebd099bc7b45dbc32ad10eae",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0358824.json": "15b5cdfc25d5b7870d0598549ca12d2c9b8c6f447cb0db594e4c815383101d17",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0361446.json": "48fd1fc3c1fa56fc5d7e84d717867cc6aa0f0f17c2ee82488798fb5b63df8056",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0361904.json": "1fb4bb47195ab565865d1c1b33bc438b2e0231a4d58cc19ea2ad1fe9e4a97f47",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0364881.json": "92e69bef87f824eceab374563fec435f3b5a9e00fac8bddd8eb97469e1004b30",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0377282.json": "37fa7957a08c33efc1410b183536443f1302bea994200d4e549c1d8cf9c04c71",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0377566.json": "78df2167689fe872f8ebcc152954d5d1f5e37b64d33f1417e18a7bc35bcb4747",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0391222.json": "b623b805abd1ddb0e0dadefa42fba895e42b6078f55474ed90b6d47989daad02",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0394371.json": "a1cd6db2612022cbec29b0fe8073770f87a7f0e5d6ff01e20e2bc8d7466aa3a3",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0479048.json": "6b2e4475cdfd25a42eb671a64070ecb43b5dc5df05c094f5b10ab965e0d43ac8",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0482078.json": "5e181413c3a8ead4ffb0f069e342d4a6b90384426dba54e5e5fde4582dd1c0aa",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0485983.json": "d446f7ff379ed9078a95131c80edac47e798442bb2c6be85730d8942880893cc",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0487157.json": "c80f39938621dfd98d99e465931a1c9daf8b1dd342267a448e380debfe1f9d92",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0493413.json": "5fff41aff6b28478b4821153790ed97af21367f5863541d978c36fecda429703",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0508782.json": "d4afa21db4cd86e7ca7f61d82ca6087585be0d1abfec4008080306aecbce0ab8",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0510173.json": "aba410eaf24af3a2b4a2607c3444675432ad7eb787cb654b25153ab9067ef7a0",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step400/validation_foundir_train_0510520.json": "171ba7a0c0641839ff275f90ed9214b6be03dfcc0a56b07a5c4e0b83d261c847",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0001445.json": "9eea9d2b57015455554f603b8daba0128b8591decaccd95fe84626b13536478b",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0007534.json": "72b8c6f13b2d86341c47ad6935bc664c220c8148ecd59297c6324c987ca5637b",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0009805.json": "f150aa03ca1a918def9a1fcc690abab77c2bfd38b2f502fc73a7b98a5875bfed",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0034135.json": "e502864f76bec06838ed3b59ed60c9ee0d25abf82347183849f903e543a269ee",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0062910.json": "5ab4ef81b43d929f83cce93fe9823c298b9a030879868a544d277050545cc39d",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0067975.json": "72a16e3de9cc5325ff809be10c92980d02daedc4e6652aa6c98f596b0fe91597",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0091843.json": "df5166b7f4ef4914f01fe38322fe7a8c3a988edf23c85df14a832d602848c1c4",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0094664.json": "a76fdbc51d51b6125096f8b3ad2be2e37d626992b07bc4136bee451c32e60515",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0144583.json": "19aacab092b8863a2f16e9d5ad4485565a4c66ca5698395bfed3efe07dbfef16",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0153585.json": "1249cf4da7289ad132f56cd254d73e079fd34913696b0c07fbec209194d2f97e",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0177424.json": "f59df8a675cd0bf4e18ff2539e31a510bdf6b1fa9dcdfc984daa49f455eaca5e",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0182272.json": "8f9fb5645ce06fe3837885ba9460ba17a6d8fda0446ec07c6e0dec3d80ebe448",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0187489.json": "c2cf91b85017bc05f1c5c0c71ad28e278ad169112211cc0852884d87cee5daf6",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0189233.json": "09999f79022a4ee17bee166d775759c3dbcde2d45410e4bd732487448758f729",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0192771.json": "865188c74c1ae092d59f132a6b58ccdf6bb658a1301895365d5dcd5965098d17",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0194586.json": "f32cf12962e38d89d4e522c35b709725b916716fa90edc744b683f83fa18f8c8",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0201705.json": "58764f746cbdb43fb10575c1c38e9e6634f6b684ab0b602cc4532ac9f51819d3",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0208167.json": "bc52e1a7d998ee98370fc0f6981c276ad6dc4712c6315764eba8b1b8eef3e821",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0225021.json": "d67debedc7084e36b77161149828ea7d76ad5baf433a7779f2e72ed97084fccb",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0229347.json": "fd53b3292a8b3b27c014e16467b23bcebbe49615d1441aa176ee2e3ff89bd9f1",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0235052.json": "9bf19b70c53bcd8fab21758ff01127b8a834de3a3e369bdd6e7d024adccc6f10",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0255323.json": "8806a552dec46f9f4db4d6144bd21692ef010fc6feefa27f625b344da983cc42",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0264740.json": "ea3980ed08a39fdfac0c60dbb6610a547a73d8373d8eeeda57f1b08b38359051",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0276837.json": "ba1bb2cfcd59305e2d1b62c2d3632d90417d645b7b6ec18c2010165bf8eaa5f9",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0358824.json": "4874fb3c41a4732c23d66d7069673f3491f2e0cb03527359dc59bb2c655f7355",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0361446.json": "9e5fe0e1a9954a4dde4941b0c520b8268a5a2a46d57cd007248dcd2415ae695d",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0361904.json": "60520722aa6a1af4262a4bc0c6c041ef081bd6bc341c7bc1cc1533ffe1cc7813",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0364881.json": "d0e783ddb7db0ba77dae6cf2ca6578655bdb6d9df88849855c362770cb227482",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0377282.json": "2373e41f69e82b347dcefdaaf11b2954d9fb753bb851a05dc75f9f4bc1cfb0a5",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0377566.json": "1d5e318a443a1005a10cc4ed981cf30eeba2f2d7c348984a0712c89ad19b33f6",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0391222.json": "1892b69c9b01f082ec34d4246d9e2e659cf30906b896ef6dc8a5981f928db2de",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0394371.json": "123b67ae608b09dd7e7b18dffce33d76ad93e6205b4de9fb7f3e2b1203da4146",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0479048.json": "e63569b957113885612d04bc3a21cfda2b8ee505b434cf8327cc5816126d73e6",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0482078.json": "e2b1bfa0f3fdf7faf961d48c099b9aa672c5c5ee10bb84f906b9a42481b86233",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0485983.json": "23fa2f5bd2e1b2eb9fa89a1a0cb22e6f5e2191cf32be770ce8bbf31309562ae0",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0487157.json": "52687b0b7d3e48cdee10e6a1b16db852271f9563126ec259e01a8566b739a2ef",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0493413.json": "4f2eca042f69f161f4d1f2d2b08dd4f3b4600800eef154a60fcc045e464b62f6",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0508782.json": "cd16f18529127dbe643888a77502aa17f16b07a041fe65ab0526665e2ce85a2c",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0510173.json": "a0dfe8c0550058f65734668c920a41654c1c0a84013c47e133fc9bc5c8f18895",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/router_step408/validation_foundir_train_0510520.json": "b853d1e1299b1ac21e8794b08e9df93576057767ed122d6fb55cb5cf3281aa38",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/steps/step_000400.json": "bcc5c5966306da8efd45603c0a9bbc6368200e4f61b7cc81b8ca0d8e5252f6f9",
+    "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/steps/step_000408.json": "0b3d95e3079d14aa9bb399dab42f3966faa180a2ef2741c10f656a91db5f7572",
+    "reports/foundir_frozen_expert_router_terminal_2026-11-04.json": "71b718d83997916f0060727728f8525cf4d887db41de35db8e6cdf42aa53c191"
+  },
+  "interpretation": [
+    "Correct-anchor group already compares soft mixture to the same-anchor one-hot under matched protocol.",
+    "Wrong-anchor group combines choice, protocol and mixture; do not call its entire deficit classification cost.",
+    "Signed contributions add to the reported mean gap, but are not causal percentages or percentages of dB.",
+    "Step400 versus408 also changes optimizer exposure; this is not a matched VLM causal ablation.",
+    "Development singleton diagnosis does not establish official-test or mixed-degradation performance."
+  ],
+  "missing_counterfactual": {
+    "GT_used_to_choose_counterfactual_anchor": false,
+    "count": 4,
+    "items": [
+      {
+        "crop_xy": [
+          609,
+          288
+        ],
+        "hard_weights_from_model_argmax": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "key": "validation_foundir_train_0144583",
+        "predicted_anchor": "blur",
+        "seed": 495174380
+      },
+      {
+        "crop_xy": [
+          783,
+          149
+        ],
+        "hard_weights_from_model_argmax": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "key": "validation_foundir_train_0189233",
+        "predicted_anchor": "blur",
+        "seed": 3046999744
+      },
+      {
+        "crop_xy": [
+          1344,
+          1824
+        ],
+        "hard_weights_from_model_argmax": [
+          1.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "key": "validation_foundir_train_0508782",
+        "predicted_anchor": "blur",
+        "seed": 3461967697
+      },
+      {
+        "crop_xy": [
+          1165,
+          906
+        ],
+        "hard_weights_from_model_argmax": [
+          0.0,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "key": "validation_foundir_train_0479048",
+        "predicted_anchor": "noise",
+        "seed": 3893297305
+      }
+    ],
+    "launched": false,
+    "needed_for": "Separate wrong-anchor hard-choice deficit from soft-mixture change on those same cases only"
+  },
+  "per_image": [
+    {
+      "baseline": {
+        "lpips": 0.36591091752052307,
+        "psnr": 15.208680860751242
+      },
+      "change_408_minus_400": {
+        "lpips": 0.0,
+        "psnr": 0.0
+      },
+      "crop_xy": [
+        1287,
+        224
+      ],
+      "key": "validation_foundir_train_0062910",
+      "record_id": "foundir_train_0062910",
+      "seed": 634272547,
+      "source_group": "ab5ba070613a8bcb456de98fad0225a787733de4f9ece157e3ad0f4638190c8c",
+      "step400": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0,
+          "psnr_loss_db": 0.0
+        },
+        "metrics": {
+          "lpips": 0.36591091752052307,
+          "psnr": 15.208680860751242
+        },
+        "other_experts_total_weight": 0.0,
+        "primary_weight": 1.0,
+        "top_two_margin": 0.9999999741204402,
+        "true_class_weight": 1.0,
+        "weights": [
+          1.0,
+          8.2027534764606e-10,
+          2.587955982846779e-08,
+          6.642836454517909e-12,
+          1.2037280894272584e-10
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0,
+          "psnr_loss_db": 0.0
+        },
+        "metrics": {
+          "lpips": 0.36591091752052307,
+          "psnr": 15.208680860751242
+        },
+        "other_experts_total_weight": 0.0,
+        "primary_weight": 1.0,
+        "top_two_margin": 0.9999999945976112,
+        "true_class_weight": 1.0,
+        "weights": [
+          1.0,
+          1.52130741337686e-09,
+          5.402388758568577e-09,
+          4.083542531896356e-12,
+          2.0396433153546667e-10
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.014239766635000706,
+        "psnr": 37.685890066702655
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0002687014639377594,
+        "psnr": 0.12208445439870985
+      },
+      "crop_xy": [
+        3549,
+        674
+      ],
+      "key": "validation_foundir_train_0001445",
+      "record_id": "foundir_train_0001445",
+      "seed": 4289161527,
+      "source_group": "9911d7aa986bf65f161c04beefc417eb30dd79d38af0cecfe3640f0afb3d3fc2",
+      "step400": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00010571349412202835,
+          "psnr_loss_db": 0.08690081291319274
+        },
+        "metrics": {
+          "lpips": 0.014345480129122734,
+          "psnr": 37.59898925378946
+        },
+        "other_experts_total_weight": 0.0031968355178833008,
+        "primary_weight": 0.9968031644821167,
+        "top_two_margin": 0.99382588500157,
+        "true_class_weight": 0.9968031644821167,
+        "weights": [
+          0.9968031644821167,
+          0.0001632014464121312,
+          0.002977279480546713,
+          9.249205277228612e-07,
+          5.550442074309103e-05
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.00016298796981573105,
+          "psnr_loss_db": -0.035183641485517114
+        },
+        "metrics": {
+          "lpips": 0.014076778665184975,
+          "psnr": 37.72107370818817
+        },
+        "other_experts_total_weight": 0.0010998249053955078,
+        "primary_weight": 0.9989001750946045,
+        "top_two_margin": 0.9983312159893103,
+        "true_class_weight": 0.9989001750946045,
+        "weights": [
+          0.9989001750946045,
+          0.00041241367580369115,
+          0.0005689591052941978,
+          5.1839896286765e-07,
+          0.00011790118151111528
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.1862894594669342,
+        "psnr": 24.536430317963696
+      },
+      "change_408_minus_400": {
+        "lpips": -0.007440477609634399,
+        "psnr": 0.5831190409590477
+      },
+      "crop_xy": [
+        358,
+        121
+      ],
+      "key": "validation_foundir_train_0009805",
+      "record_id": "foundir_train_0009805",
+      "seed": 4107361583,
+      "source_group": "9eb766c0e5534a48d10f7f42660e17bce2f7e3eabaff4ebdac6cebdf899b9a4d",
+      "step400": {
+        "anchor": "haze",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.06211119890213013,
+          "psnr_loss_db": -0.05523090402006048
+        },
+        "metrics": {
+          "lpips": 0.24840065836906433,
+          "psnr": 24.591661221983756
+        },
+        "other_experts_total_weight": 0.24261420965194702,
+        "primary_weight": 0.757385790348053,
+        "top_two_margin": 0.5168118923902512,
+        "true_class_weight": 0.24057389795780182,
+        "weights": [
+          0.24057389795780182,
+          0.0011907006846740842,
+          0.757385790348053,
+          2.505193918977966e-08,
+          0.0008496211376041174
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.05467072129249573,
+          "psnr_loss_db": -0.6383499449791081
+        },
+        "metrics": {
+          "lpips": 0.24096018075942993,
+          "psnr": 25.174780262942804
+        },
+        "other_experts_total_weight": 0.312408447265625,
+        "primary_weight": 0.687591552734375,
+        "top_two_margin": 0.3881390690803528,
+        "true_class_weight": 0.687591552734375,
+        "weights": [
+          0.687591552734375,
+          0.007744812872260809,
+          0.2994524836540222,
+          3.491317812631678e-08,
+          0.00521112559363246
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.16703490912914276,
+        "psnr": 21.375699823973452
+      },
+      "change_408_minus_400": {
+        "lpips": 0.00021716952323913574,
+        "psnr": -0.004671157225946132
+      },
+      "crop_xy": [
+        899,
+        1469
+      ],
+      "key": "validation_foundir_train_0094664",
+      "record_id": "foundir_train_0094664",
+      "seed": 3258379836,
+      "source_group": "5ca3974ad802c4084472882f97fc10843ecaf232b41e75b2783ac75ad701d1c4",
+      "step400": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -9.457767009735107e-05,
+          "psnr_loss_db": -0.0002051535914269209
+        },
+        "metrics": {
+          "lpips": 0.1669403314590454,
+          "psnr": 21.37590497756488
+        },
+        "other_experts_total_weight": 8.749961853027344e-05,
+        "primary_weight": 0.9999125003814697,
+        "top_two_margin": 0.999864547753532,
+        "true_class_weight": 0.9999125003814697,
+        "weights": [
+          0.9999125003814697,
+          3.167483737342991e-05,
+          4.7952627937775105e-05,
+          1.986420272714895e-07,
+          7.72710336605087e-06
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00012259185314178467,
+          "psnr_loss_db": 0.004466003634519211
+        },
+        "metrics": {
+          "lpips": 0.16715750098228455,
+          "psnr": 21.371233820338933
+        },
+        "other_experts_total_weight": 8.320808410644531e-05,
+        "primary_weight": 0.9999167919158936,
+        "top_two_margin": 0.9998575446334144,
+        "true_class_weight": 0.9999167919158936,
+        "weights": [
+          0.9999167919158936,
+          5.92472824791912e-05,
+          9.00792201719014e-06,
+          1.146184303024711e-07,
+          1.4836532500339672e-05
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.3204156160354614,
+        "psnr": 21.469987590052618
+      },
+      "change_408_minus_400": {
+        "lpips": 0.00011599063873291016,
+        "psnr": -0.020665436193674225
+      },
+      "crop_xy": [
+        3555,
+        1546
+      ],
+      "key": "validation_foundir_train_0007534",
+      "record_id": "foundir_train_0007534",
+      "seed": 2250497953,
+      "source_group": "17a1fb487daa2e6aa6d85a501a6db078015215b78c7b4d82ffd03f08e21c80a8",
+      "step400": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 7.683038711547852e-05,
+          "psnr_loss_db": -0.021057521757100517
+        },
+        "metrics": {
+          "lpips": 0.3204924464225769,
+          "psnr": 21.49104511180972
+        },
+        "other_experts_total_weight": 0.00351560115814209,
+        "primary_weight": 0.9964843988418579,
+        "top_two_margin": 0.9929823458660394,
+        "true_class_weight": 0.9964843988418579,
+        "weights": [
+          0.9964843988418579,
+          1.34556803459418e-05,
+          0.003502052975818515,
+          1.0890840451693862e-09,
+          1.60351163458472e-07
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00019282102584838867,
+          "psnr_loss_db": -0.0003920855634262921
+        },
+        "metrics": {
+          "lpips": 0.3206084370613098,
+          "psnr": 21.470379675616044
+        },
+        "other_experts_total_weight": 0.0005629658699035645,
+        "primary_weight": 0.9994370341300964,
+        "top_two_margin": 0.9989180504344404,
+        "true_class_weight": 0.9994370341300964,
+        "weights": [
+          0.9994370341300964,
+          4.35278816439677e-05,
+          0.0005189836956560612,
+          6.16713902168442e-10,
+          4.547469814042415e-07
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.1503629982471466,
+        "psnr": 26.95573129919591
+      },
+      "change_408_minus_400": {
+        "lpips": 0.0001579076051712036,
+        "psnr": 0.0004775859423524764
+      },
+      "crop_xy": [
+        1868,
+        641
+      ],
+      "key": "validation_foundir_train_0091843",
+      "record_id": "foundir_train_0091843",
+      "seed": 232701719,
+      "source_group": "885030185a788b241879db2009f2e5598ac7622f498f97445737bc5a69b4e9ff",
+      "step400": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -8.241832256317139e-05,
+          "psnr_loss_db": 6.872499404764199e-05
+        },
+        "metrics": {
+          "lpips": 0.15028057992458344,
+          "psnr": 26.955662574201863
+        },
+        "other_experts_total_weight": 0.0005080699920654297,
+        "primary_weight": 0.9994919300079346,
+        "top_two_margin": 0.9991821251169313,
+        "true_class_weight": 0.9994919300079346,
+        "weights": [
+          0.9994919300079346,
+          0.0003098048910032958,
+          0.00012874894309788942,
+          1.1061440090998076e-05,
+          5.83911532885395e-05
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 7.548928260803223e-05,
+          "psnr_loss_db": -0.00040886094830483444
+        },
+        "metrics": {
+          "lpips": 0.15043848752975464,
+          "psnr": 26.956140160144216
+        },
+        "other_experts_total_weight": 0.001037001609802246,
+        "primary_weight": 0.9989629983901978,
+        "top_two_margin": 0.9981050322530791,
+        "true_class_weight": 0.9989629983901978,
+        "weights": [
+          0.9989629983901978,
+          0.0008579661371186376,
+          1.785856693459209e-05,
+          5.720141871279338e-06,
+          0.00015544667257927358
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.011323144659399986,
+        "psnr": 36.52029884967793
+      },
+      "change_408_minus_400": {
+        "lpips": 0.00013811606913805008,
+        "psnr": 0.459736142813135
+      },
+      "crop_xy": [
+        1339,
+        115
+      ],
+      "key": "validation_foundir_train_0034135",
+      "record_id": "foundir_train_0034135",
+      "seed": 3146910290,
+      "source_group": "66515469364300fe51f1471860eebe160d21e2d98c9a03d4a3519ab1316e21d0",
+      "step400": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.00023965910077095032,
+          "psnr_loss_db": 0.3920765239938291
+        },
+        "metrics": {
+          "lpips": 0.011083485558629036,
+          "psnr": 36.1282223256841
+        },
+        "other_experts_total_weight": 0.08358418941497803,
+        "primary_weight": 0.916415810585022,
+        "top_two_margin": 0.8379445672035217,
+        "true_class_weight": 0.916415810585022,
+        "weights": [
+          0.916415810585022,
+          0.0013529177522286773,
+          0.07847124338150024,
+          5.9687779867090285e-05,
+          0.003700410481542349
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.00010154303163290024,
+          "psnr_loss_db": -0.06765961881930593
+        },
+        "metrics": {
+          "lpips": 0.011221601627767086,
+          "psnr": 36.587958468497234
+        },
+        "other_experts_total_weight": 0.025254487991333008,
+        "primary_weight": 0.974745512008667,
+        "top_two_margin": 0.9642036389559507,
+        "true_class_weight": 0.974745512008667,
+        "weights": [
+          0.974745512008667,
+          0.004166906699538231,
+          0.010512246750295162,
+          3.342504351167008e-05,
+          0.010541873052716255
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.30197563767433167,
+        "psnr": 15.25827420084173
+      },
+      "change_408_minus_400": {
+        "lpips": -5.21540641784668e-06,
+        "psnr": -0.000742259372437104
+      },
+      "crop_xy": [
+        35,
+        153
+      ],
+      "key": "validation_foundir_train_0067975",
+      "record_id": "foundir_train_0067975",
+      "seed": 719715910,
+      "source_group": "4bf5953c92d285ab331f6e271c5e2bd3635a43eaaea990fd811e4d23a56e2e36",
+      "step400": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00045165419578552246,
+          "psnr_loss_db": 0.01058089073880808
+        },
+        "metrics": {
+          "lpips": 0.3024272918701172,
+          "psnr": 15.247693310102921
+        },
+        "other_experts_total_weight": 4.887580871582031e-06,
+        "primary_weight": 0.9999951124191284,
+        "top_two_margin": 0.9999906059119894,
+        "true_class_weight": 0.9999951124191284,
+        "weights": [
+          0.9999951124191284,
+          1.6340355557531439e-07,
+          4.506507139012683e-06,
+          1.4872087936157463e-11,
+          1.835265805993913e-07
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0004464387893676758,
+          "psnr_loss_db": 0.011323150111245184
+        },
+        "metrics": {
+          "lpips": 0.30242207646369934,
+          "psnr": 15.246951050730484
+        },
+        "other_experts_total_weight": 1.5497207641601562e-06,
+        "primary_weight": 0.9999984502792358,
+        "top_two_margin": 0.9999976660681682,
+        "true_class_weight": 0.9999984502792358,
+        "weights": [
+          0.9999984502792358,
+          3.1518331411461986e-07,
+          7.842110676392622e-07,
+          8.425330745576165e-12,
+          2.9985247351760336e-07
+        ]
+      },
+      "task": "blur"
+    },
+    {
+      "baseline": {
+        "lpips": 0.012662265449762344,
+        "psnr": 39.31311370809781
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0029417071491479874,
+        "psnr": -0.8616443980056943
+      },
+      "crop_xy": [
+        609,
+        288
+      ],
+      "key": "validation_foundir_train_0144583",
+      "record_id": "foundir_train_0144583",
+      "seed": 495174380,
+      "source_group": "3628815c0fc118bfa53791f3dc20d144d001fa01ac6b0c617034c6d00dc47251",
+      "step400": {
+        "anchor": "blur",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0018315520137548447,
+          "psnr_loss_db": 1.5006463530767888
+        },
+        "metrics": {
+          "lpips": 0.014493817463517189,
+          "psnr": 37.81246735502102
+        },
+        "other_experts_total_weight": 0.1830427050590515,
+        "primary_weight": 0.8169572949409485,
+        "top_two_margin": 0.6351265460252762,
+        "true_class_weight": 0.1818307489156723,
+        "weights": [
+          0.8169572949409485,
+          0.1818307489156723,
+          0.0005488566239364445,
+          0.0006431923829950392,
+          1.984272967092693e-05
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.0011101551353931427,
+          "psnr_loss_db": 2.362290751082483
+        },
+        "metrics": {
+          "lpips": 0.011552110314369202,
+          "psnr": 36.950822957015326
+        },
+        "other_experts_total_weight": 0.449421763420105,
+        "primary_weight": 0.550578236579895,
+        "top_two_margin": 0.10149410367012024,
+        "true_class_weight": 0.4490841329097748,
+        "weights": [
+          0.550578236579895,
+          0.4490841329097748,
+          5.274612703942694e-05,
+          0.00024656078312546015,
+          3.8306858186842874e-05
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.06651907414197922,
+        "psnr": 40.825255729878236
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0037883594632148743,
+        "psnr": 0.05247787387236258
+      },
+      "crop_xy": [
+        1921,
+        211
+      ],
+      "key": "validation_foundir_train_0153585",
+      "record_id": "foundir_train_0153585",
+      "seed": 3503029344,
+      "source_group": "bde02725189f0b63b924e088d2f1e59d4e7725ecf6a6b7b2464ce827752552ee",
+      "step400": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.003937490284442902,
+          "psnr_loss_db": 0.034224661095620945
+        },
+        "metrics": {
+          "lpips": 0.07045656442642212,
+          "psnr": 40.791031068782615
+        },
+        "other_experts_total_weight": 0.3162901997566223,
+        "primary_weight": 0.6837098002433777,
+        "top_two_margin": 0.389633446931839,
+        "true_class_weight": 0.6837098002433777,
+        "weights": [
+          0.022178122773766518,
+          0.6837098002433777,
+          0.2940763533115387,
+          6.193575700308429e-06,
+          2.9513508707168512e-05
+        ]
+      },
+      "step408": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00014913082122802734,
+          "psnr_loss_db": -0.018253212776741634
+        },
+        "metrics": {
+          "lpips": 0.06666820496320724,
+          "psnr": 40.84350894265498
+        },
+        "other_experts_total_weight": 0.026970863342285156,
+        "primary_weight": 0.9730291366577148,
+        "top_two_margin": 0.9554879665374756,
+        "true_class_weight": 0.9730291366577148,
+        "weights": [
+          0.009397109970450401,
+          0.9730291366577148,
+          0.017541170120239258,
+          1.5225037941490882e-06,
+          3.110186298727058e-05
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.013407150283455849,
+        "psnr": 42.997338524116834
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0020232535898685455,
+        "psnr": 2.671688501807999
+      },
+      "crop_xy": [
+        259,
+        598
+      ],
+      "key": "validation_foundir_train_0182272",
+      "record_id": "foundir_train_0182272",
+      "seed": 1825916150,
+      "source_group": "2977566a0c7f542fd18974c1610fcc87585e6747d219d6f74a9584a87b6715e8",
+      "step400": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0020106900483369827,
+          "psnr_loss_db": 3.3195157168142586
+        },
+        "metrics": {
+          "lpips": 0.015417840331792831,
+          "psnr": 39.677822807302576
+        },
+        "other_experts_total_weight": 0.16664671897888184,
+        "primary_weight": 0.8333532810211182,
+        "top_two_margin": 0.7548317611217499,
+        "true_class_weight": 0.8333532810211182,
+        "weights": [
+          0.028063669800758362,
+          0.8333532810211182,
+          0.07852151989936829,
+          0.05957132950425148,
+          0.0004902330692857504
+        ]
+      },
+      "step408": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -1.2563541531562805e-05,
+          "psnr_loss_db": 0.6478272150062594
+        },
+        "metrics": {
+          "lpips": 0.013394586741924286,
+          "psnr": 42.349511309110575
+        },
+        "other_experts_total_weight": 0.023521125316619873,
+        "primary_weight": 0.9764788746833801,
+        "top_two_margin": 0.9658640529960394,
+        "true_class_weight": 0.9764788746833801,
+        "weights": [
+          0.008711319416761398,
+          0.9764788746833801,
+          0.0037743854336440563,
+          0.010614821687340736,
+          0.00042063242290169
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.018698427826166153,
+        "psnr": 45.60783344363708
+      },
+      "change_408_minus_400": {
+        "lpips": -0.015730120241642,
+        "psnr": 9.753154882715648
+      },
+      "crop_xy": [
+        1680,
+        1045
+      ],
+      "key": "validation_foundir_train_0177424",
+      "record_id": "foundir_train_0177424",
+      "seed": 2169549075,
+      "source_group": "139e8097c8f00268a95b9a2def83c25c15aabea38214e0a25a3fd198df66c090",
+      "step400": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.01646612584590912,
+          "psnr_loss_db": 16.767070261320583
+        },
+        "metrics": {
+          "lpips": 0.03516455367207527,
+          "psnr": 28.840763182316493
+        },
+        "other_experts_total_weight": 0.4639294147491455,
+        "primary_weight": 0.5360705852508545,
+        "top_two_margin": 0.07599803805351257,
+        "true_class_weight": 0.5360705852508545,
+        "weights": [
+          0.0038562158588320017,
+          0.5360705852508545,
+          6.367008040797373e-07,
+          0.4600725471973419,
+          5.402607428095507e-08
+        ]
+      },
+      "step408": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0007360056042671204,
+          "psnr_loss_db": 7.013915378604935
+        },
+        "metrics": {
+          "lpips": 0.019434433430433273,
+          "psnr": 38.59391806503214
+        },
+        "other_experts_total_weight": 0.16859924793243408,
+        "primary_weight": 0.8314007520675659,
+        "top_two_margin": 0.6649847328662872,
+        "true_class_weight": 0.8314007520675659,
+        "weights": [
+          0.0021831945050507784,
+          0.8314007520675659,
+          6.938193308769769e-08,
+          0.1664160192012787,
+          6.956877740549317e-08
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.1511465162038803,
+        "psnr": 41.4422393931597
+      },
+      "change_408_minus_400": {
+        "lpips": 0.00019976496696472168,
+        "psnr": 0.08991968736082612
+      },
+      "crop_xy": [
+        825,
+        318
+      ],
+      "key": "validation_foundir_train_0187489",
+      "record_id": "foundir_train_0187489",
+      "seed": 2567053736,
+      "source_group": "309c9edefb806d502f503dd2d61510fea431f6df6644b1fd1541c4ad74142e73",
+      "step400": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.0002601891756057739,
+          "psnr_loss_db": 0.08767853077151955
+        },
+        "metrics": {
+          "lpips": 0.15088632702827454,
+          "psnr": 41.35456086238818
+        },
+        "other_experts_total_weight": 0.06340432167053223,
+        "primary_weight": 0.9365956783294678,
+        "top_two_margin": 0.8928919769823551,
+        "true_class_weight": 0.9365956783294678,
+        "weights": [
+          0.01962890662252903,
+          0.9365956783294678,
+          0.043703701347112656,
+          5.860712917638011e-05,
+          1.3124507859174628e-05
+        ]
+      },
+      "step408": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -6.0424208641052246e-05,
+          "psnr_loss_db": -0.00224115658930657
+        },
+        "metrics": {
+          "lpips": 0.15108609199523926,
+          "psnr": 41.44448054974901
+        },
+        "other_experts_total_weight": 0.008056402206420898,
+        "primary_weight": 0.9919435977935791,
+        "top_two_margin": 0.9859022782184184,
+        "true_class_weight": 0.9919435977935791,
+        "weights": [
+          0.006041319575160742,
+          0.9919435977935791,
+          0.0019947332330048084,
+          1.0246386409562547e-05,
+          1.0103975910169538e-05
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.08227060735225677,
+        "psnr": 41.3931689977558
+      },
+      "change_408_minus_400": {
+        "lpips": -0.005614787340164185,
+        "psnr": 0.10784496561824852
+      },
+      "crop_xy": [
+        783,
+        149
+      ],
+      "key": "validation_foundir_train_0189233",
+      "record_id": "foundir_train_0189233",
+      "seed": 3046999744,
+      "source_group": "2e77644cd8b528041cf140e95c0c54a64b276345bca80849c2f1192d7f28095e",
+      "step400": {
+        "anchor": "blur",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.01708746701478958,
+          "psnr_loss_db": 15.100783705975168
+        },
+        "metrics": {
+          "lpips": 0.09935807436704636,
+          "psnr": 26.292385291780633
+        },
+        "other_experts_total_weight": 0.010843038558959961,
+        "primary_weight": 0.98915696144104,
+        "top_two_margin": 0.9814420626498759,
+        "true_class_weight": 0.0030570190865546465,
+        "weights": [
+          0.98915696144104,
+          0.0030570190865546465,
+          0.00771489879116416,
+          3.3697001526888926e-06,
+          6.772355118300766e-05
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.011472679674625397,
+          "psnr_loss_db": 14.99293874035692
+        },
+        "metrics": {
+          "lpips": 0.09374328702688217,
+          "psnr": 26.40023025739888
+        },
+        "other_experts_total_weight": 0.00961601734161377,
+        "primary_weight": 0.9903839826583862,
+        "top_two_margin": 0.9823004957288504,
+        "true_class_weight": 0.008083486929535866,
+        "weights": [
+          0.9903839826583862,
+          0.008083486929535866,
+          0.0013874704018235207,
+          1.8714127918428858e-06,
+          0.00014315680891741067
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.10552693903446198,
+        "psnr": 34.90914086809218
+      },
+      "change_408_minus_400": {
+        "lpips": 1.9624829292297363e-05,
+        "psnr": 0.0005831137980862877
+      },
+      "crop_xy": [
+        66,
+        375
+      ],
+      "key": "validation_foundir_train_0192771",
+      "record_id": "foundir_train_0192771",
+      "seed": 1765099932,
+      "source_group": "328feac554e9789f2b17e1f231a0c6a784546f8f4dca8df52c352cd446945e4a",
+      "step400": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 9.715557098388672e-06,
+          "psnr_loss_db": -0.0018091516509244343
+        },
+        "metrics": {
+          "lpips": 0.10553665459156036,
+          "psnr": 34.910950019743105
+        },
+        "other_experts_total_weight": 3.170967102050781e-05,
+        "primary_weight": 0.9999682903289795,
+        "top_two_margin": 0.9999506614913116,
+        "true_class_weight": 0.9999682903289795,
+        "weights": [
+          1.7628837667871267e-05,
+          0.9999682903289795,
+          1.3940571079729125e-05,
+          1.6933375590610922e-08,
+          1.7177360689402121e-07
+        ]
+      },
+      "step408": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 2.9340386390686035e-05,
+          "psnr_loss_db": -0.002392265449010722
+        },
+        "metrics": {
+          "lpips": 0.10555627942085266,
+          "psnr": 34.91153313354119
+        },
+        "other_experts_total_weight": 5.602836608886719e-06,
+        "primary_weight": 0.9999943971633911,
+        "top_two_margin": 0.9999895368296166,
+        "true_class_weight": 0.9999943971633911,
+        "weights": [
+          4.860333774558967e-06,
+          0.9999943971633911,
+          6.501484790533141e-07,
+          2.842925228563331e-09,
+          1.2895850431959843e-07
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.10296003520488739,
+        "psnr": 35.7840133628378
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0002980530261993408,
+        "psnr": -0.028267639600400685
+      },
+      "crop_xy": [
+        858,
+        858
+      ],
+      "key": "validation_foundir_train_0194586",
+      "record_id": "foundir_train_0194586",
+      "seed": 1420564938,
+      "source_group": "314ffebd1a54fabd4e188300f63bc70411e71b0fb79e236ef108021059759d7e",
+      "step400": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0005157589912414551,
+          "psnr_loss_db": -0.04085190837418651
+        },
+        "metrics": {
+          "lpips": 0.10347579419612885,
+          "psnr": 35.82486527121198
+        },
+        "other_experts_total_weight": 0.03577446937561035,
+        "primary_weight": 0.9642255306243896,
+        "top_two_margin": 0.9284535199403763,
+        "true_class_weight": 0.9642255306243896,
+        "weights": [
+          0.03577201068401337,
+          0.9642255306243896,
+          3.1931850230648706e-07,
+          4.616231876752863e-07,
+          1.6469080037495587e-06
+        ]
+      },
+      "step408": {
+        "anchor": "noise",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00021770596504211426,
+          "psnr_loss_db": -0.012584268773785823
+        },
+        "metrics": {
+          "lpips": 0.1031777411699295,
+          "psnr": 35.79659763161158
+        },
+        "other_experts_total_weight": 0.013367950916290283,
+        "primary_weight": 0.9866320490837097,
+        "top_two_margin": 0.9732655044645071,
+        "true_class_weight": 0.9866320490837097,
+        "weights": [
+          0.013366544619202614,
+          0.9866320490837097,
+          2.6734394253935534e-08,
+          1.1589481374585375e-07,
+          1.307718093812582e-06
+        ]
+      },
+      "task": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.1627616435289383,
+        "psnr": 16.462526043501015
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0002486705780029297,
+        "psnr": 0.015119838844178446
+      },
+      "crop_xy": [
+        1141,
+        135
+      ],
+      "key": "validation_foundir_train_0201705",
+      "record_id": "foundir_train_0201705",
+      "seed": 3616019085,
+      "source_group": "2afba849fad3e0f8af75024c6928d11defb11783c3a82da53ad5a356197aa9a9",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 6.847083568572998e-05,
+          "psnr_loss_db": 0.002762539787159568
+        },
+        "metrics": {
+          "lpips": 0.16283011436462402,
+          "psnr": 16.459763503713855
+        },
+        "other_experts_total_weight": 2.2649765014648438e-06,
+        "primary_weight": 0.9999977350234985,
+        "top_two_margin": 0.9999961797050219,
+        "true_class_weight": 0.9999977350234985,
+        "weights": [
+          1.5553184766758932e-06,
+          1.9482787649849342e-07,
+          0.9999977350234985,
+          1.241489333211887e-12,
+          5.028303462495387e-07
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.0001801997423171997,
+          "psnr_loss_db": -0.012357299057018878
+        },
+        "metrics": {
+          "lpips": 0.1625814437866211,
+          "psnr": 16.474883342558034
+        },
+        "other_experts_total_weight": 1.33514404296875e-05,
+        "primary_weight": 0.9999866485595703,
+        "top_two_margin": 0.999980530909852,
+        "true_class_weight": 0.9999866485595703,
+        "weights": [
+          6.117649718362372e-06,
+          2.1073569769214373e-06,
+          0.9999866485595703,
+          3.0025333348088212e-12,
+          5.066619451099541e-06
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.027823055163025856,
+        "psnr": 29.573739253238628
+      },
+      "change_408_minus_400": {
+        "lpips": 0.0017068292945623398,
+        "psnr": -0.9527316390843055
+      },
+      "crop_xy": [
+        1763,
+        1106
+      ],
+      "key": "validation_foundir_train_0225021",
+      "record_id": "foundir_train_0225021",
+      "seed": 3535615379,
+      "source_group": "f69a8bdcd5804f907e5af591356bbe3a0ec5cf2ebc4067a311f3bd297ca67916",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.00035703741014003754,
+          "psnr_loss_db": -0.24165442422782135
+        },
+        "metrics": {
+          "lpips": 0.02746601775288582,
+          "psnr": 29.81539367746645
+        },
+        "other_experts_total_weight": 0.02344721555709839,
+        "primary_weight": 0.9765527844429016,
+        "top_two_margin": 0.9531886391341686,
+        "true_class_weight": 0.9765527844429016,
+        "weights": [
+          0.023364145308732986,
+          8.093728683888912e-05,
+          0.9765527844429016,
+          1.8872199636366105e-10,
+          2.113179334628512e-06
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0013497918844223022,
+          "psnr_loss_db": 0.7110772148564841
+        },
+        "metrics": {
+          "lpips": 0.029172847047448158,
+          "psnr": 28.862662038382144
+        },
+        "other_experts_total_weight": 0.1327105164527893,
+        "primary_weight": 0.8672894835472107,
+        "top_two_margin": 0.7358604967594147,
+        "true_class_weight": 0.8672894835472107,
+        "weights": [
+          0.13142898678779602,
+          0.0012530155945569277,
+          0.8672894835472107,
+          5.334403474499538e-10,
+          2.8524173103505746e-05
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.11257670819759369,
+        "psnr": 22.6130973260845
+      },
+      "change_408_minus_400": {
+        "lpips": 9.040534496307373e-05,
+        "psnr": 0.022517872020337393
+      },
+      "crop_xy": [
+        1520,
+        311
+      ],
+      "key": "validation_foundir_train_0229347",
+      "record_id": "foundir_train_0229347",
+      "seed": 3907674659,
+      "source_group": "6674c28a8329825b39e0866f8584386d6563f1b58d06ed6bdc51ee03730ce863",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -9.471923112869263e-05,
+          "psnr_loss_db": 0.009496589787644893
+        },
+        "metrics": {
+          "lpips": 0.112481988966465,
+          "psnr": 22.603600736296855
+        },
+        "other_experts_total_weight": 0.0001913905143737793,
+        "primary_weight": 0.9998086094856262,
+        "top_two_margin": 0.9996188453369541,
+        "true_class_weight": 0.9998086094856262,
+        "weights": [
+          0.00018976414867211133,
+          1.276338934985688e-06,
+          0.9998086094856262,
+          6.739971081248797e-11,
+          3.495141243092803e-07
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -4.3138861656188965e-06,
+          "psnr_loss_db": -0.0130212822326925
+        },
+        "metrics": {
+          "lpips": 0.11257239431142807,
+          "psnr": 22.626118608317192
+        },
+        "other_experts_total_weight": 0.0009531378746032715,
+        "primary_weight": 0.9990468621253967,
+        "top_two_margin": 0.9981145466445014,
+        "true_class_weight": 0.9990468621253967,
+        "weights": [
+          0.0009323154808953404,
+          1.6994446923490614e-05,
+          0.9990468621253967,
+          1.84898027444369e-10,
+          3.776603080041241e-06
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.11121533066034317,
+        "psnr": 22.328047377587673
+      },
+      "change_408_minus_400": {
+        "lpips": -0.008086763322353363,
+        "psnr": 0.6941907206016396
+      },
+      "crop_xy": [
+        1409,
+        822
+      ],
+      "key": "validation_foundir_train_0255323",
+      "record_id": "foundir_train_0255323",
+      "seed": 2652528581,
+      "source_group": "0fbc709e91ee81c1fe49a03fcbd54b504ddd48a29d74a5e9bdabd17495faac87",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.0010138005018234253,
+          "psnr_loss_db": -0.11718734733612024
+        },
+        "metrics": {
+          "lpips": 0.11020153015851974,
+          "psnr": 22.445234724923793
+        },
+        "other_experts_total_weight": 0.014197766780853271,
+        "primary_weight": 0.9858022332191467,
+        "top_two_margin": 0.9718665182590485,
+        "true_class_weight": 0.9858022332191467,
+        "weights": [
+          7.883724174462259e-05,
+          0.013935714960098267,
+          0.9858022332191467,
+          3.251110911151045e-06,
+          0.00017999119882006198
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.009100563824176788,
+          "psnr_loss_db": -0.8113780679377598
+        },
+        "metrics": {
+          "lpips": 0.10211476683616638,
+          "psnr": 23.139425445525433
+        },
+        "other_experts_total_weight": 0.18894892930984497,
+        "primary_weight": 0.811051070690155,
+        "top_two_margin": 0.6246301829814911,
+        "true_class_weight": 0.811051070690155,
+        "weights": [
+          0.00033369645825587213,
+          0.18642088770866394,
+          0.811051070690155,
+          9.253693860955536e-06,
+          0.0021850126795470715
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.079948790371418,
+        "psnr": 21.5609352533021
+      },
+      "change_408_minus_400": {
+        "lpips": 0.00015307962894439697,
+        "psnr": -0.026513445798308055
+      },
+      "crop_xy": [
+        2440,
+        840
+      ],
+      "key": "validation_foundir_train_0235052",
+      "record_id": "foundir_train_0235052",
+      "seed": 2150433959,
+      "source_group": "8cb2800086b00712c967d5887159eea6a224b52fbe0d89c9e97c8b09685a46e2",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -9.102374315261841e-05,
+          "psnr_loss_db": -0.01798582332215304
+        },
+        "metrics": {
+          "lpips": 0.07985776662826538,
+          "psnr": 21.578921076624255
+        },
+        "other_experts_total_weight": 4.565715789794922e-05,
+        "primary_weight": 0.999954342842102,
+        "top_two_margin": 0.9999124464447959,
+        "true_class_weight": 0.999954342842102,
+        "weights": [
+          4.189639730611816e-05,
+          3.4051963666570373e-06,
+          0.999954342842102,
+          2.8655642836383777e-07,
+          3.117428803989242e-08
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 6.205588579177856e-05,
+          "psnr_loss_db": 0.008527622476155017
+        },
+        "metrics": {
+          "lpips": 0.08001084625720978,
+          "psnr": 21.552407630825947
+        },
+        "other_experts_total_weight": 0.00026088953018188477,
+        "primary_weight": 0.9997391104698181,
+        "top_two_margin": 0.9995209172629984,
+        "true_class_weight": 0.9997391104698181,
+        "weights": [
+          0.00021819320681970567,
+          4.134689879720099e-05,
+          0.9997391104698181,
+          9.186035754282784e-07,
+          3.3064901572288363e-07
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.04768603295087814,
+        "psnr": 27.62361620482604
+      },
+      "change_408_minus_400": {
+        "lpips": 0.001836668699979782,
+        "psnr": -1.015706408672358
+      },
+      "crop_xy": [
+        649,
+        13
+      ],
+      "key": "validation_foundir_train_0208167",
+      "record_id": "foundir_train_0208167",
+      "seed": 732744911,
+      "source_group": "81f4eee29191ce2113969d9abee34f977e16e9443e7e1194f180c1a081608555",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 2.5562942028045654e-05,
+          "psnr_loss_db": 0.055768035412928185
+        },
+        "metrics": {
+          "lpips": 0.04771159589290619,
+          "psnr": 27.56784816941311
+        },
+        "other_experts_total_weight": 0.00213015079498291,
+        "primary_weight": 0.9978698492050171,
+        "top_two_margin": 0.996131248655729,
+        "true_class_weight": 0.9978698492050171,
+        "weights": [
+          0.001738600549288094,
+          0.00039136011037044227,
+          0.9978698492050171,
+          1.9156436159573076e-10,
+          1.7451129963319545e-07
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0018622316420078278,
+          "psnr_loss_db": 1.0714744440852861
+        },
+        "metrics": {
+          "lpips": 0.04954826459288597,
+          "psnr": 26.552141760740753
+        },
+        "other_experts_total_weight": 0.016262829303741455,
+        "primary_weight": 0.9837371706962585,
+        "top_two_margin": 0.9742549676448107,
+        "true_class_weight": 0.9837371706962585,
+        "weights": [
+          0.009482203051447868,
+          0.006778308656066656,
+          0.9837371706962585,
+          5.90646975773268e-10,
+          2.2513604562846012e-06
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.06395670771598816,
+        "psnr": 22.249476888341682
+      },
+      "change_408_minus_400": {
+        "lpips": 0.08024604618549347,
+        "psnr": -4.718615273585076
+      },
+      "crop_xy": [
+        18,
+        1399
+      ],
+      "key": "validation_foundir_train_0264740",
+      "record_id": "foundir_train_0264740",
+      "seed": 1438306731,
+      "source_group": "0cafc4da477642b2b25ea42b3d75f81d532f62904ee633f39ffa83b41997f119",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.005285784602165222,
+          "psnr_loss_db": 2.030055828529612
+        },
+        "metrics": {
+          "lpips": 0.06924249231815338,
+          "psnr": 20.21942105981207
+        },
+        "other_experts_total_weight": 0.1404973864555359,
+        "primary_weight": 0.8595026135444641,
+        "top_two_margin": 0.730015367269516,
+        "true_class_weight": 0.8595026135444641,
+        "weights": [
+          0.12948724627494812,
+          0.008867036551237106,
+          0.8595026135444641,
+          7.966506565537657e-09,
+          0.0021430845372378826
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.08553183078765869,
+          "psnr_loss_db": 6.748671102114688
+        },
+        "metrics": {
+          "lpips": 0.14948853850364685,
+          "psnr": 15.500805786226994
+        },
+        "other_experts_total_weight": 0.5426715314388275,
+        "primary_weight": 0.4573284685611725,
+        "top_two_margin": 0.019936978816986084,
+        "true_class_weight": 0.4573284685611725,
+        "weights": [
+          0.4373914897441864,
+          0.0852523073554039,
+          0.4573284685611725,
+          1.5412371823231297e-08,
+          0.020027685910463333
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.03543943911790848,
+        "psnr": 30.186781824002928
+      },
+      "change_408_minus_400": {
+        "lpips": 0.0001455545425415039,
+        "psnr": 0.01849324920083717
+      },
+      "crop_xy": [
+        1667,
+        1099
+      ],
+      "key": "validation_foundir_train_0276837",
+      "record_id": "foundir_train_0276837",
+      "seed": 2198700661,
+      "source_group": "f2bee38f714bb555d5316c4700574bcc73b9367f541052935d98f1bc23641bee",
+      "step400": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -4.178285598754883e-05,
+          "psnr_loss_db": -0.017750116315404796
+        },
+        "metrics": {
+          "lpips": 0.03539765626192093,
+          "psnr": 30.204531940318333
+        },
+        "other_experts_total_weight": 0.00041562318801879883,
+        "primary_weight": 0.9995843768119812,
+        "top_two_margin": 0.9992282339953817,
+        "true_class_weight": 0.9995843768119812,
+        "weights": [
+          0.00035614281659945846,
+          5.8317305956734344e-05,
+          0.9995843768119812,
+          5.579516937359585e-07,
+          6.377510430866096e-07
+        ]
+      },
+      "step408": {
+        "anchor": "haze",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00010377168655395508,
+          "psnr_loss_db": -0.036243365516241965
+        },
+        "metrics": {
+          "lpips": 0.03554321080446243,
+          "psnr": 30.22302518951917
+        },
+        "other_experts_total_weight": 0.00295335054397583,
+        "primary_weight": 0.9970466494560242,
+        "top_two_margin": 0.9951336706290022,
+        "true_class_weight": 0.9970466494560242,
+        "weights": [
+          0.001912978827022016,
+          0.0010299953864887357,
+          0.9970466494560242,
+          1.729253540361242e-06,
+          8.723377504793461e-06
+        ]
+      },
+      "task": "haze"
+    },
+    {
+      "baseline": {
+        "lpips": 0.10958962142467499,
+        "psnr": 17.141480363695837
+      },
+      "change_408_minus_400": {
+        "lpips": -0.00010327249765396118,
+        "psnr": 0.0028160951756355246
+      },
+      "crop_xy": [
+        813,
+        88
+      ],
+      "key": "validation_foundir_train_0493413",
+      "record_id": "foundir_train_0493413",
+      "seed": 4264219782,
+      "source_group": "2977566a0c7f542fd18974c1610fcc87585e6747d219d6f74a9584a87b6715e8",
+      "step400": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 5.7347118854522705e-05,
+          "psnr_loss_db": -0.0013941692435395225
+        },
+        "metrics": {
+          "lpips": 0.10964696854352951,
+          "psnr": 17.142874532939377
+        },
+        "other_experts_total_weight": 1.1920928955078125e-05,
+        "primary_weight": 0.9999880790710449,
+        "top_two_margin": 0.9999811439133737,
+        "true_class_weight": 0.9999880790710449,
+        "weights": [
+          6.935157671250636e-06,
+          1.1141668210257194e-06,
+          3.374434754732647e-06,
+          0.9999880790710449,
+          5.956123345640663e-07
+        ]
+      },
+      "step408": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -4.5925378799438477e-05,
+          "psnr_loss_db": -0.004210264419175047
+        },
+        "metrics": {
+          "lpips": 0.10954369604587555,
+          "psnr": 17.145690628115013
+        },
+        "other_experts_total_weight": 1.9431114196777344e-05,
+        "primary_weight": 0.9999805688858032,
+        "top_two_margin": 0.9999688787611376,
+        "true_class_weight": 0.9999805688858032,
+        "weights": [
+          1.1690124665619805e-05,
+          4.3404415919212624e-06,
+          1.2200374612802989e-06,
+          0.9999805688858032,
+          2.2769402221456403e-06
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.14240221679210663,
+        "psnr": 21.98954788213827
+      },
+      "change_408_minus_400": {
+        "lpips": 0.026550233364105225,
+        "psnr": -1.3310545881566656
+      },
+      "crop_xy": [
+        1344,
+        1824
+      ],
+      "key": "validation_foundir_train_0508782",
+      "record_id": "foundir_train_0508782",
+      "seed": 3461967697,
+      "source_group": "139e8097c8f00268a95b9a2def83c25c15aabea38214e0a25a3fd198df66c090",
+      "step400": {
+        "anchor": "blur",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.160718634724617,
+          "psnr_loss_db": 13.483987465568578
+        },
+        "metrics": {
+          "lpips": 0.30312085151672363,
+          "psnr": 8.505560416569693
+        },
+        "other_experts_total_weight": 0.4140275716781616,
+        "primary_weight": 0.5859724283218384,
+        "top_two_margin": 0.17731672525405884,
+        "true_class_weight": 0.40865570306777954,
+        "weights": [
+          0.5859724283218384,
+          8.01500391389709e-06,
+          0.005363152362406254,
+          0.40865570306777954,
+          7.118484859347518e-07
+        ]
+      },
+      "step408": {
+        "anchor": "blur",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.18726886808872223,
+          "psnr_loss_db": 14.815042053725243
+        },
+        "metrics": {
+          "lpips": 0.32967108488082886,
+          "psnr": 7.174505828413028
+        },
+        "other_experts_total_weight": 0.27253127098083496,
+        "primary_weight": 0.727468729019165,
+        "top_two_margin": 0.4560861587524414,
+        "true_class_weight": 0.27138257026672363,
+        "weights": [
+          0.727468729019165,
+          2.4524839318473823e-05,
+          0.001122382702305913,
+          0.27138257026672363,
+          1.7799890201786184e-06
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.2559943199157715,
+        "psnr": 13.156241444337915
+      },
+      "change_408_minus_400": {
+        "lpips": -0.004688546061515808,
+        "psnr": 0.41242527023748465
+      },
+      "crop_xy": [
+        754,
+        175
+      ],
+      "key": "validation_foundir_train_0510173",
+      "record_id": "foundir_train_0510173",
+      "seed": 3374856142,
+      "source_group": "7ac053e4fb493e01d1655c661db259eb9cdf709de9aec3ef2769190b5a06a1c1",
+      "step400": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.00289309024810791,
+          "psnr_loss_db": -0.138257671416401
+        },
+        "metrics": {
+          "lpips": 0.2531012296676636,
+          "psnr": 13.294499115754316
+        },
+        "other_experts_total_weight": 0.007090508937835693,
+        "primary_weight": 0.9929094910621643,
+        "top_two_margin": 0.9883568650111556,
+        "true_class_weight": 0.9929094910621643,
+        "weights": [
+          0.0025301447603851557,
+          0.004552626051008701,
+          7.317175004573073e-06,
+          0.9929094910621643,
+          4.1636553760326933e-07
+        ]
+      },
+      "step408": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.007581636309623718,
+          "psnr_loss_db": -0.5506829416538856
+        },
+        "metrics": {
+          "lpips": 0.24841268360614777,
+          "psnr": 13.706924385991801
+        },
+        "other_experts_total_weight": 0.02596914768218994,
+        "primary_weight": 0.9740308523178101,
+        "top_two_margin": 0.9520271457731724,
+        "true_class_weight": 0.9740308523178101,
+        "weights": [
+          0.003961771726608276,
+          0.02200370654463768,
+          2.012434151765774e-06,
+          0.9740308523178101,
+          1.6265698832285125e-06
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.0893302783370018,
+        "psnr": 18.076225849379362
+      },
+      "change_408_minus_400": {
+        "lpips": 0.004877656698226929,
+        "psnr": -0.13620281123208855
+      },
+      "crop_xy": [
+        1165,
+        906
+      ],
+      "key": "validation_foundir_train_0479048",
+      "record_id": "foundir_train_0479048",
+      "seed": 3893297305,
+      "source_group": "934a9cbdbe313a56be7b7ac91b7bf68126a7e270a5584c3449cfce1318b75ec6",
+      "step400": {
+        "anchor": "noise",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.26426512748003006,
+          "psnr_loss_db": 12.368516240507038
+        },
+        "metrics": {
+          "lpips": 0.35359540581703186,
+          "psnr": 5.7077096088723245
+        },
+        "other_experts_total_weight": 0.19832676649093628,
+        "primary_weight": 0.8016732335090637,
+        "top_two_margin": 0.6347501426935196,
+        "true_class_weight": 0.16692309081554413,
+        "weights": [
+          0.03088991530239582,
+          0.8016732335090637,
+          0.00047295584226958454,
+          0.16692309081554413,
+          4.077921767020598e-05
+        ]
+      },
+      "step408": {
+        "anchor": "noise",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.269142784178257,
+          "psnr_loss_db": 12.504719051739126
+        },
+        "metrics": {
+          "lpips": 0.3584730625152588,
+          "psnr": 5.571506797640236
+        },
+        "other_experts_total_weight": 0.050264596939086914,
+        "primary_weight": 0.9497354030609131,
+        "top_two_margin": 0.9110570773482323,
+        "true_class_weight": 0.03867832571268082,
+        "weights": [
+          0.011520598083734512,
+          0.9497354030609131,
+          2.6670539227779955e-05,
+          0.03867832571268082,
+          3.908567305188626e-05
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.08951829373836517,
+        "psnr": 20.814671190897478
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0007383376359939575,
+        "psnr": 0.09969344839765171
+      },
+      "crop_xy": [
+        1245,
+        58
+      ],
+      "key": "validation_foundir_train_0487157",
+      "record_id": "foundir_train_0487157",
+      "seed": 3392939370,
+      "source_group": "dfb7dab7b886b275f6c87bbf487633406287dd50cfea86e1478fef792f032827",
+      "step400": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.0005969703197479248,
+          "psnr_loss_db": -0.06081110639711085
+        },
+        "metrics": {
+          "lpips": 0.08892132341861725,
+          "psnr": 20.87548229729459
+        },
+        "other_experts_total_weight": 0.0025327205657958984,
+        "primary_weight": 0.9974672794342041,
+        "top_two_margin": 0.9949468981940299,
+        "true_class_weight": 0.9974672794342041,
+        "weights": [
+          0.0025203812401741743,
+          9.61664682108676e-07,
+          1.117185274779331e-05,
+          0.9974672794342041,
+          1.8971040560700203e-07
+        ]
+      },
+      "step408": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.0013353079557418823,
+          "psnr_loss_db": -0.16050455479476256
+        },
+        "metrics": {
+          "lpips": 0.08818298578262329,
+          "psnr": 20.97517574569224
+        },
+        "other_experts_total_weight": 0.004534542560577393,
+        "primary_weight": 0.9954654574394226,
+        "top_two_margin": 0.9909402504563332,
+        "true_class_weight": 0.9954654574394226,
+        "weights": [
+          0.004525206983089447,
+          4.741012162412517e-06,
+          3.7671002246497665e-06,
+          0.9954654574394226,
+          8.390983907702321e-07
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.0943550169467926,
+        "psnr": 19.21361717317396
+      },
+      "change_408_minus_400": {
+        "lpips": 0.028903715312480927,
+        "psnr": 9.44553886128
+      },
+      "crop_xy": [
+        1302,
+        16
+      ],
+      "key": "validation_foundir_train_0482078",
+      "record_id": "foundir_train_0482078",
+      "seed": 1441111097,
+      "source_group": "314ffebd1a54fabd4e188300f63bc70411e71b0fb79e236ef108021059759d7e",
+      "step400": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.004461906850337982,
+          "psnr_loss_db": -2.7572515493431986
+        },
+        "metrics": {
+          "lpips": 0.09881692379713058,
+          "psnr": 21.97086872251716
+        },
+        "other_experts_total_weight": 0.07481741905212402,
+        "primary_weight": 0.925182580947876,
+        "top_two_margin": 0.8699579536914825,
+        "true_class_weight": 0.925182580947876,
+        "weights": [
+          0.019592372700572014,
+          0.05522462725639343,
+          4.84783724274962e-09,
+          0.925182580947876,
+          4.5071092813486757e-07
+        ]
+      },
+      "step408": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.03336562216281891,
+          "psnr_loss_db": -12.202790410623198
+        },
+        "metrics": {
+          "lpips": 0.1277206391096115,
+          "psnr": 31.41640758379716
+        },
+        "other_experts_total_weight": 0.2538599967956543,
+        "primary_weight": 0.7461400032043457,
+        "top_two_margin": 0.5214607119560242,
+        "true_class_weight": 0.7461400032043457,
+        "weights": [
+          0.029179217293858528,
+          0.22467929124832153,
+          1.4894244726448846e-09,
+          0.7461400032043457,
+          1.4838041124676238e-06
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.18371988832950592,
+        "psnr": 25.960774885338314
+      },
+      "change_408_minus_400": {
+        "lpips": 3.707408905029297e-05,
+        "psnr": -0.0038821705674685347
+      },
+      "crop_xy": [
+        1749,
+        355
+      ],
+      "key": "validation_foundir_train_0510520",
+      "record_id": "foundir_train_0510520",
+      "seed": 2898022370,
+      "source_group": "c3f9daf82f5646690ac899d78adf06eef7ff35e650a74b8023db584a162fac53",
+      "step400": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 5.2616000175476074e-05,
+          "psnr_loss_db": -0.011922959942150868
+        },
+        "metrics": {
+          "lpips": 0.1837725043296814,
+          "psnr": 25.972697845280464
+        },
+        "other_experts_total_weight": 2.6226043701171875e-06,
+        "primary_weight": 0.9999973773956299,
+        "top_two_margin": 0.9999958867417718,
+        "true_class_weight": 0.9999973773956299,
+        "weights": [
+          1.0374770909038489e-06,
+          1.4906538581271889e-06,
+          5.205298969634953e-10,
+          0.9999973773956299,
+          5.013362169847824e-09
+        ]
+      },
+      "step408": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 8.969008922576904e-05,
+          "psnr_loss_db": -0.008040789374682333
+        },
+        "metrics": {
+          "lpips": 0.1838095784187317,
+          "psnr": 25.968815674712996
+        },
+        "other_experts_total_weight": 9.417533874511719e-06,
+        "primary_weight": 0.9999905824661255,
+        "top_two_margin": 0.999983013919973,
+        "true_class_weight": 0.9999905824661255,
+        "weights": [
+          1.896090793707117e-06,
+          7.568546152469935e-06,
+          1.9870478873418307e-10,
+          0.9999905824661255,
+          2.3204396626397283e-08
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.11102542281150818,
+        "psnr": 25.303511008799575
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0023744627833366394,
+        "psnr": 0.5100666586280482
+      },
+      "crop_xy": [
+        1324,
+        926
+      ],
+      "key": "validation_foundir_train_0485983",
+      "record_id": "foundir_train_0485983",
+      "seed": 3281058557,
+      "source_group": "de34cd5b63c93b396d3004d1bdbf8f4ad7e6a03ed04b64d5b31cedfc9482ff6b",
+      "step400": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.006894610822200775,
+          "psnr_loss_db": -1.8365723356502208
+        },
+        "metrics": {
+          "lpips": 0.1041308119893074,
+          "psnr": 27.140083344449796
+        },
+        "other_experts_total_weight": 0.050660908222198486,
+        "primary_weight": 0.9493390917778015,
+        "top_two_margin": 0.8993800915777683,
+        "true_class_weight": 0.9493390917778015,
+        "weights": [
+          0.04995900020003319,
+          1.2115989193262067e-05,
+          7.117992026905995e-06,
+          0.9493390917778015,
+          0.0006826781900599599
+        ]
+      },
+      "step408": {
+        "anchor": "lowlight",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.009269073605537415,
+          "psnr_loss_db": -2.346638994278269
+        },
+        "metrics": {
+          "lpips": 0.10175634920597076,
+          "psnr": 27.650150003077844
+        },
+        "other_experts_total_weight": 0.07666373252868652,
+        "primary_weight": 0.9233362674713135,
+        "top_two_margin": 0.849335789680481,
+        "true_class_weight": 0.9233362674713135,
+        "weights": [
+          0.07400047779083252,
+          5.264745050226338e-05,
+          2.1269372609822312e-06,
+          0.9233362674713135,
+          0.0026085481513291597
+        ]
+      },
+      "task": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.16582636535167694,
+        "psnr": 27.80151739386592
+      },
+      "change_408_minus_400": {
+        "lpips": -0.09346956014633179,
+        "psnr": 3.7452853950110914
+      },
+      "crop_xy": [
+        732,
+        158
+      ],
+      "key": "validation_foundir_train_0391222",
+      "record_id": "foundir_train_0391222",
+      "seed": 4004868047,
+      "source_group": "7f8574e94591c9a49b3e7f0216506f50c00d25d72a3d93895a30a71b29a7c2ab",
+      "step400": {
+        "anchor": "haze",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.1043383926153183,
+          "psnr_loss_db": 4.361627476199814
+        },
+        "metrics": {
+          "lpips": 0.27016475796699524,
+          "psnr": 23.439889917666108
+        },
+        "other_experts_total_weight": 0.40559905767440796,
+        "primary_weight": 0.594400942325592,
+        "top_two_margin": 0.1940145194530487,
+        "true_class_weight": 0.40038642287254333,
+        "weights": [
+          0.005207796581089497,
+          4.6707518777111545e-06,
+          0.594400942325592,
+          1.8114046440587117e-07,
+          0.40038642287254333
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.010868832468986511,
+          "psnr_loss_db": 0.6163420811887228
+        },
+        "metrics": {
+          "lpips": 0.17669519782066345,
+          "psnr": 27.1851753126772
+        },
+        "other_experts_total_weight": 0.06510168313980103,
+        "primary_weight": 0.934898316860199,
+        "top_two_margin": 0.8729017227888107,
+        "true_class_weight": 0.934898316860199,
+        "weights": [
+          0.0030964286997914314,
+          8.65061429067282e-06,
+          0.061996594071388245,
+          5.8884978670903365e-08,
+          0.934898316860199
+        ]
+      },
+      "task": "rain"
+    },
+    {
+      "baseline": {
+        "lpips": 0.11100539565086365,
+        "psnr": 35.46219388805444
+      },
+      "change_408_minus_400": {
+        "lpips": -0.00028764456510543823,
+        "psnr": -0.0018277420566121805
+      },
+      "crop_xy": [
+        1318,
+        1352
+      ],
+      "key": "validation_foundir_train_0394371",
+      "record_id": "foundir_train_0394371",
+      "seed": 773986628,
+      "source_group": "20fbdf3955969142807b9faa67815d44fcd3427d319cf2b1c697e93cdd6bd7f4",
+      "step400": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.000645272433757782,
+          "psnr_loss_db": -0.03711732119548827
+        },
+        "metrics": {
+          "lpips": 0.11165066808462143,
+          "psnr": 35.49931120924993
+        },
+        "other_experts_total_weight": 0.04918545484542847,
+        "primary_weight": 0.9508145451545715,
+        "top_two_margin": 0.9034325331449509,
+        "true_class_weight": 0.9508145451545715,
+        "weights": [
+          0.047382012009620667,
+          0.0015749220037832856,
+          0.00022846690262667835,
+          1.1710344915982773e-09,
+          0.9508145451545715
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.00035762786865234375,
+          "psnr_loss_db": -0.03528957913887609
+        },
+        "metrics": {
+          "lpips": 0.11136302351951599,
+          "psnr": 35.49748346719332
+        },
+        "other_experts_total_weight": 0.021761536598205566,
+        "primary_weight": 0.9782384634017944,
+        "top_two_margin": 0.9582489915192127,
+        "true_class_weight": 0.9782384634017944,
+        "weights": [
+          0.01998947188258171,
+          0.0017527069430798292,
+          1.9334856915520504e-05,
+          3.1102903585988884e-10,
+          0.9782384634017944
+        ]
+      },
+      "task": "rain"
+    },
+    {
+      "baseline": {
+        "lpips": 0.0158144012093544,
+        "psnr": 36.864743744684404
+      },
+      "change_408_minus_400": {
+        "lpips": 7.299520075321198e-05,
+        "psnr": 0.00423526360125237
+      },
+      "crop_xy": [
+        757,
+        1111
+      ],
+      "key": "validation_foundir_train_0364881",
+      "record_id": "foundir_train_0364881",
+      "seed": 2844596564,
+      "source_group": "4369fbfe897908790d775c0c14e6f173e207dae48e9aa623ae6abc0675a7aa59",
+      "step400": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -4.678964614868164e-05,
+          "psnr_loss_db": 0.07443976561582133
+        },
+        "metrics": {
+          "lpips": 0.01576761156320572,
+          "psnr": 36.79030397906858
+        },
+        "other_experts_total_weight": 0.015266239643096924,
+        "primary_weight": 0.9847337603569031,
+        "top_two_margin": 0.9695079633966088,
+        "true_class_weight": 0.9847337603569031,
+        "weights": [
+          0.015225796960294247,
+          8.659739592076221e-07,
+          3.9676229789620265e-05,
+          6.705725308364663e-09,
+          0.9847337603569031
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 2.6205554604530334e-05,
+          "psnr_loss_db": 0.07020450201456896
+        },
+        "metrics": {
+          "lpips": 0.01584060676395893,
+          "psnr": 36.794539242669835
+        },
+        "other_experts_total_weight": 0.005628764629364014,
+        "primary_weight": 0.994371235370636,
+        "top_two_margin": 0.9887458058074117,
+        "true_class_weight": 0.994371235370636,
+        "weights": [
+          0.005625429563224316,
+          8.724949225324963e-07,
+          2.468543470968143e-06,
+          1.4799582670477207e-09,
+          0.994371235370636
+        ]
+      },
+      "task": "rain"
+    },
+    {
+      "baseline": {
+        "lpips": 0.04129562899470329,
+        "psnr": 33.764066901912805
+      },
+      "change_408_minus_400": {
+        "lpips": -0.00020372122526168823,
+        "psnr": -0.0031139002083051537
+      },
+      "crop_xy": [
+        66,
+        15
+      ],
+      "key": "validation_foundir_train_0358824",
+      "record_id": "foundir_train_0358824",
+      "seed": 2137925284,
+      "source_group": "8d341e283e23738181483ab4567063cdb18e1217ba47360bd86bcff098bb0cd4",
+      "step400": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 8.761510252952576e-05,
+          "psnr_loss_db": -0.004628215617842102
+        },
+        "metrics": {
+          "lpips": 0.04138324409723282,
+          "psnr": 33.76869511753065
+        },
+        "other_experts_total_weight": 0.0004960298538208008,
+        "primary_weight": 0.9995039701461792,
+        "top_two_margin": 0.9991172549780458,
+        "true_class_weight": 0.9995039701461792,
+        "weights": [
+          0.00038671516813337803,
+          1.598039671080187e-05,
+          9.319395030615851e-05,
+          6.397021934390068e-08,
+          0.9995039701461792
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.00011610612273216248,
+          "psnr_loss_db": -0.0015143154095369482
+        },
+        "metrics": {
+          "lpips": 0.04117952287197113,
+          "psnr": 33.76558121732234
+        },
+        "other_experts_total_weight": 0.00015306472778320312,
+        "primary_weight": 0.9998469352722168,
+        "top_two_margin": 0.9997147531830706,
+        "true_class_weight": 0.9998469352722168,
+        "weights": [
+          0.00013218208914622664,
+          1.5992742191883735e-05,
+          4.8589499783702195e-06,
+          1.1940880284555533e-08,
+          0.9998469352722168
+        ]
+      },
+      "task": "rain"
+    },
+    {
+      "baseline": {
+        "lpips": 0.09865744411945343,
+        "psnr": 32.626618904314284
+      },
+      "change_408_minus_400": {
+        "lpips": -0.10598354041576385,
+        "psnr": 11.365646293868515
+      },
+      "crop_xy": [
+        1042,
+        209
+      ],
+      "key": "validation_foundir_train_0377282",
+      "record_id": "foundir_train_0377282",
+      "seed": 2993732916,
+      "source_group": "c901e1dcffc13cc4585a21411c97ec0c4bd8895178357529df74c334705b0b46",
+      "step400": {
+        "anchor": "haze",
+        "correct": false,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.12158505618572235,
+          "psnr_loss_db": 12.975725258832984
+        },
+        "metrics": {
+          "lpips": 0.22024250030517578,
+          "psnr": 19.6508936454813
+        },
+        "other_experts_total_weight": 0.1530994176864624,
+        "primary_weight": 0.8469005823135376,
+        "top_two_margin": 0.7329299375414848,
+        "true_class_weight": 0.11397064477205276,
+        "weights": [
+          0.03877948224544525,
+          0.0003488390939310193,
+          0.8469005823135376,
+          4.788311116499244e-07,
+          0.11397064477205276
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.015601515769958496,
+          "psnr_loss_db": 1.610078964964469
+        },
+        "metrics": {
+          "lpips": 0.11425895988941193,
+          "psnr": 31.016539939349816
+        },
+        "other_experts_total_weight": 0.3102896213531494,
+        "primary_weight": 0.6897103786468506,
+        "top_two_margin": 0.4607950448989868,
+        "true_class_weight": 0.6897103786468506,
+        "weights": [
+          0.07937457412481308,
+          0.0019992308225482702,
+          0.22891533374786377,
+          5.096222253087035e-07,
+          0.6897103786468506
+        ]
+      },
+      "task": "rain"
+    },
+    {
+      "baseline": {
+        "lpips": 0.010776698589324951,
+        "psnr": 38.606059687739254
+      },
+      "change_408_minus_400": {
+        "lpips": 1.348741352558136e-05,
+        "psnr": 0.012792837932131818
+      },
+      "crop_xy": [
+        412,
+        296
+      ],
+      "key": "validation_foundir_train_0377566",
+      "record_id": "foundir_train_0377566",
+      "seed": 2444378470,
+      "source_group": "4678a10062e1f80cca4140065e2ecc5b4f4a6b3b8c86070802cd10c24079052f",
+      "step400": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -4.629511386156082e-05,
+          "psnr_loss_db": -0.0025415814406670734
+        },
+        "metrics": {
+          "lpips": 0.01073040347546339,
+          "psnr": 38.60860126917992
+        },
+        "other_experts_total_weight": 0.0002772212028503418,
+        "primary_weight": 0.9997227787971497,
+        "top_two_margin": 0.9994925253849942,
+        "true_class_weight": 0.9997227787971497,
+        "weights": [
+          0.0002302534121554345,
+          1.896717662930314e-07,
+          4.676579555962235e-05,
+          1.3675372683222276e-13,
+          0.9997227787971497
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -3.280770033597946e-05,
+          "psnr_loss_db": -0.015334419372798891
+        },
+        "metrics": {
+          "lpips": 0.010743890888988972,
+          "psnr": 38.62139410711205
+        },
+        "other_experts_total_weight": 8.368492126464844e-05,
+        "primary_weight": 0.9999163150787354,
+        "top_two_margin": 0.9998360924437293,
+        "true_class_weight": 0.9999163150787354,
+        "weights": [
+          8.022263500606641e-05,
+          1.8907849153038114e-07,
+          3.248564325986081e-06,
+          2.9984163345568235e-14,
+          0.9999163150787354
+        ]
+      },
+      "task": "rain"
+    },
+    {
+      "baseline": {
+        "lpips": 0.06598493456840515,
+        "psnr": 34.187548493713074
+      },
+      "change_408_minus_400": {
+        "lpips": -0.0034886151552200317,
+        "psnr": 4.618927740893625
+      },
+      "crop_xy": [
+        2584,
+        364
+      ],
+      "key": "validation_foundir_train_0361904",
+      "record_id": "foundir_train_0361904",
+      "seed": 3037003617,
+      "source_group": "d13c81624832e01fb3edf0e905bf7ff915eba0916809fab504ee7bdaf69acd69",
+      "step400": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.003927059471607208,
+          "psnr_loss_db": 5.1465144895099755
+        },
+        "metrics": {
+          "lpips": 0.06991199404001236,
+          "psnr": 29.041034004203098
+        },
+        "other_experts_total_weight": 0.31447720527648926,
+        "primary_weight": 0.6855227947235107,
+        "top_two_margin": 0.425192654132843,
+        "true_class_weight": 0.6855227947235107,
+        "weights": [
+          0.05288122966885567,
+          0.001265851897187531,
+          0.2603301405906677,
+          5.934703839471922e-10,
+          0.6855227947235107
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": 0.0004384443163871765,
+          "psnr_loss_db": 0.5275867486163506
+        },
+        "metrics": {
+          "lpips": 0.06642337888479233,
+          "psnr": 33.65996174509672
+        },
+        "other_experts_total_weight": 0.04572141170501709,
+        "primary_weight": 0.9542785882949829,
+        "top_two_margin": 0.9299989938735962,
+        "true_class_weight": 0.9542785882949829,
+        "weights": [
+          0.02427959442138672,
+          0.0017435860354453325,
+          0.019698256626725197,
+          1.4474289822263842e-10,
+          0.9542785882949829
+        ]
+      },
+      "task": "rain"
+    },
+    {
+      "baseline": {
+        "lpips": 0.041318200528621674,
+        "psnr": 30.509201464277467
+      },
+      "change_408_minus_400": {
+        "lpips": 0.0001642070710659027,
+        "psnr": -0.016083293881692384
+      },
+      "crop_xy": [
+        1082,
+        92
+      ],
+      "key": "validation_foundir_train_0361446",
+      "record_id": "foundir_train_0361446",
+      "seed": 293541544,
+      "source_group": "07738095dc4993c93720d83f0cfb81fb2ca4986dbf686029aadc8f994d8eb301",
+      "step400": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.0003066845238208771,
+          "psnr_loss_db": -0.01846246253774808
+        },
+        "metrics": {
+          "lpips": 0.041011516004800797,
+          "psnr": 30.527663926815215
+        },
+        "other_experts_total_weight": 0.011901557445526123,
+        "primary_weight": 0.9880984425544739,
+        "top_two_margin": 0.9795341584831476,
+        "true_class_weight": 0.9880984425544739,
+        "weights": [
+          0.0032378481701016426,
+          9.906874765874818e-05,
+          0.008564284071326256,
+          2.999071000431286e-07,
+          0.9880984425544739
+        ]
+      },
+      "step408": {
+        "anchor": "rain",
+        "correct": true,
+        "gap_vs_baseline": {
+          "lpips_increase": -0.00014247745275497437,
+          "psnr_loss_db": -0.002379168656055697
+        },
+        "metrics": {
+          "lpips": 0.0411757230758667,
+          "psnr": 30.511580632933523
+        },
+        "other_experts_total_weight": 0.0015416145324707031,
+        "primary_weight": 0.9984583854675293,
+        "top_two_margin": 0.99741764459759,
+        "true_class_weight": 0.9984583854675293,
+        "weights": [
+          0.0010407408699393272,
+          8.842627721605822e-05,
+          0.00041245933971367776,
+          5.3314337833398895e-08,
+          0.9984583854675293
+        ]
+      },
+      "task": "rain"
+    }
+  ],
+  "per_task": {
+    "blur": {
+      "400": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0077910927357152104,
+              "contribution_to_full_population_mean": 0.0077910927357152104,
+              "harmed_images": 4,
+              "improvement_sum": 0.0004166550934314728,
+              "positive_harm_sum": 0.06274539697915316
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.051641671658911203,
+              "contribution_to_full_population_mean": 0.051641671658911203,
+              "harmed_images": 4,
+              "improvement_sum": 0.07649357936858792,
+              "positive_harm_sum": 0.48962695263987754
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.18969405617099255,
+            "psnr": 24.876374126144903
+          },
+          "mean_other_experts_total_weight": 0.041688911616802216,
+          "mean_primary_weight": 0.9583110883831978,
+          "mean_router": {
+            "lpips": 0.19748514890670776,
+            "psnr": 24.824732454485993
+          },
+          "mean_true_class_weight": 0.8937096018344164
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 7,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 3.107756908450808e-05,
+              "contribution_to_full_population_mean": 2.719287294894457e-05,
+              "harmed_images": 3,
+              "improvement_sum": 0.0004166550934314728,
+              "positive_harm_sum": 0.0006341980770230293
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.06690918247019287,
+              "contribution_to_full_population_mean": 0.05854553466141876,
+              "harmed_images": 4,
+              "improvement_sum": 0.021262675348527438,
+              "positive_harm_sum": 0.48962695263987754
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.19018042712871516,
+            "psnr": 24.92493752731365
+          },
+          "mean_other_experts_total_weight": 0.01298529761178153,
+          "mean_primary_weight": 0.9870147023882184,
+          "mean_router": {
+            "lpips": 0.19021150469779968,
+            "psnr": 24.858028344843454
+          },
+          "mean_true_class_weight": 0.9870147023882184
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 1,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.06211119890213013,
+              "contribution_to_full_population_mean": 0.007763899862766266,
+              "harmed_images": 1,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.06211119890213013
+            },
+            "psnr_loss_db": {
+              "conditional_mean": -0.05523090402006048,
+              "contribution_to_full_population_mean": -0.00690386300250756,
+              "harmed_images": 0,
+              "improvement_sum": 0.05523090402006048,
+              "positive_harm_sum": 0.0
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.1862894594669342,
+            "psnr": 24.536430317963696
+          },
+          "mean_other_experts_total_weight": 0.24261420965194702,
+          "mean_primary_weight": 0.757385790348053,
+          "mean_router": {
+            "lpips": 0.24840065836906433,
+            "psnr": 24.591661221983756
+          },
+          "mean_true_class_weight": 0.24057389795780182
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {
+            "haze": 1
+          },
+          "haze": {},
+          "lowlight": {},
+          "noise": {},
+          "rain": {}
+        }
+      },
+      "408": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.006905441405251622,
+              "contribution_to_full_population_mean": 0.006905441405251622,
+              "harmed_images": 5,
+              "improvement_sum": 0.0002645310014486313,
+              "positive_harm_sum": 0.05550806224346161
+            },
+            "psnr_loss_db": {
+              "conditional_mean": -0.09077562475623724,
+              "contribution_to_full_population_mean": -0.09077562475623724,
+              "harmed_images": 2,
+              "improvement_sum": 0.7419941517956623,
+              "positive_harm_sum": 0.015789153745764395
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.18969405617099255,
+            "psnr": 24.876374126144903
+          },
+          "mean_other_experts_total_weight": 0.04255593568086624,
+          "mean_primary_weight": 0.9574440643191338,
+          "mean_router": {
+            "lpips": 0.19659949757624418,
+            "psnr": 24.96714975090114
+          },
+          "mean_true_class_weight": 0.9574440643191338
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.006905441405251622,
+              "contribution_to_full_population_mean": 0.006905441405251622,
+              "harmed_images": 5,
+              "improvement_sum": 0.0002645310014486313,
+              "positive_harm_sum": 0.05550806224346161
+            },
+            "psnr_loss_db": {
+              "conditional_mean": -0.09077562475623724,
+              "contribution_to_full_population_mean": -0.09077562475623724,
+              "harmed_images": 2,
+              "improvement_sum": 0.7419941517956623,
+              "positive_harm_sum": 0.015789153745764395
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.18969405617099255,
+            "psnr": 24.876374126144903
+          },
+          "mean_other_experts_total_weight": 0.04255593568086624,
+          "mean_primary_weight": 0.9574440643191338,
+          "mean_router": {
+            "lpips": 0.19659949757624418,
+            "psnr": 24.96714975090114
+          },
+          "mean_true_class_weight": 0.9574440643191338
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 0,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            },
+            "psnr_loss_db": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            }
+          },
+          "mean_baseline": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_other_experts_total_weight": null,
+          "mean_primary_weight": null,
+          "mean_router": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_true_class_weight": null
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {},
+          "noise": {},
+          "rain": {}
+        }
+      }
+    },
+    "haze": {
+      "400": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0004726818297058344,
+              "contribution_to_full_population_mean": 0.0004726818297058344,
+              "harmed_images": 3,
+              "improvement_sum": 0.0015983637422323227,
+              "positive_harm_sum": 0.005379818379878998
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.21293816028948065,
+              "contribution_to_full_population_mean": 0.21293816028948065,
+              "harmed_images": 4,
+              "improvement_sum": 0.3945777112014994,
+              "positive_harm_sum": 2.0980829935173446
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.08017596346326172,
+            "psnr": 24.07477752136057
+          },
+          "mean_other_experts_total_weight": 0.022615931928157806,
+          "mean_primary_weight": 0.9773840680718422,
+          "mean_router": {
+            "lpips": 0.08064864529296756,
+            "psnr": 23.86183936107109
+          },
+          "mean_true_class_weight": 0.9773840680718422
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0004726818297058344,
+              "contribution_to_full_population_mean": 0.0004726818297058344,
+              "harmed_images": 3,
+              "improvement_sum": 0.0015983637422323227,
+              "positive_harm_sum": 0.005379818379878998
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.21293816028948065,
+              "contribution_to_full_population_mean": 0.21293816028948065,
+              "harmed_images": 4,
+              "improvement_sum": 0.3945777112014994,
+              "positive_harm_sum": 2.0980829935173446
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.08017596346326172,
+            "psnr": 24.07477752136057
+          },
+          "mean_other_experts_total_weight": 0.022615931928157806,
+          "mean_primary_weight": 0.9773840680718422,
+          "mean_router": {
+            "lpips": 0.08064864529296756,
+            "psnr": 23.86183936107109
+          },
+          "mean_true_class_weight": 0.9773840680718422
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 0,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            },
+            "psnr_loss_db": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            }
+          },
+          "mean_baseline": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_other_experts_total_weight": null,
+          "mean_primary_weight": null,
+          "mean_router": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_true_class_weight": null
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {},
+          "noise": {},
+          "rain": {}
+        }
+      },
+      "408": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.009953075554221869,
+              "contribution_to_full_population_mean": 0.009953075554221869,
+              "harmed_images": 5,
+              "improvement_sum": 0.009285077452659607,
+              "positive_harm_sum": 0.08890968188643456
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.9583437960986125,
+              "contribution_to_full_population_mean": 0.9583437960986125,
+              "harmed_images": 4,
+              "improvement_sum": 0.8730000147437131,
+              "positive_harm_sum": 8.539750383532613
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.08017596346326172,
+            "psnr": 24.07477752136057
+          },
+          "mean_other_experts_total_weight": 0.11059681698679924,
+          "mean_primary_weight": 0.8894031830132008,
+          "mean_router": {
+            "lpips": 0.09012903901748359,
+            "psnr": 23.11643372526196
+          },
+          "mean_true_class_weight": 0.8894031830132008
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.009953075554221869,
+              "contribution_to_full_population_mean": 0.009953075554221869,
+              "harmed_images": 5,
+              "improvement_sum": 0.009285077452659607,
+              "positive_harm_sum": 0.08890968188643456
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.9583437960986125,
+              "contribution_to_full_population_mean": 0.9583437960986125,
+              "harmed_images": 4,
+              "improvement_sum": 0.8730000147437131,
+              "positive_harm_sum": 8.539750383532613
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.08017596346326172,
+            "psnr": 24.07477752136057
+          },
+          "mean_other_experts_total_weight": 0.11059681698679924,
+          "mean_primary_weight": 0.8894031830132008,
+          "mean_router": {
+            "lpips": 0.09012903901748359,
+            "psnr": 23.11643372526196
+          },
+          "mean_true_class_weight": 0.8894031830132008
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 0,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            },
+            "psnr_loss_db": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            }
+          },
+          "mean_baseline": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_other_experts_total_weight": null,
+          "mean_primary_weight": null,
+          "mean_router": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_true_class_weight": null
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {},
+          "noise": {},
+          "rain": {}
+        }
+      }
+    },
+    "lowlight": {
+      "400": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.052396370097994804,
+              "contribution_to_full_population_mean": 0.052396370097994804,
+              "harmed_images": 5,
+              "improvement_sum": 0.01038467139005661,
+              "positive_harm_sum": 0.42955563217401505
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 2.6307867392603743,
+              "contribution_to_full_population_mean": 2.6307867392603743,
+              "harmed_images": 2,
+              "improvement_sum": 4.806209791992622,
+              "positive_harm_sum": 25.852503706075616
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.13449188228696585,
+            "psnr": 20.20700872472009
+          },
+          "mean_other_experts_total_weight": 0.09343380481004715,
+          "mean_primary_weight": 0.9065661951899529,
+          "mean_router": {
+            "lpips": 0.18688825238496065,
+            "psnr": 17.576221985459714
+          },
+          "mean_true_class_weight": 0.8050578366965055
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 6,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": -0.0009688002367814382,
+              "contribution_to_full_population_mean": -0.0007266001775860786,
+              "harmed_images": 3,
+              "improvement_sum": 0.01038467139005661,
+              "positive_harm_sum": 0.004571869969367981
+            },
+            "psnr_loss_db": {
+              "conditional_mean": -0.8010349653321036,
+              "contribution_to_full_population_mean": -0.6007762239990777,
+              "harmed_images": 0,
+              "improvement_sum": 4.806209791992622,
+              "positive_harm_sum": 0.0
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.1407004271944364,
+            "psnr": 20.265049344373846
+          },
+          "mean_other_experts_total_weight": 0.022519350051879883,
+          "mean_primary_weight": 0.9774806499481201,
+          "mean_router": {
+            "lpips": 0.13973162695765495,
+            "psnr": 21.06608430970595
+          },
+          "mean_true_class_weight": 0.9774806499481201
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 2,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.21249188110232353,
+              "contribution_to_full_population_mean": 0.05312297027558088,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.42498376220464706
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 12.926251853037808,
+              "contribution_to_full_population_mean": 3.231562963259452,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 25.852503706075616
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.11586624756455421,
+            "psnr": 20.03288686575882
+          },
+          "mean_other_experts_total_weight": 0.30617716908454895,
+          "mean_primary_weight": 0.693822830915451,
+          "mean_router": {
+            "lpips": 0.32835812866687775,
+            "psnr": 7.106635012721009
+          },
+          "mean_true_class_weight": 0.28778939694166183
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {
+            "blur": 1,
+            "noise": 1
+          },
+          "noise": {},
+          "rain": {}
+        }
+      },
+      "408": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.05895437765866518,
+              "contribution_to_full_population_mean": 0.05895437765866518,
+              "harmed_images": 4,
+              "improvement_sum": 0.018231943249702454,
+              "positive_harm_sum": 0.4898669645190239
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 1.5058616437900496,
+              "contribution_to_full_population_mean": 1.5058616437900496,
+              "harmed_images": 2,
+              "improvement_sum": 15.272867955143973,
+              "positive_harm_sum": 27.31976110546437
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.13449188228696585,
+            "psnr": 20.20700872472009
+          },
+          "mean_other_experts_total_weight": 0.08548151701688766,
+          "mean_primary_weight": 0.9145184829831123,
+          "mean_router": {
+            "lpips": 0.19344625994563103,
+            "psnr": 18.70114708093004
+          },
+          "mean_true_class_weight": 0.7436255784705281
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 6,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0025372281670570374,
+              "contribution_to_full_population_mean": 0.001902921125292778,
+              "harmed_images": 2,
+              "improvement_sum": 0.018231943249702454,
+              "positive_harm_sum": 0.03345531225204468
+            },
+            "psnr_loss_db": {
+              "conditional_mean": -2.5454779925239954,
+              "contribution_to_full_population_mean": -1.9091084943929966,
+              "harmed_images": 0,
+              "improvement_sum": 15.272867955143973,
+              "positive_harm_sum": 0.0
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.1407004271944364,
+            "psnr": 20.265049344373846
+          },
+          "mean_other_experts_total_weight": 0.06017604470252991,
+          "mean_primary_weight": 0.9398239552974701,
+          "mean_router": {
+            "lpips": 0.14323765536149344,
+            "psnr": 22.810527336897845
+          },
+          "mean_true_class_weight": 0.9398239552974701
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 2,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.2282058261334896,
+              "contribution_to_full_population_mean": 0.0570514565333724,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.4564116522669792
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 13.659880552732185,
+              "contribution_to_full_population_mean": 3.414970138183046,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 27.31976110546437
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.11586624756455421,
+            "psnr": 20.03288686575882
+          },
+          "mean_other_experts_total_weight": 0.16139793395996094,
+          "mean_primary_weight": 0.8386020660400391,
+          "mean_router": {
+            "lpips": 0.3440720736980438,
+            "psnr": 6.373006313026632
+          },
+          "mean_true_class_weight": 0.15503044798970222
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {
+            "blur": 1,
+            "noise": 1
+          },
+          "noise": {},
+          "rain": {}
+        }
+      }
+    },
+    "noise": {
+      "400": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.005199826322495937,
+              "contribution_to_full_population_mean": 0.005199826322495937,
+              "harmed_images": 7,
+              "improvement_sum": 0.0002601891756057739,
+              "positive_harm_sum": 0.04185879975557327
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 4.5959072711286035,
+              "contribution_to_full_population_mean": 4.5959072711286035,
+              "harmed_images": 6,
+              "improvement_sum": 0.04266106002511094,
+              "positive_harm_sum": 36.80991922905394
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.06914887693710625,
+            "psnr": 40.28401300344693
+          },
+          "mean_other_experts_total_weight": 0.15499532222747803,
+          "mean_primary_weight": 0.845004677772522,
+          "mean_router": {
+            "lpips": 0.07434870325960219,
+            "psnr": 35.68810573231833
+          },
+          "mean_true_class_weight": 0.6423513667250518
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 6,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.003779931925237179,
+              "contribution_to_full_population_mean": 0.002834948943927884,
+              "harmed_images": 5,
+              "improvement_sum": 0.0002601891756057739,
+              "positive_harm_sum": 0.022939780727028847
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 3.360971351662812,
+              "contribution_to_full_population_mean": 2.520728513747109,
+              "harmed_images": 4,
+              "improvement_sum": 0.04266106002511094,
+              "positive_harm_sum": 20.208489170001982
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.07637635711580515,
+            "psnr": 40.26097022028697
+          },
+          "mean_other_experts_total_weight": 0.17434613903363547,
+          "mean_primary_weight": 0.8256538609663645,
+          "mean_router": {
+            "lpips": 0.08015628904104233,
+            "psnr": 36.89999886862416
+          },
+          "mean_true_class_weight": 0.8256538609663645
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 2,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.009459509514272213,
+              "contribution_to_full_population_mean": 0.0023648773785680532,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.018919019028544426
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 8.300715029525978,
+              "contribution_to_full_population_mean": 2.0751787573814946,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 16.601430059051957
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.04746643640100956,
+            "psnr": 40.353141352926805
+          },
+          "mean_other_experts_total_weight": 0.09694287180900574,
+          "mean_primary_weight": 0.9030571281909943,
+          "mean_router": {
+            "lpips": 0.05692594591528177,
+            "psnr": 32.05242632340082
+          },
+          "mean_true_class_weight": 0.09244388400111347
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {},
+          "noise": {
+            "blur": 2
+          },
+          "rain": {}
+        }
+      },
+      "408": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0014277149457484484,
+              "contribution_to_full_population_mean": 0.0014277149457484484,
+              "harmed_images": 5,
+              "improvement_sum": 0.0011831428855657578,
+              "positive_harm_sum": 0.012604862451553345
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 3.122687647682719,
+              "contribution_to_full_population_mean": 3.122687647682719,
+              "harmed_images": 4,
+              "improvement_sum": 0.03547090358884475,
+              "positive_harm_sum": 25.016972085050597
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.06914887693710625,
+            "psnr": 40.28401300344693
+          },
+          "mean_other_experts_total_weight": 0.08744487166404724,
+          "mean_primary_weight": 0.9125551283359528,
+          "mean_router": {
+            "lpips": 0.0705765918828547,
+            "psnr": 37.16132535576421
+          },
+          "mean_true_class_weight": 0.7770808034110814
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 6,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.00017653250445922217,
+              "contribution_to_full_population_mean": 0.00013239937834441662,
+              "harmed_images": 4,
+              "improvement_sum": 7.298775017261505e-05,
+              "positive_harm_sum": 0.001132182776927948
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 1.2710452816703917,
+              "contribution_to_full_population_mean": 0.9532839612527937,
+              "harmed_images": 2,
+              "improvement_sum": 0.03547090358884475,
+              "positive_harm_sum": 7.661742593611194
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.07637635711580515,
+            "psnr": 40.26097022028697
+          },
+          "mean_other_experts_total_weight": 0.04008686542510986,
+          "mean_primary_weight": 0.9599131345748901,
+          "mean_router": {
+            "lpips": 0.07655288962026437,
+            "psnr": 38.98992493861658
+          },
+          "mean_true_class_weight": 0.9599131345748901
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 2,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.005181262269616127,
+              "contribution_to_full_population_mean": 0.0012953155674040318,
+              "harmed_images": 1,
+              "improvement_sum": 0.0011101551353931427,
+              "positive_harm_sum": 0.011472679674625397
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 8.677614745719701,
+              "contribution_to_full_population_mean": 2.1694036864299253,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 17.355229491439403
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.04746643640100956,
+            "psnr": 40.353141352926805
+          },
+          "mean_other_experts_total_weight": 0.22951889038085938,
+          "mean_primary_weight": 0.7704811096191406,
+          "mean_router": {
+            "lpips": 0.05264769867062569,
+            "psnr": 31.675526607207104
+          },
+          "mean_true_class_weight": 0.22858380991965532
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {},
+          "noise": {
+            "blur": 2
+          },
+          "rain": {}
+        }
+      }
+    },
+    "rain": {
+      "400": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.028772953315638006,
+              "contribution_to_full_population_mean": 0.028772953315638006,
+              "harmed_images": 5,
+              "improvement_sum": 0.00039976928383111954,
+              "positive_harm_sum": 0.23058339580893517
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 2.811944676170856,
+              "contribution_to_full_population_mean": 2.811944676170856,
+              "harmed_images": 4,
+              "improvement_sum": 0.06274958079174553,
+              "positive_harm_sum": 22.558306990158595
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.06883488362655044,
+            "psnr": 33.727743809820204
+          },
+          "mean_other_experts_total_weight": 0.11878777295351028,
+          "mean_primary_weight": 0.8812122270464897,
+          "mean_router": {
+            "lpips": 0.09760783694218844,
+            "psnr": 30.91579913364935
+          },
+          "mean_true_class_weight": 0.765344169922173
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 6,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0007100296206772327,
+              "contribution_to_full_population_mean": 0.0005325222155079246,
+              "harmed_images": 3,
+              "improvement_sum": 0.00039976928383111954,
+              "positive_harm_sum": 0.004659947007894516
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.8597007790556752,
+              "contribution_to_full_population_mean": 0.6447755842917564,
+              "harmed_images": 2,
+              "improvement_sum": 0.06274958079174553,
+              "positive_harm_sum": 5.220954255125797
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.04769920992354552,
+            "psnr": 34.898969030063576
+          },
+          "mean_other_experts_total_weight": 0.06526728471120198,
+          "mean_primary_weight": 0.934732715288798,
+          "mean_router": {
+            "lpips": 0.04840923954422275,
+            "psnr": 34.039268251007904
+          },
+          "mean_true_class_weight": 0.934732715288798
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 2,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.11296172440052032,
+              "contribution_to_full_population_mean": 0.02824043110013008,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.22592344880104065
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 8.6686763675164,
+              "contribution_to_full_population_mean": 2.1671690918791,
+              "harmed_images": 2,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 17.3373527350328
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.13224190473556519,
+            "psnr": 30.214068149090103
+          },
+          "mean_other_experts_total_weight": 0.2793492376804352,
+          "mean_primary_weight": 0.7206507623195648,
+          "mean_router": {
+            "lpips": 0.2452036291360855,
+            "psnr": 21.545391781573706
+          },
+          "mean_true_class_weight": 0.25717853382229805
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {},
+          "noise": {},
+          "rain": {
+            "haze": 2
+          }
+        }
+      },
+      "408": {
+        "all": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0033751543378457427,
+              "contribution_to_full_population_mean": 0.0033751543378457427,
+              "harmed_images": 5,
+              "improvement_sum": 0.0002913912758231163,
+              "positive_harm_sum": 0.027292625978589058
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.34621185177585545,
+              "contribution_to_full_population_mean": 0.34621185177585545,
+              "harmed_images": 4,
+              "improvement_sum": 0.05451748257726763,
+              "positive_harm_sum": 2.8242122967841112
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.06883488362655044,
+            "psnr": 33.727743809820204
+          },
+          "mean_other_experts_total_weight": 0.05628517270088196,
+          "mean_primary_weight": 0.943714827299118,
+          "mean_router": {
+            "lpips": 0.07221003796439618,
+            "psnr": 33.38153195804435
+          },
+          "mean_true_class_weight": 0.943714827299118
+        },
+        "correct_anchor_soft_vs_same_anchor_onehot": {
+          "count": 8,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": 0.0033751543378457427,
+              "contribution_to_full_population_mean": 0.0033751543378457427,
+              "harmed_images": 5,
+              "improvement_sum": 0.0002913912758231163,
+              "positive_harm_sum": 0.027292625978589058
+            },
+            "psnr_loss_db": {
+              "conditional_mean": 0.34621185177585545,
+              "contribution_to_full_population_mean": 0.34621185177585545,
+              "harmed_images": 4,
+              "improvement_sum": 0.05451748257726763,
+              "positive_harm_sum": 2.8242122967841112
+            }
+          },
+          "mean_baseline": {
+            "lpips": 0.06883488362655044,
+            "psnr": 33.727743809820204
+          },
+          "mean_other_experts_total_weight": 0.05628517270088196,
+          "mean_primary_weight": 0.943714827299118,
+          "mean_router": {
+            "lpips": 0.07221003796439618,
+            "psnr": 33.38153195804435
+          },
+          "mean_true_class_weight": 0.943714827299118
+        },
+        "wrong_anchor_choice_and_mixing_combined": {
+          "count": 0,
+          "deficit": {
+            "lpips_increase": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            },
+            "psnr_loss_db": {
+              "conditional_mean": null,
+              "contribution_to_full_population_mean": 0.0,
+              "harmed_images": 0,
+              "improvement_sum": 0.0,
+              "positive_harm_sum": 0.0
+            }
+          },
+          "mean_baseline": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_other_experts_total_weight": null,
+          "mean_primary_weight": null,
+          "mean_router": {
+            "lpips": null,
+            "psnr": null
+          },
+          "mean_true_class_weight": null
+        },
+        "wrong_to_predicted_confusion": {
+          "blur": {},
+          "haze": {},
+          "lowlight": {},
+          "noise": {},
+          "rain": {}
+        }
+      }
+    }
+  },
+  "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9",
+  "regressions_step408_vs400": {
+    "lpips": 19,
+    "psnr": 15
+  },
+  "result_sha256": "8f5e4e94f2b9ed2b5ac9a738bd99e9266a5b0f3f9c18361af92552f74a522a5d",
+  "run_id": "qualification_mixed_driver_4x2_v1",
+  "script_sha256": "fcce486add81739c987ab7d5af47793cce0ec05079e307e3cdf8195aaef4d3c6",
+  "stage400": {
+    "all": {
+      "count": 40,
+      "deficit": {
+        "lpips_increase": {
+          "conditional_mean": 0.01892658486030996,
+          "contribution_to_full_population_mean": 0.01892658486030996,
+          "harmed_images": 24,
+          "improvement_sum": 0.013059648685157299,
+          "positive_harm_sum": 0.7701230430975556
+        },
+        "psnr_loss_db": {
+          "conditional_mean": 2.060643703701645,
+          "contribution_to_full_population_mean": 2.060643703701645,
+          "harmed_images": 20,
+          "improvement_sum": 5.3826917233795655,
+          "positive_harm_sum": 87.80843987144537
+        }
+      },
+      "mean_baseline": {
+        "lpips": 0.10846913249697536,
+        "psnr": 28.63398343709854
+      },
+      "mean_other_experts_total_weight": 0.0863043487071991,
+      "mean_primary_weight": 0.913695651292801,
+      "mean_router": {
+        "lpips": 0.12739571735728533,
+        "psnr": 26.573339733396892
+      },
+      "mean_true_class_weight": 0.8167694086499978
+    },
+    "correct_anchor_soft_vs_same_anchor_onehot": {
+      "count": 33,
+      "deficit": {
+        "lpips_increase": {
+          "conditional_mean": 0.0007613928932132143,
+          "contribution_to_full_population_mean": 0.0006281491369009018,
+          "harmed_images": 17,
+          "improvement_sum": 0.013059648685157299,
+          "positive_harm_sum": 0.03818561416119337
+        },
+        "psnr_loss_db": {
+          "conditional_mean": 0.6875664409674392,
+          "contribution_to_full_population_mean": 0.5672423137981374,
+          "harmed_images": 14,
+          "improvement_sum": 5.327460819359505,
+          "positive_harm_sum": 28.017153371285
+        }
+      },
+      "mean_baseline": {
+        "lpips": 0.10791898978817643,
+        "psnr": 28.4734155888008
+      },
+      "mean_other_experts_total_weight": 0.055897611560243546,
+      "mean_primary_weight": 0.9441023884397565,
+      "mean_router": {
+        "lpips": 0.10868038268138965,
+        "psnr": 27.785849147833364
+      },
+      "mean_true_class_weight": 0.9441023884397565
+    },
+    "wrong_anchor_choice_and_mixing_combined": {
+      "count": 7,
+      "deficit": {
+        "lpips_increase": {
+          "conditional_mean": 0.10456248984805175,
+          "contribution_to_full_population_mean": 0.018298435723409057,
+          "harmed_images": 7,
+          "improvement_sum": 0.0,
+          "positive_harm_sum": 0.7319374289363623
+        },
+        "psnr_loss_db": {
+          "conditional_mean": 8.533722228020045,
+          "contribution_to_full_population_mean": 1.4934013899035077,
+          "harmed_images": 6,
+          "improvement_sum": 0.05523090402006048,
+          "positive_harm_sum": 59.79128650016037
+        }
+      },
+      "mean_baseline": {
+        "lpips": 0.11106266240988459,
+        "psnr": 29.390946150502163
+      },
+      "mean_other_experts_total_weight": 0.2296503952571324,
+      "mean_primary_weight": 0.7703496047428676,
+      "mean_router": {
+        "lpips": 0.21562515225793635,
+        "psnr": 20.85722392248212
+      },
+      "mean_true_class_weight": 0.21648536106970692
+    },
+    "wrong_to_predicted_confusion": {
+      "blur": {
+        "haze": 1
+      },
+      "haze": {},
+      "lowlight": {
+        "blur": 1,
+        "noise": 1
+      },
+      "noise": {
+        "blur": 2
+      },
+      "rain": {
+        "haze": 2
+      }
+    }
+  },
+  "stage408": {
+    "all": {
+      "count": 40,
+      "deficit": {
+        "lpips_increase": {
+          "conditional_mean": 0.016123152780346574,
+          "contribution_to_full_population_mean": 0.016123152780346574,
+          "harmed_images": 24,
+          "improvement_sum": 0.029256085865199566,
+          "positive_harm_sum": 0.6741821970790625
+        },
+        "psnr_loss_db": {
+          "conditional_mean": 1.1684658629181999,
+          "contribution_to_full_population_mean": 1.1684658629181999,
+          "harmed_images": 16,
+          "improvement_sum": 16.97785050784946,
+          "positive_harm_sum": 63.71648502457745
+        }
+      },
+      "mean_baseline": {
+        "lpips": 0.10846913249697536,
+        "psnr": 28.63398343709854
+      },
+      "mean_other_experts_total_weight": 0.07647286280989647,
+      "mean_primary_weight": 0.9235271371901035,
+      "mean_router": {
+        "lpips": 0.12459228527732194,
+        "psnr": 27.465517574180343
+      },
+      "mean_true_class_weight": 0.8622536913026124
+    },
+    "correct_anchor_soft_vs_same_anchor_onehot": {
+      "count": 36,
+      "deficit": {
+        "lpips_increase": {
+          "conditional_mean": 0.004948664844656984,
+          "contribution_to_full_population_mean": 0.004453798360191286,
+          "harmed_images": 21,
+          "improvement_sum": 0.028145930729806423,
+          "positive_harm_sum": 0.20629786513745785
+        },
+        "psnr_loss_db": {
+          "conditional_mean": 0.057323442217339524,
+          "contribution_to_full_population_mean": 0.05159109799560557,
+          "harmed_images": 12,
+          "improvement_sum": 16.97785050784946,
+          "positive_harm_sum": 19.041494427673683
+        }
+      },
+      "mean_baseline": {
+        "lpips": 0.11144722033188575,
+        "psnr": 28.460757806849173
+      },
+      "mean_other_experts_total_weight": 0.06325224621428384,
+      "mean_primary_weight": 0.9367477537857162,
+      "mean_router": {
+        "lpips": 0.11639588517654273,
+        "psnr": 28.40343436463184
+      },
+      "mean_true_class_weight": 0.9367477537857162
+    },
+    "wrong_anchor_choice_and_mixing_combined": {
+      "count": 4,
+      "deficit": {
+        "lpips_increase": {
+          "conditional_mean": 0.11669354420155287,
+          "contribution_to_full_population_mean": 0.011669354420155287,
+          "harmed_images": 3,
+          "improvement_sum": 0.0011101551353931427,
+          "positive_harm_sum": 0.4678843319416046
+        },
+        "psnr_loss_db": {
+          "conditional_mean": 11.168747649225942,
+          "contribution_to_full_population_mean": 1.1168747649225943,
+          "harmed_images": 4,
+          "improvement_sum": 0.0,
+          "positive_harm_sum": 44.67499059690377
+        }
+      },
+      "mean_baseline": {
+        "lpips": 0.08166634198278189,
+        "psnr": 30.193014109342812
+      },
+      "mean_other_experts_total_weight": 0.19545841217041016,
+      "mean_primary_weight": 0.8045415878295898,
+      "mean_router": {
+        "lpips": 0.19835988618433475,
+        "psnr": 19.024266460116866
+      },
+      "mean_true_class_weight": 0.19180712895467877
+    },
+    "wrong_to_predicted_confusion": {
+      "blur": {},
+      "haze": {},
+      "lowlight": {
+        "blur": 1,
+        "noise": 1
+      },
+      "noise": {
+        "blur": 2
+      },
+      "rain": {}
+    }
+  },
+  "status": "saved_json_error_breakdown_complete",
+  "transitions": {
+    "became_correct": {
+      "count": 3,
+      "keys": [
+        "validation_foundir_train_0009805",
+        "validation_foundir_train_0391222",
+        "validation_foundir_train_0377282"
+      ],
+      "mean_change_408_minus_400": {
+        "lpips": -0.06896452605724335,
+        "psnr": 5.231350243279551
+      }
+    },
+    "became_wrong": {
+      "count": 0,
+      "keys": [],
+      "mean_change_408_minus_400": {
+        "lpips": null,
+        "psnr": null
+      }
+    },
+    "kept_correct": {
+      "count": 33,
+      "keys": [
+        "validation_foundir_train_0062910",
+        "validation_foundir_train_0001445",
+        "validation_foundir_train_0094664",
+        "validation_foundir_train_0007534",
+        "validation_foundir_train_0091843",
+        "validation_foundir_train_0034135",
+        "validation_foundir_train_0067975",
+        "validation_foundir_train_0153585",
+        "validation_foundir_train_0182272",
+        "validation_foundir_train_0177424",
+        "validation_foundir_train_0187489",
+        "validation_foundir_train_0192771",
+        "validation_foundir_train_0194586",
+        "validation_foundir_train_0201705",
+        "validation_foundir_train_0225021",
+        "validation_foundir_train_0229347",
+        "validation_foundir_train_0255323",
+        "validation_foundir_train_0235052",
+        "validation_foundir_train_0208167",
+        "validation_foundir_train_0264740",
+        "validation_foundir_train_0276837",
+        "validation_foundir_train_0493413",
+        "validation_foundir_train_0510173",
+        "validation_foundir_train_0487157",
+        "validation_foundir_train_0482078",
+        "validation_foundir_train_0510520",
+        "validation_foundir_train_0485983",
+        "validation_foundir_train_0394371",
+        "validation_foundir_train_0364881",
+        "validation_foundir_train_0358824",
+        "validation_foundir_train_0377566",
+        "validation_foundir_train_0361904",
+        "validation_foundir_train_0361446"
+      ],
+      "mean_change_408_minus_400": {
+        "lpips": 0.0021783302848537764,
+        "psnr": 0.6731551434325865
+      }
+    },
+    "stayed_wrong": {
+      "count": 4,
+      "keys": [
+        "validation_foundir_train_0144583",
+        "validation_foundir_train_0189233",
+        "validation_foundir_train_0508782",
+        "validation_foundir_train_0479048"
+      ],
+      "mean_change_408_minus_400": {
+        "lpips": 0.005717848893254995,
+        "psnr": -0.55526420794405
+      }
+    }
+  }
+}
