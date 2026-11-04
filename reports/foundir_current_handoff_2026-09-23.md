@@ -1,6 +1,35 @@
 # FoundIR current handoff — 2026-09-23
 
-## 当前授权：只补4个输出，完成匹配的路由画质对照 — 2026-11-04
+## 当前授权：两张严重错选的CPU原因核对；不启动新训练 — 2026-11-04
+
+匹配画质补测已正常结束（dd06f76），2H200/76秒/status0；不要再跑四图。
+VLM38/40对image-only33/40：平均+1.280642dB/LPIPS下降.004140，但Blur两项退步；
+相对旧soft，PSNR改善但LPIPS仍差.002063，不能宣称全面达标或官方测试成功。
+
+用户授权分析错选与训练覆盖。主代理已重算全部40图分支分数：
+VLM版内部图像分支20/40，VLM修正帮19张、害1张，最终38/40。
+内部图像分支不是独立image-only的33/40对照；联合训练只监督相加分数。
+0007534 Blur原内部选择正确，被VLM强改Haze；0479048 Low-light两个完整模型都错选Noise。
+VLM训练640/640、CE .001782，开发CE .451962，不能把追加同数据步数当必然修复。
+详细证据/后续条件分支见reports/foundir_router_generalization_audit_2026-11-04.md，
+以及foundir_router_score_audit_2026-11-04.json。不以关VLM就能解决或“唯一缺数据”下结论。
+
+当前唯一新入口为CPU只读诊断：全部680条缓存身份、标签映射、裁图、来源分离和曝光，
+及全部40图相对训练图像/VLM特征的固定近邻覆盖。不是训练、路由阈值搜索或像素评价。
+禁止对开发图扫系数/阈值、挑checkpoint、硬编码回退、改标签或回灌训练。
+不读GT/LQ像素、不加载大模型/reference latent、不恢复CNN/Restormer/energy或旧MoE训练。
+
+目的地CPU代理安全同步origin/main，保留本地无关修改、大资产及绑定源码后，直接运行：
+bash smoke/run_foundir_router_generalization_audit_v1_cpu.sh
+根仍为/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang，
+使用.conda/gpu-train-stable/bin/python，CPU8线程/0GPU-hours/单次cap600秒+30秒清理。
+无自动重试/扩预算；超时回报日志。无需GPU，也不用给用户新的GPU启动命令。
+本机未挂载目的地，缓存覆盖尚未实测；不能把静态阅读/合成单测当现场核对通过。
+成功须ROUTER_FEATURE_COVERAGE_PASS和ROUTER_GENERALIZATION_AUDIT_END status=0。
+仅推reports/foundir_router_feature_coverage_2026-11-04.json及耗时/退出简报；
+不推模型、缓存、图片或live logs。主代理据结果决定下一步，不让CPU代理自改训练。
+
+## 已结束：只补4个输出，完成匹配的路由画质对照 — 2026-11-04
 
 本节覆盖下方CPU训练待执行等旧状态。fresh_ce400_matched_v1已正常结束（23ac684）：
 CPU8线程/212秒/0GPU-hours，两组各400步，image_only开发33/40正确，image_plus_vlm为38/40。

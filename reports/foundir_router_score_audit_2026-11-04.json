@@ -1,0 +1,2517 @@
+{
+  "combined_correct": 38,
+  "count": 40,
+  "development_ce": {
+    "image_only": 0.41992712020874023,
+    "image_plus_vlm": 0.45196181535720825
+  },
+  "errors": [
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9996511365316986,
+      "combined_logits": [
+        0.005088329315185547,
+        -4.502784729003906,
+        7.992774963378906,
+        -9.031758308410645,
+        -4.103055000305176
+      ],
+      "correct": false,
+      "flip_helped": false,
+      "flip_hurt": true,
+      "image_logits": [
+        1.5522301197052002,
+        0.1447116732597351,
+        1.247018814086914,
+        -3.020704984664917,
+        -0.8836990594863892
+      ],
+      "key": "validation_foundir_train_0007534",
+      "restoration": {
+        "correct": false,
+        "key": "validation_foundir_train_0007534",
+        "known_class_control": {
+          "lpips": 0.3204156160354614,
+          "psnr": 21.469987590052618
+        },
+        "metrics": {
+          "lpips": 0.7771083116531372,
+          "psnr": 16.637974047772882
+        },
+        "old_step408_soft": {
+          "lpips": 0.3206084370613098,
+          "psnr": 21.470379675616044
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0007534__haze",
+        "task": "blur"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 7.987686634063721,
+        "image": -0.30521130561828613,
+        "vlm": 8.292897939682007
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        -1.5471417903900146,
+        -4.647496223449707,
+        6.745756149291992,
+        -6.011053085327148,
+        -3.219356060028076
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9998725862401507,
+      "combined_logits": [
+        -7.902631759643555,
+        8.763288497924805,
+        -1.029654622077942,
+        -0.7842372059822083,
+        -6.947858810424805
+      ],
+      "correct": false,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        1.7208997011184692,
+        0.5851752758026123,
+        -2.2030375003814697,
+        0.8862276673316956,
+        -1.9384915828704834
+      ],
+      "key": "validation_foundir_train_0479048",
+      "restoration": {
+        "correct": false,
+        "key": "validation_foundir_train_0479048",
+        "known_class_control": {
+          "lpips": 0.0893302783370018,
+          "psnr": 18.076225849379362
+        },
+        "metrics": {
+          "lpips": 0.36010220646858215,
+          "psnr": 5.537555460896049
+        },
+        "old_step408_soft": {
+          "lpips": 0.3584730625152588,
+          "psnr": 5.571506797640236
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0479048__noise",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 9.547525703907013,
+        "image": -0.30105239152908325,
+        "vlm": 9.848577857017517
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -9.623531341552734,
+        8.178112983703613,
+        1.1733828783035278,
+        -1.6704648733139038,
+        -5.009366989135742
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    }
+  ],
+  "flip_helped": 19,
+  "flip_hurt": 1,
+  "inputs": {
+    "cpu": "fb074f9dc53d6294cd3c432fb1529adbfc684418aab76edf7cc4d1b8e00320e1",
+    "restoration": "e6006f7bad915ecddfb4beacdee9e44da93afcfa4031f22105ce73d943cda390"
+  },
+  "limitations": [
+    "Branch scores are jointly trained; removing a branch is not a matched retraining ablation.",
+    "VLM score dominance is not proof of a feature or label bug.",
+    "No coefficient sweep, thresholds, early checkpoint selection or development-label training.",
+    "No new restoration metrics, GPU work, expert changes or formal training."
+  ],
+  "per_image": [
+    {
+      "combined": "blur",
+      "combined_confidence": 0.9999999705867855,
+      "combined_logits": [
+        16.5723819732666,
+        -26.238094329833984,
+        -2.419001817703247,
+        -13.408525466918945,
+        -0.9828029274940491
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        3.0290143489837646,
+        -1.6637574434280396,
+        0.7176821231842041,
+        -3.045928716659546,
+        -0.04579152166843414
+      ],
+      "key": "validation_foundir_train_0062910",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0062910",
+        "known_class_control": {
+          "lpips": 0.36591091752052307,
+          "psnr": 15.208680860751242
+        },
+        "metrics": {
+          "lpips": 0.36591091752052307,
+          "psnr": 15.208680860751242
+        },
+        "old_step408_soft": {
+          "lpips": 0.36591091752052307,
+          "psnr": 15.208680860751242
+        },
+        "predicted_anchor": "blur",
+        "render_id": "validation_foundir_train_0062910__blur",
+        "task": "blur"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        13.543367385864258,
+        -24.574337005615234,
+        -3.136683940887451,
+        -10.36259651184082,
+        -0.9370114207267761
+      ],
+      "vlm_delta_argmax_not_standalone_model": "blur"
+    },
+    {
+      "combined": "blur",
+      "combined_confidence": 0.9999990212747658,
+      "combined_logits": [
+        11.880667686462402,
+        -6.197614669799805,
+        -3.561480760574341,
+        -6.774253845214844,
+        -2.2090930938720703
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        6.407731533050537,
+        5.066944122314453,
+        -2.8567492961883545,
+        -1.6945961713790894,
+        -0.8318802118301392
+      ],
+      "key": "validation_foundir_train_0001445",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0001445",
+        "known_class_control": {
+          "lpips": 0.014239766635000706,
+          "psnr": 37.685890066702655
+        },
+        "metrics": {
+          "lpips": 0.014239766635000706,
+          "psnr": 37.685890066702655
+        },
+        "old_step408_soft": {
+          "lpips": 0.014076778665184975,
+          "psnr": 37.72107370818817
+        },
+        "predicted_anchor": "blur",
+        "render_id": "validation_foundir_train_0001445__blur",
+        "task": "blur"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        5.472936153411865,
+        -11.264558792114258,
+        -0.7047315239906311,
+        -5.079657554626465,
+        -1.3772128820419312
+      ],
+      "vlm_delta_argmax_not_standalone_model": "blur"
+    },
+    {
+      "combined": "blur",
+      "combined_confidence": 0.9998466851707946,
+      "combined_logits": [
+        10.97968864440918,
+        -19.480792999267578,
+        1.8517160415649414,
+        -13.425263404846191,
+        0.9653322100639343
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        1.5489966869354248,
+        -0.6767792701721191,
+        2.493060350418091,
+        -3.498663902282715,
+        1.7348947525024414
+      ],
+      "key": "validation_foundir_train_0009805",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0009805",
+        "known_class_control": {
+          "lpips": 0.1862894594669342,
+          "psnr": 24.536430317963696
+        },
+        "metrics": {
+          "lpips": 0.1862894594669342,
+          "psnr": 24.536430317963696
+        },
+        "old_step408_soft": {
+          "lpips": 0.24096018075942993,
+          "psnr": 25.174780262942804
+        },
+        "predicted_anchor": "blur",
+        "render_id": "validation_foundir_train_0009805__blur",
+        "task": "blur"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        9.430691719055176,
+        -18.804014205932617,
+        -0.6413443088531494,
+        -9.926599502563477,
+        -0.7695625424385071
+      ],
+      "vlm_delta_argmax_not_standalone_model": "blur"
+    },
+    {
+      "combined": "blur",
+      "combined_confidence": 0.9999997689997774,
+      "combined_logits": [
+        14.487476348876953,
+        -22.591468811035156,
+        -1.647406816482544,
+        -11.44300651550293,
+        -1.3480035066604614
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.892982244491577,
+        -1.1014946699142456,
+        -0.356548935174942,
+        -1.4430584907531738,
+        0.28979575634002686
+      ],
+      "key": "validation_foundir_train_0094664",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0094664",
+        "known_class_control": {
+          "lpips": 0.16703490912914276,
+          "psnr": 21.375699823973452
+        },
+        "metrics": {
+          "lpips": 0.16703490912914276,
+          "psnr": 21.375699823973452
+        },
+        "old_step408_soft": {
+          "lpips": 0.16715750098228455,
+          "psnr": 21.371233820338933
+        },
+        "predicted_anchor": "blur",
+        "render_id": "validation_foundir_train_0094664__blur",
+        "task": "blur"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        11.594493865966797,
+        -21.489974975585938,
+        -1.2908579111099243,
+        -9.999948501586914,
+        -1.6377992630004883
+      ],
+      "vlm_delta_argmax_not_standalone_model": "blur"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9996511365316986,
+      "combined_logits": [
+        0.005088329315185547,
+        -4.502784729003906,
+        7.992774963378906,
+        -9.031758308410645,
+        -4.103055000305176
+      ],
+      "correct": false,
+      "flip_helped": false,
+      "flip_hurt": true,
+      "image_logits": [
+        1.5522301197052002,
+        0.1447116732597351,
+        1.247018814086914,
+        -3.020704984664917,
+        -0.8836990594863892
+      ],
+      "key": "validation_foundir_train_0007534",
+      "restoration": {
+        "correct": false,
+        "key": "validation_foundir_train_0007534",
+        "known_class_control": {
+          "lpips": 0.3204156160354614,
+          "psnr": 21.469987590052618
+        },
+        "metrics": {
+          "lpips": 0.7771083116531372,
+          "psnr": 16.637974047772882
+        },
+        "old_step408_soft": {
+          "lpips": 0.3206084370613098,
+          "psnr": 21.470379675616044
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0007534__haze",
+        "task": "blur"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 7.987686634063721,
+        "image": -0.30521130561828613,
+        "vlm": 8.292897939682007
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        -1.5471417903900146,
+        -4.647496223449707,
+        6.745756149291992,
+        -6.011053085327148,
+        -3.219356060028076
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "blur",
+      "combined_confidence": 0.998098332430012,
+      "combined_logits": [
+        6.3984575271606445,
+        -8.702816009521484,
+        -1.8101537227630615,
+        -5.58419942855835,
+        -0.0228893905878067
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.818527936935425,
+        -1.3536947965621948,
+        -1.2417124509811401,
+        -0.56022709608078,
+        0.19711166620254517
+      ],
+      "key": "validation_foundir_train_0091843",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0091843",
+        "known_class_control": {
+          "lpips": 0.1503629982471466,
+          "psnr": 26.95573129919591
+        },
+        "metrics": {
+          "lpips": 0.1503629982471466,
+          "psnr": 26.95573129919591
+        },
+        "old_step408_soft": {
+          "lpips": 0.15043848752975464,
+          "psnr": 26.956140160144216
+        },
+        "predicted_anchor": "blur",
+        "render_id": "validation_foundir_train_0091843__blur",
+        "task": "blur"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        3.5799295902252197,
+        -7.34912109375,
+        -0.5684412121772766,
+        -5.023972511291504,
+        -0.22000105679035187
+      ],
+      "vlm_delta_argmax_not_standalone_model": "blur"
+    },
+    {
+      "combined": "blur",
+      "combined_confidence": 0.9965312718038488,
+      "combined_logits": [
+        4.679385185241699,
+        -2.352461814880371,
+        -5.282103538513184,
+        -1.9702012538909912,
+        -2.0006263256073
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.361480712890625,
+        -0.9449394941329956,
+        -0.8939540386199951,
+        -1.2268304824829102,
+        -1.1581485271453857
+      ],
+      "key": "validation_foundir_train_0034135",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0034135",
+        "known_class_control": {
+          "lpips": 0.011323144659399986,
+          "psnr": 36.52029884967793
+        },
+        "metrics": {
+          "lpips": 0.011323144659399986,
+          "psnr": 36.52029884967793
+        },
+        "old_step408_soft": {
+          "lpips": 0.011221601627767086,
+          "psnr": 36.587958468497234
+        },
+        "predicted_anchor": "blur",
+        "render_id": "validation_foundir_train_0034135__blur",
+        "task": "blur"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        2.317904472351074,
+        -1.4075223207473755,
+        -4.388149261474609,
+        -0.7433707118034363,
+        -0.8424778580665588
+      ],
+      "vlm_delta_argmax_not_standalone_model": "blur"
+    },
+    {
+      "combined": "blur",
+      "combined_confidence": 0.9999990085653643,
+      "combined_logits": [
+        14.489523887634277,
+        -24.938682556152344,
+        -0.4742915630340576,
+        -14.306992530822754,
+        0.27987584471702576
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        1.5217593908309937,
+        -0.2927277088165283,
+        2.335988759994507,
+        -3.6140096187591553,
+        0.7438042163848877
+      ],
+      "key": "validation_foundir_train_0067975",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0067975",
+        "known_class_control": {
+          "lpips": 0.30197563767433167,
+          "psnr": 15.25827420084173
+        },
+        "metrics": {
+          "lpips": 0.30197563767433167,
+          "psnr": 15.25827420084173
+        },
+        "old_step408_soft": {
+          "lpips": 0.30242207646369934,
+          "psnr": 15.246951050730484
+        },
+        "predicted_anchor": "blur",
+        "render_id": "validation_foundir_train_0067975__blur",
+        "task": "blur"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "blur",
+      "vlm_delta": [
+        12.967764854431152,
+        -24.645954132080078,
+        -2.8102803230285645,
+        -10.69298267364502,
+        -0.46392837166786194
+      ],
+      "vlm_delta_argmax_not_standalone_model": "blur"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9995523532235193,
+      "combined_logits": [
+        0.3388160467147827,
+        8.312870979309082,
+        -4.048338890075684,
+        -0.9070065021514893,
+        -6.9515581130981445
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        1.8265256881713867,
+        1.803330898284912,
+        -0.8214206695556641,
+        -0.6255109310150146,
+        -1.6161013841629028
+      ],
+      "key": "validation_foundir_train_0144583",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0144583",
+        "known_class_control": {
+          "lpips": 0.012662265449762344,
+          "psnr": 39.31311370809781
+        },
+        "metrics": {
+          "lpips": 0.012662265449762344,
+          "psnr": 39.31311370809781
+        },
+        "old_step408_soft": {
+          "lpips": 0.011552110314369202,
+          "psnr": 36.950822957015326
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0144583__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -1.487709641456604,
+        6.50954008102417,
+        -3.2269179821014404,
+        -0.2814955413341522,
+        -5.335456848144531
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9999966534251453,
+      "combined_logits": [
+        -6.641725063323975,
+        12.927647590637207,
+        0.30425870418548584,
+        -3.9034600257873535,
+        -8.885478973388672
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        0.8924909234046936,
+        0.8320218324661255,
+        0.9915194511413574,
+        -2.362365245819092,
+        -1.148716926574707
+      ],
+      "key": "validation_foundir_train_0153585",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0153585",
+        "known_class_control": {
+          "lpips": 0.06651907414197922,
+          "psnr": 40.825255729878236
+        },
+        "metrics": {
+          "lpips": 0.06651907414197922,
+          "psnr": 40.825255729878236
+        },
+        "old_step408_soft": {
+          "lpips": 0.06666820496320724,
+          "psnr": 40.84350894265498
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0153585__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -7.534215927124023,
+        12.095625877380371,
+        -0.6872607469558716,
+        -1.5410946607589722,
+        -7.736761569976807
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9999644647134827,
+      "combined_logits": [
+        -3.3990964889526367,
+        10.303866386413574,
+        -1.4136639833450317,
+        -0.24533936381340027,
+        -6.440877914428711
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.4942259788513184,
+        3.0197665691375732,
+        -1.1646208763122559,
+        -0.10923129320144653,
+        -1.2647855281829834
+      ],
+      "key": "validation_foundir_train_0182272",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0182272",
+        "known_class_control": {
+          "lpips": 0.013407150283455849,
+          "psnr": 42.997338524116834
+        },
+        "metrics": {
+          "lpips": 0.013407150283455849,
+          "psnr": 42.997338524116834
+        },
+        "old_step408_soft": {
+          "lpips": 0.013394586741924286,
+          "psnr": 42.349511309110575
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0182272__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "noise",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -5.893322467803955,
+        7.28410005569458,
+        -0.24904309213161469,
+        -0.13610807061195374,
+        -5.176092147827148
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9576611055135784,
+      "combined_logits": [
+        -3.0268425941467285,
+        6.628643035888672,
+        -6.4517107009887695,
+        3.5082972049713135,
+        -6.205256462097168
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        2.0972018241882324,
+        0.386427640914917,
+        -4.3132643699646,
+        2.836076498031616,
+        -2.5514206886291504
+      ],
+      "key": "validation_foundir_train_0177424",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0177424",
+        "known_class_control": {
+          "lpips": 0.018698427826166153,
+          "psnr": 45.60783344363708
+        },
+        "metrics": {
+          "lpips": 0.018698427826166153,
+          "psnr": 45.60783344363708
+        },
+        "old_step408_soft": {
+          "lpips": 0.019434433430433273,
+          "psnr": 38.59391806503214
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0177424__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "lowlight",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -5.124044418334961,
+        6.242215156555176,
+        -2.138446569442749,
+        0.6722206473350525,
+        -3.6538357734680176
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9995734034261009,
+      "combined_logits": [
+        -5.564090728759766,
+        10.37673568725586,
+        2.615809440612793,
+        -3.9612979888916016,
+        -8.851612091064453
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        2.4440267086029053,
+        2.302528142929077,
+        -0.7063289284706116,
+        -1.424020528793335,
+        -1.9464836120605469
+      ],
+      "key": "validation_foundir_train_0187489",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0187489",
+        "known_class_control": {
+          "lpips": 0.1511465162038803,
+          "psnr": 41.4422393931597
+        },
+        "metrics": {
+          "lpips": 0.1511465162038803,
+          "psnr": 41.4422393931597
+        },
+        "old_step408_soft": {
+          "lpips": 0.15108609199523926,
+          "psnr": 41.44448054974901
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0187489__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -8.00811767578125,
+        8.074207305908203,
+        3.3221383094787598,
+        -2.5372774600982666,
+        -6.9051289558410645
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.6159316688959156,
+      "combined_logits": [
+        4.260313987731934,
+        4.739031791687012,
+        -0.854030191898346,
+        -3.5938501358032227,
+        -6.346615791320801
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        5.336987018585205,
+        4.238968372344971,
+        -1.7707877159118652,
+        -1.8701202869415283,
+        -0.33512815833091736
+      ],
+      "key": "validation_foundir_train_0189233",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0189233",
+        "known_class_control": {
+          "lpips": 0.08227060735225677,
+          "psnr": 41.3931689977558
+        },
+        "metrics": {
+          "lpips": 0.08227060735225677,
+          "psnr": 41.3931689977558
+        },
+        "old_step408_soft": {
+          "lpips": 0.09374328702688217,
+          "psnr": 26.40023025739888
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0189233__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -1.076673150062561,
+        0.5000636577606201,
+        0.9167575240135193,
+        -1.7237299680709839,
+        -6.0114874839782715
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9999998049036051,
+      "combined_logits": [
+        -5.489748477935791,
+        14.603384017944336,
+        -0.9075427055358887,
+        -3.8564329147338867,
+        -8.651410102844238
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        1.8613392114639282,
+        2.97395396232605,
+        0.12138736993074417,
+        -2.0134479999542236,
+        -1.6543430089950562
+      ],
+      "key": "validation_foundir_train_0192771",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0192771",
+        "known_class_control": {
+          "lpips": 0.10552693903446198,
+          "psnr": 34.90914086809218
+        },
+        "metrics": {
+          "lpips": 0.10552693903446198,
+          "psnr": 34.90914086809218
+        },
+        "old_step408_soft": {
+          "lpips": 0.10555627942085266,
+          "psnr": 34.91153313354119
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0192771__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "noise",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -7.35108757019043,
+        11.629429817199707,
+        -1.0289300680160522,
+        -1.842984914779663,
+        -6.997067451477051
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9999999996165079,
+      "combined_logits": [
+        -3.1118478775024414,
+        19.6634521484375,
+        -6.1362762451171875,
+        -2.451035261154175,
+        -13.137443542480469
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        5.910123825073242,
+        3.8517730236053467,
+        -4.281977653503418,
+        0.06390343606472015,
+        -3.540254592895508
+      ],
+      "key": "validation_foundir_train_0194586",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0194586",
+        "known_class_control": {
+          "lpips": 0.10296003520488739,
+          "psnr": 35.7840133628378
+        },
+        "metrics": {
+          "lpips": 0.10296003520488739,
+          "psnr": 35.7840133628378
+        },
+        "old_step408_soft": {
+          "lpips": 0.1031777411699295,
+          "psnr": 35.79659763161158
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0194586__noise",
+        "task": "noise"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "noise",
+      "vlm_delta": [
+        -9.021971702575684,
+        15.81167984008789,
+        -1.8542985916137695,
+        -2.5149385929107666,
+        -9.597188949584961
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9999999997696039,
+      "combined_logits": [
+        -9.567486763000488,
+        -2.7571940422058105,
+        19.60102081298828,
+        -15.210098266601562,
+        -4.468441009521484
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        0.29715675115585327,
+        0.7067375183105469,
+        3.8387908935546875,
+        -4.398151874542236,
+        0.9003711342811584
+      ],
+      "key": "validation_foundir_train_0201705",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0201705",
+        "known_class_control": {
+          "lpips": 0.1627616435289383,
+          "psnr": 16.462526043501015
+        },
+        "metrics": {
+          "lpips": 0.1627616435289383,
+          "psnr": 16.462526043501015
+        },
+        "old_step408_soft": {
+          "lpips": 0.1625814437866211,
+          "psnr": 16.474883342558034
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0201705__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -9.864643096923828,
+        -3.4639315605163574,
+        15.762229919433594,
+        -10.811946868896484,
+        -5.368812084197998
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.999998033492645,
+      "combined_logits": [
+        -1.790266513824463,
+        -3.3508524894714355,
+        11.603731155395508,
+        -12.08478832244873,
+        -4.314872741699219
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        1.9639747142791748,
+        -0.7834423184394836,
+        2.966986894607544,
+        -5.103028297424316,
+        0.42113736271858215
+      ],
+      "key": "validation_foundir_train_0225021",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0225021",
+        "known_class_control": {
+          "lpips": 0.027823055163025856,
+          "psnr": 29.573739253238628
+        },
+        "metrics": {
+          "lpips": 0.027823055163025856,
+          "psnr": 29.573739253238628
+        },
+        "old_step408_soft": {
+          "lpips": 0.029172847047448158,
+          "psnr": 28.862662038382144
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0225021__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -3.7542412281036377,
+        -2.5674102306365967,
+        8.636744499206543,
+        -6.981760025024414,
+        -4.7360100746154785
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9999999996489637,
+      "combined_logits": [
+        -8.546639442443848,
+        -3.6722397804260254,
+        18.746305465698242,
+        -15.035545349121094,
+        -3.772221565246582
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        0.6987568140029907,
+        -0.42134302854537964,
+        3.789034128189087,
+        -4.627749443054199,
+        1.226643443107605
+      ],
+      "key": "validation_foundir_train_0229347",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0229347",
+        "known_class_control": {
+          "lpips": 0.11257670819759369,
+          "psnr": 22.6130973260845
+        },
+        "metrics": {
+          "lpips": 0.11257670819759369,
+          "psnr": 22.6130973260845
+        },
+        "old_step408_soft": {
+          "lpips": 0.11257239431142807,
+          "psnr": 22.626118608317192
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0229347__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -9.245396614074707,
+        -3.250896692276001,
+        14.957271575927734,
+        -10.407795906066895,
+        -4.998865127563477
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9999957395291099,
+      "combined_logits": [
+        -12.271052360534668,
+        1.4711374044418335,
+        13.837532043457031,
+        -9.193224906921387,
+        -6.848721504211426
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        0.2602293789386749,
+        1.2860151529312134,
+        0.7665558457374573,
+        -1.5359101295471191,
+        -1.5582258701324463
+      ],
+      "key": "validation_foundir_train_0255323",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0255323",
+        "known_class_control": {
+          "lpips": 0.11121533066034317,
+          "psnr": 22.328047377587673
+        },
+        "metrics": {
+          "lpips": 0.11121533066034317,
+          "psnr": 22.328047377587673
+        },
+        "old_step408_soft": {
+          "lpips": 0.10211476683616638,
+          "psnr": 23.139425445525433
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0255323__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "noise",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -12.531281471252441,
+        0.1851222664117813,
+        13.070976257324219,
+        -7.657314777374268,
+        -5.290495872497559
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9999999081655264,
+      "combined_logits": [
+        -8.438589096069336,
+        -3.5268402099609375,
+        12.916747093200684,
+        -8.17782974243164,
+        -4.894388675689697
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        0.36818116903305054,
+        -1.0399205684661865,
+        1.7986904382705688,
+        -2.241464614868164,
+        -0.8291017413139343
+      ],
+      "key": "validation_foundir_train_0235052",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0235052",
+        "known_class_control": {
+          "lpips": 0.079948790371418,
+          "psnr": 21.5609352533021
+        },
+        "metrics": {
+          "lpips": 0.079948790371418,
+          "psnr": 21.5609352533021
+        },
+        "old_step408_soft": {
+          "lpips": 0.08001084625720978,
+          "psnr": 21.552407630825947
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0235052__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -8.806770324707031,
+        -2.486919641494751,
+        11.118056297302246,
+        -5.936364650726318,
+        -4.065287113189697
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9999999989565822,
+      "combined_logits": [
+        -8.487824440002441,
+        -2.0875275135040283,
+        18.660947799682617,
+        -15.552221298217773,
+        -4.770001411437988
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        1.1003577709197998,
+        0.7909746170043945,
+        3.1368467807769775,
+        -4.524936676025391,
+        0.6155701279640198
+      ],
+      "key": "validation_foundir_train_0208167",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0208167",
+        "known_class_control": {
+          "lpips": 0.04768603295087814,
+          "psnr": 27.62361620482604
+        },
+        "metrics": {
+          "lpips": 0.04768603295087814,
+          "psnr": 27.62361620482604
+        },
+        "old_step408_soft": {
+          "lpips": 0.04954826459288597,
+          "psnr": 26.552141760740753
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0208167__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -9.58818244934082,
+        -2.878502130508423,
+        15.524101257324219,
+        -11.027284622192383,
+        -5.385571479797363
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9999780704706903,
+      "combined_logits": [
+        -8.181510925292969,
+        1.5495730638504028,
+        12.277844429016113,
+        -11.12264633178711,
+        -5.947904586791992
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        2.365804433822632,
+        -0.008669141680002213,
+        1.4661301374435425,
+        -3.9728829860687256,
+        -0.9176414012908936
+      ],
+      "key": "validation_foundir_train_0264740",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0264740",
+        "known_class_control": {
+          "lpips": 0.06395670771598816,
+          "psnr": 22.249476888341682
+        },
+        "metrics": {
+          "lpips": 0.06395670771598816,
+          "psnr": 22.249476888341682
+        },
+        "old_step408_soft": {
+          "lpips": 0.14948853850364685,
+          "psnr": 15.500805786226994
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0264740__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -10.54731559753418,
+        1.5582422018051147,
+        10.811714172363281,
+        -7.149763584136963,
+        -5.0302629470825195
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "haze",
+      "combined_confidence": 0.9999375317104795,
+      "combined_logits": [
+        -8.971156120300293,
+        2.2630395889282227,
+        11.943927764892578,
+        -8.420575141906738,
+        -7.408993721008301
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        -0.0017152391374111176,
+        0.26134973764419556,
+        1.9753328561782837,
+        -2.764448881149292,
+        -1.5220481157302856
+      ],
+      "key": "validation_foundir_train_0276837",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0276837",
+        "known_class_control": {
+          "lpips": 0.03543943911790848,
+          "psnr": 30.186781824002928
+        },
+        "metrics": {
+          "lpips": 0.03543943911790848,
+          "psnr": 30.186781824002928
+        },
+        "old_step408_soft": {
+          "lpips": 0.03554321080446243,
+          "psnr": 30.22302518951917
+        },
+        "predicted_anchor": "haze",
+        "render_id": "validation_foundir_train_0276837__haze",
+        "task": "haze"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "haze",
+      "vlm_delta": [
+        -8.969440460205078,
+        2.001689910888672,
+        9.968594551086426,
+        -5.656126022338867,
+        -5.886945724487305
+      ],
+      "vlm_delta_argmax_not_standalone_model": "haze"
+    },
+    {
+      "combined": "lowlight",
+      "combined_confidence": 0.9999980823314891,
+      "combined_logits": [
+        0.2427600622177124,
+        -7.086488723754883,
+        -6.59851598739624,
+        13.409955978393555,
+        -6.591263294219971
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        0.9402168989181519,
+        0.5298238396644592,
+        -1.864876389503479,
+        2.7018446922302246,
+        -1.5379681587219238
+      ],
+      "key": "validation_foundir_train_0493413",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0493413",
+        "known_class_control": {
+          "lpips": 0.10958962142467499,
+          "psnr": 17.141480363695837
+        },
+        "metrics": {
+          "lpips": 0.10958962142467499,
+          "psnr": 17.141480363695837
+        },
+        "old_step408_soft": {
+          "lpips": 0.10954369604587555,
+          "psnr": 17.145690628115013
+        },
+        "predicted_anchor": "lowlight",
+        "render_id": "validation_foundir_train_0493413__lowlight",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "lowlight",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "lowlight",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -0.6974568367004395,
+        -7.616312503814697,
+        -4.733639717102051,
+        10.708111763000488,
+        -5.053295135498047
+      ],
+      "vlm_delta_argmax_not_standalone_model": "lowlight"
+    },
+    {
+      "combined": "lowlight",
+      "combined_confidence": 0.9993363303670292,
+      "combined_logits": [
+        2.1842257976531982,
+        -7.479180812835693,
+        -4.4522833824157715,
+        9.503902435302734,
+        -4.506235122680664
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        3.63873553276062,
+        0.7562004327774048,
+        -2.686316728591919,
+        2.0739574432373047,
+        -2.063901662826538
+      ],
+      "key": "validation_foundir_train_0508782",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0508782",
+        "known_class_control": {
+          "lpips": 0.14240221679210663,
+          "psnr": 21.98954788213827
+        },
+        "metrics": {
+          "lpips": 0.14240221679210663,
+          "psnr": 21.98954788213827
+        },
+        "old_step408_soft": {
+          "lpips": 0.32967108488082886,
+          "psnr": 7.174505828413028
+        },
+        "predicted_anchor": "lowlight",
+        "render_id": "validation_foundir_train_0508782__lowlight",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "blur",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -1.4545097351074219,
+        -8.235381126403809,
+        -1.7659666538238525,
+        7.4299445152282715,
+        -2.442333221435547
+      ],
+      "vlm_delta_argmax_not_standalone_model": "lowlight"
+    },
+    {
+      "combined": "lowlight",
+      "combined_confidence": 0.9998751129392819,
+      "combined_logits": [
+        -1.7189481258392334,
+        2.3008012771606445,
+        -7.850898742675781,
+        11.306621551513672,
+        -9.421028137207031
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        2.848254919052124,
+        2.72377872467041,
+        -3.979991912841797,
+        2.473222017288208,
+        -3.3973164558410645
+      ],
+      "key": "validation_foundir_train_0510173",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0510173",
+        "known_class_control": {
+          "lpips": 0.2559943199157715,
+          "psnr": 13.156241444337915
+        },
+        "metrics": {
+          "lpips": 0.2559943199157715,
+          "psnr": 13.156241444337915
+        },
+        "old_step408_soft": {
+          "lpips": 0.24841268360614777,
+          "psnr": 13.706924385991801
+        },
+        "predicted_anchor": "lowlight",
+        "render_id": "validation_foundir_train_0510173__lowlight",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "lowlight",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -4.567203044891357,
+        -0.4229773283004761,
+        -3.8709070682525635,
+        8.833399772644043,
+        -6.023711681365967
+      ],
+      "vlm_delta_argmax_not_standalone_model": "lowlight"
+    },
+    {
+      "combined": "noise",
+      "combined_confidence": 0.9998725862401507,
+      "combined_logits": [
+        -7.902631759643555,
+        8.763288497924805,
+        -1.029654622077942,
+        -0.7842372059822083,
+        -6.947858810424805
+      ],
+      "correct": false,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        1.7208997011184692,
+        0.5851752758026123,
+        -2.2030375003814697,
+        0.8862276673316956,
+        -1.9384915828704834
+      ],
+      "key": "validation_foundir_train_0479048",
+      "restoration": {
+        "correct": false,
+        "key": "validation_foundir_train_0479048",
+        "known_class_control": {
+          "lpips": 0.0893302783370018,
+          "psnr": 18.076225849379362
+        },
+        "metrics": {
+          "lpips": 0.36010220646858215,
+          "psnr": 5.537555460896049
+        },
+        "old_step408_soft": {
+          "lpips": 0.3584730625152588,
+          "psnr": 5.571506797640236
+        },
+        "predicted_anchor": "noise",
+        "render_id": "validation_foundir_train_0479048__noise",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 9.547525703907013,
+        "image": -0.30105239152908325,
+        "vlm": 9.848577857017517
+      },
+      "separately_trained_image_only": "noise",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -9.623531341552734,
+        8.178112983703613,
+        1.1733828783035278,
+        -1.6704648733139038,
+        -5.009366989135742
+      ],
+      "vlm_delta_argmax_not_standalone_model": "noise"
+    },
+    {
+      "combined": "lowlight",
+      "combined_confidence": 0.999984773548428,
+      "combined_logits": [
+        1.6840934753417969,
+        -6.387468338012695,
+        -7.020903587341309,
+        12.777265548706055,
+        -6.679973125457764
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.9835381507873535,
+        0.8900543451309204,
+        -3.449223041534424,
+        3.077252149581909,
+        -2.4073166847229004
+      ],
+      "key": "validation_foundir_train_0487157",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0487157",
+        "known_class_control": {
+          "lpips": 0.08951829373836517,
+          "psnr": 20.814671190897478
+        },
+        "metrics": {
+          "lpips": 0.08951829373836517,
+          "psnr": 20.814671190897478
+        },
+        "old_step408_soft": {
+          "lpips": 0.08818298578262329,
+          "psnr": 20.97517574569224
+        },
+        "predicted_anchor": "lowlight",
+        "render_id": "validation_foundir_train_0487157__lowlight",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "lowlight",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "lowlight",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -1.2994446754455566,
+        -7.277522563934326,
+        -3.5716803073883057,
+        9.700013160705566,
+        -4.272656440734863
+      ],
+      "vlm_delta_argmax_not_standalone_model": "lowlight"
+    },
+    {
+      "combined": "lowlight",
+      "combined_confidence": 0.9999996500285772,
+      "combined_logits": [
+        -0.11940717697143555,
+        -1.6050164699554443,
+        -10.645862579345703,
+        14.950272560119629,
+        -8.484332084655762
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        5.487472057342529,
+        3.2865664958953857,
+        -6.194735050201416,
+        3.67263126373291,
+        -3.6174733638763428
+      ],
+      "key": "validation_foundir_train_0482078",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0482078",
+        "known_class_control": {
+          "lpips": 0.0943550169467926,
+          "psnr": 19.21361717317396
+        },
+        "metrics": {
+          "lpips": 0.0943550169467926,
+          "psnr": 19.21361717317396
+        },
+        "old_step408_soft": {
+          "lpips": 0.1277206391096115,
+          "psnr": 31.41640758379716
+        },
+        "predicted_anchor": "lowlight",
+        "render_id": "validation_foundir_train_0482078__lowlight",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "lowlight",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -5.606879234313965,
+        -4.89158296585083,
+        -4.451127529144287,
+        11.277641296386719,
+        -4.86685848236084
+      ],
+      "vlm_delta_argmax_not_standalone_model": "lowlight"
+    },
+    {
+      "combined": "lowlight",
+      "combined_confidence": 0.9999994944789135,
+      "combined_logits": [
+        -0.7586138248443604,
+        -1.6458187103271484,
+        -8.445920944213867,
+        14.084511756896973,
+        -8.683416366577148
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.403240442276001,
+        1.335090160369873,
+        -4.855280876159668,
+        4.696107864379883,
+        -2.998760223388672
+      ],
+      "key": "validation_foundir_train_0510520",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0510520",
+        "known_class_control": {
+          "lpips": 0.18371988832950592,
+          "psnr": 25.960774885338314
+        },
+        "metrics": {
+          "lpips": 0.18371988832950592,
+          "psnr": 25.960774885338314
+        },
+        "old_step408_soft": {
+          "lpips": 0.1838095784187317,
+          "psnr": 25.968815674712996
+        },
+        "predicted_anchor": "lowlight",
+        "render_id": "validation_foundir_train_0510520__lowlight",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "lowlight",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "lowlight",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -3.1618542671203613,
+        -2.9809088706970215,
+        -3.5906403064727783,
+        9.38840389251709,
+        -5.684656620025635
+      ],
+      "vlm_delta_argmax_not_standalone_model": "lowlight"
+    },
+    {
+      "combined": "lowlight",
+      "combined_confidence": 0.9999908774390456,
+      "combined_logits": [
+        -0.6112591028213501,
+        -7.064197063446045,
+        -6.469590187072754,
+        11.036561965942383,
+        -3.8407082557678223
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        1.132136583328247,
+        -2.0851564407348633,
+        -2.4186296463012695,
+        2.4044318199157715,
+        0.13804680109024048
+      ],
+      "key": "validation_foundir_train_0485983",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0485983",
+        "known_class_control": {
+          "lpips": 0.11102542281150818,
+          "psnr": 25.303511008799575
+        },
+        "metrics": {
+          "lpips": 0.11102542281150818,
+          "psnr": 25.303511008799575
+        },
+        "old_step408_soft": {
+          "lpips": 0.10175634920597076,
+          "psnr": 27.650150003077844
+        },
+        "predicted_anchor": "lowlight",
+        "render_id": "validation_foundir_train_0485983__lowlight",
+        "task": "lowlight"
+      },
+      "same_model_image_branch": "lowlight",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "lowlight",
+      "task_for_diagnosis_only": "lowlight",
+      "vlm_delta": [
+        -1.7433956861495972,
+        -4.979040622711182,
+        -4.050960540771484,
+        8.632129669189453,
+        -3.978754997253418
+      ],
+      "vlm_delta_argmax_not_standalone_model": "lowlight"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.999772030342243,
+      "combined_logits": [
+        -4.991306781768799,
+        -9.47634220123291,
+        1.9604301452636719,
+        -8.118285179138184,
+        10.347509384155273
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        0.3482261896133423,
+        -0.9551846385002136,
+        3.271521806716919,
+        -3.1749911308288574,
+        1.8112235069274902
+      ],
+      "key": "validation_foundir_train_0391222",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0391222",
+        "known_class_control": {
+          "lpips": 0.16582636535167694,
+          "psnr": 27.80151739386592
+        },
+        "metrics": {
+          "lpips": 0.16582636535167694,
+          "psnr": 27.80151739386592
+        },
+        "old_step408_soft": {
+          "lpips": 0.17669519782066345,
+          "psnr": 27.1851753126772
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0391222__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        -5.339532852172852,
+        -8.521157264709473,
+        -1.311091661453247,
+        -4.943294048309326,
+        8.536286354064941
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.9986555511906029,
+      "combined_logits": [
+        5.068840980529785,
+        -19.17475700378418,
+        -3.9986960887908936,
+        -10.374398231506348,
+        11.67938232421875
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        2.2942328453063965,
+        -0.6272017359733582,
+        1.786207914352417,
+        -2.8524153232574463,
+        2.172287702560425
+      ],
+      "key": "validation_foundir_train_0394371",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0394371",
+        "known_class_control": {
+          "lpips": 0.11100539565086365,
+          "psnr": 35.46219388805444
+        },
+        "metrics": {
+          "lpips": 0.11100539565086365,
+          "psnr": 35.46219388805444
+        },
+        "old_step408_soft": {
+          "lpips": 0.11136302351951599,
+          "psnr": 35.49748346719332
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0394371__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "rain",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        2.7746078968048096,
+        -18.547555923461914,
+        -5.7849040031433105,
+        -7.5219831466674805,
+        9.507094383239746
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.9999962812545613,
+      "combined_logits": [
+        -6.778249740600586,
+        -13.161389350891113,
+        0.8437014818191528,
+        -10.168838500976562,
+        13.346328735351562
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        3.3343868255615234,
+        -2.262277603149414,
+        0.23955577611923218,
+        -1.9506802558898926,
+        1.767867922782898
+      ],
+      "key": "validation_foundir_train_0364881",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0364881",
+        "known_class_control": {
+          "lpips": 0.0158144012093544,
+          "psnr": 36.864743744684404
+        },
+        "metrics": {
+          "lpips": 0.0158144012093544,
+          "psnr": 36.864743744684404
+        },
+        "old_step408_soft": {
+          "lpips": 0.01584060676395893,
+          "psnr": 36.794539242669835
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0364881__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "rain",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        -10.11263656616211,
+        -10.8991117477417,
+        0.6041457056999207,
+        -8.218157768249512,
+        11.578460693359375
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.9999999385490779,
+      "combined_logits": [
+        -5.785732269287109,
+        -11.364331245422363,
+        -2.08039927482605,
+        -8.8654146194458,
+        14.550115585327148
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.050790309906006,
+        -1.699437141418457,
+        1.1502659320831299,
+        -1.7991291284561157,
+        2.91121506690979
+      ],
+      "key": "validation_foundir_train_0358824",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0358824",
+        "known_class_control": {
+          "lpips": 0.04129562899470329,
+          "psnr": 33.764066901912805
+        },
+        "metrics": {
+          "lpips": 0.04129562899470329,
+          "psnr": 33.764066901912805
+        },
+        "old_step408_soft": {
+          "lpips": 0.04117952287197113,
+          "psnr": 33.76558121732234
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0358824__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "rain",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "rain",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        -7.836522579193115,
+        -9.664894104003906,
+        -3.2306652069091797,
+        -7.066285133361816,
+        11.638900756835938
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.9940471401071553,
+      "combined_logits": [
+        -7.717007637023926,
+        -7.37083625793457,
+        2.3001949787139893,
+        -8.138166427612305,
+        7.4182448387146
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        2.0027682781219482,
+        -0.7728685140609741,
+        0.6360480189323425,
+        -2.3332366943359375,
+        0.16428199410438538
+      ],
+      "key": "validation_foundir_train_0377282",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0377282",
+        "known_class_control": {
+          "lpips": 0.09865744411945343,
+          "psnr": 32.626618904314284
+        },
+        "metrics": {
+          "lpips": 0.09865744411945343,
+          "psnr": 32.626618904314284
+        },
+        "old_step408_soft": {
+          "lpips": 0.11425895988941193,
+          "psnr": 31.016539939349816
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0377282__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "haze",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        -9.719776153564453,
+        -6.597967624664307,
+        1.664146900177002,
+        -5.804930210113525,
+        7.253962993621826
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.9999999651375943,
+      "combined_logits": [
+        -5.201765060424805,
+        -16.335729598999023,
+        1.1649112701416016,
+        -12.399206161499023,
+        18.338485717773438
+      ],
+      "correct": true,
+      "flip_helped": false,
+      "flip_hurt": false,
+      "image_logits": [
+        2.1984856128692627,
+        -0.8866283297538757,
+        3.4876630306243896,
+        -4.693614482879639,
+        4.045746803283691
+      ],
+      "key": "validation_foundir_train_0377566",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0377566",
+        "known_class_control": {
+          "lpips": 0.010776698589324951,
+          "psnr": 38.606059687739254
+        },
+        "metrics": {
+          "lpips": 0.010776698589324951,
+          "psnr": 38.606059687739254
+        },
+        "old_step408_soft": {
+          "lpips": 0.010743890888988972,
+          "psnr": 38.62139410711205
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0377566__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "rain",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "rain",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        -7.400250434875488,
+        -15.449100494384766,
+        -2.322751760482788,
+        -7.705591201782227,
+        14.292739868164062
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.9999995269465605,
+      "combined_logits": [
+        -3.340653896331787,
+        -13.041779518127441,
+        0.31754565238952637,
+        -11.829100608825684,
+        14.907061576843262
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        1.8205312490463257,
+        -0.767388105392456,
+        3.6273484230041504,
+        -4.7877326011657715,
+        3.0126850605010986
+      ],
+      "key": "validation_foundir_train_0361904",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0361904",
+        "known_class_control": {
+          "lpips": 0.06598493456840515,
+          "psnr": 34.187548493713074
+        },
+        "metrics": {
+          "lpips": 0.06598493456840515,
+          "psnr": 34.187548493713074
+        },
+        "old_step408_soft": {
+          "lpips": 0.06642337888479233,
+          "psnr": 33.65996174509672
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0361904__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "haze",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "rain",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        -5.161185264587402,
+        -12.274391174316406,
+        -3.309802770614624,
+        -7.041368007659912,
+        11.894376754760742
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    },
+    {
+      "combined": "rain",
+      "combined_confidence": 0.999995152639618,
+      "combined_logits": [
+        -3.5122132301330566,
+        -5.899964332580566,
+        -3.3722574710845947,
+        -6.590864181518555,
+        9.552571296691895
+      ],
+      "correct": true,
+      "flip_helped": true,
+      "flip_hurt": false,
+      "image_logits": [
+        2.3709702491760254,
+        -1.6490428447723389,
+        0.9407265782356262,
+        -2.204559564590454,
+        2.228503942489624
+      ],
+      "key": "validation_foundir_train_0361446",
+      "restoration": {
+        "correct": true,
+        "key": "validation_foundir_train_0361446",
+        "known_class_control": {
+          "lpips": 0.041318200528621674,
+          "psnr": 30.509201464277467
+        },
+        "metrics": {
+          "lpips": 0.041318200528621674,
+          "psnr": 30.509201464277467
+        },
+        "old_step408_soft": {
+          "lpips": 0.0411757230758667,
+          "psnr": 30.511580632933523
+        },
+        "predicted_anchor": "rain",
+        "render_id": "validation_foundir_train_0361446__rain",
+        "task": "rain"
+      },
+      "same_model_image_branch": "blur",
+      "selected_minus_true_margin": {
+        "combined": 0.0,
+        "image": 0.0,
+        "vlm": 0.0
+      },
+      "separately_trained_image_only": "rain",
+      "task_for_diagnosis_only": "rain",
+      "vlm_delta": [
+        -5.883183479309082,
+        -4.250921726226807,
+        -4.312983989715576,
+        -4.3863043785095215,
+        7.32406759262085
+      ],
+      "vlm_delta_argmax_not_standalone_model": "rain"
+    }
+  ],
+  "same_model_image_branch_correct": 20,
+  "status": "published_router_score_audit_complete",
+  "training": {
+    "image_only": {
+      "ce": 0.1444447934627533,
+      "confusion": {
+        "blur": {
+          "blur": 127,
+          "haze": 1
+        },
+        "haze": {
+          "haze": 128
+        },
+        "lowlight": {
+          "blur": 1,
+          "haze": 1,
+          "lowlight": 126
+        },
+        "noise": {
+          "blur": 9,
+          "haze": 6,
+          "noise": 113
+        },
+        "rain": {
+          "blur": 5,
+          "haze": 11,
+          "rain": 112
+        }
+      },
+      "correct": 606,
+      "count": 640,
+      "per_task": {
+        "blur": {
+          "correct": 127,
+          "count": 128
+        },
+        "haze": {
+          "correct": 128,
+          "count": 128
+        },
+        "lowlight": {
+          "correct": 126,
+          "count": 128
+        },
+        "noise": {
+          "correct": 113,
+          "count": 128
+        },
+        "rain": {
+          "correct": 112,
+          "count": 128
+        }
+      }
+    },
+    "image_plus_vlm": {
+      "ce": 0.0017819495406001806,
+      "confusion": {
+        "blur": {
+          "blur": 128
+        },
+        "haze": {
+          "haze": 128
+        },
+        "lowlight": {
+          "lowlight": 128
+        },
+        "noise": {
+          "noise": 128
+        },
+        "rain": {
+          "rain": 128
+        }
+      },
+      "correct": 640,
+      "count": 640,
+      "per_task": {
+        "blur": {
+          "correct": 128,
+          "count": 128
+        },
+        "haze": {
+          "correct": 128,
+          "count": 128
+        },
+        "lowlight": {
+          "correct": 128,
+          "count": 128
+        },
+        "noise": {
+          "correct": 128,
+          "count": 128
+        },
+        "rain": {
+          "correct": 128,
+          "count": 128
+        }
+      }
+    }
+  }
+}
