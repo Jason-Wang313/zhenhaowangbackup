@@ -1,0 +1,3347 @@
+{
+  "GT_selects_expert": false,
+  "arms": {
+    "image_only": {
+      "overall": {
+        "correct": 33,
+        "count": 40,
+        "means": {
+          "known_class_control": {
+            "lpips": 0.10846913249697536,
+            "psnr": 28.63398343709854
+          },
+          "metrics": {
+            "lpips": 0.13079529639799148,
+            "psnr": 26.91907455056421
+          },
+          "old_step408_soft": {
+            "lpips": 0.12459228527732194,
+            "psnr": 27.465517574180343
+          }
+        },
+        "regressions_vs_known_class": {
+          "lpips": 7,
+          "psnr": 7
+        }
+      },
+      "per_image": [
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0062910",
+          "known_class_control": {
+            "lpips": 0.36591091752052307,
+            "psnr": 15.208680860751242
+          },
+          "metrics": {
+            "lpips": 0.36591091752052307,
+            "psnr": 15.208680860751242
+          },
+          "old_step408_soft": {
+            "lpips": 0.36591091752052307,
+            "psnr": 15.208680860751242
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0062910__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0001445",
+          "known_class_control": {
+            "lpips": 0.014239766635000706,
+            "psnr": 37.685890066702655
+          },
+          "metrics": {
+            "lpips": 0.014239766635000706,
+            "psnr": 37.685890066702655
+          },
+          "old_step408_soft": {
+            "lpips": 0.014076778665184975,
+            "psnr": 37.72107370818817
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0001445__blur",
+          "task": "blur"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0009805",
+          "known_class_control": {
+            "lpips": 0.1862894594669342,
+            "psnr": 24.536430317963696
+          },
+          "metrics": {
+            "lpips": 0.26484134793281555,
+            "psnr": 22.7418618885212
+          },
+          "old_step408_soft": {
+            "lpips": 0.24096018075942993,
+            "psnr": 25.174780262942804
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0009805__haze",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0094664",
+          "known_class_control": {
+            "lpips": 0.16703490912914276,
+            "psnr": 21.375699823973452
+          },
+          "metrics": {
+            "lpips": 0.16703490912914276,
+            "psnr": 21.375699823973452
+          },
+          "old_step408_soft": {
+            "lpips": 0.16715750098228455,
+            "psnr": 21.371233820338933
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0094664__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0007534",
+          "known_class_control": {
+            "lpips": 0.3204156160354614,
+            "psnr": 21.469987590052618
+          },
+          "metrics": {
+            "lpips": 0.3204156160354614,
+            "psnr": 21.469987590052618
+          },
+          "old_step408_soft": {
+            "lpips": 0.3206084370613098,
+            "psnr": 21.470379675616044
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0007534__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0091843",
+          "known_class_control": {
+            "lpips": 0.1503629982471466,
+            "psnr": 26.95573129919591
+          },
+          "metrics": {
+            "lpips": 0.1503629982471466,
+            "psnr": 26.95573129919591
+          },
+          "old_step408_soft": {
+            "lpips": 0.15043848752975464,
+            "psnr": 26.956140160144216
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0091843__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0034135",
+          "known_class_control": {
+            "lpips": 0.011323144659399986,
+            "psnr": 36.52029884967793
+          },
+          "metrics": {
+            "lpips": 0.011323144659399986,
+            "psnr": 36.52029884967793
+          },
+          "old_step408_soft": {
+            "lpips": 0.011221601627767086,
+            "psnr": 36.587958468497234
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0034135__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0067975",
+          "known_class_control": {
+            "lpips": 0.30197563767433167,
+            "psnr": 15.25827420084173
+          },
+          "metrics": {
+            "lpips": 0.30197563767433167,
+            "psnr": 15.25827420084173
+          },
+          "old_step408_soft": {
+            "lpips": 0.30242207646369934,
+            "psnr": 15.246951050730484
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0067975__blur",
+          "task": "blur"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0144583",
+          "known_class_control": {
+            "lpips": 0.012662265449762344,
+            "psnr": 39.31311370809781
+          },
+          "metrics": {
+            "lpips": 0.026674369350075722,
+            "psnr": 38.355953595866005
+          },
+          "old_step408_soft": {
+            "lpips": 0.011552110314369202,
+            "psnr": 36.950822957015326
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0144583__blur",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0153585",
+          "known_class_control": {
+            "lpips": 0.06651907414197922,
+            "psnr": 40.825255729878236
+          },
+          "metrics": {
+            "lpips": 0.06651907414197922,
+            "psnr": 40.825255729878236
+          },
+          "old_step408_soft": {
+            "lpips": 0.06666820496320724,
+            "psnr": 40.84350894265498
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0153585__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0182272",
+          "known_class_control": {
+            "lpips": 0.013407150283455849,
+            "psnr": 42.997338524116834
+          },
+          "metrics": {
+            "lpips": 0.013407150283455849,
+            "psnr": 42.997338524116834
+          },
+          "old_step408_soft": {
+            "lpips": 0.013394586741924286,
+            "psnr": 42.349511309110575
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0182272__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0177424",
+          "known_class_control": {
+            "lpips": 0.018698427826166153,
+            "psnr": 45.60783344363708
+          },
+          "metrics": {
+            "lpips": 0.018698427826166153,
+            "psnr": 45.60783344363708
+          },
+          "old_step408_soft": {
+            "lpips": 0.019434433430433273,
+            "psnr": 38.59391806503214
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0177424__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0187489",
+          "known_class_control": {
+            "lpips": 0.1511465162038803,
+            "psnr": 41.4422393931597
+          },
+          "metrics": {
+            "lpips": 0.1511465162038803,
+            "psnr": 41.4422393931597
+          },
+          "old_step408_soft": {
+            "lpips": 0.15108609199523926,
+            "psnr": 41.44448054974901
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0187489__noise",
+          "task": "noise"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0189233",
+          "known_class_control": {
+            "lpips": 0.08227060735225677,
+            "psnr": 41.3931689977558
+          },
+          "metrics": {
+            "lpips": 0.10018330812454224,
+            "psnr": 26.15330277625286
+          },
+          "old_step408_soft": {
+            "lpips": 0.09374328702688217,
+            "psnr": 26.40023025739888
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0189233__blur",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0192771",
+          "known_class_control": {
+            "lpips": 0.10552693903446198,
+            "psnr": 34.90914086809218
+          },
+          "metrics": {
+            "lpips": 0.10552693903446198,
+            "psnr": 34.90914086809218
+          },
+          "old_step408_soft": {
+            "lpips": 0.10555627942085266,
+            "psnr": 34.91153313354119
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0192771__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0194586",
+          "known_class_control": {
+            "lpips": 0.10296003520488739,
+            "psnr": 35.7840133628378
+          },
+          "metrics": {
+            "lpips": 0.10296003520488739,
+            "psnr": 35.7840133628378
+          },
+          "old_step408_soft": {
+            "lpips": 0.1031777411699295,
+            "psnr": 35.79659763161158
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0194586__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0201705",
+          "known_class_control": {
+            "lpips": 0.1627616435289383,
+            "psnr": 16.462526043501015
+          },
+          "metrics": {
+            "lpips": 0.1627616435289383,
+            "psnr": 16.462526043501015
+          },
+          "old_step408_soft": {
+            "lpips": 0.1625814437866211,
+            "psnr": 16.474883342558034
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0201705__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0225021",
+          "known_class_control": {
+            "lpips": 0.027823055163025856,
+            "psnr": 29.573739253238628
+          },
+          "metrics": {
+            "lpips": 0.027823055163025856,
+            "psnr": 29.573739253238628
+          },
+          "old_step408_soft": {
+            "lpips": 0.029172847047448158,
+            "psnr": 28.862662038382144
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0225021__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0229347",
+          "known_class_control": {
+            "lpips": 0.11257670819759369,
+            "psnr": 22.6130973260845
+          },
+          "metrics": {
+            "lpips": 0.11257670819759369,
+            "psnr": 22.6130973260845
+          },
+          "old_step408_soft": {
+            "lpips": 0.11257239431142807,
+            "psnr": 22.626118608317192
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0229347__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0255323",
+          "known_class_control": {
+            "lpips": 0.11121533066034317,
+            "psnr": 22.328047377587673
+          },
+          "metrics": {
+            "lpips": 0.11121533066034317,
+            "psnr": 22.328047377587673
+          },
+          "old_step408_soft": {
+            "lpips": 0.10211476683616638,
+            "psnr": 23.139425445525433
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0255323__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0235052",
+          "known_class_control": {
+            "lpips": 0.079948790371418,
+            "psnr": 21.5609352533021
+          },
+          "metrics": {
+            "lpips": 0.079948790371418,
+            "psnr": 21.5609352533021
+          },
+          "old_step408_soft": {
+            "lpips": 0.08001084625720978,
+            "psnr": 21.552407630825947
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0235052__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0208167",
+          "known_class_control": {
+            "lpips": 0.04768603295087814,
+            "psnr": 27.62361620482604
+          },
+          "metrics": {
+            "lpips": 0.04768603295087814,
+            "psnr": 27.62361620482604
+          },
+          "old_step408_soft": {
+            "lpips": 0.04954826459288597,
+            "psnr": 26.552141760740753
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0208167__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0264740",
+          "known_class_control": {
+            "lpips": 0.06395670771598816,
+            "psnr": 22.249476888341682
+          },
+          "metrics": {
+            "lpips": 0.06395670771598816,
+            "psnr": 22.249476888341682
+          },
+          "old_step408_soft": {
+            "lpips": 0.14948853850364685,
+            "psnr": 15.500805786226994
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0264740__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0276837",
+          "known_class_control": {
+            "lpips": 0.03543943911790848,
+            "psnr": 30.186781824002928
+          },
+          "metrics": {
+            "lpips": 0.03543943911790848,
+            "psnr": 30.186781824002928
+          },
+          "old_step408_soft": {
+            "lpips": 0.03554321080446243,
+            "psnr": 30.22302518951917
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0276837__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0493413",
+          "known_class_control": {
+            "lpips": 0.10958962142467499,
+            "psnr": 17.141480363695837
+          },
+          "metrics": {
+            "lpips": 0.10958962142467499,
+            "psnr": 17.141480363695837
+          },
+          "old_step408_soft": {
+            "lpips": 0.10954369604587555,
+            "psnr": 17.145690628115013
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0493413__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0508782",
+          "known_class_control": {
+            "lpips": 0.14240221679210663,
+            "psnr": 21.98954788213827
+          },
+          "metrics": {
+            "lpips": 0.38914793729782104,
+            "psnr": 5.950981458502187
+          },
+          "old_step408_soft": {
+            "lpips": 0.32967108488082886,
+            "psnr": 7.174505828413028
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0508782__blur",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0510173",
+          "known_class_control": {
+            "lpips": 0.2559943199157715,
+            "psnr": 13.156241444337915
+          },
+          "metrics": {
+            "lpips": 0.2559943199157715,
+            "psnr": 13.156241444337915
+          },
+          "old_step408_soft": {
+            "lpips": 0.24841268360614777,
+            "psnr": 13.706924385991801
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0510173__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0479048",
+          "known_class_control": {
+            "lpips": 0.0893302783370018,
+            "psnr": 18.076225849379362
+          },
+          "metrics": {
+            "lpips": 0.36010220646858215,
+            "psnr": 5.537555460896049
+          },
+          "old_step408_soft": {
+            "lpips": 0.3584730625152588,
+            "psnr": 5.571506797640236
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0479048__noise",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0487157",
+          "known_class_control": {
+            "lpips": 0.08951829373836517,
+            "psnr": 20.814671190897478
+          },
+          "metrics": {
+            "lpips": 0.08951829373836517,
+            "psnr": 20.814671190897478
+          },
+          "old_step408_soft": {
+            "lpips": 0.08818298578262329,
+            "psnr": 20.97517574569224
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0487157__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0482078",
+          "known_class_control": {
+            "lpips": 0.0943550169467926,
+            "psnr": 19.21361717317396
+          },
+          "metrics": {
+            "lpips": 0.0943550169467926,
+            "psnr": 19.21361717317396
+          },
+          "old_step408_soft": {
+            "lpips": 0.1277206391096115,
+            "psnr": 31.41640758379716
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0482078__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0510520",
+          "known_class_control": {
+            "lpips": 0.18371988832950592,
+            "psnr": 25.960774885338314
+          },
+          "metrics": {
+            "lpips": 0.18371988832950592,
+            "psnr": 25.960774885338314
+          },
+          "old_step408_soft": {
+            "lpips": 0.1838095784187317,
+            "psnr": 25.968815674712996
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0510520__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0485983",
+          "known_class_control": {
+            "lpips": 0.11102542281150818,
+            "psnr": 25.303511008799575
+          },
+          "metrics": {
+            "lpips": 0.11102542281150818,
+            "psnr": 25.303511008799575
+          },
+          "old_step408_soft": {
+            "lpips": 0.10175634920597076,
+            "psnr": 27.650150003077844
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0485983__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0391222",
+          "known_class_control": {
+            "lpips": 0.16582636535167694,
+            "psnr": 27.80151739386592
+          },
+          "metrics": {
+            "lpips": 0.28659787774086,
+            "psnr": 20.334622819881076
+          },
+          "old_step408_soft": {
+            "lpips": 0.17669519782066345,
+            "psnr": 27.1851753126772
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0391222__haze",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0394371",
+          "known_class_control": {
+            "lpips": 0.11100539565086365,
+            "psnr": 35.46219388805444
+          },
+          "metrics": {
+            "lpips": 0.11100539565086365,
+            "psnr": 35.46219388805444
+          },
+          "old_step408_soft": {
+            "lpips": 0.11136302351951599,
+            "psnr": 35.49748346719332
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0394371__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0364881",
+          "known_class_control": {
+            "lpips": 0.0158144012093544,
+            "psnr": 36.864743744684404
+          },
+          "metrics": {
+            "lpips": 0.0158144012093544,
+            "psnr": 36.864743744684404
+          },
+          "old_step408_soft": {
+            "lpips": 0.01584060676395893,
+            "psnr": 36.794539242669835
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0364881__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0358824",
+          "known_class_control": {
+            "lpips": 0.04129562899470329,
+            "psnr": 33.764066901912805
+          },
+          "metrics": {
+            "lpips": 0.04129562899470329,
+            "psnr": 33.764066901912805
+          },
+          "old_step408_soft": {
+            "lpips": 0.04117952287197113,
+            "psnr": 33.76558121732234
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0358824__rain",
+          "task": "rain"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0377282",
+          "known_class_control": {
+            "lpips": 0.09865744411945343,
+            "psnr": 32.626618904314284
+          },
+          "metrics": {
+            "lpips": 0.24293814599514008,
+            "psnr": 18.06598959222247
+          },
+          "old_step408_soft": {
+            "lpips": 0.11425895988941193,
+            "psnr": 31.016539939349816
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0377282__haze",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0377566",
+          "known_class_control": {
+            "lpips": 0.010776698589324951,
+            "psnr": 38.606059687739254
+          },
+          "metrics": {
+            "lpips": 0.010776698589324951,
+            "psnr": 38.606059687739254
+          },
+          "old_step408_soft": {
+            "lpips": 0.010743890888988972,
+            "psnr": 38.62139410711205
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0377566__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0361904",
+          "known_class_control": {
+            "lpips": 0.06598493456840515,
+            "psnr": 34.187548493713074
+          },
+          "metrics": {
+            "lpips": 0.06598493456840515,
+            "psnr": 34.187548493713074
+          },
+          "old_step408_soft": {
+            "lpips": 0.06642337888479233,
+            "psnr": 33.65996174509672
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0361904__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0361446",
+          "known_class_control": {
+            "lpips": 0.041318200528621674,
+            "psnr": 30.509201464277467
+          },
+          "metrics": {
+            "lpips": 0.041318200528621674,
+            "psnr": 30.509201464277467
+          },
+          "old_step408_soft": {
+            "lpips": 0.0411757230758667,
+            "psnr": 30.511580632933523
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0361446__rain",
+          "task": "rain"
+        }
+      ],
+      "per_task": {
+        "blur": {
+          "correct": 7,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.18969405617099255,
+              "psnr": 24.876374126144903
+            },
+            "metrics": {
+              "lpips": 0.19951304222922772,
+              "psnr": 24.652053072464593
+            },
+            "old_step408_soft": {
+              "lpips": 0.19659949757624418,
+              "psnr": 24.96714975090114
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 1,
+            "psnr": 1
+          }
+        },
+        "haze": {
+          "correct": 8,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.08017596346326172,
+              "psnr": 24.07477752136057
+            },
+            "metrics": {
+              "lpips": 0.08017596346326172,
+              "psnr": 24.07477752136057
+            },
+            "old_step408_soft": {
+              "lpips": 0.09012903901748359,
+              "psnr": 23.11643372526196
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 0,
+            "psnr": 0
+          }
+        },
+        "lowlight": {
+          "correct": 6,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.13449188228696585,
+              "psnr": 20.20700872472009
+            },
+            "metrics": {
+              "lpips": 0.1991815883666277,
+              "psnr": 16.634854123205166
+            },
+            "old_step408_soft": {
+              "lpips": 0.19344625994563103,
+              "psnr": 18.70114708093004
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 2,
+            "psnr": 2
+          }
+        },
+        "noise": {
+          "correct": 6,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.06914887693710625,
+              "psnr": 40.28401300344693
+            },
+            "metrics": {
+              "lpips": 0.0731394775211811,
+              "psnr": 38.259384711730085
+            },
+            "old_step408_soft": {
+              "lpips": 0.0705765918828547,
+              "psnr": 37.16132535576421
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 2,
+            "psnr": 2
+          }
+        },
+        "rain": {
+          "correct": 6,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.06883488362655044,
+              "psnr": 33.727743809820204
+            },
+            "metrics": {
+              "lpips": 0.10196641040965915,
+              "psnr": 30.974303324060624
+            },
+            "old_step408_soft": {
+              "lpips": 0.07221003796439618,
+              "psnr": 33.38153195804435
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 2,
+            "psnr": 2
+          }
+        }
+      }
+    },
+    "image_plus_vlm": {
+      "overall": {
+        "correct": 38,
+        "count": 40,
+        "means": {
+          "known_class_control": {
+            "lpips": 0.10846913249697536,
+            "psnr": 28.63398343709854
+          },
+          "metrics": {
+            "lpips": 0.12665574809070676,
+            "psnr": 28.199716338829468
+          },
+          "old_step408_soft": {
+            "lpips": 0.12459228527732194,
+            "psnr": 27.465517574180343
+          }
+        },
+        "regressions_vs_known_class": {
+          "lpips": 2,
+          "psnr": 2
+        }
+      },
+      "per_image": [
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0062910",
+          "known_class_control": {
+            "lpips": 0.36591091752052307,
+            "psnr": 15.208680860751242
+          },
+          "metrics": {
+            "lpips": 0.36591091752052307,
+            "psnr": 15.208680860751242
+          },
+          "old_step408_soft": {
+            "lpips": 0.36591091752052307,
+            "psnr": 15.208680860751242
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0062910__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0001445",
+          "known_class_control": {
+            "lpips": 0.014239766635000706,
+            "psnr": 37.685890066702655
+          },
+          "metrics": {
+            "lpips": 0.014239766635000706,
+            "psnr": 37.685890066702655
+          },
+          "old_step408_soft": {
+            "lpips": 0.014076778665184975,
+            "psnr": 37.72107370818817
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0001445__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0009805",
+          "known_class_control": {
+            "lpips": 0.1862894594669342,
+            "psnr": 24.536430317963696
+          },
+          "metrics": {
+            "lpips": 0.1862894594669342,
+            "psnr": 24.536430317963696
+          },
+          "old_step408_soft": {
+            "lpips": 0.24096018075942993,
+            "psnr": 25.174780262942804
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0009805__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0094664",
+          "known_class_control": {
+            "lpips": 0.16703490912914276,
+            "psnr": 21.375699823973452
+          },
+          "metrics": {
+            "lpips": 0.16703490912914276,
+            "psnr": 21.375699823973452
+          },
+          "old_step408_soft": {
+            "lpips": 0.16715750098228455,
+            "psnr": 21.371233820338933
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0094664__blur",
+          "task": "blur"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0007534",
+          "known_class_control": {
+            "lpips": 0.3204156160354614,
+            "psnr": 21.469987590052618
+          },
+          "metrics": {
+            "lpips": 0.7771083116531372,
+            "psnr": 16.637974047772882
+          },
+          "old_step408_soft": {
+            "lpips": 0.3206084370613098,
+            "psnr": 21.470379675616044
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0007534__haze",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0091843",
+          "known_class_control": {
+            "lpips": 0.1503629982471466,
+            "psnr": 26.95573129919591
+          },
+          "metrics": {
+            "lpips": 0.1503629982471466,
+            "psnr": 26.95573129919591
+          },
+          "old_step408_soft": {
+            "lpips": 0.15043848752975464,
+            "psnr": 26.956140160144216
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0091843__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0034135",
+          "known_class_control": {
+            "lpips": 0.011323144659399986,
+            "psnr": 36.52029884967793
+          },
+          "metrics": {
+            "lpips": 0.011323144659399986,
+            "psnr": 36.52029884967793
+          },
+          "old_step408_soft": {
+            "lpips": 0.011221601627767086,
+            "psnr": 36.587958468497234
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0034135__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0067975",
+          "known_class_control": {
+            "lpips": 0.30197563767433167,
+            "psnr": 15.25827420084173
+          },
+          "metrics": {
+            "lpips": 0.30197563767433167,
+            "psnr": 15.25827420084173
+          },
+          "old_step408_soft": {
+            "lpips": 0.30242207646369934,
+            "psnr": 15.246951050730484
+          },
+          "predicted_anchor": "blur",
+          "render_id": "validation_foundir_train_0067975__blur",
+          "task": "blur"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0144583",
+          "known_class_control": {
+            "lpips": 0.012662265449762344,
+            "psnr": 39.31311370809781
+          },
+          "metrics": {
+            "lpips": 0.012662265449762344,
+            "psnr": 39.31311370809781
+          },
+          "old_step408_soft": {
+            "lpips": 0.011552110314369202,
+            "psnr": 36.950822957015326
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0144583__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0153585",
+          "known_class_control": {
+            "lpips": 0.06651907414197922,
+            "psnr": 40.825255729878236
+          },
+          "metrics": {
+            "lpips": 0.06651907414197922,
+            "psnr": 40.825255729878236
+          },
+          "old_step408_soft": {
+            "lpips": 0.06666820496320724,
+            "psnr": 40.84350894265498
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0153585__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0182272",
+          "known_class_control": {
+            "lpips": 0.013407150283455849,
+            "psnr": 42.997338524116834
+          },
+          "metrics": {
+            "lpips": 0.013407150283455849,
+            "psnr": 42.997338524116834
+          },
+          "old_step408_soft": {
+            "lpips": 0.013394586741924286,
+            "psnr": 42.349511309110575
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0182272__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0177424",
+          "known_class_control": {
+            "lpips": 0.018698427826166153,
+            "psnr": 45.60783344363708
+          },
+          "metrics": {
+            "lpips": 0.018698427826166153,
+            "psnr": 45.60783344363708
+          },
+          "old_step408_soft": {
+            "lpips": 0.019434433430433273,
+            "psnr": 38.59391806503214
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0177424__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0187489",
+          "known_class_control": {
+            "lpips": 0.1511465162038803,
+            "psnr": 41.4422393931597
+          },
+          "metrics": {
+            "lpips": 0.1511465162038803,
+            "psnr": 41.4422393931597
+          },
+          "old_step408_soft": {
+            "lpips": 0.15108609199523926,
+            "psnr": 41.44448054974901
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0187489__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0189233",
+          "known_class_control": {
+            "lpips": 0.08227060735225677,
+            "psnr": 41.3931689977558
+          },
+          "metrics": {
+            "lpips": 0.08227060735225677,
+            "psnr": 41.3931689977558
+          },
+          "old_step408_soft": {
+            "lpips": 0.09374328702688217,
+            "psnr": 26.40023025739888
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0189233__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0192771",
+          "known_class_control": {
+            "lpips": 0.10552693903446198,
+            "psnr": 34.90914086809218
+          },
+          "metrics": {
+            "lpips": 0.10552693903446198,
+            "psnr": 34.90914086809218
+          },
+          "old_step408_soft": {
+            "lpips": 0.10555627942085266,
+            "psnr": 34.91153313354119
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0192771__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0194586",
+          "known_class_control": {
+            "lpips": 0.10296003520488739,
+            "psnr": 35.7840133628378
+          },
+          "metrics": {
+            "lpips": 0.10296003520488739,
+            "psnr": 35.7840133628378
+          },
+          "old_step408_soft": {
+            "lpips": 0.1031777411699295,
+            "psnr": 35.79659763161158
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0194586__noise",
+          "task": "noise"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0201705",
+          "known_class_control": {
+            "lpips": 0.1627616435289383,
+            "psnr": 16.462526043501015
+          },
+          "metrics": {
+            "lpips": 0.1627616435289383,
+            "psnr": 16.462526043501015
+          },
+          "old_step408_soft": {
+            "lpips": 0.1625814437866211,
+            "psnr": 16.474883342558034
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0201705__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0225021",
+          "known_class_control": {
+            "lpips": 0.027823055163025856,
+            "psnr": 29.573739253238628
+          },
+          "metrics": {
+            "lpips": 0.027823055163025856,
+            "psnr": 29.573739253238628
+          },
+          "old_step408_soft": {
+            "lpips": 0.029172847047448158,
+            "psnr": 28.862662038382144
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0225021__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0229347",
+          "known_class_control": {
+            "lpips": 0.11257670819759369,
+            "psnr": 22.6130973260845
+          },
+          "metrics": {
+            "lpips": 0.11257670819759369,
+            "psnr": 22.6130973260845
+          },
+          "old_step408_soft": {
+            "lpips": 0.11257239431142807,
+            "psnr": 22.626118608317192
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0229347__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0255323",
+          "known_class_control": {
+            "lpips": 0.11121533066034317,
+            "psnr": 22.328047377587673
+          },
+          "metrics": {
+            "lpips": 0.11121533066034317,
+            "psnr": 22.328047377587673
+          },
+          "old_step408_soft": {
+            "lpips": 0.10211476683616638,
+            "psnr": 23.139425445525433
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0255323__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0235052",
+          "known_class_control": {
+            "lpips": 0.079948790371418,
+            "psnr": 21.5609352533021
+          },
+          "metrics": {
+            "lpips": 0.079948790371418,
+            "psnr": 21.5609352533021
+          },
+          "old_step408_soft": {
+            "lpips": 0.08001084625720978,
+            "psnr": 21.552407630825947
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0235052__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0208167",
+          "known_class_control": {
+            "lpips": 0.04768603295087814,
+            "psnr": 27.62361620482604
+          },
+          "metrics": {
+            "lpips": 0.04768603295087814,
+            "psnr": 27.62361620482604
+          },
+          "old_step408_soft": {
+            "lpips": 0.04954826459288597,
+            "psnr": 26.552141760740753
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0208167__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0264740",
+          "known_class_control": {
+            "lpips": 0.06395670771598816,
+            "psnr": 22.249476888341682
+          },
+          "metrics": {
+            "lpips": 0.06395670771598816,
+            "psnr": 22.249476888341682
+          },
+          "old_step408_soft": {
+            "lpips": 0.14948853850364685,
+            "psnr": 15.500805786226994
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0264740__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0276837",
+          "known_class_control": {
+            "lpips": 0.03543943911790848,
+            "psnr": 30.186781824002928
+          },
+          "metrics": {
+            "lpips": 0.03543943911790848,
+            "psnr": 30.186781824002928
+          },
+          "old_step408_soft": {
+            "lpips": 0.03554321080446243,
+            "psnr": 30.22302518951917
+          },
+          "predicted_anchor": "haze",
+          "render_id": "validation_foundir_train_0276837__haze",
+          "task": "haze"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0493413",
+          "known_class_control": {
+            "lpips": 0.10958962142467499,
+            "psnr": 17.141480363695837
+          },
+          "metrics": {
+            "lpips": 0.10958962142467499,
+            "psnr": 17.141480363695837
+          },
+          "old_step408_soft": {
+            "lpips": 0.10954369604587555,
+            "psnr": 17.145690628115013
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0493413__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0508782",
+          "known_class_control": {
+            "lpips": 0.14240221679210663,
+            "psnr": 21.98954788213827
+          },
+          "metrics": {
+            "lpips": 0.14240221679210663,
+            "psnr": 21.98954788213827
+          },
+          "old_step408_soft": {
+            "lpips": 0.32967108488082886,
+            "psnr": 7.174505828413028
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0508782__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0510173",
+          "known_class_control": {
+            "lpips": 0.2559943199157715,
+            "psnr": 13.156241444337915
+          },
+          "metrics": {
+            "lpips": 0.2559943199157715,
+            "psnr": 13.156241444337915
+          },
+          "old_step408_soft": {
+            "lpips": 0.24841268360614777,
+            "psnr": 13.706924385991801
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0510173__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": false,
+          "key": "validation_foundir_train_0479048",
+          "known_class_control": {
+            "lpips": 0.0893302783370018,
+            "psnr": 18.076225849379362
+          },
+          "metrics": {
+            "lpips": 0.36010220646858215,
+            "psnr": 5.537555460896049
+          },
+          "old_step408_soft": {
+            "lpips": 0.3584730625152588,
+            "psnr": 5.571506797640236
+          },
+          "predicted_anchor": "noise",
+          "render_id": "validation_foundir_train_0479048__noise",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0487157",
+          "known_class_control": {
+            "lpips": 0.08951829373836517,
+            "psnr": 20.814671190897478
+          },
+          "metrics": {
+            "lpips": 0.08951829373836517,
+            "psnr": 20.814671190897478
+          },
+          "old_step408_soft": {
+            "lpips": 0.08818298578262329,
+            "psnr": 20.97517574569224
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0487157__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0482078",
+          "known_class_control": {
+            "lpips": 0.0943550169467926,
+            "psnr": 19.21361717317396
+          },
+          "metrics": {
+            "lpips": 0.0943550169467926,
+            "psnr": 19.21361717317396
+          },
+          "old_step408_soft": {
+            "lpips": 0.1277206391096115,
+            "psnr": 31.41640758379716
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0482078__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0510520",
+          "known_class_control": {
+            "lpips": 0.18371988832950592,
+            "psnr": 25.960774885338314
+          },
+          "metrics": {
+            "lpips": 0.18371988832950592,
+            "psnr": 25.960774885338314
+          },
+          "old_step408_soft": {
+            "lpips": 0.1838095784187317,
+            "psnr": 25.968815674712996
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0510520__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0485983",
+          "known_class_control": {
+            "lpips": 0.11102542281150818,
+            "psnr": 25.303511008799575
+          },
+          "metrics": {
+            "lpips": 0.11102542281150818,
+            "psnr": 25.303511008799575
+          },
+          "old_step408_soft": {
+            "lpips": 0.10175634920597076,
+            "psnr": 27.650150003077844
+          },
+          "predicted_anchor": "lowlight",
+          "render_id": "validation_foundir_train_0485983__lowlight",
+          "task": "lowlight"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0391222",
+          "known_class_control": {
+            "lpips": 0.16582636535167694,
+            "psnr": 27.80151739386592
+          },
+          "metrics": {
+            "lpips": 0.16582636535167694,
+            "psnr": 27.80151739386592
+          },
+          "old_step408_soft": {
+            "lpips": 0.17669519782066345,
+            "psnr": 27.1851753126772
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0391222__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0394371",
+          "known_class_control": {
+            "lpips": 0.11100539565086365,
+            "psnr": 35.46219388805444
+          },
+          "metrics": {
+            "lpips": 0.11100539565086365,
+            "psnr": 35.46219388805444
+          },
+          "old_step408_soft": {
+            "lpips": 0.11136302351951599,
+            "psnr": 35.49748346719332
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0394371__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0364881",
+          "known_class_control": {
+            "lpips": 0.0158144012093544,
+            "psnr": 36.864743744684404
+          },
+          "metrics": {
+            "lpips": 0.0158144012093544,
+            "psnr": 36.864743744684404
+          },
+          "old_step408_soft": {
+            "lpips": 0.01584060676395893,
+            "psnr": 36.794539242669835
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0364881__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0358824",
+          "known_class_control": {
+            "lpips": 0.04129562899470329,
+            "psnr": 33.764066901912805
+          },
+          "metrics": {
+            "lpips": 0.04129562899470329,
+            "psnr": 33.764066901912805
+          },
+          "old_step408_soft": {
+            "lpips": 0.04117952287197113,
+            "psnr": 33.76558121732234
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0358824__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0377282",
+          "known_class_control": {
+            "lpips": 0.09865744411945343,
+            "psnr": 32.626618904314284
+          },
+          "metrics": {
+            "lpips": 0.09865744411945343,
+            "psnr": 32.626618904314284
+          },
+          "old_step408_soft": {
+            "lpips": 0.11425895988941193,
+            "psnr": 31.016539939349816
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0377282__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0377566",
+          "known_class_control": {
+            "lpips": 0.010776698589324951,
+            "psnr": 38.606059687739254
+          },
+          "metrics": {
+            "lpips": 0.010776698589324951,
+            "psnr": 38.606059687739254
+          },
+          "old_step408_soft": {
+            "lpips": 0.010743890888988972,
+            "psnr": 38.62139410711205
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0377566__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0361904",
+          "known_class_control": {
+            "lpips": 0.06598493456840515,
+            "psnr": 34.187548493713074
+          },
+          "metrics": {
+            "lpips": 0.06598493456840515,
+            "psnr": 34.187548493713074
+          },
+          "old_step408_soft": {
+            "lpips": 0.06642337888479233,
+            "psnr": 33.65996174509672
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0361904__rain",
+          "task": "rain"
+        },
+        {
+          "correct": true,
+          "key": "validation_foundir_train_0361446",
+          "known_class_control": {
+            "lpips": 0.041318200528621674,
+            "psnr": 30.509201464277467
+          },
+          "metrics": {
+            "lpips": 0.041318200528621674,
+            "psnr": 30.509201464277467
+          },
+          "old_step408_soft": {
+            "lpips": 0.0411757230758667,
+            "psnr": 30.511580632933523
+          },
+          "predicted_anchor": "rain",
+          "render_id": "validation_foundir_train_0361446__rain",
+          "task": "rain"
+        }
+      ],
+      "per_task": {
+        "blur": {
+          "correct": 7,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.18969405617099255,
+              "psnr": 24.876374126144903
+            },
+            "metrics": {
+              "lpips": 0.24678064312320203,
+              "psnr": 24.272372433359937
+            },
+            "old_step408_soft": {
+              "lpips": 0.19659949757624418,
+              "psnr": 24.96714975090114
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 1,
+            "psnr": 1
+          }
+        },
+        "haze": {
+          "correct": 8,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.08017596346326172,
+              "psnr": 24.07477752136057
+            },
+            "metrics": {
+              "lpips": 0.08017596346326172,
+              "psnr": 24.07477752136057
+            },
+            "old_step408_soft": {
+              "lpips": 0.09012903901748359,
+              "psnr": 23.11643372526196
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 0,
+            "psnr": 0
+          }
+        },
+        "lowlight": {
+          "correct": 7,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.13449188228696585,
+              "psnr": 20.20700872472009
+            },
+            "metrics": {
+              "lpips": 0.1683383733034134,
+              "psnr": 18.639674926159675
+            },
+            "old_step408_soft": {
+              "lpips": 0.19344625994563103,
+              "psnr": 18.70114708093004
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 1,
+            "psnr": 1
+          }
+        },
+        "noise": {
+          "correct": 8,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.06914887693710625,
+              "psnr": 40.28401300344693
+            },
+            "metrics": {
+              "lpips": 0.06914887693710625,
+              "psnr": 40.28401300344693
+            },
+            "old_step408_soft": {
+              "lpips": 0.0705765918828547,
+              "psnr": 37.16132535576421
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 0,
+            "psnr": 0
+          }
+        },
+        "rain": {
+          "correct": 8,
+          "count": 8,
+          "means": {
+            "known_class_control": {
+              "lpips": 0.06883488362655044,
+              "psnr": 33.727743809820204
+            },
+            "metrics": {
+              "lpips": 0.06883488362655044,
+              "psnr": 33.727743809820204
+            },
+            "old_step408_soft": {
+              "lpips": 0.07221003796439618,
+              "psnr": 33.38153195804435
+            }
+          },
+          "regressions_vs_known_class": {
+            "lpips": 0,
+            "psnr": 0
+          }
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "validation_foundir_train_0001445__blur": {
+      "metrics": {
+        "lpips": 0.014239766635000706,
+        "psnr": 37.685890066702655
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0001445.json",
+      "record_sha256": "5c72e10009a47c299b6ce93f1b77c1d8a09a960f9858db9e20ae4d644e28b407",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0001445_b06538c9435e457ba58c155f1daa08ad.safetensors",
+      "tensor_sha256": "b635a9363eeecc38af30a68dd4215e784330d4ff99b9e766404f4026b04ee573"
+    },
+    "validation_foundir_train_0007534__blur": {
+      "metrics": {
+        "lpips": 0.3204156160354614,
+        "psnr": 21.469987590052618
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0007534.json",
+      "record_sha256": "b98facc5c883b836f8739aaabbeaaab0d6718607382769f3298dad51b0cfe7d3",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0007534_125a102c7f2946798f9e56484d1dc926.safetensors",
+      "tensor_sha256": "d11305dd83b5fc159b0429f5e397bdf6a52a6cdfd1332eccd6b9cee658bd5791"
+    },
+    "validation_foundir_train_0007534__haze": {
+      "metrics": {
+        "lpips": 0.7771083116531372,
+        "psnr": 16.637974047772882
+      },
+      "record": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/new/validation_foundir_train_0007534__haze.json",
+      "record_sha256": "9f4cec11da5e14d8fb315814e92820a68b1874f9d095e1d62c095d38c5cc22bf",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "new_render",
+      "tensor": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/tensors/validation_foundir_train_0007534__haze_99fb144c8cd04fd98cf6053db6295e82.safetensors",
+      "tensor_sha256": "cd87640997ff25d7172708f8833f844669baf809fe87226052057c31d41bdf0e"
+    },
+    "validation_foundir_train_0009805__blur": {
+      "metrics": {
+        "lpips": 0.1862894594669342,
+        "psnr": 24.536430317963696
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0009805.json",
+      "record_sha256": "24041d10ae1075ef7563f4e6891543c4af989055983a2fb7eb3ba91170b669f0",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0009805_4fe4aaeb1fda4539a6a07116fe32bd88.safetensors",
+      "tensor_sha256": "8d909179ee71d2175da140318108aa5aba3e0c3737b952405c6bd7e99fbb5816"
+    },
+    "validation_foundir_train_0009805__haze": {
+      "metrics": {
+        "lpips": 0.26484134793281555,
+        "psnr": 22.7418618885212
+      },
+      "record": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/new/validation_foundir_train_0009805__haze.json",
+      "record_sha256": "199caed094ea253233b3d21c1389a018a3f0be9659bb88bccc352d54c318df8c",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "new_render",
+      "tensor": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/tensors/validation_foundir_train_0009805__haze_923f2210d71f45549d82b7463d04b88b.safetensors",
+      "tensor_sha256": "dc6cd2bed175c42eba3c9235cfaea67124ecb0988b39f531c50f0443abdf813f"
+    },
+    "validation_foundir_train_0034135__blur": {
+      "metrics": {
+        "lpips": 0.011323144659399986,
+        "psnr": 36.52029884967793
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0034135.json",
+      "record_sha256": "b83d9456d9ffc19196db076afb717512068f8790f58af9754787e7776dde18de",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0034135_a8151749e4c64fa3b08938d64dda4a6d.safetensors",
+      "tensor_sha256": "e5488208976e4b2086e17b0d1e97d79de297a5006867fbf65d79fe277e1ffe65"
+    },
+    "validation_foundir_train_0062910__blur": {
+      "metrics": {
+        "lpips": 0.36591091752052307,
+        "psnr": 15.208680860751242
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0062910.json",
+      "record_sha256": "5c90211c454caf35f28821244c2b8a86e3ff3e0085571aca146dc245271311a1",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0062910_285e2491ddd44ca6a917bafaf134a1da.safetensors",
+      "tensor_sha256": "b089eae9c8e180fef8e75f1699c7f175af622e0c298d7e143082a2a58ace8f16"
+    },
+    "validation_foundir_train_0067975__blur": {
+      "metrics": {
+        "lpips": 0.30197563767433167,
+        "psnr": 15.25827420084173
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0067975.json",
+      "record_sha256": "31a93ceb24e1cd863f1e615d0b5e24f9272a2e98ca6730e0d7c500ffb3debe16",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0067975_1d708677326445c0ae98115dbb8055c7.safetensors",
+      "tensor_sha256": "e7a675bcaf54e63ac0a032348e394b15f64085b97a4edc52de71790b5bf4d381"
+    },
+    "validation_foundir_train_0091843__blur": {
+      "metrics": {
+        "lpips": 0.1503629982471466,
+        "psnr": 26.95573129919591
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0091843.json",
+      "record_sha256": "abe57c0739e1d95737dfbce530d024f526d6c197f73835546010e25590962d61",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0091843_1cfced88d840436dae3459cd9a6c8441.safetensors",
+      "tensor_sha256": "19c766ff5a7f8dbb685e7217e2d6541f096fe43dfaaf95a61763e7a0562d4b93"
+    },
+    "validation_foundir_train_0094664__blur": {
+      "metrics": {
+        "lpips": 0.16703490912914276,
+        "psnr": 21.375699823973452
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0094664.json",
+      "record_sha256": "1c1b781109237c725c6f5594e248782a976ddb6a97b36e3af8f1e27336e324db",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0094664_590eab7567954c4cac447f7e77db587e.safetensors",
+      "tensor_sha256": "ab4e409bf06af0fc61dabf7d719e329dae321b1748f745ade57046cf4f71d827"
+    },
+    "validation_foundir_train_0144583__blur": {
+      "metrics": {
+        "lpips": 0.026674369350075722,
+        "psnr": 38.355953595866005
+      },
+      "record": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/hard/validation_foundir_train_0144583.json",
+      "record_sha256": "bd188c26762f859c672bf354d3f21057028c2760f0e8da942fd39fae7f04217c",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "previous_predicted_onehot",
+      "tensor": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/tensors/hard_validation_foundir_train_0144583_689ecd2e737f4cf18a21c41018898c14.safetensors",
+      "tensor_sha256": "c996fabccab61cb29e8c6f09a1055fdd2e3f5b40836797c55ecc69656a650f32"
+    },
+    "validation_foundir_train_0144583__noise": {
+      "metrics": {
+        "lpips": 0.012662265449762344,
+        "psnr": 39.31311370809781
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0144583.json",
+      "record_sha256": "14f7cdf2ecf6f6e7843370a981fc9fad9e0b36c697f93866ff8148f6ae66fc4b",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0144583_8b32e228e2914a4f9eaf877483860520.safetensors",
+      "tensor_sha256": "a9d954795b5264a86700cf922a38b13ab3f5b090405040dce0327f0f3dc8144e"
+    },
+    "validation_foundir_train_0153585__noise": {
+      "metrics": {
+        "lpips": 0.06651907414197922,
+        "psnr": 40.825255729878236
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0153585.json",
+      "record_sha256": "b227a8e571b9eada01e08fb98496ffc3f599d01b5d606051235254e1bcb38a6f",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0153585_0810ff789d1344f7a5b015f771ed5174.safetensors",
+      "tensor_sha256": "d95a7bb1c1db8fe202aa78150fd6434704bb82c7a26d99ee3831ec3731ca7912"
+    },
+    "validation_foundir_train_0177424__noise": {
+      "metrics": {
+        "lpips": 0.018698427826166153,
+        "psnr": 45.60783344363708
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0177424.json",
+      "record_sha256": "723611566610b8b4ed76e90a04daccfa6e121626587282a5b141d13391cb7d6d",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0177424_bbc7025ff2d5499f9c6664674add47d0.safetensors",
+      "tensor_sha256": "6c144e614588947632eedb43ceb51c13f2c04f2ad5d36a93f9b2a0b5370e3a53"
+    },
+    "validation_foundir_train_0182272__noise": {
+      "metrics": {
+        "lpips": 0.013407150283455849,
+        "psnr": 42.997338524116834
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0182272.json",
+      "record_sha256": "c175bd77ab601d81378b86b3a0ed767e6df786cb44c565275b9db3cdba06e928",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0182272_c413a11480024633b388b735f282d017.safetensors",
+      "tensor_sha256": "978c1072c48ccf8f056b992963b263856e75ef6a61753c0f3c916a918b19fcd8"
+    },
+    "validation_foundir_train_0187489__noise": {
+      "metrics": {
+        "lpips": 0.1511465162038803,
+        "psnr": 41.4422393931597
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0187489.json",
+      "record_sha256": "75ebfb500086d46f53b9800a29a0394650fd92b8daeb9f0f4cefcc00f284c278",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0187489_44c19ef1152d4ba79f1d265b175fe496.safetensors",
+      "tensor_sha256": "44a4e206853b6a20b7b010d7f0ef7569606e7a5bace3d8671effe29e6c66afa1"
+    },
+    "validation_foundir_train_0189233__blur": {
+      "metrics": {
+        "lpips": 0.10018330812454224,
+        "psnr": 26.15330277625286
+      },
+      "record": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/hard/validation_foundir_train_0189233.json",
+      "record_sha256": "3c334840330c99890ae68648d2d2b711b17f7ed59ba158d913d69c88c395fef9",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "previous_predicted_onehot",
+      "tensor": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/tensors/hard_validation_foundir_train_0189233_c79a5deb9b5c49acb2ab089c29817370.safetensors",
+      "tensor_sha256": "ca81cd2161ea7bb980bfaac0bf16453ca2160667b7ef1fce893251a421b1f144"
+    },
+    "validation_foundir_train_0189233__noise": {
+      "metrics": {
+        "lpips": 0.08227060735225677,
+        "psnr": 41.3931689977558
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0189233.json",
+      "record_sha256": "132d6547576f44b3eb88b68c1ae155ca58741dde834bd09dcb342facd82e60bf",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0189233_d10b12c7cc724ee6ab7489fa8fdf6434.safetensors",
+      "tensor_sha256": "280a3304a4cb0d5f94669ee848d950dfeef74409352a8d4ccd9969f05b5ca7ab"
+    },
+    "validation_foundir_train_0192771__noise": {
+      "metrics": {
+        "lpips": 0.10552693903446198,
+        "psnr": 34.90914086809218
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0192771.json",
+      "record_sha256": "2a36709d51379406176f5bf7990236c7c58e6970005e49786d8afabbf0bf39e1",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0192771_2d2c46622e27494ea89f43a240ca71ee.safetensors",
+      "tensor_sha256": "4825b5f5bb1bc8c0770e3775f57224df8b5c2f5f495b16b9448743551eb66dfc"
+    },
+    "validation_foundir_train_0194586__noise": {
+      "metrics": {
+        "lpips": 0.10296003520488739,
+        "psnr": 35.7840133628378
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0194586.json",
+      "record_sha256": "942c43301adf233a37ab0f8cda118dde82d7e7a6ca55710ca1c4715f3aa781fb",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0194586_9e12746185954f34bad50d8d37398af4.safetensors",
+      "tensor_sha256": "597f127fee74b889555a190ae911d8343f0cbbcf254d0056f027dcfd6893d3f2"
+    },
+    "validation_foundir_train_0201705__haze": {
+      "metrics": {
+        "lpips": 0.1627616435289383,
+        "psnr": 16.462526043501015
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0201705.json",
+      "record_sha256": "266f17f5a1dd96235f3fa890ddbebc98a0ecdb13277402a5059d4b496d6010c8",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0201705_e01e618da517405aa9bb0ea07ace06fc.safetensors",
+      "tensor_sha256": "7a6c48a31be1469b12dc5f522db2d97142c2fa6d94824055964b2f429c289490"
+    },
+    "validation_foundir_train_0208167__haze": {
+      "metrics": {
+        "lpips": 0.04768603295087814,
+        "psnr": 27.62361620482604
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0208167.json",
+      "record_sha256": "8f7b2de95d2f9f489a9c73310a3cc8992ef252c8458b0343a37377606b125d16",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0208167_53538ff51246433c990c078ce53a5b18.safetensors",
+      "tensor_sha256": "cdb85844deac16fb2963bf56e20dcf5ba8fb44d8d65989f5380e89ab8c542534"
+    },
+    "validation_foundir_train_0225021__haze": {
+      "metrics": {
+        "lpips": 0.027823055163025856,
+        "psnr": 29.573739253238628
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0225021.json",
+      "record_sha256": "515c74e27385dc55f13a6390d67d09a42eabdb093cb597907749dc6b0bc6cd1e",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0225021_843980d1dc3b4c63b644766a9132c342.safetensors",
+      "tensor_sha256": "64bfa04d8ba188ee70515c8166c84c2939f58ee0edbb88d6ce5430c1ce1e4e0a"
+    },
+    "validation_foundir_train_0229347__haze": {
+      "metrics": {
+        "lpips": 0.11257670819759369,
+        "psnr": 22.6130973260845
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0229347.json",
+      "record_sha256": "dbac5af2c710f5891f3dddbe1e2670d5b10358a25f7fceba858d4829a3e9b021",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0229347_bf012d790e5747a0b2596743062b7943.safetensors",
+      "tensor_sha256": "c0daf84826d2fff05da95b98534762637d12a485c0845076ecc37794e4b7e4f1"
+    },
+    "validation_foundir_train_0235052__haze": {
+      "metrics": {
+        "lpips": 0.079948790371418,
+        "psnr": 21.5609352533021
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0235052.json",
+      "record_sha256": "8c503ccffc55ba9af98d32fdbd75f19dfeed9ec3bad5b995ab14792553f25891",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0235052_625d072c281f4d2398d220a482b6b067.safetensors",
+      "tensor_sha256": "5e57ccd660290c4efeb187e51c8918570a96be1243dd4afc227dff6f357d3def"
+    },
+    "validation_foundir_train_0255323__haze": {
+      "metrics": {
+        "lpips": 0.11121533066034317,
+        "psnr": 22.328047377587673
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0255323.json",
+      "record_sha256": "3152cf35d24394bd65ac09e02ee6903019e87b12481f11251789da4690c3fded",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0255323_35c4e38809fe4702a7f14c2b44f022ba.safetensors",
+      "tensor_sha256": "04ac29a0ba83e702d48e807a5e4d3f0b9bcee8fbb1ffdbf861b1a2ef1e1434a7"
+    },
+    "validation_foundir_train_0264740__haze": {
+      "metrics": {
+        "lpips": 0.06395670771598816,
+        "psnr": 22.249476888341682
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0264740.json",
+      "record_sha256": "ad2c2fad05768b2e11c3beb4bd1b80ff3ecb9b0e8e832ddca0ab30d198f57076",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0264740_1cd1e8e303a64cd7b1832dcaa2342bc6.safetensors",
+      "tensor_sha256": "e83cfab45c997f9b2955be61780e501bd0f5904cbfc4336f496c9a75e9ecf0ad"
+    },
+    "validation_foundir_train_0276837__haze": {
+      "metrics": {
+        "lpips": 0.03543943911790848,
+        "psnr": 30.186781824002928
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0276837.json",
+      "record_sha256": "6fc9c44b62a458497c39d243fb71bbfc2bc9762f530fcf5e119982bc77adbbed",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0276837_e51129946e1d4e40842ffdcd5bb9b86e.safetensors",
+      "tensor_sha256": "5fb941a64fb8aedcc7caedda63a2a290723aa3d3f4e7f627c99d8d08a8038aba"
+    },
+    "validation_foundir_train_0358824__rain": {
+      "metrics": {
+        "lpips": 0.04129562899470329,
+        "psnr": 33.764066901912805
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0358824.json",
+      "record_sha256": "bbe8e58df10ec016edb5e589b91e6060a2705867309c93af418537877625cad7",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0358824_187170fe814046f380d5eb8d3d49b722.safetensors",
+      "tensor_sha256": "b5ea0f90017123a347e96e42f9db91ea004b70b9a38d308e72ba5c220f330b84"
+    },
+    "validation_foundir_train_0361446__rain": {
+      "metrics": {
+        "lpips": 0.041318200528621674,
+        "psnr": 30.509201464277467
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0361446.json",
+      "record_sha256": "d27cf812a4517a0d5c304764f3338fdd03fed83db6a0054be2ac2a353a3db892",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0361446_4b83b2cf9173466a869aa7a7279b1bef.safetensors",
+      "tensor_sha256": "8253df6a4bbfc6918b177cd3df655ba822268164c62ab5666a688cff66f20897"
+    },
+    "validation_foundir_train_0361904__rain": {
+      "metrics": {
+        "lpips": 0.06598493456840515,
+        "psnr": 34.187548493713074
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0361904.json",
+      "record_sha256": "3b1bbd6400e19244c249b248007a36c2332d951ae0637a2a7d72ae684531299e",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0361904_a876cf745be14f86a04a8fc9a2f3a1e9.safetensors",
+      "tensor_sha256": "ba3c59d9ed843d994818f31115ba364e73cd27af1efe1aa785e5514d27ee680b"
+    },
+    "validation_foundir_train_0364881__rain": {
+      "metrics": {
+        "lpips": 0.0158144012093544,
+        "psnr": 36.864743744684404
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0364881.json",
+      "record_sha256": "0a71447ef8f051ecf3019eb840706d333bb52bbc03f9c3f2e101a3747a2ea2ce",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0364881_7c6152dbb7984b57b96c4e29d3b6e777.safetensors",
+      "tensor_sha256": "73d3a4df0635e7136d3ebb6e4edfac6d87e685148359e3794e8d25fc594ca34d"
+    },
+    "validation_foundir_train_0377282__haze": {
+      "metrics": {
+        "lpips": 0.24293814599514008,
+        "psnr": 18.06598959222247
+      },
+      "record": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/new/validation_foundir_train_0377282__haze.json",
+      "record_sha256": "db93681999263b98e85c3b7d843640ab4955309be6b6ec10f0ad71febe3f2c06",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "new_render",
+      "tensor": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/tensors/validation_foundir_train_0377282__haze_fdf123b2c3f54ec4b52d5be3e2540dbf.safetensors",
+      "tensor_sha256": "00d13b3dc6afe5e3412659962f1776d1bc7dbe90ef21c6b4207d088dd78acd0a"
+    },
+    "validation_foundir_train_0377282__rain": {
+      "metrics": {
+        "lpips": 0.09865744411945343,
+        "psnr": 32.626618904314284
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0377282.json",
+      "record_sha256": "0a99801f9c2f97a6764c234888f4b5e8d3f9103d8e1598e4f1f98ece1ada72eb",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0377282_a8ccdbed851a445ea682e6a59f9f555a.safetensors",
+      "tensor_sha256": "e0ec3482528255259f7a5ccf4361af95c49a78d6c04aab298aeae1d23fbba80a"
+    },
+    "validation_foundir_train_0377566__rain": {
+      "metrics": {
+        "lpips": 0.010776698589324951,
+        "psnr": 38.606059687739254
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0377566.json",
+      "record_sha256": "18d76bd30cf9bfccf6716fe0a9c57b418950624275c40456b7f8a7154896712d",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0377566_3c42db45b66e42b29b9ab1de9dc5c11b.safetensors",
+      "tensor_sha256": "a5fec10503278843fa091691b90fc20993ae3bced6b16ef2cdd4d811701f18e0"
+    },
+    "validation_foundir_train_0391222__haze": {
+      "metrics": {
+        "lpips": 0.28659787774086,
+        "psnr": 20.334622819881076
+      },
+      "record": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/new/validation_foundir_train_0391222__haze.json",
+      "record_sha256": "c60ea27f9730bfc33f86c503dfdba12c47c7f27862d72eeea5efc119e825fda7",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "haze",
+        "model_calls": 50,
+        "prompt": "Remove haze from the reference image and restore a clear clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "new_render",
+      "tensor": "checkpoints/foundir_supervised_router_restoration_v1/matched_top1_four_missing_v1/tensors/validation_foundir_train_0391222__haze_bfb370e8417b4a219ab02909b78fed09.safetensors",
+      "tensor_sha256": "f84377376c47fd0670f8e9e6182c7baf052160f4017b073c58c381a1904aec2f"
+    },
+    "validation_foundir_train_0391222__rain": {
+      "metrics": {
+        "lpips": 0.16582636535167694,
+        "psnr": 27.80151739386592
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0391222.json",
+      "record_sha256": "d42fef97c07297b962ac1b54932ea1087458b9885f0a46cec565ab16804c5208",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0391222_77ec851ce3564a028022ff8285dd857a.safetensors",
+      "tensor_sha256": "7821da7db953d724dddcb7080ae497aba7a807040e94af8c0f5a82a52468382e"
+    },
+    "validation_foundir_train_0394371__rain": {
+      "metrics": {
+        "lpips": 0.11100539565086365,
+        "psnr": 35.46219388805444
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0394371.json",
+      "record_sha256": "de2cd08a4fc68e0711a5eabbecfd09d67fce997ac8680bf1028f1dd51e60580f",
+      "route": {
+        "alpha": 1.0,
+        "anchor": "rain",
+        "model_calls": 26,
+        "prompt": "Remove rain streaks from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "endpoint_at_call25",
+        "schedule_steps": 50,
+        "second_quantization": false,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0394371_18fde141ea0e4636b9f72bc0eee7e76b.safetensors",
+      "tensor_sha256": "c6cd6a44561d7ef1abb6af555b4005a0ac481a42f66a9f22a315ade2bbd83ca1"
+    },
+    "validation_foundir_train_0479048__lowlight": {
+      "metrics": {
+        "lpips": 0.0893302783370018,
+        "psnr": 18.076225849379362
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0479048.json",
+      "record_sha256": "3f7af00cca60b1eb95cb43471aec602a0eda530edf723db4552cdca1d0d3ef9c",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0479048_a8ff49b2ea2b4688a81cc378bf55840d.safetensors",
+      "tensor_sha256": "ecf55970c7dfb549e23cf500eed8321e80f2f0daef142b835d092b799312e164"
+    },
+    "validation_foundir_train_0479048__noise": {
+      "metrics": {
+        "lpips": 0.36010220646858215,
+        "psnr": 5.537555460896049
+      },
+      "record": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/hard/validation_foundir_train_0479048.json",
+      "record_sha256": "f500f5580e7cd46f8fbaeda3b16c2e4154e61d41ac704eacf73de4db62bf1ffc",
+      "route": {
+        "alpha": 0.3,
+        "anchor": "noise",
+        "model_calls": 50,
+        "prompt": "Remove noise from the reference image and restore a clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "previous_predicted_onehot",
+      "tensor": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/tensors/hard_validation_foundir_train_0479048_221f53fd29f642d1a482469905748448.safetensors",
+      "tensor_sha256": "30153179c1d8e3e0bfffc6b07592508f9079679a318b8f6090b9144a1a896f31"
+    },
+    "validation_foundir_train_0482078__lowlight": {
+      "metrics": {
+        "lpips": 0.0943550169467926,
+        "psnr": 19.21361717317396
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0482078.json",
+      "record_sha256": "a74621cbdc6b7c5ae7e09b28e336eb36691f8366687a5c42c7f9c93efb084c6b",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0482078_4688d8b678d84601a5718fa29a81d8e0.safetensors",
+      "tensor_sha256": "2cda395c5b0d6543c857242ac2ee14dd3162010f445dc4ad2f6936d12b450d5c"
+    },
+    "validation_foundir_train_0485983__lowlight": {
+      "metrics": {
+        "lpips": 0.11102542281150818,
+        "psnr": 25.303511008799575
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0485983.json",
+      "record_sha256": "87bdcbccdd78bbb706d5486ca20c07289404f094e9a1e773f679714edaf6481f",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0485983_f68e988b3a7f4405b55608b2d39e4c9a.safetensors",
+      "tensor_sha256": "7db1f4354580cabd3fec2543e15010213dabc25af18a8364f1fa7b1ea65b501c"
+    },
+    "validation_foundir_train_0487157__lowlight": {
+      "metrics": {
+        "lpips": 0.08951829373836517,
+        "psnr": 20.814671190897478
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0487157.json",
+      "record_sha256": "4df9a19597821c0ae322cb41fd0c090e8fb9d3b11954bb517a51c9e6d88069a5",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0487157_1b1bb94c7e69479ea5ae6964a8f0174e.safetensors",
+      "tensor_sha256": "de200529d4a43b900b9707a63e7a8f517a578f09e41dd50456423de175006386"
+    },
+    "validation_foundir_train_0493413__lowlight": {
+      "metrics": {
+        "lpips": 0.10958962142467499,
+        "psnr": 17.141480363695837
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0493413.json",
+      "record_sha256": "ca1bd6ea10503f2771e19f10d6ca5f92351a2c24b43488b1f431273e954e3f3c",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0493413_e05376539e0a42a586daa650c525d70c.safetensors",
+      "tensor_sha256": "37df5ea8d0bbf98b93205066736017063cda8ceebe8840fc732408bf21b85905"
+    },
+    "validation_foundir_train_0508782__blur": {
+      "metrics": {
+        "lpips": 0.38914793729782104,
+        "psnr": 5.950981458502187
+      },
+      "record": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/hard/validation_foundir_train_0508782.json",
+      "record_sha256": "78596ccacdbad5ed418efa6ff663bfa537816e1428936f5a26d5cdda91ada920",
+      "route": {
+        "alpha": 0.75,
+        "anchor": "blur",
+        "model_calls": 50,
+        "prompt": "Remove blur from the reference image and restore a sharp clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "previous_predicted_onehot",
+      "tensor": "checkpoints/foundir_router_hard_counterfactual_v1/predicted_hard_four_v1/tensors/hard_validation_foundir_train_0508782_3cb2b2a743ae4f7cb6d90399d32c5363.safetensors",
+      "tensor_sha256": "fe5bbe83af202a3e177a1410bdd294cd773e207abf738b0ac672a2aed1778fd3"
+    },
+    "validation_foundir_train_0508782__lowlight": {
+      "metrics": {
+        "lpips": 0.14240221679210663,
+        "psnr": 21.98954788213827
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0508782.json",
+      "record_sha256": "e39a206f924c2fc08b17d6d1a836bfba175c83c3badae14630d67a7fa0d4d0f2",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0508782_d8fdce55598148afa2837e77a98e021b.safetensors",
+      "tensor_sha256": "c042e66f5347d2e9637f2be091e9133ab51c116484ab34904937be1b36bf2a20"
+    },
+    "validation_foundir_train_0510173__lowlight": {
+      "metrics": {
+        "lpips": 0.2559943199157715,
+        "psnr": 13.156241444337915
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0510173.json",
+      "record_sha256": "f9d278827d67176ed4391eda0f17a3069ce796f442d44a71fa1f06d660b8d382",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0510173_5829398226bd4687b649855c6f5b7a39.safetensors",
+      "tensor_sha256": "025b3533505d632ca7d46e132f9f477b2d9dddffa9641c89c4cc4d1f1aa6e56f"
+    },
+    "validation_foundir_train_0510520__lowlight": {
+      "metrics": {
+        "lpips": 0.18371988832950592,
+        "psnr": 25.960774885338314
+      },
+      "record": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/evaluation/known_class_control/validation_foundir_train_0510520.json",
+      "record_sha256": "693765dd2060a5016989c20b9f9e761c654c8a07aee699ef93d83a08adbca139",
+      "route": {
+        "alpha": 0.925,
+        "anchor": "lowlight",
+        "model_calls": 50,
+        "prompt": "Enhance the low-light reference image and restore a normally exposed clean image. Preserve the exact content, geometry, identity, color, and texture.",
+        "rain_after_call25": "zero_and_renormalize_nonrain",
+        "readout": "final_flow",
+        "schedule_steps": 50,
+        "second_quantization": true,
+        "weights": [
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ]
+        ]
+      },
+      "source": "existing_onehot_cache",
+      "tensor": "checkpoints/foundir_frozen_expert_router_v1/qualification_mixed_driver_4x2_v1/tensors/evaluation_known_class_control_validation_foundir_train_0510520_0a2338f5078d45229afebd5bdb3ce153.safetensors",
+      "tensor_sha256": "f70e2bc667e262c67706beb8143bb7bb3dc2407eeb6075598bf69a348ac1daac"
+    }
+  },
+  "automatic_followup": false,
+  "cpu_report_sha256": "fb074f9dc53d6294cd3c432fb1529adbfc684418aab76edf7cc4d1b8e00320e1",
+  "interpretation": [
+    "Same 40 inputs and same predicted top-1 policy for both matched trained router arms.",
+    "Cache lookup uses input+route identity, never quality or a GT choice of expert.",
+    "Known-class controls are references, not deployable GT routing.",
+    "Comparison to old step408 soft also changes training and policy; do not attribute that whole difference to VLM.",
+    "Small single-seed development set; no official SoW, Rain100 or mixed-degradation gate claim.",
+    "Driver differences recorded; no cross-driver bitwise equivalence claimed."
+  ],
+  "new_render_diagnostics": [
+    {
+      "peak_allocated_gib": 137.90130805969238,
+      "render_id": "validation_foundir_train_0007534__haze",
+      "seconds": 21.934893173049204
+    },
+    {
+      "peak_allocated_gib": 137.90130805969238,
+      "render_id": "validation_foundir_train_0009805__haze",
+      "seconds": 20.49578003201168
+    },
+    {
+      "peak_allocated_gib": 137.93256092071533,
+      "render_id": "validation_foundir_train_0377282__haze",
+      "seconds": 19.887001245981082
+    },
+    {
+      "peak_allocated_gib": 137.93256092071533,
+      "render_id": "validation_foundir_train_0391222__haze",
+      "seconds": 19.929134455043823
+    }
+  ],
+  "official_test": false,
+  "plan_counts": {
+    "new_render_count": 4,
+    "prediction_rows": 80,
+    "reused_prediction_rows": 76,
+    "reused_unique_prediction_routes": 43,
+    "unique_prediction_routes": 47
+  },
+  "receipt_sha256": "63743a57a96d3cdb9fb833a8ba414d5b121786fd5ac2d24471e230e20a6a002a",
+  "run_id": "matched_top1_four_missing_v1",
+  "runtime": {
+    "H100_qualified": false,
+    "actual_gpus": 2,
+    "actual_nodes": 1,
+    "driver_difference_allowed": true,
+    "inherited_comparison_signature": {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "memory_policy": {
+        "inherited": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB",
+        "router_explicit_gate_checkpoint": true
+      },
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  595.58.03  Release Build  (dvs-builder@U22-I3-AM25-28-3)  Tue Mar 17 19:55:10 UTC 2026\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    "training": false
+  },
+  "singleton_development_only": true,
+  "status": "matched_top1_restoration_evaluation_complete",
+  "training": false,
+  "vlm_minus_image_only": {
+    "overall": {
+      "lpips_reduction": 0.004139548307284718,
+      "psnr_gain_db": 1.2806417882652568
+    },
+    "per_task": {
+      "blur": {
+        "lpips_reduction": -0.047267600893974304,
+        "psnr_gain_db": -0.3796806391046559
+      },
+      "haze": {
+        "lpips_reduction": 0.0,
+        "psnr_gain_db": 0.0
+      },
+      "lowlight": {
+        "lpips_reduction": 0.030843215063214302,
+        "psnr_gain_db": 2.0048208029545087
+      },
+      "noise": {
+        "lpips_reduction": 0.003990600584074855,
+        "psnr_gain_db": 2.0246282917168443
+      },
+      "rain": {
+        "lpips_reduction": 0.03313152678310871,
+        "psnr_gain_db": 2.7534404857595796
+      }
+    }
+  }
+}
