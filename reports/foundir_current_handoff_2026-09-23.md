@@ -1,5 +1,29 @@
 # FoundIR current handoff — 2026-09-23
 
+## 当前状态：路由资格已结束；只做CPU逐图误差拆分 — 2026-11-04
+
+用户授权执行终态后的误差分析。本节覆盖下方“资格待启动/运行中”的历史状态。
+qualification_mixed_driver_4x2_v1已完成400分类＋8质量步、40图前后评价，四节点status0；
+8H200实测，峰值138.089GiB/卡，不代表H10080GB训练通过。不要重新启动旧资格或自动formal。
+五个专家仍冻结；当前不是共享LoRA/专家被训练改坏。主专家最终36/40正确，错4张在Noise/Low-light。
+Haze8/8选对仍比同图单选低.958344dB且LPIPS高.009953，证明选对也可能混坏，但不是每图都退步。
+这不是VLM因果贡献消融，不把8质量步当路线终判；资格权重不seed正式训练。
+
+当前新入口只有CPU脚本smoke/analyze_foundir_frozen_router_errors_v1.py：
+在唯一新工作根用.conda/gpu-train-stable/bin/python -S运行。只读receipt/result、
+400/408 checkpoint小JSON和120个评价JSON，不读图片、大tensor、不重新算指标、不占GPU。
+核对身份/均值后导出40图完整记录、正确/错误组差距贡献、主专家转变及缺失对照清单，
+输出reports/foundir_frozen_router_error_breakdown_2026-11-04.json。
+主代理本地已完成汇总分析/11项CPU单测，但看不到新挂载；真实逐图拆分须由目的地CPU运行并推小报告，
+不能把测试夹具当真实实验结果。成功标志FROZEN_ROUTER_ERROR_BREAKDOWN_PASS。
+
+正确36张已有soft与同主专家one-hot对照；错误4张的差距混合了选择与比例影响，不能全算分类损失。
+若后续需要精确因果拆分，最多补这4张“模型argmax主专家one-hot”的输出，不能用GT选主专家或逐图择优。
+当前仅生成缺失清单，未启动补测/新训练，不自动扩预算。先回传CPU报告，再决定配方。
+跨节点不同驱动/型号授权、官方SoW600重复评测授权保持；均不等于H100显存已合格。
+保持历史绑定源码/权重/缓存不动，保留无关脏文件；只focused push小报告。
+详见reports/foundir_frozen_router_error_analysis_readiness_2026-11-04.md。
+
 ## 当前授权：冻结已有五专家，训练图像路由＋VLM分数修正 — 2026-11-04
 
 本节覆盖下方旧“先五库接入/未训练”状态。用户已授权下一阶段。五库接入已结束：
