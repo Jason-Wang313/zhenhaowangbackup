@@ -1,6 +1,42 @@
 # FoundIR current handoff — 2026-09-23
 
-## 当前授权：CPU完整监督训练VLM路由；单退化预测top-1 — 2026-11-04
+## 当前授权：只补4个输出，完成匹配的路由画质对照 — 2026-11-04
+
+本节覆盖下方CPU训练待执行等旧状态。fresh_ce400_matched_v1已正常结束（23ac684）：
+CPU8线程/212秒/0GPU-hours，两组各400步，image_only开发33/40正确，image_plus_vlm为38/40。
+这是分类结果，不是新PSNR/LPIPS。不要重复CPU训练，不恢复旧400+8或energy任务。
+
+用户已授权当前matched_top1_four_missing_v1。两组固定最终400步预测，均用预测top-1，
+送入同一冻结五专家FLUX内部bank，保持原prompt/alpha/量化/crop/seed/读出。
+只补4个此前不存在的input+predicted-expert输出；其余76/80行在核验原JSON及输出SHA后复用。
+共47个不同预测路由，其中43个已有；原40个正确类别参考+旧4个错误路由缓存为44项，
+不把缓存目录项数误算成预测数量。不用GT改选专家、不按质量挑缓存、不重新生成40图。
+
+缺失：image_only的0009805/0391222/0377282→Haze；image_plus_vlm的0007534→Haze。
+完整key前缀validation_foundir_train_。四个新输出均原Haze50步/alpha1。
+GT仅生成后计分；正确类别单选只是参考，不是实际预测。报告两组各40图/五类/逐图及配对差值。
+相对旧step408 soft同时改变训练和部署策略，不能把整段提升都算作VLM贡献；
+单seed小开发集不代表官方SoW/Rain100达标、混合退化或泛化成功。
+
+本轮轻量例外：单节点2×H200，每卡至少139GiB；不占四节点八卡。
+旧真实纯推理峰值137.933GiB/卡，H10080GB不符合当前内存要求，入口明确拒绝。
+不为兼容H100擅改精度/offload/科学口径。保留父运行软件/指标/内存策略，允许记录驱动差异，
+不宣称跨驱动逐像素相等。累计cap900秒/15分钟/.5使用GPU-hour，另最多30秒清理；
+此前四图77秒只作参考，不保证本轮ETA。若整机独占，另记整机占用成本。
+每图原子保存，可恢复已核验完成图；失败时间累计，缺失结束账需核实，不自动重启/扩预算。
+
+主代理已完成33项CPU测试（11新+22回归）、shell/Python静态检查；测试夹具不是新实验指标。
+尚未在目的地/GPU运行。唯一执行根为/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang。
+CPU代理安全同步origin/main，保留无关脏文件、大资产和历史绑定文件，然后用已验收环境运行：
+.conda/gpu-train-stable/bin/python -S smoke/evaluate_foundir_supervised_router_restoration_v1.py prepare
+此预检不读像素/加载模型；通过后给用户单节点两张H200的tmux入口：
+bash smoke/start_foundir_supervised_router_restoration_v1_tmux.sh
+不要发旧四节点或CPU训练命令。成功须MATCHED_RESTORATION_RESULT_VERIFIED和MATCHED_RESTORATION_END status=0。
+只推reports/foundir_supervised_router_restoration_terminal_2026-11-04.json和简短耗时/退出报告；
+不推tensor/图片/权重/缓存/live logs。不自动训练或启动下一阶段。
+详细范围、恢复规则见reports/foundir_supervised_router_restoration_readiness_2026-11-04.md。
+
+## 历史授权：CPU完整监督训练VLM路由；单退化预测top-1 — 2026-11-04
 
 用户在四图补测后授权execute修复。四图补测已终态：a68d01a，2H200/77秒/.042778使用GPU-hours；
 不再跑旧四图或400+8质量资格。四错例主要损失来自选错专家及其原协议，直接把旧路由全部改hard不能解决；
