@@ -1,3 +1,34 @@
+## 当前授权：只补4张模型自选主专家的单选输出 — 2026-11-04
+
+用户已授权execute。本节覆盖下方“只做CPU分析/尚未授权补测”。CPU报告f66143f已回传并独立核对：
+36张主专家正确，soft相对正确one-hot平均PSNR低.057323dB、LPIPS高.004949；
+4张错误平均低11.168748dB、高.116694。错误图仍混合选择/推理协议和混合比例的影响，
+不能把全部损失叫分类损失。五个专家始终冻结；不恢复任何旧训练，不自动formal。
+
+当前唯一新任务：predicted_hard_four_v1，四张固定错误图各生成一次模型step408已选主专家的one-hot输出。
+不重新训练/运行router，不用GT改选专家，不改原权重、裁图、种子、prompt、alpha、量化或50步流程。
+只读这4张原开发图，GT只在完整生成后评分。禁止加图、遍历五专家、逐图选最优或重跑40图基线。
+保留历史C=正确类别单选、S=原soft；新H=模型argmax单选，拆分S-C=(H-C)+(S-H)。
+符号采用两项均正数表示损害；H-C包含主专家附带的prompt/alpha等协议，不是纯分类的因果估计。
+
+本次属于轻量推理例外：单节点2张同型号H100/H200，各2图，不占4节点8卡，不做反传/NCCL训练。
+建议沿用已跑通的H200；H100仅代码路径支持、待实测，不能据此声称138GiB的完整训练已适配H100。
+沿用旧数值软件、LPIPS与内存策略，记录GPU/driver差异，不宣称跨硬件逐像素相等。
+全任务累计cap30分钟/1使用GPU-hour，另最多30秒清理；不是实测ETA，不自动扩预算。
+每图独立原子保存uint8与小JSON；相同入口跳过已核验完成图；孤立tensor保留。
+失败尝试成本累积；若节点硬断导致attempt结束账缺失，先根据日志补记，不默默清零预算。
+
+主代理已实现入口，22项CPU回归通过；本机没有目的地挂载/GPU，尚未运行真实补测。
+目的地CPU代理安全同步GitHub后运行：
+.conda/gpu-train-stable/bin/python -S smoke/diagnose_foundir_router_hard_counterfactual_v1.py prepare
+只读旧元数据并写新receipt，不解码图片、不占GPU。通过后给用户单节点tmux入口：
+bash smoke/start_foundir_router_hard_counterfactual_v1_tmux.sh
+只在唯一新工作根执行；不提供旧四节点训练命令。日志logs/foundir_router_hard_counterfactual_v1.log。
+终态需要ROUTER_HARD_RESULT_VERIFIED和ROUTER_HARD_END status=0。
+CPU代理只推小报告reports/foundir_router_hard_counterfactual_terminal_2026-11-04.json，
+另简短说明exit/耗时/两卡GPU-hours及累计失败成本；不要推图片/tensor/权重/live logs。
+详见reports/foundir_router_hard_counterfactual_readiness_2026-11-04.md。
+
 ## 当前状态：路由资格已结束；只做CPU逐图误差拆分 — 2026-11-04
 
 用户授权执行终态后的误差分析。本节覆盖下方“资格待启动/运行中”的历史状态。
