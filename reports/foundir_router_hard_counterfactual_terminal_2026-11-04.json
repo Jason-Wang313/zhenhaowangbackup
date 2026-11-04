@@ -1,0 +1,219 @@
+{
+  "GT_selects_expert": false,
+  "artifacts": {
+    "validation_foundir_train_0144583": {
+      "files": {
+        "tensors/hard_validation_foundir_train_0144583_689ecd2e737f4cf18a21c41018898c14.safetensors": "c996fabccab61cb29e8c6f09a1055fdd2e3f5b40836797c55ecc69656a650f32"
+      },
+      "record_sha256": "bd188c26762f859c672bf354d3f21057028c2760f0e8da942fd39fae7f04217c"
+    },
+    "validation_foundir_train_0189233": {
+      "files": {
+        "tensors/hard_validation_foundir_train_0189233_c79a5deb9b5c49acb2ab089c29817370.safetensors": "ca81cd2161ea7bb980bfaac0bf16453ca2160667b7ef1fce893251a421b1f144"
+      },
+      "record_sha256": "3c334840330c99890ae68648d2d2b711b17f7ed59ba158d913d69c88c395fef9"
+    },
+    "validation_foundir_train_0479048": {
+      "files": {
+        "tensors/hard_validation_foundir_train_0479048_221f53fd29f642d1a482469905748448.safetensors": "30153179c1d8e3e0bfffc6b07592508f9079679a318b8f6090b9144a1a896f31"
+      },
+      "record_sha256": "f500f5580e7cd46f8fbaeda3b16c2e4154e61d41ac704eacf73de4db62bf1ffc"
+    },
+    "validation_foundir_train_0508782": {
+      "files": {
+        "tensors/hard_validation_foundir_train_0508782_3cb2b2a743ae4f7cb6d90399d32c5363.safetensors": "fe5bbe83af202a3e177a1410bdd294cd773e207abf738b0ac672a2aed1778fd3"
+      },
+      "record_sha256": "78596ccacdbad5ed418efa6ff663bfa537816e1428936f5a26d5cdda91ada920"
+    }
+  },
+  "automatic_followup": false,
+  "breakdown_sha256": "911c411710d96498dcdf6d8af2e1abe772c52b95bc3b79d948b485aba5bbf6c5",
+  "count": 4,
+  "four_case_mean": {
+    "choice_and_native_protocol_deficit": {
+      "lpips_increase": 0.1373606133274734,
+      "psnr_loss_db": 11.193565786463536
+    },
+    "soft_mixture_incremental_deficit": {
+      "lpips_increase": -0.020667069125920534,
+      "psnr_loss_db": -0.024818137237592408
+    },
+    "total_soft_deficit": {
+      "lpips_increase": 0.11669354420155287,
+      "psnr_loss_db": 11.168747649225942
+    }
+  },
+  "interpretation": [
+    "Positive deficits mean worse for both metrics; signed parts sum to total.",
+    "Choice component includes anchor-dependent prompt/alpha/readout, not classification alone.",
+    "Four preselected error cases are diagnosis, not a new overall performance estimate.",
+    "This is not a VLM contribution ablation or mixed-degradation success.",
+    "Driver/Hopper model differences are recorded; no bitwise cross-hardware equivalence claimed."
+  ],
+  "per_image": [
+    {
+      "baseline": {
+        "lpips": 0.012662265449762344,
+        "psnr": 39.31311370809781
+      },
+      "choice_and_native_protocol_deficit": {
+        "lpips_increase": 0.014012103900313377,
+        "psnr_loss_db": 0.9571601122318043
+      },
+      "hard": {
+        "lpips": 0.026674369350075722,
+        "psnr": 38.355953595866005
+      },
+      "key": "validation_foundir_train_0144583",
+      "peak_allocated_gib": 137.90130805969238,
+      "predicted_anchor": "blur",
+      "seconds": 20.939859429956414,
+      "soft": {
+        "lpips": 0.011552110314369202,
+        "psnr": 36.950822957015326
+      },
+      "soft_mixture_incremental_deficit": {
+        "lpips_increase": -0.01512225903570652,
+        "psnr_loss_db": 1.4051306388506788
+      },
+      "total_soft_deficit": {
+        "lpips_increase": -0.0011101551353931427,
+        "psnr_loss_db": 2.362290751082483
+      },
+      "true_task_for_reporting_only": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.08227060735225677,
+        "psnr": 41.3931689977558
+      },
+      "choice_and_native_protocol_deficit": {
+        "lpips_increase": 0.01791270077228546,
+        "psnr_loss_db": 15.23986622150294
+      },
+      "hard": {
+        "lpips": 0.10018330812454224,
+        "psnr": 26.15330277625286
+      },
+      "key": "validation_foundir_train_0189233",
+      "peak_allocated_gib": 137.90130805969238,
+      "predicted_anchor": "blur",
+      "seconds": 20.689800243009813,
+      "soft": {
+        "lpips": 0.09374328702688217,
+        "psnr": 26.40023025739888
+      },
+      "soft_mixture_incremental_deficit": {
+        "lpips_increase": -0.006440021097660065,
+        "psnr_loss_db": -0.24692748114602026
+      },
+      "total_soft_deficit": {
+        "lpips_increase": 0.011472679674625397,
+        "psnr_loss_db": 14.99293874035692
+      },
+      "true_task_for_reporting_only": "noise"
+    },
+    {
+      "baseline": {
+        "lpips": 0.14240221679210663,
+        "psnr": 21.98954788213827
+      },
+      "choice_and_native_protocol_deficit": {
+        "lpips_increase": 0.24674572050571442,
+        "psnr_loss_db": 16.038566423636084
+      },
+      "hard": {
+        "lpips": 0.38914793729782104,
+        "psnr": 5.950981458502187
+      },
+      "key": "validation_foundir_train_0508782",
+      "peak_allocated_gib": 137.93256092071533,
+      "predicted_anchor": "blur",
+      "seconds": 19.999531849985942,
+      "soft": {
+        "lpips": 0.32967108488082886,
+        "psnr": 7.174505828413028
+      },
+      "soft_mixture_incremental_deficit": {
+        "lpips_increase": -0.05947685241699219,
+        "psnr_loss_db": -1.223524369910841
+      },
+      "total_soft_deficit": {
+        "lpips_increase": 0.18726886808872223,
+        "psnr_loss_db": 14.815042053725243
+      },
+      "true_task_for_reporting_only": "lowlight"
+    },
+    {
+      "baseline": {
+        "lpips": 0.0893302783370018,
+        "psnr": 18.076225849379362
+      },
+      "choice_and_native_protocol_deficit": {
+        "lpips_increase": 0.27077192813158035,
+        "psnr_loss_db": 12.538670388483315
+      },
+      "hard": {
+        "lpips": 0.36010220646858215,
+        "psnr": 5.537555460896049
+      },
+      "key": "validation_foundir_train_0479048",
+      "peak_allocated_gib": 137.93256092071533,
+      "predicted_anchor": "noise",
+      "seconds": 19.968009348027408,
+      "soft": {
+        "lpips": 0.3584730625152588,
+        "psnr": 5.571506797640236
+      },
+      "soft_mixture_incremental_deficit": {
+        "lpips_increase": -0.0016291439533233643,
+        "psnr_loss_db": -0.033951336744187266
+      },
+      "total_soft_deficit": {
+        "lpips_increase": 0.269142784178257,
+        "psnr_loss_db": 12.504719051739126
+      },
+      "true_task_for_reporting_only": "lowlight"
+    }
+  ],
+  "receipt_sha256": "721ef9741aed321f9f5258498a965888997432fa6b9e0e5e9c43b5e1d81a8aec",
+  "run_id": "predicted_hard_four_v1",
+  "runtime": {
+    "actual_gpus": 2,
+    "actual_nodes": 1,
+    "driver_difference_allowed": true,
+    "inherited_comparison_signature": {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "memory_policy": {
+        "inherited": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB",
+        "router_explicit_gate_checkpoint": true
+      },
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    "parent_gpu_names": [
+      "NVIDIA H200",
+      "NVIDIA H200",
+      "NVIDIA H200",
+      "NVIDIA H200"
+    ],
+    "training": false
+  },
+  "status": "four_predicted_hard_outputs_verified",
+  "training": false
+}
