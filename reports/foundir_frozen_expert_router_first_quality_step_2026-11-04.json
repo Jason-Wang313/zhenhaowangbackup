@@ -1,0 +1,167 @@
+{
+  "run_id": "qualification_mixed_driver_4x2_v1",
+  "status": "running",
+  "first_quality_step": {
+    "step": 401,
+    "phase": "quality",
+    "correct_class_weight": 0.9406931856647134,
+    "rgb_mse": 0.03131392752538886,
+    "lpips": 0.1462364629842341,
+    "ce": 0.07996233796580299,
+    "gradient_norms": {
+      "image": 0.3963491916656494,
+      "vlm": 0.03898545354604721
+    },
+    "image_loss_route_gradient_norm_mean": 1.4576154566166224,
+    "expert_weight_means": {
+      "blur": 0.22048857811089162,
+      "noise": 0.20115190999132804,
+      "haze": 0.2302598901974566,
+      "lowlight": 0.19146058314145675,
+      "rain": 0.15663903820464664
+    },
+    "anchor_counts": {
+      "blur": 7.0,
+      "noise": 7.0,
+      "haze": 7.0,
+      "lowlight": 6.0,
+      "rain": 5.0
+    },
+    "seconds_before_save": 313.6774494999554,
+    "peak_allocated_gib": 138.07967042922974
+  },
+  "prequality_evaluation": {
+    "step": 400,
+    "groups": {
+      "blur": {
+        "count": 8,
+        "means": {
+          "known_class_control": {
+            "psnr": 24.876374126144903,
+            "lpips": 0.18969405617099255
+          },
+          "router_step400": {
+            "psnr": 24.824732454485993,
+            "lpips": 0.19748514890670776
+          }
+        },
+        "router_anchor_correct": {
+          "known_class_control": 8,
+          "router_step400": 7
+        },
+        "regressions_vs_known_class": {
+          "router_step400": {
+            "psnr": 4,
+            "lpips": 4
+          }
+        }
+      },
+      "noise": {
+        "count": 8,
+        "means": {
+          "known_class_control": {
+            "psnr": 40.28401300344693,
+            "lpips": 0.06914887693710625
+          },
+          "router_step400": {
+            "psnr": 35.68810573231833,
+            "lpips": 0.07434870325960219
+          }
+        },
+        "router_anchor_correct": {
+          "known_class_control": 8,
+          "router_step400": 6
+        },
+        "regressions_vs_known_class": {
+          "router_step400": {
+            "psnr": 6,
+            "lpips": 7
+          }
+        }
+      },
+      "haze": {
+        "count": 8,
+        "means": {
+          "known_class_control": {
+            "psnr": 24.07477752136057,
+            "lpips": 0.08017596346326172
+          },
+          "router_step400": {
+            "psnr": 23.86183936107109,
+            "lpips": 0.08064864529296756
+          }
+        },
+        "router_anchor_correct": {
+          "known_class_control": 8,
+          "router_step400": 8
+        },
+        "regressions_vs_known_class": {
+          "router_step400": {
+            "psnr": 4,
+            "lpips": 3
+          }
+        }
+      },
+      "lowlight": {
+        "count": 8,
+        "means": {
+          "known_class_control": {
+            "psnr": 20.20700872472009,
+            "lpips": 0.13449188228696585
+          },
+          "router_step400": {
+            "psnr": 17.576221985459714,
+            "lpips": 0.18688825238496065
+          }
+        },
+        "router_anchor_correct": {
+          "known_class_control": 8,
+          "router_step400": 6
+        },
+        "regressions_vs_known_class": {
+          "router_step400": {
+            "psnr": 2,
+            "lpips": 5
+          }
+        }
+      },
+      "rain": {
+        "count": 8,
+        "means": {
+          "known_class_control": {
+            "psnr": 33.727743809820204,
+            "lpips": 0.06883488362655044
+          },
+          "router_step400": {
+            "psnr": 30.91579913364935,
+            "lpips": 0.09760783694218844
+          }
+        },
+        "router_anchor_correct": {
+          "known_class_control": 8,
+          "router_step400": 6
+        },
+        "regressions_vs_known_class": {
+          "router_step400": {
+            "psnr": 4,
+            "lpips": 5
+          }
+        }
+      }
+    },
+    "development_not_official_or_blind_test": true,
+    "known_class_control_uses_label_not_deployable_router": true
+  },
+  "quality_steps_completed_at_check": 1,
+  "latest_complete_receipt": {
+    "file": "steps/router_000401_1793819107548027561.pt",
+    "parameter_hash": "26794bdf4b4977983635a95d529f1ae3a4e2c9edda9f90515f54f0fdc43b141e",
+    "receipt_hash": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9",
+    "sha256": "1a56f81949db9f73541e99a8bcce798116040758d4c1eab4f2ff1eb8401787f4",
+    "step": 401
+  },
+  "H200_peak_memory_not_H100_qualified": true,
+  "remaining_estimate": "~37min quality training from step401 + final evaluation; initial estimate from one step only",
+  "automatic_formal": false,
+  "full_tensor_audit_performed": false
+}
