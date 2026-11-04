@@ -1,4 +1,43 @@
-## 当前授权：两张严重错选的CPU原因核对；不启动新训练 — 2026-11-04
+## 当前授权：一轮冻结图像路由修复＋独立来源验证 — 2026-11-04
+
+本节覆盖下方“仅CPU诊断、不启动新训练”。用户明确授权一轮有边界修复与一次独立来源验证。
+7fe87e5审计已结束：680条身份/特征复制/来源分离/20次曝光通过；不要重复该诊断。
+Blur更像路由泛化问题，Low-light特征混淆/覆盖偏弱，未证明唯一根因，不能承诺这是最后一次。
+
+当前expanded_frozen_image_v2：保留fresh_ce400_matched_v1真正image_only step400图像MLP并冻结，
+fresh VLM MLP零输出起点，只训练VLM分数修正；不是继续联合更新image分支。
+五个已训练FLUX专家、VAE、Qwen都冻结，不加CNN/Restormer/refiner、不恢复energy或旧400+8训练。
+训练2560（每类512），calibration400、holdout400（每类各80），严格来源/GT/LQ哈希隔离。
+原计划各128校准/验证不成立：合格Low-light仅723来源，少于512+128+128；未读新像素前改为80。
+旧640训练特征复用，2720份新特征；旧40开发图及其来源排除，不针对两错例调参或补数据。
+本地真实manifest预检已通过：fit2335不同来源、cal400/holdout400来源，三组无交叉。
+新holdout只保证路由训练来源分离，不保证FLUX/Qwen预训练从未见过。
+
+固定1600步/global32/每图20曝光，AdamW lr.001/wd.01/label_smoothing.05/grad_clip1；
+400/800/1200/1600只用calibration最低CE选一次，选择先落盘，再读取holdout评分。
+不扫系数/阈值、不挑holdout检查点。holdout筛选：总体正确数提高、每类不降、CE不升。
+分类筛选不是PSNR/LPIPS/SoW成功；此轮不生成恢复图，也不自动下一阶段。
+修正头见2560而冻结image-only只见旧640，本轮不是数据量匹配的VLM消融。
+
+目的地CPU代理安全同步GitHub，保留无关修改/大资产，先用已验收环境执行：
+.conda/gpu-train-stable/bin/python -S smoke/repair_foundir_frozen_image_router_v2.py prepare
+通过后给用户四节点各两卡特征命令，节点编号0..3各一次：
+bash smoke/start_foundir_frozen_image_router_v2_tmux.sh features <node_rank>
+只本地torchrun两worker/全局八分片，不需要master IP/NCCL；H100/H200代码支持，CUDA显存待实测。
+新任务只加载冻结编码器，不把旧138GiB五专家bank推理说成H100已合格。
+八个worker完整、四节点status0后释放GPU，CPU代理手动执行同一授权阶段：
+bash smoke/start_foundir_frozen_image_router_v2_tmux.sh train
+CPU8线程，最终须FROZEN_IMAGE_V2_RESULT_VERIFIED和FROZEN_IMAGE_V2_END status=0。
+每node缓存累计cap1小时（总最多8GPU-hours）；CPU累计cap1小时；不自动重试/扩预算。
+逐图缓存及逐step VLM/Adam/RNG/slot保存；0..1600快照约18–22GiB，首启需30GiB空闲。
+只有代码/CPU测试/真实清单预检已完成，主代理未启动真实GPU缓存或训练。
+
+唯一执行根仍为/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang；
+Python为该根下.conda/gpu-train-stable/bin/python。禁止在冻结旧HDD3执行。
+详见reports/foundir_frozen_image_router_v2_readiness_2026-11-04.md。
+CPU代理只推小结果/耗时/退出/峰值报告，主代理分析；不推tensor、权重、数据或live logs，不自行改配方。
+
+## 已结束：两张严重错选的CPU原因核对；不启动新训练 — 2026-11-04
 
 匹配画质补测已正常结束（dd06f76），2H200/76秒/status0；不要再跑四图。
 VLM38/40对image-only33/40：平均+1.280642dB/LPIPS下降.004140，但Blur两项退步；

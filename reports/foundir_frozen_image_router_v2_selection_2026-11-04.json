@@ -1,0 +1,24 @@
+{
+  "GPU_started": false,
+  "counts": {
+    "calibration": {
+      "records": 400,
+      "sources": 400
+    },
+    "fit": {
+      "records": 2560,
+      "sources": 2335
+    },
+    "holdout": {
+      "records": 400,
+      "sources": 400
+    }
+  },
+  "destination_assets_verified": false,
+  "items_sha256": "333117f97705c42acefedbbee698098935da143c21a1bb6f176cf409f3fc4ceb",
+  "manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "new_features": 2720,
+  "pixels_accessed": false,
+  "reused_features": 640,
+  "status": "real_manifest_metadata_selection_pass"
+}
