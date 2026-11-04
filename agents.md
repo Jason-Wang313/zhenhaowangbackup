@@ -1,3 +1,44 @@
+## 当前授权：CPU完整监督训练VLM路由；单退化预测top-1 — 2026-11-04
+
+用户在四图补测后授权execute修复。四图补测已终态：a68d01a，2H200/77秒/.042778使用GPU-hours；
+不再跑旧四图或400+8质量资格。四错例主要损失来自选错专家及其原协议，直接把旧路由全部改hard不能解决；
+正确36图又有混合损害。五个专家一直冻结，不能说专家权重被训坏。
+
+明确代码缺口：旧400分类步VLM关闭，VLM仅训练8质量步/256条样本曝光；
+argmax所选prompt/读出协议无离散导数，虽然soft权重仍有真实修图梯度，不能视为VLM已充分学会五类。
+这不证明唯一根因，也不保证新分类训练一定能泛化。本轮不盲目延长昂贵完整FLUX反传。
+
+当前唯一新任务fresh_ce400_matched_v1：CPU、原640训练特征/40开发特征，五类各128/8；
+两组均fresh模型/Adam、相同图像MLP初始化、同样本顺序、400步/global32/lr.001/纯分类CE。
+image_only不启用VLM，image_plus_vlm从第1步启用VLM修正；两组各曝光训练记录20遍。
+不读取旧qualification权重，不改专家、底座、VAE或Qwen，不加CNN/Restormer/refiner。
+只读已有image/vlm缓存，不取reference latent，不解码GT/LQ像素，不重生成缓存。
+训练类别只用于CE；推理只接图像/VLM特征，不传类别。两组都完成后才读40开发特征，
+固定最终400步，无开发集挑步/早停。报告分类混淆、原4错例转变及新增错误，不虚构新PSNR/LPIPS。
+
+当前singleton部署候选用模型预测top-1/one-hot进入原内部FLUX bank；
+只要选对即可沿用已验证单专家能力，不默认混入其它专家。选错仍会失败；
+这不是“hard本身修好错误”，也不是double/triple混合退化方案，更不是新论文贡献已成立。
+生成质量验收留待CPU结果回传后明确安排，不自动GPU/正式训练。旧纯推理峰值137.933GiB，
+H10080GB的完整路径依然未验收；CPU阶段不受GPU型号影响，不等于已修好显存。
+
+默认CPU8线程，显式CUDA_VISIBLE_DEVICES为空；累计硬cap30分钟（非ETA）、0GPU-hours。
+每完整步保存模型/Adam/CPU+Python RNG/slot及SHA，两组含step0共802份，约24GiB，
+首启需30GiB空闲。全部旧文件不动，同入口恢复相同CPU运行栈；损坏不回退，失败时间不清零。
+不要把所有checkpoint/缓存推GitHub。主代理已通过11项新CPU测试（含合成双组400步与精确恢复）；
+本机无目的地缓存，实际训练未执行，不能把合成测试当实验结果。
+
+目的地CPU代理同步最新origin/main，保留无关脏文件/大资产，直接运行：
+bash smoke/start_foundir_router_supervised_repair_v1_tmux.sh
+这是CPU任务，无需用户启动GPU；prepare→train→verify均已在入口内。
+纯元数据预检可用.conda/gpu-train-stable/bin/python -S smoke/train_foundir_router_supervised_repair_v1.py prepare。
+唯一执行根仍为/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang；
+不在旧HDD3执行，不用系统Python替代已验收环境。GPU入口本轮没有新增。
+成功须SUPERVISED_ROUTER_FINAL_VERIFIED及SUPERVISED_ROUTER_CPU_END status=0；
+回传reports/foundir_router_supervised_repair_terminal_2026-11-04.json及简短耗时/退出记录。
+只推小报告，不上传模型/Adam/特征/live logs。主代理负责分析与下一步，不让CPU代理自改配方。
+详见reports/foundir_router_supervised_repair_readiness_2026-11-04.md。
+
 ## 当前授权：只补4张模型自选主专家的单选输出 — 2026-11-04
 
 用户已授权execute。本节覆盖下方“只做CPU分析/尚未授权补测”。CPU报告f66143f已回传并独立核对：
