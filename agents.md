@@ -1,4 +1,33 @@
-## 当前授权：只修复右图VLM分数修正，CPU训练V3 — 2026-11-04
+## 当前执行：V3训练侧核对；不盲目追加步数 — 2026-11-04
+
+用户授权先核对已保存的800/1600步模型，再决定是否给VLM修正头补充图像路由五个分数。
+最终仍坚持右图：图像路由＋VLM token修正；image-only仅冻结分支/对照，不是替代方案。
+本节覆盖下面V3“待训练”状态；不要再次运行V3训练或旧GPU缓存。
+
+V3已结束，73bc85e：1600步/345秒/CPU8线程/status0；校准366→366→363→362正确，
+四个检查点均不满足每类不降。800步仅失败诊断：同校准组误改12→11、纠错28→28。
+Haze仍73→66，Lowlight77→76；不把校准366和旧holdout374混成同一验证集。
+没有新100图确认或PSNR/LPIPS。原专家、缓存、checkpoint与历史源码保持不动。
+
+本轮fit800_1600_v1：仅加载2560训练特征，前向评价固定两个保存模型；
+校准预测直接复用原JSON。记录总体/每类纠错与误改率、保护损失及历史last100训练统计。
+按原图像路由正确/错误数作分母，不能直接比较2560与400图的错误张数。
+不训练、不改结构、不读calibration/holdout/预留100图特征或新GT/LQ像素，不自动GPU。
+若训练已学会而校准仍差，支持泛化差距；若训练也差，先查目标/优化。
+“让VLM修正头同时看图像路由五个分数”仍是待结果支持的候选，不是已证实根因或已实现方案。
+后续由主代理读回实际结果决定；CPU代理不自行加步数、换结构或调参。
+
+唯一执行根/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang，
+使用其.conda/gpu-train-stable/bin/python；主代理无目的地挂载，不能声称已现场运行。
+CPU代理安全同步GitHub保留本地修改/大资产后直接运行：
+bash smoke/run_foundir_vlm_preserve_fit_audit_v1_cpu.sh
+CPU8线程/0GPU-hours/累计cap600秒+30秒清理；与旧CPU训练共用锁，不杀无关任务。
+成功须VLM_FIT_AUDIT_RESULT_VERIFIED和VLM_FIT_AUDIT_END status=0。
+仅push reports/foundir_vlm_preserve_fit_audit_2026-11-04.json与耗时/退出简报；
+不push训练特征、权重、逐图缓存、图片、live logs。保持简单中文、事实与假设分开。
+详见reports/foundir_vlm_preserve_fit_audit_readiness_2026-11-04.md。
+
+## 历史授权：只修复右图VLM分数修正，CPU训练V3 — 2026-11-04
 
 用户明确坚持PNG右图“图像路由＋VLM token修正分数”。image-only只是冻结分支/诊断对照，
 不是最终替代方案，也不应成为必须先另训一个image-only才能继续的前置条件。
