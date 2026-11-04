@@ -1,0 +1,443 @@
+{
+  "run_id": "qualification_mixed_driver_4x2_v1",
+  "checked_at_utc": "2026-11-04T18:58:52.094733+00:00",
+  "status": "running",
+  "last_complete_checkpoint": {
+    "file": "steps/router_000400_1793818492895819363.pt",
+    "parameter_hash": "7beb274e21767fb7791293dddbd73446fa20e5df8d6f21b9a1aba1c8a3ee4ab8",
+    "receipt_hash": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9",
+    "sha256": "e88281263d2dd0cd1a6ce8f19f24cacc54e0109beddb0abb1e3a67eb682cec37",
+    "step": 400
+  },
+  "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9",
+  "vlm_feature_count": 680,
+  "image_feature_count": 680,
+  "parity": [
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 0.09876816719770432,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0008375",
+          "row": {
+            "category": "01Blur",
+            "composition_size": "1",
+            "crop_xy": [
+              3213,
+              1461
+            ],
+            "degradations_json": "[\"blur\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0008376.png",
+            "gt_phash": "f860c7f8f866451b",
+            "gt_sha256": "68281bf9dfd5b8f6ee6e5b6dcc34c33fc8a1593d71ab1a4fb8b9ab1fdfcb7cc2",
+            "height": "2656",
+            "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0008376.png",
+            "lq_sha256": "20d6eb973c2a999b4573719dea3548772b373b4b3eec6054a44ea1194923d8c3",
+            "record_id": "foundir_train_0008375",
+            "source_group": "d9b1f7da176c420d8b692b3728b2e88a18963ff582a46125053d90e9f0ff3642",
+            "split": "train",
+            "width": "3984"
+          },
+          "seed": 2593552465,
+          "split": "train",
+          "task": "blur"
+        },
+        "rank": 0,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    },
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 0.09174168854951859,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0144381",
+          "row": {
+            "category": "05Noise",
+            "composition_size": "1",
+            "crop_xy": [
+              737,
+              1157
+            ],
+            "degradations_json": "[\"noise\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/05Noise/GT/0204272.JPG",
+            "gt_phash": "dcf96d26f281e063",
+            "gt_sha256": "81f042e3e13c3ea5444ef67949d4687317437941a8d8417e3d39b6c81e02a4bb",
+            "height": "1688",
+            "lq_path": "data/foundir/MillionIRData/Train/05Noise/LQ/0204272.JPG",
+            "lq_sha256": "a9a2fb0aba156b29dbfdb5c8031af6c6b150e728e551ab3b232eca49abdfad7b",
+            "record_id": "foundir_train_0144381",
+            "source_group": "5736189756871846237e5d4e3f8683d181505c5b10f246a4571ffa3296198672",
+            "split": "train",
+            "width": "3008"
+          },
+          "seed": 3999370105,
+          "split": "train",
+          "task": "noise"
+        },
+        "rank": 1,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    },
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 0.2527458071708679,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0269570",
+          "row": {
+            "category": "08Haze",
+            "composition_size": "1",
+            "crop_xy": [
+              786,
+              499
+            ],
+            "degradations_json": "[\"haze\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/08Haze/GT/0419361.jpg",
+            "gt_phash": "afb29254a907d59d",
+            "gt_sha256": "26676bdcb0dbca8696ff53d304febf3cd68ade52090a00ad08adfd832e68c705",
+            "height": "1920",
+            "lq_path": "data/foundir/MillionIRData/Train/08Haze/LQ/0419361.jpg",
+            "lq_sha256": "f79bb1dbc7721dadc91143d65e102e7510605b8948c7e93fded78a284caede35",
+            "record_id": "foundir_train_0269570",
+            "source_group": "7e54b2087be69ca9bba65b370cdd3a0634064dfb52b6bd0e87b1a88f595be6c5",
+            "split": "train",
+            "width": "2560"
+          },
+          "seed": 2940134542,
+          "split": "train",
+          "task": "haze"
+        },
+        "rank": 2,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    },
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 1.1269177198410034,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0495264",
+          "row": {
+            "category": "14Lowlight",
+            "composition_size": "1",
+            "crop_xy": [
+              222,
+              58
+            ],
+            "degradations_json": "[\"low_light\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/14Lowlight/GT/0729994.JPG",
+            "gt_phash": "96b68e268c27aeae",
+            "gt_sha256": "7f0544cd99da6d7dd0eaaeca79cccf3d10c3cf8a2449c77de80ab08bfaa93f19",
+            "height": "1688",
+            "lq_path": "data/foundir/MillionIRData/Train/14Lowlight/LQ/0729994.JPG",
+            "lq_sha256": "843f91c5f4871f09e1fab003e1647270ecef45fa737b48d8e3fef6dca8b0d9bd",
+            "record_id": "foundir_train_0495264",
+            "source_group": "df410156a390a33d2a33b8630589d61b7007ed8ccf4cf9480553f5c12db7017e",
+            "split": "train",
+            "width": "3008"
+          },
+          "seed": 3093396692,
+          "split": "train",
+          "task": "lowlight"
+        },
+        "rank": 3,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    },
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 0.18429425358772278,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0386083",
+          "row": {
+            "category": "10Rain",
+            "composition_size": "1",
+            "crop_xy": [
+              137,
+              1036
+            ],
+            "degradations_json": "[\"rain\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/10Rain/GT/0535874.png",
+            "gt_phash": "c8c8d09072fefec6",
+            "gt_sha256": "0d292ba71d73319669ac41837d0ffe26bc35a8f3c7bdb0ffd5ca5abc337d2e70",
+            "height": "1944",
+            "lq_path": "data/foundir/MillionIRData/Train/10Rain/LQ/0535874.png",
+            "lq_sha256": "34a9b6afacc36d7a1ac302737d2099589086733a12f015d0bcbf69a865aae4ec",
+            "record_id": "foundir_train_0386083",
+            "source_group": "6e887f0efd69bbbdf5cd2c2eb6d6a04bf177b74732f94ea92d27df3c22d6c33b",
+            "split": "train",
+            "width": "2592"
+          },
+          "seed": 1958400481,
+          "split": "train",
+          "task": "rain"
+        },
+        "rank": 4,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    },
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 0.5429279804229736,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0089898",
+          "row": {
+            "category": "01Blur",
+            "composition_size": "1",
+            "crop_xy": [
+              798,
+              1098
+            ],
+            "degradations_json": "[\"blur\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0089899.jpg",
+            "gt_phash": "aba1d52fce1628dc",
+            "gt_sha256": "5838fa65e2b601bc834ec926eae7b78eaff4902ada2412566b6db558a5d48a5b",
+            "height": "2160",
+            "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0089899.jpg",
+            "lq_sha256": "89d9f294bfcd5010986932f780a645152d9b3267fb843f6b012d54a011da3a69",
+            "record_id": "foundir_train_0089898",
+            "source_group": "62d5a3f58171c3ad7edada9415bcc88de93d76a25be8adedf53203127e6c5464",
+            "split": "train",
+            "width": "3840"
+          },
+          "seed": 1611351900,
+          "split": "train",
+          "task": "blur"
+        },
+        "rank": 5,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    },
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 0.0691307783126831,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0188974",
+          "row": {
+            "category": "05Noise",
+            "composition_size": "1",
+            "crop_xy": [
+              1708,
+              335
+            ],
+            "degradations_json": "[\"noise\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/05Noise/GT/0248865.JPG",
+            "gt_phash": "abdf2e2b52a542a6",
+            "gt_sha256": "f526d3ce8effd4cca19371ae9bc5287a41ef5515a95a4a942a0c6eed4b693ad1",
+            "height": "1528",
+            "lq_path": "data/foundir/MillionIRData/Train/05Noise/LQ/0248865.JPG",
+            "lq_sha256": "3e7a12a0571962603d95b33b5fc983542bcc7c45f4cfde1dddadd7671929c448",
+            "record_id": "foundir_train_0188974",
+            "source_group": "c7b26f808baef91bd9abf6d84f5509e6e9bc34333cd08ab2f7871080f7b83075",
+            "split": "train",
+            "width": "2720"
+          },
+          "seed": 2925136604,
+          "split": "train",
+          "task": "noise"
+        },
+        "rank": 6,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    },
+    {
+      "decoded_max_abs": 0.0,
+      "gradient_finite": true,
+      "gradient_norm": 0.6588605046272278,
+      "identity": {
+        "arm": "autograd_forward_parity",
+        "item": {
+          "key": "train_foundir_train_0255731",
+          "row": {
+            "category": "08Haze",
+            "composition_size": "1",
+            "crop_xy": [
+              983,
+              1424
+            ],
+            "degradations_json": "[\"haze\"]",
+            "gt_path": "data/foundir/MillionIRData/Train/08Haze/GT/0405522.jpg",
+            "gt_phash": "fda382ddf7088874",
+            "gt_sha256": "686a73dc305d147495c97e9c1ca4a8f71fe866193ae5f0a23dcb01999d992496",
+            "height": "2391",
+            "lq_path": "data/foundir/MillionIRData/Train/08Haze/LQ/0405522.jpg",
+            "lq_sha256": "a13fbe1d6c40e1a8a58e9cef3c37c24804fe97bfa9c170ca509f57b54667fb86",
+            "record_id": "foundir_train_0255731",
+            "source_group": "1a49d2caed0e5588d85ea19c26bd15ea668c7750076b104645849eb459c8069e",
+            "split": "train",
+            "width": "1913"
+          },
+          "seed": 2419018905,
+          "split": "train",
+          "task": "haze"
+        },
+        "rank": 7,
+        "receipt_sha256": "7a7dd60caca6a57922aa5c82c7c61743fe8f2ed60a997b55400f91a478d56ab9"
+      },
+      "pass": true,
+      "uint8_equal": true
+    }
+  ],
+  "evaluation_records_at_check": 48,
+  "runtime_receipts": [
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "memory_policy": {
+        "inherited": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB",
+        "router_explicit_gate_checkpoint": true
+      },
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX x86_64 Kernel Module  570.124.06  Wed Feb 26 02:12:04 UTC 2025\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "memory_policy": {
+        "inherited": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB",
+        "router_explicit_gate_checkpoint": true
+      },
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  595.58.03  Release Build  (dvs-builder@U22-I3-AM25-28-3)  Tue Mar 17 19:55:10 UTC 2026\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "memory_policy": {
+        "inherited": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB",
+        "router_explicit_gate_checkpoint": true
+      },
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  595.58.03  Release Build  (dvs-builder@U22-I3-AM25-28-3)  Tue Mar 17 19:55:10 UTC 2026\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    },
+    {
+      "cudnn": 90701,
+      "gpu_name": "NVIDIA H200",
+      "local_gpus": 2,
+      "memory_policy": {
+        "inherited": "vae_query_chunk256_saved_activation_cpu_offload_cudnn_workspace256MiB",
+        "router_explicit_gate_checkpoint": true
+      },
+      "metrics": {
+        "lpips_head_sha256": "df73285e35b22355a2df87cdb6b70b343713b667eddbda73e1977e0c860835c0",
+        "lpips_implementation_sha256": "b647ed2ab4d466228931ccd70fa1ef51de61dd9b7cfc308ebdb28e3d4bada88a",
+        "packages": {
+          "Pillow": "11.1.0",
+          "numpy": "1.26.4",
+          "torchmetrics": "1.9.0",
+          "torchvision": "0.22.0+cu128"
+        }
+      },
+      "nvidia_driver": "NVRM version: NVIDIA UNIX Open Kernel Module for x86_64  595.58.03  Release Build  (dvs-builder@U22-I3-AM25-28-3)  Tue Mar 17 19:55:10 UTC 2026\nGCC version:  gcc version 11.4.0 (Ubuntu 11.4.0-1ubuntu1~22.04.2)",
+      "torch": "2.7.0+cu128",
+      "torch_cuda": "12.8",
+      "transformers": "5.14.1",
+      "world": 8
+    }
+  ],
+  "logs": [
+    {
+      "node": 0,
+      "path": "logs/foundir_frozen_expert_router_v1_qualification_mixed_driver_4x2_v1_node0.log",
+      "snapshot_bytes": 26282,
+      "snapshot_sha256": "06cbece2bff762014515c33fa1c06c6cb69a0f110105f34f40b3f6d8e1055b6f"
+    },
+    {
+      "node": 1,
+      "path": "logs/foundir_frozen_expert_router_v1_qualification_mixed_driver_4x2_v1_node1.log",
+      "snapshot_bytes": 14989,
+      "snapshot_sha256": "7ccc54103d4c48266dc06295360cfe6cd301331e41069fcf422eb8d1688e72c5"
+    },
+    {
+      "node": 2,
+      "path": "logs/foundir_frozen_expert_router_v1_qualification_mixed_driver_4x2_v1_node2.log",
+      "snapshot_bytes": 15333,
+      "snapshot_sha256": "7dced320f137ea6de4c7a73ea79c9524611e62382ee73da78d85f5797b7ba6af"
+    },
+    {
+      "node": 3,
+      "path": "logs/foundir_frozen_expert_router_v1_qualification_mixed_driver_4x2_v1_node3.log",
+      "snapshot_bytes": 14354,
+      "snapshot_sha256": "fda6dc71bdd058c7244c7237173309afe39882b0c2d1181d6245cdcfd4d637b5"
+    }
+  ],
+  "quality_updates_completed": 0,
+  "CUDA_scope": "8 H200 across driver570/595; initial DDP and 8 real full-path forward/backward parity checks passed; no completed quality optimizer step yet",
+  "ETA": "pending first complete quality optimizer step",
+  "automatic_formal": false,
+  "full_tensor_audit_performed": false
+}
