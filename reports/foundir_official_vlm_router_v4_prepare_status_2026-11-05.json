@@ -1,0 +1,26 @@
+{
+  "status": "prepare_blocked_missing_pyiqa",
+  "synced_commit": "b6e0a2dfed5e6db313e3e92e31821b6c22939075",
+  "checked_utc": "2026-11-05T18:25:28.877317+00:00",
+  "python": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+  "error": "ModuleNotFoundError: No module named 'pyiqa'",
+  "required_pyiqa_version": "0.1.16",
+  "prepare_attempts": [
+    {
+      "file": "prepare_20261105T182417_1241203.ended.json",
+      "status": 1,
+      "seconds": 43,
+      "gpus": 0,
+      "used_gpu_seconds": 0
+    }
+  ],
+  "used_gpu_hours": 0,
+  "route_started": false,
+  "plan_run": false,
+  "render_authorized": false,
+  "other_test_sets_evaluated": false,
+  "environment_changed": false,
+  "local_changes_preserved": true,
+  "backup": "reports/local_sync_backups/official_v4_20261105T182411Z",
+  "next_action": "Supply the required pyiqa 0.1.16 runtime and official metric weights through an approved environment change; retry prepare before providing route launch commands. No automatic dependency installation or metric substitution."
+}
