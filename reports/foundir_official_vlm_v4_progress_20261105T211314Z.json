@@ -1,0 +1,66 @@
+{
+  "status": "render_in_progress",
+  "utc": "2026-11-05T21:13:14.257539+00:00",
+  "committed_tiles": 2068,
+  "planned_tiles": 21828,
+  "tile_percent": 9.474070001832509,
+  "completed_images": 136,
+  "official_images": 600,
+  "nodes": [
+    {
+      "node": 0,
+      "completed_images_logged": 36,
+      "latest_tile_log": [
+        "OFFICIAL_VLM_V4_TILE rank=0 id=official_01Blur_0145 anchor=blur tile=5/15 record_seconds=86.9",
+        "OFFICIAL_VLM_V4_TILE rank=1 id=official_01Blur_0146 anchor=blur tile=5/15 record_seconds=87.0"
+      ],
+      "errors": [],
+      "attempt_ended": false
+    },
+    {
+      "node": 1,
+      "completed_images_logged": 36,
+      "latest_tile_log": [
+        "OFFICIAL_VLM_V4_TILE rank=3 id=official_01Blur_0148 anchor=blur tile=5/15 record_seconds=86.8",
+        "OFFICIAL_VLM_V4_TILE rank=2 id=official_01Blur_0147 anchor=blur tile=5/15 record_seconds=86.9"
+      ],
+      "errors": [],
+      "attempt_ended": false
+    },
+    {
+      "node": 2,
+      "completed_images_logged": 32,
+      "latest_tile_log": [
+        "OFFICIAL_VLM_V4_TILE rank=4 id=official_01Blur_0125 anchor=blur tile=15/15 record_seconds=298.8",
+        "OFFICIAL_VLM_V4_TILE rank=5 id=official_01Blur_0126 anchor=blur tile=15/15 record_seconds=299.5"
+      ],
+      "errors": [],
+      "attempt_ended": false
+    },
+    {
+      "node": 3,
+      "completed_images_logged": 32,
+      "latest_tile_log": [
+        "OFFICIAL_VLM_V4_TILE rank=6 id=official_01Blur_0127 anchor=blur tile=15/15 record_seconds=297.1",
+        "OFFICIAL_VLM_V4_TILE rank=7 id=official_01Blur_0128 anchor=blur tile=15/15 record_seconds=297.7"
+      ],
+      "errors": [],
+      "attempt_ended": false
+    }
+  ],
+  "recent_50call_tile_seconds": {
+    "H200": 17.35,
+    "H100": 19.9
+  },
+  "estimated_remaining_hours_range": [
+    13,
+    16
+  ],
+  "estimated_slowest_rank_pure_generation_hours": 12.8,
+  "ETA_not_guaranteed": true,
+  "no_aggregate_partial_quality_claim": true,
+  "time_limit_disabled": true,
+  "training_or_route_rerun": false,
+  "historical_render_failure_GPU_hours": 0.9188888888888889,
+  "current_attempts_GPU_hours_pending": true
+}
