@@ -135,24 +135,25 @@ class ExpandedV4Tests(unittest.TestCase):
         metrics.pop(next(iter(metrics)))
         with self.assertRaises(ValueError): x.aggregate(plan,items,metrics)
 
-    def test_eight_shards_cover_all_features_and_render_ids(self):
+    def test_four_shards_cover_all_features_and_render_ids(self):
         for count in (11457,100,137,400):
-            rows=list(range(count)); shards=[rows[k::8] for k in range(8)]
+            rows=list(range(count)); from smoke.expanded_vlm_h100_runtime_v4 import shard
+            shards=[shard(rows,k) for k in range(x.WORLD_SIZE)]
             self.assertEqual(sorted(j for shard in shards for j in shard),rows)
             self.assertLessEqual(max(map(len,shards))-min(map(len,shards)),1)
 
     def test_costs_require_completed_attempts_and_include_failures(self):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp)
-            for key,gpus in [('prepare',0),('train',0)]+[(f'{phase}_node{n}',2) for phase in ('features','render') for n in range(4)]:
+            for key,gpus in [('prepare',0),('train',0)]+[(f'{phase}_node{n}',2) for phase in ('features','render') for n in range(x.NODES)]:
                 x.c.write_new(out/f'attempts/{key}_test.started.json',{'gpus':gpus})
                 x.c.write_new(out/f'attempts/{key}_test.ended.json',{'status':0,'seconds':10,'gpus':gpus,'used_gpu_seconds':gpus*10})
             costs=run.compute_costs(out)
-            self.assertAlmostEqual(costs['used_gpu_hours'],160/3600)
+            self.assertAlmostEqual(costs['used_gpu_hours'],80/3600)
             x.c.write_new(out/'attempts/features_node0_failed.started.json',{'gpus':2})
             with self.assertRaisesRegex(ValueError,'interrupted'): run.compute_costs(out)
             x.c.write_new(out/'attempts/features_node0_failed.ended.json',{'status':1,'seconds':5,'gpus':2,'used_gpu_seconds':10})
-            self.assertAlmostEqual(run.compute_costs(out)['used_gpu_hours'],170/3600)
+            self.assertAlmostEqual(run.compute_costs(out)['used_gpu_hours'],90/3600)
 
     def test_conditional_pipeline_selection_before_confirmation_no_classification_gate(self):
         # End-to-end tiny-dimensional CPU fixture; not a real experiment or GPU qualification.

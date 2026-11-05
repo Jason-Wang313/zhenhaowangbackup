@@ -2,9 +2,9 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 [[ "$ROOT" == /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang ]] || exit 2
-[[ $# == 1 || $# == 2 ]] || { echo 'Usage: <train|features node0-3|render node0-3>'; exit 2; }
+[[ $# == 1 || $# == 2 ]] || { echo 'Usage: <train|features node0-1|render node0-1>'; exit 2; }
 PHASE=$1 NODE=${2:-0}
-[[ "$PHASE" =~ ^(features|render)$ && $# == 2 && "$NODE" =~ ^[0-3]$ || "$PHASE" == train && $# == 1 ]] || exit 2
+[[ "$PHASE" =~ ^(features|render)$ && $# == 2 && "$NODE" =~ ^[0-1]$ || "$PHASE" == train && $# == 1 ]] || exit 2
 TMUX_BIN="$ROOT/.tools/tmux-env/bin/tmux"
 [[ -x "$TMUX_BIN" ]] || exit 2
 SESSION="foundir_expanded_vlm_v4_${PHASE}_${NODE}"

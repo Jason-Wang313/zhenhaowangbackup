@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One bounded expansion: features -> CPU training -> fixed 100-image restoration.
 
-Four nodes/two H200 per node for independent GPU shards, no rendezvous. No extra
+Two nodes/two H100 or H200 per node for independent GPU shards, no rendezvous. No extra
 classification qualification gate. Selection is committed before confirmation.
 """
 import argparse
@@ -70,14 +70,19 @@ def hardware(node,phase,idle):
     from smoke import train_foundir_frozen_expert_router_mixed_driver_v1 as impl
     from smoke.frozen_router_runtime_policy_v1 import execution_signature
     b=bound(); actual=impl.native.hopper.hardware(idle)
-    require('H200' in actual['gpu_name'] and all(torch.cuda.get_device_properties(k).total_memory>=139*1024**3 for k in range(2)),
-            'observed ~137GiB peak: two H200 >=139GiB required; H10080GB unqualified')
+    # Inherited hardware checks exact two same-model Hopper GPUs >=75GiB.
+    # H100 execution is pending CUDA measurement; do not reuse old peak as proof.
     original=b['original']
     actual['metrics']=impl.parent.four_impl.metric_runtime({'metric':original['parent']['metric']})
     actual['memory_policy']={'inherited':original['parent']['memory_policy'],'router_explicit_gate_checkpoint':True}
     prior=ROOT/'checkpoints/foundir_frozen_expert_router_v1'/x.old.parent.s.analysis.RUN
     require(all(execution_signature(actual)==execution_signature(c.read(prior/f'runtime_node{k}.json')) for k in range(4)),
             'GPU numerical runtime incompatible')
+    from smoke.expanded_vlm_h100_runtime_v4 import POLICY
+    actual['world']=x.WORLD_SIZE
+    actual['memory_policy']={**actual['memory_policy'], 'vae_convolution': POLICY}
+    actual['H100_qualified']=False
+    actual['legacy_cache_bitwise_equality_claimed']=False
     path=ROOT/x.OUTPUT/f'{phase}_runtime_node{node}.json'
     if idle: c.write_new(path,actual)
     else: require(c.read(path)==actual,'node runtime changed; explicit migration required')
@@ -113,13 +118,14 @@ def features(node):
     b,impl,rank,device=device_setup(node,'features')
     fresh=[i for i in b['items'] if i['reuse_key'] is None]
     # Existing extractor binds each new item/receipt and atomically saves VLM+FLUX features.
-    impl.features(ROOT/x.OUTPUT,{**b['original'],'items':fresh},rank,device)
-    completion('features',node,rank,len(fresh[rank::8]))
+    from smoke.expanded_vlm_h100_runtime_v4 import features as extract
+    extract(ROOT/x.OUTPUT,{**b['original'],'items':fresh},rank,device)
+    completion('features',node,rank,len(fresh[rank::x.WORLD_SIZE]))
 
 
 def require_workers(phase,counts,extra=None):
     out=ROOT/x.OUTPUT
-    for rank in range(8):
+    for rank in range(x.WORLD_SIZE):
         row=c.read(out/f'{phase}_worker{rank}.json')
         require({k:v for k,v in row.items() if k!='peak_allocated_gib'}==
                 {'receipt_sha256':c.sha(out/'receipt.json'),'rank':rank,'count':counts[rank],
@@ -130,7 +136,7 @@ def require_workers(phase,counts,extra=None):
 
 def feature_index(b):
     out=ROOT/x.OUTPUT; fresh=[i for i in b['items'] if not i['reuse_key']]
-    require_workers('features',[len(fresh[k::8]) for k in range(8)])
+    require_workers('features',[len(fresh[k::x.WORLD_SIZE]) for k in range(x.WORLD_SIZE)])
     index={}
     for i in b['items']:
         if i['reuse_key']:
@@ -291,10 +297,12 @@ def render(node):
     from lowlight_restoration.five_expert_flux import restore_five_expert
     verify_training(); b,impl,rank,device=device_setup(node,'render')
     out=ROOT/x.OUTPUT; plan=c.read(out/'render_plan.json')
-    routes=[plan['routes'][k] for k in sorted(plan['routes'])]; assigned=routes[rank::8]
+    routes=[plan['routes'][k] for k in sorted(plan['routes'])]; assigned=routes[rank::x.WORLD_SIZE]
     pending=[p for p in assigned if read_render(p,node) is None]
     if pending:
         model,gates,rules,ae,prompts=impl.load_bank(b['original'],device)
+        from smoke.expanded_vlm_h100_runtime_v4 import bounded_vae
+        ae=bounded_vae(ae)
         metric=LearnedPerceptualImagePatchSimilarity(net_type='alex',normalize=True).to(device).eval().requires_grad_(False)
         items={i['key']:i for i in b['items'] if i['role']=='confirmation'}
         for p in pending:
@@ -322,7 +330,7 @@ def render(node):
 
 def compute_costs(out):
     result={}
-    for key,gpus in [('prepare',0),('train',0)]+[(f'{phase}_node{node}',2) for phase in ('features','render') for node in range(4)]:
+    for key,gpus in [('prepare',0),('train',0)]+[(f'{phase}_node{node}',2) for phase in ('features','render') for node in range(x.NODES)]:
         starts=sorted((out/'attempts').glob(key+'_*.started.json'))
         ends=sorted((out/'attempts').glob(key+'_*.ended.json'))
         require(starts and {p.name.removesuffix('.started.json') for p in starts}==
@@ -339,11 +347,11 @@ def compute_costs(out):
 def final_report():
     verify_training(); b=bound(); out=ROOT/x.OUTPUT; plan=c.read(out/'render_plan.json')
     routes=[plan['routes'][k] for k in sorted(plan['routes'])]
-    require_workers('render',[len(routes[k::8]) for k in range(8)],{'render_plan_sha256':c.sha(out/'render_plan.json')})
+    require_workers('render',[len(routes[k::x.WORLD_SIZE]) for k in range(x.WORLD_SIZE)],{'render_plan_sha256':c.sha(out/'render_plan.json')})
     metrics={}; artifacts={}
     prompts={t:b['original']['parent']['experts'][t]['prompt'] for t in ORDER}
     for index,p in enumerate(routes):
-        row=read_render(p,(index%8)//2); require(row is not None and row['rank']==index%8,'render missing/wrong shard')
+        row=read_render(p,(index%x.WORLD_SIZE)//2); require(row is not None and row['rank']==index%x.WORLD_SIZE,'render missing/wrong shard')
         x.old.parent.audit.quality.analysis.check_route(row['route'],p['anchor'],control=True,prompts=prompts)
         metrics[p['render_id']]=row['metrics']; artifacts[p['render_id']]={'record_sha256':c.sha(out/'renders'/(p['render_id']+'.json')),
                                                                       'tensor_sha256':row['files'][row['tensor']]}
@@ -351,7 +359,8 @@ def final_report():
             'training_report_sha256':c.sha(ROOT/x.TRAIN_REPORT),'render_plan_sha256':c.sha(out/'render_plan.json'),
             'selected_checkpoint':c.read(ROOT/x.TRAIN_REPORT)['selected_checkpoint'],
             **x.aggregate(plan,b['items'],metrics),'artifacts':artifacts,'compute_costs':compute_costs(out),
-            'confirmation_records':100,'classification_blocked_restoration':False,'automatic_followup':False,
+            'execution_policy':b['recipe']['GPU_execution_policy'],
+            'legacy_cache_bitwise_equality_claimed':False, 'confirmation_records':100,'classification_blocked_restoration':False,'automatic_followup':False,
             'limitations':['Only five singleton types; no double/triple claim.',
                            '100 training-collection sources separated from router training; frozen FLUX/Qwen may have seen them.',
                            'Larger data plus changed correction head is not an isolated causal VLM ablation.',
@@ -368,7 +377,7 @@ def finish():
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('phase',choices=('prepare','hardware','features','train','verify_train','render','finish'))
-    ap.add_argument('--node',type=int,choices=range(4),default=0)
+    ap.add_argument('--node',type=int,choices=range(x.NODES),default=0)
     ap.add_argument('--stage',choices=('features','render'),default='features')
     args=ap.parse_args(); require(str(ROOT)==x.old.parent.s.analysis.ACTIVE_ROOT,'destination workspace only')
     if args.phase=='hardware': hardware(args.node,args.stage,True)

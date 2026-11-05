@@ -2,9 +2,9 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 [[ "$ROOT" == /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang ]] || exit 2
-[[ $# == 1 || $# == 2 ]] || { echo 'Usage: <prepare|train|finish|features node0-3|render node0-3>'; exit 2; }
+[[ $# == 1 || $# == 2 ]] || { echo 'Usage: <prepare|train|finish|features node0-1|render node0-1>'; exit 2; }
 PHASE=$1 NODE=${2:-0}
-[[ "$PHASE" =~ ^(features|render)$ && $# == 2 && "$NODE" =~ ^[0-3]$ || "$PHASE" =~ ^(prepare|train|finish)$ && $# == 1 ]] || exit 2
+[[ "$PHASE" =~ ^(features|render)$ && $# == 2 && "$NODE" =~ ^[0-1]$ || "$PHASE" =~ ^(prepare|train|finish)$ && $# == 1 ]] || exit 2
 cd "$ROOT"
 PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 [[ -x "$PYTHON" ]] || { echo 'ERROR: qualified runtime missing'; exit 2; }
@@ -21,8 +21,8 @@ mkdir -p "$OUTPUT/attempts" logs
 if [[ "$PHASE" == features || "$PHASE" == render ]]; then
   export CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
   export CUDNN_CONV_WSCAP_DBG=256 TORCH_CUDNN_V8_API_LRU_CACHE_LIMIT=64
-  KEY="${PHASE}_node$NODE"; GPUS=2; CAP=5400
-  [[ "$PHASE" == features ]] || CAP=2700
+  KEY="${PHASE}_node$NODE"; GPUS=2; CAP=10800
+  [[ "$PHASE" == features ]] || CAP=5400
   exec 9>/tmp/zhenhaowang_existing_flux_replay.lock
 else
   export CUDA_VISIBLE_DEVICES="" OMP_NUM_THREADS=8 OPENBLAS_NUM_THREADS=8 MKL_NUM_THREADS=8

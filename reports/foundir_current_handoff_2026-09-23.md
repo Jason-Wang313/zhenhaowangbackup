@@ -1,3 +1,22 @@
+## 用户最新资源要求：V4改为两节点×两张H100 — 2026-11-05
+
+本节覆盖下方V4四节点/H200限制。用户仅能提供两节点共4张H100，已要求实现兼容。
+仍执行同一轮V4：13917训练裁图/400校准/100确认、6400步/global32、原损失/精度/seed/专家/恢复协议不变。
+改用四个独立worker，不需要MASTER_ADDR或跨节点NCCL；节点编号只能0/1，各两张同型号H100/H200>=75GiB。
+features/render必须四worker和两节点status0完整后再继续下一阶段，不遗漏或重复样本。
+原137–138GiB峰值的具体分配来源尚未隔离，不能说已经证明是cuDNN workspace。
+新显存路径仅在VAE encode/decode范围禁用cuDNN，使用原FP32的PyTorch原生卷积；保留query chunk256。
+没有量化、降精度、缩图、换专家或自动offload。此为显式数值执行策略调整，不保证与旧H200缓存逐像素相等。
+旧2960特征保留并复用，其producer不变；新缓存receipt绑定新的卷积策略和源码，报告须说明差异。
+H100仅代码/CPU检查完成，真实CUDA显存/吞吐/指标仍待运行；不能把改硬件检查当GPU验收。
+若OOM/非有限/超时，保留缓存/状态并回报，不自动重试、改策略或扩大预算。
+特征每节点累计cap10800秒(3h)，两节点×两卡合计12GPU-hours；恢复每节点cap5400秒(1.5h)，合计6GPU-hours。
+CPU训练仍1小时，prepare/finish各10分钟；总GPU预算仍18GPU-hours，不将减卡包装为速度保证。
+入口不变：prepare；用户在两个节点分别运行features 0/1；CPU代理train；用户render 0/1；CPU代理finish。
+本轮仍无旧分类门槛放行要求；工程身份、有限和预算检查保留。不得启动旧八分片入口或旧实验。
+CPU代理可修改并发布上述资源适配，但不自行更改科学配方。GPU尚未自行启动。
+详细适配记录：reports/foundir_expanded_vlm_router_v4_2node_h100_2026-11-05.md。
+
 # FoundIR current handoff — 2026-09-23
 
 ## 当前授权：V4扩大训练＋五类恢复完整实验 — 2026-11-05

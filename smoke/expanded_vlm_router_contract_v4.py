@@ -9,20 +9,24 @@ RUN = 'expanded_conditional_v4'
 OUTPUT = 'checkpoints/foundir_expanded_vlm_router_v4/' + RUN
 TRAIN_REPORT = 'reports/foundir_expanded_vlm_router_v4_training_2026-11-05.json'
 REPORT = 'reports/foundir_expanded_vlm_router_v4_terminal_2026-11-05.json'
+NODES, LOCAL_GPUS, WORLD_SIZE = 2, 2, 4
 SEED = 2026110501
 STEPS, CHECKS, VIEWS, MAX_SOURCES = 6400, (1600, 3200, 4800, 6400), 3, 1024
 ARMS = ('image_only', 'previous_v3', 'conditional_v4', 'known_class_reference')
 TARGETS = dict(zip(ORDER, ((25.9,.18), (38.9,.10), (22.1,.19), (18.9,.28), (34.2,.08))))
 SOURCES = ['lowlight_restoration/conditional_vlm_router_v4.py', 'smoke/expanded_vlm_router_contract_v4.py',
-           'smoke/expanded_vlm_router_state_v4.py', 'smoke/run_foundir_expanded_vlm_router_v4.py',
+           'smoke/expanded_vlm_router_state_v4.py', 'smoke/expanded_vlm_h100_runtime_v4.py', 'smoke/run_foundir_expanded_vlm_router_v4.py',
            'smoke/run_foundir_expanded_vlm_router_v4.sh', 'smoke/start_foundir_expanded_vlm_router_v4_tmux.sh']
 RECIPE = {'steps': STEPS, 'checks': list(CHECKS), 'seed': SEED, 'batch': 32, 'views_per_record_cap': VIEWS,
           'source_cap_per_class': MAX_SOURCES, 'lr': .001, 'weight_decay': .01, 'label_smoothing': .05,
           'preserve_weight': 1., 'margin_cap': .2, 'clip': 1., 'frozen_image_and_experts': True,
           'selection': 'minimum_calibration_CE_then_earliest_no_per_class_classification_gate',
-          'classification_gate_blocks_restoration': False, 'GPU_features_cap_per_node': 5400,
-          'GPU_render_cap_per_node': 2700, 'CPU_train_cap': 3600, 'CPU_finish_cap': 600,
-          'nodes': 4, 'local_gpus': 2, 'H100_qualified': False}
+          'classification_gate_blocks_restoration': False, 'GPU_features_cap_per_node': 10800,
+          'GPU_render_cap_per_node': 5400, 'CPU_train_cap': 3600, 'CPU_finish_cap': 600,
+          'nodes': NODES, 'local_gpus': LOCAL_GPUS, 'world_size': WORLD_SIZE, 'H100_qualified': False,
+          'GPU_execution_policy': 'vae_native_conv_fp32_query_chunk256_v1',
+          'H100_status': 'code_and_CPU_checks_only_pending_CUDA',
+          'legacy_cache_runtime_difference_recorded': True}
 
 
 def expand(rows, previous, confirmation, cap=MAX_SOURCES, views=VIEWS):
