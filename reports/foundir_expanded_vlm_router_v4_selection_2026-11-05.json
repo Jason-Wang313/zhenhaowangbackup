@@ -1,0 +1,32 @@
+{
+  "status": "real_manifest_expansion_metadata_pass",
+  "manifest_sha256": "e8c018879029c0bcc2da8d074cc4999541158ca97d07f48aadbcdddcdccc3ca7",
+  "previous_items_sha256": "333117f97705c42acefedbbee698098935da143c21a1bb6f176cf409f3fc4ceb",
+  "reserved_confirmation_sha256": "57596103ccf992e6f47dbcdb0bce0c1c0d3a8b7ee02e78837fe43b929b6043a7",
+  "expanded_items_sha256": "568ffd35a6cad695a95f1d86f90a2826f606e596a10f4b5b11f58351e64d6432",
+  "total_records": 14417,
+  "fit_crop_records": 13917,
+  "fit_source_task_pairs": 4639,
+  "unique_fit_sources": 4192,
+  "calibration_records": 400,
+  "confirmation_records": 100,
+  "new_features": 11457,
+  "reused_features": 2960,
+  "counts": {
+    "blur": {"sources": 1024, "crops": 3072, "exposure_min": 13, "exposure_max": 14},
+    "noise": {"sources": 1024, "crops": 3072, "exposure_min": 13, "exposure_max": 14},
+    "haze": {"sources": 1024, "crops": 3072, "exposure_min": 13, "exposure_max": 14},
+    "lowlight": {"sources": 543, "crops": 1629, "exposure_min": 25, "exposure_max": 26},
+    "rain": {"sources": 1024, "crops": 3072, "exposure_min": 13, "exposure_max": 14}
+  },
+  "optimizer_steps": 6400,
+  "global_batch": 32,
+  "training_exposures": 204800,
+  "training_exposures_per_class": 40960,
+  "source_gt_lq_disjoint_across_roles": true,
+  "official_or_sealed_pixels_accessed": false,
+  "pixels_or_features_accessed_in_local_selection": false,
+  "destination_assets_verified": false,
+  "GPU_started": false,
+  "whole_system_unseen_claim": false
+}

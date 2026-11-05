@@ -1,6 +1,52 @@
 # FoundIR current handoff — 2026-09-23
 
-## 当前执行：V3训练侧核对；不盲目追加步数 — 2026-11-04
+## 当前授权：V4扩大训练＋五类恢复完整实验 — 2026-11-05
+
+用户明确要求推进更大实验，不再被一串小资格试验卡住。本节覆盖下面“仅审计/暂不训练”。
+V3及fit审计已结束（bfcaef5）：训练97.15→98.55%，校准91.5→90.5%，不继续旧2560固定裁图加步数。
+当前一次完整实验expanded_conditional_v4，prepare→特征→CPU6400步→100图五类恢复→汇总。
+没有额外25步训练或“每类分类零退步”放行门槛；有限/身份/预算/完整性工程检查不能跳过。
+
+方向仍是PNG右图：原冻结图像路由＋VLM token分数修正。image-only只作原分支和对照，不替代VLM。
+新VLM修正头同时读取原图像五分数（中心化/5），VLM视觉特征3584维LayerNorm后拼接，MLP256输出5。
+原图像分支、已训练五个FLUX专家、Qwen、VAE全冻结；不加CNN/Restormer/refiner/energy。
+fresh零输出VLM/fresh Adam，6400步/global32/lr.001/wd.01/smoothing.05/clip1；
+保持保护hinge权重1/余量.2，不扫系数。只用LQ图像/视觉token，不冒称生成的退化文字等级。
+
+真实清单已核对：fit13917裁图、4639个来源×类型、跨类型4192不同来源；不是13917独立来源。
+Blur/Noise/Haze/Rain各1024来源×3裁图，Lowlight543×3；校准400，独立确认100每类20。
+保留原2560训练+400校准缓存2960份，新提取11457份。原400holdout与nontrain全部来源/GT/LQ排除。
+Lowlight543包含合法的其他类别旧fit来源，不把旧验证移入训练；类内样本不够不凑数。
+展开SHA 568ffd35a6cad695a95f1d86f90a2826f606e596a10f4b5b11f58351e64d6432。
+1600/3200/4800/6400按校准最低CE选一次、平局最早，selection落盘后才读新100确认特征。
+分类退步仍继续预定恢复评价，不据确认集重选模型/步数。预提取确认特征不等于允许训练读取。
+
+在新100图比较原image-only、旧V3 step800、新V4及已知类别专家参考。前三组无GT选专家；
+第四组明确是类别参考，不是部署/GT挑最优。固定top1进入原FLUX bank，同输入同路由只生成一次。
+保留四类50步、Rain第26次调用endpoint、原alpha和量化；不改专家、不拼最好指标、不按GT回退。
+报告同图PSNR/LPIPS总体与每类，保留原五类数值目标。100裁图结果不能宣称完整官方SoW通过；
+仍是singleton top1，不宣称混合退化、逐token MoE或论文消融全完成。大数据+新结构不是单因素消融。
+
+执行根/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang；
+Python为其.conda/gpu-train-stable/bin/python。主代理无目的地挂载，代码完成不代表现场已启动。
+GPU使用四节点×2H200，每卡≥139GiB，独立八分片，无跨节点NCCL。旧峰值137–138GiB，
+80GB H100本入口明确未合格并拒绝，不静默改精度/offload/裁图冒称兼容。
+CPU代理安全同步保留修改/大资产，按同一授权实验协调：
+1. bash smoke/run_foundir_expanded_vlm_router_v4.sh prepare
+2. 给用户四节点各自的 bash smoke/start_foundir_expanded_vlm_router_v4_tmux.sh features <0..3>
+3. 全8worker/四节点status0后CPU代理运行 bash smoke/run_foundir_expanded_vlm_router_v4.sh train
+4. TRAIN_VERIFIED/status0后，无需再等分类门槛，给用户同四节点的tmux入口 render <0..3>
+5. 全部渲染成功后CPU代理运行 bash smoke/run_foundir_expanded_vlm_router_v4.sh finish
+阶段顺序是资源交接，不是额外小实验/科学gate；CPU代理不自行改配方/扩大预算或提前读保护像素。
+
+cap：特征每节点90分共12使用GPU-hours；恢复每节点45分共6使用GPU-hours；CPU训练1小时；
+prepare/finish各10分。失败成本累计，超时保留进度不自动加预算；GPU总cap18小时单位是GPU-hours。
+每图/每完整optimizer步保存，0..6400状态约80–100GiB，prepare需150GiB空闲；旧产物不动。
+只push训练/最终报告和耗时退出简报，不push权重/特征/图片/live logs。普通小时与GPU-hours分开。
+最终须EXPANDED_V4_RESULT_VERIFIED和finish的EXPANDED_V4_END status=0。
+详见reports/foundir_expanded_vlm_router_v4_readiness_2026-11-05.md；继续简单中文、结论先行。
+
+## 历史执行：V3训练侧核对；不盲目追加步数 — 2026-11-04
 
 用户授权先核对已保存的800/1600步模型，再决定是否给VLM修正头补充图像路由五个分数。
 最终仍坚持右图：图像路由＋VLM token修正；image-only仅冻结分支/对照，不是替代方案。
