@@ -1,0 +1,79 @@
+{
+  "status": "all_eight_GPU_metric_identity_verified_and_rendering_started",
+  "utc": "2026-11-05T19:56:15.566569+00:00",
+  "run_id": "official_vlm_v4_frozen4800_v1_4x2",
+  "nodes": [
+    {
+      "node": 0,
+      "verified_local_devices": [
+        "cuda:0",
+        "cuda:1"
+      ],
+      "latest_logged_tiles": [
+        "OFFICIAL_VLM_V4_TILE rank=1 id=official_01Blur_0002 anchor=blur tile=10/15 record_seconds=174.5",
+        "OFFICIAL_VLM_V4_TILE rank=0 id=official_01Blur_0001 anchor=blur tile=10/15 record_seconds=174.5"
+      ],
+      "errors": [],
+      "ended_attempts": []
+    },
+    {
+      "node": 1,
+      "verified_local_devices": [
+        "cuda:0",
+        "cuda:1"
+      ],
+      "latest_logged_tiles": [
+        "OFFICIAL_VLM_V4_TILE rank=2 id=official_01Blur_0003 anchor=blur tile=10/15 record_seconds=174.8",
+        "OFFICIAL_VLM_V4_TILE rank=3 id=official_01Blur_0004 anchor=blur tile=10/15 record_seconds=174.9"
+      ],
+      "errors": [],
+      "ended_attempts": []
+    },
+    {
+      "node": 2,
+      "verified_local_devices": [
+        "cuda:0",
+        "cuda:1"
+      ],
+      "latest_logged_tiles": [
+        "OFFICIAL_VLM_V4_TILE rank=4 id=official_01Blur_0005 anchor=blur tile=10/15 record_seconds=200.3",
+        "OFFICIAL_VLM_V4_TILE rank=5 id=official_01Blur_0006 anchor=blur tile=10/15 record_seconds=200.6"
+      ],
+      "errors": [],
+      "ended_attempts": []
+    },
+    {
+      "node": 3,
+      "verified_local_devices": [
+        "cuda:0",
+        "cuda:1"
+      ],
+      "latest_logged_tiles": [
+        "OFFICIAL_VLM_V4_TILE rank=6 id=official_01Blur_0007 anchor=blur tile=10/15 record_seconds=199.6",
+        "OFFICIAL_VLM_V4_TILE rank=7 id=official_01Blur_0008 anchor=blur tile=10/15 record_seconds=199.7"
+      ],
+      "errors": [],
+      "ended_attempts": []
+    }
+  ],
+  "committed_tile_receipts": 88,
+  "planned_tiles": 21828,
+  "tile_percent": 0.4031519149715961,
+  "completed_images": 0,
+  "official_image_count": 600,
+  "latest_tile_receipt_age_seconds": 2.5561861991882324,
+  "PSNR_LPIPS_available": false,
+  "metricfix_binding_sha256": "ef906054dde065a314fe8b6da1a457569c14138f16c7d10b6ee9c61e5b5d6e18",
+  "time_limit_disabled": true,
+  "scientific_recipe_changed": false,
+  "training_or_route_rerun": false,
+  "historical_first_render_failure_GPU_hours": 0.9188888888888889,
+  "route_GPU_hours": 1.74,
+  "current_running_attempt_GPU_hours_not_finalized": true,
+  "GPU_full_resolution_scoring_qualified": false,
+  "notes": [
+    "Tile receipts counted; not a new full-cache SHA sweep.",
+    "Full-image scoring has not completed; no quality success claim.",
+    "Log output is sparse within an image; saved receipts are the live progress measure."
+  ]
+}
