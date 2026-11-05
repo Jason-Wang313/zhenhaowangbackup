@@ -1,3 +1,32 @@
+## 当前授权：立即恢复官方600评价，不设最长时限 — 2026-11-05
+
+用户原话：“no need for max hour limit, just execute and start the exp”。
+这已批准本轮四节点×两卡的完整render及finish；不再索要具体GPU-hours批准，
+不设置wall-hour/GPU-hour上限，也不伪造一个很大的有限cap。本节覆盖下方预算等待规则。
+仅取消本轮恢复/评分的时间上限；模型/step4800/官方600/三组对照/种子/精度/拼接/指标不变。
+不重训、不重新route、不使用其他测试集、不新增测速或质量gate、不自动反复重启错误任务。
+
+route/plan已正常完成：600图、8worker、四节点status0；VLM590/600，图像路由546/600；
+21,828块恢复计划SHA256为5f3823ed90320639bf804e7e29d0a891a5e0edb92e8b2761b51ac55fd90ea53d。
+保留全部已完成缓存和历史费用；旧123.24 GPU-hours/15.4小时只是外推，不是已测速度或门槛。
+不修改已绑定的原producer源码/receipt/plan，以免使现有缓存失效。
+新增unlimited执行覆盖层记录用户授权；render_budget中上限为null，shell不调用timeout。
+保留逐块/逐图原子保存、校验、节点锁、错误退出、失败尝试和实际GPU-hours记录。
+相同命令可复用已核验进度；中断账目缺失需核对，不静默删除或从零重跑。
+
+CPU代理同步GitHub后直接执行：
+bash smoke/run_foundir_official_vlm_v4_unlimited.sh authorize
+此命令只是落盘用户已给出的授权，不是再请求批准，不重新生成特征/决策。
+然后在原四节点分别启动：
+bash smoke/start_foundir_official_vlm_v4_unlimited_tmux.sh <0|1|2|3>
+若CPU代理没有GPU进程控制权限，立即给用户四条对应命令，不谎称已经启动。
+8个WORKER_COMPLETE且四节点END status0后，CPU运行：
+bash smoke/run_foundir_official_vlm_v4_unlimited.sh finish
+最终要求OFFICIAL_VLM_V4_RESULT_VERIFIED和finish END status0；不因退出0宣称指标达标。
+只push小进度/终态报告，不上传权重、缓存、PNG或live logs。继续简单中文、事实与估计分开。
+主代理当前无新工作区/GPU控制通道；已实现启动覆盖层不等于现场启动。
+详细说明：reports/foundir_official_vlm_v4_unlimited_readiness_2026-11-05.md。
+
 ## 最新执行：官方V4支持四节点×两卡 — 2026-11-05
 
 用户授权修复缺失pyiqa并适配四节点。本节覆盖本轮官方V4的旧两节点默认值；官方唯一测试集规则继续有效。

@@ -1,0 +1,17 @@
+{
+  "status": "authorized",
+  "authority": "user",
+  "date": "2026-11-05",
+  "user_request": "no need for max hour limit, just execute and start the exp",
+  "run_id": "official_vlm_v4_frozen4800_v1_4x2",
+  "render_plan_sha256": "5f3823ed90320639bf804e7e29d0a891a5e0edb92e8b2761b51ac55fd90ea53d",
+  "scope": "Complete the existing official600 frozen V4 render and scoring; four nodes, two GPUs each",
+  "maximum_wall_hours": null,
+  "maximum_GPU_hours": null,
+  "time_based_termination": false,
+  "new_training_or_scientific_change": false,
+  "other_test_sets_allowed": false,
+  "automatic_retry_on_error": false,
+  "durable_progress_and_actual_compute_accounting_required": true,
+  "historical_producer_sources_receipts_and_caches_must_remain_unchanged": true
+}
