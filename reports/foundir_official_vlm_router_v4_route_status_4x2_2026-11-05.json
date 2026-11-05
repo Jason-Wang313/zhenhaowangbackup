@@ -1,0 +1,179 @@
+{
+  "status": "official_v4_four_node_route_and_plan_complete",
+  "utc": "2026-11-05T19:13:17.393733+00:00",
+  "run_id": "official_vlm_v4_frozen4800_v1_4x2",
+  "official_records": 600,
+  "vlm_feature_tiles": 19460,
+  "image_feature_tiles": 19460,
+  "nodes": [
+    {
+      "node": 0,
+      "gpu_model": "NVIDIA H200",
+      "gpus": 2,
+      "attempts": [
+        {
+          "status": 0,
+          "seconds": 835,
+          "gpus": 2,
+          "used_gpu_seconds": 1670
+        }
+      ]
+    },
+    {
+      "node": 1,
+      "gpu_model": "NVIDIA H200",
+      "gpus": 2,
+      "attempts": [
+        {
+          "status": 0,
+          "seconds": 804,
+          "gpus": 2,
+          "used_gpu_seconds": 1608
+        }
+      ]
+    },
+    {
+      "node": 2,
+      "gpu_model": "NVIDIA H100 80GB HBM3",
+      "gpus": 2,
+      "attempts": [
+        {
+          "status": 0,
+          "seconds": 778,
+          "gpus": 2,
+          "used_gpu_seconds": 1556
+        }
+      ]
+    },
+    {
+      "node": 3,
+      "gpu_model": "NVIDIA H100 80GB HBM3",
+      "gpus": 2,
+      "attempts": [
+        {
+          "status": 0,
+          "seconds": 715,
+          "gpus": 2,
+          "used_gpu_seconds": 1430
+        }
+      ]
+    }
+  ],
+  "workers": [
+    {
+      "rank": 0,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "ac01b9b53f29fffd0154997089e6de860880da42787b7e2c8354218cda9b00e0"
+    },
+    {
+      "rank": 1,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "cc912f61484f25301618f3d63ddb6826f9b55376f588aac98224aa6e3ac249cb"
+    },
+    {
+      "rank": 2,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "5258336bc94c9dabf37f58663a2dbcd4ab8c6b6b6b53003a9ce8fd1cbe5256f8"
+    },
+    {
+      "rank": 3,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "0d64c54e3a13eda102a11274a9210376ea8d1b40bf0257852ea8e4ece8ddb56e"
+    },
+    {
+      "rank": 4,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "4019b71a9dd8558c3c255978f104741c94902c78804bfb685b89cfd086dfae78"
+    },
+    {
+      "rank": 5,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "db941cfa82e2a709100d051ec428c82671adb8f3dc48a374306966a96f4870fd"
+    },
+    {
+      "rank": 6,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "ec7fffc760deb063fefc275b584a4624b67196dd8999e104b8645a263ac843fa"
+    },
+    {
+      "rank": 7,
+      "records": 75,
+      "peak_allocated_gib": 15.73495626449585,
+      "marker_sha256": "80024b44368ffa19c82dab186842778ba391b0b279292542f3425a9052337cae"
+    }
+  ],
+  "correct_routes": {
+    "image_only": 546,
+    "conditional_v4": 590
+  },
+  "per_task_classification": {
+    "blur": {
+      "count": 150,
+      "image_only_correct": 150,
+      "conditional_v4_correct": 150
+    },
+    "noise": {
+      "count": 100,
+      "image_only_correct": 54,
+      "conditional_v4_correct": 90
+    },
+    "haze": {
+      "count": 200,
+      "image_only_correct": 200,
+      "conditional_v4_correct": 200
+    },
+    "rain": {
+      "count": 100,
+      "image_only_correct": 92,
+      "conditional_v4_correct": 100
+    },
+    "lowlight": {
+      "count": 50,
+      "image_only_correct": 50,
+      "conditional_v4_correct": 50
+    }
+  },
+  "route_GPU_hours": 1.74,
+  "plan_CPU_attempts": [
+    {
+      "status": 0,
+      "seconds": 443,
+      "gpus": 0,
+      "used_gpu_seconds": 0
+    }
+  ],
+  "route_plan_sha256": "5f3823ed90320639bf804e7e29d0a891a5e0edb92e8b2761b51ac55fd90ea53d",
+  "tiles_by_rank": [
+    2723,
+    2663,
+    2710,
+    2710,
+    2760,
+    2792,
+    2645,
+    2825
+  ],
+  "unique_native_tile_generations": 21828,
+  "estimated_render_GPU_hours": 123.23595441595441,
+  "estimated_8GPU_wall_hours": 15.404494301994301,
+  "estimate_is_not_measurement_or_guarantee": true,
+  "official_GT_pixels_read": false,
+  "PSNR_LPIPS_SSIM_available": false,
+  "render_started": false,
+  "render_budget_approved": false,
+  "automatic_followup": false,
+  "current_official_GPU_hours": 1.74,
+  "historical_V4_GPU_hours_separate": 2.473888888888889,
+  "historical_failed_prepare_CPU_seconds": 43,
+  "four_node_prepare_CPU_seconds": 35,
+  "H100_H200_route_phase_verified": true,
+  "H100_full_resolution_metrics_verified": false,
+  "assets_preserved": true
+}
