@@ -1,0 +1,266 @@
+{
+  "calibration": {
+    "1600": {
+      "ce": 0.1890290379524231,
+      "correct": 372,
+      "count": 400,
+      "per_task": {
+        "blur": {
+          "correct": 76,
+          "count": 80
+        },
+        "haze": {
+          "correct": 67,
+          "count": 80
+        },
+        "lowlight": {
+          "correct": 79,
+          "count": 80
+        },
+        "noise": {
+          "correct": 79,
+          "count": 80
+        },
+        "rain": {
+          "correct": 71,
+          "count": 80
+        }
+      }
+    },
+    "3200": {
+      "ce": 0.10976079106330872,
+      "correct": 389,
+      "count": 400,
+      "per_task": {
+        "blur": {
+          "correct": 79,
+          "count": 80
+        },
+        "haze": {
+          "correct": 78,
+          "count": 80
+        },
+        "lowlight": {
+          "correct": 79,
+          "count": 80
+        },
+        "noise": {
+          "correct": 75,
+          "count": 80
+        },
+        "rain": {
+          "correct": 78,
+          "count": 80
+        }
+      }
+    },
+    "4800": {
+      "ce": 0.0781174972653389,
+      "correct": 397,
+      "count": 400,
+      "per_task": {
+        "blur": {
+          "correct": 80,
+          "count": 80
+        },
+        "haze": {
+          "correct": 80,
+          "count": 80
+        },
+        "lowlight": {
+          "correct": 80,
+          "count": 80
+        },
+        "noise": {
+          "correct": 78,
+          "count": 80
+        },
+        "rain": {
+          "correct": 79,
+          "count": 80
+        }
+      }
+    },
+    "6400": {
+      "ce": 0.08963651955127716,
+      "correct": 398,
+      "count": 400,
+      "per_task": {
+        "blur": {
+          "correct": 79,
+          "count": 80
+        },
+        "haze": {
+          "correct": 80,
+          "count": 80
+        },
+        "lowlight": {
+          "correct": 80,
+          "count": 80
+        },
+        "noise": {
+          "correct": 80,
+          "count": 80
+        },
+        "rain": {
+          "correct": 79,
+          "count": 80
+        }
+      }
+    }
+  },
+  "classification_blocks_restoration": false,
+  "confirmation_classification": {
+    "conditional_v4": {
+      "ce": 0.06749852001667023,
+      "correct": 99,
+      "count": 100,
+      "per_task": {
+        "blur": {
+          "correct": 19,
+          "count": 20
+        },
+        "haze": {
+          "correct": 20,
+          "count": 20
+        },
+        "lowlight": {
+          "correct": 20,
+          "count": 20
+        },
+        "noise": {
+          "correct": 20,
+          "count": 20
+        },
+        "rain": {
+          "correct": 20,
+          "count": 20
+        }
+      }
+    },
+    "image_only": {
+      "ce": 0.31434696912765503,
+      "correct": 89,
+      "count": 100,
+      "per_task": {
+        "blur": {
+          "correct": 18,
+          "count": 20
+        },
+        "haze": {
+          "correct": 17,
+          "count": 20
+        },
+        "lowlight": {
+          "correct": 20,
+          "count": 20
+        },
+        "noise": {
+          "correct": 17,
+          "count": 20
+        },
+        "rain": {
+          "correct": 17,
+          "count": 20
+        }
+      }
+    },
+    "previous_v3": {
+      "ce": 0.19016245007514954,
+      "correct": 91,
+      "count": 100,
+      "per_task": {
+        "blur": {
+          "correct": 18,
+          "count": 20
+        },
+        "haze": {
+          "correct": 16,
+          "count": 20
+        },
+        "lowlight": {
+          "correct": 19,
+          "count": 20
+        },
+        "noise": {
+          "correct": 19,
+          "count": 20
+        },
+        "rain": {
+          "correct": 19,
+          "count": 20
+        }
+      }
+    }
+  },
+  "counts": {
+    "blur": {
+      "crops": 3072,
+      "exposure_max": 14,
+      "exposure_min": 13,
+      "sources": 1024
+    },
+    "haze": {
+      "crops": 3072,
+      "exposure_max": 14,
+      "exposure_min": 13,
+      "sources": 1024
+    },
+    "lowlight": {
+      "crops": 1629,
+      "exposure_max": 26,
+      "exposure_min": 25,
+      "sources": 543
+    },
+    "noise": {
+      "crops": 3072,
+      "exposure_max": 14,
+      "exposure_min": 13,
+      "sources": 1024
+    },
+    "rain": {
+      "crops": 3072,
+      "exposure_max": 14,
+      "exposure_min": 13,
+      "sources": 1024
+    }
+  },
+  "feature_index_sha256": "296cb6922d1620cd05c347beffc0aad7221d51874cb4bb71efdab00551107a54",
+  "frozen_image_hash": "152543ce65502aab6a83706d8872ef5b93c3a56ea2f637e12d6fd02b2f0eaddd",
+  "identity": "2fbe3dfb50caf1a34d7b5f100126baaa9a8ba0c4f1fd87785db72cceb365440f",
+  "predictions_sha256": "9bfd6866df5b102ba779938b56aa6794597c9e20f06b1b00992f2a052b84eeb1",
+  "ready_for_prespecified_restoration": true,
+  "receipt_sha256": "31f73ba4e89b47d5620bd99278ec85b410c8a9824aee3abc28fc65b80ea79fb1",
+  "render_plan_sha256": "ccd252d058788cc6a254b491f12f1ab3b6f6fa12940eeb01f67aa59d3d3fbdc4",
+  "restoration_measured": false,
+  "run_id": "expanded_conditional_v4",
+  "runtime": {
+    "build": "694b2140139990abd201f2d940cf53edd9cf526a89e4b106e87d13525f8f4535",
+    "cpu": "model name\t: INTEL(R) XEON(R) GOLD 6530",
+    "deterministic": true,
+    "interop": 1,
+    "python": "3.12.13",
+    "threads": 8,
+    "torch": "2.7.0+cu128"
+  },
+  "selected_checkpoint": {
+    "file": "steps/vlm_004800_1793889270960585510.pt",
+    "identity": "2fbe3dfb50caf1a34d7b5f100126baaa9a8ba0c4f1fd87785db72cceb365440f",
+    "parameter_hash": "4ccd8f2e41f8ed95d8f02981a88bca42ee631714d53a84c6e7df00a05f5f0743",
+    "sha256": "383d40b63e31d79283ec5a33193413fee914a5082a8888c5c918737ccdd6d971",
+    "step": 4800
+  },
+  "selection": {
+    "calibration_sha256": {
+      "1600": "87eb57f53e582208022ac00f6a7eb023200c5e3f43e53a81af654453a355f027",
+      "3200": "32c89be64e376b5e3e834a90360dd12e844a4602fff7ba86b1c3684620981e68",
+      "4800": "c41df6b6d8c2ba0fe7b80d8a0dd7e1213d4fee75ee4df2c193dc518a6316e00e",
+      "6400": "026c14f73a2fa08c6a39705b546255edf99c5594067da4974081dd4687192ec5"
+    },
+    "criterion": "minimum_calibration_CE_then_earliest_no_per_class_classification_gate",
+    "receipt_sha256": "31f73ba4e89b47d5620bd99278ec85b410c8a9824aee3abc28fc65b80ea79fb1",
+    "step": 4800
+  },
+  "status": "expanded_vlm_v4_training_complete",
+  "unique_renders": 117
+}
