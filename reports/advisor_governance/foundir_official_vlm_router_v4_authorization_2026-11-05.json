@@ -1,0 +1,21 @@
+{
+  "authority": "user",
+  "date": "2026-11-05",
+  "status": "authorized",
+  "request": "execute; never use other test sets later for anything, only use the official test set; document in AGENTS.md",
+  "current_scope": "Frozen V4 step4800, five existing FLUX experts, official five singleton categories, 600 pairs",
+  "reference_authorization": "reports/advisor_governance/foundir_official_sow600_moe_clarification_2026-11-03.json",
+  "official_categories_and_counts": {"01Blur": 150, "05Noise": 100, "08Haze": 200, "10Rain": 100, "14Lowlight": 50},
+  "future_performance_testing_official_only": true,
+  "other_test_development_training_probe_pixels_for_performance_evaluation": false,
+  "preserve_historical_results": true,
+  "synthetic_CPU_engineering_tests_allowed": true,
+  "training_data_still_required_for_training": true,
+  "official_training_examples_allowed": false,
+  "official_GT_loss_or_gradient_updates_allowed": false,
+  "GT_based_per_image_routing_or_output_selection_allowed": false,
+  "new_training_or_checkpoint_selection_in_this_run": false,
+  "other_official_categories_opened_by_this_run": false,
+  "claim_independent_blind_test_after_historical_tuning": false,
+  "protocol": "original_resolution_RGB_outputs_and_pyiqa_0.1.16_defaults; no_metric_crop_resize_border_shave"
+}
