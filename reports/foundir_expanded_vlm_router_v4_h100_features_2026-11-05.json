@@ -1,0 +1,62 @@
+{
+  "run_id": "expanded_conditional_v4",
+  "phase": "features_complete_cpu_train_running",
+  "features": 11457,
+  "reused": 2960,
+  "workers": [
+    {
+      "count": 2865,
+      "peak_allocated_gib": 15.73495626449585,
+      "rank": 0,
+      "receipt_sha256": "31f73ba4e89b47d5620bd99278ec85b410c8a9824aee3abc28fc65b80ea79fb1",
+      "runtime_sha256": "1f9c3045de0c6770debe397347b734d7716a4a6b86662e4ad65fff7639ff658d"
+    },
+    {
+      "count": 2864,
+      "peak_allocated_gib": 15.73495626449585,
+      "rank": 1,
+      "receipt_sha256": "31f73ba4e89b47d5620bd99278ec85b410c8a9824aee3abc28fc65b80ea79fb1",
+      "runtime_sha256": "1f9c3045de0c6770debe397347b734d7716a4a6b86662e4ad65fff7639ff658d"
+    },
+    {
+      "count": 2864,
+      "peak_allocated_gib": 15.73495626449585,
+      "rank": 2,
+      "receipt_sha256": "31f73ba4e89b47d5620bd99278ec85b410c8a9824aee3abc28fc65b80ea79fb1",
+      "runtime_sha256": "1f9c3045de0c6770debe397347b734d7716a4a6b86662e4ad65fff7639ff658d"
+    },
+    {
+      "count": 2864,
+      "peak_allocated_gib": 15.73495626449585,
+      "rank": 3,
+      "receipt_sha256": "31f73ba4e89b47d5620bd99278ec85b410c8a9824aee3abc28fc65b80ea79fb1",
+      "runtime_sha256": "1f9c3045de0c6770debe397347b734d7716a4a6b86662e4ad65fff7639ff658d"
+    }
+  ],
+  "attempts": [
+    {
+      "status": 0,
+      "seconds": 1651,
+      "gpus": 2,
+      "used_gpu_seconds": 3302
+    },
+    {
+      "status": 0,
+      "seconds": 1613,
+      "gpus": 2,
+      "used_gpu_seconds": 3226
+    }
+  ],
+  "used_gpu_hours": 1.8133333333333332,
+  "feature_GPU_names": [
+    "NVIDIA H100 80GB HBM3",
+    "NVIDIA H100 80GB HBM3"
+  ],
+  "CPU_training_complete": false,
+  "restoration_H100_qualified": false,
+  "budget_GPU_hours": 18,
+  "budget_features_GPU_hours_cap": 12,
+  "budget_render_GPU_hours_cap": 6,
+  "numeric_policy": "vae_native_conv_fp32_query_chunk256_v1",
+  "historical_cache_bitwise_equality_claimed": false
+}
