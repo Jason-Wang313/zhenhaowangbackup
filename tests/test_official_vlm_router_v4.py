@@ -2,6 +2,9 @@ import copy
 import json
 from pathlib import Path
 import tempfile
+import subprocess
+import sys
+import os
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
@@ -27,6 +30,19 @@ class OfficialV4Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):torch.set_num_threads(1)
 
+    def test_two_and_four_node_contracts_keep_same_scope_seed_and_total_budget(self):
+        results=[]
+        for nodes in (2,4):
+            code="from smoke import official_vlm_router_v4_contract as x; import json; print(json.dumps({'world':x.WORLD,'run':x.RUN,'recipe':x.RECIPE,'seed':x.tiles({'record_id':'official_01Blur_0001','height':'517','width':'513'})}))"
+            value=json.loads(subprocess.check_output([sys.executable,'-S','-c',code],env={**os.environ,'FOUNDIR_OFFICIAL_NNODES':str(nodes)},text=True))
+            self.assertEqual(value['world'],nodes*2)
+            self.assertEqual(value['recipe']['route_GPU_cap_seconds_per_node']*value['world']/3600,12)
+            results.append(value)
+        self.assertEqual(results[0]['seed'],results[1]['seed'])
+        self.assertNotEqual(results[0]['run'],results[1]['run'])
+        invalid=subprocess.run([sys.executable,'-S','-c','from smoke import official_vlm_router_v4_contract'],env={**os.environ,'FOUNDIR_OFFICIAL_NNODES':'3'},capture_output=True)
+        self.assertNotEqual(invalid.returncode,0)
+
     def test_only_exact_official600_scope(self):
         rows=rows_fixture();x.validate_rows(rows)
         for mutate in ('missing','duplicate','other_set','mixed','path_escape'):
@@ -39,8 +55,8 @@ class OfficialV4Tests(unittest.TestCase):
             with self.assertRaises(ValueError):x.validate_rows(bad)
 
     def test_shards_complete_disjoint(self):
-        rows=rows_fixture();parts=[rows[k::4] for k in range(4)]
-        self.assertEqual([len(p) for p in parts],[150]*4)
+        rows=rows_fixture();parts=[rows[k::x.WORLD] for k in range(x.WORLD)]
+        self.assertEqual([len(p) for p in parts],[600//x.WORLD]*x.WORLD)
         self.assertEqual(len({r['record_id'] for p in parts for r in p}),600)
 
     def test_origins_cover_and_no_duplicate_edges(self):
@@ -146,7 +162,7 @@ class OfficialV4Tests(unittest.TestCase):
             for hours,note in ((0,'explicit user approval'),(float('nan'),'explicit user approval'),(10,'guess')):
                 with self.assertRaises(ValueError):run.authorize_render(hours,note)
             run.authorize_render(120,'SYNTHETIC TEST ONLY explicit user approval')
-            b=x.c.read(out/'render_budget.json');self.assertEqual(b['cap_seconds_per_node'],108000)
+            b=x.c.read(out/'render_budget.json');self.assertEqual(b['cap_seconds_per_node'],int(120*3600/x.WORLD))
             self.assertEqual(b['render_plan_sha256'],x.c.sha(out/'render_plan.json'))
 
     def test_route_plan_binds_all_workers_and_feature_tensors_before_GT(self):
@@ -155,10 +171,10 @@ class OfficialV4Tests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp,patch.object(run,'ROOT',Path(temp)):
             out=Path(temp)/x.OUTPUT;x.c.write_new(out/'receipt.json',{})
             receipt_hash=x.c.sha(out/'receipt.json')
-            for node in (0,1):x.c.write_new(out/f'runtime_node{node}.json',{'node':node})
-            for rank in range(4):
+            for node in range(x.NODES):x.c.write_new(out/f'runtime_node{node}.json',{'node':node})
+            for rank in range(x.WORLD):
                 rh=x.c.sha(out/f'runtime_node{rank//2}.json')
-                assigned=rows[rank::4]
+                assigned=rows[rank::x.WORLD]
                 x.c.write_new(out/f'route_worker{rank}.json',{'receipt_sha256':receipt_hash,'runtime_sha256':rh,
                             'rank':rank,'records':[r['record_id'] for r in assigned],'peak_allocated_gib':0})
                 for row in assigned:
@@ -181,12 +197,12 @@ class OfficialV4Tests(unittest.TestCase):
     def test_cost_accounting_includes_failed_attempts_and_rejects_orphans(self):
         with tempfile.TemporaryDirectory() as temp:
             out=Path(temp)
-            keys=[('prepare',0),('plan',0)]+[(f'{p}_node{n}',2) for p in ('route','render') for n in (0,1)]
+            keys=[('prepare',0),('plan',0)]+[(f'{p}_node{n}',2) for p in ('route','render') for n in range(x.NODES)]
             for key,gpu in keys:
                 for j,status in enumerate((1,0)):
                     x.c.write_new(out/'attempts'/f'{key}_{j}.started.json',{})
                     x.c.write_new(out/'attempts'/f'{key}_{j}.ended.json',{'seconds':10,'status':status,'gpus':gpu,'used_gpu_seconds':10*gpu})
-            r=run.costs(out);self.assertAlmostEqual(r['used_gpu_hours'],160/3600)
+            r=run.costs(out);self.assertAlmostEqual(r['used_gpu_hours'],(x.NODES*80)/3600)
             x.c.write_new(out/'attempts'/'render_node0_3.started.json',{})
             with self.assertRaises(ValueError):run.costs(out)
 

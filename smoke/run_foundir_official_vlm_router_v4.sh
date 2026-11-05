@@ -2,29 +2,35 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 [[ "$ROOT" == /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang ]] || exit 2
-[[ $# == 1 || $# == 2 ]] || { echo 'Usage: <prepare|plan|finish|route node0-1|render node0-1>'; exit 2; }
+export FOUNDIR_OFFICIAL_NNODES=${FOUNDIR_OFFICIAL_NNODES:-4}
+[[ "$FOUNDIR_OFFICIAL_NNODES" == 2 || "$FOUNDIR_OFFICIAL_NNODES" == 4 ]] || { echo "ERROR: FOUNDIR_OFFICIAL_NNODES must be 2 or 4"; exit 2; }
+TOTAL_GPUS=$((FOUNDIR_OFFICIAL_NNODES*2))
+[[ $# == 1 || $# == 2 ]] || { echo 'Usage: <prepare|plan|finish|route node0..N-1|render node0..N-1>'; exit 2; }
 PHASE=$1 NODE=${2:-0}
-[[ "$PHASE" =~ ^(route|render)$ && $# == 2 && "$NODE" =~ ^[0-1]$ || "$PHASE" =~ ^(prepare|plan|finish)$ && $# == 1 ]] || exit 2
+[[ "$PHASE" =~ ^(route|render)$ && $# == 2 && "$NODE" =~ ^[0-3]$ && "$NODE" -lt "$FOUNDIR_OFFICIAL_NNODES" || "$PHASE" =~ ^(prepare|plan|finish)$ && $# == 1 ]] || exit 2
 cd "$ROOT"
 PYTHON="$ROOT/.conda/gpu-train-stable/bin/python"
 [[ -x "$PYTHON" ]] || { echo 'ERROR: qualified runtime missing'; exit 2; }
 export HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 TORCH_HOME="$ROOT/models/torch"
 export PYTHONPATH="$ROOT:$ROOT/third_party/flux2/src"
-OUTPUT="$ROOT/checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1"
+RUN_SUFFIX=""
+[[ "$FOUNDIR_OFFICIAL_NNODES" != 4 ]] || RUN_SUFFIX="_4x2"
+OUTPUT="$ROOT/checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1$RUN_SUFFIX"
 if [[ "$PHASE" != prepare ]]; then [[ -f "$OUTPUT/receipt.json" ]] || { echo 'ERROR: CPU prepare required'; exit 2; }; fi
 mkdir -p "$OUTPUT/attempts" logs
 if [[ "$PHASE" == route || "$PHASE" == render ]]; then
   export CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
   export CUDNN_CONV_WSCAP_DBG=256 TORCH_CUDNN_V8_API_LRU_CACHE_LIMIT=64
-  KEY="${PHASE}_node$NODE"; GPUS=2; CAP=10800
+  KEY="${PHASE}_node$NODE"; GPUS=2; CAP=$((12*3600/TOTAL_GPUS))
   if [[ "$PHASE" == render ]]; then
     [[ -f "$OUTPUT/render_budget.json" ]] || { echo 'ERROR: full-resolution cost requires explicit user approval; run plan first'; exit 2; }
-    CAP=$("$PYTHON" -S - "$OUTPUT" <<'PY'
+    CAP=$("$PYTHON" -S - "$OUTPUT" "$TOTAL_GPUS" <<'PY'
 import hashlib,json,pathlib,sys
 p=pathlib.Path(sys.argv[1]); b=json.loads((p/'render_budget.json').read_text())
 assert b['render_plan_sha256']==hashlib.sha256((p/'render_plan.json').read_bytes()).hexdigest()
 assert b['authority']=='explicit_user_approval_recorded_by_CPU_agent' and len(b['approval_note'].strip())>=12
-assert 0<b['approved_render_GPU_hours']<=400 and b['cap_seconds_per_node']==int(b['approved_render_GPU_hours']*3600/4)
+assert b['world']==int(sys.argv[2])
+assert 0<b['approved_render_GPU_hours']<=400 and b['cap_seconds_per_node']==int(b['approved_render_GPU_hours']*3600/int(sys.argv[2]))
 print(b['cap_seconds_per_node'])
 PY
 )
@@ -39,7 +45,7 @@ fi
 flock -n 9 || { echo 'ERROR: local task active; do not kill it'; exit 3; }
 exec 8>"$OUTPUT/$KEY.lock"
 flock -n 8 || { echo 'ERROR: same stage/shard active elsewhere'; exit 3; }
-exec > >(tee -a "logs/foundir_official_vlm_router_v4_$KEY.log") 2>&1
+exec > >(tee -a "logs/foundir_official_vlm_router_v4${RUN_SUFFIX}_$KEY.log") 2>&1
 REMAINING=$("$PYTHON" -S - "$OUTPUT" "$KEY" "$CAP" <<'PY'
 import json,pathlib,sys
 p=pathlib.Path(sys.argv[1])/'attempts'; key=sys.argv[2]; cap=int(sys.argv[3])

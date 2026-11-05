@@ -1,0 +1,84 @@
+{
+  "status": "dependency_fixed_four_node_prepare_pass",
+  "utc": "2026-11-05T18:41:55.612038+00:00",
+  "pyiqa_version": "0.1.16",
+  "pyiqa_wheel_sha256": "42bbcf1c274a8b53f040a3ec5ec304a15b7725afb5a85b81050e9cc7e6d09ed4",
+  "install_policy": "official wheel verified against PyPI SHA256; --no-deps, only required PSNR/LPIPS/SSIM paths validated; optional unrelated metric dependencies not installed",
+  "existing_environment_versions": {
+    "existing_package_count": 375,
+    "changed": {},
+    "pyiqa": "0.1.16",
+    "install_no_deps": true
+  },
+  "metric_identity": {
+    "defaults": true,
+    "state_hashes": {
+      "lpips": "969a90b85c32f49ea72efa778ff0a00f93ed4da671127400c8996026249c7c54",
+      "psnr": "131310284192b2f0b0703e14669e62f150b79ab111a7a9302723c7cdcaca7c6a",
+      "ssim": "131310284192b2f0b0703e14669e62f150b79ab111a7a9302723c7cdcaca7c6a"
+    },
+    "version": "0.1.16"
+  },
+  "prepare_attempts": [
+    {
+      "status": 0,
+      "seconds": 35,
+      "gpus": 0,
+      "used_gpu_seconds": 0
+    }
+  ],
+  "historical_two_node_failed_prepare_seconds": 43,
+  "cpu_engineering_tests": {
+    "two_nodes": 14,
+    "four_nodes": 14,
+    "real_performance_images_used": false
+  },
+  "preflight_sha256": "7dc3735b6f6b527b036dae0e6bda79b2dc06e4567a485d1387531bc574d60e24",
+  "recipe": {
+    "CPU_finish_cap_seconds": 900,
+    "CPU_prepare_cap_seconds": 1800,
+    "arms": [
+      "image_only",
+      "conditional_v4",
+      "known_class_reference"
+    ],
+    "checkpoint_selection": false,
+    "frozen_experts": true,
+    "local_gpus": 2,
+    "metrics": "pyiqa_0.1.16_defaults_psnr_lpips_ssim_full_RGB_no_crop_resize_shave",
+    "nodes": 4,
+    "overlap": 128,
+    "padding": "numpy_reflect_right_bottom_singleton_edge",
+    "render_budget": "separate_explicit_user_approval_after_exact_route_plan",
+    "route": "mean_crop_logits_then_one_global_top1_no_labels",
+    "route_GPU_cap_seconds_per_node": 5400,
+    "route_used_GPU_hours_cap": 12,
+    "run": "official_vlm_v4_frozen4800_v1_4x2",
+    "seed": "sha256_2026110502_record_xy_shared_across_arms",
+    "selected_step": 4800,
+    "stitch": "native_uint8_tiles_sqrt_hann_floor_1e-3_then_round_uint8",
+    "tile": 512,
+    "training": false,
+    "world": 8
+  },
+  "tile_counts_by_rank": [
+    2423,
+    2423,
+    2370,
+    2370,
+    2492,
+    2492,
+    2445,
+    2445
+  ],
+  "official_records": 600,
+  "minimum_restoration_tiles": 19460,
+  "maximum_restoration_tiles": 58380,
+  "GPU_started": false,
+  "render_budget_approved": false,
+  "other_test_sets_run": false,
+  "historical_V4_GPU_hours": 2.473888888888889,
+  "current_GPU_hours": 0,
+  "route_GPU_hours_cap": 12,
+  "preserve_assets_and_local_changes": true
+}

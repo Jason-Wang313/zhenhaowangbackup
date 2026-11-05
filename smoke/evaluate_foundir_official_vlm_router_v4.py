@@ -298,13 +298,13 @@ def rendering_plan(b):
     estimate=sum(workload)*(.6605555555555556/117)
     return {'receipt_sha256':c.sha(out/'receipt.json'),'decisions':decisions,'tiles_by_rank':workload,
             'unique_native_tile_generations':sum(workload),'estimated_render_GPU_hours_from_v4':estimate,
-            'estimated_four_GPU_wall_hours':estimate/4,'estimate_includes_old_overhead_not_new_measurement':True,
+            'world':x.WORLD, 'nodes':x.NODES, 'estimated_wall_hours':estimate/x.WORLD,'estimate_includes_old_overhead_not_new_measurement':True,
             'GT_pixels_read':False,'render_authorized':False}
 
 
 def plan():
     value=rendering_plan(bound());c.write_new(ROOT/x.OUTPUT/'render_plan.json',value)
-    c.write_new(ROOT/'reports/foundir_official_vlm_router_v4_route_plan_2026-11-05.json',value)
+    c.write_new(ROOT/f'reports/foundir_official_vlm_router_v4_route_plan{x.SUFFIX}_2026-11-05.json',value)
     print('OFFICIAL_VLM_V4_PLAN_FIXED '+str({k:v for k,v in value.items() if k!='decisions'}),flush=True)
 
 
@@ -314,8 +314,8 @@ def authorize_render(gpu_hours,note):
     require(math.isfinite(gpu_hours) and 0<gpu_hours<=400 and len(note.strip())>=12,'explicit user budget and approval note required')
     out=ROOT/x.OUTPUT;expected=rendering_plan(bound())
     require(c.read(out/'render_plan.json')==expected,'fixed route plan required')
-    value={'render_plan_sha256':c.sha(out/'render_plan.json'),'approved_render_GPU_hours':gpu_hours,
-           'cap_seconds_per_node':int(gpu_hours*3600/4),'approval_note':note,'authority':'explicit_user_approval_recorded_by_CPU_agent',
+    value={'render_plan_sha256':c.sha(out/'render_plan.json'),'approved_render_GPU_hours':gpu_hours,'world':x.WORLD,'nodes':x.NODES,
+           'cap_seconds_per_node':int(gpu_hours*3600/x.WORLD),'approval_note':note,'authority':'explicit_user_approval_recorded_by_CPU_agent',
            'no_automatic_extension':True,'route_GPU_hours_counted_separately':True}
     c.write_new(out/'render_budget.json',value)
     print('OFFICIAL_VLM_V4_RENDER_BUDGET_RECORDED '+str(value),flush=True)
@@ -382,7 +382,7 @@ def render(node):
 
 def costs(out):
     result={}
-    for key,gpus in [('prepare',0),('plan',0)]+[(f'{phase}_node{node}',2) for phase in ('route','render') for node in (0,1)]:
+    for key,gpus in [('prepare',0),('plan',0)]+[(f'{phase}_node{node}',2) for phase in ('route','render') for node in range(x.NODES)]:
         starts=list((out/'attempts').glob(key+'_*.started.json'));ends=list((out/'attempts').glob(key+'_*.ended.json'))
         require(starts and {p.name.removesuffix('.started.json') for p in starts}=={p.name.removesuffix('.ended.json') for p in ends},'incomplete attempt accounting: '+key)
         rows=[c.read(p) for p in ends]
@@ -395,7 +395,7 @@ def finish():
     b=bound();out=ROOT/x.OUTPUT;records={};artifacts={}
     require(c.read(out/'render_plan.json')==rendering_plan(b),'render plan changed')
     from smoke.frozen_router_runtime_policy_v1 import execution_signature
-    require(execution_signature(c.read(out/'runtime_node0.json'))==execution_signature(c.read(out/'runtime_node1.json')),'cross-node numerical runtime differs')
+    require(all(execution_signature(c.read(out/'runtime_node0.json'))==execution_signature(c.read(out/f'runtime_node{node}.json')) for node in range(x.NODES)), 'cross-node numerical runtime differs')
     for rank in range(x.WORLD):
         assigned=b['rows'][rank::x.WORLD];marker=c.read(out/f'worker{rank}.json')
         expected={'receipt_sha256':c.sha(out/'receipt.json'),'runtime_sha256':c.sha(out/f'runtime_node{rank//2}.json'),
@@ -419,7 +419,7 @@ def finish():
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__);ap.add_argument('phase',choices=('prepare','hardware','route','plan','authorize_render','render','finish'))
-    ap.add_argument('--node',type=int,choices=(0,1),default=0)
+    ap.add_argument('--node',type=int,choices=range(x.NODES),default=0)
     ap.add_argument('--gpu-hours',type=float);ap.add_argument('--approval-note');args=ap.parse_args()
     require(str(ROOT)==ACTIVE,'destination root only; no old-workspace execution')
     if args.phase=='hardware':hardware(args.node,True)

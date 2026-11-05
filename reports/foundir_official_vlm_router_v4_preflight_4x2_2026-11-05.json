@@ -1,0 +1,47 @@
+{
+  "GPU_started": false,
+  "H100_full_image_metrics_qualified": false,
+  "maximum_restoration_tiles": 58380,
+  "minimum_restoration_tiles": 19460,
+  "official_pixels_decoded": false,
+  "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+  "recipe": {
+    "CPU_finish_cap_seconds": 900,
+    "CPU_prepare_cap_seconds": 1800,
+    "arms": [
+      "image_only",
+      "conditional_v4",
+      "known_class_reference"
+    ],
+    "checkpoint_selection": false,
+    "frozen_experts": true,
+    "local_gpus": 2,
+    "metrics": "pyiqa_0.1.16_defaults_psnr_lpips_ssim_full_RGB_no_crop_resize_shave",
+    "nodes": 4,
+    "overlap": 128,
+    "padding": "numpy_reflect_right_bottom_singleton_edge",
+    "render_budget": "separate_explicit_user_approval_after_exact_route_plan",
+    "route": "mean_crop_logits_then_one_global_top1_no_labels",
+    "route_GPU_cap_seconds_per_node": 5400,
+    "route_used_GPU_hours_cap": 12,
+    "run": "official_vlm_v4_frozen4800_v1_4x2",
+    "seed": "sha256_2026110502_record_xy_shared_across_arms",
+    "selected_step": 4800,
+    "stitch": "native_uint8_tiles_sqrt_hann_floor_1e-3_then_round_uint8",
+    "tile": 512,
+    "training": false,
+    "world": 8
+  },
+  "records": 600,
+  "status": "official_vlm_v4_metadata_and_model_preflight_pass",
+  "tile_counts_by_rank": [
+    2423,
+    2423,
+    2370,
+    2370,
+    2492,
+    2492,
+    2445,
+    2445
+  ]
+}

@@ -1,13 +1,20 @@
 """Official-only SOW600 evaluation; no training, tuning, or other populations."""
 from collections import Counter
 import math
+import os
 from pathlib import PurePosixPath
 from smoke import existing_flux_replay_contract_v1 as c
 
-RUN = 'official_vlm_v4_frozen4800_v1'
+NODES = int(os.environ.get('FOUNDIR_OFFICIAL_NNODES', '4'))
+if NODES not in (2, 4):
+    raise ValueError('FOUNDIR_OFFICIAL_NNODES must be 2 or 4')
+LOCAL_GPUS = 2
+WORLD = NODES * LOCAL_GPUS
+SUFFIX = '_4x2' if NODES == 4 else ''
+RUN = 'official_vlm_v4_frozen4800_v1' + SUFFIX
 OUTPUT = 'checkpoints/foundir_official_vlm_router_v4/' + RUN
-REPORT = 'reports/foundir_official_vlm_router_v4_terminal_2026-11-05.json'
-PREFLIGHT = 'reports/foundir_official_vlm_router_v4_preflight_2026-11-05.json'
+REPORT = f'reports/foundir_official_vlm_router_v4_terminal{SUFFIX}_2026-11-05.json'
+PREFLIGHT = f'reports/foundir_official_vlm_router_v4_preflight{SUFFIX}_2026-11-05.json'
 MANIFEST = 'manifests/foundir_official_sow600_qwen_v1.csv'
 MANIFEST_SHA = 'dfe5a05ba13f941ac57734e2a96eb21048ad463f4248f306d2fb2d9c6d48866e'
 TRAIN_REPORT_SHA = '09fa4b7998ddbfe46f52d4aa3952a6f40624b6fc72b2eb4c182d4e2f1db3e695'
@@ -18,9 +25,8 @@ CATEGORIES = dict(zip(ORDER, ('01Blur', '05Noise', '08Haze', '14Lowlight', '10Ra
 COUNTS = {'01Blur':150, '05Noise':100, '08Haze':200, '14Lowlight':50, '10Rain':100}
 TARGETS = dict(zip(ORDER, ((25.9,.18), (38.9,.10), (22.1,.19), (18.9,.28), (34.2,.08))))
 ARMS = ('image_only', 'conditional_v4', 'known_class_reference')
-WORLD = 4
 TILE, OVERLAP = 512, 128
-RECIPE = {'run':RUN, 'nodes':2, 'local_gpus':2, 'world':WORLD, 'selected_step':4800,
+RECIPE = {'run':RUN, 'nodes':NODES, 'local_gpus':LOCAL_GPUS, 'world':WORLD, 'selected_step':4800,
           'arms':list(ARMS), 'tile':TILE, 'overlap':OVERLAP,
           'route':'mean_crop_logits_then_one_global_top1_no_labels',
           'padding':'numpy_reflect_right_bottom_singleton_edge',
@@ -28,7 +34,7 @@ RECIPE = {'run':RUN, 'nodes':2, 'local_gpus':2, 'world':WORLD, 'selected_step':4
           'seed':'sha256_2026110502_record_xy_shared_across_arms',
           'metrics':'pyiqa_0.1.16_defaults_psnr_lpips_ssim_full_RGB_no_crop_resize_shave',
           'frozen_experts':True, 'training':False, 'checkpoint_selection':False,
-          'route_GPU_cap_seconds_per_node':10800, 'route_used_GPU_hours_cap':12,
+          'route_GPU_cap_seconds_per_node':int(12*3600/WORLD), 'route_used_GPU_hours_cap':12,
           'render_budget':'separate_explicit_user_approval_after_exact_route_plan',
           'CPU_prepare_cap_seconds':1800, 'CPU_finish_cap_seconds':900}
 SOURCES = ['smoke/official_vlm_router_v4_contract.py', 'smoke/evaluate_foundir_official_vlm_router_v4.py',
