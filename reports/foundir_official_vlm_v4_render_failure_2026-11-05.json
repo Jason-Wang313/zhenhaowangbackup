@@ -1,0 +1,94 @@
+{
+  "status": "all_four_render_nodes_failed_before_first_tile",
+  "utc": "2026-11-05T19:42:28.706149+00:00",
+  "nodes": [
+    {
+      "node": 0,
+      "attempts": [
+        {
+          "status": 1,
+          "seconds": 419,
+          "gpus": 2,
+          "used_gpu_seconds": 838,
+          "time_limit_disabled": true
+        }
+      ],
+      "log_sha256": "753dea85333150b0d86371c608a507c596c284a6e51f0178a1fb438268dddc37",
+      "error": "ValueError: official metric weights changed",
+      "tile_log_count": 0,
+      "completed_image_count": 0
+    },
+    {
+      "node": 1,
+      "attempts": [
+        {
+          "status": 1,
+          "seconds": 421,
+          "gpus": 2,
+          "used_gpu_seconds": 842,
+          "time_limit_disabled": true
+        }
+      ],
+      "log_sha256": "ec06fecf85633afceaf244c8c1c2cfb7ae48e86d46da9f7cb293586a7c3f46c3",
+      "error": "ValueError: official metric weights changed",
+      "tile_log_count": 0,
+      "completed_image_count": 0
+    },
+    {
+      "node": 2,
+      "attempts": [
+        {
+          "status": 1,
+          "seconds": 415,
+          "gpus": 2,
+          "used_gpu_seconds": 830,
+          "time_limit_disabled": true
+        }
+      ],
+      "log_sha256": "1b791e2e94cc486c3eaade5350551d49e12b5abc9de5c4a30c53f41ebcf98c96",
+      "error": "ValueError: official metric weights changed",
+      "tile_log_count": 0,
+      "completed_image_count": 0
+    },
+    {
+      "node": 3,
+      "attempts": [
+        {
+          "status": 1,
+          "seconds": 399,
+          "gpus": 2,
+          "used_gpu_seconds": 798,
+          "time_limit_disabled": true
+        }
+      ],
+      "log_sha256": "a154b27ae9b8a010e6277914dd2dd62a066fab92ddba30b5241ac5f111c4e386",
+      "error": "ValueError: official metric weights changed",
+      "tile_log_count": 0,
+      "completed_image_count": 0
+    }
+  ],
+  "restored_tiles": 0,
+  "completed_images": 0,
+  "render_failure_GPU_hours": 0.9188888888888889,
+  "route_GPU_hours": 1.74,
+  "current_official_total_GPU_hours": 2.658888888888889,
+  "historical_V4_GPU_hours_separate": 2.473888888888889,
+  "CPU_metric_identity_still_matches_original_receipt": true,
+  "CPU_meta_only_diagnostic": {
+    "PSNR_CPU_dummy_type": "Parameter",
+    "PSNR_CPU_wrapper_state_keys": [
+      "dummy_param"
+    ],
+    "PSNR_meta_dummy_type": "Tensor",
+    "PSNR_meta_wrapper_state_keys": [],
+    "PSNR_underlying_network_state_keys_both": [],
+    "CPU_wrapper_hash": "131310284192b2f0b0703e14669e62f150b79ab111a7a9302723c7cdcaca7c6a",
+    "empty_state_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "interpretation": "Device conversion can change wrapper parameter registration; hashing the wrapper can reject unchanged metric network weights. GPU actual metric hashes were not logged; not claimed as fully CUDA-isolated root cause."
+  },
+  "producer_changed": false,
+  "cache_changed": false,
+  "automatic_retry": false,
+  "other_test_set_pixels_read": false,
+  "PSNR_LPIPS_results_available": false
+}
