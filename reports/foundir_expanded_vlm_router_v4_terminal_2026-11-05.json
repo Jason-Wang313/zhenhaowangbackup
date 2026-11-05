@@ -1,0 +1,3588 @@
+{
+  "all_numeric_targets_on_new100_pass": false,
+  "arms": {
+    "conditional_v4": {
+      "count": 100,
+      "overall": {
+        "lpips": 0.12209467410109937,
+        "psnr": 27.308319434035948
+      },
+      "per_task": {
+        "blur": {
+          "lpips": 0.21621393375098705,
+          "psnr": 21.75404641103294
+        },
+        "haze": {
+          "lpips": 0.08778361268341542,
+          "psnr": 21.90291627929943
+        },
+        "lowlight": {
+          "lpips": 0.16801234446465968,
+          "psnr": 18.30808811283172
+        },
+        "noise": {
+          "lpips": 0.0913828743621707,
+          "psnr": 40.30307643736488
+        },
+        "rain": {
+          "lpips": 0.04708060524426401,
+          "psnr": 34.27346992965077
+        }
+      },
+      "rows": [
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0001399",
+          "lpips": 0.31824326515197754,
+          "psnr": 16.56818246819633,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0001777",
+          "lpips": 0.2503938674926758,
+          "psnr": 22.17200217090683,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0003517",
+          "lpips": 0.3358445167541504,
+          "psnr": 20.924378877326397,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0005440",
+          "lpips": 0.352353572845459,
+          "psnr": 22.731523339585763,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0009486",
+          "lpips": 0.11138597130775452,
+          "psnr": 24.194729176743962,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0023817",
+          "lpips": 0.19054441154003143,
+          "psnr": 18.128856732910045,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0027759",
+          "lpips": 0.284934937953949,
+          "psnr": 17.2774979397072,
+          "task": "blur"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0031174",
+          "lpips": 0.13801980018615723,
+          "psnr": 21.369637594842523,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0036859",
+          "lpips": 0.28121984004974365,
+          "psnr": 20.56996062033872,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0058890",
+          "lpips": 0.10722655057907104,
+          "psnr": 23.29248617095477,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0072183",
+          "lpips": 0.18350005149841309,
+          "psnr": 22.80885370433531,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0089777",
+          "lpips": 0.3522299826145172,
+          "psnr": 21.75503842378461,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0090520",
+          "lpips": 0.31228330731391907,
+          "psnr": 19.66525452981593,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094157",
+          "lpips": 0.18452048301696777,
+          "psnr": 21.587616105641626,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094793",
+          "lpips": 0.11853418499231339,
+          "psnr": 26.043342031596982,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0095462",
+          "lpips": 0.11821040511131287,
+          "psnr": 19.840160045785765,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0102944",
+          "lpips": 0.055347930639982224,
+          "psnr": 28.5126382029898,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108178",
+          "lpips": 0.04841460660099983,
+          "psnr": 31.179644980515615,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108708",
+          "lpips": 0.3314623534679413,
+          "psnr": 17.25959167358575,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0109153",
+          "lpips": 0.24960863590240479,
+          "psnr": 19.199533431094952,
+          "task": "blur"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185440",
+          "lpips": 0.032929033041000366,
+          "psnr": 39.31663206112472,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185463",
+          "lpips": 0.11825250834226608,
+          "psnr": 39.95172219362885,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185477",
+          "lpips": 0.10411116480827332,
+          "psnr": 40.78087153010295,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185544",
+          "lpips": 0.03833317756652832,
+          "psnr": 39.54570930585373,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185594",
+          "lpips": 0.01708374172449112,
+          "psnr": 39.61394716023045,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185983",
+          "lpips": 0.023135226219892502,
+          "psnr": 47.046299519856525,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186167",
+          "lpips": 0.08755075931549072,
+          "psnr": 40.41473031588623,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186292",
+          "lpips": 0.018050169572234154,
+          "psnr": 43.02106435142953,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186413",
+          "lpips": 0.05103703960776329,
+          "psnr": 41.25361548924899,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186626",
+          "lpips": 0.08082546293735504,
+          "psnr": 41.933716011029965,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186719",
+          "lpips": 0.021205095574259758,
+          "psnr": 34.36517990555745,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186725",
+          "lpips": 0.09223347157239914,
+          "psnr": 42.75015787968208,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186732",
+          "lpips": 0.25286710262298584,
+          "psnr": 38.860753632937225,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186739",
+          "lpips": 0.08102009445428848,
+          "psnr": 40.48558380727744,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186777",
+          "lpips": 0.11571592092514038,
+          "psnr": 40.9723901601746,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186797",
+          "lpips": 0.17590424418449402,
+          "psnr": 40.40631967071845,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186882",
+          "lpips": 0.08758845925331116,
+          "psnr": 40.229092556764236,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187041",
+          "lpips": 0.336448073387146,
+          "psnr": 36.02847628046389,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187049",
+          "lpips": 0.01676812767982483,
+          "psnr": 39.171583914007016,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187055",
+          "lpips": 0.07659861445426941,
+          "psnr": 39.91368300132333,
+          "task": "noise"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0203677",
+          "lpips": 0.07875873893499374,
+          "psnr": 18.873291849524524,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0205781",
+          "lpips": 0.08170372247695923,
+          "psnr": 21.575794425195266,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0207725",
+          "lpips": 0.048037707805633545,
+          "psnr": 24.309151106415406,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0217263",
+          "lpips": 0.08209284394979477,
+          "psnr": 21.621455789057315,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0222275",
+          "lpips": 0.11320525407791138,
+          "psnr": 21.252308436448843,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0223037",
+          "lpips": 0.03597414121031761,
+          "psnr": 29.699872957165404,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0224171",
+          "lpips": 0.0384620763361454,
+          "psnr": 25.572093765743666,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0227921",
+          "lpips": 0.01820855587720871,
+          "psnr": 20.064063620031327,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0238364",
+          "lpips": 0.05276141315698624,
+          "psnr": 20.560580454543892,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0240653",
+          "lpips": 0.04712633043527603,
+          "psnr": 20.824246499458333,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0245317",
+          "lpips": 0.10899905860424042,
+          "psnr": 22.491275545233744,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0251019",
+          "lpips": 0.17792856693267822,
+          "psnr": 20.328052109031706,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0256220",
+          "lpips": 0.062490083277225494,
+          "psnr": 23.3060156810981,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0261979",
+          "lpips": 0.10043022781610489,
+          "psnr": 26.091637830027853,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0262962",
+          "lpips": 0.0637277141213417,
+          "psnr": 25.198327469104278,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0265744",
+          "lpips": 0.18002530932426453,
+          "psnr": 19.027837604303247,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0267120",
+          "lpips": 0.09534472227096558,
+          "psnr": 21.907732536504973,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271524",
+          "lpips": 0.12324042618274689,
+          "psnr": 18.358371370922434,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271897",
+          "lpips": 0.06671170145273209,
+          "psnr": 19.65768722066329,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0274242",
+          "lpips": 0.1804436594247818,
+          "psnr": 17.338529315515018,
+          "task": "haze"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0357669",
+          "lpips": 0.0821000337600708,
+          "psnr": 30.211692640453883,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0358802",
+          "lpips": 0.04767952859401703,
+          "psnr": 35.90126968784103,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0358847",
+          "lpips": 0.0796796903014183,
+          "psnr": 31.22619245407912,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0359713",
+          "lpips": 0.024962741881608963,
+          "psnr": 32.73976640399303,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362158",
+          "lpips": 0.04397572576999664,
+          "psnr": 33.186330011255464,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362836",
+          "lpips": 0.06659980118274689,
+          "psnr": 28.82655200602194,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0363950",
+          "lpips": 0.014297805726528168,
+          "psnr": 43.35146639076817,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0367301",
+          "lpips": 0.011645998805761337,
+          "psnr": 38.05218939157562,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0369705",
+          "lpips": 0.023145010694861412,
+          "psnr": 31.35358302891175,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0370271",
+          "lpips": 0.026812328025698662,
+          "psnr": 32.00016933328951,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0371580",
+          "lpips": 0.01170838437974453,
+          "psnr": 43.246210899981435,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0373406",
+          "lpips": 0.015357126481831074,
+          "psnr": 38.96874050397421,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0374659",
+          "lpips": 0.05127142369747162,
+          "psnr": 37.65520070120409,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0376427",
+          "lpips": 0.05782528966665268,
+          "psnr": 35.689635083714094,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379170",
+          "lpips": 0.05184408649802208,
+          "psnr": 33.360028814636046,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379426",
+          "lpips": 0.028955407440662384,
+          "psnr": 34.797626674406686,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0381127",
+          "lpips": 0.09228947013616562,
+          "psnr": 29.872319738279685,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0384404",
+          "lpips": 0.025713808834552765,
+          "psnr": 32.70078665200688,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0385544",
+          "lpips": 0.07945479452610016,
+          "psnr": 34.77581687113679,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0392524",
+          "lpips": 0.10629364848136902,
+          "psnr": 27.553821305486032,
+          "task": "rain"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0476696",
+          "lpips": 0.14721640944480896,
+          "psnr": 19.198961276368312,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0481412",
+          "lpips": 0.17615754902362823,
+          "psnr": 14.38826200276463,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0481706",
+          "lpips": 0.31794244050979614,
+          "psnr": 12.713608069709759,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0487742",
+          "lpips": 0.183913454413414,
+          "psnr": 14.353078934107216,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489487",
+          "lpips": 0.09777750074863434,
+          "psnr": 20.796048110712235,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489710",
+          "lpips": 0.300929456949234,
+          "psnr": 24.582359426413678,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0492646",
+          "lpips": 0.06748387962579727,
+          "psnr": 18.192238618859474,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493430",
+          "lpips": 0.06257458031177521,
+          "psnr": 25.145015484624963,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493486",
+          "lpips": 0.2257714867591858,
+          "psnr": 10.791320396095447,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0494428",
+          "lpips": 0.1156756728887558,
+          "psnr": 27.899877692160796,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0495443",
+          "lpips": 0.23259249329566956,
+          "psnr": 16.241046036318807,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0497719",
+          "lpips": 0.1526339054107666,
+          "psnr": 11.664263818792646,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0505689",
+          "lpips": 0.20852062106132507,
+          "psnr": 18.842250296116475,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0509383",
+          "lpips": 0.08121488988399506,
+          "psnr": 21.862073399987686,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510126",
+          "lpips": 0.16875506937503815,
+          "psnr": 19.274965683517102,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510818",
+          "lpips": 0.12684346735477448,
+          "psnr": 18.106323779698194,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0511568",
+          "lpips": 0.14769920706748962,
+          "psnr": 16.15978005599814,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0513722",
+          "lpips": 0.11338554322719574,
+          "psnr": 14.728930717065973,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0514697",
+          "lpips": 0.26673004031181335,
+          "psnr": 20.366972241618512,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0516314",
+          "lpips": 0.16642922163009644,
+          "psnr": 20.854386215704274,
+          "task": "lowlight"
+        }
+      ]
+    },
+    "image_only": {
+      "count": 100,
+      "overall": {
+        "lpips": 0.1431358653213829,
+        "psnr": 26.44992961635915
+      },
+      "per_task": {
+        "blur": {
+          "lpips": 0.23842889294028283,
+          "psnr": 21.70139794096226
+        },
+        "haze": {
+          "lpips": 0.10954651795327663,
+          "psnr": 21.602674138490364
+        },
+        "lowlight": {
+          "lpips": 0.16801234446465968,
+          "psnr": 18.30808811283172
+        },
+        "noise": {
+          "lpips": 0.09941519293934106,
+          "psnr": 37.82062981326223
+        },
+        "rain": {
+          "lpips": 0.10027637830935418,
+          "psnr": 32.81685807624919
+        }
+      },
+      "rows": [
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0001399",
+          "lpips": 0.6347524523735046,
+          "psnr": 16.444631904092276,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0001777",
+          "lpips": 0.2503938674926758,
+          "psnr": 22.17200217090683,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0003517",
+          "lpips": 0.3358445167541504,
+          "psnr": 20.924378877326397,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0005440",
+          "lpips": 0.352353572845459,
+          "psnr": 22.731523339585763,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0009486",
+          "lpips": 0.11138597130775452,
+          "psnr": 24.194729176743962,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0023817",
+          "lpips": 0.19054441154003143,
+          "psnr": 18.128856732910045,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0027759",
+          "lpips": 0.284934937953949,
+          "psnr": 17.2774979397072,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0031174",
+          "lpips": 0.09125112742185593,
+          "psnr": 22.50941953688531,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0036859",
+          "lpips": 0.28121984004974365,
+          "psnr": 20.56996062033872,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0058890",
+          "lpips": 0.10722655057907104,
+          "psnr": 23.29248617095477,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0072183",
+          "lpips": 0.18350005149841309,
+          "psnr": 22.80885370433531,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0089777",
+          "lpips": 0.3522299826145172,
+          "psnr": 21.75503842378461,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0090520",
+          "lpips": 0.31228330731391907,
+          "psnr": 19.66525452981593,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094157",
+          "lpips": 0.18452048301696777,
+          "psnr": 21.587616105641626,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094793",
+          "lpips": 0.11853418499231339,
+          "psnr": 26.043342031596982,
+          "task": "blur"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0095462",
+          "lpips": 0.29276907444000244,
+          "psnr": 17.77095926643329,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0102944",
+          "lpips": 0.055347930639982224,
+          "psnr": 28.5126382029898,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108178",
+          "lpips": 0.04841460660099983,
+          "psnr": 31.179644980515615,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108708",
+          "lpips": 0.3314623534679413,
+          "psnr": 17.25959167358575,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0109153",
+          "lpips": 0.24960863590240479,
+          "psnr": 19.199533431094952,
+          "task": "blur"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185440",
+          "lpips": 0.032929033041000366,
+          "psnr": 39.31663206112472,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185463",
+          "lpips": 0.11825250834226608,
+          "psnr": 39.95172219362885,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185477",
+          "lpips": 0.10411116480827332,
+          "psnr": 40.78087153010295,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185544",
+          "lpips": 0.03833317756652832,
+          "psnr": 39.54570930585373,
+          "task": "noise"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0185594",
+          "lpips": 0.2433021515607834,
+          "psnr": 19.499873983142265,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185983",
+          "lpips": 0.023135226219892502,
+          "psnr": 47.046299519856525,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186167",
+          "lpips": 0.08755075931549072,
+          "psnr": 40.41473031588623,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186292",
+          "lpips": 0.018050169572234154,
+          "psnr": 43.02106435142953,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186413",
+          "lpips": 0.05103703960776329,
+          "psnr": 41.25361548924899,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186626",
+          "lpips": 0.08082546293735504,
+          "psnr": 41.933716011029965,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186719",
+          "lpips": 0.021205095574259758,
+          "psnr": 34.36517990555745,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186725",
+          "lpips": 0.09223347157239914,
+          "psnr": 42.75015787968208,
+          "task": "noise"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0186732",
+          "lpips": 0.10000430047512054,
+          "psnr": 23.107657149601643,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186739",
+          "lpips": 0.08102009445428848,
+          "psnr": 40.48558380727744,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186777",
+          "lpips": 0.11571592092514038,
+          "psnr": 40.9723901601746,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186797",
+          "lpips": 0.17590424418449402,
+          "psnr": 40.40631967071845,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186882",
+          "lpips": 0.08758845925331116,
+          "psnr": 40.229092556764236,
+          "task": "noise"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0187041",
+          "lpips": 0.42373883724212646,
+          "psnr": 22.246713458834634,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187049",
+          "lpips": 0.01676812767982483,
+          "psnr": 39.171583914007016,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187055",
+          "lpips": 0.07659861445426941,
+          "psnr": 39.91368300132333,
+          "task": "noise"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0203677",
+          "lpips": 0.07875873893499374,
+          "psnr": 18.873291849524524,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0205781",
+          "lpips": 0.08170372247695923,
+          "psnr": 21.575794425195266,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0207725",
+          "lpips": 0.048037707805633545,
+          "psnr": 24.309151106415406,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0217263",
+          "lpips": 0.08209284394979477,
+          "psnr": 21.621455789057315,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0222275",
+          "lpips": 0.11320525407791138,
+          "psnr": 21.252308436448843,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0223037",
+          "lpips": 0.03597414121031761,
+          "psnr": 29.699872957165404,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0224171",
+          "lpips": 0.0384620763361454,
+          "psnr": 25.572093765743666,
+          "task": "haze"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0227921",
+          "lpips": 0.06346343457698822,
+          "psnr": 22.57945229607642,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0238364",
+          "lpips": 0.05276141315698624,
+          "psnr": 20.560580454543892,
+          "task": "haze"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0240653",
+          "lpips": 0.14345988631248474,
+          "psnr": 18.184876095419927,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0245317",
+          "lpips": 0.10899905860424042,
+          "psnr": 22.491275545233744,
+          "task": "haze"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0251019",
+          "lpips": 0.47159823775291443,
+          "psnr": 14.447191020843636,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0256220",
+          "lpips": 0.062490083277225494,
+          "psnr": 23.3060156810981,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0261979",
+          "lpips": 0.10043022781610489,
+          "psnr": 26.091637830027853,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0262962",
+          "lpips": 0.0637277141213417,
+          "psnr": 25.198327469104278,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0265744",
+          "lpips": 0.18002530932426453,
+          "psnr": 19.027837604303247,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0267120",
+          "lpips": 0.09534472227096558,
+          "psnr": 21.907732536504973,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271524",
+          "lpips": 0.12324042618274689,
+          "psnr": 18.358371370922434,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271897",
+          "lpips": 0.06671170145273209,
+          "psnr": 19.65768722066329,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0274242",
+          "lpips": 0.1804436594247818,
+          "psnr": 17.338529315515018,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0357669",
+          "lpips": 0.09222015738487244,
+          "psnr": 25.409439906473416,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0358802",
+          "lpips": 0.04767952859401703,
+          "psnr": 35.90126968784103,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0358847",
+          "lpips": 0.0796796903014183,
+          "psnr": 31.22619245407912,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0359713",
+          "lpips": 0.024962741881608963,
+          "psnr": 32.73976640399303,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362158",
+          "lpips": 0.04397572576999664,
+          "psnr": 33.186330011255464,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362836",
+          "lpips": 0.06659980118274689,
+          "psnr": 28.82655200602194,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0363950",
+          "lpips": 0.014297805726528168,
+          "psnr": 43.35146639076817,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0367301",
+          "lpips": 0.011645998805761337,
+          "psnr": 38.05218939157562,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0369705",
+          "lpips": 0.023145010694861412,
+          "psnr": 31.35358302891175,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0370271",
+          "lpips": 0.026812328025698662,
+          "psnr": 32.00016933328951,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0371580",
+          "lpips": 0.01170838437974453,
+          "psnr": 43.246210899981435,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0373406",
+          "lpips": 0.015357126481831074,
+          "psnr": 38.96874050397421,
+          "task": "rain"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0374659",
+          "lpips": 0.5114120244979858,
+          "psnr": 24.348330746288227,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0376427",
+          "lpips": 0.05782528966665268,
+          "psnr": 35.689635083714094,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379170",
+          "lpips": 0.05184408649802208,
+          "psnr": 33.360028814636046,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379426",
+          "lpips": 0.028955407440662384,
+          "psnr": 34.797626674406686,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0381127",
+          "lpips": 0.09228947013616562,
+          "psnr": 29.872319738279685,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0384404",
+          "lpips": 0.025713808834552765,
+          "psnr": 32.70078665200688,
+          "task": "rain"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0385544",
+          "lpips": 0.6731095314025879,
+          "psnr": 23.7527024920014,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0392524",
+          "lpips": 0.10629364848136902,
+          "psnr": 27.553821305486032,
+          "task": "rain"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0476696",
+          "lpips": 0.14721640944480896,
+          "psnr": 19.198961276368312,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0481412",
+          "lpips": 0.17615754902362823,
+          "psnr": 14.38826200276463,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0481706",
+          "lpips": 0.31794244050979614,
+          "psnr": 12.713608069709759,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0487742",
+          "lpips": 0.183913454413414,
+          "psnr": 14.353078934107216,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489487",
+          "lpips": 0.09777750074863434,
+          "psnr": 20.796048110712235,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489710",
+          "lpips": 0.300929456949234,
+          "psnr": 24.582359426413678,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0492646",
+          "lpips": 0.06748387962579727,
+          "psnr": 18.192238618859474,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493430",
+          "lpips": 0.06257458031177521,
+          "psnr": 25.145015484624963,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493486",
+          "lpips": 0.2257714867591858,
+          "psnr": 10.791320396095447,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0494428",
+          "lpips": 0.1156756728887558,
+          "psnr": 27.899877692160796,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0495443",
+          "lpips": 0.23259249329566956,
+          "psnr": 16.241046036318807,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0497719",
+          "lpips": 0.1526339054107666,
+          "psnr": 11.664263818792646,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0505689",
+          "lpips": 0.20852062106132507,
+          "psnr": 18.842250296116475,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0509383",
+          "lpips": 0.08121488988399506,
+          "psnr": 21.862073399987686,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510126",
+          "lpips": 0.16875506937503815,
+          "psnr": 19.274965683517102,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510818",
+          "lpips": 0.12684346735477448,
+          "psnr": 18.106323779698194,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0511568",
+          "lpips": 0.14769920706748962,
+          "psnr": 16.15978005599814,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0513722",
+          "lpips": 0.11338554322719574,
+          "psnr": 14.728930717065973,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0514697",
+          "lpips": 0.26673004031181335,
+          "psnr": 20.366972241618512,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0516314",
+          "lpips": 0.16642922163009644,
+          "psnr": 20.854386215704274,
+          "task": "lowlight"
+        }
+      ]
+    },
+    "known_class_reference": {
+      "count": 100,
+      "overall": {
+        "lpips": 0.12162698737345636,
+        "psnr": 27.31971725345638
+      },
+      "per_task": {
+        "blur": {
+          "lpips": 0.21387550011277198,
+          "psnr": 21.811035508135085
+        },
+        "haze": {
+          "lpips": 0.08778361268341542,
+          "psnr": 21.90291627929943
+        },
+        "lowlight": {
+          "lpips": 0.16801234446465968,
+          "psnr": 18.30808811283172
+        },
+        "noise": {
+          "lpips": 0.0913828743621707,
+          "psnr": 40.30307643736488
+        },
+        "rain": {
+          "lpips": 0.04708060524426401,
+          "psnr": 34.27346992965077
+        }
+      },
+      "rows": [
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0001399",
+          "lpips": 0.31824326515197754,
+          "psnr": 16.56818246819633,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0001777",
+          "lpips": 0.2503938674926758,
+          "psnr": 22.17200217090683,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0003517",
+          "lpips": 0.3358445167541504,
+          "psnr": 20.924378877326397,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0005440",
+          "lpips": 0.352353572845459,
+          "psnr": 22.731523339585763,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0009486",
+          "lpips": 0.11138597130775452,
+          "psnr": 24.194729176743962,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0023817",
+          "lpips": 0.19054441154003143,
+          "psnr": 18.128856732910045,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0027759",
+          "lpips": 0.284934937953949,
+          "psnr": 17.2774979397072,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0031174",
+          "lpips": 0.09125112742185593,
+          "psnr": 22.50941953688531,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0036859",
+          "lpips": 0.28121984004974365,
+          "psnr": 20.56996062033872,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0058890",
+          "lpips": 0.10722655057907104,
+          "psnr": 23.29248617095477,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0072183",
+          "lpips": 0.18350005149841309,
+          "psnr": 22.80885370433531,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0089777",
+          "lpips": 0.3522299826145172,
+          "psnr": 21.75503842378461,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0090520",
+          "lpips": 0.31228330731391907,
+          "psnr": 19.66525452981593,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094157",
+          "lpips": 0.18452048301696777,
+          "psnr": 21.587616105641626,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094793",
+          "lpips": 0.11853418499231339,
+          "psnr": 26.043342031596982,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0095462",
+          "lpips": 0.11821040511131287,
+          "psnr": 19.840160045785765,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0102944",
+          "lpips": 0.055347930639982224,
+          "psnr": 28.5126382029898,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108178",
+          "lpips": 0.04841460660099983,
+          "psnr": 31.179644980515615,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108708",
+          "lpips": 0.3314623534679413,
+          "psnr": 17.25959167358575,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0109153",
+          "lpips": 0.24960863590240479,
+          "psnr": 19.199533431094952,
+          "task": "blur"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185440",
+          "lpips": 0.032929033041000366,
+          "psnr": 39.31663206112472,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185463",
+          "lpips": 0.11825250834226608,
+          "psnr": 39.95172219362885,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185477",
+          "lpips": 0.10411116480827332,
+          "psnr": 40.78087153010295,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185544",
+          "lpips": 0.03833317756652832,
+          "psnr": 39.54570930585373,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185594",
+          "lpips": 0.01708374172449112,
+          "psnr": 39.61394716023045,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185983",
+          "lpips": 0.023135226219892502,
+          "psnr": 47.046299519856525,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186167",
+          "lpips": 0.08755075931549072,
+          "psnr": 40.41473031588623,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186292",
+          "lpips": 0.018050169572234154,
+          "psnr": 43.02106435142953,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186413",
+          "lpips": 0.05103703960776329,
+          "psnr": 41.25361548924899,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186626",
+          "lpips": 0.08082546293735504,
+          "psnr": 41.933716011029965,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186719",
+          "lpips": 0.021205095574259758,
+          "psnr": 34.36517990555745,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186725",
+          "lpips": 0.09223347157239914,
+          "psnr": 42.75015787968208,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186732",
+          "lpips": 0.25286710262298584,
+          "psnr": 38.860753632937225,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186739",
+          "lpips": 0.08102009445428848,
+          "psnr": 40.48558380727744,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186777",
+          "lpips": 0.11571592092514038,
+          "psnr": 40.9723901601746,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186797",
+          "lpips": 0.17590424418449402,
+          "psnr": 40.40631967071845,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186882",
+          "lpips": 0.08758845925331116,
+          "psnr": 40.229092556764236,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187041",
+          "lpips": 0.336448073387146,
+          "psnr": 36.02847628046389,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187049",
+          "lpips": 0.01676812767982483,
+          "psnr": 39.171583914007016,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187055",
+          "lpips": 0.07659861445426941,
+          "psnr": 39.91368300132333,
+          "task": "noise"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0203677",
+          "lpips": 0.07875873893499374,
+          "psnr": 18.873291849524524,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0205781",
+          "lpips": 0.08170372247695923,
+          "psnr": 21.575794425195266,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0207725",
+          "lpips": 0.048037707805633545,
+          "psnr": 24.309151106415406,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0217263",
+          "lpips": 0.08209284394979477,
+          "psnr": 21.621455789057315,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0222275",
+          "lpips": 0.11320525407791138,
+          "psnr": 21.252308436448843,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0223037",
+          "lpips": 0.03597414121031761,
+          "psnr": 29.699872957165404,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0224171",
+          "lpips": 0.0384620763361454,
+          "psnr": 25.572093765743666,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0227921",
+          "lpips": 0.01820855587720871,
+          "psnr": 20.064063620031327,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0238364",
+          "lpips": 0.05276141315698624,
+          "psnr": 20.560580454543892,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0240653",
+          "lpips": 0.04712633043527603,
+          "psnr": 20.824246499458333,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0245317",
+          "lpips": 0.10899905860424042,
+          "psnr": 22.491275545233744,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0251019",
+          "lpips": 0.17792856693267822,
+          "psnr": 20.328052109031706,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0256220",
+          "lpips": 0.062490083277225494,
+          "psnr": 23.3060156810981,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0261979",
+          "lpips": 0.10043022781610489,
+          "psnr": 26.091637830027853,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0262962",
+          "lpips": 0.0637277141213417,
+          "psnr": 25.198327469104278,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0265744",
+          "lpips": 0.18002530932426453,
+          "psnr": 19.027837604303247,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0267120",
+          "lpips": 0.09534472227096558,
+          "psnr": 21.907732536504973,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271524",
+          "lpips": 0.12324042618274689,
+          "psnr": 18.358371370922434,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271897",
+          "lpips": 0.06671170145273209,
+          "psnr": 19.65768722066329,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0274242",
+          "lpips": 0.1804436594247818,
+          "psnr": 17.338529315515018,
+          "task": "haze"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0357669",
+          "lpips": 0.0821000337600708,
+          "psnr": 30.211692640453883,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0358802",
+          "lpips": 0.04767952859401703,
+          "psnr": 35.90126968784103,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0358847",
+          "lpips": 0.0796796903014183,
+          "psnr": 31.22619245407912,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0359713",
+          "lpips": 0.024962741881608963,
+          "psnr": 32.73976640399303,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362158",
+          "lpips": 0.04397572576999664,
+          "psnr": 33.186330011255464,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362836",
+          "lpips": 0.06659980118274689,
+          "psnr": 28.82655200602194,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0363950",
+          "lpips": 0.014297805726528168,
+          "psnr": 43.35146639076817,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0367301",
+          "lpips": 0.011645998805761337,
+          "psnr": 38.05218939157562,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0369705",
+          "lpips": 0.023145010694861412,
+          "psnr": 31.35358302891175,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0370271",
+          "lpips": 0.026812328025698662,
+          "psnr": 32.00016933328951,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0371580",
+          "lpips": 0.01170838437974453,
+          "psnr": 43.246210899981435,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0373406",
+          "lpips": 0.015357126481831074,
+          "psnr": 38.96874050397421,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0374659",
+          "lpips": 0.05127142369747162,
+          "psnr": 37.65520070120409,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0376427",
+          "lpips": 0.05782528966665268,
+          "psnr": 35.689635083714094,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379170",
+          "lpips": 0.05184408649802208,
+          "psnr": 33.360028814636046,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379426",
+          "lpips": 0.028955407440662384,
+          "psnr": 34.797626674406686,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0381127",
+          "lpips": 0.09228947013616562,
+          "psnr": 29.872319738279685,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0384404",
+          "lpips": 0.025713808834552765,
+          "psnr": 32.70078665200688,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0385544",
+          "lpips": 0.07945479452610016,
+          "psnr": 34.77581687113679,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0392524",
+          "lpips": 0.10629364848136902,
+          "psnr": 27.553821305486032,
+          "task": "rain"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0476696",
+          "lpips": 0.14721640944480896,
+          "psnr": 19.198961276368312,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0481412",
+          "lpips": 0.17615754902362823,
+          "psnr": 14.38826200276463,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0481706",
+          "lpips": 0.31794244050979614,
+          "psnr": 12.713608069709759,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0487742",
+          "lpips": 0.183913454413414,
+          "psnr": 14.353078934107216,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489487",
+          "lpips": 0.09777750074863434,
+          "psnr": 20.796048110712235,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489710",
+          "lpips": 0.300929456949234,
+          "psnr": 24.582359426413678,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0492646",
+          "lpips": 0.06748387962579727,
+          "psnr": 18.192238618859474,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493430",
+          "lpips": 0.06257458031177521,
+          "psnr": 25.145015484624963,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493486",
+          "lpips": 0.2257714867591858,
+          "psnr": 10.791320396095447,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0494428",
+          "lpips": 0.1156756728887558,
+          "psnr": 27.899877692160796,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0495443",
+          "lpips": 0.23259249329566956,
+          "psnr": 16.241046036318807,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0497719",
+          "lpips": 0.1526339054107666,
+          "psnr": 11.664263818792646,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0505689",
+          "lpips": 0.20852062106132507,
+          "psnr": 18.842250296116475,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0509383",
+          "lpips": 0.08121488988399506,
+          "psnr": 21.862073399987686,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510126",
+          "lpips": 0.16875506937503815,
+          "psnr": 19.274965683517102,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510818",
+          "lpips": 0.12684346735477448,
+          "psnr": 18.106323779698194,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0511568",
+          "lpips": 0.14769920706748962,
+          "psnr": 16.15978005599814,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0513722",
+          "lpips": 0.11338554322719574,
+          "psnr": 14.728930717065973,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0514697",
+          "lpips": 0.26673004031181335,
+          "psnr": 20.366972241618512,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0516314",
+          "lpips": 0.16642922163009644,
+          "psnr": 20.854386215704274,
+          "task": "lowlight"
+        }
+      ]
+    },
+    "previous_v3": {
+      "count": 100,
+      "overall": {
+        "lpips": 0.13509792326949538,
+        "psnr": 27.003700933284236
+      },
+      "per_task": {
+        "blur": {
+          "lpips": 0.2320393931120634,
+          "psnr": 21.74786888282774
+        },
+        "haze": {
+          "lpips": 0.11109622064977884,
+          "psnr": 21.605748433861013
+        },
+        "lowlight": {
+          "lpips": 0.1822428096085787,
+          "psnr": 18.31041358201547
+        },
+        "noise": {
+          "lpips": 0.1026937948539853,
+          "psnr": 39.29737277851048
+        },
+        "rain": {
+          "lpips": 0.047417398123070595,
+          "psnr": 34.057100989206475
+        }
+      },
+      "rows": [
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0001399",
+          "lpips": 0.6347524523735046,
+          "psnr": 16.444631904092276,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0001777",
+          "lpips": 0.2503938674926758,
+          "psnr": 22.17200217090683,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0003517",
+          "lpips": 0.3358445167541504,
+          "psnr": 20.924378877326397,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0005440",
+          "lpips": 0.352353572845459,
+          "psnr": 22.731523339585763,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0009486",
+          "lpips": 0.11138597130775452,
+          "psnr": 24.194729176743962,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0023817",
+          "lpips": 0.19054441154003143,
+          "psnr": 18.128856732910045,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0027759",
+          "lpips": 0.284934937953949,
+          "psnr": 17.2774979397072,
+          "task": "blur"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0031174",
+          "lpips": 0.13801980018615723,
+          "psnr": 21.369637594842523,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0036859",
+          "lpips": 0.28121984004974365,
+          "psnr": 20.56996062033872,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0058890",
+          "lpips": 0.10722655057907104,
+          "psnr": 23.29248617095477,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0072183",
+          "lpips": 0.18350005149841309,
+          "psnr": 22.80885370433531,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0089777",
+          "lpips": 0.3522299826145172,
+          "psnr": 21.75503842378461,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0090520",
+          "lpips": 0.31228330731391907,
+          "psnr": 19.66525452981593,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094157",
+          "lpips": 0.18452048301696777,
+          "psnr": 21.587616105641626,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0094793",
+          "lpips": 0.11853418499231339,
+          "psnr": 26.043342031596982,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0095462",
+          "lpips": 0.11821040511131287,
+          "psnr": 19.840160045785765,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0102944",
+          "lpips": 0.055347930639982224,
+          "psnr": 28.5126382029898,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108178",
+          "lpips": 0.04841460660099983,
+          "psnr": 31.179644980515615,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0108708",
+          "lpips": 0.3314623534679413,
+          "psnr": 17.25959167358575,
+          "task": "blur"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0109153",
+          "lpips": 0.24960863590240479,
+          "psnr": 19.199533431094952,
+          "task": "blur"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185440",
+          "lpips": 0.032929033041000366,
+          "psnr": 39.31663206112472,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185463",
+          "lpips": 0.11825250834226608,
+          "psnr": 39.95172219362885,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185477",
+          "lpips": 0.10411116480827332,
+          "psnr": 40.78087153010295,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185544",
+          "lpips": 0.03833317756652832,
+          "psnr": 39.54570930585373,
+          "task": "noise"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0185594",
+          "lpips": 0.2433021515607834,
+          "psnr": 19.499873983142265,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0185983",
+          "lpips": 0.023135226219892502,
+          "psnr": 47.046299519856525,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186167",
+          "lpips": 0.08755075931549072,
+          "psnr": 40.41473031588623,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186292",
+          "lpips": 0.018050169572234154,
+          "psnr": 43.02106435142953,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186413",
+          "lpips": 0.05103703960776329,
+          "psnr": 41.25361548924899,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186626",
+          "lpips": 0.08082546293735504,
+          "psnr": 41.933716011029965,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186719",
+          "lpips": 0.021205095574259758,
+          "psnr": 34.36517990555745,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186725",
+          "lpips": 0.09223347157239914,
+          "psnr": 42.75015787968208,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186732",
+          "lpips": 0.25286710262298584,
+          "psnr": 38.860753632937225,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186739",
+          "lpips": 0.08102009445428848,
+          "psnr": 40.48558380727744,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186777",
+          "lpips": 0.11571592092514038,
+          "psnr": 40.9723901601746,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186797",
+          "lpips": 0.17590424418449402,
+          "psnr": 40.40631967071845,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0186882",
+          "lpips": 0.08758845925331116,
+          "psnr": 40.229092556764236,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187041",
+          "lpips": 0.336448073387146,
+          "psnr": 36.02847628046389,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187049",
+          "lpips": 0.01676812767982483,
+          "psnr": 39.171583914007016,
+          "task": "noise"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0187055",
+          "lpips": 0.07659861445426941,
+          "psnr": 39.91368300132333,
+          "task": "noise"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0203677",
+          "lpips": 0.07875873893499374,
+          "psnr": 18.873291849524524,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0205781",
+          "lpips": 0.08170372247695923,
+          "psnr": 21.575794425195266,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0207725",
+          "lpips": 0.048037707805633545,
+          "psnr": 24.309151106415406,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0217263",
+          "lpips": 0.08209284394979477,
+          "psnr": 21.621455789057315,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0222275",
+          "lpips": 0.11320525407791138,
+          "psnr": 21.252308436448843,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0223037",
+          "lpips": 0.03597414121031761,
+          "psnr": 29.699872957165404,
+          "task": "haze"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0224171",
+          "lpips": 0.03805594891309738,
+          "psnr": 28.45419832400307,
+          "task": "haze"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0227921",
+          "lpips": 0.07222064584493637,
+          "psnr": 22.85413786941673,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0238364",
+          "lpips": 0.05276141315698624,
+          "psnr": 20.560580454543892,
+          "task": "haze"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0240653",
+          "lpips": 0.14345988631248474,
+          "psnr": 18.184876095419927,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0245317",
+          "lpips": 0.10899905860424042,
+          "psnr": 22.491275545233744,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0251019",
+          "lpips": 0.17792856693267822,
+          "psnr": 20.328052109031706,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0256220",
+          "lpips": 0.062490083277225494,
+          "psnr": 23.3060156810981,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0261979",
+          "lpips": 0.10043022781610489,
+          "psnr": 26.091637830027853,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0262962",
+          "lpips": 0.0637277141213417,
+          "psnr": 25.198327469104278,
+          "task": "haze"
+        },
+        {
+          "anchor": "noise",
+          "key": "confirm_foundir_train_0265744",
+          "lpips": 0.4963379502296448,
+          "psnr": 10.051672291928496,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0267120",
+          "lpips": 0.09534472227096558,
+          "psnr": 21.907732536504973,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271524",
+          "lpips": 0.12324042618274689,
+          "psnr": 18.358371370922434,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0271897",
+          "lpips": 0.06671170145273209,
+          "psnr": 19.65768722066329,
+          "task": "haze"
+        },
+        {
+          "anchor": "haze",
+          "key": "confirm_foundir_train_0274242",
+          "lpips": 0.1804436594247818,
+          "psnr": 17.338529315515018,
+          "task": "haze"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0357669",
+          "lpips": 0.0821000337600708,
+          "psnr": 30.211692640453883,
+          "task": "rain"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0358802",
+          "lpips": 0.05441538617014885,
+          "psnr": 31.57389087895503,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0358847",
+          "lpips": 0.0796796903014183,
+          "psnr": 31.22619245407912,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0359713",
+          "lpips": 0.024962741881608963,
+          "psnr": 32.73976640399303,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362158",
+          "lpips": 0.04397572576999664,
+          "psnr": 33.186330011255464,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0362836",
+          "lpips": 0.06659980118274689,
+          "psnr": 28.82655200602194,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0363950",
+          "lpips": 0.014297805726528168,
+          "psnr": 43.35146639076817,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0367301",
+          "lpips": 0.011645998805761337,
+          "psnr": 38.05218939157562,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0369705",
+          "lpips": 0.023145010694861412,
+          "psnr": 31.35358302891175,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0370271",
+          "lpips": 0.026812328025698662,
+          "psnr": 32.00016933328951,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0371580",
+          "lpips": 0.01170838437974453,
+          "psnr": 43.246210899981435,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0373406",
+          "lpips": 0.015357126481831074,
+          "psnr": 38.96874050397421,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0374659",
+          "lpips": 0.05127142369747162,
+          "psnr": 37.65520070120409,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0376427",
+          "lpips": 0.05782528966665268,
+          "psnr": 35.689635083714094,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379170",
+          "lpips": 0.05184408649802208,
+          "psnr": 33.360028814636046,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0379426",
+          "lpips": 0.028955407440662384,
+          "psnr": 34.797626674406686,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0381127",
+          "lpips": 0.09228947013616562,
+          "psnr": 29.872319738279685,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0384404",
+          "lpips": 0.025713808834552765,
+          "psnr": 32.70078665200688,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0385544",
+          "lpips": 0.07945479452610016,
+          "psnr": 34.77581687113679,
+          "task": "rain"
+        },
+        {
+          "anchor": "rain",
+          "key": "confirm_foundir_train_0392524",
+          "lpips": 0.10629364848136902,
+          "psnr": 27.553821305486032,
+          "task": "rain"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0476696",
+          "lpips": 0.14721640944480896,
+          "psnr": 19.198961276368312,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "blur",
+          "key": "confirm_foundir_train_0481412",
+          "lpips": 0.46076685190200806,
+          "psnr": 14.434771386439728,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0481706",
+          "lpips": 0.31794244050979614,
+          "psnr": 12.713608069709759,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0487742",
+          "lpips": 0.183913454413414,
+          "psnr": 14.353078934107216,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489487",
+          "lpips": 0.09777750074863434,
+          "psnr": 20.796048110712235,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0489710",
+          "lpips": 0.300929456949234,
+          "psnr": 24.582359426413678,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0492646",
+          "lpips": 0.06748387962579727,
+          "psnr": 18.192238618859474,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493430",
+          "lpips": 0.06257458031177521,
+          "psnr": 25.145015484624963,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0493486",
+          "lpips": 0.2257714867591858,
+          "psnr": 10.791320396095447,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0494428",
+          "lpips": 0.1156756728887558,
+          "psnr": 27.899877692160796,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0495443",
+          "lpips": 0.23259249329566956,
+          "psnr": 16.241046036318807,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0497719",
+          "lpips": 0.1526339054107666,
+          "psnr": 11.664263818792646,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0505689",
+          "lpips": 0.20852062106132507,
+          "psnr": 18.842250296116475,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0509383",
+          "lpips": 0.08121488988399506,
+          "psnr": 21.862073399987686,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510126",
+          "lpips": 0.16875506937503815,
+          "psnr": 19.274965683517102,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0510818",
+          "lpips": 0.12684346735477448,
+          "psnr": 18.106323779698194,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0511568",
+          "lpips": 0.14769920706748962,
+          "psnr": 16.15978005599814,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0513722",
+          "lpips": 0.11338554322719574,
+          "psnr": 14.728930717065973,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0514697",
+          "lpips": 0.26673004031181335,
+          "psnr": 20.366972241618512,
+          "task": "lowlight"
+        },
+        {
+          "anchor": "lowlight",
+          "key": "confirm_foundir_train_0516314",
+          "lpips": 0.16642922163009644,
+          "psnr": 20.854386215704274,
+          "task": "lowlight"
+        }
+      ]
+    }
+  },
+  "artifacts": {
+    "confirm_foundir_train_0001399__blur": {
+      "record_sha256": "93b8277521b4b2c8d559b51212bd0ac8bd93c2f6695c9655de95410a71e1450c",
+      "tensor_sha256": "e83c4c7f058455a89c055c1d3fb7380e63a9e2a41e11cc54cec86b294b85663f"
+    },
+    "confirm_foundir_train_0001399__haze": {
+      "record_sha256": "73bab8a8ce408d16dc123fde622a712784915877d09f399926c27fed844247b1",
+      "tensor_sha256": "772fbf76141d54de0a2a99b989d2d406c41195ea4414e8e05e1db5339801f8bf"
+    },
+    "confirm_foundir_train_0001777__blur": {
+      "record_sha256": "c0d82940f3b5c2267a1450ce672678a740da361a240a8b1258ad71945efe592c",
+      "tensor_sha256": "9fb7722604ad55f050b957d0694ae2f0e80462471ada4a5ea701d103cca4de70"
+    },
+    "confirm_foundir_train_0003517__blur": {
+      "record_sha256": "421386ccfe32831e673e6283722b61ddb898a51ad209f845033c326194679651",
+      "tensor_sha256": "04b7d12908c6f505b4af2ee78632c53cd270737bea63761d15d8513cb338a45b"
+    },
+    "confirm_foundir_train_0005440__blur": {
+      "record_sha256": "01c5f149fd106f3c6c5047c0e4800e5d5250bf185986222f03c2326d4015e82a",
+      "tensor_sha256": "ffde1fcdfb9754c1653cb221f6f67dbe1ae485914f1952f75d59acbb1ca50f6f"
+    },
+    "confirm_foundir_train_0009486__blur": {
+      "record_sha256": "4ba44783f2b1128d593d914e9718017b3e3027f58ac8c510cff251b057f092cd",
+      "tensor_sha256": "bfb7aa93fb6b6a14900401392c0e369f871335dd82c20528867dd53349b27a33"
+    },
+    "confirm_foundir_train_0023817__blur": {
+      "record_sha256": "65fffa7bd3e4bf20080cb8402165377d59c9eb62035c9154a1afac1614f5af01",
+      "tensor_sha256": "8a55bee1c9418ef971d3bb81b563c9229904991a56ad780e5766d0e494ffe68f"
+    },
+    "confirm_foundir_train_0027759__blur": {
+      "record_sha256": "7f9013ae0f668c67e5d35bda0fe291a92d5f31952fdba5d704faec656c20ad99",
+      "tensor_sha256": "151c78d4990fea612404aaae05e673630d5be82fd696a0f1635e304a92ba1e75"
+    },
+    "confirm_foundir_train_0031174__blur": {
+      "record_sha256": "3b7bc4c6d8ac1cd8b14c6b0cd855cfc22a99999be13354f32a2edb445ae30028",
+      "tensor_sha256": "52bc968e2f5b7d87287e4a94ed4b8a0765c2004b25fbaf74954ce892685f5f12"
+    },
+    "confirm_foundir_train_0031174__rain": {
+      "record_sha256": "e47281c572082bddc8a7b729946e22a04c8f47042c45e07d673aae3ef663a82b",
+      "tensor_sha256": "549e41fcc1e15f9c6c49dff6e69b142b6694df4c9c4a37e9f027014dfb00e923"
+    },
+    "confirm_foundir_train_0036859__blur": {
+      "record_sha256": "9e2fa86c6635cdf9cb89ce7b0200fbcfa5b8685b0af6c3f6aa4efc025152ca0e",
+      "tensor_sha256": "b26e611dbb4281170cce32099782bafd6dd9461128e49be134a8057d492f0b87"
+    },
+    "confirm_foundir_train_0058890__blur": {
+      "record_sha256": "cdcf84c45019d329edd349df0dff94e926238445a96e18838337ceee6b6ad637",
+      "tensor_sha256": "3a239d9d32bf8c13954022b49aaa153b5d1ef2446d982b64778ae01c0dd105c5"
+    },
+    "confirm_foundir_train_0072183__blur": {
+      "record_sha256": "957a3c50d625a0e6f98777d1d7b5de080ed5d1e5d603ce73b98d871eb9ecad1e",
+      "tensor_sha256": "f3f55a3277ac852785ed71f7b88876d463d90ab736fa6fa23804f344eb8b504d"
+    },
+    "confirm_foundir_train_0089777__blur": {
+      "record_sha256": "2e13992834eb63382c36c580e84a21fcc11be93c6c3d4333118b821852096aa9",
+      "tensor_sha256": "6b439b78169db24f7cf4ee6feec2dcde88cd0842de731d286acb70d2347a5b96"
+    },
+    "confirm_foundir_train_0090520__blur": {
+      "record_sha256": "7d61b6bf378873f61cbf041ca00048f5f16cad97a012f069630d0fd3fc1b6d16",
+      "tensor_sha256": "4285f1b3f2f8f09b4ae8a513831b4f1f76847f96a6c783c4475fc420dc5e9e92"
+    },
+    "confirm_foundir_train_0094157__blur": {
+      "record_sha256": "8bbc0b0ccab3ee2d89261fb3fe2dc47003738a2192c0a395ca72f568cf8ab05e",
+      "tensor_sha256": "c7fa5f213e5ad18b826235bba6fd02bf46453ed959afe352825ddc2072f5b015"
+    },
+    "confirm_foundir_train_0094793__blur": {
+      "record_sha256": "b00e12b7a9bfa0a54e30ccc295a561274d147742e04fa1fa1cee6fc7d1080017",
+      "tensor_sha256": "a8e4d2bc9c89aa0effd8505d924f7ce631fe417eb0a123d98ce04f8a0ebf157e"
+    },
+    "confirm_foundir_train_0095462__blur": {
+      "record_sha256": "b22694a7c96c6e38f648151007e451459f45ae1ae8896a95b13d44b68107ecbe",
+      "tensor_sha256": "19f5ffd234c1247eef23ce755c1ddbb6b24faa9d2e30425ef7619ca6be82be8b"
+    },
+    "confirm_foundir_train_0095462__haze": {
+      "record_sha256": "db734cf92671931ee675bbc8e6dd8fb7c6591a8e5b04dfe91bdc6b673f36dfd5",
+      "tensor_sha256": "26d0f911d1f5d757b39b52aebd644f856b727eb491d3165a880ecc9b01057f3d"
+    },
+    "confirm_foundir_train_0102944__blur": {
+      "record_sha256": "75cf60e1eb6869eae03005f60514b14f5ba7d83893f3b15444484ef41c8784d0",
+      "tensor_sha256": "2d57240ad2afbbbee00b3d0f86f80af495ae301882c257e3018fd56a32b39be3"
+    },
+    "confirm_foundir_train_0108178__blur": {
+      "record_sha256": "5ea17e617fdd437159d350e074e9ba9fb14b4d95ddc79d3f33095e2962c81134",
+      "tensor_sha256": "32ce23beb95d863d2526eb2ff82d7dc701b3263a68088a3f6cba1df0ba8c33cf"
+    },
+    "confirm_foundir_train_0108708__blur": {
+      "record_sha256": "71b4590e636d17947a45dc44fcb773cebcf96f90091de8692868a9e918e8e9f9",
+      "tensor_sha256": "de9748a80c0e7c36cdf7ef2aa2653dc549513b041c40a159fc790fb6793be9ba"
+    },
+    "confirm_foundir_train_0109153__blur": {
+      "record_sha256": "42045db84633f93d58f73aa4aabd76842c56b6b53cae08eaa378f3c5c8e8b905",
+      "tensor_sha256": "a348e95d2d73ede74af9e168ed3810457a8bccc6387df71dfb39bd265a399b11"
+    },
+    "confirm_foundir_train_0185440__noise": {
+      "record_sha256": "10209a4246eebde8c553b1c76a4a604fd5e5162d5a8d1c2b3841148160642337",
+      "tensor_sha256": "c7778fb926ed3a4b27965d753bbaaa03ba8d18e51e9b2f604ed63172c76261e3"
+    },
+    "confirm_foundir_train_0185463__noise": {
+      "record_sha256": "d993407e7fdd61afffea212d0aef5a91b59f29e0ce61f18afc09dd9201e1ffdc",
+      "tensor_sha256": "8a58bb75ded62f4e8d6bf8c76d6a61406020994605f5c78d92fa274e3e8843ca"
+    },
+    "confirm_foundir_train_0185477__noise": {
+      "record_sha256": "0315768c5d441b03522cbf02a6954508fdddafefd169642f9ffb0afe9e83bbfa",
+      "tensor_sha256": "5bb48a4f8f9b89215fc194a543693169426352f701fbe7ee00078ee2c5e8c052"
+    },
+    "confirm_foundir_train_0185544__noise": {
+      "record_sha256": "316da89af314093a77cae41072c6c752bf115407f46254aca78e440a1c33b9cf",
+      "tensor_sha256": "95874668aa6f1f0c280b7e217aaf75c6f224a511cd1252537cfe2cc045dd15fd"
+    },
+    "confirm_foundir_train_0185594__haze": {
+      "record_sha256": "68433bdf6e535662a712fd6cb3932814802f3725e14d8d2affdb426d1f08794b",
+      "tensor_sha256": "ec92f39f80e8b8aae18c9a398e820f32142b7e2d02b633365ce19fb3e2140696"
+    },
+    "confirm_foundir_train_0185594__noise": {
+      "record_sha256": "afc395ae58cc2e529641b3f86d41df6aa483269139d23e01b1fb0570c89575c3",
+      "tensor_sha256": "286e06cbcb344048cad0b7dc7c03dfa9d407d4c7522c52d8ac4d1d32afbdbf5b"
+    },
+    "confirm_foundir_train_0185983__noise": {
+      "record_sha256": "1a6e6556140c7c16577777d1f997c6da3db10489c0f676b6cc5636cab161d532",
+      "tensor_sha256": "8210485f4f2458a73c87b0c31fea373a8c4b1d5aa4f29938cc39bcf84da25b25"
+    },
+    "confirm_foundir_train_0186167__noise": {
+      "record_sha256": "c1b51c6c641c2cc8b15c5f4eccd86c8db499b31635597645c92a1c3ff63051f9",
+      "tensor_sha256": "27918ed2d0de8a7099d07260e140c26ae25dca4132ebe232368346021c18a3fa"
+    },
+    "confirm_foundir_train_0186292__noise": {
+      "record_sha256": "201ef5dd1037e213b3df0f54064a56c2370789a6a1df7202cd93a1cc2fa28a0d",
+      "tensor_sha256": "da1ab80f14d66c50e37e20b08abb9a271dcd2b08d42c05af80756789bfb8953c"
+    },
+    "confirm_foundir_train_0186413__noise": {
+      "record_sha256": "b7ee682377be0ebe69bcf144c23395f3fc203854b5c826dbd66d0393a1567beb",
+      "tensor_sha256": "7114cd448123d0d1c3013d4fea5f5f0f5b3d1f6fc48b935a08bdc3b168d04e33"
+    },
+    "confirm_foundir_train_0186626__noise": {
+      "record_sha256": "936dcd75ca7f06d82728739efba09db1b4e463e93869849b00d5ef3f8bfe2655",
+      "tensor_sha256": "b24abdde403a709eff5b79c027d39dfe827540f0d6d3556eaba7db1af3867dcd"
+    },
+    "confirm_foundir_train_0186719__noise": {
+      "record_sha256": "9f71d721c786e1f504bf8d45a663b2fae31483d69759ee856c1821e431f4b98a",
+      "tensor_sha256": "4221e793b964b88a7a76e2486a90c97c416cd5e201fef9549375977548fe5093"
+    },
+    "confirm_foundir_train_0186725__noise": {
+      "record_sha256": "5a5322bbe035103fb2948aac5d5545c2c38486859177185ebe332af3491d43ab",
+      "tensor_sha256": "e1608a18d56c540cfa833e25e8dc5804aac53cfa1f822c9ddc4eb1c0e9fcad20"
+    },
+    "confirm_foundir_train_0186732__blur": {
+      "record_sha256": "1f60c160a12987f114743ab2f20bb0547f27dc7212f5e555e956e974bdc03fa0",
+      "tensor_sha256": "9efff7c04a62f5e665bc4142e696727bb791cee23090d7be64e8cd9285671465"
+    },
+    "confirm_foundir_train_0186732__noise": {
+      "record_sha256": "5feeb14ccd2d004fbeb95bcded7c5813ea15d665aa01d86137c32285b0e42fde",
+      "tensor_sha256": "3df4d85aba8d98bf6ebe1e7acf4e090be4a5553ef6452e36f822856f9d289537"
+    },
+    "confirm_foundir_train_0186739__noise": {
+      "record_sha256": "866f9578dbba8dc1ac1ea16a33a812efdc8c627d7d51a3150182a6ef6e5866d8",
+      "tensor_sha256": "e3ce75c54afd54149ad47c28078ba7437dfd6f90718004c4c7e6e0145ce56d70"
+    },
+    "confirm_foundir_train_0186777__noise": {
+      "record_sha256": "b02721862a9ef06b1650532056b4fe998e2c867531a2d88f019ab48980bdcf81",
+      "tensor_sha256": "11145ab7e5f5e0125228f7611f33db03b9f91f77ca5732c9e95236fe88b61651"
+    },
+    "confirm_foundir_train_0186797__noise": {
+      "record_sha256": "c786661f24510a7e0bd9f4a6b7c4d9fd4e8c1f74702d51206943bf6a271f3e00",
+      "tensor_sha256": "006c865d6ce83ba0dd947c5057776fd6495d1c334a0f9a2b6fa9cc0f8558f95d"
+    },
+    "confirm_foundir_train_0186882__noise": {
+      "record_sha256": "c923fc443595d24326e94809b947ebfe40ec5c07007f4213d026bde555c75750",
+      "tensor_sha256": "320c02caefcd808ab45a9e5ed1555c5be61cbdc5c86d2adab912a0f48063de84"
+    },
+    "confirm_foundir_train_0187041__blur": {
+      "record_sha256": "d6186e65754dddefa4416a718028aebee557e88fc41544daddb960068ba10751",
+      "tensor_sha256": "589d5003cb00b0dd96f27a98ca526c53ad308605e14dd96e8957070274e16e78"
+    },
+    "confirm_foundir_train_0187041__noise": {
+      "record_sha256": "e0b77a38a779cee90b2576e2f2ce9eac4562b9a5fb0537c9eada04fef3a27a9d",
+      "tensor_sha256": "016665ec286f96a9e555f3d23c8dc72dc2afca13099fb2ef2d6983b20d617468"
+    },
+    "confirm_foundir_train_0187049__noise": {
+      "record_sha256": "db4b4f4231eda661ae93ec5fd18241ba1494a5703b041db71354d09597460b11",
+      "tensor_sha256": "a09fff36617377bbd28f86b960ab38d9bb7379c0fd4d1b0a622382920f3dbbd7"
+    },
+    "confirm_foundir_train_0187055__noise": {
+      "record_sha256": "faf9af7fa1965e19867bb797616b0c6ef72e81c9e78ba102cf4bc5f03edcc8a6",
+      "tensor_sha256": "6103fc5983aa110ce2d01c811392e83af7dcbfc08eb3e826d52d5e6f59453978"
+    },
+    "confirm_foundir_train_0203677__haze": {
+      "record_sha256": "e4418cb3b69e889c3287b7e26f051b1587af1dd305391a879dbe2ce39dc646c8",
+      "tensor_sha256": "bcc333f30d401eab546fa4fbed109aaff79a7e50f0ab07044f277231e8cbf558"
+    },
+    "confirm_foundir_train_0205781__haze": {
+      "record_sha256": "400d48a442144062ba02fc17057575a697e5eeea7f0f8822daeaecbdde2b1ee0",
+      "tensor_sha256": "cdc6bf1a816b25679f215fd90a0d1fa224f38716e6507cbd4152197dbfd9c068"
+    },
+    "confirm_foundir_train_0207725__haze": {
+      "record_sha256": "8eb9aec425dda269bbd37de983e454b40f34c0c5bb4b822abc6ce446d9a3e58d",
+      "tensor_sha256": "cea6e874ff4f1416d67bd36b7385bbb67c55086477a2ec78847e6789d3184eee"
+    },
+    "confirm_foundir_train_0217263__haze": {
+      "record_sha256": "0e519ab7df33467eaf3193cd2a3ea6a19faea62cf0515456c2259c1858a39e28",
+      "tensor_sha256": "57dc6e4d23a25ab1019086723791853b95531459fcf69afdd8a8c3e640ddcb12"
+    },
+    "confirm_foundir_train_0222275__haze": {
+      "record_sha256": "7b163a84ca333ed2295748e88fc869e7b0335a0abc85114051599553f1691218",
+      "tensor_sha256": "3ad4194aa45de6d3d080a638c3f6fcfc65391a6d907153320f8f0a2e2a020525"
+    },
+    "confirm_foundir_train_0223037__haze": {
+      "record_sha256": "6fb103f2781d0f8fde0d36bdb9ae9706b99ae891721d5dd7fa1bb62835581656",
+      "tensor_sha256": "70c63b3a6b21ae7481294f1fb11807939ad8d94d001daf8c78cb2ae6f42f8ca4"
+    },
+    "confirm_foundir_train_0224171__haze": {
+      "record_sha256": "bff23a49f5a3fdb04ac40c139622a0041afdecfec911522f2391b2a03197ecee",
+      "tensor_sha256": "50957073cce4c58809d3dd57c58edc51d8f5148374b0967e350bfbfa63628b86"
+    },
+    "confirm_foundir_train_0224171__rain": {
+      "record_sha256": "c82837262518c5836d49812889c1f3edbcc494f8f94f032edbab6eb5f08d0049",
+      "tensor_sha256": "9e07722ff1facb1fe9a01ea87d232741feeef2e502a1dfd924d77f90192617cc"
+    },
+    "confirm_foundir_train_0227921__blur": {
+      "record_sha256": "a3ca813f23f856daa6d7a7510d2c0c2991116caca509bd16fe69871853821d45",
+      "tensor_sha256": "d7a764cf4c5781e584ee9e3c7a51c8d4719bdf63ac3990055fac69b8c032bfba"
+    },
+    "confirm_foundir_train_0227921__haze": {
+      "record_sha256": "c3ca8e1dabf75a0b5058b5ae8d2e069dfadddaea59fbd7b83153f86d93cde44f",
+      "tensor_sha256": "da5d308c0f52b9daa5604930e42712772d76bd570001a9f848f63bab5952e695"
+    },
+    "confirm_foundir_train_0227921__rain": {
+      "record_sha256": "9c5ea755b524f857733a1b07bffff631b58459db445c181072d0434dd7174fea",
+      "tensor_sha256": "812d538889376770854d7b4b8f106644b6dd5c2ebc68e02ef85a60de5ee3f1e6"
+    },
+    "confirm_foundir_train_0238364__haze": {
+      "record_sha256": "ff45d847a8a5e0be8c15cf68290eb482e24df64e2daa038df0d91ebe05ccc3a6",
+      "tensor_sha256": "f36e6740b52230ab7933300c4859ec48adf7bc7ea92ee0f7f5df2a79de46abd2"
+    },
+    "confirm_foundir_train_0240653__blur": {
+      "record_sha256": "ab08a5108706689511d748dffaf413c3b05f0a8a825e76d1680ee6aa026ccf0e",
+      "tensor_sha256": "2869797588adb11d58b58b82e4029b25518ba4a3b148fe26ab864a1cf68bdb2b"
+    },
+    "confirm_foundir_train_0240653__haze": {
+      "record_sha256": "d1e0e5c091e8dbe74d3050f0a3e259a9d9f021197c50dfc78f4f72181aaab6b4",
+      "tensor_sha256": "1980f35022dc541b4b40aeece2dff8dbce0cd82bfc8bdca8a372ff92c3984850"
+    },
+    "confirm_foundir_train_0245317__haze": {
+      "record_sha256": "51abeff5b9d674c108f843d09a5eba8a61660a67bd05372e784d3a3db67175c9",
+      "tensor_sha256": "4b8e1612858c6e6dc9066c24bfdfaddc2a5b796b056b5fe2525be5ca3a57fae0"
+    },
+    "confirm_foundir_train_0251019__blur": {
+      "record_sha256": "c910f6133f6ab122a937caf497963b5feec44d5af932ae1c4e84f10fb170c6ce",
+      "tensor_sha256": "ea06d19162f4afda1a22fc3e9f267f7439e15cfd8feca12863f8858ee9898a96"
+    },
+    "confirm_foundir_train_0251019__haze": {
+      "record_sha256": "fee6548b807b4df15032dc0d38ef7ad668e2eeb1a84f2fb11c2d50d7171ae21a",
+      "tensor_sha256": "d68e49469ee4eabf9bd1b783aeb9b6a0fe58b669f4b5ea57e323a0b41e5fb9dd"
+    },
+    "confirm_foundir_train_0256220__haze": {
+      "record_sha256": "cf5e37af47d310b45a12a081c71c3ce2bdc596a2924565b02c1dc47cd59587e5",
+      "tensor_sha256": "fe37d1f7c70a658290c18e98c896d68cb5cb406bd6408b167d0c747c6a474b68"
+    },
+    "confirm_foundir_train_0261979__haze": {
+      "record_sha256": "23f1c84c5369c943dda37c188ad34f8ac72e47fcaf2d223c7609cd8b1ae051b2",
+      "tensor_sha256": "9347508ee3a76db3db7cead36321021434e3290ae2f04d970444c8ae0aca59be"
+    },
+    "confirm_foundir_train_0262962__haze": {
+      "record_sha256": "ba806df5eb42788e44ffb2b1ca9b456de3b5226924875aaa08886b773d456bc0",
+      "tensor_sha256": "fe4f0bdb41e26008e137f6a2e43edc3d6bf30cb7db30022153509c6c0073e0c3"
+    },
+    "confirm_foundir_train_0265744__haze": {
+      "record_sha256": "d9f3c784e3a95e85d05e1e1132e27557faaf79f676b43d5fd344635e92d79c48",
+      "tensor_sha256": "ebf1848f8d54dee75fd4002a4d5ded48d1e0bfae8b92830540adf03a24118669"
+    },
+    "confirm_foundir_train_0265744__noise": {
+      "record_sha256": "192b444d6bbc8531d62bfd8ed79abe2c51ecd801a3a38e985f3ba5550c4e88a4",
+      "tensor_sha256": "640f6ed80d6040884fb3229122c7e735c748b433edce1212b6fa251e49706aed"
+    },
+    "confirm_foundir_train_0267120__haze": {
+      "record_sha256": "f858df37d5e8e3f508693a639bd98725d7f78a32ab259385c5124cb309ffa368",
+      "tensor_sha256": "eb39572bb615b124c8aab3ae24a70c5f48d801c1bfd71e91e1c9834bf5c58fbd"
+    },
+    "confirm_foundir_train_0271524__haze": {
+      "record_sha256": "c2fe28d9d4ab477333a9a9373d9a0315062cebf3365d0e6dd02c6f27b505c405",
+      "tensor_sha256": "403abb62f8c5f7fd45167cbbda5c503bed0c12224ef7d4af825bc950d36ec280"
+    },
+    "confirm_foundir_train_0271897__haze": {
+      "record_sha256": "9d76b0f00c5c37232eec63b8fe8d1b8a87e73c685ca9a89b6e36614269a88327",
+      "tensor_sha256": "a47086213cbd2d6bcc4451e8bb9d223270a6af016925327805d70244d9b80227"
+    },
+    "confirm_foundir_train_0274242__haze": {
+      "record_sha256": "fe8720575e51503bcd7f406952e886c0609cebc2189edbc7b9b74c936e3713cf",
+      "tensor_sha256": "3626fde79149c89d1b09c6de2a9dc481c456f55576ebb555be208b8f9dd6eb99"
+    },
+    "confirm_foundir_train_0357669__haze": {
+      "record_sha256": "b7a09ad33224403b5f00051129dc649673415fc00637c7ceef038c5d263e2f24",
+      "tensor_sha256": "446271465406ca0d2b5823d7f383231ba48b542b78a09da65c2eec36e8facc87"
+    },
+    "confirm_foundir_train_0357669__rain": {
+      "record_sha256": "81d193f80c216830e595af2c3cb7da2dda5dd9d6b9453fe2e30e96d7266eb2f8",
+      "tensor_sha256": "2e7e17325987865616dd9580765922e19845ac6e28656031b305f734c996e74b"
+    },
+    "confirm_foundir_train_0358802__blur": {
+      "record_sha256": "2b4fd46d8f48a1afe2de78c9230bd15ce5a8010c337be9a5da60a0e5cbd8cd5f",
+      "tensor_sha256": "b05a184519749c1f24f31e40a675c86cd060730d6211fe2d247a05d042acf151"
+    },
+    "confirm_foundir_train_0358802__rain": {
+      "record_sha256": "14f792b7241535c4cf66c09a3973b5b9978c170ede2729fc7246f1ff492559d4",
+      "tensor_sha256": "02fe1bdfb7513c471b5bcc96ce4cbe4006e352ad520a5606444c8db8af9822ec"
+    },
+    "confirm_foundir_train_0358847__rain": {
+      "record_sha256": "e76cbf592986565d39693f3927b6962fa2232f0973e431fc62f6f9806dd41617",
+      "tensor_sha256": "cd879fca23892dac7e355a885297354b37332fd6418eaa7b4f08646bb668829e"
+    },
+    "confirm_foundir_train_0359713__rain": {
+      "record_sha256": "02779dbc6fe85da63c8c773408106d3c605e23155ef0edddaa64d39cabf5ce79",
+      "tensor_sha256": "6ce4c09aab7a68e44540fef31092d1f607a90007ab46efaa3738cb690651403e"
+    },
+    "confirm_foundir_train_0362158__rain": {
+      "record_sha256": "b110631c11b7a9ae96bbd6f572bb340f7bd3fb20f2ee45df1b48133ee3beac6e",
+      "tensor_sha256": "18077eba6d55cb9f2421165d5179e4e564eb366535929602611859320321dcde"
+    },
+    "confirm_foundir_train_0362836__rain": {
+      "record_sha256": "f0d50686ec1b975e33083c6abc1a9d6d0bee36f75612e6be78ce64b4516e36c1",
+      "tensor_sha256": "fe727e6321dc6a5f2951e390e0eb726eae4075c1ce4ac56821496e53784ca8fd"
+    },
+    "confirm_foundir_train_0363950__rain": {
+      "record_sha256": "05d488a1a6190f53eb9193ee509506211c47eefacbdb5691ffaddafcd4eda2c0",
+      "tensor_sha256": "a9abe8d527e2e27ffb2651865c352967c6123223b90d0036065b128bf9135d1f"
+    },
+    "confirm_foundir_train_0367301__rain": {
+      "record_sha256": "da48d18fa4c8600459476c3289567fd2c5ec48904507c9f57fc4fb0684123ffe",
+      "tensor_sha256": "3fffa8e643629a9b063ee6e69526751df588def7ffd92fbb470e6678584e5094"
+    },
+    "confirm_foundir_train_0369705__rain": {
+      "record_sha256": "61ff4b00cf3d01101f6d2d85ea725ee5f573f9b2f8ee85380aecc1d055fc1094",
+      "tensor_sha256": "2788a4d26817a4ff291220608af1d06f20a818b7be075b96e82de3987a74adf6"
+    },
+    "confirm_foundir_train_0370271__rain": {
+      "record_sha256": "4541b77b415f077bb3b7d94eba3ee882654b849a9e2d08b788a50630a0c182e1",
+      "tensor_sha256": "127cdd10bbe53b884cd1a26e0ca47e5786b4ca163dd3e4f61ad5c2c2114ff68b"
+    },
+    "confirm_foundir_train_0371580__rain": {
+      "record_sha256": "4a5b897b7bfa1f48fd745d73bcb18e6557772b2264d7e24dd46789fa08bf31ea",
+      "tensor_sha256": "ddae7e1c9d6c28f2bc929a82ed28b7119b520c1b64ad2150e1090338327d65a0"
+    },
+    "confirm_foundir_train_0373406__rain": {
+      "record_sha256": "f7434cd684c141998c7f796b99bbfe84042ae0fe3603a2f7c7d7956e114bcd62",
+      "tensor_sha256": "9ac411c57f6f024f82ac90e7024180186bbfdd99ae1c48855a5722716b16c3fc"
+    },
+    "confirm_foundir_train_0374659__haze": {
+      "record_sha256": "5b342e717be37ad4008100084bb1b5228a2c883bb6be08547cf57dfffa4fce11",
+      "tensor_sha256": "80bf34c50036c5df210cfb9bd05a8a5db8403b13e51394d0abda43a3e071abee"
+    },
+    "confirm_foundir_train_0374659__rain": {
+      "record_sha256": "3c99ee2a72f6817019dde6acdcd1992cf63a8d47bed96e653ac7a01c25571584",
+      "tensor_sha256": "41707b2ca9bd77caf5c9dfa4b4a771f2de138d22b1ed09c0e0e431741e6acd2c"
+    },
+    "confirm_foundir_train_0376427__rain": {
+      "record_sha256": "4450677126a2f2ccf8b3c585e2f8a65bf61dc1271e33062ca08edf4de9a63c23",
+      "tensor_sha256": "db30afbb5e60636cf15d8807626ad574c715d28dbb38318e0d62f5093619909f"
+    },
+    "confirm_foundir_train_0379170__rain": {
+      "record_sha256": "308fa55dde1a8e7cccbab816322537f2bff0c02089773139acd18ffe1bec37ec",
+      "tensor_sha256": "b29d912f426e532ceab71c55b61c698f9f73e23720e827a947a623bdbdd5c405"
+    },
+    "confirm_foundir_train_0379426__rain": {
+      "record_sha256": "701fb2e4d7c833bb5c696667c473a8ac07d745108d8a826df41d500f8b1978b5",
+      "tensor_sha256": "146b02ecf5e03ad1d585a511c583fa5522d4b59f93f30c423ed477546216bed1"
+    },
+    "confirm_foundir_train_0381127__rain": {
+      "record_sha256": "f586d008e11ee54cbfaca07010cdd2fe200fb0f78c2a72419f034c64aa0c26e2",
+      "tensor_sha256": "a35f98f24ed9cff10ead977b2ca28e408e0172d54600a31d1a201d9ad26ec9de"
+    },
+    "confirm_foundir_train_0384404__rain": {
+      "record_sha256": "a035133b2efadc5cebfb832a3c37045bd59856cad4b29e64d61bffded6fe17da",
+      "tensor_sha256": "2adec700cef200acb5881f5ed0be140fb0fdc22c67724c21772dad907cfa72c4"
+    },
+    "confirm_foundir_train_0385544__blur": {
+      "record_sha256": "df47ad9e8ea3b4b60547b6f7b44c043425a7be62b01a0416774c28e16be300c8",
+      "tensor_sha256": "4ae1db6211eca0900c0f9198bc1d9c74cc1c35359fbc84585040733bb855f220"
+    },
+    "confirm_foundir_train_0385544__rain": {
+      "record_sha256": "0a99b7099ba00527c8e8fcc23b2ffe00e3288024c6acfafda466b5e77c606b9a",
+      "tensor_sha256": "770d18939d37a79d04c091e7834028183641aac99331a8376a9e5492c378165e"
+    },
+    "confirm_foundir_train_0392524__rain": {
+      "record_sha256": "ea228b6b5b531ced1957919594e2aa09e5186c9c04df1637e6e3d95b63350e6e",
+      "tensor_sha256": "81a7e4ca9333044a16522f9b95435664f6a9936ff57d49000b149e7f4bebc816"
+    },
+    "confirm_foundir_train_0476696__lowlight": {
+      "record_sha256": "016f9cd1b3b616c8dd7065b43d94004e7bfc657af52a43384bd823e2e6c31734",
+      "tensor_sha256": "3414bac8b606c4cb2945b96822b7d3474ec79156d5873db9c1dc56f3a2033431"
+    },
+    "confirm_foundir_train_0481412__blur": {
+      "record_sha256": "1adba3742078472da54e60a39034c29f8aee4bbe2a6c27200c844f23d5018660",
+      "tensor_sha256": "f06dfe9ba84a056e0e17781d99f6de224af55a57a2f9bc39a120f2b7d27f5f44"
+    },
+    "confirm_foundir_train_0481412__lowlight": {
+      "record_sha256": "4ee9bd344b74994776acd7544fb15df8b5cfca0db0361d04b0dfb5fc73f4d6fb",
+      "tensor_sha256": "1adabc93b24878eb3928960bdde2da1b1b18a40cdaf7fee55cd2e6668b2150ea"
+    },
+    "confirm_foundir_train_0481706__lowlight": {
+      "record_sha256": "093b70e05a8cdd0ec822aa904f7b3b6b401be93ab60daede5b30b74eb74f2840",
+      "tensor_sha256": "e12567d67d7aa505b5104a72e865fc519388926189de836bb188d95c2cabcfd7"
+    },
+    "confirm_foundir_train_0487742__lowlight": {
+      "record_sha256": "4d17250c9a767f4c5e71aba7274d1d87544ec54f246e8526dc148dcc1dd2da60",
+      "tensor_sha256": "ba0a043c1623e653e1d466a9b4fb9c7845f2733aa64f027c4635a8c4e943e4a4"
+    },
+    "confirm_foundir_train_0489487__lowlight": {
+      "record_sha256": "e7ec4bd1f2382799c3fd7926adb41a6114a4e2d3acb61e57314703ac9d2949ab",
+      "tensor_sha256": "3ef8de4bb5e4741aff9d9043dfee8d365958f7436e8b98b4ae9ef63080419a37"
+    },
+    "confirm_foundir_train_0489710__lowlight": {
+      "record_sha256": "aa1326efc5a015b1ba8500d0ec3799c57ca215d5d7a0250776d08ceaac746962",
+      "tensor_sha256": "5e57fb9cc4894c1824f9f3788c175ebf5bdfdbcfc2cb4594d77e106985a6d4a2"
+    },
+    "confirm_foundir_train_0492646__lowlight": {
+      "record_sha256": "e737147304a6da66c70dd1e11a951bda78a1d4b6641f7c6eeb0fee71474bb0c4",
+      "tensor_sha256": "14577cbb7fcbc0e8349e5742165d43e9e71d62caf2336c8e04ceb45980f5bd4d"
+    },
+    "confirm_foundir_train_0493430__lowlight": {
+      "record_sha256": "1b45e7965d843fad3aa20ea8be4e7bf35e35ac521a866a0237131711a8ef8e68",
+      "tensor_sha256": "6b679c1b2208ad72debf2aaad47e05a031a6f6e9f1a26ffec9fce76996b5baae"
+    },
+    "confirm_foundir_train_0493486__lowlight": {
+      "record_sha256": "a2bf215c5dc07bdff9ad82ec1f2f4ff91b659a8e319f3724ac8d53d36f81beea",
+      "tensor_sha256": "b568543d866592106863ead834078c6344b9d393969133111e6f61232454810e"
+    },
+    "confirm_foundir_train_0494428__lowlight": {
+      "record_sha256": "80af0f9b7eb5e52f148c9c11a1466be23be46b5fddefa19e8690862113079bb0",
+      "tensor_sha256": "5359542e3548d3fb2e26ea0e2a15926436a111b005c1798a9a337c3a983f3988"
+    },
+    "confirm_foundir_train_0495443__lowlight": {
+      "record_sha256": "4fa6bd7cd2d286e8727ac0a8bd0d2a9071300f395a1c005035c1f50ec5761a2b",
+      "tensor_sha256": "59bd33abf8a0809a1819fa9e57a57b1bb3068eabf9e531b837da8ee434661da0"
+    },
+    "confirm_foundir_train_0497719__lowlight": {
+      "record_sha256": "593554d8daa18dbc96b63f26a1260d52ee2dc15a9dec12f904345f5c2b1e594f",
+      "tensor_sha256": "ffd2657481bccc02df3341a336b71525ae15ca0b7b896c8ca634db0c9cd435a3"
+    },
+    "confirm_foundir_train_0505689__lowlight": {
+      "record_sha256": "b0a8d78d9ec6431a3dcb6053766aa04836e4f8d27ad6c63ecf6bd411b632dc97",
+      "tensor_sha256": "c5f0c24a09c0bb2ee84acacf2d5b97f30a5e8df178f979d3ea3233377f00421b"
+    },
+    "confirm_foundir_train_0509383__lowlight": {
+      "record_sha256": "bb35b035c93ee31b8d89cee70fe5042d005e2b1f892bfb2c9d44ca146a14cac6",
+      "tensor_sha256": "59ae9e0b1855d0ec15480ae8c0edaaafa5764e34cd290776cc9ed7923f79d88b"
+    },
+    "confirm_foundir_train_0510126__lowlight": {
+      "record_sha256": "456a3ed8df38515cffbbe9192fb83cd54945e26f730c5571f805603ea3ddc09d",
+      "tensor_sha256": "f11956f98327d0c2a2aa6d9ff4edbe7bc1ece6bdd1544bdc71f05ef6facc20b9"
+    },
+    "confirm_foundir_train_0510818__lowlight": {
+      "record_sha256": "082b33eb2f0479da847433e04a075389843ab06ccdcc6d2b041b091812e1e062",
+      "tensor_sha256": "166ce386ef9661b40d99ada5e1d3e22582b202c6bc9b470359859fc4bb6cb5a8"
+    },
+    "confirm_foundir_train_0511568__lowlight": {
+      "record_sha256": "b190cc137796c874dd1421e1da8e16b2b4773022f0e509a977dbd07e734f33e6",
+      "tensor_sha256": "c4fdbdf5c831c7dba8d6e883395661ba0025653dca391d9ac5e422a88ec75482"
+    },
+    "confirm_foundir_train_0513722__lowlight": {
+      "record_sha256": "52c218a32ba1e9df67a60e17ad2f03929f89c503da7b00d6386028db774b7b6c",
+      "tensor_sha256": "a47d501749d54a08a94a9a05f70071dffd7d9661f1cf09afce17c570fc0040e1"
+    },
+    "confirm_foundir_train_0514697__lowlight": {
+      "record_sha256": "e7551196142731bfe67eb6a78eab203cc8ffea003f87dc2070d81b52c8e3045b",
+      "tensor_sha256": "51f4699ffff360532e045a13ad6d207e95d86e3d4153279227c0381a0d892866"
+    },
+    "confirm_foundir_train_0516314__lowlight": {
+      "record_sha256": "0687ce626bc817e7c86d6ebfdeee05a2afecb929466c609fa0bed38f549f8254",
+      "tensor_sha256": "0b4f0ad2a8e82176f0c3e51a35299317dbff54d7c4ac428ada547875bd9d8bca"
+    }
+  },
+  "automatic_followup": false,
+  "classification_blocked_restoration": false,
+  "compute_costs": {
+    "finish_cpu_attempt_reported_separately": true,
+    "phases": {
+      "features_node0": {
+        "attempts": 1,
+        "failed_attempts": 0,
+        "gpus": 2,
+        "seconds": 1651,
+        "used_gpu_seconds": 3302
+      },
+      "features_node1": {
+        "attempts": 1,
+        "failed_attempts": 0,
+        "gpus": 2,
+        "seconds": 1613,
+        "used_gpu_seconds": 3226
+      },
+      "prepare": {
+        "attempts": 1,
+        "failed_attempts": 0,
+        "gpus": 0,
+        "seconds": 22,
+        "used_gpu_seconds": 0
+      },
+      "render_node0": {
+        "attempts": 1,
+        "failed_attempts": 0,
+        "gpus": 2,
+        "seconds": 610,
+        "used_gpu_seconds": 1220
+      },
+      "render_node1": {
+        "attempts": 1,
+        "failed_attempts": 0,
+        "gpus": 2,
+        "seconds": 579,
+        "used_gpu_seconds": 1158
+      },
+      "train": {
+        "attempts": 1,
+        "failed_attempts": 0,
+        "gpus": 0,
+        "seconds": 2334,
+        "used_gpu_seconds": 0
+      }
+    },
+    "used_gpu_hours": 2.473888888888889,
+    "whole_machine_allocation_hours_known": false
+  },
+  "confirmation_records": 100,
+  "execution_policy": "vae_native_conv_fp32_query_chunk256_v1",
+  "historical_numeric_targets_on_new100": {
+    "blur": {
+      "lpips_max": 0.18,
+      "pass_on_this_population": false,
+      "psnr_min": 25.9
+    },
+    "haze": {
+      "lpips_max": 0.19,
+      "pass_on_this_population": false,
+      "psnr_min": 22.1
+    },
+    "lowlight": {
+      "lpips_max": 0.28,
+      "pass_on_this_population": false,
+      "psnr_min": 18.9
+    },
+    "noise": {
+      "lpips_max": 0.1,
+      "pass_on_this_population": true,
+      "psnr_min": 38.9
+    },
+    "rain": {
+      "lpips_max": 0.08,
+      "pass_on_this_population": true,
+      "psnr_min": 34.2
+    }
+  },
+  "joint_mean_improvement_over_image_and_previous_vlm": true,
+  "legacy_cache_bitwise_equality_claimed": false,
+  "limitations": [
+    "Only five singleton types; no double/triple claim.",
+    "100 training-collection sources separated from router training; frozen FLUX/Qwen may have seen them.",
+    "Larger data plus changed correction head is not an isolated causal VLM ablation.",
+    "Numerical SoW thresholds retained as reference on new100, not an official-test pass.",
+    "All per-class regressions reported; mean improvement does not imply no harm."
+  ],
+  "new100_is_official_test": false,
+  "official_SoW_pass": null,
+  "receipt_sha256": "31f73ba4e89b47d5620bd99278ec85b410c8a9824aee3abc28fc65b80ea79fb1",
+  "render_plan_sha256": "ccd252d058788cc6a254b491f12f1ab3b6f6fa12940eeb01f67aa59d3d3fbdc4",
+  "run_id": "expanded_conditional_v4",
+  "selected_checkpoint": {
+    "file": "steps/vlm_004800_1793889270960585510.pt",
+    "identity": "2fbe3dfb50caf1a34d7b5f100126baaa9a8ba0c4f1fd87785db72cceb365440f",
+    "parameter_hash": "4ccd8f2e41f8ed95d8f02981a88bca42ee631714d53a84c6e7df00a05f5f0743",
+    "sha256": "383d40b63e31d79283ec5a33193413fee914a5082a8888c5c918737ccdd6d971",
+    "step": 4800
+  },
+  "status": "expanded_vlm_v4_restoration_complete",
+  "training_report_sha256": "09fa4b7998ddbfe46f52d4aa3952a6f40624b6fc72b2eb4c182d4e2f1db3e695",
+  "vlm_v4_minus_comparators": {
+    "image_only": {
+      "overall": {
+        "lpips_reduction": 0.02104119122028353,
+        "psnr_gain_db": 0.8583898176767981
+      },
+      "per_task": {
+        "blur": {
+          "lpips_reduction": 0.02221495918929578,
+          "psnr_gain_db": 0.05264847007068241
+        },
+        "haze": {
+          "lpips_reduction": 0.021762905269861216,
+          "psnr_gain_db": 0.30024214080906475
+        },
+        "lowlight": {
+          "lpips_reduction": 0.0,
+          "psnr_gain_db": 0.0
+        },
+        "noise": {
+          "lpips_reduction": 0.008032318577170364,
+          "psnr_gain_db": 2.48244662410265
+        },
+        "rain": {
+          "lpips_reduction": 0.05319577306509017,
+          "psnr_gain_db": 1.4566118534015828
+        }
+      }
+    },
+    "known_class_reference": {
+      "overall": {
+        "lpips_reduction": -0.0004676867276430102,
+        "psnr_gain_db": -0.011397819420430721
+      },
+      "per_task": {
+        "blur": {
+          "lpips_reduction": -0.002338433638215065,
+          "psnr_gain_db": -0.05698909710214295
+        },
+        "haze": {
+          "lpips_reduction": 0.0,
+          "psnr_gain_db": 0.0
+        },
+        "lowlight": {
+          "lpips_reduction": 0.0,
+          "psnr_gain_db": 0.0
+        },
+        "noise": {
+          "lpips_reduction": 0.0,
+          "psnr_gain_db": 0.0
+        },
+        "rain": {
+          "lpips_reduction": 0.0,
+          "psnr_gain_db": 0.0
+        }
+      }
+    },
+    "previous_v3": {
+      "overall": {
+        "lpips_reduction": 0.013003249168396014,
+        "psnr_gain_db": 0.3046185007517117
+      },
+      "per_task": {
+        "blur": {
+          "lpips_reduction": 0.01582545936107635,
+          "psnr_gain_db": 0.006177528205203231
+        },
+        "haze": {
+          "lpips_reduction": 0.02331260796636342,
+          "psnr_gain_db": 0.2971678454384161
+        },
+        "lowlight": {
+          "lpips_reduction": 0.014230465143919013,
+          "psnr_gain_db": -0.0023254691837522046
+        },
+        "noise": {
+          "lpips_reduction": 0.011310920491814605,
+          "psnr_gain_db": 1.0057036588544008
+        },
+        "rain": {
+          "lpips_reduction": 0.0003367928788065855,
+          "psnr_gain_db": 0.21636894044429766
+        }
+      }
+    }
+  }
+}
