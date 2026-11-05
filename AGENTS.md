@@ -1,3 +1,18 @@
+## 官方V4评分身份修复：复用原路由与不限时授权 — 2026-11-05
+
+四节点首次render在评分身份比较处全部退出，0恢复块；失败费用0.918888889 GPU-hours保留。
+用户已授权修复。只新增metricfix执行层，不修改已绑定的原producer/contract/unlimited执行层或receipt/plan。
+评分网络先按原默认设置在CPU构造并核验完整state哈希，再将整个Module迁移到GPU并复核全部state。
+保留pyiqa空dummy_param的注册身份，不删除真实权重检查、不改变指标默认设置/精度/评分计算。
+本轮仍是固定官方600图、三组、step4800、四节点×两卡H100/H200，原21,828块计划与不限时授权不变。
+新CPU命令：`bash smoke/run_foundir_official_vlm_v4_metricfix.sh prepare`。
+通过后四GPU终端分别运行：`bash smoke/start_foundir_official_vlm_v4_metricfix_tmux.sh <0|1|2|3>`。
+新日志`logs/foundir_official_vlm_router_v4_4x2_render_node<N>_metricfix.log`；原失败日志/attempt不覆盖。
+监测必须同时检查METRIC_DEVICE_VERIFIED、实际TILE落盘及退出码；CPU通过不当作CUDA已通过。
+不重跑训练/route/plan，不重建缓存，不新增图像测试集或独立测速，不自动重启循环。
+8worker完成、4节点status0后CPU运行`bash smoke/run_foundir_official_vlm_v4_metricfix.sh finish`，推小报告和累计耗时。
+详见reports/foundir_official_vlm_v4_metricfix_readiness_2026-11-05.md。
+
 ## 当前授权：立即恢复官方600评价，不设最长时限 — 2026-11-05
 
 用户原话：“no need for max hour limit, just execute and start the exp”。

@@ -1,0 +1,49 @@
+{
+  "status": "metric_identity_repair_CPU_prepared_CUDA_pending",
+  "utc": "2026-11-05T19:48:22.589654+00:00",
+  "policy": "pyiqa_cpu_construct_whole_module_transfer_full_state_verify_v1",
+  "CPU_tests_passed": 20,
+  "CPU_prepare_attempt": {
+    "status": 0,
+    "seconds": 7.518110945820808,
+    "gpus": 0
+  },
+  "immutable_original_sources_receipts_and_plan_unchanged": {
+    "smoke/official_vlm_router_v4_contract.py": "dc501f999ce41bbda9e57fb46c21205323548299fa3f066c6ad897fc1dc8f750",
+    "smoke/evaluate_foundir_official_vlm_router_v4.py": "3a15b4fb2a7043ffd236f4abbe10ca1035a4a577cceaa17ca02782d5b4579bff",
+    "smoke/official_vlm_v4_unlimited_execution.py": "0d982cf2b3875a4d5f6ecad80783f71de5a8931faf7508287b9517927cf104a6",
+    "smoke/run_foundir_official_vlm_v4_unlimited.sh": "ce4b42702efd671d3117adb96402422475ab28fb876558f32426f9811e108134",
+    "smoke/start_foundir_official_vlm_v4_unlimited_tmux.sh": "79524420dcd621c44d263ee676574349a2534c7836b28299c505e58e2234a6ac",
+    "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/receipt.json": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+    "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/render_plan.json": "5f3823ed90320639bf804e7e29d0a891a5e0edb92e8b2761b51ac55fd90ea53d",
+    "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/render_budget.json": "1b93cabe82ba3c4a477ffeafbb79ef9bc82d3626aba6fa134bb1909571488917",
+    "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/unlimited_execution.json": "4d6967c822983030386baae5204e40edc10a03909db0980906d1c75f866ab91f"
+  },
+  "repair_binding_sha256": "ef906054dde065a314fe8b6da1a457569c14138f16c7d10b6ee9c61e5b5d6e18",
+  "repair_sources": {
+    "smoke/official_vlm_v4_metric_identity_fix.py": "9b6eada933c1f7ff320a3224709ac6449b88c607b59fc946367cab03497d106c",
+    "smoke/run_foundir_official_vlm_v4_metricfix.sh": "3afa049bdd80c91586d3381d98ce73b95e20734580fc2a26891e5b4d1c2389a0",
+    "smoke/start_foundir_official_vlm_v4_metricfix_tmux.sh": "a8fbda5bb80d056fa0565d031cdf50abe79eb6dbc42d2aae20c57c63fc9c5174"
+  },
+  "metric_identity": {
+    "defaults": true,
+    "state_hashes": {
+      "lpips": "969a90b85c32f49ea72efa778ff0a00f93ed4da671127400c8996026249c7c54",
+      "psnr": "131310284192b2f0b0703e14669e62f150b79ab111a7a9302723c7cdcaca7c6a",
+      "ssim": "131310284192b2f0b0703e14669e62f150b79ab111a7a9302723c7cdcaca7c6a"
+    },
+    "version": "0.1.16"
+  },
+  "real_metric_weights_checked_before_and_after_whole_module_transfer": true,
+  "ignored_state_keys": [],
+  "original_route_and_feature_caches_reused": true,
+  "training_or_route_rerun": false,
+  "other_test_set_pixels_read": false,
+  "CUDA_repair_verified": false,
+  "GPU_restarted": false,
+  "time_limit_disabled": true,
+  "preserved_first_render_failure_GPU_hours": 0.9188888888888889,
+  "official_GPU_hours_so_far": 2.658888888888889,
+  "restored_tiles_so_far": 0,
+  "scientific_recipe_changed": false
+}
