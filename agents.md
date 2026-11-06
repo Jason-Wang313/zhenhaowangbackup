@@ -1,3 +1,12 @@
+## 当前终态：四台worker已核验；Rain新损失仅CPU候选 — 2026-11-06
+
+第四台已由用户启动并实际核验共享registration/新鲜heartbeat，node0–3均idle、无未完成队列；8个GPU UUID互异。无需重复启动worker。node3 IP10.244.90.116，只接nodes=[3]独立双卡任务，四节点联合job仍不支持；轻任务优先单节点。
+Rain四组诊断已结束，新逐图log-MSE候选6项CPU测试通过；32固定训练探针×800/900/1000共96输出核对完成，5.908933秒、退出0、0GPU-hours。没有新GPU训练或待结束GPU任务。
+参考误差仅取原800训练探针中位数.001339064795，eps=(2/255)^2；保留LPIPS权重.05，log-MSE在参考误差处匹配原MSE权重10的局部梯度。模型/推理未改，未读开发或官方像素。
+全32探针的原量化MSE和原目标在1000均比800差，所以8图目标权重冲突不是完整根因证明；新损失不是已证实修复，不保证官方通过。LPIPS复用已核验记录，未重新计算；uint8诊断不等同连续RGB训练loss。
+GPU试验配方/步数/开发验证/预算/入口尚未冻结；不追加原1000训练、不据官方改选900、不宣称只剩GPU运行。下一设计需匹配原loss与新loss对照，不能凭CPU通过启动长训。
+详见reports/foundir_rain_logmse_objective_v1_CPU_2026-11-06.{md,json}及reports/foundir_fullstack_four_workers_verified_2026-11-06.json。保留energy、全部旧失败记录和大资产。
+
 ## Rain交叉诊断终态；第四节点独立入口已准备 — 2026-11-06
 
 Rain固定8训练图×四组完成，node0两H100，72.19355秒/.04010753GPU-hours，GPU与CPU退出0；16个原版本输出均逐像素/指标复现。报告推送9e5a4a1。

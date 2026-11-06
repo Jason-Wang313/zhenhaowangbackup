@@ -1,0 +1,225 @@
+{
+  "checked_at_UTC": "2026-11-06T20:45:34.250741+00:00",
+  "workers": [
+    {
+      "registration": {
+        "cards": [
+          {
+            "index": 0,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-088d3d0c-7640-eddc-6397-c3c53c7010cc"
+          },
+          {
+            "index": 1,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-1d25eb74-ed91-ca3b-e24f-c75e0d98837a"
+          }
+        ],
+        "confirmed_mapping": {
+          "ip": "10.244.211.17",
+          "notebook": "37497631-24c8-4a19-907e-494c701599ab"
+        },
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "node": 0,
+        "observed_addresses": [
+          "10.244.211.17"
+        ]
+      },
+      "heartbeat": {
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job": null,
+        "pid": 115876,
+        "state": "idle",
+        "utc_unix": 1793997930.5705352,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "heartbeat_age_seconds": 3.680206060409546
+    },
+    {
+      "registration": {
+        "cards": [
+          {
+            "index": 0,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-452324c5-3ee2-86d7-58fa-f1ff215e20ae"
+          },
+          {
+            "index": 1,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-bfc7b63a-133e-3614-e7cc-e362502af598"
+          }
+        ],
+        "confirmed_mapping": {
+          "ip": "10.244.47.55",
+          "notebook": "2551e049-18b3-4c01-8490-735ced1e58cd"
+        },
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "node": 1,
+        "observed_addresses": [
+          "10.244.47.55"
+        ]
+      },
+      "heartbeat": {
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job": null,
+        "pid": 111399,
+        "state": "idle",
+        "utc_unix": 1793997931.3876836,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "heartbeat_age_seconds": 2.8630576133728027
+    },
+    {
+      "registration": {
+        "cards": [
+          {
+            "index": 0,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-6eda6d4a-79d7-b34e-3242-e75953a2ed69"
+          },
+          {
+            "index": 1,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-d8ea8f9a-c6d4-9fa1-cf29-912335970fd8"
+          }
+        ],
+        "confirmed_mapping": {
+          "ip": "10.245.39.185",
+          "notebook": "55ef95b9-862f-4ffa-a2ed-6eaa7156ccad"
+        },
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "node": 2,
+        "observed_addresses": [
+          "10.245.39.185"
+        ]
+      },
+      "heartbeat": {
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job": null,
+        "pid": 105249,
+        "state": "idle",
+        "utc_unix": 1793997932.095017,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "heartbeat_age_seconds": 2.155724287033081
+    },
+    {
+      "registration": {
+        "cards": [
+          {
+            "index": 0,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-672ff3b3-2907-afc4-3fb0-ed5d396ce994"
+          },
+          {
+            "index": 1,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-944a09f5-1a7b-3764-9f5a-66c74f154f76"
+          }
+        ],
+        "confirmed_mapping": {
+          "ip": "10.244.90.116",
+          "notebook": "e087f2fc-829f-4a0d-8aa5-5df18b6cd56a"
+        },
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "node": 3,
+        "observed_addresses": [
+          "10.244.90.116"
+        ]
+      },
+      "heartbeat": {
+        "capability": "independent_node3_two_H100_jobs_only",
+        "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job": null,
+        "pid": 299730,
+        "state": "idle",
+        "utc_unix": 1793997933.8738837,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "heartbeat_age_seconds": 0.3768575191497803
+    }
+  ],
+  "unique_registered_GPU_UUIDs": 8,
+  "all_workers_idle": true,
+  "unfinished_queue_jobs": [],
+  "jobs": [
+    {
+      "job_id": "round1_blur_strength_single_node_v1",
+      "statuses": {
+        "0": 0
+      },
+      "cancel_record_preserved": false
+    },
+    {
+      "job_id": "round1_official_input_baseline_3x2_v2",
+      "statuses": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "cancel_record_preserved": false
+    },
+    {
+      "job_id": "round2_blur_lq_start_v1",
+      "statuses": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "cancel_record_preserved": false
+    },
+    {
+      "job_id": "round3_haze_consensus_single_node_v1",
+      "statuses": {
+        "0": 0
+      },
+      "cancel_record_preserved": false
+    },
+    {
+      "job_id": "round4_rain_continue_3x2_v1",
+      "statuses": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "cancel_record_preserved": false
+    },
+    {
+      "job_id": "round5_rain_step1000_3x2_resume_v1",
+      "statuses": {
+        "0": 0,
+        "1": 0,
+        "2": 0
+      },
+      "cancel_record_preserved": false
+    },
+    {
+      "job_id": "round5_rain_step1000_3x2_v1",
+      "statuses": {
+        "0": -15,
+        "1": -15,
+        "2": -15
+      },
+      "cancel_record_preserved": true
+    },
+    {
+      "job_id": "round7_rain_prefix_cross_v1",
+      "statuses": {
+        "0": 0
+      },
+      "cancel_record_preserved": false
+    }
+  ],
+  "live_GPU_utilization_queried": false,
+  "node3_scope": "independent nodes=[3] jobs only; no four-node joint job support",
+  "new_GPU_job_submitted": false
+}
