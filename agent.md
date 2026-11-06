@@ -1,3 +1,10 @@
+## Blur下一项已准备：固定64训练图只读拟合诊断 — 2026-11-06
+
+官方1024来源delta200仍21.819776/.241321失败；解释报告dfaca80已推送。先检查训练侧是否学会正确修正，不盲加步、不推进其它类别。
+固定当前训练来源前64张/原512裁图、同一step200权重，PNG固定后才读训练GT统计LQ/候选指标和修正方向；不更新参数、不跑旧50步、不设新测试集gate。单节点node3两H100，每rank32张；权重SHA前后不变，全部64图及PNG核验。只标training_fit_only，不是泛化证据。
+smoke/diagnose_foundir_blur_coverage_fit_v2.py及run_foundir_fullstack_blur_coverage_fit_v2.sh已实现，prepare/语法检查通过；当前待发布提交，以共享queue round10_blur_coverage_fit_v2实际状态为准。输出foundir_blur_coverage_fit_v2；短任务无独立持久监视器，接手需检查实际ended，再执行CPU finish并推报告，勿重复提交。旧prelaunch receipt已备份，旧全部运行资产保持。
+完整自主研究授权继续；后续依据结果冻结方案。唯一质量验收仍完整官方Blur150的25.9/.18，未过前不推进其它类别。详见reports/foundir_blur_coverage_fit_v2_readiness_2026-11-06.md。
+
 ## Blur1024来源对照失败：有单项变化，无联合收益；先诊断训练侧 — 2026-11-06
 
 完整官方150/2250块、两rank及launcher退出0、CPU核验通过，终态fa375b5已推送。新21.819776/.241321：比128来源delta200的PSNR+.666617dB，但LPIPS变差6.9881%；比旧50步FLUX的PSNR+.273014dB，LPIPS变差19.0991%。未过25.9/.18，不采用、不推进其它类别。100/150 PSNR差于LQ；仅30/150比前轮两项都好。
