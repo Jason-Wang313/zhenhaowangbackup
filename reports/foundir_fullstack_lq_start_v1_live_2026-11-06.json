@@ -1,0 +1,84 @@
+{
+  "status": "GPU_running",
+  "run_id": "round2_blur_lq_start_v1",
+  "source_commit": "652fdd75e2cace9270ecf1d63fb29b17dfdb574f",
+  "checked_utc_unix": 1793972548.007984,
+  "records": 16,
+  "tiles": 269,
+  "target_tiles": 2250,
+  "target_regenerated_records": 150,
+  "tiles_per_rank": {
+    "0": 67,
+    "1": 67,
+    "2": 68,
+    "3": 67,
+    "4": 0,
+    "5": 0
+  },
+  "worker_heartbeats": {
+    "0": {
+      "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+      "job": "round2_blur_lq_start_v1",
+      "pid": 115876,
+      "state": "running",
+      "utc_unix": 1793972547.687708,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": "round2_blur_lq_start_v1",
+      "pid": 111399,
+      "state": "running",
+      "utc_unix": 1793972547.6670532,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "2": {
+      "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+      "job": "round2_blur_lq_start_v1",
+      "pid": 105249,
+      "state": "running",
+      "utc_unix": 1793972546.489125,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  },
+  "verified_actual_start": {
+    "GT_input": false,
+    "guidance": 1.0,
+    "maximum_start_time": 0.5,
+    "model_calls": 7,
+    "original_steps": 50,
+    "reference_time": 10,
+    "seed": 2420807234,
+    "start_index": 43,
+    "start_time": 0.4716968238353729
+  },
+  "preflight": {
+    "GPU_started": false,
+    "calls_per_tile": 7,
+    "multi_node_reason": "Full-resolution FLUX regeneration over thousands of tiles; materially heavier than cached metric scoring.",
+    "nodes": 3,
+    "official_GT_decoded": false,
+    "receipt_sha256": "81c0d87a84e44ee172675b441bb804e8aa07ca17b659010e0a244c41086019da",
+    "records": 600,
+    "regenerated_records": 150,
+    "seconds": 11.97399802133441,
+    "start_index": 43,
+    "start_time": 0.4716968238353729,
+    "status": "CPU_preflight_passed",
+    "tiles": 2250,
+    "tiles_per_rank": [
+      375,
+      375,
+      375,
+      375,
+      375,
+      375
+    ],
+    "total_native_CFG_calls": 15750,
+    "training": false,
+    "world": 6
+  },
+  "completed": false,
+  "scientific_pass": null,
+  "note": "Initial incomplete subset is not used to select or change the fixed start. Node2 startup slower than node0/1; no terminal error observed."
+}

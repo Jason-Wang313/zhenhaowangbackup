@@ -30,4 +30,4 @@ VAE沿用FP32 native convolution和query256策略。512图块/128重叠、原尺
 新run round2_blur_lq_start_v1，输出checkpoints/foundir_fullstack_lq_start_v1。旧run/source不修改。
 每图块PNG+identity receipt、每图完整输出/指标独立保存；进程失败保留所有资产，不自动重试。
 核验每rank实际torch/CUDA/VAE数值策略，6worker完整性、逐图/逐块SHA和完整600均值。
-GPU结束后CPU执行 `python -S smoke/evaluate_foundir_fullstack_lq_start_v1.py finish`（共享环境Python），推送小报告、退出码及实际GPU-hours。
+GPU结束后CPU执行 `python smoke/evaluate_foundir_fullstack_lq_start_v1.py finish`（共享环境Python），推送小报告、退出码及实际GPU-hours。
