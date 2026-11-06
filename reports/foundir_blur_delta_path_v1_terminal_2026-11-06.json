@@ -1,0 +1,90 @@
+{
+  "status": "complete_implementation_diagnostic",
+  "official_Blur_pass": false,
+  "quality_gate": false,
+  "source_commit": "b4f905ea7f53ef2982b4026a603a72187ef5dbef",
+  "job": {
+    "args": [],
+    "automatic_retry": false,
+    "entry": "smoke/run_foundir_fullstack_blur_delta_path_v1.sh",
+    "id": "round9_blur_delta_path_v1",
+    "nodes": [
+      3
+    ],
+    "purpose": "Read-only consistency diagnostic on first8 already-trained sources; official150 remains sole quality gate; no new training",
+    "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+    "source_commit": "b4f905ea7f53ef2982b4026a603a72187ef5dbef",
+    "sources": {
+      "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+      "smoke/blur_delta_state_v1.py": "5714a0ff543cc9686dfe79e1d84bab1f2306cb0875aaf5f10fd689587fc443f0",
+      "smoke/diagnose_foundir_blur_delta_path_v1.py": "6fc6060d2e32e5a81f0a35e19fab18c1f7508d34a778cfcdf51ee2119299abd5",
+      "smoke/evaluate_foundir_blur_delta_official_v1.py": "f5d8ca123b24a4bc1064b0b9c304ae42ce2f90286425fecd8769db247a00a976",
+      "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+      "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "smoke/run_foundir_fullstack_blur_delta_path_v1.sh": "bffa907d22b69deab9ad3f36d89b87ceb8fee688524b31bbd4e460bb6cb0b66c",
+      "smoke/run_foundir_fullstack_blur_delta_v1.py": "922e9302c95d2c13d7167b3712c223744d3e23c5dc97a18388a887347fed1c7e"
+    }
+  },
+  "launcher": {
+    "allocated_GPU_hours": 0.0244709927505917,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 44.04778695106506,
+    "status": 0
+  },
+  "ranks": [
+    {
+      "keys": [
+        "train_foundir_train_0008694",
+        "train_foundir_train_0004423",
+        "train_foundir_train_0109029",
+        "train_foundir_train_0096764"
+      ],
+      "parameter_hash_after": "d9e1847a0a0495e5fe7b76c4cf55138dc695c54c4daa1426ee343cd525105d28",
+      "parameter_hash_before": "d9e1847a0a0495e5fe7b76c4cf55138dc695c54c4daa1426ee343cd525105d28",
+      "peak_allocated_GiB": 18.76332664489746,
+      "rank": 0,
+      "receipt_sha256": "2d2e5b0204e511d3d5456632a4bd42750f421833fa4dd7fcf053710a3f2fb412",
+      "seconds": 33.06788910506293
+    },
+    {
+      "keys": [
+        "train_foundir_train_0076676",
+        "train_foundir_train_0087763",
+        "train_foundir_train_0034435",
+        "train_foundir_train_0055295"
+      ],
+      "parameter_hash_after": "d9e1847a0a0495e5fe7b76c4cf55138dc695c54c4daa1426ee343cd525105d28",
+      "parameter_hash_before": "d9e1847a0a0495e5fe7b76c4cf55138dc695c54c4daa1426ee343cd525105d28",
+      "peak_allocated_GiB": 18.76332664489746,
+      "rank": 1,
+      "receipt_sha256": "2d2e5b0204e511d3d5456632a4bd42750f421833fa4dd7fcf053710a3f2fb412",
+      "seconds": 30.499975675949827
+    }
+  ],
+  "cpu_finish_seconds": 0.42509744316339493,
+  "CPU_exit_code": 0,
+  "training_fit_only_summary": {
+    "candidate": {
+      "lpips": 0.23564486717805266,
+      "psnr": 24.16445565223694,
+      "ssim": 0.7115491204254002
+    },
+    "lq": {
+      "lpips": 0.34600421972572803,
+      "psnr": 23.885945320129395,
+      "ssim": 0.7025375584555035
+    },
+    "old50step": {
+      "lpips": 0.18682032218202949,
+      "psnr": 22.408154845237732,
+      "ssim": 0.6690102337184497
+    }
+  },
+  "all_four_paths_float_and_uint8_identical": true,
+  "all_cached_vs_fresh_tensors_identical": true,
+  "prior_delta_pilot_total_GPU_hours": 1.2714492316,
+  "including_path_diagnostic_GPU_hours": 1.2959202243505916,
+  "interpretation": "No cached/fresh/train/eval path mismatch found on fixed8 training inputs. Training mean gain over LQ is small, candidate LPIPS remains worse than old50step; this does not establish overfitting as unique cause. Official150 failure remains unchanged. No official GT fitting/selection."
+}
