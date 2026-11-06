@@ -1,0 +1,9 @@
+# Blur200八训练图实现一致性诊断
+
+本轮官方150未通过；所有类别仍仅使用官方FoundIR作质量验收。不增加开发集或其它测试集门槛。
+
+固定原128训练来源的前8张及原512裁图，不根据结果挑图；冻结同一最终step200 LoRA、原参考LoRA、VAE和完整pyiqa身份，无optimizer或训练更新。四条路径：原缓存reference；同LQ重新编码/计算reference；官方推理的requires_grad=false模式；训练时checkpoint/梯度模式。所有路径生成时不读GT；四份输出固定后才用训练GT报告training_fit_only指标，绝不作为泛化/官方通过。
+
+记录cached/fresh latent、reference velocity、reference decode的最大误差，各输出浮点及uint8差，GPU实际加载参数SHA和前后不变性。固定8条、两rank各4张、node3两H100。两张卡必须完整结束，全部PNG/SHA完整后CPU汇总；一致只表示本8图的路径证据，不能广泛宣称所有CUDA数值都bitwise等价。
+
+prepare检查原缓存/权重/父结果身份；源码发布后由共享worker启动smoke/run_foundir_fullstack_blur_delta_path_v1.sh 3。任务只诊断，无自动追加训练/官方重跑/其它类别；旧资产和失败记录完整保留。最终报告逐rank耗时、退出码和任务GPU-hours。
