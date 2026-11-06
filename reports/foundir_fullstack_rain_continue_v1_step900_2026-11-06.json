@@ -1,0 +1,218 @@
+{
+  "event": "step900",
+  "observed_utc_unix": 1793983446.816061,
+  "job": "round4_rain_continue_3x2_v1",
+  "source_commit": "cdc670ad63ebea480765cc640dc730fcb3bb475f",
+  "latest_checkpoint": {
+    "file": "steps/state_000900_1793983388551013513.pt",
+    "parameter_hash": "ed405837d5ce6391b08bd1e945425c26318509642f54804b5e0a5332bb55c189",
+    "receipt_hash": "922bb045e02c7182cb59bd2c68786e9032993ce88aa058fe733207d9fa633af2",
+    "sha256": "7a582c030714239798c82128c2310ad3d2361437e71b58543e042a26011ed1c2",
+    "step": 900
+  },
+  "new_updates": 100,
+  "nodes": [
+    {
+      "node": 0,
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "876fed6d689b02ffbfdf4d8ca43b56e688bdc36e927665a088a8fc87a35282c1",
+        "node": 0,
+        "utc_unix": 1793980507.8242598
+      },
+      "end": null,
+      "heartbeat": {
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job": "round4_rain_continue_3x2_v1",
+        "pid": 115876,
+        "state": "running",
+        "utc_unix": 1793983446.0914884,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "log_sha256": "07f8738351e79d9d29c11fb8728e233a04586b7fc62fcaaa36c15397ddfb8a24",
+      "NCCL_verified_count": 2,
+      "restored_count": 2
+    },
+    {
+      "node": 1,
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "876fed6d689b02ffbfdf4d8ca43b56e688bdc36e927665a088a8fc87a35282c1",
+        "node": 1,
+        "utc_unix": 1793980505.3536768
+      },
+      "end": null,
+      "heartbeat": {
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job": "round4_rain_continue_3x2_v1",
+        "pid": 111399,
+        "state": "running",
+        "utc_unix": 1793983446.06213,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "log_sha256": "ceb3800461bf42d457814e2cae9c051160b7584144664164c7ceed3472882c93",
+      "NCCL_verified_count": 1,
+      "restored_count": 2
+    },
+    {
+      "node": 2,
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job_sha256": "876fed6d689b02ffbfdf4d8ca43b56e688bdc36e927665a088a8fc87a35282c1",
+        "node": 2,
+        "utc_unix": 1793980505.562359
+      },
+      "end": null,
+      "heartbeat": {
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job": "round4_rain_continue_3x2_v1",
+        "pid": 105249,
+        "state": "running",
+        "utc_unix": 1793983446.0974138,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "log_sha256": "bec4887c19d699ae8bf7410d128e673ecb77091e345b59658ee45af456e01ca6",
+      "NCCL_verified_count": 2,
+      "restored_count": 1
+    }
+  ],
+  "milestones": {
+    "800": {
+      "delta_vs_matched800": {
+        "lpips": 0.0,
+        "psnr": 0.0
+      },
+      "historical800": {
+        "lpips": 0.05940335488412529,
+        "psnr": 34.71967755056656
+      },
+      "means": {
+        "lpips": 0.05936874556937255,
+        "psnr": 34.71886276223198
+      },
+      "official_gate_claim": false,
+      "records": 32,
+      "step": 800,
+      "training_fit_only": true
+    },
+    "900": {
+      "delta_vs_matched800": {
+        "lpips": -0.0003088753728661686,
+        "psnr": 0.024400532632249394
+      },
+      "historical800": {
+        "lpips": 0.05940335488412529,
+        "psnr": 34.71967755056656
+      },
+      "means": {
+        "lpips": 0.05905987019650638,
+        "psnr": 34.74326329486423
+      },
+      "official_gate_claim": false,
+      "records": 32,
+      "step": 900,
+      "training_fit_only": true
+    }
+  },
+  "official_Rain_evaluated_this_round": false,
+  "training_fit_only": true,
+  "legacy_official_GT_source_overlap": "3 sources / 30 official Rain records; 6 historical on-policy presentations confirmed",
+  "new_training_excludes_all_detected_official_source_groups": true,
+  "world_change_bitwise_equivalent": false,
+  "automatic_more_training": false,
+  "latest_training_logs": [
+    {
+      "step": 896,
+      "new_updates": 96,
+      "losses": {
+        "total": 0.020073085554031422,
+        "gt_rgb_mse": 0.001765776481533976,
+        "gt_lpips": 0.04830641137959901
+      },
+      "max_rank_grad_norm": 0.07661321759223938,
+      "max_rank_step_seconds_excluding_checkpoint": 26.34146499633789,
+      "max_rank_prefix_seconds": 20.340970993041992,
+      "peak_allocated_gib": 15.38421630859375,
+      "next_global_slot": 28672,
+      "world": 6,
+      "global_batch": 32,
+      "last_selected_cache_index": 28672,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS"
+    },
+    {
+      "step": 897,
+      "new_updates": 97,
+      "losses": {
+        "total": 0.02834133998840116,
+        "gt_rgb_mse": 0.002568316037468321,
+        "gt_lpips": 0.0531635836159694
+      },
+      "max_rank_grad_norm": 0.10467326641082764,
+      "max_rank_step_seconds_excluding_checkpoint": 26.792028427124023,
+      "max_rank_prefix_seconds": 20.336355209350586,
+      "peak_allocated_gib": 15.384233474731445,
+      "next_global_slot": 28704,
+      "world": 6,
+      "global_batch": 32,
+      "last_selected_cache_index": 28704,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS"
+    },
+    {
+      "step": 898,
+      "new_updates": 98,
+      "losses": {
+        "total": 0.03205417373101227,
+        "gt_rgb_mse": 0.0028751075005857274,
+        "gt_lpips": 0.06606197334622266
+      },
+      "max_rank_grad_norm": 0.14058615267276764,
+      "max_rank_step_seconds_excluding_checkpoint": 26.53514289855957,
+      "max_rank_prefix_seconds": 20.34543228149414,
+      "peak_allocated_gib": 15.38425064086914,
+      "next_global_slot": 28736,
+      "world": 6,
+      "global_batch": 32,
+      "last_selected_cache_index": 28736,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS"
+    },
+    {
+      "step": 899,
+      "new_updates": 99,
+      "losses": {
+        "total": 0.027487470593769103,
+        "gt_rgb_mse": 0.0024885144812287763,
+        "gt_lpips": 0.05204651181702502
+      },
+      "max_rank_grad_norm": 0.06714145094156265,
+      "max_rank_step_seconds_excluding_checkpoint": 26.660741806030273,
+      "max_rank_prefix_seconds": 20.342395782470703,
+      "peak_allocated_gib": 15.384267807006836,
+      "next_global_slot": 28768,
+      "world": 6,
+      "global_batch": 32,
+      "last_selected_cache_index": 28768,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS"
+    },
+    {
+      "step": 900,
+      "new_updates": 100,
+      "losses": {
+        "total": 0.031815059774089605,
+        "gt_rgb_mse": 0.002793911698518059,
+        "gt_lpips": 0.07751885178731754
+      },
+      "max_rank_grad_norm": 0.08307969570159912,
+      "max_rank_step_seconds_excluding_checkpoint": 26.291912078857422,
+      "max_rank_prefix_seconds": 20.278854370117188,
+      "peak_allocated_gib": 15.384284973144531,
+      "next_global_slot": 28800,
+      "world": 6,
+      "global_batch": 32,
+      "last_selected_cache_index": 28800,
+      "objective": "current_policy_prefix25_detached_last_call_GT_RGB_MSE_LPIPS"
+    }
+  ]
+}
