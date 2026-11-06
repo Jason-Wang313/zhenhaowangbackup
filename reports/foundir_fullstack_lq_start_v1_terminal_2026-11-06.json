@@ -1,0 +1,173 @@
+{
+  "status": "engineering_complete_scientific_targets_failed",
+  "run_id": "round2_blur_lq_start_v1",
+  "source_commit": "652fdd75e2cace9270ecf1d63fb29b17dfdb574f",
+  "result_sha256": "f572899fb779173ceffea1b966ad7c7c50337f62941cb0225cdc9a0b8abc0d28",
+  "receipt_sha256": "81c0d87a84e44ee172675b441bb804e8aa07ca17b659010e0a244c41086019da",
+  "job_sha256": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+  "nodes": [
+    {
+      "node": 0,
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+        "node": 0,
+        "utc_unix": 1793972220.981148
+      },
+      "end": {
+        "allocated_GPU_hours": 0.7305302702056037,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1314.9544863700867,
+        "status": 0
+      },
+      "log_sha256": "46d107dd4609567151b21a490b34b146aa35720190fec6bc47da9026ea9e19be",
+      "metric_identity_checks": 2,
+      "complete_markers": 2
+    },
+    {
+      "node": 1,
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+        "node": 1,
+        "utc_unix": 1793972216.9561243
+      },
+      "end": {
+        "allocated_GPU_hours": 0.7327418396208021,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1318.9353113174438,
+        "status": 0
+      },
+      "log_sha256": "18e787edba74889553a869eb55cc70aa0e840fa16b18627960755d785685487c",
+      "metric_identity_checks": 2,
+      "complete_markers": 2
+    },
+    {
+      "node": 2,
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job_sha256": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+        "node": 2,
+        "utc_unix": 1793972217.544423
+      },
+      "end": {
+        "allocated_GPU_hours": 0.8869697276751201,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1596.545509815216,
+        "status": 0
+      },
+      "log_sha256": "e418d19d1cc32d1e8f15f306cb7a2c7184dfa49812ba4ab0705d9f3ad41c651a",
+      "metric_identity_checks": 2,
+      "complete_markers": 2
+    }
+  ],
+  "worker_counts": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "tiles_per_rank": [
+    375,
+    375,
+    375,
+    375,
+    375,
+    375
+  ],
+  "regenerated_images": 150,
+  "reused_unchanged_images": 450,
+  "total_records": 600,
+  "tiles": 2250,
+  "native_CFG_calls": 15750,
+  "gpu_wall_seconds_first_start_to_last_end": 1597.1338086128235,
+  "used_GPU_hours": 2.350241837501526,
+  "cpu_finish_seconds": 75.56039218604565,
+  "cpu_finish_status": 0,
+  "peak_allocated_gib": 10.923712730407715,
+  "blur": {
+    "input": {
+      "count": 150,
+      "lpips": 0.35360328872998553,
+      "psnr": 21.863902537027993,
+      "ssim": 0.7402368453389072
+    },
+    "parent": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "LQ_start": {
+      "lpips": 0.35614940424760183,
+      "psnr": 21.820219332377118,
+      "ssim": 0.7381766358950343
+    },
+    "delta_psnr_vs_parent": 0.2734571329752633,
+    "LPIPS_increase_percent_vs_parent": 75.77013474793648,
+    "delta_psnr_vs_input": -0.043683204650875496,
+    "delta_lpips_vs_input": 0.0025461155176162986,
+    "psnr_wins_vs_parent": 92,
+    "lpips_wins_vs_parent": 0
+  },
+  "node2_user_telemetry": {
+    "source": "user executed read-only commands on node2 terminal",
+    "received_utc_unix": 1793973081.7329996,
+    "node": 2,
+    "ip": "10.245.39.185",
+    "gpus": [
+      {
+        "index": 0,
+        "name": "NVIDIA H100 80GB HBM3",
+        "memory_used_mib": 14658,
+        "utilization_percent": 97
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA H100 80GB HBM3",
+        "memory_used_mib": 14658,
+        "utilization_percent": 97
+      }
+    ],
+    "torchrun": {
+      "pid": 609853,
+      "ppid": 609342,
+      "stat": "Sl",
+      "etime": "12:35",
+      "cpu_percent": 0.6
+    },
+    "workers": [
+      {
+        "pid": 612864,
+        "ppid": 609853,
+        "stat": "Rsl",
+        "etime": "12:07",
+        "cpu_percent": 54.7
+      },
+      {
+        "pid": 612865,
+        "ppid": 609853,
+        "stat": "Rsl",
+        "etime": "12:07",
+        "cpu_percent": 54.8
+      }
+    ],
+    "interpretation": "GPU work confirmed; do not infer deadlock from missing early outputs alone; no termination or restart performed"
+  },
+  "notes": [
+    "Node2 first-output delay did not establish a deadlock. User measured both GPUs at 97% utilization and 14658MiB; later generation proceeded near other nodes speed. No process terminated or restarted.",
+    "No training, new routing, other dataset or GT-based output selection.",
+    "The one fixed LQ-start intervention failed. Similarity of aggregate scores to input supports insufficient deblurring here; it does not prove all LQ-start times or trained anchored flows impossible."
+  ],
+  "decision": "Do not deploy this LQ-start or sweep more start times automatically. Retain original expert outputs. Next design must distinguish learned restoration fidelity from merely retaining input; do not assume untrained inference-start changes substitute for matched training."
+}
