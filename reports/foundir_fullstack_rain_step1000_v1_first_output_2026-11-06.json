@@ -1,0 +1,58 @@
+{
+  "event": "first_output",
+  "utc_unix": 1793986991.2122164,
+  "detail": null,
+  "job": "round5_rain_step1000_3x2_v1",
+  "fixed_step": 1000,
+  "completed_Rain_records": 6,
+  "complete_summary_records": 456,
+  "tiles": 372,
+  "nodes": [
+    {
+      "node": 0,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "5ffeb282602781bcd40a0092cf26c1f1f6f88c952f6f46596206623e3075c2db",
+        "node": 0,
+        "utc_unix": 1793986295.5983906
+      },
+      "ended": null
+    },
+    {
+      "node": 1,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "5ffeb282602781bcd40a0092cf26c1f1f6f88c952f6f46596206623e3075c2db",
+        "node": 1,
+        "utc_unix": 1793986296.3928564
+      },
+      "ended": null
+    },
+    {
+      "node": 2,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job_sha256": "5ffeb282602781bcd40a0092cf26c1f1f6f88c952f6f46596206623e3075c2db",
+        "node": 2,
+        "utc_unix": 1793986296.701307
+      },
+      "ended": null
+    }
+  ],
+  "new_training": false,
+  "all600_end_to_end_rerun": false,
+  "independent_blind_test": false,
+  "legacy_GT_source_overlap": "3 sources shared with 30 official Rain records; earlier weights already exposed",
+  "preserve_accepted_Haze_and_other500": true,
+  "automatic_retry": false,
+  "completed_node_GPU_hours": 0,
+  "prepare_CPU": {
+    "status": 0,
+    "seconds": 39.8066452331841,
+    "stdout": "RAIN1000_PREPARED {'status': 'CPU_preflight_passed', 'receipt_sha256': 'f34306f0919756a1a01937642923612af126fbd4028f41bd2d3fa4da645b8fd8', 'records': 600, 'regenerated_records': 100, 'reused_records': 500, 'tiles_per_rank': [786, 786, 786, 786, 768, 768], 'tiles': 4680, 'calls_per_tile': 26, 'total_native_CFG_calls': 121680, 'world': 6, 'nodes': 3, 'seconds': 37.51964946091175, 'GPU_started': False, 'official_GT_decoded': False, 'training': False, 'fixed_step': 1000, 'retains_accepted_Haze': True, 'independent_blind_test': False}\n",
+    "stderr": ""
+  }
+}
