@@ -1,0 +1,27 @@
+{
+  "status": "metadata_and_CPU_tests_passed_final_weight_preflight_pending",
+  "observed_utc_unix": 1793981537.8039293,
+  "tests_passed": 8,
+  "records": 600,
+  "regenerated_Rain": 100,
+  "reused_accepted": 500,
+  "tiles": 4680,
+  "tiles_per_rank": [
+    786,
+    786,
+    786,
+    786,
+    768,
+    768
+  ],
+  "fixed_step": 1000,
+  "model_calls_per_tile": 26,
+  "new_training": false,
+  "GPU_evaluation_started": false,
+  "GT_pixels_read_in_preparation": false,
+  "training_bound_sources_unchanged": true,
+  "legacy_overlap_official_Rain_records": 30,
+  "independent_blind_test": false,
+  "final_export_required_before_prepare_and_submit": true,
+  "all600_end_to_end_rerun": false
+}
