@@ -1,3 +1,12 @@
+## Rain续训已实际运行，里程碑报告持续监控 — 2026-11-06
+
+三节点六张H100的NCCL和step800模型/Adam恢复均通过；已保存step815，训练继续至固定1000，不自动扩步。
+独立CPU已核验step805完整状态、SHA、六rank与next_slot25760，退出0；最近计算约26.5秒/步，另计保存和探针。
+CPU报告监视器首次因Markdown末尾空行未通过git diff检查而退出，GPU训练未受影响；已修复发布格式并保留原失败日志。
+监视器负责首次五步、900及终态小报告推送与最终CPU核验，不自动重试GPU。源码smoke/watch_foundir_fullstack_rain_continue_v1_cpu.py。
+训练探针不是官方成绩；旧权重有已确认3来源/30张官方Rain的历史GT来源曝光，新数据过滤不能抹去此事实。
+固定1000的Rain100评价另行绑定最终权重；保留Haze/Lowlight已通过候选，全部类别修好后才统一600端到端复跑。
+
 # Session handoff — 2026-09-12
 
 This is the latest operational continuation guide. It supersedes older
