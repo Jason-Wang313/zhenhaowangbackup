@@ -1,0 +1,36 @@
+{
+  "status": "post_diagnostic_interpretation_not_a_new_experiment",
+  "parent_result_sha256": "3c4265a3425bc79d630c67661e6c84aa6092cbd6c79e46ef5f844652e69dec69",
+  "scope": "same fixed8 training crops, all retained",
+  "mean_quantized_MSE_reconstructed_from_uncapped_PSNR": {
+    "p1000_r1000": 0.0005968193581793457,
+    "p1000_r800": 0.0006203708951488808,
+    "p800_r1000": 0.0005971175978629618,
+    "p800_r800": 0.0006241645182853972
+  },
+  "fixed_prefix_readout_MSE_relative_change_percent": -4.333299896113008,
+  "fixed_prefix_readout_mean_PSNR_change": -0.3206213822851893,
+  "fixed_new_readout_prefix_change": {
+    "lpips": -7.139833178371191e-05,
+    "psnr": -0.02437503293259624
+  },
+  "prefix_cancellation_hypothesis_supported": false,
+  "interpretation": "Mean MSE improves while mean per-image PSNR worsens in this probe. Current arithmetic-MSE objective and mean-log-MSE metric weight examples differently; this is observed evidence of an objective mismatch, not proof of the sole cause of the full official gap.",
+  "next_direction": "Investigate per-image error normalization/log-MSE and baseline-relative preservation on training data, then separate development validation. No new recipe/steps committed and no training automatically launched.",
+  "single_high_quality_case": {
+    "index": 12806,
+    "old": {
+      "lpips": 0.012852556072175503,
+      "psnr": 45.42928816048378
+    },
+    "fixed_prefix_new_readout": {
+      "lpips": 0.013165815733373165,
+      "psnr": 40.48758612448061
+    },
+    "MSE_ratio": 3.120112142273778
+  },
+  "GPU_hours_new_analysis": 0,
+  "official_pixels_read": false,
+  "new_training": false,
+  "automatic_followup": false
+}

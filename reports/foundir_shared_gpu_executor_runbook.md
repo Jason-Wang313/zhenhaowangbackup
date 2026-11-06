@@ -161,3 +161,9 @@ cancel仅标记该job；worker终止自己创建的子进程组并保存退出�
 CPU tmux session分别为`rain_fullstack_monitor_v1`、`rain_step1000_eval_monitor_v1`；日志为`logs/foundir_fullstack_rain_continue_v1_cpu_monitor.log`和`logs/foundir_fullstack_rain_step1000_v1_cpu_monitor.log`。这说明自动后续工作由实际持久程序驱动，而不是在回复里承诺后就凭空运行。
 
 本手册不新增任何实验授权。训练、评价、节点数、数据范围和预算继续服从用户当前指令及AGENTS顶部；保留旧资产，完成本轮后按真实结果决策。
+
+## 2026-11-06新增第四台：node3独立任务扩展
+
+新node3 IP10.244.90.116、notebook e087f2fc-829f-4a0d-8aa5-5df18b6cd56a，用户回传两卡H100及共享Python检查通过。用`bash smoke/start_foundir_fullstack_worker_node3_v1_tmux.sh`在第四台一次性启动；代理先看node3实际登记/心跳再声称可用。当前3台v2源码/进程不改。
+
+新工具`smoke/foundir_fullstack_node3_extension_v1.py submit`固定nodes=[3]，复用共享队列。旧worker会跳过该任务；新node3拒绝混合节点列表。**不能直接向旧v2派发四节点job**，四节点联合训练仍需另行适配。单节点任务无需为第四台到来扩大范围。完整规则见`reports/foundir_fullstack_node3_extension_v1_readiness_2026-11-06.md`。
