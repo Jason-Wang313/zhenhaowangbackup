@@ -1,0 +1,81 @@
+{
+  "CPU_stages": {
+    "prepare": {
+      "seconds": 34.41283346712589,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "Loading pretrained model LPIPS from /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/models/torch/hub/pyiqa/LPIPS_v0.1_alex-df73285e.pth\nOFFICIAL_VLM_V4_METRIC_DEVICE_VERIFIED device=cpu full_state=true\nBLUR_DELTA_OFFICIAL_PREFLIGHT_PASS {\"status\": \"destination_CPU_preflight_pass\", \"records\": 150, \"final_step\": 200, \"final_parameter_hash\": \"d9e1847a0a0495e5fe7b76c4cf55138dc695c54c4daa1426ee343cd525105d28\", \"final_checkpoint_SHA_Adam_RNG_sampler_checked\": true, \"all201_step_receipts_contiguous\": true, \"all201_large_checkpoints_rehashed\": false, \"receipt_sha256\": \"2d8d3ebc2755bf5b9f00abcf57bf30827893c44e36af70ca8960d94a4887e024\", \"GT_pixels_decoded\": false, \"GPU_started\": false, \"seconds\": 28.359419599175453, \"exit_code\": 0, \"GPU_hours\": 0, \"completed_training_job\": {\"allocated_GPU_hours\": 0.6234152910444472, \"automatic_retry\": false, \"error\": null, \"gpus\": 2, \"seconds\": 1122.1475238800049, \"status\": 0}}\n"
+    }
+  },
+  "completed_GPU_hours": 0.738032990164227,
+  "cost_complete": false,
+  "detail": "\u5df2\u63d0\u4ea4\u6700\u7ec8step200\u7684\u5b8c\u6574\u5b98\u65b9150\u5f20\u6062\u590d\u8bc4\u4ef7\uff0c\u5355\u8282\u70b9\u4e24H100\uff0c\u65e0\u5176\u5b83\u9a8c\u8bc1\u96c6\u3002",
+  "event": "queued",
+  "independent_blind_test": false,
+  "jobs": {
+    "round9_blur_delta_cache_v1": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.03783612158563402,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 68.10501885414124,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "251aa4afd737e47fe8c62f4a8308c38c9c6c48fb4f465b567a08d2c40277d76e",
+        "node": 3,
+        "utc_unix": 1794002009.7895782
+      }
+    },
+    "round9_blur_delta_official150_v1": {
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "10d71293f3586da72660aadf301d0ded2d141b84bcb4433d2f382575f2821447",
+        "node": 3,
+        "utc_unix": 1794003345.21453
+      }
+    },
+    "round9_blur_delta_qualify_v1": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.07678157753414577,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 138.2068395614624,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "0ce6d3d2aa1c86fb479eb26433f7e954c9df6ceabd3d3424db529ae540fba8dd",
+        "node": 3,
+        "utc_unix": 1794001681.237516
+      }
+    },
+    "round9_blur_delta_train_v1": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.6234152910444472,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1122.1475238800049,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "274160955b68db722533c52a6b5f41f8c4db8f626a05363b40f1cbe6ac3e0749",
+        "node": 3,
+        "utc_unix": 1794002127.9451156
+      }
+    }
+  },
+  "official_only_per_latest_user": true,
+  "other_categories_run": false,
+  "other_evaluation_populations_run": false,
+  "utc_unix": 1794003369.171704
+}
