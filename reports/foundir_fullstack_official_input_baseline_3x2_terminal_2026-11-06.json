@@ -1,0 +1,309 @@
+{
+  "status": "completed_and_CPU_verified",
+  "job": "round1_official_input_baseline_3x2_v2",
+  "records": 600,
+  "worker_counts": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "nodes": [
+    {
+      "node": 0,
+      "registration": {
+        "cards": [
+          {
+            "index": 0,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-088d3d0c-7640-eddc-6397-c3c53c7010cc"
+          },
+          {
+            "index": 1,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-1d25eb74-ed91-ca3b-e24f-c75e0d98837a"
+          }
+        ],
+        "confirmed_mapping": {
+          "ip": "10.244.211.17",
+          "notebook": "37497631-24c8-4a19-907e-494c701599ab"
+        },
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "node": 0,
+        "observed_addresses": [
+          "10.244.211.17"
+        ]
+      },
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "b874feedb284d0ec1bfe139a700874fd13c3382c109fcb0d06d6c78780815355",
+        "node": 0,
+        "utc_unix": 1793968646.857669
+      },
+      "end": {
+        "allocated_GPU_hours": 0.042316634787453546,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 76.16994261741638,
+        "status": 0
+      },
+      "heartbeat_at_audit": {
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job": null,
+        "pid": 115876,
+        "state": "idle",
+        "utc_unix": 1793968818.1272357,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "log_sha256": "32e657b86923c71ae8ecdaea62ed2e4198ecfb58867a7ec78d9d52f2a595445b",
+      "warning_count": 3
+    },
+    {
+      "node": 1,
+      "registration": {
+        "cards": [
+          {
+            "index": 0,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-452324c5-3ee2-86d7-58fa-f1ff215e20ae"
+          },
+          {
+            "index": 1,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-bfc7b63a-133e-3614-e7cc-e362502af598"
+          }
+        ],
+        "confirmed_mapping": {
+          "ip": "10.244.47.55",
+          "notebook": "2551e049-18b3-4c01-8490-735ced1e58cd"
+        },
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "node": 1,
+        "observed_addresses": [
+          "10.244.47.55"
+        ]
+      },
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "b874feedb284d0ec1bfe139a700874fd13c3382c109fcb0d06d6c78780815355",
+        "node": 1,
+        "utc_unix": 1793968647.7609482
+      },
+      "end": {
+        "allocated_GPU_hours": 0.042303282684750025,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 76.14590883255005,
+        "status": 0
+      },
+      "heartbeat_at_audit": {
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job": null,
+        "pid": 111399,
+        "state": "idle",
+        "utc_unix": 1793968818.9846961,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "log_sha256": "812de925bfa4b3ab2467233c2210aed3da4d1c30d15eb3ef422ef85eb33a3e1c",
+      "warning_count": 3
+    },
+    {
+      "node": 2,
+      "registration": {
+        "cards": [
+          {
+            "index": 0,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-6eda6d4a-79d7-b34e-3242-e75953a2ed69"
+          },
+          {
+            "index": 1,
+            "memory_mib": 81559,
+            "name": "NVIDIA H100 80GB HBM3",
+            "uuid": "GPU-d8ea8f9a-c6d4-9fa1-cf29-912335970fd8"
+          }
+        ],
+        "confirmed_mapping": {
+          "ip": "10.245.39.185",
+          "notebook": "55ef95b9-862f-4ffa-a2ed-6eaa7156ccad"
+        },
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "node": 2,
+        "observed_addresses": [
+          "10.245.39.185"
+        ]
+      },
+      "start": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job_sha256": "b874feedb284d0ec1bfe139a700874fd13c3382c109fcb0d06d6c78780815355",
+        "node": 2,
+        "utc_unix": 1793968649.6770706
+      },
+      "end": {
+        "allocated_GPU_hours": 0.04344697528415256,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 78.20455551147461,
+        "status": 0
+      },
+      "heartbeat_at_audit": {
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job": null,
+        "pid": 105249,
+        "state": "idle",
+        "utc_unix": 1793968818.005933,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "log_sha256": "c5b56f69b09a81049e8e0b40b059dba90a94ba736bb9c3379496e20e368d69fd",
+      "warning_count": 3
+    }
+  ],
+  "workers": [
+    {
+      "peak_allocated_gib": 2.840334892272949,
+      "rank": 0,
+      "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+      "seconds": 26.28736052988097
+    },
+    {
+      "peak_allocated_gib": 2.840334892272949,
+      "rank": 1,
+      "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+      "seconds": 25.922349147032946
+    },
+    {
+      "peak_allocated_gib": 2.840334892272949,
+      "rank": 2,
+      "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+      "seconds": 26.037770038004965
+    },
+    {
+      "peak_allocated_gib": 2.840334892272949,
+      "rank": 3,
+      "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+      "seconds": 25.748590430943295
+    },
+    {
+      "peak_allocated_gib": 2.840334892272949,
+      "rank": 4,
+      "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+      "seconds": 31.593352753669024
+    },
+    {
+      "peak_allocated_gib": 2.840334892272949,
+      "rank": 5,
+      "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+      "seconds": 31.5188947385177
+    }
+  ],
+  "job_sha256": "b874feedb284d0ec1bfe139a700874fd13c3382c109fcb0d06d6c78780815355",
+  "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+  "result_sha256": "839939b0ea3df1197305d07efde0d6b73f162dbf1ea06485e87bbade16d01cf9",
+  "record_hash_manifest_sha256": "d22c74c35a49e8cd7a4dd9ac6baa22c0bdd6515201572b47472501e59b5cdbba",
+  "wall_seconds_first_start_to_last_end": 81.02395701408386,
+  "used_GPU_hours": 0.12806689275635613,
+  "cpu_finish": {
+    "seconds": 1.492187473922968,
+    "status": 0,
+    "stdout": "FULLSTACK_OFFICIAL_BASELINE_VERIFIED {\"01Blur\": {\"count\": 150, \"psnr\": 21.863902537027993, \"lpips\": 0.35360328872998553, \"ssim\": 0.7402368453389072}, \"05Noise\": {\"count\": 100, \"psnr\": 37.41788215637207, \"lpips\": 0.17131404856219887, \"ssim\": 0.9328778550945855}, \"08Haze\": {\"count\": 200, \"psnr\": 13.466770710945129, \"lpips\": 0.359710990563035, \"ssim\": 0.6394019144181023}, \"10Rain\": {\"count\": 100, \"psnr\": 23.44885372161865, \"lpips\": 0.31119497686624525, \"ssim\": 0.7791146362701604}, \"14Lowlight\": {\"count\": 50, \"psnr\": 6.9859764099121096, \"lpips\": 0.662017782330513, \"ssim\": 0.18018405585612288}}\n",
+    "stderr": ""
+  },
+  "peak_allocated_gib": 2.840334892272949,
+  "comparison": {
+    "01Blur": {
+      "input": {
+        "count": 150,
+        "lpips": 0.35360328872998553,
+        "psnr": 21.863902537027993,
+        "ssim": 0.7402368453389072
+      },
+      "known_class_reference": {
+        "lpips": 0.2026222513616085,
+        "psnr": 21.546762199401854,
+        "ssim": 0.7535799373553662
+      },
+      "expert_psnr_gain_db": -0.3171403376261388,
+      "expert_lpips_reduction_percent": 42.697860054030045
+    },
+    "05Noise": {
+      "input": {
+        "count": 100,
+        "lpips": 0.17131404856219887,
+        "psnr": 37.41788215637207,
+        "ssim": 0.9328778550945855
+      },
+      "known_class_reference": {
+        "lpips": 0.11075484250672162,
+        "psnr": 37.69359203338623,
+        "ssim": 0.9544164964071539
+      },
+      "expert_psnr_gain_db": 0.27570987701415817,
+      "expert_lpips_reduction_percent": 35.34981898083511
+    },
+    "08Haze": {
+      "input": {
+        "count": 200,
+        "lpips": 0.359710990563035,
+        "psnr": 13.466770710945129,
+        "ssim": 0.6394019144181023
+      },
+      "known_class_reference": {
+        "lpips": 0.12367851933464408,
+        "psnr": 21.963812551498414,
+        "ssim": 0.8384822837425908
+      },
+      "expert_psnr_gain_db": 8.497041840553285,
+      "expert_lpips_reduction_percent": 65.61725313395146
+    },
+    "10Rain": {
+      "input": {
+        "count": 100,
+        "lpips": 0.31119497686624525,
+        "psnr": 23.44885372161865,
+        "ssim": 0.7791146362701604
+      },
+      "known_class_reference": {
+        "lpips": 0.07501418385654687,
+        "psnr": 32.0349299621582,
+        "ssim": 0.9218588440458518
+      },
+      "expert_psnr_gain_db": 8.586076240539551,
+      "expert_lpips_reduction_percent": 75.89479604974835
+    },
+    "14Lowlight": {
+      "input": {
+        "count": 50,
+        "lpips": 0.662017782330513,
+        "psnr": 6.9859764099121096,
+        "ssim": 0.18018405585612288
+      },
+      "known_class_reference": {
+        "lpips": 0.17252287715673448,
+        "psnr": 19.231370677947996,
+        "ssim": 0.8644231889270912
+      },
+      "expert_psnr_gain_db": 12.245394268035888,
+      "expert_lpips_reduction_percent": 73.93984243906576
+    }
+  },
+  "early_errors": [],
+  "warnings": "Three pkg_resources deprecation warnings per node; no traceback, OOM or fatal error in full logs.",
+  "training": false,
+  "routing": false,
+  "FLUX_generation": false,
+  "acceptance": "Input baseline completed; this is not a new restored result or all-ten-target pass.",
+  "next_priority": "Blur fidelity/perceptual tradeoff and Noise expert gap; known-class reference is diagnostic, not deployed oracle selection."
+}

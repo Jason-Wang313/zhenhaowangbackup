@@ -1,0 +1,39 @@
+{
+  "FLUX_inference": false,
+  "categories": {
+    "01Blur": {
+      "count": 150,
+      "lpips": 0.35360328872998553,
+      "psnr": 21.863902537027993,
+      "ssim": 0.7402368453389072
+    },
+    "05Noise": {
+      "count": 100,
+      "lpips": 0.17131404856219887,
+      "psnr": 37.41788215637207,
+      "ssim": 0.9328778550945855
+    },
+    "08Haze": {
+      "count": 200,
+      "lpips": 0.359710990563035,
+      "psnr": 13.466770710945129,
+      "ssim": 0.6394019144181023
+    },
+    "10Rain": {
+      "count": 100,
+      "lpips": 0.31119497686624525,
+      "psnr": 23.44885372161865,
+      "ssim": 0.7791146362701604
+    },
+    "14Lowlight": {
+      "count": 50,
+      "lpips": 0.662017782330513,
+      "psnr": 6.9859764099121096,
+      "ssim": 0.18018405585612288
+    }
+  },
+  "receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+  "records": 600,
+  "status": "official_input_baseline_complete",
+  "training": false
+}
