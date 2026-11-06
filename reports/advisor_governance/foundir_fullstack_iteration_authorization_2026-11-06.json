@@ -1,0 +1,12 @@
+{
+  "authority": "user",
+  "date": "2026-11-06",
+  "request": "Analyze this round, improve it, test on official FoundIR, repeat until official test passes; this workspace owns full stack execution, not only GPU commands.",
+  "scope": "official five singleton categories / 600 full-resolution images / original ten PSNR-LPIPS targets",
+  "full_stack_execution_authorized": true,
+  "iterative_training_and_code_changes_authorized": true,
+  "official_GT_training_or_per_image_selection_authorized": false,
+  "official_benchmark_adaptively_reused": true,
+  "preserve_local_changes_and_assets": true,
+  "gpu_control_channel_currently_unavailable": true
+}
