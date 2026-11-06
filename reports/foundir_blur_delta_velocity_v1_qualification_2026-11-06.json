@@ -1,0 +1,108 @@
+{
+  "GT_used_at_inference": false,
+  "engineering_pass": true,
+  "final_parameter_hash": "6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a",
+  "history": [
+    {
+      "gradient_norm": 0.2269141972064972,
+      "loss": 0.12966670014429837,
+      "lpips": 0.34600421972572803,
+      "max_rank_seconds": 5.863114356994629,
+      "mse": 0.009506627857263084,
+      "next_global_slot": 8,
+      "peak_allocated_GiB": 16.713905334472656,
+      "step": 1
+    },
+    {
+      "gradient_norm": 0.1671113222837448,
+      "loss": 0.12585175642743707,
+      "lpips": 0.34038135688751936,
+      "max_rank_seconds": 4.2250213623046875,
+      "mse": 0.009181361954688327,
+      "next_global_slot": 16,
+      "peak_allocated_GiB": 16.96299171447754,
+      "step": 2
+    }
+  ],
+  "identity": [
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0008694",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    },
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0004423",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    },
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0109029",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    },
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0096764",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    },
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0076676",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    },
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0087763",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    },
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0034435",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    },
+    {
+      "float_max_difference": 0.0,
+      "key": "train_foundir_train_0055295",
+      "train_eval_float_max_difference": 0.0,
+      "uint8_max_difference": 0
+    }
+  ],
+  "initial_parameter_hash": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+  "official_pass": false,
+  "ranks": [
+    {
+      "CUDA": "12.8",
+      "GPU": "NVIDIA H100 80GB HBM3",
+      "exit_code": 0,
+      "parameter_hash": "6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a",
+      "peak_allocated_GiB": 16.96299171447754,
+      "rank": 0,
+      "receipt_sha256": "52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419",
+      "seconds": 95.03636125393678,
+      "step": 2,
+      "torch": "2.7.0+cu128"
+    },
+    {
+      "CUDA": "12.8",
+      "GPU": "NVIDIA H100 80GB HBM3",
+      "exit_code": 0,
+      "parameter_hash": "6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a",
+      "peak_allocated_GiB": 16.96299171447754,
+      "rank": 1,
+      "receipt_sha256": "52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419",
+      "seconds": 95.0364709199639,
+      "step": 2,
+      "torch": "2.7.0+cu128"
+    }
+  ],
+  "receipt_sha256": "52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419",
+  "scientific_pass": false,
+  "training_data_only": true
+}

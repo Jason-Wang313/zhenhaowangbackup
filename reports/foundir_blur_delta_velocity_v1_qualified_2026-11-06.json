@@ -1,0 +1,40 @@
+{
+  "CPU_stages": {
+    "verify-qualification": {
+      "seconds": 8.44067058339715,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_DELTA_QUALIFICATION_VERIFIED {\"engineering_pass\": true, \"scientific_pass\": false, \"official_pass\": false, \"receipt_sha256\": \"52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419\", \"identity\": [{\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0008694\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0004423\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0109029\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0096764\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0076676\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0087763\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0034435\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0055295\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}], \"ranks\": [{\"CUDA\": \"12.8\", \"GPU\": \"NVIDIA H100 80GB HBM3\", \"exit_code\": 0, \"parameter_hash\": \"6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a\", \"peak_allocated_GiB\": 16.96299171447754, \"rank\": 0, \"receipt_sha256\": \"52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419\", \"seconds\": 95.03636125393678, \"step\": 2, \"torch\": \"2.7.0+cu128\"}, {\"CUDA\": \"12.8\", \"GPU\": \"NVIDIA H100 80GB HBM3\", \"exit_code\": 0, \"parameter_hash\": \"6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a\", \"peak_allocated_GiB\": 16.96299171447754, \"rank\": 1, \"receipt_sha256\": \"52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419\", \"seconds\": 95.0364709199639, \"step\": 2, \"torch\": \"2.7.0+cu128\"}], \"history\": [{\"step\": 1, \"loss\": 0.12966670014429837, \"mse\": 0.009506627857263084, \"lpips\": 0.34600421972572803, \"gradient_norm\": 0.2269141972064972, \"max_rank_seconds\": 5.863114356994629, \"peak_allocated_GiB\": 16.713905334472656, \"next_global_slot\": 8}, {\"step\": 2, \"loss\": 0.12585175642743707, \"mse\": 0.009181361954688327, \"lpips\": 0.34038135688751936, \"gradient_norm\": 0.1671113222837448, \"max_rank_seconds\": 4.2250213623046875, \"peak_allocated_GiB\": 16.96299171447754, \"next_global_slot\": 16}], \"initial_parameter_hash\": \"1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5\", \"final_parameter_hash\": \"6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a\", \"training_data_only\": true, \"GT_used_at_inference\": false}\n"
+    }
+  },
+  "completed_GPU_hours": 0.07678157753414577,
+  "cost_complete": true,
+  "cumulative_GPU_hour_cap": null,
+  "detail": "\u4e24\u6b65CUDA\u5de5\u7a0b\u9a8c\u6536\u53caCPU\u72ec\u7acb\u6838\u9a8c\u901a\u8fc7\uff1b\u6b64\u7ed3\u8bba\u53ea\u8986\u76d6\u521d\u59cb\u5316\u3001\u68af\u5ea6\u3001\u4e24\u5361\u6c47\u603b\u53ca\u4fdd\u5b58\u6062\u590d\u3002",
+  "event": "qualified",
+  "jobs": {
+    "qualify": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.07678157753414577,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 138.2068395614624,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "0ce6d3d2aa1c86fb479eb26433f7e954c9df6ceabd3d3424db529ae540fba8dd",
+        "node": 3,
+        "utc_unix": 1794001681.237516
+      }
+    }
+  },
+  "latest_pilot_step_receipt": null,
+  "official_Blur_pass_required_before_other_types": true,
+  "official_evaluated": false,
+  "other_categories_submitted": false,
+  "receipt_sha256": "52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419",
+  "utc_unix": 1794001833.4719265
+}
