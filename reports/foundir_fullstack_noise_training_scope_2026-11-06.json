@@ -1,0 +1,12 @@
+{
+  "status": "metadata_only_complete",
+  "training_records": 16,
+  "training_source_groups": 16,
+  "original_training_steps": 400,
+  "manifest_sha256": "3abbaad9bb7a476d9fd673f76542a984471c72f265a5914170efe8151e30ec98",
+  "exact_file_hash_overlap_with_official600": [],
+  "semantic_source_disjointness_proven": false,
+  "pixels_read": false,
+  "original_checkpoint_history_fully_audited": false,
+  "GPU_hours": 0
+}
