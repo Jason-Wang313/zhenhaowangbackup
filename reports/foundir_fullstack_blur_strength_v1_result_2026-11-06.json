@@ -1,0 +1,249 @@
+{
+  "GT_used_for_selection": false,
+  "affected_records": 150,
+  "arms": {
+    "five_quarters": {
+      "all_ten_pass": false,
+      "checks": {
+        "01Blur": {
+          "lpips": false,
+          "psnr": false
+        },
+        "05Noise": {
+          "lpips": false,
+          "psnr": false
+        },
+        "08Haze": {
+          "lpips": true,
+          "psnr": false
+        },
+        "10Rain": {
+          "lpips": true,
+          "psnr": false
+        },
+        "14Lowlight": {
+          "lpips": true,
+          "psnr": true
+        }
+      },
+      "per_category": {
+        "01Blur": {
+          "lpips": 0.18809041847785313,
+          "psnr": 20.988326479593912,
+          "ssim": 0.7443717180433561
+        },
+        "05Noise": {
+          "lpips": 0.13663816242478788,
+          "psnr": 34.632453122138976,
+          "ssim": 0.9270681065619815
+        },
+        "08Haze": {
+          "lpips": 0.12367851933464408,
+          "psnr": 21.963812551498414,
+          "ssim": 0.8384822837425908
+        },
+        "10Rain": {
+          "lpips": 0.07501418385654687,
+          "psnr": 32.0349299621582,
+          "ssim": 0.9218588440458518
+        },
+        "14Lowlight": {
+          "lpips": 0.17252287715673448,
+          "psnr": 19.231370677947996,
+          "ssim": 0.8644231889270912
+        }
+      }
+    },
+    "half": {
+      "all_ten_pass": false,
+      "checks": {
+        "01Blur": {
+          "lpips": false,
+          "psnr": false
+        },
+        "05Noise": {
+          "lpips": false,
+          "psnr": false
+        },
+        "08Haze": {
+          "lpips": true,
+          "psnr": false
+        },
+        "10Rain": {
+          "lpips": true,
+          "psnr": false
+        },
+        "14Lowlight": {
+          "lpips": true,
+          "psnr": true
+        }
+      },
+      "per_category": {
+        "01Blur": {
+          "lpips": 0.2753988696138064,
+          "psnr": 22.129605216979982,
+          "ssim": 0.7562248129630929
+        },
+        "05Noise": {
+          "lpips": 0.13663816242478788,
+          "psnr": 34.632453122138976,
+          "ssim": 0.9270681065619815
+        },
+        "08Haze": {
+          "lpips": 0.12367851933464408,
+          "psnr": 21.963812551498414,
+          "ssim": 0.8384822837425908
+        },
+        "10Rain": {
+          "lpips": 0.07501418385654687,
+          "psnr": 32.0349299621582,
+          "ssim": 0.9218588440458518
+        },
+        "14Lowlight": {
+          "lpips": 0.17252287715673448,
+          "psnr": 19.231370677947996,
+          "ssim": 0.8644231889270912
+        }
+      }
+    },
+    "three_halves": {
+      "all_ten_pass": false,
+      "checks": {
+        "01Blur": {
+          "lpips": false,
+          "psnr": false
+        },
+        "05Noise": {
+          "lpips": false,
+          "psnr": false
+        },
+        "08Haze": {
+          "lpips": true,
+          "psnr": false
+        },
+        "10Rain": {
+          "lpips": true,
+          "psnr": false
+        },
+        "14Lowlight": {
+          "lpips": true,
+          "psnr": true
+        }
+      },
+      "per_category": {
+        "01Blur": {
+          "lpips": 0.1848685252169768,
+          "psnr": 20.336427256266276,
+          "ssim": 0.7305201253563337
+        },
+        "05Noise": {
+          "lpips": 0.13663816242478788,
+          "psnr": 34.632453122138976,
+          "ssim": 0.9270681065619815
+        },
+        "08Haze": {
+          "lpips": 0.12367851933464408,
+          "psnr": 21.963812551498414,
+          "ssim": 0.8384822837425908
+        },
+        "10Rain": {
+          "lpips": 0.07501418385654687,
+          "psnr": 32.0349299621582,
+          "ssim": 0.9218588440458518
+        },
+        "14Lowlight": {
+          "lpips": 0.17252287715673448,
+          "psnr": 19.231370677947996,
+          "ssim": 0.8644231889270912
+        }
+      }
+    },
+    "three_quarters": {
+      "all_ten_pass": false,
+      "checks": {
+        "01Blur": {
+          "lpips": false,
+          "psnr": false
+        },
+        "05Noise": {
+          "lpips": false,
+          "psnr": false
+        },
+        "08Haze": {
+          "lpips": true,
+          "psnr": false
+        },
+        "10Rain": {
+          "lpips": true,
+          "psnr": false
+        },
+        "14Lowlight": {
+          "lpips": true,
+          "psnr": true
+        }
+      },
+      "per_category": {
+        "01Blur": {
+          "lpips": 0.23078681816657384,
+          "psnr": 21.939185218811033,
+          "ssim": 0.7571946148352305
+        },
+        "05Noise": {
+          "lpips": 0.13663816242478788,
+          "psnr": 34.632453122138976,
+          "ssim": 0.9270681065619815
+        },
+        "08Haze": {
+          "lpips": 0.12367851933464408,
+          "psnr": 21.963812551498414,
+          "ssim": 0.8384822837425908
+        },
+        "10Rain": {
+          "lpips": 0.07501418385654687,
+          "psnr": 32.0349299621582,
+          "ssim": 0.9218588440458518
+        },
+        "14Lowlight": {
+          "lpips": 0.17252287715673448,
+          "psnr": 19.231370677947996,
+          "ssim": 0.8644231889270912
+        }
+      }
+    }
+  },
+  "independent_blind_test": false,
+  "new_FLUX_generation": false,
+  "parent": {
+    "01Blur": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "05Noise": {
+      "lpips": 0.13663816242478788,
+      "psnr": 34.632453122138976,
+      "ssim": 0.9270681065619815
+    },
+    "08Haze": {
+      "lpips": 0.12367851933464408,
+      "psnr": 21.963812551498414,
+      "ssim": 0.8384822837425908
+    },
+    "10Rain": {
+      "lpips": 0.07501418385654687,
+      "psnr": 32.0349299621582,
+      "ssim": 0.9218588440458518
+    },
+    "14Lowlight": {
+      "lpips": 0.17252287715673448,
+      "psnr": 19.231370677947996,
+      "ssim": 0.8644231889270912
+    }
+  },
+  "receipt_sha256": "7c0a1c52818849d4caf821d59c1d0694c770a8246f1f801fb220b0dd74104802",
+  "records": 600,
+  "scope": "fixed post-uint8 output ablation, not raw-alpha equivalence or new learned expert",
+  "selected_for_deployment": null,
+  "status": "complete",
+  "training": false
+}

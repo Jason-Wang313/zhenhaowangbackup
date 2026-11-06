@@ -1,0 +1,84 @@
+{
+  "status": "engineering_complete_scientific_targets_not_met",
+  "run_id": "round1_blur_strength_single_node_v1",
+  "topology": {
+    "nodes": [
+      0
+    ],
+    "gpus": 2,
+    "type": "H100 80GB"
+  },
+  "GPU_launcher": {
+    "allocated_GPU_hours": 0.2829638538095686,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 509.3349368572235,
+    "status": 0
+  },
+  "CPU_finish": {
+    "seconds": 25.609119802713394,
+    "status": 0,
+    "stderr": ""
+  },
+  "records": 600,
+  "modified_blur_records": 150,
+  "unchanged_reused_records": 450,
+  "candidate_PNG_count": 600,
+  "peak_allocated_gib": 0.5941224098205566,
+  "worker_counts": [
+    300,
+    300
+  ],
+  "sources": {
+    "smoke/audit_foundir_fullstack_blur_strength_v1.py": "51789c05ad3b13588c5ee20f893d586525ade2547bc40d7fef0a8eea3e752c1d",
+    "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+    "smoke/official_vlm_v4_metric_identity_fix.py": "9b6eada933c1f7ff320a3224709ac6449b88c607b59fc946367cab03497d106c",
+    "smoke/run_foundir_fullstack_blur_strength_v1.sh": "da4dd768344f200e1e4768da334476f13455bef913c6a58deae3a8b351380593"
+  },
+  "receipt_sha256": "7c0a1c52818849d4caf821d59c1d0694c770a8246f1f801fb220b0dd74104802",
+  "result_sha256": "e70712561a5e2e341836ca578a06162b75eeb0d1ca90f018388a3919dd94d5bb",
+  "log_sha256": "fa2bcb1d3bf0a95e6cb5cb1ae0fd43bced83aebbd09ea6ad8a6866b8935c3149",
+  "job_sha256": "6a0fbfc85c26a40a7c162c48ea647a8f3c53df3fa0b8efb479b4807f19d370ba",
+  "no_node1_or_node2_launch": true,
+  "blur_baseline": {
+    "lpips": 0.2026222513616085,
+    "psnr": 21.546762199401854,
+    "ssim": 0.7535799373553662
+  },
+  "blur_candidates": {
+    "five_quarters": {
+      "lpips": 0.18809041847785313,
+      "psnr": 20.988326479593912,
+      "ssim": 0.7443717180433561
+    },
+    "half": {
+      "lpips": 0.2753988696138064,
+      "psnr": 22.129605216979982,
+      "ssim": 0.7562248129630929
+    },
+    "three_halves": {
+      "lpips": 0.1848685252169768,
+      "psnr": 20.336427256266276,
+      "ssim": 0.7305201253563337
+    },
+    "three_quarters": {
+      "lpips": 0.23078681816657384,
+      "psnr": 21.939185218811033,
+      "ssim": 0.7571946148352305
+    }
+  },
+  "all_arms_failed_blur_joint_target": true,
+  "new_training": false,
+  "new_route": false,
+  "new_FLUX_generation": false,
+  "selected_for_deployment": null,
+  "warnings": "3 pkg_resources deprecation warnings, no fatal error",
+  "decision": "Do not deploy these strengths or continue an unbounded coefficient sweep; prioritize learned fidelity/spatial correspondence and train/deploy consistency. Four fixed strengths do not prove a global impossibility result.",
+  "interpretation": "Post-uint8 residual ablation, not raw continuous alpha replay. Each arm retains complete official600 and uses existing predicted routing; official GT is metric-only.",
+  "legacy_evidence": [
+    "reports/foundir_blur_only_flux2_trajectory_endpoint_terminal_result_2026-09-16.md",
+    "reports/foundir_blur_only_flux2_source_diverse_spatial_anchor_terminal_result_2026-09-16.md"
+  ],
+  "legacy_lessons": "Tiny endpoint fine-tuning overfit; source-diverse spatial-anchor pilot also worsened LPIPS. Do not blindly restart either old recipe."
+}
