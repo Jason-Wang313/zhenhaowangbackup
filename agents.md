@@ -1,3 +1,10 @@
+## Blur真实参数梯度诊断已准备：两检查点×固定8训练图 — 2026-11-06
+
+当前官方21.819776/.241321未过25.9/.18，只推进Blur。64训练图已有20张错误方向，先核对损失的实际参数作用，不把RGB梯度比例当LoRA更新证据。
+固定当前前8训练来源/裁图，原初始化和当前step200，真实10*MSE/.1*LPIPS分别求全部LoRA参数梯度；每图及NCCL汇总global8分别报告norm/cosine/内积。原初始化复现LQ，step200复现已有64图对应PNG；每检查点求导前后参数SHA不变，无optimizer/参数更新，GT仅现有训练8图。
+4项CPU测试、静态检查和prepare通过，2.037856秒/GPU0；待发布入队round11_blur_loss_gradients_v1，node3双H100。入口smoke/diagnose_foundir_blur_loss_gradients_v1.py，输出foundir_blur_loss_gradients_v1。无专用持久观察器，接手看真实ended，再finish/推报告，勿重复提交。
+原始混合SGD方向的一阶loss内积只是诊断，不等于Adam实际行为或有限步/官方收益。仅官方完整150为质量门槛，无新测试集gate。不改旧绑定配方，不盲追加训练，依据真实结果冻结下一方案；完整自主研究授权继续有效。详见reports/foundir_blur_loss_gradients_v1_readiness_2026-11-06.md。
+
 ## Blur64训练图诊断：训练侧也存在错误方向；先核对loss参数梯度 — 2026-11-06
 
 固定前64当前训练图/最终step200只读诊断完成，两rank/launcher退出0，参数SHA前后不变，PNG/记录核验通过。48.074520秒/.026708067 GPU-hours，CPU1.422280秒；两个delta试验及对应诊断共2.562817654 GPU-hours，早期历史另计。
