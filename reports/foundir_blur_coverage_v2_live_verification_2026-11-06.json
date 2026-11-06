@@ -1,0 +1,33 @@
+{
+  "status": "live_engineering_verification_pass",
+  "verified_utc_unix": 1794006316.112177,
+  "training_job": "round10_blur_coverage_train_v2",
+  "first_checkpoint_receipt": {
+    "file": "steps/state_000001_1794006158080673528.pt",
+    "next_global_slot": 8,
+    "parameter_hash": "f58b2d97a311c36110a92308e019461dcc7e29ed78adf8772881c2a23f9aa2bb",
+    "receipt_sha256": "c9e39f43405c7cc29a2e69994d479d30b6766cf112a8c3f17c8207bf228cb137",
+    "sha256": "9bc6a52fcad53521366ce0adbc94d85e36b10f6a0d9c579a1c8d49bfd4414d9a",
+    "step": 1,
+    "world": 2
+  },
+  "full_checkpoint_file_SHA_checked": true,
+  "model_parameter_hash_recomputed": true,
+  "parameters_changed_from_step0": true,
+  "optimizer_FP32_finite_parameters": 100,
+  "Adam_step": 1,
+  "rank_RNG_states": 2,
+  "next_global_slot": 8,
+  "cache_shards_unique_and_receipt_bound": [
+    512,
+    512
+  ],
+  "cache_total": 1024,
+  "cached_GT_input": false,
+  "selected_source_group_and_image_identities_match_screened_original_manifest": 1024,
+  "new_evaluation_population": false,
+  "official_Blur_pass": false,
+  "new_GPU_job_submitted": false,
+  "GPU_hours": 0,
+  "note": "CPU只读核验已完成步骤，不扫描全部历史大checkpoint；本报告不代表质量通过。"
+}
