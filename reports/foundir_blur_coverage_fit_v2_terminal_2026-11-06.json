@@ -1,0 +1,180 @@
+{
+  "status": "training_fit_diagnostic_complete",
+  "launcher": {
+    "allocated_GPU_hours": 0.026708066595925225,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 48.074519872665405,
+    "status": 0
+  },
+  "ranks": [
+    {
+      "keys": [
+        "train_foundir_train_0034314",
+        "train_foundir_train_0068705",
+        "train_foundir_train_0021200",
+        "train_foundir_train_0053870",
+        "train_foundir_train_0032900",
+        "train_foundir_train_0072816",
+        "train_foundir_train_0066877",
+        "train_foundir_train_0033365",
+        "train_foundir_train_0035273",
+        "train_foundir_train_0066989",
+        "train_foundir_train_0065344",
+        "train_foundir_train_0068504",
+        "train_foundir_train_0071538",
+        "train_foundir_train_0062100",
+        "train_foundir_train_0034397",
+        "train_foundir_train_0072779",
+        "train_foundir_train_0059081",
+        "train_foundir_train_0066595",
+        "train_foundir_train_0066131",
+        "train_foundir_train_0027782",
+        "train_foundir_train_0100233",
+        "train_foundir_train_0073102",
+        "train_foundir_train_0106366",
+        "train_foundir_train_0072237",
+        "train_foundir_train_0033994",
+        "train_foundir_train_0106483",
+        "train_foundir_train_0103058",
+        "train_foundir_train_0040681",
+        "train_foundir_train_0104664",
+        "train_foundir_train_0046851",
+        "train_foundir_train_0035928",
+        "train_foundir_train_0072661"
+      ],
+      "parameter_hash_after": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175",
+      "parameter_hash_before": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175",
+      "peak_allocated_GiB": 10.605735778808594,
+      "rank": 0,
+      "receipt_sha256": "33ac1644283f4bdfa2106a19def897dc1837418ced90de76a212b1af438f8226",
+      "seconds": 36.525120517006144
+    },
+    {
+      "keys": [
+        "train_foundir_train_0067544",
+        "train_foundir_train_0033402",
+        "train_foundir_train_0067698",
+        "train_foundir_train_0099772",
+        "train_foundir_train_0061901",
+        "train_foundir_train_0065808",
+        "train_foundir_train_0033202",
+        "train_foundir_train_0069301",
+        "train_foundir_train_0055794",
+        "train_foundir_train_0067616",
+        "train_foundir_train_0067472",
+        "train_foundir_train_0020942",
+        "train_foundir_train_0029938",
+        "train_foundir_train_0034644",
+        "train_foundir_train_0098994",
+        "train_foundir_train_0028201",
+        "train_foundir_train_0104253",
+        "train_foundir_train_0027701",
+        "train_foundir_train_0033938",
+        "train_foundir_train_0066904",
+        "train_foundir_train_0050835",
+        "train_foundir_train_0044989",
+        "train_foundir_train_0055579",
+        "train_foundir_train_0067037",
+        "train_foundir_train_0106409",
+        "train_foundir_train_0099178",
+        "train_foundir_train_0042548",
+        "train_foundir_train_0015271",
+        "train_foundir_train_0032063",
+        "train_foundir_train_0066572",
+        "train_foundir_train_0040835",
+        "train_foundir_train_0064927"
+      ],
+      "parameter_hash_after": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175",
+      "parameter_hash_before": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175",
+      "peak_allocated_GiB": 10.605735778808594,
+      "rank": 1,
+      "receipt_sha256": "33ac1644283f4bdfa2106a19def897dc1837418ced90de76a212b1af438f8226",
+      "seconds": 36.38313710701186
+    }
+  ],
+  "CPU_finish_seconds": 1.4222803562879562,
+  "CPU_exit_code": 0,
+  "training_fit_only_summary": {
+    "candidate": {
+      "lpips": 0.23219666178920306,
+      "psnr": 23.672546952962875,
+      "ssim": 0.7487340236670903
+    },
+    "lq": {
+      "lpips": 0.3473904332022357,
+      "psnr": 23.384540647268295,
+      "ssim": 0.7482926702686176
+    }
+  },
+  "nonpositive_direction_count": 20,
+  "PSNR_worse_than_LQ_count": 28,
+  "cosine_mean": 0.2549937986163784,
+  "PSNR_gain_vs_training_LQ": 0.2880063056945801,
+  "LPIPS_reduction_vs_training_LQ_percent": 33.15974200877657,
+  "official_Blur_pass": false,
+  "quality_gate": false,
+  "parameters_updated": false,
+  "prior_initializer_qualification_RGB_gradient_evidence": [
+    {
+      "rank": 1,
+      "key": "train_foundir_train_0096764",
+      "MSE_RGB_gradient_norm": 0.0010088052367791533,
+      "LPIPS_RGB_gradient_norm": 0.0059106857515871525
+    },
+    {
+      "rank": 0,
+      "key": "train_foundir_train_0004423",
+      "MSE_RGB_gradient_norm": 0.0020674788393080235,
+      "LPIPS_RGB_gradient_norm": 0.010501289740204811
+    },
+    {
+      "rank": 1,
+      "key": "train_foundir_train_0087763",
+      "MSE_RGB_gradient_norm": 0.0001673649821896106,
+      "LPIPS_RGB_gradient_norm": 0.002077903365716338
+    },
+    {
+      "rank": 0,
+      "key": "train_foundir_train_0076676",
+      "MSE_RGB_gradient_norm": 0.0002269632532261312,
+      "LPIPS_RGB_gradient_norm": 0.0024023375008255243
+    },
+    {
+      "rank": 1,
+      "key": "train_foundir_train_0055295",
+      "MSE_RGB_gradient_norm": 0.0008131624781526625,
+      "LPIPS_RGB_gradient_norm": 0.004355658311396837
+    },
+    {
+      "rank": 0,
+      "key": "train_foundir_train_0034435",
+      "MSE_RGB_gradient_norm": 0.0009429609053768218,
+      "LPIPS_RGB_gradient_norm": 0.005541402846574783
+    },
+    {
+      "rank": 0,
+      "key": "train_foundir_train_0008694",
+      "MSE_RGB_gradient_norm": 0.000840037246234715,
+      "LPIPS_RGB_gradient_norm": 0.006386154796928167
+    },
+    {
+      "rank": 1,
+      "key": "train_foundir_train_0109029",
+      "MSE_RGB_gradient_norm": 0.001429297379218042,
+      "LPIPS_RGB_gradient_norm": 0.014297704212367535
+    }
+  ],
+  "prior_weighted_LPIPS_to_MSE_RGB_gradient_ratio": {
+    "min": 5.079273142026231,
+    "max": 12.415400990884978,
+    "median": 6.7394134313727285
+  },
+  "parameter_gradient_dominance_proven": false,
+  "interpretation": "Seen training inputs already include nonpositive directions and PSNR regressions; cannot call this solely official generalization. Existing RGB gradient ratio motivates measuring actual LoRA parameter contributions before loss change.",
+  "next_action": "Fixed first8 current training inputs, original initialization and final200; read-only weighted MSE/LPIPS LoRA gradient norm/cosine diagnosis. Not implemented or submitted yet; no optimizer updates.",
+  "next_new_GPU_job_submitted": false,
+  "all_delta_trials_and_diagnostics_GPU_hours": 2.5628176538433305,
+  "older_history_not_in_subtotal": true
+}
