@@ -1,0 +1,430 @@
+{
+  "automatic_followup": false,
+  "diagnostic_only": true,
+  "new_model_calls": 432,
+  "new_training": false,
+  "official_or_development_evaluated": false,
+  "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83",
+  "records": [
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12800_17502f7f23b94e11be3fc95ad671e61c.safetensors": "eea0f39390f153c91d642ccdcbcf7b72001feec4baee29668dda474dbc444063"
+      },
+      "identity": {
+        "index": 12800,
+        "rank": 0,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12800,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.1360016167163849,
+          "psnr": 30.817779032280793
+        },
+        "p1000_r800": {
+          "lpips": 0.13928954303264618,
+          "psnr": 30.511749567069018
+        },
+        "p800_r1000": {
+          "lpips": 0.13644395768642426,
+          "psnr": 30.811843254480877
+        },
+        "p800_r800": {
+          "lpips": 0.139633446931839,
+          "psnr": 30.504840008474993
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.005877139512449503,
+      "seconds": 8.940801588119939,
+      "seed": 14827148607,
+      "tensor": "tensors/cross_12800_17502f7f23b94e11be3fc95ad671e61c.safetensors",
+      "training_fit_only": true
+    },
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12801_f01beecc89004571bf4fd4b8d0f559bd.safetensors": "91266e3a324c8866dbf1b00d103a9bbfa20153fa71cc3b1a7845e069bcb79163"
+      },
+      "identity": {
+        "index": 12801,
+        "rank": 1,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12801,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.05189342796802521,
+          "psnr": 30.215653451485878
+        },
+        "p1000_r800": {
+          "lpips": 0.05389118194580078,
+          "psnr": 30.31132741327534
+        },
+        "p800_r1000": {
+          "lpips": 0.05241578817367554,
+          "psnr": 30.218512918168564
+        },
+        "p800_r800": {
+          "lpips": 0.05453135818243027,
+          "psnr": 30.303533286369785
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.005213845055550337,
+      "seconds": 8.956333036068827,
+      "seed": 14828148610,
+      "tensor": "tensors/cross_12801_f01beecc89004571bf4fd4b8d0f559bd.safetensors",
+      "training_fit_only": true
+    },
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12802_a6696654e47d4321aea115eb2a18ddde.safetensors": "1f36f04a7d0f1c2a50dc70391e66685c091dcc98b84ce2216639ce7313188264"
+      },
+      "identity": {
+        "index": 12802,
+        "rank": 0,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12802,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.02241523563861847,
+          "psnr": 34.221847093889465
+        },
+        "p1000_r800": {
+          "lpips": 0.02077653631567955,
+          "psnr": 34.39287381441566
+        },
+        "p800_r1000": {
+          "lpips": 0.021734362468123436,
+          "psnr": 34.25656658566978
+        },
+        "p800_r800": {
+          "lpips": 0.020338162779808044,
+          "psnr": 34.41203948596836
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.004770055878907442,
+      "seconds": 8.202367261052132,
+      "seed": 14829148613,
+      "tensor": "tensors/cross_12802_a6696654e47d4321aea115eb2a18ddde.safetensors",
+      "training_fit_only": true
+    },
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12803_c1d6fa90372a412d98a40caf6d8ef2bc.safetensors": "f445d6c575aefeb7c5301c41dc3a2cccfd271acab87af3a5b3f08a74e68f5b02"
+      },
+      "identity": {
+        "index": 12803,
+        "rank": 1,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12803,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.1085064560174942,
+          "psnr": 32.69155593516719
+        },
+        "p1000_r800": {
+          "lpips": 0.11220991611480713,
+          "psnr": 31.44901318427541
+        },
+        "p800_r1000": {
+          "lpips": 0.10960382223129272,
+          "psnr": 32.62714471689254
+        },
+        "p800_r800": {
+          "lpips": 0.11346323043107986,
+          "psnr": 31.280247082437917
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.007860083132982254,
+      "seconds": 8.261186813935637,
+      "seed": 14830148616,
+      "tensor": "tensors/cross_12803_c1d6fa90372a412d98a40caf6d8ef2bc.safetensors",
+      "training_fit_only": true
+    },
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12804_385e31f9aec247e6baf5f4cc2195c083.safetensors": "a2fd27d0418075fcb1a666326c627c715f9a6acd2932bc6aab11ab44da607e71"
+      },
+      "identity": {
+        "index": 12804,
+        "rank": 0,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12804,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.07175701856613159,
+          "psnr": 31.199212447012023
+        },
+        "p1000_r800": {
+          "lpips": 0.07061635702848434,
+          "psnr": 31.455626837762125
+        },
+        "p800_r1000": {
+          "lpips": 0.07082293182611465,
+          "psnr": 31.19798283452029
+        },
+        "p800_r800": {
+          "lpips": 0.07051970809698105,
+          "psnr": 31.445245019123327
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.004768009297549725,
+      "seconds": 8.243186133913696,
+      "seed": 14831148619,
+      "tensor": "tensors/cross_12804_385e31f9aec247e6baf5f4cc2195c083.safetensors",
+      "training_fit_only": true
+    },
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12805_f184699adef745ba904a94161803856c.safetensors": "d834da73b9a4e49aa9c0f99387abd276c19ac097719ca1544fd22a5a12edcf09"
+      },
+      "identity": {
+        "index": 12805,
+        "rank": 1,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12805,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.02662983536720276,
+          "psnr": 39.68524565502979
+        },
+        "p1000_r800": {
+          "lpips": 0.026778537780046463,
+          "psnr": 38.69904641056013
+        },
+        "p800_r1000": {
+          "lpips": 0.02664223127067089,
+          "psnr": 39.70647557376004
+        },
+        "p800_r800": {
+          "lpips": 0.02675081230700016,
+          "psnr": 38.73998791945061
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.004842917434871197,
+      "seconds": 8.233449697028846,
+      "seed": 14832148622,
+      "tensor": "tensors/cross_12805_f184699adef745ba904a94161803856c.safetensors",
+      "training_fit_only": true
+    },
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12806_0d0a15be3f4c43958634edd9b16bd928.safetensors": "486576246531e41062d7d3b16b2d8d4002299357421251363dcc586b18da4a7b"
+      },
+      "identity": {
+        "index": 12806,
+        "rank": 0,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12806,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.013228148221969604,
+          "psnr": 40.27329014420537
+        },
+        "p1000_r800": {
+          "lpips": 0.012924117967486382,
+          "psnr": 45.38905500804334
+        },
+        "p800_r1000": {
+          "lpips": 0.013165815733373165,
+          "psnr": 40.48758612448061
+        },
+        "p800_r800": {
+          "lpips": 0.012852556072175503,
+          "psnr": 45.42928816048378
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.007074839901179075,
+      "seconds": 8.141638953005895,
+      "seed": 14833148625,
+      "tensor": "tensors/cross_12806_0d0a15be3f4c43958634edd9b16bd928.safetensors",
+      "training_fit_only": true
+    },
+    {
+      "GT_input": false,
+      "actual_model_calls": 54,
+      "files": {
+        "tensors/cross_12807_e0909fb8e2604e7bbfb919cbbddd1215.safetensors": "6fbb5175f793b4c691f030eac6df3a2090166870df7b71b16994d34038470e26"
+      },
+      "identity": {
+        "index": 12807,
+        "rank": 1,
+        "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83"
+      },
+      "index": 12807,
+      "metrics": {
+        "p1000_r1000": {
+          "lpips": 0.1450437605381012,
+          "psnr": 29.51503429992547
+        },
+        "p1000_r800": {
+          "lpips": 0.14647911489009857,
+          "psnr": 29.265510156575573
+        },
+        "p800_r1000": {
+          "lpips": 0.14521777629852295,
+          "psnr": 29.50850631448402
+        },
+        "p800_r800": {
+          "lpips": 0.14622674882411957,
+          "psnr": 29.264408418429465
+        }
+      },
+      "parity": {
+        "1000": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        },
+        "800": {
+          "max_metric_difference": 0.0,
+          "max_uint8_difference": 0
+        }
+      },
+      "prefix_generated_tokens_RMS_difference": 0.005209401715546846,
+      "seconds": 8.195640238933265,
+      "seed": 14834148628,
+      "tensor": "tensors/cross_12807_e0909fb8e2604e7bbfb919cbbddd1215.safetensors",
+      "training_fit_only": true
+    }
+  ],
+  "status": "complete",
+  "summary": {
+    "automatic_training": false,
+    "conditional_deltas": {
+      "prefix_change_fixed1000_readout": {
+        "lpips": -7.139833178371191e-05,
+        "psnr": -0.02437503293259624
+      },
+      "prefix_change_fixed800_readout": {
+        "lpips": -0.00016883981879800558,
+        "psnr": 0.011826626404790375
+      },
+      "readout_change_fixed1000_prefix": {
+        "lpips": -0.0009362257551401854,
+        "psnr": -0.35682304162257594
+      },
+      "readout_change_fixed800_prefix": {
+        "lpips": -0.001033667242154479,
+        "psnr": -0.3206213822851893
+      },
+      "whole_update": {
+        "lpips": -0.001105065573938191,
+        "psnr": -0.34499641521778557
+      }
+    },
+    "interaction": {
+      "lpips": 9.744148701429367e-05,
+      "psnr": -0.036201659337386616
+    },
+    "matched_parent_parity": true,
+    "means": {
+      "p1000_r1000": {
+        "lpips": 0.07193443737924099,
+        "psnr": 33.577452257374496
+      },
+      "p1000_r800": {
+        "lpips": 0.07287066313438118,
+        "psnr": 33.93427529899707
+      },
+      "p800_r1000": {
+        "lpips": 0.0720058357110247,
+        "psnr": 33.60182729030709
+      },
+      "p800_r800": {
+        "lpips": 0.07303950295317918,
+        "psnr": 33.92244867259228
+      }
+    },
+    "official_quality_claim": false,
+    "prefix_cancellation_signature_in_this_eight_crop_probe": false,
+    "scope": "eight fixed historical training probe crops; no generalization or statistical significance claim"
+  }
+}
