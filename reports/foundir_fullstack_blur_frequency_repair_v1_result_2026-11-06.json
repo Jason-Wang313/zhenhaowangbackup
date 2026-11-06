@@ -1,0 +1,75 @@
+{
+  "admit_official_evaluation": false,
+  "automatic_deployment": false,
+  "coefficient_sha256": "165ad1ccd30acd629c479561a219ad2a9588748cd96ecc210bccb99e8c423def",
+  "development_is_not_blind_test": true,
+  "exit_code": 0,
+  "fit_parameters": 6,
+  "new_FLUX_training": false,
+  "official_evaluated": false,
+  "official_gate_claim": false,
+  "receipt_sha256": "49212c57d68aa57bea7c89f7c32357970e92f01da524c0dafbc893741e7d7519",
+  "seconds": 4.571099206805229,
+  "status": "bounded_candidate_complete",
+  "summary": {
+    "development": {
+      "baseline": {
+        "lpips": 0.2173799765005242,
+        "psnr": 23.891740202903748,
+        "ssim": 0.7322094117106728
+      },
+      "candidate": {
+        "lpips": 0.3305451919368352,
+        "psnr": 24.66046792268753,
+        "ssim": 0.7585506272742997
+      },
+      "constant_band_control": {
+        "lpips": 0.21737615167512558,
+        "psnr": 23.899540781974792,
+        "ssim": 0.732185468622499
+      },
+      "constant_control_max_uint8_difference": 1,
+      "count": 32,
+      "lq": {
+        "lpips": 0.36374727720976807,
+        "psnr": 24.199093997478485,
+        "ssim": 0.7520519562978898
+      },
+      "worst_psnr_loss": 5.067924499511719
+    },
+    "train": {
+      "baseline": {
+        "lpips": 0.23017810811143136,
+        "psnr": 22.584691181778908,
+        "ssim": 0.690188234400974
+      },
+      "candidate": {
+        "lpips": 0.3632389983649773,
+        "psnr": 23.0419984087348,
+        "ssim": 0.7046207548006069
+      },
+      "constant_band_control": {
+        "lpips": 0.23025304952898296,
+        "psnr": 22.58607889711857,
+        "ssim": 0.6902418413856617
+      },
+      "constant_control_max_uint8_difference": 1,
+      "count": 128,
+      "lq": {
+        "lpips": 0.4065026017706259,
+        "psnr": 22.74623743444681,
+        "ssim": 0.6948794320629358
+      },
+      "worst_psnr_loss": 5.338977813720703
+    }
+  },
+  "task": "blur",
+  "weights": [
+    0.2812188161076626,
+    0.3566168749383814,
+    0.3353503979106527,
+    0.18766050940950052,
+    0.10495773107471375,
+    0.06044866177308034
+  ]
+}
