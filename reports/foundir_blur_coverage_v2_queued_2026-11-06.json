@@ -1,0 +1,28 @@
+{
+  "CPU_stages": {
+    "plan": {
+      "seconds": 9.530374757945538,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_DELTA_OFFICIAL_PLAN {\"status\": \"official150_metadata_plan_pass\", \"records\": 150, \"tiles_per_rank\": [1125, 1125], \"total_model_calls\": 4500, \"GT_pixels_decoded\": false, \"GPU_started\": false, \"seconds\": 1.1475094445049763, \"exit_code\": 0, \"GPU_hours\": 0, \"plan_sha256\": \"7d2627193c087dbb0fc9ad5ba3b676053432f5bd9e96aad7ab96719dc018f371\", \"independent_blind_test\": false}\n"
+    }
+  },
+  "adaptive_official_benchmark_not_independent_blind_test": true,
+  "completed_GPU_hours": 0,
+  "cost_complete": true,
+  "detail": "\u76ee\u7684\u5730CPU\u9884\u68c0\u5b8c\u6210\uff0c\u56fa\u5b9a\u7f13\u5b58\u2192fresh200\u2192\u5b98\u65b9150\u5df2\u6388\u6743\u94fe\u5f00\u59cb\u3002",
+  "event": "queued",
+  "fixed_steps": 200,
+  "jobs": {},
+  "latest_step": null,
+  "new_development_test": false,
+  "official_Blur_pass": false,
+  "official_only_quality_gate": true,
+  "other_categories_submitted": false,
+  "prior_delta_pilot_and_path_GPU_hours": 1.2959202243505916,
+  "receipt_sha256": "c9e39f43405c7cc29a2e69994d479d30b6766cf112a8c3f17c8207bf228cb137",
+  "training_exposures": 1600,
+  "training_logs": [],
+  "training_sources": 1024,
+  "utc_unix": 1794005860.196738
+}
