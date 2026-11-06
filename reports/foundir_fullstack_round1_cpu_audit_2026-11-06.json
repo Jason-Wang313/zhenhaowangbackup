@@ -1,0 +1,943 @@
+{
+  "categories": {
+    "01Blur": {
+      "count": 150,
+      "input_psnr_diagnostic": 21.86390235395717,
+      "known_class_psnr": 21.546762199401854,
+      "max_psnr_formula_difference": 3.4223123428489544e-06,
+      "mean_gain_db": -0.31714089815357105,
+      "psnr_worse_than_input": 91,
+      "worst_gain_records": [
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "01Blur",
+          "height": 1080,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 22.997236031424823,
+          "known_class_lpips": 0.1712636649608612,
+          "known_class_psnr_diagnostic": 20.070523584287372,
+          "known_class_psnr_gain_db": -2.926712447137451,
+          "mean_rgb_error": [
+            -0.0011219437892982065,
+            -0.001319809420503903,
+            0.0006859511489919559
+          ],
+          "record_id": "official_01Blur_0064",
+          "regions": {
+            "interior": {
+              "input_mse": 0.005150855420482408,
+              "output_mse": 0.01017402663472781,
+              "output_over_input_mse": 1.9752110677132833
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.0029596218523341884,
+              "output_mse": 0.004766843771790159,
+              "output_over_input_mse": 1.610625954809279
+            }
+          },
+          "saved_known_class_psnr": 20.070524215698242,
+          "width": 1920
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "01Blur",
+          "height": 1080,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 20.84815362578174,
+          "known_class_lpips": 0.2322985827922821,
+          "known_class_psnr_diagnostic": 18.216226439709047,
+          "known_class_psnr_gain_db": -2.6319271860726943,
+          "mean_rgb_error": [
+            -0.002542513656955612,
+            -0.002379882786310505,
+            -0.0011508070447868064
+          ],
+          "record_id": "official_01Blur_0073",
+          "regions": {
+            "interior": {
+              "input_mse": 0.008309426080568562,
+              "output_mse": 0.015266757083499248,
+              "output_over_input_mse": 1.8372817731901214
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.0069619035013358055,
+              "output_mse": 0.01223974660324039,
+              "output_over_input_mse": 1.7581034555983008
+            }
+          },
+          "saved_known_class_psnr": 18.21622657775879,
+          "width": 1920
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "01Blur",
+          "height": 1080,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 25.555564018444166,
+          "known_class_lpips": 0.2820528447628021,
+          "known_class_psnr_diagnostic": 22.95534258504899,
+          "known_class_psnr_gain_db": -2.600221433395177,
+          "mean_rgb_error": [
+            -0.005775183179069211,
+            -0.004987641329177149,
+            -0.0015720334928357013
+          ],
+          "record_id": "official_01Blur_0120",
+          "regions": {
+            "interior": {
+              "input_mse": 0.0027263433761515474,
+              "output_mse": 0.005023883097271778,
+              "output_over_input_mse": 1.8427183975495385
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.0036331658680774735,
+              "output_mse": 0.005665766851671794,
+              "output_over_input_mse": 1.55945724951718
+            }
+          },
+          "saved_known_class_psnr": 22.95534324645996,
+          "width": 1920
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "01Blur",
+          "height": 1080,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 25.941684958192717,
+          "known_class_lpips": 0.257461279630661,
+          "known_class_psnr_diagnostic": 23.52924825822733,
+          "known_class_psnr_gain_db": -2.4124366999653866,
+          "mean_rgb_error": [
+            -0.0008590724280683962,
+            5.422016054828059e-05,
+            0.002662334045325909
+          ],
+          "record_id": "official_01Blur_0118",
+          "regions": {
+            "interior": {
+              "input_mse": 0.0025156902439208892,
+              "output_mse": 0.0043591883263299925,
+              "output_over_input_mse": 1.7328001079878081
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.0030020466988478745,
+              "output_mse": 0.005612204168644073,
+              "output_over_input_mse": 1.8694593161385278
+            }
+          },
+          "saved_known_class_psnr": 23.529247283935547,
+          "width": 1920
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "01Blur",
+          "height": 1080,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 23.07968653275961,
+          "known_class_lpips": 0.15409965813159943,
+          "known_class_psnr_diagnostic": 20.678958316449116,
+          "known_class_psnr_gain_db": -2.400728216310494,
+          "mean_rgb_error": [
+            0.001848498921425306,
+            0.0011751545021809165,
+            0.002494379500508162
+          ],
+          "record_id": "official_01Blur_0066",
+          "regions": {
+            "interior": {
+              "input_mse": 0.005084492784319985,
+              "output_mse": 0.008844491907847004,
+              "output_over_input_mse": 1.7395032863695747
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.002442274915258031,
+              "output_mse": 0.004136429837555225,
+              "output_over_input_mse": 1.693679041500618
+            }
+          },
+          "saved_known_class_psnr": 20.678958892822266,
+          "width": 1920
+        }
+      ]
+    },
+    "05Noise": {
+      "count": 100,
+      "input_psnr_diagnostic": 37.41788124405992,
+      "known_class_psnr": 37.69359203338623,
+      "max_psnr_formula_difference": 5.334676693280471e-06,
+      "mean_gain_db": 0.2757100898175075,
+      "psnr_worse_than_input": 38,
+      "worst_gain_records": [
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "05Noise",
+          "height": 1688,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 40.90053047912971,
+          "known_class_lpips": 0.05587361380457878,
+          "known_class_psnr_diagnostic": 38.64335434118293,
+          "known_class_psnr_gain_db": -2.257176137946786,
+          "mean_rgb_error": [
+            -0.006115472681696186,
+            -0.008573515348884779,
+            -0.009627140898114919
+          ],
+          "record_id": "official_05Noise_0315",
+          "regions": {
+            "interior": {
+              "input_mse": 8.185884524205159e-05,
+              "output_mse": 0.00013800653095293738,
+              "output_over_input_mse": 1.6859085972305194
+            },
+            "tile_edge_bands": {
+              "input_mse": 7.377984300420172e-05,
+              "output_mse": 0.00011970844502503585,
+              "output_over_input_mse": 1.6225088066156297
+            }
+          },
+          "saved_known_class_psnr": 38.64335632324219,
+          "width": 3008
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "05Noise",
+          "height": 1688,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 39.18503116559361,
+          "known_class_lpips": 0.06304872035980225,
+          "known_class_psnr_diagnostic": 36.97409418032434,
+          "known_class_psnr_gain_db": -2.2109369852692637,
+          "mean_rgb_error": [
+            -0.00904549538354621,
+            -0.011620767828159292,
+            -0.012508725762495631
+          ],
+          "record_id": "official_05Noise_0314",
+          "regions": {
+            "interior": {
+              "input_mse": 0.00012192366696028414,
+              "output_mse": 0.00020273207863245776,
+              "output_over_input_mse": 1.662778717921078
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.00010440025832537734,
+              "output_mse": 0.00017530882002677795,
+              "output_over_input_mse": 1.6791991019831063
+            }
+          },
+          "saved_known_class_psnr": 36.97409439086914,
+          "width": 3008
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "05Noise",
+          "height": 1688,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 36.5514576324623,
+          "known_class_lpips": 0.0911032184958458,
+          "known_class_psnr_diagnostic": 34.39650005157627,
+          "known_class_psnr_gain_db": -2.154957580886034,
+          "mean_rgb_error": [
+            -0.012198767542260604,
+            -0.012802009050684873,
+            -0.012731383813457411
+          ],
+          "record_id": "official_05Noise_0324",
+          "regions": {
+            "interior": {
+              "input_mse": 0.0002227323006857491,
+              "output_mse": 0.0003669051963788413,
+              "output_over_input_mse": 1.6472922663179617
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.00020229350454734724,
+              "output_mse": 0.00031883678002947116,
+              "output_over_input_mse": 1.5761098248947816
+            }
+          },
+          "saved_known_class_psnr": 34.39649963378906,
+          "width": 3008
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "05Noise",
+          "height": 1688,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 42.87417715642235,
+          "known_class_lpips": 0.0190863236784935,
+          "known_class_psnr_diagnostic": 40.74013077362377,
+          "known_class_psnr_gain_db": -2.13404638279858,
+          "mean_rgb_error": [
+            -0.0044515825339264395,
+            -0.0050642944425749814,
+            -0.004081467104682326
+          ],
+          "record_id": "official_05Noise_0325",
+          "regions": {
+            "interior": {
+              "input_mse": 5.160887616422671e-05,
+              "output_mse": 8.479673791812395e-05,
+              "output_over_input_mse": 1.6430649961895853
+            },
+            "tile_edge_bands": {
+              "input_mse": 5.124426124044368e-05,
+              "output_mse": 7.834405582003518e-05,
+              "output_over_input_mse": 1.5288356963999599
+            }
+          },
+          "saved_known_class_psnr": 40.74013137817383,
+          "width": 3008
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "05Noise",
+          "height": 1688,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 36.84539517808511,
+          "known_class_lpips": 0.14138858020305634,
+          "known_class_psnr_diagnostic": 34.819658136268544,
+          "known_class_psnr_gain_db": -2.025737041816569,
+          "mean_rgb_error": [
+            -0.014522951246903937,
+            -0.014440758049619846,
+            -0.01447977072597729
+          ],
+          "record_id": "official_05Noise_0352",
+          "regions": {
+            "interior": {
+              "input_mse": 0.0002076591377829367,
+              "output_mse": 0.0003309951988331015,
+              "output_over_input_mse": 1.5939351495289666
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.00019529067000130594,
+              "output_mse": 0.0003124218989224682,
+              "output_over_input_mse": 1.599778929123337
+            }
+          },
+          "saved_known_class_psnr": 34.81966018676758,
+          "width": 3008
+        }
+      ]
+    },
+    "08Haze": {
+      "count": 200,
+      "input_psnr_diagnostic": 13.466770683015005,
+      "known_class_psnr": 21.963812551498414,
+      "max_psnr_formula_difference": 3.606755214491386e-06,
+      "mean_gain_db": 8.497041171539156,
+      "psnr_worse_than_input": 0,
+      "worst_gain_records": [
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "08Haze",
+          "height": 1380,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 15.885689194431185,
+          "known_class_lpips": 0.1505787968635559,
+          "known_class_psnr_diagnostic": 17.824180047766998,
+          "known_class_psnr_gain_db": 1.9384908533358125,
+          "mean_rgb_error": [
+            0.08153176018585258,
+            0.07371479838571257,
+            0.06915900351359637
+          ],
+          "record_id": "official_08Haze_0524",
+          "regions": {
+            "interior": {
+              "input_mse": 0.025796700132756263,
+              "output_mse": 0.016614903424618254,
+              "output_over_input_mse": 0.6440708826754511
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.025685460174102462,
+              "output_mse": 0.015051901087774242,
+              "output_over_input_mse": 0.5860086206651038
+            }
+          },
+          "saved_known_class_psnr": 17.824180603027344,
+          "width": 2124
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "08Haze",
+          "height": 1380,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 15.231503968335815,
+          "known_class_lpips": 0.16418775916099548,
+          "known_class_psnr_diagnostic": 17.282123294271685,
+          "known_class_psnr_gain_db": 2.0506193259358696,
+          "mean_rgb_error": [
+            0.08870188283065938,
+            0.08857325120539868,
+            0.08518832476238256
+          ],
+          "record_id": "official_08Haze_0525",
+          "regions": {
+            "interior": {
+              "input_mse": 0.029978871027610727,
+              "output_mse": 0.018819122518019864,
+              "output_over_input_mse": 0.6277462050084319
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.030012043709227394,
+              "output_mse": 0.01711179393989515,
+              "output_over_input_mse": 0.5701642349212633
+            }
+          },
+          "saved_known_class_psnr": 17.282123565673828,
+          "width": 2124
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "08Haze",
+          "height": 1380,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 17.99835502677435,
+          "known_class_lpips": 0.10417843610048294,
+          "known_class_psnr_diagnostic": 20.10723347199862,
+          "known_class_psnr_gain_db": 2.108878445224267,
+          "mean_rgb_error": [
+            0.05540121964232054,
+            0.04711909201279216,
+            0.04318475402179631
+          ],
+          "record_id": "official_08Haze_0522",
+          "regions": {
+            "interior": {
+              "input_mse": 0.01587506978476106,
+              "output_mse": 0.009907155785326806,
+              "output_over_input_mse": 0.6240700620312846
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.01559190421464975,
+              "output_mse": 0.00778370498543189,
+              "output_over_input_mse": 0.4992145204508454
+            }
+          },
+          "saved_known_class_psnr": 20.10723304748535,
+          "width": 2124
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "08Haze",
+          "height": 2064,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 16.378451069884413,
+          "known_class_lpips": 0.12277297675609589,
+          "known_class_psnr_diagnostic": 18.58686117544583,
+          "known_class_psnr_gain_db": 2.2084101055614163,
+          "mean_rgb_error": [
+            0.06702062091728855,
+            0.06069624349655284,
+            0.0727748803997643
+          ],
+          "record_id": "official_08Haze_0584",
+          "regions": {
+            "interior": {
+              "input_mse": 0.022922808387700576,
+              "output_mse": 0.013812753303684285,
+              "output_over_input_mse": 0.6025768339579034
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.02429972926962387,
+              "output_mse": 0.0142666762433066,
+              "output_over_input_mse": 0.5871125593625772
+            }
+          },
+          "saved_known_class_psnr": 18.58686065673828,
+          "width": 1368
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "08Haze",
+          "height": 2064,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 14.136549897680338,
+          "known_class_lpips": 0.14144659042358398,
+          "known_class_psnr_diagnostic": 16.836242375189244,
+          "known_class_psnr_gain_db": 2.699692477508906,
+          "mean_rgb_error": [
+            0.09644356168160965,
+            0.08996570013010859,
+            0.07814901191903206
+          ],
+          "record_id": "official_08Haze_0586",
+          "regions": {
+            "interior": {
+              "input_mse": 0.03835204977532158,
+              "output_mse": 0.02089254442857177,
+              "output_over_input_mse": 0.5447569178431634
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.041475504202030736,
+              "output_mse": 0.0185028634714911,
+              "output_over_input_mse": 0.44611545603790775
+            }
+          },
+          "saved_known_class_psnr": 16.836244583129883,
+          "width": 1368
+        }
+      ]
+    },
+    "10Rain": {
+      "count": 100,
+      "input_psnr_diagnostic": 23.44885336152788,
+      "known_class_psnr": 32.0349299621582,
+      "max_psnr_formula_difference": 4.511703700416092e-06,
+      "mean_gain_db": 8.586075831880116,
+      "psnr_worse_than_input": 0,
+      "worst_gain_records": [
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "10Rain",
+          "height": 1314,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 24.487801906632967,
+          "known_class_lpips": 0.09712694585323334,
+          "known_class_psnr_diagnostic": 28.22071639278514,
+          "known_class_psnr_gain_db": 3.732914486152172,
+          "mean_rgb_error": [
+            -0.0016458427155575724,
+            0.00010976514492086114,
+            -0.0006369713894942069
+          ],
+          "record_id": "official_10Rain_0861",
+          "regions": {
+            "interior": {
+              "input_mse": 0.0035768795485489825,
+              "output_mse": 0.0014990189877388553,
+              "output_over_input_mse": 0.4190856771643194
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.0032981421984874353,
+              "output_mse": 0.0016078297994016782,
+              "output_over_input_mse": 0.48749559680569465
+            }
+          },
+          "saved_known_class_psnr": 28.220718383789062,
+          "width": 2000
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "10Rain",
+          "height": 1314,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 23.62269268178624,
+          "known_class_lpips": 0.12000181525945663,
+          "known_class_psnr_diagnostic": 27.709254796095905,
+          "known_class_psnr_gain_db": 4.086562114309665,
+          "mean_rgb_error": [
+            -0.00334354776278747,
+            -0.0018463202347091924,
+            -0.003531750164901777
+          ],
+          "record_id": "official_10Rain_0864",
+          "regions": {
+            "interior": {
+              "input_mse": 0.0043694691865977225,
+              "output_mse": 0.0016851073337258568,
+              "output_over_input_mse": 0.38565493009872026
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.003967601079337412,
+              "output_mse": 0.0018263056584199733,
+              "output_over_input_mse": 0.46030475894642253
+            }
+          },
+          "saved_known_class_psnr": 27.70925521850586,
+          "width": 2000
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "10Rain",
+          "height": 1314,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 22.06327670733929,
+          "known_class_lpips": 0.15432128310203552,
+          "known_class_psnr_diagnostic": 27.17023796052335,
+          "known_class_psnr_gain_db": 5.1069612531840605,
+          "mean_rgb_error": [
+            0.0016163756597063843,
+            0.005188029459465537,
+            0.001317985817892803
+          ],
+          "record_id": "official_10Rain_0867",
+          "regions": {
+            "interior": {
+              "input_mse": 0.00625819291261324,
+              "output_mse": 0.001914369108542872,
+              "output_over_input_mse": 0.3058980659871488
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.00566595643257834,
+              "output_mse": 0.0019764899679460715,
+              "output_over_input_mse": 0.3488360688023599
+            }
+          },
+          "saved_known_class_psnr": 27.170238494873047,
+          "width": 2000
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "10Rain",
+          "height": 2160,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 23.81927055122137,
+          "known_class_lpips": 0.07855481654405594,
+          "known_class_psnr_diagnostic": 28.949181990918195,
+          "known_class_psnr_gain_db": 5.129911439696826,
+          "mean_rgb_error": [
+            0.007981246714651958,
+            0.007835253125674879,
+            0.012120564094965135
+          ],
+          "record_id": "official_10Rain_0817",
+          "regions": {
+            "interior": {
+              "input_mse": 0.004149675783046022,
+              "output_mse": 0.001270128319274605,
+              "output_over_input_mse": 0.30607892897653843
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.004157217546952343,
+              "output_mse": 0.0013194071219962643,
+              "output_over_input_mse": 0.31737745429356273
+            }
+          },
+          "saved_known_class_psnr": 28.949182510375977,
+          "width": 3840
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "10Rain",
+          "height": 1314,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 21.615077030093026,
+          "known_class_lpips": 0.12752512097358704,
+          "known_class_psnr_diagnostic": 26.876717083835636,
+          "known_class_psnr_gain_db": 5.26164005374261,
+          "mean_rgb_error": [
+            -0.0016226744337255118,
+            -0.0007685259956720496,
+            -0.004167509893217667
+          ],
+          "record_id": "official_10Rain_0866",
+          "regions": {
+            "interior": {
+              "input_mse": 0.006947969779978295,
+              "output_mse": 0.0020495745147966747,
+              "output_over_input_mse": 0.2949889794717958
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.006151569079823636,
+              "output_mse": 0.0020960223996020957,
+              "output_over_input_mse": 0.3407297182887505
+            }
+          },
+          "saved_known_class_psnr": 26.876718521118164,
+          "width": 2000
+        }
+      ]
+    },
+    "14Lowlight": {
+      "count": 50,
+      "input_psnr_diagnostic": 6.98597671901992,
+      "known_class_psnr": 19.231370677947996,
+      "max_psnr_formula_difference": 3.0901730774246516e-06,
+      "mean_gain_db": 12.245393493241894,
+      "psnr_worse_than_input": 0,
+      "worst_gain_records": [
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "14Lowlight",
+          "height": 1688,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 10.954603285524218,
+          "known_class_lpips": 0.11399554461240768,
+          "known_class_psnr_diagnostic": 16.636022768084356,
+          "known_class_psnr_gain_db": 5.681419482560138,
+          "mean_rgb_error": [
+            0.1438781084656832,
+            0.13787456537907117,
+            0.13345373278956996
+          ],
+          "record_id": "official_14Lowlight_1144",
+          "regions": {
+            "interior": {
+              "input_mse": 0.07995781322469576,
+              "output_mse": 0.021591800193179248,
+              "output_over_input_mse": 0.2700399038240631
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.08415739606874413,
+              "output_mse": 0.023017021899626493,
+              "output_over_input_mse": 0.2734996919441875
+            }
+          },
+          "saved_known_class_psnr": 16.636022567749023,
+          "width": 3008
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "14Lowlight",
+          "height": 1528,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 3.4124971928024794,
+          "known_class_lpips": 0.28454887866973877,
+          "known_class_psnr_diagnostic": 9.203097404767496,
+          "known_class_psnr_gain_db": 5.790600211965016,
+          "mean_rgb_error": [
+            -0.26169301136474493,
+            -0.36844767424647645,
+            -0.36426100713497966
+          ],
+          "record_id": "official_14Lowlight_1106",
+          "regions": {
+            "interior": {
+              "input_mse": 0.45643857276140853,
+              "output_mse": 0.11994689414028292,
+              "output_over_input_mse": 0.26278868898966184
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.4463193260199873,
+              "output_mse": 0.12290157167682195,
+              "output_over_input_mse": 0.2753669055131126
+            }
+          },
+          "saved_known_class_psnr": 9.20309829711914,
+          "width": 2720
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "14Lowlight",
+          "height": 1528,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 2.6248006228855676,
+          "known_class_lpips": 0.3650439381599426,
+          "known_class_psnr_diagnostic": 8.680488947580354,
+          "known_class_psnr_gain_db": 6.055688324694787,
+          "mean_rgb_error": [
+            -0.37007309362408913,
+            -0.34424075167685514,
+            -0.32750864507947314
+          ],
+          "record_id": "official_14Lowlight_1127",
+          "regions": {
+            "interior": {
+              "input_mse": 0.5459903362284292,
+              "output_mse": 0.13518796082991302,
+              "output_over_input_mse": 0.24760138020712813
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.5524125042708462,
+              "output_mse": 0.14000074583687913,
+              "output_over_input_mse": 0.2534351499187592
+            }
+          },
+          "saved_known_class_psnr": 8.680488586425781,
+          "width": 2720
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "14Lowlight",
+          "height": 1528,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 3.387100938298704,
+          "known_class_lpips": 0.27288761734962463,
+          "known_class_psnr_diagnostic": 10.946159777238968,
+          "known_class_psnr_gain_db": 7.559058838940264,
+          "mean_rgb_error": [
+            -0.27164424931814923,
+            -0.27684457293287557,
+            -0.26255017148136073
+          ],
+          "record_id": "official_14Lowlight_1122",
+          "regions": {
+            "interior": {
+              "input_mse": 0.4585607075301278,
+              "output_mse": 0.0807322865138466,
+              "output_over_input_mse": 0.17605583118684984
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.4568395901508352,
+              "output_mse": 0.07602792376613458,
+              "output_over_input_mse": 0.16642148667770315
+            }
+          },
+          "saved_known_class_psnr": 10.946159362792969,
+          "width": 2720
+        },
+        {
+          "GT_used_only_for_diagnostics": true,
+          "category": "14Lowlight",
+          "height": 1528,
+          "identity": {
+            "official_records": 600,
+            "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+            "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+            "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+          },
+          "input_psnr_diagnostic": 7.197759642006166,
+          "known_class_lpips": 0.25607186555862427,
+          "known_class_psnr_diagnostic": 15.624942966441866,
+          "known_class_psnr_gain_db": 8.427183324435699,
+          "mean_rgb_error": [
+            0.003446386312751239,
+            -0.008902325307603667,
+            0.005539290892938168
+          ],
+          "record_id": "official_14Lowlight_1104",
+          "regions": {
+            "interior": {
+              "input_mse": 0.19184809658605673,
+              "output_mse": 0.027677064906169748,
+              "output_over_input_mse": 0.14426551734775606
+            },
+            "tile_edge_bands": {
+              "input_mse": 0.1734985213565702,
+              "output_mse": 0.023217867743127653,
+              "output_over_input_mse": 0.1338217038484773
+            }
+          },
+          "saved_known_class_psnr": 15.624943733215332,
+          "width": 2720
+        }
+      ]
+    }
+  },
+  "gpus": 0,
+  "identity": {
+    "official_records": 600,
+    "receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+    "source_sha256": "9efd75de3fa20044f44cf77db79ae7380d4560e19c762da8ee46dbe267e33419",
+    "terminal_sha256": "b5b7f34df44ed12a82993aa07b9bfe02672870bf85959bcaa76a35200e9f0af6"
+  },
+  "new_restorations": false,
+  "note": "NumPy RGB MSE diagnostic with pyiqa epsilon; final acceptance uses original pyiqa scores.",
+  "parameter_fitting": false,
+  "scope": "official600 saved-output error decomposition",
+  "seconds": 255.7406298480928,
+  "status": "completed",
+  "training": false
+}
