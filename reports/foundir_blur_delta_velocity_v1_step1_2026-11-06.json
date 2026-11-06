@@ -1,0 +1,87 @@
+{
+  "CPU_stages": {
+    "verify-qualification": {
+      "seconds": 8.44067058339715,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_DELTA_QUALIFICATION_VERIFIED {\"engineering_pass\": true, \"scientific_pass\": false, \"official_pass\": false, \"receipt_sha256\": \"52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419\", \"identity\": [{\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0008694\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0004423\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0109029\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0096764\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0076676\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0087763\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0034435\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}, {\"float_max_difference\": 0.0, \"key\": \"train_foundir_train_0055295\", \"train_eval_float_max_difference\": 0.0, \"uint8_max_difference\": 0}], \"ranks\": [{\"CUDA\": \"12.8\", \"GPU\": \"NVIDIA H100 80GB HBM3\", \"exit_code\": 0, \"parameter_hash\": \"6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a\", \"peak_allocated_GiB\": 16.96299171447754, \"rank\": 0, \"receipt_sha256\": \"52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419\", \"seconds\": 95.03636125393678, \"step\": 2, \"torch\": \"2.7.0+cu128\"}, {\"CUDA\": \"12.8\", \"GPU\": \"NVIDIA H100 80GB HBM3\", \"exit_code\": 0, \"parameter_hash\": \"6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a\", \"peak_allocated_GiB\": 16.96299171447754, \"rank\": 1, \"receipt_sha256\": \"52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419\", \"seconds\": 95.0364709199639, \"step\": 2, \"torch\": \"2.7.0+cu128\"}], \"history\": [{\"step\": 1, \"loss\": 0.12966670014429837, \"mse\": 0.009506627857263084, \"lpips\": 0.34600421972572803, \"gradient_norm\": 0.2269141972064972, \"max_rank_seconds\": 5.863114356994629, \"peak_allocated_GiB\": 16.713905334472656, \"next_global_slot\": 8}, {\"step\": 2, \"loss\": 0.12585175642743707, \"mse\": 0.009181361954688327, \"lpips\": 0.34038135688751936, \"gradient_norm\": 0.1671113222837448, \"max_rank_seconds\": 4.2250213623046875, \"peak_allocated_GiB\": 16.96299171447754, \"next_global_slot\": 16}], \"initial_parameter_hash\": \"1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5\", \"final_parameter_hash\": \"6150749682887bfbcb3ec3057e7ba3d8ea58dcb8a5335b5fd502f03f2984bf8a\", \"training_data_only\": true, \"GT_used_at_inference\": false}\n"
+    }
+  },
+  "completed_GPU_hours": 0.11461769911977979,
+  "cost_complete": false,
+  "cumulative_GPU_hour_cap": null,
+  "detail": "\u56fa\u5b9a200\u6b65Blur\u5c0f\u8bd5\u9a8cstep1\u5df2\u843d\u76d8\uff0c\u5c1a\u65e0\u5b98\u65b9\u7ed3\u679c\u3002",
+  "event": "step1",
+  "jobs": {
+    "cache": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.03783612158563402,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 68.10501885414124,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "251aa4afd737e47fe8c62f4a8308c38c9c6c48fb4f465b567a08d2c40277d76e",
+        "node": 3,
+        "utc_unix": 1794002009.7895782
+      }
+    },
+    "qualify": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.07678157753414577,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 138.2068395614624,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "0ce6d3d2aa1c86fb479eb26433f7e954c9df6ceabd3d3424db529ae540fba8dd",
+        "node": 3,
+        "utc_unix": 1794001681.237516
+      }
+    },
+    "train": {
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "274160955b68db722533c52a6b5f41f8c4db8f626a05363b40f1cbe6ac3e0749",
+        "node": 3,
+        "utc_unix": 1794002127.9451156
+      }
+    }
+  },
+  "latest_pilot_step_receipt": {
+    "file": "steps/state_000001_1794002159941656045.pt",
+    "next_global_slot": 8,
+    "parameter_hash": "759c6d997b4fac7b508a8033a4a65ae0a4b669b82e5980f3b75e13830d0129da",
+    "receipt_sha256": "52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419",
+    "sha256": "abaeae9e50182bcba4e212f603ec7f9054e5f1f7e6128ad95eb77727813cf638",
+    "step": 1,
+    "world": 2
+  },
+  "official_Blur_pass_required_before_other_types": true,
+  "official_evaluated": false,
+  "other_categories_submitted": false,
+  "receipt_sha256": "52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419",
+  "training_logs_available_at_report_time": [
+    {
+      "gradient_norm": 0.11653990298509598,
+      "loss": 0.12983205122873187,
+      "lpips": 0.4593973830342293,
+      "max_rank_seconds": 4.26396369934082,
+      "mse": 0.008389231050387025,
+      "next_global_slot": 8,
+      "peak_allocated_GiB": 16.713478088378906,
+      "step": 1
+    }
+  ],
+  "upload_may_be_deferred_by_network": true,
+  "utc_unix": 1794002164.8700485
+}
