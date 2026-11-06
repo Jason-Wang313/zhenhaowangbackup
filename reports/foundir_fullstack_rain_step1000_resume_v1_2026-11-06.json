@@ -1,0 +1,252 @@
+{
+  "CPU_finish": {
+    "seconds": 122.68641794472933,
+    "status": 0,
+    "stderr": "",
+    "stdout": "RAIN1000_RESULT_VERIFIED {'status': 'complete', 'records': 600, 'new_rain_records': 100, 'reused_unchanged_records': 500, 'receipt_sha256': 'f34306f0919756a1a01937642923612af126fbd4028f41bd2d3fa4da645b8fd8', 'per_category': {'01Blur': {'psnr': 21.546762199401854, 'lpips': 0.2026222513616085, 'ssim': 0.7535799373553662}, '05Noise': {'psnr': 34.632453122138976, 'lpips': 0.13663816242478788, 'ssim': 0.9270681065619815}, '08Haze': {'psnr': 22.85760964870453, 'lpips': 0.12084775179624557, 'ssim': 0.8388523487994053}, '14Lowlight': {'psnr': 19.231370677947996, 'lpips': 0.17252287715673448, 'ssim': 0.8644231889270912}, '10Rain': {'psnr': 31.891857471466064, 'lpips': 0.07479695761576295, 'ssim': 0.9233573051390915}}, 'checks': {'blur': {'psnr': False, 'lpips': False}, 'noise': {'psnr': False, 'lpips': False}, 'haze': {'psnr': True, 'lpips': True}, 'lowlight': {'psnr': True, 'lpips': True}, 'rain': {'psnr': False, 'lpips': True}}, 'all_ten_pass': False, 'parent': {'01Blur': {'lpips': 0.2026222513616085, 'psnr': 21.546762199401854, 'ssim': 0.7535799373553662}, '05Noise': {'lpips': 0.13663816242478788, 'psnr': 34.632453122138976, 'ssim': 0.9270681065619815}, '08Haze': {'lpips': 0.12084775179624557, 'psnr': 22.85760964870453, 'ssim': 0.8388523487994053}, '10Rain': {'lpips': 0.07501418385654687, 'psnr': 32.0349299621582, 'ssim': 0.9218588440458518}, '14Lowlight': {'lpips': 0.17252287715673448, 'psnr': 19.231370677947996, 'ssim': 0.8644231889270912}}, 'training': False, 'fixed_step': 1000, 'GT_input': False, 'independent_blind_test': False, 'known_legacy_GT_overlap_records': 30, 'scope': 'Fixed step1000 Rain100 generation; accepted Haze and other500 outputs preserved.', 'descriptive_Rain_subgroups': {'known_GT_source_overlap30': {'count': 30, 'means': {'psnr': 29.718720054626466, 'lpips': 0.0746460256477197, 'ssim': 0.9244716641059495}}, 'other70_not_claimed_independent': {'count': 70, 'means': {'psnr': 32.82320207868304, 'lpips': 0.07486164274492434, 'ssim': 0.922879722724724}}}, 'Rain_changes': {'psnr': -0.14307249069213768, 'lpips': -0.0002172262407839215, 'ssim': 0.0014984610932397002}, 'Rain_single_image_improved': {'psnr': 36, 'lpips': 47}, 'Rain_worst_PSNR_change': -1.6013107299804688, 'no_per_image_GT_selection': True, 'used_GPU_hours': 2.5841067322324833}\n"
+  },
+  "attempts": {
+    "round5_rain_step1000_3x2_resume_v1": [
+      {
+        "end": {
+          "allocated_GPU_hours": 0.13261590666241116,
+          "automatic_retry": false,
+          "error": null,
+          "gpus": 2,
+          "seconds": 238.7086319923401,
+          "status": 0
+        },
+        "node": 0,
+        "start": {
+          "gpus": 2,
+          "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+          "job_sha256": "33ccfd4110fb52c508aba6b2cd4dbdc81a1349c0a9e7becb9ededaea99c0a90c",
+          "node": 0,
+          "utc_unix": 1793994620.8235943
+        }
+      },
+      {
+        "end": {
+          "allocated_GPU_hours": 0.19258669018745422,
+          "automatic_retry": false,
+          "error": null,
+          "gpus": 2,
+          "seconds": 346.6560423374176,
+          "status": 0
+        },
+        "node": 1,
+        "start": {
+          "gpus": 2,
+          "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+          "job_sha256": "33ccfd4110fb52c508aba6b2cd4dbdc81a1349c0a9e7becb9ededaea99c0a90c",
+          "node": 1,
+          "utc_unix": 1793994621.9413939
+        }
+      },
+      {
+        "end": {
+          "allocated_GPU_hours": 0.023381847937901816,
+          "automatic_retry": false,
+          "error": null,
+          "gpus": 2,
+          "seconds": 42.08732628822327,
+          "status": 0
+        },
+        "node": 2,
+        "start": {
+          "gpus": 2,
+          "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+          "job_sha256": "33ccfd4110fb52c508aba6b2cd4dbdc81a1349c0a9e7becb9ededaea99c0a90c",
+          "node": 2,
+          "utc_unix": 1793994621.5646172
+        }
+      }
+    ],
+    "round5_rain_step1000_3x2_v1": [
+      {
+        "end": {
+          "allocated_GPU_hours": 4.566701408227285,
+          "automatic_retry": false,
+          "error": null,
+          "gpus": 2,
+          "seconds": 8220.062534809113,
+          "status": -15
+        },
+        "node": 0,
+        "start": {
+          "gpus": 2,
+          "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+          "job_sha256": "5ffeb282602781bcd40a0092cf26c1f1f6f88c952f6f46596206623e3075c2db",
+          "node": 0,
+          "utc_unix": 1793986295.5983906
+        }
+      },
+      {
+        "end": {
+          "allocated_GPU_hours": 4.566875853670968,
+          "automatic_retry": false,
+          "error": null,
+          "gpus": 2,
+          "seconds": 8220.376536607742,
+          "status": -15
+        },
+        "node": 1,
+        "start": {
+          "gpus": 2,
+          "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+          "job_sha256": "5ffeb282602781bcd40a0092cf26c1f1f6f88c952f6f46596206623e3075c2db",
+          "node": 1,
+          "utc_unix": 1793986296.3928564
+        }
+      },
+      {
+        "end": {
+          "allocated_GPU_hours": 4.566512182950974,
+          "automatic_retry": false,
+          "error": null,
+          "gpus": 2,
+          "seconds": 8219.721929311752,
+          "status": -15
+        },
+        "node": 2,
+        "start": {
+          "gpus": 2,
+          "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+          "job_sha256": "5ffeb282602781bcd40a0092cf26c1f1f6f88c952f6f46596206623e3075c2db",
+          "node": 2,
+          "utc_unix": 1793986296.701307
+        }
+      }
+    ]
+  },
+  "explicit_user_request": "do not stop; let existing evaluation finish",
+  "interruption_cause": "assistant incorrectly interpreted explanation request as instruction to cancel",
+  "new_experiments_started": false,
+  "old_assets_preserved": true,
+  "original_cancel_record_preserved": true,
+  "receipt_sha256": "f34306f0919756a1a01937642923612af126fbd4028f41bd2d3fa4da645b8fd8",
+  "result": {
+    "GT_input": false,
+    "Rain_changes": {
+      "lpips": -0.0002172262407839215,
+      "psnr": -0.14307249069213768,
+      "ssim": 0.0014984610932397002
+    },
+    "Rain_single_image_improved": {
+      "lpips": 47,
+      "psnr": 36
+    },
+    "Rain_worst_PSNR_change": -1.6013107299804688,
+    "all_ten_pass": false,
+    "checks": {
+      "blur": {
+        "lpips": false,
+        "psnr": false
+      },
+      "haze": {
+        "lpips": true,
+        "psnr": true
+      },
+      "lowlight": {
+        "lpips": true,
+        "psnr": true
+      },
+      "noise": {
+        "lpips": false,
+        "psnr": false
+      },
+      "rain": {
+        "lpips": true,
+        "psnr": false
+      }
+    },
+    "descriptive_Rain_subgroups": {
+      "known_GT_source_overlap30": {
+        "count": 30,
+        "means": {
+          "lpips": 0.0746460256477197,
+          "psnr": 29.718720054626466,
+          "ssim": 0.9244716641059495
+        }
+      },
+      "other70_not_claimed_independent": {
+        "count": 70,
+        "means": {
+          "lpips": 0.07486164274492434,
+          "psnr": 32.82320207868304,
+          "ssim": 0.922879722724724
+        }
+      }
+    },
+    "fixed_step": 1000,
+    "independent_blind_test": false,
+    "known_legacy_GT_overlap_records": 30,
+    "new_rain_records": 100,
+    "no_per_image_GT_selection": true,
+    "parent": {
+      "01Blur": {
+        "lpips": 0.2026222513616085,
+        "psnr": 21.546762199401854,
+        "ssim": 0.7535799373553662
+      },
+      "05Noise": {
+        "lpips": 0.13663816242478788,
+        "psnr": 34.632453122138976,
+        "ssim": 0.9270681065619815
+      },
+      "08Haze": {
+        "lpips": 0.12084775179624557,
+        "psnr": 22.85760964870453,
+        "ssim": 0.8388523487994053
+      },
+      "10Rain": {
+        "lpips": 0.07501418385654687,
+        "psnr": 32.0349299621582,
+        "ssim": 0.9218588440458518
+      },
+      "14Lowlight": {
+        "lpips": 0.17252287715673448,
+        "psnr": 19.231370677947996,
+        "ssim": 0.8644231889270912
+      }
+    },
+    "per_category": {
+      "01Blur": {
+        "lpips": 0.2026222513616085,
+        "psnr": 21.546762199401854,
+        "ssim": 0.7535799373553662
+      },
+      "05Noise": {
+        "lpips": 0.13663816242478788,
+        "psnr": 34.632453122138976,
+        "ssim": 0.9270681065619815
+      },
+      "08Haze": {
+        "lpips": 0.12084775179624557,
+        "psnr": 22.85760964870453,
+        "ssim": 0.8388523487994053
+      },
+      "10Rain": {
+        "lpips": 0.07479695761576295,
+        "psnr": 31.891857471466064,
+        "ssim": 0.9233573051390915
+      },
+      "14Lowlight": {
+        "lpips": 0.17252287715673448,
+        "psnr": 19.231370677947996,
+        "ssim": 0.8644231889270912
+      }
+    },
+    "receipt_sha256": "f34306f0919756a1a01937642923612af126fbd4028f41bd2d3fa4da645b8fd8",
+    "records": 600,
+    "reused_unchanged_records": 500,
+    "scope": "Fixed step1000 Rain100 generation; accepted Haze and other500 outputs preserved.",
+    "status": "complete",
+    "training": false,
+    "used_GPU_hours": 2.5841067322324833
+  },
+  "result_sha256": "1ebbf5d866d02d19634b2c2b9e9ae086ff4d51707ad0d48c62297fd65012ff1b",
+  "status": "complete",
+  "total_attempt_GPU_hours": 14.048673889636994,
+  "training_restarted": false
+}

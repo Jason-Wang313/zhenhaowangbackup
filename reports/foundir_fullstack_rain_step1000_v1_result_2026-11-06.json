@@ -1,0 +1,120 @@
+{
+  "GT_input": false,
+  "Rain_changes": {
+    "lpips": -0.0002172262407839215,
+    "psnr": -0.14307249069213768,
+    "ssim": 0.0014984610932397002
+  },
+  "Rain_single_image_improved": {
+    "lpips": 47,
+    "psnr": 36
+  },
+  "Rain_worst_PSNR_change": -1.6013107299804688,
+  "all_ten_pass": false,
+  "checks": {
+    "blur": {
+      "lpips": false,
+      "psnr": false
+    },
+    "haze": {
+      "lpips": true,
+      "psnr": true
+    },
+    "lowlight": {
+      "lpips": true,
+      "psnr": true
+    },
+    "noise": {
+      "lpips": false,
+      "psnr": false
+    },
+    "rain": {
+      "lpips": true,
+      "psnr": false
+    }
+  },
+  "descriptive_Rain_subgroups": {
+    "known_GT_source_overlap30": {
+      "count": 30,
+      "means": {
+        "lpips": 0.0746460256477197,
+        "psnr": 29.718720054626466,
+        "ssim": 0.9244716641059495
+      }
+    },
+    "other70_not_claimed_independent": {
+      "count": 70,
+      "means": {
+        "lpips": 0.07486164274492434,
+        "psnr": 32.82320207868304,
+        "ssim": 0.922879722724724
+      }
+    }
+  },
+  "fixed_step": 1000,
+  "independent_blind_test": false,
+  "known_legacy_GT_overlap_records": 30,
+  "new_rain_records": 100,
+  "no_per_image_GT_selection": true,
+  "parent": {
+    "01Blur": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "05Noise": {
+      "lpips": 0.13663816242478788,
+      "psnr": 34.632453122138976,
+      "ssim": 0.9270681065619815
+    },
+    "08Haze": {
+      "lpips": 0.12084775179624557,
+      "psnr": 22.85760964870453,
+      "ssim": 0.8388523487994053
+    },
+    "10Rain": {
+      "lpips": 0.07501418385654687,
+      "psnr": 32.0349299621582,
+      "ssim": 0.9218588440458518
+    },
+    "14Lowlight": {
+      "lpips": 0.17252287715673448,
+      "psnr": 19.231370677947996,
+      "ssim": 0.8644231889270912
+    }
+  },
+  "per_category": {
+    "01Blur": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "05Noise": {
+      "lpips": 0.13663816242478788,
+      "psnr": 34.632453122138976,
+      "ssim": 0.9270681065619815
+    },
+    "08Haze": {
+      "lpips": 0.12084775179624557,
+      "psnr": 22.85760964870453,
+      "ssim": 0.8388523487994053
+    },
+    "10Rain": {
+      "lpips": 0.07479695761576295,
+      "psnr": 31.891857471466064,
+      "ssim": 0.9233573051390915
+    },
+    "14Lowlight": {
+      "lpips": 0.17252287715673448,
+      "psnr": 19.231370677947996,
+      "ssim": 0.8644231889270912
+    }
+  },
+  "receipt_sha256": "f34306f0919756a1a01937642923612af126fbd4028f41bd2d3fa4da645b8fd8",
+  "records": 600,
+  "reused_unchanged_records": 500,
+  "scope": "Fixed step1000 Rain100 generation; accepted Haze and other500 outputs preserved.",
+  "status": "complete",
+  "training": false,
+  "used_GPU_hours": 2.5841067322324833
+}
