@@ -1,0 +1,31 @@
+{
+  "status": "read_only_diagnosis_complete_Rain_not_fixed",
+  "records": 100,
+  "tiles": 4680,
+  "pixel_exact_stitches": 100,
+  "overlap_RMS_255": 3.1241306823235027,
+  "overlap_constant_fraction": 0.19620740527147296,
+  "block32_error_fraction": 0.19740522306796085,
+  "global_RGB_mean_error_fraction": 0.03409261746645218,
+  "GT_block32_mean_removal_reference_gain_db": 0.9863673854583341,
+  "GT_block32_reference_is_deployable": false,
+  "PSNR_gap_db": 2.165070037841801,
+  "negative_LQ_minus_GT_fraction": 0.0853801415576867,
+  "min_LQ_minus_GT": -56,
+  "CPU_overlap_seconds": 288.86035646125674,
+  "CPU_additivity_seconds": 75.39280356094241,
+  "exit_code": 0,
+  "gpus": 0,
+  "training": false,
+  "new_restorations": false,
+  "decision": "Do not treat Haze overlap synchronization or one-sided input clipping as established Rain fixes. Inspect training-side fine-detail errors before choosing a bounded FLUX update. Haze end-to-end rerun deferred until all five categories pass.",
+  "sources": {
+    "smoke/analyze_foundir_fullstack_rain_overlap_v1.py": "fd86a79aece58c84c5ba95b61b4e10b97ff686676bb074906618ff94ff927dd5",
+    "smoke/analyze_foundir_fullstack_rain_additivity_v1.py": "e1a22c23e7e01daf09a6011eef1b78e3e2e8ea4117d6e8556c9cd1a3521910c5"
+  },
+  "limitations": [
+    "Official benchmark is adaptively reused, not an independent blind test.",
+    "32-block oracle is a specific diagnostic projection, not a bound on all possible low-frequency methods.",
+    "Overlap disagreement also varies with seed and crop-relative positions."
+  ]
+}

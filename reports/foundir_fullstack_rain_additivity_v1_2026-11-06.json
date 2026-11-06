@@ -1,0 +1,1523 @@
+{
+  "status": "complete",
+  "records": [
+    {
+      "record_id": "official_10Rain_0801",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3441178,
+      "below_GT_by_more_than_one_gray_components": 2616467,
+      "minimum_LQ_minus_GT_255": -31,
+      "equal_LQ_GT_components": 3028197,
+      "prediction_brighter_than_LQ_components": 4010630,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.07992850789857954,
+      "pixel_hashes": {
+        "lq": "3c74bec46a3327a54112625bb3ab2e71854fe8454ef0aabe2fe431474b3e0887",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "84a7841be01f06b20edce5f91de33e01d391edfa90428401708f44599abb30dc"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0802",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2967507,
+      "below_GT_by_more_than_one_gray_components": 2354918,
+      "minimum_LQ_minus_GT_255": -29,
+      "equal_LQ_GT_components": 2318996,
+      "prediction_brighter_than_LQ_components": 3000437,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.039553687350195134,
+      "pixel_hashes": {
+        "lq": "fb5c0d9fa66c41916c1c2406b16834a037982b8f787204b05c211e8313ab9d5b",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "0ee17ce496f19575ea142f9078cad4fa0bc2492c4efa9ad0a7c54ff0774a0e74"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0803",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3488006,
+      "below_GT_by_more_than_one_gray_components": 2647823,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 3237131,
+      "prediction_brighter_than_LQ_components": 3686356,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06592439106150799,
+      "pixel_hashes": {
+        "lq": "64ec07fe21037796af189a92c9e8362fbf4d60cb3b09981a795c409b41ec2fec",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "f258807b7389a5185630606b2fb8d4b29b067e67cfd0628c1f56b125559e6dd7"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0804",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3502291,
+      "below_GT_by_more_than_one_gray_components": 2687865,
+      "minimum_LQ_minus_GT_255": -33,
+      "equal_LQ_GT_components": 2958668,
+      "prediction_brighter_than_LQ_components": 3188278,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.055055527588268774,
+      "pixel_hashes": {
+        "lq": "fc78be6b030869751d3b01c35110f3a939466d540dd74e73d85518724f8e07c9",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "856032a46ba0fe4051346cc816f7a38e65f14633215660fdd6abff7d26592801"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0805",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2896247,
+      "below_GT_by_more_than_one_gray_components": 2310441,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 2171860,
+      "prediction_brighter_than_LQ_components": 2926834,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.04751635104305693,
+      "pixel_hashes": {
+        "lq": "7e1d45ef59b3eb76013e6b6acfbbe7fc493e5236c8c537fb30643f8dd1239d68",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "65d67289bcd17c8566ded0ad9a424e3f8d382be4c979788925478d5625a08f5d"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0806",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2723414,
+      "below_GT_by_more_than_one_gray_components": 2190389,
+      "minimum_LQ_minus_GT_255": -27,
+      "equal_LQ_GT_components": 2098357,
+      "prediction_brighter_than_LQ_components": 3382244,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.05798175111050544,
+      "pixel_hashes": {
+        "lq": "d5c5c191ea649a9307ff37a761df89725a385f45953ff39af1b14423c5690a2c",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "a162c2b39434e246ef7960eae599fd90f705a2a4e9fbe1c50bc46365f6a99567"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0807",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2649355,
+      "below_GT_by_more_than_one_gray_components": 2187062,
+      "minimum_LQ_minus_GT_255": -32,
+      "equal_LQ_GT_components": 1586842,
+      "prediction_brighter_than_LQ_components": 2829602,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.03548625303701909,
+      "pixel_hashes": {
+        "lq": "48527b1ea891aa5bb58e858850a52601058014f012143ba83cd8af0f82e9a913",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "4fb94cc611c291ae390b29b0aaee88fd43a48069164d8c05f70e9e781d9a6032"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0808",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2808691,
+      "below_GT_by_more_than_one_gray_components": 2273888,
+      "minimum_LQ_minus_GT_255": -36,
+      "equal_LQ_GT_components": 1887615,
+      "prediction_brighter_than_LQ_components": 3068736,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.03667465686456361,
+      "pixel_hashes": {
+        "lq": "ae23cf2db087aa4044b416b10f1c193cec45aca6362dfc8dd2b7b8d8d94ad3bd",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "2a5040f2d742d09bf93aede9f024e7d671b0616c391dd1b2c34c54a0b226d3ea"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0809",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2695623,
+      "below_GT_by_more_than_one_gray_components": 2219946,
+      "minimum_LQ_minus_GT_255": -30,
+      "equal_LQ_GT_components": 1614492,
+      "prediction_brighter_than_LQ_components": 2726961,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.03644417881406773,
+      "pixel_hashes": {
+        "lq": "8a9ca7373cf3e834ddedb4f5219900e82c3ca352ce834695c1de8ef12dca40cf",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "1ad63d684bb691908af979763ea1ff102a82ae180205e1d0cae81259fc8eb0b5"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0810",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3044228,
+      "below_GT_by_more_than_one_gray_components": 2390515,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 2515393,
+      "prediction_brighter_than_LQ_components": 3388362,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.050621332135601556,
+      "pixel_hashes": {
+        "lq": "bc35c28d5087ca335c960d0803430f3c29804ffff129ea765d140d453e1bbbcd",
+        "gt": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+        "prediction": "de22d39217f7f2092fc516dd9d8e33c7b936e0c9e7246c540c4fb1bb5baf761f"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0811",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1662716,
+      "below_GT_by_more_than_one_gray_components": 1315554,
+      "minimum_LQ_minus_GT_255": -50,
+      "equal_LQ_GT_components": 512064,
+      "prediction_brighter_than_LQ_components": 1483784,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.03850607046780319,
+      "pixel_hashes": {
+        "lq": "9299d33b9ec2530462a3beedc10d70a3f05c670d4edb8ff246bdf8f048b0f8fb",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "efba14e983c3a16c3b935e13d0eece98ef33b60c68370ec3ddcdf8323374e29b"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0812",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2061198,
+      "below_GT_by_more_than_one_gray_components": 1606139,
+      "minimum_LQ_minus_GT_255": -43,
+      "equal_LQ_GT_components": 684806,
+      "prediction_brighter_than_LQ_components": 1630717,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.04206522296970861,
+      "pixel_hashes": {
+        "lq": "32a700c58cebf026769a5de45003ac26e62f337033a3f4d8b6e7efd9a32a4480",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "bb2ecf68c0ffab81ea8e849a87cecbc37110bd49047a729e7580f0d1c8445a97"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0813",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2520748,
+      "below_GT_by_more_than_one_gray_components": 1939236,
+      "minimum_LQ_minus_GT_255": -49,
+      "equal_LQ_GT_components": 939439,
+      "prediction_brighter_than_LQ_components": 2005936,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06330945864874307,
+      "pixel_hashes": {
+        "lq": "6bc693eb0790da9e43be439e86a940764ebd1487433ad2d5a729b6b500096a49",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "81151092d63f461d3086244c113e8b6a1d13d5d4e5c0308e9665dcbe0fbd3a08"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0814",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3950984,
+      "below_GT_by_more_than_one_gray_components": 2961848,
+      "minimum_LQ_minus_GT_255": -45,
+      "equal_LQ_GT_components": 2302114,
+      "prediction_brighter_than_LQ_components": 3731512,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.09423067683648517,
+      "pixel_hashes": {
+        "lq": "f66694b0e52917e06207b8d6f0eb4fe5ba4d37488ed59ada049de9f102a196ef",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "023392d872d566d22f9fdc6dd5b5d214e72c6104ad5bd30c4350a87b1c162b6e"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0815",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 4204008,
+      "below_GT_by_more_than_one_gray_components": 3193788,
+      "minimum_LQ_minus_GT_255": -51,
+      "equal_LQ_GT_components": 2609467,
+      "prediction_brighter_than_LQ_components": 3886244,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.08744058608839474,
+      "pixel_hashes": {
+        "lq": "d20eb5e317f5a59ea0894a6574ba38aae1580e7da09b7105532ffb6fc1d8fc10",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "5334aad82f92218c19184bea47dd943dce8f750f6814fd702a9be78942a0748b"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0816",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 5357219,
+      "below_GT_by_more_than_one_gray_components": 4160396,
+      "minimum_LQ_minus_GT_255": -50,
+      "equal_LQ_GT_components": 3822618,
+      "prediction_brighter_than_LQ_components": 5645980,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.1383359468677311,
+      "pixel_hashes": {
+        "lq": "444e150512f06e8c8abaf97695fe228f3d2b1c80b90a251b422d55010977996e",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "bdb4b5274938dd931f8b229a32fecf93e1a97c818954d3e33e06e326aa19a258"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0817",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 6097045,
+      "below_GT_by_more_than_one_gray_components": 4804904,
+      "minimum_LQ_minus_GT_255": -56,
+      "equal_LQ_GT_components": 4817933,
+      "prediction_brighter_than_LQ_components": 8275846,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.24908380001602667,
+      "pixel_hashes": {
+        "lq": "6a62466437141f7cd82f00cedfdff151d432fc2046bd0e1b560bc3623fec0775",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "14c8a8985f5c49bf855c383b32f7fc308ed642a27758a30b8b3bd2deec675079"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0818",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3292427,
+      "below_GT_by_more_than_one_gray_components": 2481968,
+      "minimum_LQ_minus_GT_255": -54,
+      "equal_LQ_GT_components": 1561302,
+      "prediction_brighter_than_LQ_components": 2653671,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06857182116331001,
+      "pixel_hashes": {
+        "lq": "6f3749f3f5d23675926c776d6cd4f262be556e20570832cd6b8d75758d6299c3",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "4c769097421dfa95a95fef3b268fd1f26cd2a52a9148abc04f32476eaa95e284"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0819",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3890263,
+      "below_GT_by_more_than_one_gray_components": 3047561,
+      "minimum_LQ_minus_GT_255": -56,
+      "equal_LQ_GT_components": 1394247,
+      "prediction_brighter_than_LQ_components": 3832368,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.12036835499693252,
+      "pixel_hashes": {
+        "lq": "64f079c316122fa3901ee132dc6432dafb69a65b1683868bbe796506b3d7d6be",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "694db75200f06e51042afb8e0901b3e421199811e4f15810e248331f97e10bba"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0820",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1755659,
+      "below_GT_by_more_than_one_gray_components": 1360884,
+      "minimum_LQ_minus_GT_255": -49,
+      "equal_LQ_GT_components": 609121,
+      "prediction_brighter_than_LQ_components": 1418755,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.04150280053397291,
+      "pixel_hashes": {
+        "lq": "827bf526b02a67b613c5571eae12920db62800923e8bed87e35640ef3f883d70",
+        "gt": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+        "prediction": "580350b5d627bc4eefa03e0f48faf66ac4306c6bc0a5855ec2382b2b99e2e9c5"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0821",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1822009,
+      "below_GT_by_more_than_one_gray_components": 1344927,
+      "minimum_LQ_minus_GT_255": -32,
+      "equal_LQ_GT_components": 1717420,
+      "prediction_brighter_than_LQ_components": 3123784,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.05648535469148666,
+      "pixel_hashes": {
+        "lq": "60aee435b14e9779812987a790cc9f36abd38b3ed64a00046b7de9ad549dd0aa",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "a3eda9fea76fb490d0f757b5275af0c3f4ffc50f6d215324bfe08271d8e028b8"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0822",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2136448,
+      "below_GT_by_more_than_one_gray_components": 1531659,
+      "minimum_LQ_minus_GT_255": -27,
+      "equal_LQ_GT_components": 2476285,
+      "prediction_brighter_than_LQ_components": 3261523,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.062302803897646655,
+      "pixel_hashes": {
+        "lq": "e2dc854cff19fc03868258f2ff925768cefff47fbf9ff22f3091f99cd6403650",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "54667d24c99b0e1e811ff19aa0d165c76f3524983ff6147d1b20938feccad8e2"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0823",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2332191,
+      "below_GT_by_more_than_one_gray_components": 1634680,
+      "minimum_LQ_minus_GT_255": -25,
+      "equal_LQ_GT_components": 3196193,
+      "prediction_brighter_than_LQ_components": 3847492,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.08472120264743184,
+      "pixel_hashes": {
+        "lq": "66465250cab0f8603a5c60f8add015499f7565f6d101921982fa896288114876",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "759fbab27ef51d5d80f1ebe637ee5fbba8282f6c44524ac438fe4038c80e9ba2"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0824",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2512667,
+      "below_GT_by_more_than_one_gray_components": 1752512,
+      "minimum_LQ_minus_GT_255": -25,
+      "equal_LQ_GT_components": 3820601,
+      "prediction_brighter_than_LQ_components": 4001489,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.07550837567408894,
+      "pixel_hashes": {
+        "lq": "67ea1a6466f4997d7a0ba41570b45ba0bbd1c66c2182a7a7247f4933f3f2e951",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "19514fc02f8503efec370593e20fb516d895d9863ab5fd3957898a11a69abded"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0825",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2747599,
+      "below_GT_by_more_than_one_gray_components": 1849827,
+      "minimum_LQ_minus_GT_255": -29,
+      "equal_LQ_GT_components": 7170532,
+      "prediction_brighter_than_LQ_components": 5739305,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.12024363246677196,
+      "pixel_hashes": {
+        "lq": "7a473a6a4e93b8c3e171fcc3074b1ef65b9088d6eb5ebbab5bb731fc36f03284",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "235f72246abd2232a24eed95f520801b359f5084bd35deef5e5d613878f9166f"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0826",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3055904,
+      "below_GT_by_more_than_one_gray_components": 2065295,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 9709417,
+      "prediction_brighter_than_LQ_components": 6767978,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.13155058664408575,
+      "pixel_hashes": {
+        "lq": "0bdaf3b04bf551487796fb7cdc69ca35247ecd13eb42008948cec40976008aae",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "0746be4006f8c076694f5245a3a331946f20aedac8fadc45ffe9f93bde21ed65"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0827",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3595625,
+      "below_GT_by_more_than_one_gray_components": 2517893,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 10519159,
+      "prediction_brighter_than_LQ_components": 7216572,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.16248802826425843,
+      "pixel_hashes": {
+        "lq": "20c687f70655c61825bd1004b466cad4cc5e6f21499be42e85e083117f6c954e",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "c87f8c0913eca1ce7a4eb96587284adc28f8b030c2c5756320c5eeb655e18089"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0828",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 2725800,
+      "below_GT_by_more_than_one_gray_components": 1815833,
+      "minimum_LQ_minus_GT_255": -25,
+      "equal_LQ_GT_components": 7807188,
+      "prediction_brighter_than_LQ_components": 6717173,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.16417777412917733,
+      "pixel_hashes": {
+        "lq": "e15ba7252ab8f5c8df37d80f4830642558ea61aff91f0108ddaa43802d9fe9f8",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "8ad6a273c343ae0dc788ef3164931c3b7df427470438396471f1595b296f0c1d"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0829",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3040941,
+      "below_GT_by_more_than_one_gray_components": 2153713,
+      "minimum_LQ_minus_GT_255": -29,
+      "equal_LQ_GT_components": 3694324,
+      "prediction_brighter_than_LQ_components": 4093988,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.07884504278587344,
+      "pixel_hashes": {
+        "lq": "4281bd6aed535f59d48b99db1b6c5323926ebe911890bab25b43a466ff772f5c",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "ceab9aeadddb94179cda4a926c5b6809ac3ae1cdd6f340f9a7fc0778060cfb3b"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0830",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1817564,
+      "below_GT_by_more_than_one_gray_components": 1340801,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 1739440,
+      "prediction_brighter_than_LQ_components": 3406271,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.0526773746845921,
+      "pixel_hashes": {
+        "lq": "85a21cb1d37e1dbd1105a95b7772486b035be75960dd3be848b21cdd2b600332",
+        "gt": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+        "prediction": "0e7b58698364bd4459f64f302d7c66dfb1458c4eebd9f9e80b940600b5e27e60"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0831",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3003115,
+      "below_GT_by_more_than_one_gray_components": 2448589,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 1240700,
+      "prediction_brighter_than_LQ_components": 3204381,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.04387613882882778,
+      "pixel_hashes": {
+        "lq": "095cf6215745c87dad44bb61bbb889e13f92cde97f5a6cfb66b67876e5f1d50a",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "52cc50a5f0aeb2d50d063294499af34c1b6fc7b8bbdb84df14a635a0b49a76bb"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0832",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3322641,
+      "below_GT_by_more_than_one_gray_components": 2610818,
+      "minimum_LQ_minus_GT_255": -31,
+      "equal_LQ_GT_components": 2139204,
+      "prediction_brighter_than_LQ_components": 3622479,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.05638302586876439,
+      "pixel_hashes": {
+        "lq": "5b42ad4f88ae85631294a23403160d8d61f32fc06ff229aaa3e29e4204823c51",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "d476f62273eb5ab156a3f7ee466d506013e5f32f2ab755f3697c34db9dfdf09f"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0833",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3557511,
+      "below_GT_by_more_than_one_gray_components": 2749742,
+      "minimum_LQ_minus_GT_255": -30,
+      "equal_LQ_GT_components": 2788067,
+      "prediction_brighter_than_LQ_components": 3937699,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06302159304804109,
+      "pixel_hashes": {
+        "lq": "526ded6b4c493aa8d6d73d5850c10384392e5e68e54b98566c0cab80b26621d0",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "be6f47def862e61385a9a80f44bd4535b73fba7a45a2d6e04a0f56a95c0dda36"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0834",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3812084,
+      "below_GT_by_more_than_one_gray_components": 2874182,
+      "minimum_LQ_minus_GT_255": -32,
+      "equal_LQ_GT_components": 4310879,
+      "prediction_brighter_than_LQ_components": 4697335,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.08010255536793649,
+      "pixel_hashes": {
+        "lq": "e8c98b23e7b4d52e3677df4a503a61b6151717a1222fa0dbf270411443de0091",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "7c5415af3ec67a668df201af6b9c1127f51a40223c65946301b0bcfb0e2f3a4c"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0835",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3696106,
+      "below_GT_by_more_than_one_gray_components": 2731310,
+      "minimum_LQ_minus_GT_255": -32,
+      "equal_LQ_GT_components": 7747357,
+      "prediction_brighter_than_LQ_components": 5284499,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.07223109941567796,
+      "pixel_hashes": {
+        "lq": "1d6d895cb2dacb99ef734652af8abbe52f97a1370035fb13a138dda8f34eac11",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "62529be79624128486106a7bca0122320f0a093c7529e5a86c7b9222f41dcba1"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0836",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 4167440,
+      "below_GT_by_more_than_one_gray_components": 3063223,
+      "minimum_LQ_minus_GT_255": -30,
+      "equal_LQ_GT_components": 8113256,
+      "prediction_brighter_than_LQ_components": 6235259,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.11288479126194474,
+      "pixel_hashes": {
+        "lq": "a5e52dd70509c2f8f96f7b2ec0f6408e3f70fc104c50deb402333d65c710c090",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "5bdbe0252c71d9e19eaa4d9cd4b0a91e152c7d44b44d71250753111322fb89d4"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0837",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 4391043,
+      "below_GT_by_more_than_one_gray_components": 3235830,
+      "minimum_LQ_minus_GT_255": -36,
+      "equal_LQ_GT_components": 9581152,
+      "prediction_brighter_than_LQ_components": 6982075,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.1303897533105817,
+      "pixel_hashes": {
+        "lq": "b6064b05dd9e20a06b1320d24e8b96941096b425f31261986ef5d17ebe8e952e",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "a631b4180ab52a7520e78f1f6e5385e27cc86567f364e76481090211e68377c6"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0838",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3629652,
+      "below_GT_by_more_than_one_gray_components": 2781817,
+      "minimum_LQ_minus_GT_255": -28,
+      "equal_LQ_GT_components": 3212410,
+      "prediction_brighter_than_LQ_components": 4120560,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.060053287538075775,
+      "pixel_hashes": {
+        "lq": "248ba1a844e3e789d853fc1f1be3e3cdf30c84429ebb59cddb0f29471fd98525",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "3684453141dcc2eacc82f93df07a84d55af9398f7a6b9dca6840c23f0b307df0"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0839",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 4084348,
+      "below_GT_by_more_than_one_gray_components": 3090332,
+      "minimum_LQ_minus_GT_255": -29,
+      "equal_LQ_GT_components": 3412216,
+      "prediction_brighter_than_LQ_components": 4024081,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06204757535008975,
+      "pixel_hashes": {
+        "lq": "e78c4121e132e11fc8a82a3d7ab07a6becab60a08aeb0d83cb194a4a92fd1b94",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "001614017be1068cdc6e7fcced11d387b2001137bc1cb0f3b2079061e68bda34"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0840",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 3198331,
+      "below_GT_by_more_than_one_gray_components": 2568027,
+      "minimum_LQ_minus_GT_255": -31,
+      "equal_LQ_GT_components": 1574762,
+      "prediction_brighter_than_LQ_components": 3287688,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.05157432984143641,
+      "pixel_hashes": {
+        "lq": "bd1ec865095bfdafcb43969fa72396c0bb86ed567b2dd2b95ab2f3dbbe92238d",
+        "gt": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+        "prediction": "9d216259fb7dcd80804042a7559bd807f7e40bc9df703da1ff55b8c6128b8434"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0841",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 799117,
+      "below_GT_by_more_than_one_gray_components": 414508,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 20120379,
+      "prediction_brighter_than_LQ_components": 7348953,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.25151799328215113,
+      "pixel_hashes": {
+        "lq": "d449b4f913773b49468dda475c7c7708d10874567b5815efedce879f8aff6e16",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "c5e40223e810649313f13f76ca6389f2c7a45c67a042333dc6362b77f14d22b4"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0842",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 751232,
+      "below_GT_by_more_than_one_gray_components": 425775,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 20428974,
+      "prediction_brighter_than_LQ_components": 8726901,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.3178553786888733,
+      "pixel_hashes": {
+        "lq": "3a724bb3df3d7fd9e576debcb9167ef95287d1a28ad4364b57f867361d9cc2d8",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "ef1bdcf7e218333a528311de37fe40fd4df27d18cc96752cd2d50a85cc4b373a"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0843",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 664677,
+      "below_GT_by_more_than_one_gray_components": 336167,
+      "minimum_LQ_minus_GT_255": -24,
+      "equal_LQ_GT_components": 20932406,
+      "prediction_brighter_than_LQ_components": 9939384,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.3182586464248991,
+      "pixel_hashes": {
+        "lq": "a1443fe7ca8dae7870fe688f80c0d6413fb60a22258c4744876f32935324cb86",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "44129aeff80a3fcc893f9440e1199702208bf866cec50d1e8b76862f3f4179f9"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0844",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 606701,
+      "below_GT_by_more_than_one_gray_components": 322039,
+      "minimum_LQ_minus_GT_255": -24,
+      "equal_LQ_GT_components": 21309618,
+      "prediction_brighter_than_LQ_components": 9865787,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.364506484601197,
+      "pixel_hashes": {
+        "lq": "bffc0ae22856e1d1eebccb52ed598c46b2ac7aa7e8a1bdbffc72dac201f5fcf8",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "b88bcb686ecb466247140f0d454f7f4cb543da43ace97018dd1dd22451ae8860"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0845",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 786801,
+      "below_GT_by_more_than_one_gray_components": 467200,
+      "minimum_LQ_minus_GT_255": -22,
+      "equal_LQ_GT_components": 19937316,
+      "prediction_brighter_than_LQ_components": 7591398,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.25153408200843547,
+      "pixel_hashes": {
+        "lq": "1768d3410766458cdb2d34ca67580451a4b323ec59feeaa38b501a009b25c182",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "b7aa51d3150103d4158237cb663e9c4f73c04500f621bdd9ab2e714b2c74927d"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0846",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 648188,
+      "below_GT_by_more_than_one_gray_components": 369148,
+      "minimum_LQ_minus_GT_255": -23,
+      "equal_LQ_GT_components": 21059305,
+      "prediction_brighter_than_LQ_components": 9691308,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.3316963919247212,
+      "pixel_hashes": {
+        "lq": "92351c08f52ff0bb5f3a3e959c0c5e9b0d58e24ce043aada2cfc2f053a98f5f0",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "933a0e2ab4b8eb70ff6da0893cc5b56879fe6d1415d5b9ba6ee8cb37b5c8a636"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0847",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 784076,
+      "below_GT_by_more_than_one_gray_components": 420836,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 20093760,
+      "prediction_brighter_than_LQ_components": 8003949,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2726632238674877,
+      "pixel_hashes": {
+        "lq": "d916157831ccb55323e0e24f22678bc133b47a1e5753d30853591f5eb99d6a69",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "b10fed76cd0e41a59d33bab0dbfe42ed1ed8de56a550d0f858c9ceb5a93cc238"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0848",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 762133,
+      "below_GT_by_more_than_one_gray_components": 386819,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 20381140,
+      "prediction_brighter_than_LQ_components": 8578043,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.3080185613894886,
+      "pixel_hashes": {
+        "lq": "a6e055eda46cf8fff716d1759c6bf14126742bec80b6e77fc613b2d2f7f57cfd",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "e402d8efe81305c058e453ece7258416db51a71a420a0e5f3b4be4af6bb1b856"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0849",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 662300,
+      "below_GT_by_more_than_one_gray_components": 308700,
+      "minimum_LQ_minus_GT_255": -20,
+      "equal_LQ_GT_components": 21029908,
+      "prediction_brighter_than_LQ_components": 10173548,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.3499498566055349,
+      "pixel_hashes": {
+        "lq": "7bf4cdc6107540b2c9ce603ba84016f4ed89d6a4952efea72ede966df09f875b",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "4b393083fa12d15373c152c2dc9e5dd58bb5e92f01f5a7fab05d7ce5f4e63534"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0850",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 732380,
+      "below_GT_by_more_than_one_gray_components": 403609,
+      "minimum_LQ_minus_GT_255": -24,
+      "equal_LQ_GT_components": 20493381,
+      "prediction_brighter_than_LQ_components": 10040350,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.3826278861193353,
+      "pixel_hashes": {
+        "lq": "a5182215ece3738c79060511cf2552bc38e4f55d34ee9b31c7fb4ba3b30aa1da",
+        "gt": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+        "prediction": "d278b8bc132d9650f7c1d47fb0ba7c5bf9caaffedfd6bb768941ed31233fbad5"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0851",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1090610,
+      "below_GT_by_more_than_one_gray_components": 680549,
+      "minimum_LQ_minus_GT_255": -24,
+      "equal_LQ_GT_components": 20194698,
+      "prediction_brighter_than_LQ_components": 8024919,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.23097489729646725,
+      "pixel_hashes": {
+        "lq": "7a3456221729c40ba8d04d0632fbcce24f956eec351fc3c515e5e3a77fbfe873",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "a40d961ba854f758a371be7ebb661c9f84be77f3f41e42832b3995557eeb24a5"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0852",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 937449,
+      "below_GT_by_more_than_one_gray_components": 587255,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 20941698,
+      "prediction_brighter_than_LQ_components": 8401989,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2270569146897255,
+      "pixel_hashes": {
+        "lq": "f85974d94fc48e6f15a64ec8c649c432b3539bc8b59be5e875f50adf4c9bd447",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "030455363cbf5cabff9b1c638f12e0aa27ac5e90c50d5f418dcdc2dd8bdde1a8"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0853",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1112371,
+      "below_GT_by_more_than_one_gray_components": 728562,
+      "minimum_LQ_minus_GT_255": -23,
+      "equal_LQ_GT_components": 19999069,
+      "prediction_brighter_than_LQ_components": 8323944,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.22973620754363813,
+      "pixel_hashes": {
+        "lq": "d465e7f44c2f8bb9597dc2481e80da7bbf192c76fee5e4ddea66ab6594112e15",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "c7a776fb1be3c78a3a2e4b07b4ce104eb2108989849fed6d470b448e1a5ce5c5"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0854",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1209929,
+      "below_GT_by_more_than_one_gray_components": 737902,
+      "minimum_LQ_minus_GT_255": -23,
+      "equal_LQ_GT_components": 19763036,
+      "prediction_brighter_than_LQ_components": 8884774,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2284588387107156,
+      "pixel_hashes": {
+        "lq": "7a8cc3de9080bfda2ec4f13c4d39d5d6d9b2917e0e64875d8aee0ebc437c85f1",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "5d8b8568e6569ac680028aa72147446b0705610062fa7ccd8d2a2bc1bfbbefb8"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0855",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 1017463,
+      "below_GT_by_more_than_one_gray_components": 621324,
+      "minimum_LQ_minus_GT_255": -24,
+      "equal_LQ_GT_components": 20428917,
+      "prediction_brighter_than_LQ_components": 9231541,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2712146265795973,
+      "pixel_hashes": {
+        "lq": "8a92f3eb3baa9c5545d2693d92ddb5ea4a7ccf2a23e4e6bdcc954202f88fb4c2",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "16a829400e8fdd070343e03ecaa28a565f09b3be1d60a5088c1309a05e18aeca"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0856",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 748331,
+      "below_GT_by_more_than_one_gray_components": 443883,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 21579748,
+      "prediction_brighter_than_LQ_components": 9337964,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2621386779683219,
+      "pixel_hashes": {
+        "lq": "c0119b60a1ca17e0afae912a7af5c60ca2da45e16e5e8078c853a1fe7fd99a95",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "d184ec3f498a7704ce6e20afc89fa4df5ab78ebc08cd123986a4496b06e87a36"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0857",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 897678,
+      "below_GT_by_more_than_one_gray_components": 557847,
+      "minimum_LQ_minus_GT_255": -20,
+      "equal_LQ_GT_components": 21037590,
+      "prediction_brighter_than_LQ_components": 9050729,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.29725739238491694,
+      "pixel_hashes": {
+        "lq": "76d56344770e1dc7ec675e411a12c45c9ecddc6be870f5c4306fd92da6813a87",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "b3fefc957210229d0d6233fdff1233411b593aae6957687d6c4e835dea7bca94"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0858",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 774136,
+      "below_GT_by_more_than_one_gray_components": 473368,
+      "minimum_LQ_minus_GT_255": -26,
+      "equal_LQ_GT_components": 21521500,
+      "prediction_brighter_than_LQ_components": 9696998,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2627560103443091,
+      "pixel_hashes": {
+        "lq": "37ecb498835a72a2976c393453889ca6a6fac34a71dc21f63bb283eaf4128b7d",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "97fce5ce744d358b454b985328553415f5da3ef7768171ad821910438944e131"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0859",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 935919,
+      "below_GT_by_more_than_one_gray_components": 576133,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 20868682,
+      "prediction_brighter_than_LQ_components": 9279655,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.24024424226613278,
+      "pixel_hashes": {
+        "lq": "dd1f28abb674dbf24d975edc28ef6269a27249aad83d70d447fda25da6984289",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "38d0b1552ca2d65270785b447383357973431c25d80f9161bd13313427737822"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0860",
+      "components": 24883200,
+      "negative_LQ_minus_GT_components": 835631,
+      "below_GT_by_more_than_one_gray_components": 535759,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 21124324,
+      "prediction_brighter_than_LQ_components": 8387589,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.21597490823261925,
+      "pixel_hashes": {
+        "lq": "c294d3e687009d421645293e2c8e342f17672e3f9d6e1bc137f9b85047b98f11",
+        "gt": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+        "prediction": "13b653137f336fa3e0104cfb38f4de878febd4e95c8b6d182bf5b6dec0f7f167"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0861",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 39459,
+      "below_GT_by_more_than_one_gray_components": 20311,
+      "minimum_LQ_minus_GT_255": -16,
+      "equal_LQ_GT_components": 5399666,
+      "prediction_brighter_than_LQ_components": 2197420,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.30271723304302656,
+      "pixel_hashes": {
+        "lq": "1846080d3d90b72fad91eb1aeacb662b8d70134122c0bb4a559e1e7d429b93c3",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "77296b9d0b88e0ce499c8617a9877eb5a382b8605bd656484f17e6af60a1129d"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0862",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 63482,
+      "below_GT_by_more_than_one_gray_components": 33297,
+      "minimum_LQ_minus_GT_255": -20,
+      "equal_LQ_GT_components": 3914221,
+      "prediction_brighter_than_LQ_components": 1437342,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.17192366758278435,
+      "pixel_hashes": {
+        "lq": "4676d07d184c38bf36ac0740871fedfcb56635613f43af2df3b23694a1d6b0e9",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "3a049b8ed17463b4a2267ec5cf6fd86347d01d5386bcf7fdb907fcc7a8da89a2"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0863",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 94936,
+      "below_GT_by_more_than_one_gray_components": 49277,
+      "minimum_LQ_minus_GT_255": -20,
+      "equal_LQ_GT_components": 1838332,
+      "prediction_brighter_than_LQ_components": 653505,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.11429134512139087,
+      "pixel_hashes": {
+        "lq": "e355744d5e03888b79e5950b3d61b33a24603eede633cc0779ad8518b51ad547",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "b442e418f0301b2ac4b4aa705becbdfff6a180e7eaaf468e2336f4bce3762c36"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0864",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 56443,
+      "below_GT_by_more_than_one_gray_components": 30845,
+      "minimum_LQ_minus_GT_255": -18,
+      "equal_LQ_GT_components": 4334666,
+      "prediction_brighter_than_LQ_components": 1536701,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.22433330449561936,
+      "pixel_hashes": {
+        "lq": "21b10001ea3aa189f48dcfb0239eec595839000ddd18160cca3dc05647a56c6d",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "134ba88992c3a9594a09dc985b60a6b6e038c048c0e60cd97ba06632a6bb7952"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0865",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 93055,
+      "below_GT_by_more_than_one_gray_components": 51979,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 1901221,
+      "prediction_brighter_than_LQ_components": 814311,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.12459648278329125,
+      "pixel_hashes": {
+        "lq": "57d46c2eddd4121aa0035fdf80bcd42c9e4a6feac786da261ef334d441878fd4",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "33b432ffa24f7fe7ec5f19c94ee8676afb8c44aa987038488d7cea946c12efd0"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0866",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 81156,
+      "below_GT_by_more_than_one_gray_components": 44221,
+      "minimum_LQ_minus_GT_255": -20,
+      "equal_LQ_GT_components": 2704344,
+      "prediction_brighter_than_LQ_components": 1082304,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.1651830802970109,
+      "pixel_hashes": {
+        "lq": "acfc1b1a0de3ae4f9b7941a8b00c4f221a2e907732dbc79949777f22f57cb5ee",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "25e62f065cba9c65697d0180df7619ee0c02a641b245479bfa2a535f811093f7"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0867",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 83572,
+      "below_GT_by_more_than_one_gray_components": 43719,
+      "minimum_LQ_minus_GT_255": -18,
+      "equal_LQ_GT_components": 2666617,
+      "prediction_brighter_than_LQ_components": 1269680,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.20883646321011243,
+      "pixel_hashes": {
+        "lq": "117efc58ab2e83f1ed2b8ab78820262814a8d74bbc3effdf4b77a71b02f2cb94",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "6232fd147d70de4b514f8131204fceddbc7484d8185333c9ff55402e0709b257"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0868",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 80830,
+      "below_GT_by_more_than_one_gray_components": 42721,
+      "minimum_LQ_minus_GT_255": -18,
+      "equal_LQ_GT_components": 2735395,
+      "prediction_brighter_than_LQ_components": 1123904,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.16339642626630912,
+      "pixel_hashes": {
+        "lq": "0dc3b80e2dba84513dc07893c6107b7925660468a05d831d18d6864b3d0fe8a9",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "9b0efea25330d8212debe6d54a3564bed243ccc61e2b391733f56fca66d00e95"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0869",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 115157,
+      "below_GT_by_more_than_one_gray_components": 74720,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 592362,
+      "prediction_brighter_than_LQ_components": 453492,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.09935482566197137,
+      "pixel_hashes": {
+        "lq": "7000f53eb09134c2b3a236f0d35cf486c5da9b4b3ca109b01fbb04b1ffa07b45",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "5bfb4e1ae8039dc338b3cd99907f7281c12b80850a549e18be523a52f9fe3ed2"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0870",
+      "components": 7884000,
+      "negative_LQ_minus_GT_components": 96368,
+      "below_GT_by_more_than_one_gray_components": 52252,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 2016489,
+      "prediction_brighter_than_LQ_components": 1077963,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.1993507518988745,
+      "pixel_hashes": {
+        "lq": "47da446448538983f45e5dac88c5b8b9586be3c13604212f4b61562898d724f3",
+        "gt": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+        "prediction": "a0666cfcde96a5b2652d7d6b7ef6716fd7c2c1b4abc89307eb750aea9ae47467"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0871",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 169980,
+      "below_GT_by_more_than_one_gray_components": 89551,
+      "minimum_LQ_minus_GT_255": -18,
+      "equal_LQ_GT_components": 8782749,
+      "prediction_brighter_than_LQ_components": 3661248,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2157994150802083,
+      "pixel_hashes": {
+        "lq": "a141887ee7b1a4a678e1b41ee8c64a7f3543ef08f77677ddf985a55ab143961c",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "e91651008df3206de5b21dfd336d9c8966b52fcbfd1aaebc1b05568aea3844c4"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0872",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 262010,
+      "below_GT_by_more_than_one_gray_components": 126202,
+      "minimum_LQ_minus_GT_255": -16,
+      "equal_LQ_GT_components": 6784300,
+      "prediction_brighter_than_LQ_components": 2406126,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.1382607714505425,
+      "pixel_hashes": {
+        "lq": "1f6699b13b87a9526e9be4641b198d8102a6e8fc44980be78ca61577751bb424",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "948e0e1ef05e7dbba866e747645634bec1a67b1d6f8c0e05153adc43834f9e68"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0873",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 419110,
+      "below_GT_by_more_than_one_gray_components": 233948,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 3273838,
+      "prediction_brighter_than_LQ_components": 979875,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.05223564982615158,
+      "pixel_hashes": {
+        "lq": "0d68ed7f134c5e90fd38dc6ccd3b20efdd12a45e63d0def8d7a4009b5bf9d452",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "d6c596405209dd4a9517f6d58302207a24bab490f54d4bb78f81547e66505995"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0874",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 246891,
+      "below_GT_by_more_than_one_gray_components": 142925,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 7118270,
+      "prediction_brighter_than_LQ_components": 2122369,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.13146630793947486,
+      "pixel_hashes": {
+        "lq": "db0b334c3344d3caedc6983f94d13bcef13bf0028bb5da322f061552a21f0856",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "76543d6ba860ade15da23f93441d7a8de937711a319ec97a88ffa819894be8a2"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0875",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 394403,
+      "below_GT_by_more_than_one_gray_components": 224290,
+      "minimum_LQ_minus_GT_255": -25,
+      "equal_LQ_GT_components": 3370633,
+      "prediction_brighter_than_LQ_components": 1251607,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06704887269414254,
+      "pixel_hashes": {
+        "lq": "16975ed0a27deb59a3d8d36f0afcb75d808cf1d0bcb0f80da7e3eb72f3004623",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "4bd773814546dd920a70a1a04b4872a05d7fe4855834114b42bece563b0467bd"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0876",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 341958,
+      "below_GT_by_more_than_one_gray_components": 198559,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 4587232,
+      "prediction_brighter_than_LQ_components": 1328688,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06909778987937466,
+      "pixel_hashes": {
+        "lq": "efedce3f7fe6ebaaadd7bcea78a375351bd5d0283a4d09688881c52684ee6bb9",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "5f37fe25a0c2c987b5a642e6b44b3b29e01ecf7cda3aecd5095c3d388cfcc4b8"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0877",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 363455,
+      "below_GT_by_more_than_one_gray_components": 197208,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 4462316,
+      "prediction_brighter_than_LQ_components": 1775305,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.12357557270095579,
+      "pixel_hashes": {
+        "lq": "e55f7b8620c595cbc0d5ba1f969f12087c871e4605392120330917108832a5d2",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "e95f26d61b4f412fd6253a9e27eced1e17462d6058bba98ec94ef3e92e3db85d"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0878",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 359137,
+      "below_GT_by_more_than_one_gray_components": 192937,
+      "minimum_LQ_minus_GT_255": -20,
+      "equal_LQ_GT_components": 4698160,
+      "prediction_brighter_than_LQ_components": 1433931,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06806670397480398,
+      "pixel_hashes": {
+        "lq": "f2d70848535ed119b78cabab4528465aa0d8acc8aee74d2b90dd47e0b6585f49",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "9c757d027ad73e2b0328f7732942ee61d05fa637e73689d370070907c4bb9fbe"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0879",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 493393,
+      "below_GT_by_more_than_one_gray_components": 319751,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 1181229,
+      "prediction_brighter_than_LQ_components": 623710,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.0480460708340485,
+      "pixel_hashes": {
+        "lq": "6a54dfb31b780e05162791e906987ac96da09cfa8ac8ee5573bc83eda702d92f",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "24e0eb2fb5904166fd05afca8406dbaf25bd493b75b3ca33a1b60732aebbddea"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0880",
+      "components": 12873744,
+      "negative_LQ_minus_GT_components": 413399,
+      "below_GT_by_more_than_one_gray_components": 239619,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 3444643,
+      "prediction_brighter_than_LQ_components": 1530958,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.11196341607821113,
+      "pixel_hashes": {
+        "lq": "063811a29d839942d948b49f7daf3b75783ea2ceeae53b84f6b52a3147c1258b",
+        "gt": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+        "prediction": "0eaf4a66d390c8a569a7f41e7f9f637ff40d210c02b7b74f908eb0c88a8cee5e"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0881",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 768626,
+      "below_GT_by_more_than_one_gray_components": 544408,
+      "minimum_LQ_minus_GT_255": -23,
+      "equal_LQ_GT_components": 8002700,
+      "prediction_brighter_than_LQ_components": 3297794,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.2296338123147857,
+      "pixel_hashes": {
+        "lq": "660508abc5b33f9802e9922a60872cb0c88be91473a16745ac05a7a8d9ff04f0",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "df7c7e1ccae7707b3242c08276b287792a3bc3ddf2287571f7ac812d8cf32ae5"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0882",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1192999,
+      "below_GT_by_more_than_one_gray_components": 791456,
+      "minimum_LQ_minus_GT_255": -22,
+      "equal_LQ_GT_components": 6137796,
+      "prediction_brighter_than_LQ_components": 2944803,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.156586047170728,
+      "pixel_hashes": {
+        "lq": "3263d066da2db5e637f7fe17ffd72053d86eb7d947fcce578588791004d56be7",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "68911ea40e2dc6a316d004d8e63c44fddaaa2961d467cb293f88625ce909d122"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0883",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1843791,
+      "below_GT_by_more_than_one_gray_components": 1347003,
+      "minimum_LQ_minus_GT_255": -24,
+      "equal_LQ_GT_components": 2921016,
+      "prediction_brighter_than_LQ_components": 2365453,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.07187700305567651,
+      "pixel_hashes": {
+        "lq": "8a539159021f961d140e94fc04478957ee085e0ce43943e8bb97df0fbd015fa3",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "d961a17da2efd761e0c3cf58fb93cfd8ea8cf2c6104a102bebcb572fec0ecc91"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0884",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1074114,
+      "below_GT_by_more_than_one_gray_components": 809100,
+      "minimum_LQ_minus_GT_255": -19,
+      "equal_LQ_GT_components": 6499095,
+      "prediction_brighter_than_LQ_components": 2970214,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.19786651423051474,
+      "pixel_hashes": {
+        "lq": "b0ec551c1216edacfc9e42e96d6da9cb72073ad539058098f23b77750bc5df0c",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "2f93db72ed27a0ed37cda58e07d2f85d19d514ab67574abfdbdcc324aa43d7de"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0885",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1761352,
+      "below_GT_by_more_than_one_gray_components": 1272576,
+      "minimum_LQ_minus_GT_255": -26,
+      "equal_LQ_GT_components": 3117577,
+      "prediction_brighter_than_LQ_components": 2862843,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.13749266521676823,
+      "pixel_hashes": {
+        "lq": "b5050f2410999feb17801811888ed562837dbfaff0d150e2658deef063d27654",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "3750ee4d6eabc672b793a63a737e3d53189acb8759783a9fcecada24faeba796"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0886",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1528520,
+      "below_GT_by_more_than_one_gray_components": 1142475,
+      "minimum_LQ_minus_GT_255": -23,
+      "equal_LQ_GT_components": 4242214,
+      "prediction_brighter_than_LQ_components": 2379568,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.09887201218607411,
+      "pixel_hashes": {
+        "lq": "977e61aa2ff6bd5838ec4ac72656e35222bc9c6ab4fdbfeecaddf898ae012d83",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "375f5a100b2270d3ade603abfe0dd2467ea822234d29f15fea049e36c7b71ca7"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0887",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1568090,
+      "below_GT_by_more_than_one_gray_components": 1242165,
+      "minimum_LQ_minus_GT_255": -22,
+      "equal_LQ_GT_components": 4003688,
+      "prediction_brighter_than_LQ_components": 2727896,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.19250371090255805,
+      "pixel_hashes": {
+        "lq": "34cced03dbb46c17fd09b5e4e5622b5c529102fa5a8e632a82ecbef2e71fce87",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "b917ea0ea3dd37914c500049725a6857b1adc8b53c991a4356575bc82aa8fe9c"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0888",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1564052,
+      "below_GT_by_more_than_one_gray_components": 1133225,
+      "minimum_LQ_minus_GT_255": -24,
+      "equal_LQ_GT_components": 4212207,
+      "prediction_brighter_than_LQ_components": 2801497,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.1376493200359982,
+      "pixel_hashes": {
+        "lq": "bf0b080debd272674792f1557b611da4bb70f0c407830783674411ebcbe32472",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "41f0423f4e028d47312b0a2e3902e097c17d1d77d545d5d2025db919c3d8892b"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0889",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 2165459,
+      "below_GT_by_more_than_one_gray_components": 1786187,
+      "minimum_LQ_minus_GT_255": -25,
+      "equal_LQ_GT_components": 1055199,
+      "prediction_brighter_than_LQ_components": 2562934,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.08889071500322134,
+      "pixel_hashes": {
+        "lq": "d8ece7f7dfb0993587aeb717d8de0a25c527030907193b434099cf7ff6a5ce04",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "90722eac7e3b4bc5097a8f2e7469baf73e79551c278d60082b196d4c8f85ab3f"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0890",
+      "components": 11614464,
+      "negative_LQ_minus_GT_components": 1777723,
+      "below_GT_by_more_than_one_gray_components": 1279825,
+      "minimum_LQ_minus_GT_255": -23,
+      "equal_LQ_GT_components": 3177187,
+      "prediction_brighter_than_LQ_components": 3357603,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.25316127753663986,
+      "pixel_hashes": {
+        "lq": "ba4c12ebe85078c41c57f19985a7436fd83d1c7f8c269d7d9c26e3eb967dd5b8",
+        "gt": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+        "prediction": "d529653d6df916e342eb25db425ec053cf5ea977bd0fdb86b62522906664ef8e"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0891",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 91283,
+      "below_GT_by_more_than_one_gray_components": 51758,
+      "minimum_LQ_minus_GT_255": -18,
+      "equal_LQ_GT_components": 4275796,
+      "prediction_brighter_than_LQ_components": 1997368,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.12993147793279786,
+      "pixel_hashes": {
+        "lq": "33c943db05bb58890b89d324f0502319e516da6836425d23da574532b621d7e1",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "0657d9a25cadc3b784c230e1058afc17b6ac1f2d185bf0575a065b25b82445df"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0892",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 55676,
+      "below_GT_by_more_than_one_gray_components": 35609,
+      "minimum_LQ_minus_GT_255": -17,
+      "equal_LQ_GT_components": 6991120,
+      "prediction_brighter_than_LQ_components": 3357399,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.20250560664248815,
+      "pixel_hashes": {
+        "lq": "88da94255adaa4f6231942d705bfefdcd5946d0b742fa6892330a59dbaffdeeb",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "cb4f494d1d6f7f7dcba78b489d825ea4736933f79d963c9931cda2d79f47c820"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0893",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 68418,
+      "below_GT_by_more_than_one_gray_components": 42559,
+      "minimum_LQ_minus_GT_255": -18,
+      "equal_LQ_GT_components": 5902991,
+      "prediction_brighter_than_LQ_components": 2610980,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.1473773733404171,
+      "pixel_hashes": {
+        "lq": "15e5651b39b8bd13715d41e7dde9733a5ad97bcd825f22e1dd072197c54ec82f",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "e5b0df0e3ed7b5214272b97d81de99f94381ee0f9b35e230595d5b7dac26c2a5"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0894",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 83182,
+      "below_GT_by_more_than_one_gray_components": 53330,
+      "minimum_LQ_minus_GT_255": -17,
+      "equal_LQ_GT_components": 4597255,
+      "prediction_brighter_than_LQ_components": 1553421,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.07864313638268657,
+      "pixel_hashes": {
+        "lq": "7e6b7e277409ebc69bcf4432502f03c4bb8db3eef515e4db4823ed7bfc683ac4",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "1d6f9563ba5d6c9e9f28e68ecef0c441f867db696ae8d4b80166329c0c7db610"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0895",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 64532,
+      "below_GT_by_more_than_one_gray_components": 51371,
+      "minimum_LQ_minus_GT_255": -17,
+      "equal_LQ_GT_components": 5606765,
+      "prediction_brighter_than_LQ_components": 1383355,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.06252757013224505,
+      "pixel_hashes": {
+        "lq": "9437b1f1873ff1c5ea600ba6f86eab0cd3d7323cdb51e4a9623d1b052510b438",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "5ab1c2caf9ac70b1f60f92cbf58e2cd1b72ac6db33188cdd09adfc1ff085a406"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0896",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 77938,
+      "below_GT_by_more_than_one_gray_components": 63577,
+      "minimum_LQ_minus_GT_255": -21,
+      "equal_LQ_GT_components": 4875519,
+      "prediction_brighter_than_LQ_components": 1716897,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.08322814351901044,
+      "pixel_hashes": {
+        "lq": "3306e0ed984d18a0e9be7f04559d7db1b8e53a8b407f551b01beb935f1bc29ee",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "77e5cf02cf0c642babcce9a5e87aa8e6d8ebea2eecaa679411e549d093aac04d"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0897",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 116531,
+      "below_GT_by_more_than_one_gray_components": 80952,
+      "minimum_LQ_minus_GT_255": -17,
+      "equal_LQ_GT_components": 1559008,
+      "prediction_brighter_than_LQ_components": 673507,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.03789330476684771,
+      "pixel_hashes": {
+        "lq": "7c414d3a8da95a1e6d5d5ad3e79fb419d37bbda00ef4c5f534b0d40ea87a259f",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "a35f497273b6c4d5b21a556a09040c66905fc59b385613f54fc83d6de17869cd"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0898",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 69748,
+      "below_GT_by_more_than_one_gray_components": 46499,
+      "minimum_LQ_minus_GT_255": -17,
+      "equal_LQ_GT_components": 5301154,
+      "prediction_brighter_than_LQ_components": 2758912,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.15213113036292275,
+      "pixel_hashes": {
+        "lq": "67ceedb8b9fa8c8622202eeb85be91935c164d2a2fd6b1a81287b786917dd91b",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "7498a577b4494bddd2753f6f45f2a871e3863aa9d3c8b95dbd5d654eb6d46b7d"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0899",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 102544,
+      "below_GT_by_more_than_one_gray_components": 67288,
+      "minimum_LQ_minus_GT_255": -17,
+      "equal_LQ_GT_components": 2937782,
+      "prediction_brighter_than_LQ_components": 1452223,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.09005575239093322,
+      "pixel_hashes": {
+        "lq": "a9137918ff44385c327531df4479d45cd87fbd79c27b874d5d99e89113f0758f",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "23835a0ec43356c603e50d34048503e86c2741aebe56afdf2fe06848e4697de1"
+      }
+    },
+    {
+      "record_id": "official_10Rain_0900",
+      "components": 11321856,
+      "negative_LQ_minus_GT_components": 120202,
+      "below_GT_by_more_than_one_gray_components": 85228,
+      "minimum_LQ_minus_GT_255": -17,
+      "equal_LQ_GT_components": 1346657,
+      "prediction_brighter_than_LQ_components": 839412,
+      "fraction_error_energy_where_prediction_exceeds_LQ": 0.05263815880903441,
+      "pixel_hashes": {
+        "lq": "ac0fe84e048ec7853273758646e9f42d4847220f80f45440bab1d1d3f68fcaf3",
+        "gt": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+        "prediction": "85fb36f99c5ba306752135da1f588b3e36c6b54ba68bf265c765205671759853"
+      }
+    }
+  ],
+  "record_count": 100,
+  "source_sha256": "e1a22c23e7e01daf09a6011eef1b78e3e2e8ea4117d6e8556c9cd1a3521910c5",
+  "parent_receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+  "negative_LQ_minus_GT_component_fraction": 0.0853801415576867,
+  "LQ_below_GT_by_more_than_one_gray_fraction": 0.06271975792896067,
+  "equal_LQ_GT_component_fraction": 0.37019741891095226,
+  "prediction_brighter_than_LQ_component_fraction": 0.21467025139281545,
+  "mean_error_energy_fraction_where_prediction_exceeds_LQ": 0.14185615804888482,
+  "minimum_LQ_minus_GT_255": -56,
+  "seconds": 75.39280356094241,
+  "gpus": 0,
+  "exit_code": 0,
+  "training": false,
+  "parameter_fitting": false,
+  "new_restorations": false,
+  "GT_used_only_for_diagnostics": true,
+  "independent_blind_test": false,
+  "limitation": "Empirical premise check on reused official benchmark; not proof of a universal rain formation model. Projection, if tested, must use LQ and prediction only."
+}
