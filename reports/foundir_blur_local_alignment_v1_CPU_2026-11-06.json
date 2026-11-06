@@ -1,0 +1,535 @@
+{
+  "GPU_hours": 0,
+  "exit_code": 0,
+  "new_GPU": false,
+  "new_training": false,
+  "official_success_claim": false,
+  "receipt_sha256": "98cb304030b7f61260529df08963428e74b8651ac5482309bc53db39c12c444c",
+  "recipe": {
+    "GT_reference_arm_not_deployable": true,
+    "arms": [
+      "baseline",
+      "LQ_reference",
+      "GT_reference_diagnostic_only"
+    ],
+    "match_sigma_pixels": 2.0,
+    "max_flow_component_pixels": 16.0,
+    "method": "OpenCV_DIS_MEDIUM_backward_flow_bilinear_border_replicate",
+    "new_FLUX_calls": 0,
+    "official_or_development_pixels_read": false,
+    "parameter_search": false,
+    "score": "full512_no_inner_crop_original_pyiqa_identity",
+    "selection": "first8_training_rows_in_frozen_frequency_receipt_no_score_selection",
+    "training": false
+  },
+  "rows": [
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.0007801055908203125,
+        "flow_RMS_pixels": 2.4926836490631104,
+        "flow_max_absolute_component_pixels": 19.447830200195312,
+        "retained_flow_RMS_pixels": 2.4822592735290527
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 5.7220458984375e-06,
+        "flow_RMS_pixels": 2.1020944118499756,
+        "flow_max_absolute_component_pixels": 16.03515625,
+        "retained_flow_RMS_pixels": 2.102093458175659
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          179,
+          156
+        ],
+        "inference_seed": 1479134971,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0008695.png",
+          "gt_phash": "c069e7b6143fe9a8",
+          "gt_sha256": "ec3b99a6b151130292c1632aae33a1d2fa17a7e5b6c5ee0f100273e37193cefe",
+          "height": "720",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0008695.png",
+          "lq_sha256": "e5eeec94288911c7368bbbe6aa350b49a4a46b37ac23583e9eecb8bff23f0c77",
+          "record_id": "foundir_train_0008694",
+          "source_group": "b40ef2bdba699c09059b4f4af73dfe33d67997a90ded51ba135b8b28df2337e2",
+          "split": "train",
+          "width": "1280"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.17058151960372925,
+          "psnr": 23.554479598999023,
+          "ssim": 0.7470842000323219
+        },
+        "LQ_reference": {
+          "lpips": 0.1842222809791565,
+          "psnr": 22.539884567260742,
+          "ssim": 0.7157978679690141
+        },
+        "baseline": {
+          "lpips": 0.16642004251480103,
+          "psnr": 21.006683349609375,
+          "ssim": 0.6686656675399432
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0008694_GT_reference_diagnostic.png": "555a825c879a6b391c5fbf564daddd0e33bf3eee53d461fcb197a205b528bfbe",
+        "images/train_foundir_train_0008694_LQ_reference.png": "c20a37e56c437d41ed88676eeafb4f3670eba4f414c706c5cdc48ae053f68cfd"
+      },
+      "training_fit_only": true
+    },
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.0,
+        "flow_RMS_pixels": 0.3837527632713318,
+        "flow_max_absolute_component_pixels": 6.087221145629883,
+        "retained_flow_RMS_pixels": 0.3837527632713318
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 0.0,
+        "flow_RMS_pixels": 0.23442554473876953,
+        "flow_max_absolute_component_pixels": 1.8159310817718506,
+        "retained_flow_RMS_pixels": 0.23442554473876953
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          2982,
+          982
+        ],
+        "inference_seed": 201946140,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0076677.jpg",
+          "gt_phash": "b594a0df087bdd16",
+          "gt_sha256": "72e777fe49e93abc0d7ea3b5d3ccdcd430767693a8769fb6fa759827b02b0bdc",
+          "height": "2160",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0076677.jpg",
+          "lq_sha256": "cd3935d46d10efe2a85cb87b4a2704e9564fb6343289b0d8f82c5477183c0d70",
+          "record_id": "foundir_train_0076676",
+          "source_group": "a345ce82592d1eeb58f0e053162a1bfb05a423142221d4872127c1676a0fe508",
+          "split": "train",
+          "width": "3840"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.036054812371730804,
+          "psnr": 32.55046463012695,
+          "ssim": 0.9612745007906249
+        },
+        "LQ_reference": {
+          "lpips": 0.03714153170585632,
+          "psnr": 31.82472038269043,
+          "ssim": 0.9580662188954251
+        },
+        "baseline": {
+          "lpips": 0.03283747658133507,
+          "psnr": 31.57050132751465,
+          "ssim": 0.957583838965517
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0076676_GT_reference_diagnostic.png": "62517cc8328ac89b4c1eb4f33f9e4c32cfbdaec2d921d13a6f0de1e8cddcc9fb",
+        "images/train_foundir_train_0076676_LQ_reference.png": "23dd47abf23f98af367dffd307a13649c53fbc022b07a9e4e1337723570b62fc"
+      },
+      "training_fit_only": true
+    },
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.00165557861328125,
+        "flow_RMS_pixels": 5.079402446746826,
+        "flow_max_absolute_component_pixels": 19.390666961669922,
+        "retained_flow_RMS_pixels": 5.070204257965088
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 0.000232696533203125,
+        "flow_RMS_pixels": 2.810192108154297,
+        "flow_max_absolute_component_pixels": 18.495203018188477,
+        "retained_flow_RMS_pixels": 2.8082828521728516
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          656,
+          907
+        ],
+        "inference_seed": 3520113947,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0004424.png",
+          "gt_phash": "d1f1e767ca2a8c68",
+          "gt_sha256": "1d45287af9e094a0b3d9c4f4060ed83078f00193a8203a6640c3c559b53a76d5",
+          "height": "3648",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0004424.png",
+          "lq_sha256": "1cc3164562ca3aa06c716ca4dbb365dbee59e7482e8aa5c83cf19f3694f5c022",
+          "record_id": "foundir_train_0004423",
+          "source_group": "7235ca04b9399323bba9d60a6cf63745f329ce8593dd80b92588cdf49f301e89",
+          "split": "train",
+          "width": "5472"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.3512604236602783,
+          "psnr": 16.351520538330078,
+          "ssim": 0.36823172068939397
+        },
+        "LQ_reference": {
+          "lpips": 0.3819747269153595,
+          "psnr": 14.699928283691406,
+          "ssim": 0.26541487666144586
+        },
+        "baseline": {
+          "lpips": 0.362497478723526,
+          "psnr": 14.01999568939209,
+          "ssim": 0.23566664228620407
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0004423_GT_reference_diagnostic.png": "f18ec341fc4db88d6070f3bbc90dcb1083026f3fe16eff2df1462831488f3845",
+        "images/train_foundir_train_0004423_LQ_reference.png": "0b53adbd933045cfe3f7551bb379432c78ee4641aeb54912a9c5725117174c6b"
+      },
+      "training_fit_only": true
+    },
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.000400543212890625,
+        "flow_RMS_pixels": 3.030555486679077,
+        "flow_max_absolute_component_pixels": 18.64873504638672,
+        "retained_flow_RMS_pixels": 3.027686357498169
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 0.0008831024169921875,
+        "flow_RMS_pixels": 2.4319067001342773,
+        "flow_max_absolute_component_pixels": 23.068035125732422,
+        "retained_flow_RMS_pixels": 2.4193198680877686
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          1097,
+          338
+        ],
+        "inference_seed": 881052818,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0087764.jpg",
+          "gt_phash": "eceece387038aad8",
+          "gt_sha256": "2446daf91f8430d81f177b4f501fd78d0de9d30e5ad286cf6e71989b03c5a671",
+          "height": "2160",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0087764.jpg",
+          "lq_sha256": "a1db6c34909ec9a336decc5f023f38731227c5da46dbdca6f92f1a50fae88e02",
+          "record_id": "foundir_train_0087763",
+          "source_group": "426489ff38d10acaa9cb36a1aed757cf28b52e7dbb34217f96d816a3a9c1300b",
+          "split": "train",
+          "width": "3840"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.025225261226296425,
+          "psnr": 36.623565673828125,
+          "ssim": 0.9726024565528517
+        },
+        "LQ_reference": {
+          "lpips": 0.026413949206471443,
+          "psnr": 36.150394439697266,
+          "ssim": 0.9702065651879299
+        },
+        "baseline": {
+          "lpips": 0.02389732003211975,
+          "psnr": 35.94795608520508,
+          "ssim": 0.9706245232024865
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0087763_GT_reference_diagnostic.png": "ea1b31549db693c610418e69c99348c17b7d73e03ea1dbea75aca10dde0c5040",
+        "images/train_foundir_train_0087763_LQ_reference.png": "ba63cc2e10e099f00b2839301fdbdb172eaece7571d833c5609f65ebb6f77bdd"
+      },
+      "training_fit_only": true
+    },
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.021501541137695312,
+        "flow_RMS_pixels": 4.961894989013672,
+        "flow_max_absolute_component_pixels": 21.8862247467041,
+        "retained_flow_RMS_pixels": 4.768208980560303
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 0.000240325927734375,
+        "flow_RMS_pixels": 1.9487802982330322,
+        "flow_max_absolute_component_pixels": 17.75276756286621,
+        "retained_flow_RMS_pixels": 1.9465667009353638
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          3712,
+          1196
+        ],
+        "inference_seed": 1418278778,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0109030.png",
+          "gt_phash": "a49c9c594bb931d7",
+          "gt_sha256": "e519ea9dd0954cce67c9ccb27845c11ed222ca7dc1c1d7f5f1c369e229dbec21",
+          "height": "3648",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0109030.png",
+          "lq_sha256": "fd3c80f87edbfff64038b3ccfb8ac782b4ecef05dd0c47a87e5613365d5035d4",
+          "record_id": "foundir_train_0109029",
+          "source_group": "436ccdc58d68000e64073771bfae1ef21f60f21bb543c1c0f33e93bc816fd659",
+          "split": "train",
+          "width": "5472"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.2502121329307556,
+          "psnr": 18.168415069580078,
+          "ssim": 0.5432081644903645
+        },
+        "LQ_reference": {
+          "lpips": 0.2674488127231598,
+          "psnr": 17.557466506958008,
+          "ssim": 0.5018047399274699
+        },
+        "baseline": {
+          "lpips": 0.2559077739715576,
+          "psnr": 17.225757598876953,
+          "ssim": 0.4883571489770953
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0109029_GT_reference_diagnostic.png": "a1337337b2e441315062a46dc72e2b1903b1567e21c5356566f0d1b2851410f4",
+        "images/train_foundir_train_0109029_LQ_reference.png": "cbdeac8d401fb1dc962aebe6e3ad99c49346944692b2da4760966f54950a8fed"
+      },
+      "training_fit_only": true
+    },
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.2171306610107422,
+        "flow_RMS_pixels": 11.932981491088867,
+        "flow_max_absolute_component_pixels": 63.4515495300293,
+        "retained_flow_RMS_pixels": 8.794365882873535
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 0.0036830902099609375,
+        "flow_RMS_pixels": 3.773435592651367,
+        "flow_max_absolute_component_pixels": 20.978153228759766,
+        "retained_flow_RMS_pixels": 3.7424421310424805
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          1108,
+          97
+        ],
+        "inference_seed": 3615166810,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034436.png",
+          "gt_phash": "c02030f8dadef6f6",
+          "gt_sha256": "9f0b9b5b6213468bb07a76e99f12dbebf6901ea1dd715b7bed1f915e2ccc532a",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034436.png",
+          "lq_sha256": "e26d60c5bc397d1788047e1cf3733529bf50be3991f6eb8d857b331fc0bd5fcb",
+          "record_id": "foundir_train_0034435",
+          "source_group": "1bcb3f1588e48f1a858ddcd2489f074f902e2bd4f543b848f01d97e6489c31ff",
+          "split": "train",
+          "width": "1920"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.21978344023227692,
+          "psnr": 23.559959411621094,
+          "ssim": 0.7273111737110742
+        },
+        "LQ_reference": {
+          "lpips": 0.27322283387184143,
+          "psnr": 20.425378799438477,
+          "ssim": 0.6804294749716913
+        },
+        "baseline": {
+          "lpips": 0.30943867564201355,
+          "psnr": 18.83579444885254,
+          "ssim": 0.6400881577615329
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0034435_GT_reference_diagnostic.png": "bc8ad6d012df1423eaa464fa3ac75c76ab35c749afd4faa4c75945cb0e32cd72",
+        "images/train_foundir_train_0034435_LQ_reference.png": "897c0239d39031fbb1b9f2ebcc5aa4c44d69f5ecb264fc6fb08a6c94d0e6e874"
+      },
+      "training_fit_only": true
+    },
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.017818450927734375,
+        "flow_RMS_pixels": 7.959736347198486,
+        "flow_max_absolute_component_pixels": 115.5577163696289,
+        "retained_flow_RMS_pixels": 4.834506511688232
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 0.0168609619140625,
+        "flow_RMS_pixels": 5.7037034034729,
+        "flow_max_absolute_component_pixels": 77.81513214111328,
+        "retained_flow_RMS_pixels": 4.3942670822143555
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          2285,
+          342
+        ],
+        "inference_seed": 1473501538,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0096765.jpg",
+          "gt_phash": "e62336b46d753538",
+          "gt_sha256": "b2f83797dcdaf850438b19d8936d4e8972f5cff509e26d3cfc26ea1c1db3c383",
+          "height": "2160",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0096765.jpg",
+          "lq_sha256": "78c69557b07706b442c384e0e4c2124756c0e100f92373ece65d284c0900dd08",
+          "record_id": "foundir_train_0096764",
+          "source_group": "ff4e91daeec31a3ef29d7feeb7745b332658228f58ac866c49e4aa563b2d75b3",
+          "split": "train",
+          "width": "3840"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.13819581270217896,
+          "psnr": 25.192764282226562,
+          "ssim": 0.8706527831994844
+        },
+        "LQ_reference": {
+          "lpips": 0.21752873063087463,
+          "psnr": 20.426898956298828,
+          "ssim": 0.7585804046798086
+        },
+        "baseline": {
+          "lpips": 0.1808110475540161,
+          "psnr": 20.72671890258789,
+          "ssim": 0.7568704960446815
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0096764_GT_reference_diagnostic.png": "eb7df60e732f9258d76899803ec4db6822c5c53659db605f6cf018bc2a0f19d3",
+        "images/train_foundir_train_0096764_LQ_reference.png": "6c56f5b84b9189b2989d626cc98d35d153f9925a2ade8f8ac64d2da8918f7a5a"
+      },
+      "training_fit_only": true
+    },
+    {
+      "GT_diagnostic_flow": {
+        "component_clip_fraction": 0.12905120849609375,
+        "flow_RMS_pixels": 10.554981231689453,
+        "flow_max_absolute_component_pixels": 22.220844268798828,
+        "retained_flow_RMS_pixels": 10.344831466674805
+      },
+      "GT_diagnostic_is_not_a_deployment_result": true,
+      "LQ_flow": {
+        "component_clip_fraction": 0.00131988525390625,
+        "flow_RMS_pixels": 4.203756809234619,
+        "flow_max_absolute_component_pixels": 30.763818740844727,
+        "retained_flow_RMS_pixels": 4.149261474609375
+      },
+      "LQ_policy_GT_input": false,
+      "item": {
+        "crop_xy": [
+          588,
+          279
+        ],
+        "inference_seed": 1056023687,
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0055296.png",
+          "gt_phash": "acd4d48687c5adcd",
+          "gt_sha256": "299bcd49bbd580699f5e4dba5f00727a76111c8aaa0eb34f88ba57dfe91ed9f6",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0055296.png",
+          "lq_sha256": "63867139152b56873bd13c2d1f1c3434989e58429bb05b02faa641f8cefda106",
+          "record_id": "foundir_train_0055295",
+          "source_group": "b8206f6d9935cb325612bf853bf2a2ac7ba12292014350b2907962576cf0ab14",
+          "split": "train",
+          "width": "1920"
+        }
+      },
+      "metrics": {
+        "GT_reference_diagnostic_only": {
+          "lpips": 0.09150715172290802,
+          "psnr": 26.670928955078125,
+          "ssim": 0.8096604903749021
+        },
+        "LQ_reference": {
+          "lpips": 0.15290744602680206,
+          "psnr": 21.45079803466797,
+          "ssim": 0.685441738114313
+        },
+        "baseline": {
+          "lpips": 0.16296495497226715,
+          "psnr": 19.931827545166016,
+          "ssim": 0.6342263695624313
+        }
+      },
+      "outputs": {
+        "images/train_foundir_train_0055295_GT_reference_diagnostic.png": "220ad3fc02e0ce9428f4ac55fc11ebfe4de01fa14a156a042623d6fb5523a01d",
+        "images/train_foundir_train_0055295_LQ_reference.png": "eb086f5098255f29564c1e5acc234a988b495df3cca11e5f2b0ccf3c415864bb"
+      },
+      "training_fit_only": true
+    }
+  ],
+  "seconds": 21.49574701860547,
+  "status": "fixed_training_only_geometry_diagnostic_complete",
+  "summary": {
+    "GT_reference_diagnostic_only": {
+      "lpips": 0.1603525693062693,
+      "psnr": 25.334012269973755,
+      "ssim": 0.7500031862301272
+    },
+    "LQ_reference": {
+      "lpips": 0.1926075390074402,
+      "psnr": 23.13443374633789,
+      "ssim": 0.6919677358008872
+    },
+    "baseline": {
+      "lpips": 0.18684684624895453,
+      "psnr": 22.408154368400574,
+      "ssim": 0.6690103555424864
+    }
+  },
+  "training_fit_only": true
+}
