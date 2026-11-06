@@ -1,3 +1,14 @@
+## 正在推进：Noise/Lowlight固定CPU路由小试验；Blur来源准备 — 2026-11-06
+
+用户明确要求继续Noise、Blur下一步。六卡仍由Rain固定1000及Rain100评价顺序占用；本节只授权已限定CPU试验，不提交额外GPU或自动部署。
+Noise/Lowlight冻结路由4901缓存+官方150重放完成；平均概率替换平均logit完全未改变150图，不能当修复。误判来自多块共同分类，需检查输入特征的区分能力。
+来源审计新增事实：旧路由fit池159裁图/30跨类别来源组与官方GT文件精确重叠；路由训练用LQ特征和类别，不是GT像素训练。官方不称独立盲测；新过滤不能消除旧权重曝光。
+新CPU试验：原路由已为Noise/Lowlight时，20个LQ亮度/对比度/高频统计输入21参数线性margin修正；其它三类路由完全保持。固定400步、batch64、lr.001，无超参/阈值/选步扫描，不改FLUX专家。
+新fit来源Noise1001/Lowlight513；calibration80/77、confirmation20/17，已排除165个匹配裁图及其来源组；只fit更新。四项CPU测试及prepare通过，待实际训练/评价。
+训练保存后CPU固定官方150无标签推理，先落盘决策再复用已有GPU输出评分；缺输出如实报告，不能伪造或按GT选。CPU阶段cap1800秒，不自动部署或扩大预算。
+Blur同步完成来源候选计划：与Noise各预留128训练/32开发来源，只做元数据，不是GPU训练已获具体规模授权。所有旧资产和运行绑定源码不变。
+详见reports/foundir_fullstack_noise_physical_router_v1_readiness_2026-11-06.md；科学结果与失败均需小报告推送。
+
 ## 并行CPU准备：先Noise再Blur，六卡继续留给Rain — 2026-11-06
 
 用户要求先查当前进度，再做Noise、Blur；当前仅3节点6卡。保留Rain固定1000及已安排Rain100评价，未新增Noise/Blur GPU任务。
