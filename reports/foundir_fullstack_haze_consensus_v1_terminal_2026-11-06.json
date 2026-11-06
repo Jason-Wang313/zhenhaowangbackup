@@ -1,0 +1,112 @@
+{
+  "status": "Haze_mean_both_targets_pass_all_ten_not_yet_pass",
+  "run_id": "round3_haze_consensus_single_node_v1",
+  "source_commit": "a654f0407f82d6985d2963383f9bea3b7b5c5e22",
+  "result_sha256": "f426965955877d54ca6c30b0aa278e2408de0700434d9c99be2957f6da3f8ab0",
+  "accepted_manifest": "checkpoints/foundir_fullstack_haze_consensus_v1/accepted_followup_manifest.json",
+  "accepted_manifest_sha256": "c2b33d040da3fe38657c409a93922a8704c970286c7972d55e75324090d9974f",
+  "receipt_sha256": "d4fb8809dcf5ccf85e284512a684fad3d021693e5baffe4da145558e2d685378",
+  "record_count": 600,
+  "new_Haze_outputs": 200,
+  "unchanged_other_outputs": 400,
+  "parent_Haze": {
+    "lpips": 0.12367851933464408,
+    "psnr": 21.963812551498414,
+    "ssim": 0.8384822837425908
+  },
+  "Haze": {
+    "lpips": 0.12084775179624557,
+    "psnr": 22.85760964870453,
+    "ssim": 0.8388523487994053
+  },
+  "PSNR_gain_db": 0.8937970972061144,
+  "LPIPS_reduction_percent": 2.2888109864406925,
+  "PSNR_wins": 188,
+  "LPIPS_wins": 174,
+  "PSNR_regressions": 12,
+  "LPIPS_regressions": 26,
+  "worst_PSNR_delta": -1.3092060089111328,
+  "worst_PSNR_record": "official_08Haze_0600",
+  "all_category_metrics": {
+    "01Blur": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "05Noise": {
+      "lpips": 0.13663816242478788,
+      "psnr": 34.632453122138976,
+      "ssim": 0.9270681065619815
+    },
+    "08Haze": {
+      "lpips": 0.12084775179624557,
+      "psnr": 22.85760964870453,
+      "ssim": 0.8388523487994053
+    },
+    "10Rain": {
+      "lpips": 0.07501418385654687,
+      "psnr": 32.0349299621582,
+      "ssim": 0.9218588440458518
+    },
+    "14Lowlight": {
+      "lpips": 0.17252287715673448,
+      "psnr": 19.231370677947996,
+      "ssim": 0.8644231889270912
+    }
+  },
+  "all_category_checks": {
+    "01Blur": {
+      "lpips": false,
+      "psnr": false
+    },
+    "05Noise": {
+      "lpips": false,
+      "psnr": false
+    },
+    "08Haze": {
+      "lpips": true,
+      "psnr": true
+    },
+    "10Rain": {
+      "lpips": true,
+      "psnr": false
+    },
+    "14Lowlight": {
+      "lpips": true,
+      "psnr": true
+    }
+  },
+  "passed_metric_count": 5,
+  "gpu_job": {
+    "allocated_GPU_hours": 0.05788966377576192,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 104.20139479637146,
+    "status": 0
+  },
+  "gpu_log_sha256": "1cda27568dc8d162358edd281642f662ac8670479e192f35023c507604330f90",
+  "CPU_audit_seconds": 364.8937818929553,
+  "CPU_generation_seconds": 666.3570591248572,
+  "CPU_finish_seconds": 4.964714802801609,
+  "CPU_finish_status": 0,
+  "max_preclip_global_RGB_shift_255": 1.2863131917491248e-10,
+  "max_postquant_global_RGB_shift_255": 1.824217544367284,
+  "mean_clipped_component_fraction": 0.01409118483656096,
+  "peak_GPU_allocated_GiB": 2.8408684730529785,
+  "GT_used_for_parameters_or_per_image_selection": false,
+  "independent_blind_test": false,
+  "new_training": false,
+  "new_FLUX_generation": false,
+  "visual_review": {
+    "ids": [
+      "official_08Haze_0501",
+      "official_08Haze_0600",
+      "official_08Haze_0700"
+    ],
+    "selection": "first/middle/last; 0600 also worst PSNR regression",
+    "scope": "thumbnail original/candidate/GT side-by-side; not all200 review",
+    "observation": "No gross content or geometry changes observed in these previews; regional tone changes remain, and 0600 has real PSNR/LPIPS/SSIM regressions."
+  },
+  "decision": "Retain this one fixed Haze postprocessor and all200 outputs as accepted mean-gate candidate for followup. Do not select per-image fallback. Preserve old producer. Other categories remain at original pipeline results. Next priority Rain, then Noise; Blur deferred."
+}

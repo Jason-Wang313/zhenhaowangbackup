@@ -1,0 +1,106 @@
+{
+  "GT_used_for_selection": false,
+  "affected_records": 200,
+  "all_ten_pass": false,
+  "checks": {
+    "01Blur": {
+      "lpips": false,
+      "psnr": false
+    },
+    "05Noise": {
+      "lpips": false,
+      "psnr": false
+    },
+    "08Haze": {
+      "lpips": true,
+      "psnr": true
+    },
+    "10Rain": {
+      "lpips": true,
+      "psnr": false
+    },
+    "14Lowlight": {
+      "lpips": true,
+      "psnr": true
+    }
+  },
+  "haze_LPIPS_wins": 174,
+  "haze_PSNR_wins": 188,
+  "haze_worst_PSNR_delta": -1.3092060089111328,
+  "independent_blind_test": false,
+  "parent": {
+    "01Blur": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "05Noise": {
+      "lpips": 0.13663816242478788,
+      "psnr": 34.632453122138976,
+      "ssim": 0.9270681065619815
+    },
+    "08Haze": {
+      "lpips": 0.12367851933464408,
+      "psnr": 21.963812551498414,
+      "ssim": 0.8384822837425908
+    },
+    "10Rain": {
+      "lpips": 0.07501418385654687,
+      "psnr": 32.0349299621582,
+      "ssim": 0.9218588440458518
+    },
+    "14Lowlight": {
+      "lpips": 0.17252287715673448,
+      "psnr": 19.231370677947996,
+      "ssim": 0.8644231889270912
+    }
+  },
+  "per_category": {
+    "01Blur": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "05Noise": {
+      "lpips": 0.13663816242478788,
+      "psnr": 34.632453122138976,
+      "ssim": 0.9270681065619815
+    },
+    "08Haze": {
+      "lpips": 0.12084775179624557,
+      "psnr": 22.85760964870453,
+      "ssim": 0.8388523487994053
+    },
+    "10Rain": {
+      "lpips": 0.07501418385654687,
+      "psnr": 32.0349299621582,
+      "ssim": 0.9218588440458518
+    },
+    "14Lowlight": {
+      "lpips": 0.17252287715673448,
+      "psnr": 19.231370677947996,
+      "ssim": 0.8644231889270912
+    }
+  },
+  "policy": {
+    "GT_input": false,
+    "coefficient": 1,
+    "edge_weight": "intersection_pixel_count",
+    "gauge": "zero_mean_blended_correction_field",
+    "mean_preservation": "preclip_only; report actual postquantization shift",
+    "method": "adjacent_overlap_constant_RGB_weighted_least_squares",
+    "new_FLUX_generation": false,
+    "nodes": [
+      0
+    ],
+    "output": "original_unrounded_stitch_minus_field_then_round_clip",
+    "parameter_sweep": false,
+    "scope": "existing predicted haze anchor only; other routes exactly reused",
+    "training": false,
+    "world": 2
+  },
+  "receipt_sha256": "d4fb8809dcf5ccf85e284512a684fad3d021693e5baffe4da145558e2d685378",
+  "records": 600,
+  "selected_for_deployment": null,
+  "status": "complete"
+}

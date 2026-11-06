@@ -1,3 +1,15 @@
+## 最新终态：Haze官方200张平均双指标通过 — 2026-11-06
+
+round3_haze_consensus_single_node_v1已完整结束，node0两张H100退出0、2worker齐全，600记录/200候选核验通过。
+Haze由21.963813/.123679改善为22.857610/.120848，超过22.1/.19双门槛；PSNR+.893797dB，LPIPS下降2.2888%。
+188/200张PSNR改善、174/200张LPIPS改善；最差PSNR退步1.309206dB，不能说逐图无损。无GT按图回退。
+只有固定重叠块色偏协调：原模型/路线/图块不变，无训练，无新FLUX生成；GT仅计分，不参与偏置求解。
+GPU评分104.201秒/.057889664 GPU-hours；CPU审计364.894秒、拼接666.357秒、核验4.965秒另计。node1/2保持待命。
+固定Haze策略及全部200输出保留为后续统一方案的已通过候选：checkpoints/foundir_fullstack_haze_consensus_v1/accepted_followup_manifest.json。
+不改旧producer或旧绑定源码，不重跑本轮，不逐图拼最优。当前全部十项5项通过：Haze、Lowlight双项过，Rain仅LPIPS过，Blur/Noise仍未过。
+下一优先级Rain，再Noise，Blur暂缓；不能无诊断直接把Haze修正套到其他类型。官方是自适应验收基准，非独立盲测。
+详见reports/foundir_fullstack_haze_consensus_v1_terminal_2026-11-06.{md,json}及result JSON。
+
 ## 当前执行：Haze重叠块色偏协调单次对照 — 2026-11-06
 
 用户已授权execute，先查现有Haze重叠图块，再做证据支持的最小干预。原模型、路由、所有旧输出保留。
