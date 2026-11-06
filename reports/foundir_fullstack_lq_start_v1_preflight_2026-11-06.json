@@ -1,0 +1,26 @@
+{
+  "GPU_started": false,
+  "calls_per_tile": 7,
+  "multi_node_reason": "Full-resolution FLUX regeneration over thousands of tiles; materially heavier than cached metric scoring.",
+  "nodes": 3,
+  "official_GT_decoded": false,
+  "receipt_sha256": "81c0d87a84e44ee172675b441bb804e8aa07ca17b659010e0a244c41086019da",
+  "records": 600,
+  "regenerated_records": 150,
+  "seconds": 11.97399802133441,
+  "start_index": 43,
+  "start_time": 0.4716968238353729,
+  "status": "CPU_preflight_passed",
+  "tiles": 2250,
+  "tiles_per_rank": [
+    375,
+    375,
+    375,
+    375,
+    375,
+    375
+  ],
+  "total_native_CFG_calls": 15750,
+  "training": false,
+  "world": 6
+}

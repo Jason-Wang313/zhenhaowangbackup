@@ -1,3 +1,18 @@
+## 当前执行：固定LQ latent起点官方对照 — 2026-11-06
+
+用户已授权execute。新run round2_blur_lq_start_v1：只对原conditional_v4预测为Blur的150张官方图重生成；
+另外450图沿用未变的原专家输出/指标，最终仍完整600图验收。不是重训练、重路由或Restormer恢复。
+唯一固定干预：原50步shifted时间表选择第一个t<=.5，即512图块1024 token时index43、t=.4716968238353729，
+以(1-t)*encoded_LQ+t*同seed噪声为初态，执行原suffix7步。保留原模型/LoRA/提示、reference_time10、CFG1、
+原alpha=.75双uint8、512/128拼接及pyiqa口径。官方GT只在输出落盘后评分，不选起点/阈值/候选。
+这是推理反事实；初态条件分布不同于训练clean+noise，不能预先宣称必改善或失败即路线不可能。
+2250块/15750次native CFG模型调用，属于较重完整生成，使用现有3节点×2H100，每rank375块；
+轻量任务默认单节点规则不变。本轮预计20–40分钟仅粗估，须按实际日志更新。常驻执行器领取，不要求用户重新开终端。
+4项核心CPU接线测试、600图六分片完整性、源/权重/提示哈希预检通过；GPU执行状态须看新队列日志。
+旧绑定源码与资产不改；新输出checkpoints/foundir_fullstack_lq_start_v1逐块/逐图保存，失败不自动重试。
+6worker完成且3节点退出0后CPU finish核验并推送小报告、费用与所有失败结果。
+详见reports/foundir_fullstack_lq_start_v1_readiness_2026-11-06.md。
+
 ## 当前问题澄清：纯FLUX专家的开发通过，不等于官方通过 — 2026-11-06
 
 用户所指是替换Restormer后的纯FLUX专家；不能拿更早异构v8系统身份差异代替回答。
