@@ -1,0 +1,25 @@
+{
+  "unit_tests": 3,
+  "status": "pass",
+  "exit_code": 0,
+  "GPU_hours": 0,
+  "official_pixels_decoded": false,
+  "synthetic_tests_only": true,
+  "tests_log": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\ntest_joint_gate_uses_same_complete_candidate (tests.test_blur_delta_official_v1.OfficialTests.test_joint_gate_uses_same_complete_candidate) ... ok\ntest_original_size_tile_identity_and_missing_tile_rejection (tests.test_blur_delta_official_v1.OfficialTests.test_original_size_tile_identity_and_missing_tile_rejection) ... ok\ntest_two_ranks_cover_exact_all150 (tests.test_blur_delta_official_v1.OfficialTests.test_two_ranks_cover_exact_all150) ... ok\n\n----------------------------------------------------------------------\nRan 3 tests in 0.167s\n\nOK\n",
+  "metadata_plan": {
+    "GPU_hours": 0,
+    "GPU_started": false,
+    "GT_pixels_decoded": false,
+    "exit_code": 0,
+    "independent_blind_test": false,
+    "plan_sha256": "75b340db0432d548d85e47dc7ce7a9b88d04b18d8f8d7b8cf6da6520b2502e6d",
+    "records": 150,
+    "seconds": 1.1853563487529755,
+    "status": "official150_metadata_plan_pass",
+    "tiles_per_rank": [
+      1125,
+      1125
+    ],
+    "total_model_calls": 4500
+  }
+}
