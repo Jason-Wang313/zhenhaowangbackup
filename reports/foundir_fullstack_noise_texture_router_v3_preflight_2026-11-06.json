@@ -1,0 +1,35 @@
+{
+  "CUDA_qualification": "pending",
+  "GPU_hours": 0,
+  "GPU_started": false,
+  "counts": {
+    "calibration": 157,
+    "confirmation": 37,
+    "fit": 1514
+  },
+  "exit_code": 0,
+  "parameters": 42153,
+  "receipt_sha256": "804946005bbb9baa432fcfedd1c9ae5e436d3c23d474ec6f846bf744a0e83e99",
+  "recipe": {
+    "automatic_deployment": false,
+    "binary_gate": "old_Noise_or_Lowlight_only",
+    "checkpoint_selection": "fixed400",
+    "global_batch": 32,
+    "input": "fixed_native128_four_corners_center_plus_global_thumbnail",
+    "lr": 0.001,
+    "margin": "mean_six_view_logits",
+    "new_RGB_network": false,
+    "official_inputs": false,
+    "optimizer": "fresh_AdamW",
+    "seed": 2026110613,
+    "steps": 400,
+    "threshold": 0,
+    "training_GT_pixels": false,
+    "views": 6,
+    "wall_cap_seconds": 1800,
+    "weight_decay": 0.01,
+    "world": 2
+  },
+  "seconds": 66.82794415205717,
+  "status": "destination_CPU_preflight_pass"
+}

@@ -1,3 +1,15 @@
+## 就绪但未启动：Noise纹理路由及Noise/Blur六频段修复 — 2026-11-06
+
+用户要求推进到只剩GPU运行。本轮代码、真实CPU预检、单入口编排和小报告发布已准备；未提交round6队列，未启动新GPU。Rain评价保持运行。
+Noise705参数独立CPU分类器固定400步失败：calibration Lowlight75/77、confirmation16/17，原为77/77、17/17；12.833秒，0GPU-hours。不部署、不做官方阈值扫描。
+下一候选：42,153参数LQ纹理分类器，1514训练/157校准/37确认来源，固定400步/global32，单节点两卡，逐步保存；仅修改原Noise/Lowlight二分类，不输出RGB。GPU效果待验证。
+Noise/Blur专家保持冻结；各128训练/32开发固定来源和512裁图，50步原生输出。各6个共享DCT频段系数只以训练GT闭式拟合，开发/官方不拟合；不同于旧统一倍率，但不保证解决局部几何。
+21项CPU测试通过；Noise/Blur各320文件SHA/裁图、12项模型提示词SHA及pyiqa完整state身份通过；路由1708来源LQ六视图已准备。CUDA、NCCL、速度和指标尚待实测。
+入口start_foundir_fullstack_noise_blur_v1_tmux.sh需本轮完整提交SHA；显式启动后先等Rain终态报告，再Noise路由→Noise缓存/CPU拟合/单节点评分→Blur同流程→CPU核验推送→停止。当前未启动该监视器。
+缓存可三节点六卡；轻量路由/评分只node0两卡。固定本轮硬cap共11GPU-hours，旧Rain及历史成本另计，失败不自动重试/扩预算，不自动官方测试/部署或统一600复跑。
+保留Haze/Lowlight、energy和所有旧资产。下一步只需实际执行该有限GPU链；最终是否修好仍需真实结果，不能保证通过或提前声称官方成功。
+必读reports/foundir_fullstack_noise_blur_repair_v1_readiness_2026-11-06.md；无SSH执行方法仍见reports/foundir_shared_gpu_executor_runbook.md。
+
 ## CPU后续终态：Noise小试验未修复官方错误，Blur平移不采用 — 2026-11-06
 
 Noise21参数物理统计头固定400步已完成：校准修正1条、确认37/37保持，但官方150条路由全部未变；10张Noise仍误送Lowlight。训练129.533秒、官方诊断32.380秒、GPU0，不部署、不调官方阈值或追加步。

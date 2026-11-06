@@ -1,0 +1,61 @@
+{
+  "status": "ready_for_bounded_GPU_execution_not_a_quality_pass",
+  "utc_unix": 1793988154.165632,
+  "checks": {
+    "noise_preflight": {
+      "path": "reports/foundir_fullstack_noise_frequency_repair_v1_preflight_2026-11-06.json",
+      "sha256": "77536561d3818f16d0336813e04dceaeffc543878ca0ae5d634a6df1f20d5352",
+      "seconds": 22.061303857713938
+    },
+    "blur_preflight": {
+      "path": "reports/foundir_fullstack_blur_frequency_repair_v1_preflight_2026-11-06.json",
+      "sha256": "952c2431b3021c552914a687fb449b3fedcc946695cf036c83fc881fe52a1741",
+      "seconds": 71.59656073525548
+    },
+    "texture_preflight": {
+      "path": "reports/foundir_fullstack_noise_texture_router_v3_preflight_2026-11-06.json",
+      "sha256": "f083a49fc56e0fda9cdf4855305d6defb9d1f9cf592a6484772c89d655f54cfc",
+      "seconds": 66.82794415205717
+    },
+    "failed_CPU_router": {
+      "path": "reports/foundir_fullstack_noise_standalone_router_v2_2026-11-06.json",
+      "sha256": "7131c0bf07373350fe6484412ff86ba2f2c7b2fbd10293e2e4f397ed8ac61f0e",
+      "seconds": 12.832642581313848
+    }
+  },
+  "CPU_tests_passed": 21,
+  "GPU_jobs_submitted": false,
+  "GPU_monitor_started": false,
+  "GPU_hours_this_preparation": 0,
+  "planned_GPU_hours_cap": 11,
+  "existing_Rain_cost_is_separate": true,
+  "preserve_Haze_Lowlight_energy_and_old_assets": true,
+  "automatic_official_evaluation": false,
+  "automatic_deployment": false,
+  "GPU_effectiveness_and_CUDA_qualification": "pending",
+  "preflight_first_attempt_failure": {
+    "exit_code": 1,
+    "reason": "python -S omits existing sitecustomize dependency path; urllib3 missing",
+    "log": "logs/foundir_fullstack_noise_frequency_preflight_v1.log",
+    "resolution": "use existing normal Python, no environment changes"
+  },
+  "sequence": [
+    "wait_Rain_terminal_published",
+    "Noise_texture_router_single_node",
+    "Noise_cache_3nodes",
+    "Noise_CPU_fit",
+    "Noise_score_single_node",
+    "Noise_CPU_finish_and_push",
+    "Blur_cache_3nodes",
+    "Blur_CPU_fit",
+    "Blur_score_single_node",
+    "Blur_CPU_finish_and_push",
+    "stop"
+  ],
+  "source_screen_limitations": [
+    "pHash exclusion does not prove semantic disjointness",
+    "legacy router source overlap remains",
+    "development has prior historical use"
+  ],
+  "readiness": "reports/foundir_fullstack_noise_blur_repair_v1_readiness_2026-11-06.md"
+}

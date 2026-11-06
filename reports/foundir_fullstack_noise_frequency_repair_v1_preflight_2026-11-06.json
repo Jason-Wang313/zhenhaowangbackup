@@ -1,0 +1,21 @@
+{
+  "CUDA_qualification": "pending",
+  "GPU_hours": 0,
+  "GPU_started": false,
+  "all320_image_files_SHA_and_crop_decode_checked": true,
+  "development": 32,
+  "exit_code": 0,
+  "metric_identity_checked": true,
+  "model_prompt_hashes_checked": 12,
+  "nodes": [
+    0,
+    1,
+    2
+  ],
+  "official_pixels_decoded": false,
+  "receipt_sha256": "1f4e5ef6702105fd1d11afdbe2b3f9e0c36bfdcef411e94d2fce15e26d09a642",
+  "seconds": 22.061303857713938,
+  "status": "destination_CPU_preflight_pass",
+  "task": "noise",
+  "train": 128
+}
