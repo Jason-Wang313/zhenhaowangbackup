@@ -1,3 +1,10 @@
+## Blur下一轮：1024个1080p训练来源，固定200步→官方150 — 2026-11-06
+
+用户授权自主完整修复，仍仅Blur、仅官方FoundIR质量门槛；25.9/.18前不推进其它类别。上一轮官方21.153159/.225559退步；8训练图四路径一致，只是诊断进展，无修复收益。
+本轮控制训练曝光1600张/global8/200步及全部原数值实现不变，只把128混合尺度固定裁图换为1024不同1080p训练来源、每来源固定512裁图。原Blur step10000/fresh Adam，不继承失败step200、不加其它网络。来源分辨率/多样性共同变化，不能拆分因果；更少重复可能欠拟合，未证明有效。
+目的地CPU预检35.119302秒/退出0：2048图SHA及裁图、模型/提示词/指标身份通过，5项针对性测试通过。相同数学CUDA资格复用，新数据初始化/每步工程检查仍执行。源码发布后由node3双H100执行新缓存→fresh200→完整官方150→CPU收尾；其它节点不启动，无开发集gate/逐图选择/官方GT拟合，失败停链。不能把准备/入队称实际GPU训练开始。
+持久监视器smoke/watch_foundir_blur_coverage_v2_cpu.py，monitor和upload分离；首次/50/100/200/终态推小报告。队列round10_blur_coverage_{cache,train,official}_v2；输出foundir_blur_delta_coverage_v2和foundir_blur_coverage_official_v2。保留旧全部资产/失败和费用，无自动加步/重试。详见reports/foundir_blur_coverage_v2_readiness_2026-11-06.md。按共享心跳/实际step/终态核验，勿重复提交。
+
 ## Blur路径诊断终态：四路径一致，官方失败未改变 — 2026-11-06
 
 固定前8张训练图、同一step200权重，无更新参数。两rank和node3 launcher均退出0；44.047787秒、.024470993 GPU-hours，CPU finish .425097秒。缓存四张量与重算完全一致，四路径float/uint8完全相同，GPU参数SHA前后不变。只排除所测路径差异，不宣称排除所有bug。
