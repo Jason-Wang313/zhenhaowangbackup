@@ -1,0 +1,91 @@
+{
+  "status": "official_Blur_failed_control_interpreted",
+  "means": {
+    "LQ": {
+      "psnr": 21.863902537027993,
+      "lpips": 0.35360328872998553,
+      "ssim": 0.7402368453389072
+    },
+    "old50step": {
+      "psnr": 21.546762199401854,
+      "lpips": 0.2026222513616085,
+      "ssim": 0.7535799373553662
+    },
+    "delta128": {
+      "psnr": 21.153158988952637,
+      "lpips": 0.225558958252271,
+      "ssim": 0.7146880389792597
+    },
+    "delta1024": {
+      "psnr": 21.81977596282959,
+      "lpips": 0.24132125635941823,
+      "ssim": 0.7275497882643466
+    }
+  },
+  "delta1024_vs_delta128": {
+    "PSNR_delta_vs_delta128": 0.6666169738769518,
+    "LPIPS_relative_reduction_vs_delta128_percent": -6.988105561969404,
+    "joint_better_than_delta128": 30,
+    "joint_worse_than_delta128": 45
+  },
+  "direction_summary": {
+    "delta1024": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.007464117142478175,
+      "MSE_worse_than_LQ_count": 100,
+      "aligned_but_excess_norm_count": 10,
+      "cosine_mean": 0.12573990357764514,
+      "error_DC_MSE": 6.482138229290715e-05,
+      "error_DC_fraction": 0.012326186013904507,
+      "nonpositive_direction_count": 90,
+      "residual_MSE_norm": 0.00086271085981294,
+      "residual_target_dot_mean": 0.0003332116356699623
+    },
+    "delta128": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.008893108902763208,
+      "MSE_worse_than_LQ_count": 111,
+      "aligned_but_excess_norm_count": 21,
+      "cosine_mean": 0.019365876270882015,
+      "error_DC_MSE": 6.734746669114206e-05,
+      "error_DC_fraction": 0.011686183524063906,
+      "nonpositive_direction_count": 90,
+      "residual_MSE_norm": 0.0016731871792313442,
+      "residual_target_dot_mean": 2.3953915236647926e-05
+    },
+    "old50step": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.007895083075126349,
+      "MSE_worse_than_LQ_count": 91,
+      "aligned_but_excess_norm_count": 67,
+      "cosine_mean": 0.23608861497624625,
+      "error_DC_MSE": 1.2053537662240076e-05,
+      "error_DC_fraction": 0.0017763028397549756,
+      "nonpositive_direction_count": 24,
+      "residual_MSE_norm": 0.003086700715279657,
+      "residual_target_dot_mean": 0.0012297235970792333
+    }
+  },
+  "nonpositive_direction_overlap_between_delta_runs": 70,
+  "residual_energy_reduction_vs_delta128_percent": 48.43907062392947,
+  "official_Blur_pass": false,
+  "candidate_adopted": false,
+  "new_trial_GPU_hours": 1.2401893628968133,
+  "delta_trials_and_path_diagnostic_GPU_hours": 2.536109587247405,
+  "older_history_costs_not_in_above_subtotal": true,
+  "interpretation": "Both weaker residual and improved average alignment;90/150 remain nonpositive,70 overlap prior. Dataset change alone did not solve joint quality. Cannot infer all larger-data training impossible or additional steps will succeed.",
+  "next_action": "Fixed first64 current training inputs, final200 checkpoint; read-only GPU training-fit diagnosis, not a new quality gate. Compare LQ and candidate metrics plus correction direction; no optimizer/update, no new official run. Not implemented/submitted yet.",
+  "new_GPU_jobs_submitted": false,
+  "GPU_idle_at_last_check": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "comparison_CPU_seconds": 0.06926922127604485,
+  "direction_CPU_seconds": 33.201576460152864,
+  "CPU_exit_codes": [
+    0,
+    0
+  ]
+}
