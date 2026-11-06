@@ -1,3 +1,14 @@
+## 当前执行：Haze重叠块色偏协调单次对照 — 2026-11-06
+
+用户已授权execute，先查现有Haze重叠图块，再做证据支持的最小干预。原模型、路由、所有旧输出保留。
+当前新方案是确定性拼接修正，不训练FLUX或RGB网络：相邻图块重叠区RGB均值差构成图，按重叠面积加权最小二乘求每块常量偏置。
+约束加权拼接后的修正场整图RGB均值为零；只消除相对块间偏差，不拟合整图GT色彩。裁剪和uint8量化后均值可能轻微变化，必须记录。
+系数固定1，不扫强度、不按GT选图。仅对原conditional_v4预测Haze的200图应用；另400图沿用原输出和指标，完整600图汇总。
+CPU只读核验旧tiles后生成唯一候选，GT像素仅用于后续评分。采用单节点node0两卡评分，node1/2待命；不重跑FLUX、训练或路由。
+新目录checkpoints/foundir_fullstack_haze_consensus_v1，job round3_haze_consensus_single_node_v1。
+合成检查只证明数学接线，不能证明官方改善；需同时通过Haze22.1/.19，记录所有退步及十项总状态。
+详见reports/foundir_fullstack_haze_consensus_v1_readiness_2026-11-06.md。
+
 ## 当前优先级：先处理Haze，再推进Rain/Noise — 2026-11-06
 
 用户明确要求先处理Blur之外较容易的三类，优先Haze。Lowlight已有双项通过，保留；Blur暂停新GPU尝试，历史资产全部保留。

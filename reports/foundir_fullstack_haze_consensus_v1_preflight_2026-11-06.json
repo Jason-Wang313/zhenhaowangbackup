@@ -1,0 +1,8 @@
+{
+  "status": "CPU_preflight_pass_GPU_not_started",
+  "synthetic_tests_passed": 4,
+  "python_syntax": true,
+  "shell_syntax": true,
+  "receipt_sha256": "d4fb8809dcf5ccf85e284512a684fad3d021693e5baffe4da145558e2d685378",
+  "scope": "one fixed GT-free overlap consensus; node0 two H100 metric scoring only"
+}
