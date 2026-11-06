@@ -1,3 +1,21 @@
+## 当前硬件与队列：三台新实例、六张H100 — 2026-11-06
+
+用户确认当前仅3节点×每节点2张 NVIDIA H100 80GB HBM3（81559MiB）；旧四节点映射不再适用。
+按用户浏览器顺序：新node0 notebook=37497631-24c8-4a19-907e-494c701599ab，IP=10.244.211.17；
+新node1 notebook=2551e049-18b3-4c01-8490-735ced1e58cd，IP=10.244.47.55；
+新node2 notebook=55ef95b9-862f-4ffa-a2ed-6eaa7156ccad，IP=10.245.39.185。
+用户终端实测GPU空闲；代理仍需以新worker心跳、设备登记和任务日志确认真实执行。
+
+旧四节点队列round1_official_input_baseline_v1已取消，未启动、无GPU结果；源码、receipt、队列与取消记录保留。
+新常驻入口：bash smoke/start_foundir_fullstack_worker_3x2_v2_tmux.sh <0|1|2>。
+新共享队列checkpoints/foundir_fullstack_executor_3x2_h100_v2，与旧队列隔离；启动核对IP、H100型号、显存和GPU UUID。
+当前唯一排队工作是官方600张未处理输入的基线评分：新run round1_official_input_baseline_3x2_v2，6worker各100张。
+不重跑已完成训练、路由或FLUX恢复。评分口径、全部600张与旧父资产不变；父身份读取保留原4节点绑定，执行分片为6。
+新结果根checkpoints/foundir_fullstack_official_input_baseline_3x2_v2；GPU结束后CPU运行
+`.conda/gpu-train-stable/bin/python -S smoke/audit_foundir_fullstack_official_baseline_3x2_v2.py finish`并推小JSON及耗时/退出码。
+全流程研究和执行职责继续有效；后续新任务按当前3×2资源实现，不把旧八卡参数或旧节点编号静默复用。
+详见reports/foundir_fullstack_3x2_h100_readiness_2026-11-06.md。
+
 ## 当前最高优先级：本工作区全流程负责，持续改进直到官方FoundIR达标 — 2026-11-06
 
 用户明确授权：另一执行端目前不可用，后续工作统一在这里推进；分析本轮问题、改进实现/训练、

@@ -1,0 +1,54 @@
+{
+  "status": "CPU_preflight_passed_GPU_not_started",
+  "topology": {
+    "nodes": 3,
+    "local_gpus": 2,
+    "world": 6,
+    "model": "NVIDIA H100 80GB HBM3",
+    "memory_mib": 81559
+  },
+  "mapping": [
+    {
+      "node": 0,
+      "notebook": "37497631-24c8-4a19-907e-494c701599ab",
+      "ip": "10.244.211.17"
+    },
+    {
+      "node": 1,
+      "notebook": "2551e049-18b3-4c01-8490-735ced1e58cd",
+      "ip": "10.244.47.55"
+    },
+    {
+      "node": 2,
+      "notebook": "55ef95b9-862f-4ffa-a2ed-6eaa7156ccad",
+      "ip": "10.245.39.185"
+    }
+  ],
+  "hardware_evidence": "user measured idle GPUs on each new terminal; executor runtime verification pending",
+  "old_job": "round1_official_input_baseline_v1",
+  "old_job_state": "cancelled before any worker/start/output",
+  "new_job": "round1_official_input_baseline_3x2_v2",
+  "records": 600,
+  "records_per_worker": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+  ],
+  "training": false,
+  "route": false,
+  "FLUX_generation": false,
+  "preflight": "parent receipt/result/metric binding and source hashes verified",
+  "tests": 12,
+  "gpu_execution_verified": false,
+  "old_source_sha256": {
+    "smoke/foundir_fullstack_executor_v1.py": "ff7fbcdf092a5030eef33d38ac182474833e6626bc1e195850c1c6498a5e84d5",
+    "smoke/start_foundir_fullstack_worker_tmux.sh": "e2449ecfe407edb38eca299f475ce0bcfca50110be1f5757e0a1a2faeb0dca22",
+    "smoke/audit_foundir_fullstack_official_baseline_v1.py": "c861229ac0012f5d11dd79d971f9941b46174270b45ffc6178ae115705856332",
+    "smoke/run_foundir_fullstack_official_baseline_v1.sh": "614a79b57df698f3c21402b81d82fd005404c95c61c38e3d8bc54ac037b237b0"
+  },
+  "new_receipt_sha256": "fdc68faa93a65f9a8cc1a59655278a28e3da250c29584c456b82c8b46728b54c",
+  "old_cancel_sha256": "23a25944368140b8c021ddadca4c6e72c01d81d918ccb3666df5eaa3235a4af0"
+}
