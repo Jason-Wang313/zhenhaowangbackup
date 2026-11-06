@@ -1,3 +1,11 @@
+## 当前Blur-only执行：原生预测差小试验已CPU预检 — 2026-11-06
+
+继续只攻Blur；官方150张PSNR≥25.9且LPIPS≤.18之前不推进其它类别，无累计GPU-hours上限。当前新方案为LQ + 冻结VAE解码差，latent修正来自训练LoRA与冻结原Blur LoRA在同一LQ/t1状态的velocity差；两次模型前向，不是旧50步。仅原生LoRA训练，不加RGB网络，不恢复energy或其它类别。
+固定128训练/32开发来源、512裁图；先node3双H100两步工程资格，CPU核验通过后缓存160图，再独立fresh Adam/原LoRA初始化200步、global8、lr1e-5、loss=10*MSE_RGB01+.1*LPIPS。最终全160图评价，不选中途检查点，不读官方像素。开发放行25.9/.18且两项优于旧50步、最大PSNR退步≤1dB；开发通过仍非官方成功。
+7项CPU测试及真实两进程global8梯度SUM/Adam对照通过，目的地预检77.589859秒、退出0、0GPU-hours；权重/来源/320图哈希及裁图、旧160缓存、指标身份核验通过。此时尚未CUDA验收，不声称已修复。
+入口smoke/run_foundir_fullstack_blur_delta_v1.py；持久观察器smoke/watch_foundir_blur_delta_v1_cpu.py按qualify→CPU核验→cache→train→evaluate→finish执行，失败停链不自动重试。每步原子保存Adam/RNG/采样位置及SHA，step1/50/100/200和终态推小报告。不修改旧源码/资产，轻任务只用node3两卡，node0–2保留空闲。
+详见reports/foundir_blur_delta_velocity_v1_readiness_2026-11-06.md及preflight JSON；真实CUDA速度、显存和结果待日志确认，不引用旧ETA。
+
 ## Blur当前：频段候选失败；局部几何诊断完成；继续Blur原生保真修复 — 2026-11-06
 
 仍严格只推进Blur，官方150图25.9/.18双目标通过前不动其它类别，无累计GPU-hours上限。round8缓存160/160、评分160/160、所需节点全部status0；CPU核验通过并推送ce1793b9。缓存+评分实耗1.053419215GPU-hours；全部旧资产保留。

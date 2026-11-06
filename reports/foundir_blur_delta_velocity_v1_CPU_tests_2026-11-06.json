@@ -1,0 +1,11 @@
+{
+  "tests": 7,
+  "unit_pass": true,
+  "real_two_process_gloo_adam_steps": 2,
+  "global_batch": 8,
+  "real_two_process_pass": true,
+  "exit_code": 0,
+  "GPU_hours": 0,
+  "CUDA_tested": false,
+  "distributed_stdout": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\nBLUR_DELTA_TWO_RANK_CPU_ADAM_PASS steps=2 batch=8\n"
+}
