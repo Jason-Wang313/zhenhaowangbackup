@@ -1,0 +1,225 @@
+{
+  "scope": "existing 16 training triptychs from current Haze step3000; descriptive only",
+  "training_fit_only": true,
+  "records": [
+    {
+      "record_id": "foundir_train_0197745",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/09_foundir_train_0197745.png",
+      "sha256": "8f0b91f436f720eee4b962cb6dbc73e4868f8dcdae7d3b78ca8efd93764255f1",
+      "mean_rgb_error": [
+        0.013316300336043804,
+        0.0063638126148865435,
+        0.0033824696260309753
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.060218746714611054,
+      "diagnostic_psnr": 28.965154483647282,
+      "saved_psnr": 28.96518816188024
+    },
+    {
+      "record_id": "foundir_train_0198331",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/13_foundir_train_0198331.png",
+      "sha256": "e51a0abd72cc84412da9940444dac076cb289d14b5efc3ffa5b804a5b4f9e821",
+      "mean_rgb_error": [
+        0.09045199225940867,
+        0.05959598316850079,
+        0.04864235672283115
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.21212228161915989,
+      "diagnostic_psnr": 16.545090892349187,
+      "saved_psnr": 16.545092250089933
+    },
+    {
+      "record_id": "foundir_train_0203628",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/11_foundir_train_0203628.png",
+      "sha256": "44cf6669f99387ef9b3e8b5e8cce01a8cf7d814dc574de57dd600a26c64b76b3",
+      "mean_rgb_error": [
+        -0.04842568191839763,
+        -0.06019922892274923,
+        -0.06957813337760968
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.5058437717068759,
+      "diagnostic_psnr": 21.473069197370442,
+      "saved_psnr": 21.47307473205881
+    },
+    {
+      "record_id": "foundir_train_0203782",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/07_foundir_train_0203782.png",
+      "sha256": "e0541c508c02e082d855d099c0943c92d5e5e9a552a2575b4e452625ebeb5fcd",
+      "mean_rgb_error": [
+        0.03520628985236721,
+        0.027243430941691286,
+        -0.004413170908011049
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.21632905936964755,
+      "diagnostic_psnr": 25.109521455686547,
+      "saved_psnr": 25.109535437397334
+    },
+    {
+      "record_id": "foundir_train_0208621",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/01_foundir_train_0208621.png",
+      "sha256": "58ee1542b19da06b52684a638d42a073e52de6d2b86c585508958389049941cc",
+      "mean_rgb_error": [
+        -0.025855718874441793,
+        -0.03170134600468546,
+        -0.024517104204942474
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.36504482179770287,
+      "diagnostic_psnr": 26.825637703236072,
+      "saved_psnr": 26.82565843904857
+    },
+    {
+      "record_id": "foundir_train_0210448",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/14_foundir_train_0210448.png",
+      "sha256": "93b271ac14e4c8ac9f1b65bc8df36f12584acd2f4926ba0dfdd2fdff16503187",
+      "mean_rgb_error": [
+        0.05053443160724458,
+        0.04611327227434758,
+        0.052180720310713816
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.8755981693397692,
+      "diagnostic_psnr": 25.500173823943744,
+      "saved_psnr": 25.500187829996417
+    },
+    {
+      "record_id": "foundir_train_0216147",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/10_foundir_train_0216147.png",
+      "sha256": "a5a2e6eb47a1e8a66c11b29f970de90874e1b05e11b7031a623e65dd8717524c",
+      "mean_rgb_error": [
+        0.033380904852173994,
+        0.020629209630613127,
+        0.012932751225480944
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.45891771557544286,
+      "diagnostic_psnr": 29.06592301995005,
+      "saved_psnr": 29.06595761717629
+    },
+    {
+      "record_id": "foundir_train_0221327",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/15_foundir_train_0221327.png",
+      "sha256": "d592a4bce23fdef54c56b02a8ef27518f52223d16ad796b8d579be5e17a1461b",
+      "mean_rgb_error": [
+        -0.15666747747704937,
+        -0.16047122431758812,
+        -0.12076610490407984
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.7538801309584092,
+      "diagnostic_psnr": 15.423114588132927,
+      "saved_psnr": 15.423115349938142
+    },
+    {
+      "record_id": "foundir_train_0222212",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/05_foundir_train_0222212.png",
+      "sha256": "6de603622ccd5ed31fa0731fcbefcb46bcbddd06059d97ca8cc4ad2193ba14bf",
+      "mean_rgb_error": [
+        -0.02239112106022612,
+        -0.01669630162855164,
+        0.0012925690295655904
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.08112620408685978,
+      "diagnostic_psnr": 24.931856561690623,
+      "saved_psnr": 24.93186938204079
+    },
+    {
+      "record_id": "foundir_train_0229110",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/02_foundir_train_0229110.png",
+      "sha256": "5d24d4444fb9c68187bb6008e260f020622e550573680344aba8e1c6cbdfe6c0",
+      "mean_rgb_error": [
+        0.01115707696652072,
+        0.007802656585089867,
+        0.012239732929295345
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.13922301316445915,
+      "diagnostic_psnr": 30.95558002681445,
+      "saved_psnr": 30.955634333137674
+    },
+    {
+      "record_id": "foundir_train_0232278",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/04_foundir_train_0232278.png",
+      "sha256": "dfa45be8c35811f570bf8029cd690bd8eddf124ebdb7137a939e34ec1bc505d0",
+      "mean_rgb_error": [
+        0.08808346916673668,
+        0.09322390088873315,
+        0.10607977474464388
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.8242953080825515,
+      "diagnostic_psnr": 19.50687681020751,
+      "saved_psnr": 19.506880363331412
+    },
+    {
+      "record_id": "foundir_train_0236448",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/12_foundir_train_0236448.png",
+      "sha256": "aa3da9a39c1a3c9d0c426dc6a259d420aad0eb802b5290cb6b292c87fa078dc6",
+      "mean_rgb_error": [
+        0.00625011967677891,
+        0.008763346952551983,
+        0.007946029363896608
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.030775197319143806,
+      "diagnostic_psnr": 27.124677313579248,
+      "saved_psnr": 27.124699666392587
+    },
+    {
+      "record_id": "foundir_train_0238241",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/03_foundir_train_0238241.png",
+      "sha256": "5771f1247fa6e2050d47e7d85a2763a842d8805038cb5c14a00aafdafd512ab3",
+      "mean_rgb_error": [
+        -0.044395760928969526,
+        -0.047361501058026646,
+        -0.04841586842266142
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.6369128059769851,
+      "diagnostic_psnr": 24.6441586414702,
+      "saved_psnr": 24.64417123886519
+    },
+    {
+      "record_id": "foundir_train_0244068",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/06_foundir_train_0244068.png",
+      "sha256": "b7a4e285078ff9a5a6f2cd4f416d5004c6860316e6ce27ebea54870763e20b8a",
+      "mean_rgb_error": [
+        -0.013625470329727048,
+        -0.029172276515567953,
+        -0.012859299603624919
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.06215043684022928,
+      "diagnostic_psnr": 21.906470227792404,
+      "saved_psnr": 21.906476336020276
+    },
+    {
+      "record_id": "foundir_train_0256450",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/00_foundir_train_0256450.png",
+      "sha256": "7cb30fbbebffbdece92100293bae00a516ac4f6b349313b1e9e981f35b2e7c51",
+      "mean_rgb_error": [
+        -0.1481657439589411,
+        -0.14521423040674772,
+        -0.15665486653668473
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.8811990263949945,
+      "diagnostic_psnr": 15.923704308373555,
+      "saved_psnr": 15.923705580741023
+    },
+    {
+      "record_id": "foundir_train_0261039",
+      "path": "checkpoints/foundir_haze_flux2_source_diverse_continuation_v1/final_all_16/training_triptychs/step_003000/08_foundir_train_0261039.png",
+      "sha256": "a7ea66ddb0b7eed7f4c7699d8c58bb4536412e1821bd4d13c08cff9f5c50bbfd",
+      "mean_rgb_error": [
+        -0.020064155728194106,
+        0.0011346106435737614,
+        0.0058176676432271646
+      ],
+      "fraction_error_energy_in_RGB_mean": 0.08994628997478861,
+      "diagnostic_psnr": 27.89922365098844,
+      "saved_psnr": 27.899250531453
+    }
+  ],
+  "mean_rgb_error": [
+    -0.009450659097417009,
+    -0.013746617822120543,
+    -0.01166815477262054
+  ],
+  "mean_fraction_error_energy_in_RGB_mean": 0.3870989361826019,
+  "parameter_fitting": false,
+  "gpus": 0,
+  "seconds": 1.0957839898765087,
+  "exit_code": 0,
+  "limitations": "16 historical training crops are not representative full-image evidence; no correction fitted or deployed."
+}
