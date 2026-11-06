@@ -1,0 +1,5009 @@
+{
+  "status": "fixed_CPU_route_diagnosis_not_deployed",
+  "training_report_sha256": "a6998277b482631d7f39c3483b250b764093d9d270c85a4bce7d950d4469361c",
+  "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+  "source_sha256": "9688366d96704de3660826d659accaee2db1dccca62c53d56b3be72c40dab018",
+  "parent_official_receipt_sha256": "98eb74a6534eb234e75a164a2460f43b0a2f6beaeb08a686e1812f85a7615157",
+  "summary": {
+    "05Noise": {
+      "count": 100,
+      "baseline_routes": {
+        "lowlight": 10,
+        "noise": 90
+      },
+      "candidate_routes": {
+        "lowlight": 10,
+        "noise": 90
+      },
+      "correct_routes": 90,
+      "changed": 0,
+      "missing_GPU_outputs": [],
+      "candidate_metrics": {
+        "psnr": 34.632453122138976,
+        "lpips": 0.13663816242478788,
+        "ssim": 0.9270681065619815
+      }
+    },
+    "14Lowlight": {
+      "count": 50,
+      "baseline_routes": {
+        "lowlight": 50
+      },
+      "candidate_routes": {
+        "lowlight": 50
+      },
+      "correct_routes": 50,
+      "changed": 0,
+      "missing_GPU_outputs": [],
+      "candidate_metrics": {
+        "psnr": 19.231370677947996,
+        "lpips": 0.17252287715673448,
+        "ssim": 0.8644231889270912
+      }
+    }
+  },
+  "records": [
+    {
+      "record_id": "official_05Noise_0301",
+      "lq_sha256": "774617a8864bdc0528f480d1b4a3e4011b821d41485f257e76c383c34493ce75",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9253560811281204,
+        3.2834879979491234,
+        -0.056989777088165286,
+        4.390630352497101,
+        0.33674941062927244
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.12886008620262146,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.3431634306907654,
+        "psnr": 8.130844116210938,
+        "ssim": 0.691030444963088
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.3431634306907654,
+        "psnr": 8.130844116210938,
+        "ssim": 0.691030444963088
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0301__lowlight.png",
+        "sha256": "cc1c755305528da8c90867da6e4306facd3bd2efdb9819f44518cc27e133672d"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0302",
+      "lq_sha256": "00609a29fbfb4ad9ab04b9b99e4b76f6deba1d3e4a478f041356bb5debc0c6f7",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.0977693021297454,
+        3.403517933562398,
+        -0.2840400546789169,
+        4.404372987151146,
+        0.18840205669403076
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.084623783826828,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.34751439094543457,
+        "psnr": 8.133913040161133,
+        "ssim": 0.6893177907745126
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.34751439094543457,
+        "psnr": 8.133913040161133,
+        "ssim": 0.6893177907745126
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0302__lowlight.png",
+        "sha256": "59a5e6ea201721e59bae46894f98b233cc7df3e65259e89c95b0f12fbb643e78"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0303",
+      "lq_sha256": "7a68beac9f78d9042b7f38ae6cd39dd8874b8fbacc3827854ce0f504961c976d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.073115886747837,
+        3.407911682128906,
+        -0.4868960827589035,
+        4.557668542861938,
+        0.07000772356986999
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.08548770844936371,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.3623625636100769,
+        "psnr": 8.082048416137695,
+        "ssim": 0.6837521277548473
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.3623625636100769,
+        "psnr": 8.082048416137695,
+        "ssim": 0.6837521277548473
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0303__lowlight.png",
+        "sha256": "5f19cb026ef622d2826ce4ebd301d8e39db29f6ae2e75b192e126699c36eaa2b"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0304",
+      "lq_sha256": "ff4703888a8963860e320338f9856024cb26690afca2c633497d8628fa43cda4",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.0316521778702736,
+        3.95742980837822,
+        -0.677483332157135,
+        4.382167845964432,
+        0.10225366950035095
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.0787806361913681,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.36606207489967346,
+        "psnr": 8.27817153930664,
+        "ssim": 0.6854327288725033
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.36606207489967346,
+        "psnr": 8.27817153930664,
+        "ssim": 0.6854327288725033
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0304__lowlight.png",
+        "sha256": "78a8487897a7d994008bc821748619fa57bc5c5467ca6867f4f8483baf09d166"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0305",
+      "lq_sha256": "ff936d777c4fc8f86da34d66fa1a8f88ec3e14412a54602949ba324f3af21e3e",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.35639011561870576,
+        2.792190134525299,
+        0.7876813188195229,
+        4.61714597940445,
+        0.7070075958967209
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.15662039816379547,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.3414507210254669,
+        "psnr": 8.013649940490723,
+        "ssim": 0.6957232577600542
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.3414507210254669,
+        "psnr": 8.013649940490723,
+        "ssim": 0.6957232577600542
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0305__lowlight.png",
+        "sha256": "25cc443e873e13817db19607df9a965058da19b3afb5ee7493faffb68a069803"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0306",
+      "lq_sha256": "56360f5f4f97762054640cf938cc421cda8cb1cc14664909cfd1d3b840f0e554",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.29952920973300934,
+        3.026643317937851,
+        0.7557547092437744,
+        4.537897473573684,
+        0.7508940905332565
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.15808653831481934,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.33943676948547363,
+        "psnr": 8.004838943481445,
+        "ssim": 0.6963050539681119
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.33943676948547363,
+        "psnr": 8.004838943481445,
+        "ssim": 0.6963050539681119
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0306__lowlight.png",
+        "sha256": "f32ba37ca3a16a08e3da4a1baee6de1738d098f8eb7d1dac089dd8671e5e79f0"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0307",
+      "lq_sha256": "0e8a324513845afef029de967690dd0d32e8ee3e7eea1f070455bfc1c4f83b91",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.33262588679790495,
+        3.21359930569306,
+        0.580006118118763,
+        4.502070441842079,
+        0.599565464258194
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.15708762407302856,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.33700689673423767,
+        "psnr": 8.016098976135254,
+        "ssim": 0.6965196678507678
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.33700689673423767,
+        "psnr": 8.016098976135254,
+        "ssim": 0.6965196678507678
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0307__lowlight.png",
+        "sha256": "bbea3289abbdab305be5ecd8a372439bba92885cf7775bf1563ede6db163d2a7"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0308",
+      "lq_sha256": "d438d3d180e817946400bdd2364b27638d96022accd28c51c9b37f40fd707162",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.23961280584335326,
+        3.4679412357509136,
+        0.48504332154989244,
+        4.396831357479096,
+        0.6694146454334259
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.15640246868133545,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.33196067810058594,
+        "psnr": 8.056901931762695,
+        "ssim": 0.6978202823259523
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.33196067810058594,
+        "psnr": 8.056901931762695,
+        "ssim": 0.6978202823259523
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0308__lowlight.png",
+        "sha256": "8e9f9373f6d0976e36968a65844738f5e95d498f3f84d21bcc5ed23812b1e9ac"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0309",
+      "lq_sha256": "8fcbfc5747df9af2e4a1021b4a524fa4894cba48e0de65416628c935269c07e9",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.2398717910051346,
+        3.585740090161562,
+        0.3325509339570999,
+        4.406831620633602,
+        0.5936138808727265
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.15536922216415405,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.3308553695678711,
+        "psnr": 7.950000286102295,
+        "ssim": 0.6947443558613823
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.3308553695678711,
+        "psnr": 7.950000286102295,
+        "ssim": 0.6947443558613823
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0309__lowlight.png",
+        "sha256": "7344689f886f441701e9a01e7bc57d751323c4fc1545ca13d5fa9eae8198a29c"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0310",
+      "lq_sha256": "e7f7fce01baa0f29e2d259fb6082755f511951be36ee8d8c906e69990942edb7",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.35788358747959137,
+        3.6246520668268203,
+        0.20285526365041734,
+        4.315292686223984,
+        0.5839056849479676
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": 0.15853525698184967,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.32863378524780273,
+        "psnr": 8.011378288269043,
+        "ssim": 0.6967645162919883
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.32863378524780273,
+        "psnr": 8.011378288269043,
+        "ssim": 0.6967645162919883
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0310__lowlight.png",
+        "sha256": "13e339279c214680b9ac706dc2c0056341ea7fe665a7e572420680561dc93a75"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0311",
+      "lq_sha256": "86268d55d37d2df5214d2d99648fab8e5cb0d937ad619772cb91c2767cd2e9a7",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.412631979584694,
+        4.8310048341751095,
+        -0.19226538762450218,
+        1.4524437755346298,
+        0.35559654533863067
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.30200785398483276,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03089779056608677,
+        "psnr": 40.23308563232422,
+        "ssim": 0.9736833413250615
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03089779056608677,
+        "psnr": 40.23308563232422,
+        "ssim": 0.9736833413250615
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0311__noise.png",
+        "sha256": "0c5c3ffb0d201f543181e41f87c572b9e4e5dbfa7a4f6c2277f0124d8381bc8a"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0312",
+      "lq_sha256": "3c4952cce0c56b048624ea8222e54ebd0e86aec8631eeface18573ead834507b",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.9631997138261794,
+        4.2263426497578624,
+        -0.12270190119743347,
+        1.2587758511304856,
+        0.2611308306455612
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.30822688341140747,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03617214038968086,
+        "psnr": 38.79515075683594,
+        "ssim": 0.9731724106004879
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03617214038968086,
+        "psnr": 38.79515075683594,
+        "ssim": 0.9731724106004879
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0312__noise.png",
+        "sha256": "011a4c4ae58b4aa9efb0b99517d19c94a652647841c2ede5c25977e7dbd1be20"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0313",
+      "lq_sha256": "618c3865673711a5cf3a7509d8875730fc71c8fc2609b38eb383fd9b9016acb0",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.5534019738435745,
+        4.8325434923172,
+        0.17439669594168664,
+        1.0781983740627765,
+        0.19869085252285004
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.306853324174881,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.04315972700715065,
+        "psnr": 38.778621673583984,
+        "ssim": 0.9754957790919752
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.04315972700715065,
+        "psnr": 38.778621673583984,
+        "ssim": 0.9754957790919752
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0313__noise.png",
+        "sha256": "c3f4d5860ef0b273f8be8ada18b4fc0774e531b9c93329d190954bf13769ed5d"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0314",
+      "lq_sha256": "97bb7a9d935d6ce6e1bb7a011025dd9b28b19a82765086cd14224f313854456b",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.6484260559082031,
+        6.639780282974243,
+        -1.2687571749091149,
+        0.9378691248595714,
+        0.1823761522769928
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.26152360439300537,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.06304872035980225,
+        "psnr": 36.97409439086914,
+        "ssim": 0.978256659152188
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.06304872035980225,
+        "psnr": 36.97409439086914,
+        "ssim": 0.978256659152188
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0314__noise.png",
+        "sha256": "e59f6e926a8ac3d26fad6e2b5302af69a303fc92c2a833c08090475ced5e5f48"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0315",
+      "lq_sha256": "253fbcf66c49fca8fee321a864e11b06e0009227eab6a16c89e9d2dee7ca80ba",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.83427414894104,
+        6.37550705075264,
+        -1.1793349713087082,
+        0.9489503990858793,
+        0.15564906001091003
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2631494700908661,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.05587361380457878,
+        "psnr": 38.64335632324219,
+        "ssim": 0.9788895803352456
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.05587361380457878,
+        "psnr": 38.64335632324219,
+        "ssim": 0.9788895803352456
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0315__noise.png",
+        "sha256": "6fd7148399b9cdc469d8c0563d6f284463d3150815b861312230df1f3af33d98"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0316",
+      "lq_sha256": "1029141bf797d5aa6a0821aa891d8e7502d2a6d8b2a743943273749e6e2b546f",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.812437093257904,
+        6.377822303771973,
+        -1.1848302826285362,
+        0.9737178362905979,
+        0.223109370470047
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2636558413505554,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.05014778673648834,
+        "psnr": 39.72317886352539,
+        "ssim": 0.9790349715935968
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.05014778673648834,
+        "psnr": 39.72317886352539,
+        "ssim": 0.9790349715935968
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0316__noise.png",
+        "sha256": "eeea04a5506eba2db589a66ac85aa3bf3a29c402dc2df8d6c6b13c3891cb5c52"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0317",
+      "lq_sha256": "21efc0eeebf3bb53f3c3989f80023bfa8a9d42a49991ff677303a8a59976fa81",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.7139030784368515,
+        6.462102466821671,
+        -1.0988434731960297,
+        0.9249909244477749,
+        0.23527063727378844
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.26331236958503723,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.043499551713466644,
+        "psnr": 40.21304702758789,
+        "ssim": 0.9799929234346613
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.043499551713466644,
+        "psnr": 40.21304702758789,
+        "ssim": 0.9799929234346613
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0317__noise.png",
+        "sha256": "026874a9c09dbd74dd57569696fde7319afe1d4303c59de0e8fc5d6fecb811a3"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0318",
+      "lq_sha256": "d2495cfc276bfe9ff486c02b85253ebdf35472274ef0faf4700ae0fe60b6c039",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9519984602928162,
+        6.32653232216835,
+        -1.2208991050720215,
+        0.874828613549471,
+        0.17179685235023498
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.26375719904899597,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03998275101184845,
+        "psnr": 41.548744201660156,
+        "ssim": 0.9807313473358499
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03998275101184845,
+        "psnr": 41.548744201660156,
+        "ssim": 0.9807313473358499
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0318__noise.png",
+        "sha256": "a48385e5a555d9c8c716689784e33b9e195e00a601451d929215bccc649df7e5"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0319",
+      "lq_sha256": "b1145eab70ec09d55c60b17c2941a073683b9698252f23574070d485692a15a8",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.7656805962324142,
+        6.387312495708466,
+        -1.1059820264577866,
+        0.948715104162693,
+        0.20645692348480224
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.26362937688827515,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03556197136640549,
+        "psnr": 42.24683380126953,
+        "ssim": 0.9814126691313854
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03556197136640549,
+        "psnr": 42.24683380126953,
+        "ssim": 0.9814126691313854
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0319__noise.png",
+        "sha256": "1db7862de91d704695d9ef3a010cad0f99603d0e4bdc28207de0695045ca8233"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0320",
+      "lq_sha256": "c6a82e6668787e30645b409f74a74bc1b3b31bb69b232f7cd1c9b56683bee0ff",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.8316456586122513,
+        6.320463305711746,
+        -1.06588826328516,
+        0.9179656825959682,
+        0.2084508001804352
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.263763427734375,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03349882364273071,
+        "psnr": 42.571510314941406,
+        "ssim": 0.9819365572156902
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03349882364273071,
+        "psnr": 42.571510314941406,
+        "ssim": 0.9819365572156902
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0320__noise.png",
+        "sha256": "869bbee457ab60cf979b421dbe43ddc0c4603abcf7488f15ab6526a633754e80"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0321",
+      "lq_sha256": "5c0949f32bc9b40e8bb519102365a3b066c005361221535d2f3ea87a5e0a2c8d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.307686048746109,
+        5.486180609464645,
+        -0.4398520402610302,
+        1.7005094408988952,
+        1.5536773473024368
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.46566879749298096,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03687985986471176,
+        "psnr": 41.61595153808594,
+        "ssim": 0.977020079202371
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03687985986471176,
+        "psnr": 41.61595153808594,
+        "ssim": 0.977020079202371
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0321__noise.png",
+        "sha256": "2a13d08d74370b47e579c9c13dedbad7ae492edc0a355e815257efbf5a9b96aa"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0322",
+      "lq_sha256": "cc028f98e854548504135a729b5ed73024d9f41751078d43c1787464a6c5c26d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.2840570747852325,
+        5.586572623252868,
+        -0.5243106484413147,
+        1.8692410439252853,
+        1.4387180089950562
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.4392193555831909,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.06754621118307114,
+        "psnr": 37.29010009765625,
+        "ssim": 0.9702092148910322
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.06754621118307114,
+        "psnr": 37.29010009765625,
+        "ssim": 0.9702092148910322
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0322__noise.png",
+        "sha256": "3858ca99f5b500ecd0e715a737506f76ce15d0aefcfe6d30e4738ce349b8edd5"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0323",
+      "lq_sha256": "4d79abc71b052dd455992161d00c0bc8bf8b60dda94f904b5da685d0fcb484ab",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.53340682387352,
+        5.170541346073151,
+        -0.2965600922703743,
+        1.612943796813488,
+        1.511312910914421
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.4666711688041687,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.02674919366836548,
+        "psnr": 41.169647216796875,
+        "ssim": 0.9792424102160371
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.02674919366836548,
+        "psnr": 41.169647216796875,
+        "ssim": 0.9792424102160371
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0323__noise.png",
+        "sha256": "dbec5537b784cd53f31e79ffd911ca657d772be8d34ac5f1a7229477696d95d6"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0324",
+      "lq_sha256": "673a5c0f6ab030a36e75dd68771d22a9427d10e8082d06ba1e84a2bb46416692",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.0646067917346955,
+        5.729297542572022,
+        -0.49741121381521225,
+        1.9509795159101486,
+        1.2735389679670335
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.425393283367157,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.0911032184958458,
+        "psnr": 34.39649963378906,
+        "ssim": 0.9650491297521554
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.0911032184958458,
+        "psnr": 34.39649963378906,
+        "ssim": 0.9650491297521554
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0324__noise.png",
+        "sha256": "67eb6da60d859a6a006c68f6ed1ac5068934a684367436be6fddbc1c439be7ec"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0325",
+      "lq_sha256": "bd9f1c223b394367c5e0bb2997bef08e1e734e0705e4b8f649d23538fb88c0f1",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.5548065602779388,
+        5.810465925931931,
+        -0.5618238501250744,
+        1.4865211069583892,
+        0.8479700446128845
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.4572089910507202,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.0190863236784935,
+        "psnr": 40.74013137817383,
+        "ssim": 0.9863556734900361
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.0190863236784935,
+        "psnr": 40.74013137817383,
+        "ssim": 0.9863556734900361
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0325__noise.png",
+        "sha256": "a14d11bae8e09fb1ea81e26f1e6401a93378ca72cb28d790b62a42d3b39a7724"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0326",
+      "lq_sha256": "67b6b75775d6f0fb2da65bd075546254640a82a4f7bac490368e63b25e1f11d6",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        2.060644894838333,
+        4.607819366455078,
+        -0.22918883599340917,
+        1.5733498930931091,
+        1.4996800437569617
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.485601007938385,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.011805269867181778,
+        "psnr": 39.33024978637695,
+        "ssim": 0.9862774693369979
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.011805269867181778,
+        "psnr": 39.33024978637695,
+        "ssim": 0.9862774693369979
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0326__noise.png",
+        "sha256": "68e223a3386d55fdee7a101ced52cac48f7db3d726017fea7f5a09129228e635"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0327",
+      "lq_sha256": "eef29d459532f9e4d11162469090b9235a347c1cb6dd884d7204f5225df934d1",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        2.1790497422218325,
+        4.472868663072586,
+        -0.10074343271553517,
+        1.544036966562271,
+        1.5511208117008208
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.4881005883216858,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.013635922223329544,
+        "psnr": 38.21072006225586,
+        "ssim": 0.985850780032152
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.013635922223329544,
+        "psnr": 38.21072006225586,
+        "ssim": 0.985850780032152
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0327__noise.png",
+        "sha256": "0f0972ed353e40a18a22faab521fe49552125d028d1db7e9c347bd21efc62161"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0328",
+      "lq_sha256": "6b2c6c789e6dff318bd6637cf52164b9faf38b3fde057009a400bc2f6dc44844",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.7230835735797883,
+        5.222565287351609,
+        -0.3579788884148002,
+        1.6138973265886307,
+        1.1804210782051086
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.46050888299942017,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.009744551032781601,
+        "psnr": 41.935340881347656,
+        "ssim": 0.9854949780206894
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.009744551032781601,
+        "psnr": 41.935340881347656,
+        "ssim": 0.9854949780206894
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0328__noise.png",
+        "sha256": "74086c4bb53f8c5bdf164d8db74e05fe356d7c737d29ffd7c948664a917241f4"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0329",
+      "lq_sha256": "3697aff724b400c230dea10ff93630d4ee16adcbd26fa1a88fd92e61bec25bf0",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.8794828832149506,
+        5.114892816543579,
+        -0.39080810546875,
+        1.5152323544025421,
+        1.2295194536447525
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.4693986773490906,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.009830647148191929,
+        "psnr": 41.17752456665039,
+        "ssim": 0.9858466076719363
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.009830647148191929,
+        "psnr": 41.17752456665039,
+        "ssim": 0.9858466076719363
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0329__noise.png",
+        "sha256": "32d651d081e7bdddf68b36e3e421286309ca2860b81a3701a623c02d4107547f"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0330",
+      "lq_sha256": "a2fd622a7ff26854ec8251b7f05ddeb14c05be340a80300069ae625453a90fa6",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.6957488179206848,
+        5.425817966461182,
+        -0.4314000219106674,
+        1.582448160648346,
+        1.1094174966216088
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.45983976125717163,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.010778186842799187,
+        "psnr": 42.65768051147461,
+        "ssim": 0.9850949383462537
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.010778186842799187,
+        "psnr": 42.65768051147461,
+        "ssim": 0.9850949383462537
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0330__noise.png",
+        "sha256": "91527068034713eb63d5443110b946d5e30ac2ef8ed98dc92cf804ec86f45ba8"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0331",
+      "lq_sha256": "240891789c2814b22304874d168e810efb019937947e9b1befb9b8ca9b532fef",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.2751738399267196,
+        4.489557114243508,
+        -1.1668623208999633,
+        2.4179848551750185,
+        1.1202917337417602
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.33321070671081543,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.14160701632499695,
+        "psnr": 37.35118103027344,
+        "ssim": 0.9570095883987059
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.14160701632499695,
+        "psnr": 37.35118103027344,
+        "ssim": 0.9570095883987059
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0331__noise.png",
+        "sha256": "5655e941f5470effce07ae4c3247a1586efa8be2c545cbac4b8878097eaea775"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0332",
+      "lq_sha256": "f615b6e2a910193fb8ed0754e4f10cddf223293e78a4c87ab5853c9939c2300b",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.6094477862119674,
+        3.779595223069191,
+        -0.556695605814457,
+        2.259116092324257,
+        1.0677275002002715
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.41581475734710693,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.027447538450360298,
+        "psnr": 37.99871826171875,
+        "ssim": 0.9806175651344521
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.027447538450360298,
+        "psnr": 37.99871826171875,
+        "ssim": 0.9806175651344521
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0332__noise.png",
+        "sha256": "20874b116635a04d6dfd737835023e7aac544a7218111645f096a846b880ef1e"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0333",
+      "lq_sha256": "b0c23c872213bbe118a43db0a2da1b7aae237b6954525a58339dbcf73a8f7190",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.6149709492921829,
+        4.088898035883903,
+        -0.7002195730805397,
+        1.9215768784284593,
+        1.1500906884670257
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.41645920276641846,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.025597259402275085,
+        "psnr": 37.87263107299805,
+        "ssim": 0.9817952716003508
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.025597259402275085,
+        "psnr": 37.87263107299805,
+        "ssim": 0.9817952716003508
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0333__noise.png",
+        "sha256": "9ff97d99cd0a673f9cc7c398ddd228c33086f98daeb181b3e182e2b97727e2a7"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0334",
+      "lq_sha256": "193ad083b9870eecdbd517dd0ea1b4cae925e7fa62f21f3148747e2d89329467",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.3914246320724488,
+        4.240433529019356,
+        -0.8004738479852677,
+        2.374258443713188,
+        1.0173150241374969
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.3757638931274414,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.07372979074716568,
+        "psnr": 40.96334457397461,
+        "ssim": 0.9717241329378973
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.07372979074716568,
+        "psnr": 40.96334457397461,
+        "ssim": 0.9717241329378973
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0334__noise.png",
+        "sha256": "88b38be0320cd293e65a8ffaac51ac9458f958354230ed9b0ed9501f309391c7"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0335",
+      "lq_sha256": "d54db48a390c1db8a2abc9783c6ecf25ba9c9f439cf7caf7b18a0fa9d7c48f1e",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.5012268424034119,
+        4.102237659692764,
+        -0.7636677511036396,
+        2.3733318954706193,
+        0.9916983127593995
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.38431572914123535,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.057656846940517426,
+        "psnr": 39.385799407958984,
+        "ssim": 0.9742108744852903
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.057656846940517426,
+        "psnr": 39.385799407958984,
+        "ssim": 0.9742108744852903
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0335__noise.png",
+        "sha256": "798b462cabf2b4ef24c185add9f7cb4f92280fc566b6353b5fc3cdd31e057f88"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0336",
+      "lq_sha256": "b0fcede12780eabff89a3cd04a255ef4e44641a26114d68624e0e6e344f80309",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.1102547943592072,
+        4.4173732697963715,
+        -0.8182872369885444,
+        2.5396006226539614,
+        1.0467470943927766
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.36582237482070923,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.09825360029935837,
+        "psnr": 39.261024475097656,
+        "ssim": 0.9617282552240803
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.09825360029935837,
+        "psnr": 39.261024475097656,
+        "ssim": 0.9617282552240803
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0336__noise.png",
+        "sha256": "2c21490add46926d759f4517e4e615180f5859358f05cda6e824b7f05008d829"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0337",
+      "lq_sha256": "7e7c305629aa82120efeef2c599fbb19ead9fe0c3e0a47d92a5d268b4f4b5719",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.4107573479413986,
+        4.425597494840622,
+        -1.6838499553501607,
+        3.119229477643967,
+        0.5546947062015534
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2760522961616516,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.23358431458473206,
+        "psnr": 28.223060607910156,
+        "ssim": 0.9306322652438951
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.23358431458473206,
+        "psnr": 28.223060607910156,
+        "ssim": 0.9306322652438951
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0337__noise.png",
+        "sha256": "ef331880382b0e512185b0d4a830f16ef62c1ec768b583fa12ef123266ded5ad"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0338",
+      "lq_sha256": "a2b253b3d089ce88bab8b7d8fe2f1af1c218b323eb7d89e6a61b0dea023583d8",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.4699439465999604,
+        4.4048569947481155,
+        -1.620800420641899,
+        2.8894114673137663,
+        0.7461842060089111
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.29078179597854614,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.213295117020607,
+        "psnr": 31.015188217163086,
+        "ssim": 0.9378913818029115
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.213295117020607,
+        "psnr": 31.015188217163086,
+        "ssim": 0.9378913818029115
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0338__noise.png",
+        "sha256": "525bf35ea04f2cadcd7b95a92f03dab4983cad37a48b5d409951cc68580e070f"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0339",
+      "lq_sha256": "fa6c40fb62d53b0f653f27929f0970e8688afcfc28999c8624bff76947c0f2d5",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.4307503521442413,
+        3.9600526332855224,
+        -0.6176874592900277,
+        2.3457276701927183,
+        1.178494107723236
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.41068965196609497,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.036703791469335556,
+        "psnr": 37.93196487426758,
+        "ssim": 0.9781733670446808
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.036703791469335556,
+        "psnr": 37.93196487426758,
+        "ssim": 0.9781733670446808
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0339__noise.png",
+        "sha256": "cb549904cb7dc32bb5719f8b3a2573d156676581be65c31aa3e0347aacc77d16"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0340",
+      "lq_sha256": "4331fea958a2f9653ec9468d8cda75ace2095a4d593e89310002af229203bed1",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.251542216539383,
+        4.235923150181771,
+        -1.0274535812437535,
+        2.661406311392784,
+        1.0360409379005433
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.3361501693725586,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.12393300980329514,
+        "psnr": 38.75282669067383,
+        "ssim": 0.9582793635793218
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.12393300980329514,
+        "psnr": 38.75282669067383,
+        "ssim": 0.9582793635793218
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0340__noise.png",
+        "sha256": "6c92f3efc997f905ab2110aa16a3623b2a8671db55c1bcbd1dfc20e4b1fe494b"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0341",
+      "lq_sha256": "4532e259d4eb715daea749c987b656ed974c583b0ffbaca767dc7fc977d9bc6d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.38561959862709044,
+        6.179993939399719,
+        0.20983544886112213,
+        1.7213130652904511,
+        0.5693498313426971
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.23183472454547882,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.07712998241186142,
+        "psnr": 40.60087203979492,
+        "ssim": 0.9712483974440943
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.07712998241186142,
+        "psnr": 40.60087203979492,
+        "ssim": 0.9712483974440943
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0341__noise.png",
+        "sha256": "18088cf1944fd0d6264b861d85fb0684d1109a2534e2fba089b9e0695b523764"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0342",
+      "lq_sha256": "17501a5c3e5a679df069f54536ca83a3064cc3af3c4c7bac78ef2105aace9ebb",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6457067519426346,
+        6.168909084796906,
+        0.3813340783119202,
+        1.9752327166497707,
+        0.7039854228496552
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.22094005346298218,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.06871557235717773,
+        "psnr": 39.0095329284668,
+        "ssim": 0.973299885549338
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.06871557235717773,
+        "psnr": 39.0095329284668,
+        "ssim": 0.973299885549338
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0342__noise.png",
+        "sha256": "3fae0aaf032ef218dff52f3d6a2f59e17d014512f1f7e733ca859973872edfb9"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0343",
+      "lq_sha256": "58511e1f52da1b7dd5755d6fd6201ea96292469407183ae115ef4af726bf8694",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.49225919842720034,
+        5.972853696346283,
+        0.7382531180977822,
+        1.612042073532939,
+        0.8998915672302246
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2211853414773941,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.02503392845392227,
+        "psnr": 41.38837432861328,
+        "ssim": 0.9803481281739448
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.02503392845392227,
+        "psnr": 41.38837432861328,
+        "ssim": 0.9803481281739448
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0343__noise.png",
+        "sha256": "c84f326d92e510120c5366848f46fe589097ea09fc2d57bd1c60669ed9a71915"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0344",
+      "lq_sha256": "c32212d6e479ffe6d7afbddfa7b026acdab5da15f36285efc097d686ce24b0ae",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.541289484500885,
+        5.939511728286743,
+        0.5943416401743888,
+        1.8002470202744008,
+        0.8233670711517334
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.21691018342971802,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.04357978701591492,
+        "psnr": 40.939598083496094,
+        "ssim": 0.977073478155968
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.04357978701591492,
+        "psnr": 40.939598083496094,
+        "ssim": 0.977073478155968
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0344__noise.png",
+        "sha256": "63caf9cf3c88db54e7bd8564ea2efc3933634aeb9f144f8e510b846f60fa1e80"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0345",
+      "lq_sha256": "1bf5422035ca5c06878f2d07d1bddb7560c2bbd5f985710a286677ab9e6bbdf6",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5365724638104439,
+        5.476380485296249,
+        1.3784727424383163,
+        1.6282624788582325,
+        1.281599947810173
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.25775960087776184,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.019253965467214584,
+        "psnr": 40.10804748535156,
+        "ssim": 0.9856282896401384
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.019253965467214584,
+        "psnr": 40.10804748535156,
+        "ssim": 0.9856282896401384
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0345__noise.png",
+        "sha256": "3b3bcfc3f0ccc41a41a7dc6a6a619a7b28958ff4a8eb7a8ed4778d4c978f5e5f"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0346",
+      "lq_sha256": "1df337e2ac25b73b5745b62f90fd7d757846b94b1b7d159a760e8b92e02d98ef",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.42630859166383744,
+        5.623910719156266,
+        1.0378713026642798,
+        1.7093825161457061,
+        1.087841311097145
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2638532817363739,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.017002295702695847,
+        "psnr": 39.04237365722656,
+        "ssim": 0.9838417333829884
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.017002295702695847,
+        "psnr": 39.04237365722656,
+        "ssim": 0.9838417333829884
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0346__noise.png",
+        "sha256": "eb2870f6be5224af25ee1493ad9647d7284263e2110ce7785138a0f2e57113d6"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0347",
+      "lq_sha256": "c12e7bd8f2ff09aeb685b2128524067280a2d8bf60fd946ea5412fa504da6cb2",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.3656442999839783,
+        5.309260684251785,
+        1.2683012008666992,
+        1.7871111281216145,
+        1.1218506425619126
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2552661597728729,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.017769329249858856,
+        "psnr": 41.931297302246094,
+        "ssim": 0.9845025591774783
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.017769329249858856,
+        "psnr": 41.931297302246094,
+        "ssim": 0.9845025591774783
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0347__noise.png",
+        "sha256": "7010d0d6d5130522c9e60e954a79a29c115aa23275a453d17e21eda3f3801f43"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0348",
+      "lq_sha256": "c74139d96d650f983eef19fed7e22a77245353199d856d95b2b2a3e6ab59c002",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.4532195746898651,
+        5.62521840929985,
+        0.9415169641375541,
+        1.8616291269659997,
+        1.0740119904279708
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2572885751724243,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.018213454633951187,
+        "psnr": 42.38010787963867,
+        "ssim": 0.9828730396237445
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.018213454633951187,
+        "psnr": 42.38010787963867,
+        "ssim": 0.9828730396237445
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0348__noise.png",
+        "sha256": "97c0f267e4d08b24df4a479513fc4e7f716cd6d1cbd5db0cde5ebb3cc1c87fb2"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0349",
+      "lq_sha256": "1ee79690faf65229348817d4295fb2c4f524d781a92cd870c61bc8eba90798f7",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.3802874982357025,
+        6.125385987758636,
+        0.30422401130199433,
+        1.767946589551866,
+        0.6452796399593353
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.23043030500411987,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.04523371160030365,
+        "psnr": 41.04399108886719,
+        "ssim": 0.9762950725063635
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.04523371160030365,
+        "psnr": 41.04399108886719,
+        "ssim": 0.9762950725063635
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0349__noise.png",
+        "sha256": "e4382cc2267d86f1c53e7bd7e11f4ab453732f5fa58becbbc50e48848c044560"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0350",
+      "lq_sha256": "2f224aac53445de49ecb2dfa811c34ef60b60e7015fd2e9740c7c8ccb7dc4a57",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.3492455303668976,
+        5.9059008955955505,
+        0.515686260163784,
+        1.7989491323009132,
+        0.6391952753067016
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.219574972987175,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03436112031340599,
+        "psnr": 42.26465606689453,
+        "ssim": 0.978386480122706
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03436112031340599,
+        "psnr": 42.26465606689453,
+        "ssim": 0.978386480122706
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0350__noise.png",
+        "sha256": "d0357d1195559142f3e6f76ecbfbba76c41c742055e18b576a296ffd544acb43"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0351",
+      "lq_sha256": "e1f31acdfbc092bdef56e682341e8d06a415cdcf867c1363129094ade9e74d82",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.7590170666575432,
+        5.769000065326691,
+        -0.5305648297071457,
+        2.214007115364075,
+        0.961761885881424
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2458726465702057,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.018278058618307114,
+        "psnr": 38.271854400634766,
+        "ssim": 0.984685219333274
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.018278058618307114,
+        "psnr": 38.271854400634766,
+        "ssim": 0.984685219333274
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0351__noise.png",
+        "sha256": "6eda7793a578b8645dcf7cf3619bfa31ba520394100d01c409af09e0648d5c45"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0352",
+      "lq_sha256": "0708a9ef7cc662003814a59774e3038c325a824e3e3d652e10dff6152f821b25",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.30877140536904335,
+        6.273474931716919,
+        -0.9924744809046387,
+        2.5894154727458956,
+        0.4316001534461975
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.17188626527786255,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.14138858020305634,
+        "psnr": 34.81966018676758,
+        "ssim": 0.9539947258121719
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.14138858020305634,
+        "psnr": 34.81966018676758,
+        "ssim": 0.9539947258121719
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0352__noise.png",
+        "sha256": "741b2811f900e6564a3f3b3f6f4a8f1bc4a88e75a578117aa460c2b497954506"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0353",
+      "lq_sha256": "a51fdceb937fdf0504f421a5fbbe86b792c3c3f14012d14a8b55f00b04337a4a",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.4741102322936058,
+        6.271611046791077,
+        -1.1326639145612716,
+        2.418022033572197,
+        0.3871423304080963
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.1724013090133667,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.11152970790863037,
+        "psnr": 37.23227310180664,
+        "ssim": 0.9610178592628407
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.11152970790863037,
+        "psnr": 37.23227310180664,
+        "ssim": 0.9610178592628407
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0353__noise.png",
+        "sha256": "51bd1774eb5934fdc73baebbf8a253ae94cb7278a9cbe7927361615fd89f4a9c"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0354",
+      "lq_sha256": "d347262ccd1c5f86b4a350cae547ecef7e539081ec84e0783d4dc9f960195b60",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.7297581784427166,
+        5.8463401913642885,
+        -0.6817806929349899,
+        2.2520960956811904,
+        0.6966749250888824
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.24631310999393463,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.017436619848012924,
+        "psnr": 40.418601989746094,
+        "ssim": 0.9817190230577668
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.017436619848012924,
+        "psnr": 40.418601989746094,
+        "ssim": 0.9817190230577668
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0354__noise.png",
+        "sha256": "1859a199fbaae6ff0996f4dc574b630f7bd071a158efdfe667bcfbd3913a8bac"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0355",
+      "lq_sha256": "f91d62456db7f75547093270ff36abd6c3ae2de47aa313bb479f70746a039e90",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.6563772551715374,
+        5.905466103553772,
+        -0.6267110943794251,
+        2.2674220383167265,
+        0.7837124466896057
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.24612396955490112,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.017616238445043564,
+        "psnr": 39.10798263549805,
+        "ssim": 0.9825206491101213
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.017616238445043564,
+        "psnr": 39.10798263549805,
+        "ssim": 0.9825206491101213
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0355__noise.png",
+        "sha256": "0ac71a00714c94bf6c531a617421f44ddedb0ec9a8d5f22b75e9ed0f07cc7c8f"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0356",
+      "lq_sha256": "b734a7e4c60422830eeb16948388455b9209a3c0c425f8e31fcc00c5e8173d57",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.6019122786819935,
+        6.227465307712555,
+        -0.9848553523421287,
+        2.2734144926071167,
+        0.5836464822292328
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.20672306418418884,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.04803571477532387,
+        "psnr": 41.6825065612793,
+        "ssim": 0.9738774062063836
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.04803571477532387,
+        "psnr": 41.6825065612793,
+        "ssim": 0.9738774062063836
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0356__noise.png",
+        "sha256": "f8ce13b9a261bd829e4abf28fe8834120aa0380293df11fef503d58ec2f40162"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0357",
+      "lq_sha256": "4afae93d756835427ca49c0ec54a59d0da023a9d4cb122f7e5acea9806087d45",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.5541418388485908,
+        6.114393842220307,
+        -0.7446797907352447,
+        2.2847217857837676,
+        0.6572132349014282
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.21540623903274536,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.03482292592525482,
+        "psnr": 40.42276382446289,
+        "ssim": 0.9768701388816016
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.03482292592525482,
+        "psnr": 40.42276382446289,
+        "ssim": 0.9768701388816016
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0357__noise.png",
+        "sha256": "f82eb84b7e58f80618b778133154ff6443a750e19787575ef0d97388fad4d56e"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0358",
+      "lq_sha256": "69961bac1b729ea009500eded05128fda0e2a359698a2102a0fe805b9cbe1b01",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.4278950050473213,
+        6.3475129961967465,
+        -0.8897210687398911,
+        2.2730893179774285,
+        0.5097815155982971
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.20788340270519257,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.06702517718076706,
+        "psnr": 40.7003173828125,
+        "ssim": 0.9695562508820535
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.06702517718076706,
+        "psnr": 40.7003173828125,
+        "ssim": 0.9695562508820535
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0358__noise.png",
+        "sha256": "a0759dd9769f973fe7ef9c5be78e5acce67dca11a518622d51c0727df28dcef0"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0359",
+      "lq_sha256": "c23065886732b1543bf2eb5758791b351b8ea3ae09b0995b3be2cdb5cf3ed93c",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.4100596226751804,
+        6.234649884700775,
+        -1.238188873231411,
+        2.598374730348587,
+        0.45734028816223143
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.150834321975708,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2094356119632721,
+        "psnr": 31.051313400268555,
+        "ssim": 0.9372804225200964
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2094356119632721,
+        "psnr": 31.051313400268555,
+        "ssim": 0.9372804225200964
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0359__noise.png",
+        "sha256": "9f75cd6b07a2bbfc4bee7d94caab6ec51a9b9a8cb106780b5c82d4a52717d054"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0360",
+      "lq_sha256": "c1eefa2518f8aab8774763f965f358c032fce1831b1dc993ea9a22f957afa6f7",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.2605270355939865,
+        6.292444670200348,
+        -1.1457055263221263,
+        2.5872508481144907,
+        0.4391628861427307
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.165477454662323,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.18021152913570404,
+        "psnr": 33.505245208740234,
+        "ssim": 0.9452823531249969
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.18021152913570404,
+        "psnr": 33.505245208740234,
+        "ssim": 0.9452823531249969
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0360__noise.png",
+        "sha256": "a44164b7881de66cf0a01750e22b00b53750eeb6042e51785a683345fbb8301d"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0361",
+      "lq_sha256": "4f6ec9a246db795a3214becf4121d912e1ac3749df3a4fc79601258122e4f98d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.537240617615836,
+        7.705041830880301,
+        0.09553068024771554,
+        0.1763258763722011,
+        0.45997652326311383
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28534597158432007,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.25077542662620544,
+        "psnr": 33.34203338623047,
+        "ssim": 0.9196841232837434
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.25077542662620544,
+        "psnr": 33.34203338623047,
+        "ssim": 0.9196841232837434
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0361__noise.png",
+        "sha256": "6ae43e2d3644d2e64d6d2801c063cf9b80bd35aeee80520101f143a906c9ab9b"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0362",
+      "lq_sha256": "93c03fce3cf033e668f7c8cb3eac91a242d40f149bdf1597c97300912079e479",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6075780851500375,
+        7.799453912462507,
+        0.056893532616751535,
+        0.24777683360236033,
+        0.43960958889552526
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28777652978897095,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.25159478187561035,
+        "psnr": 33.36355972290039,
+        "ssim": 0.9199309520324541
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.25159478187561035,
+        "psnr": 33.36355972290039,
+        "ssim": 0.9199309520324541
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0362__noise.png",
+        "sha256": "d92122f11a93afc2608486815d14fafc361f2dab2941d5a2f693e02bb624c56d"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0363",
+      "lq_sha256": "b8841e65edfa29d417a80a7fb161bcee0a90760fc0b0b5d3433db14f45c87810",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.48786227362496515,
+        7.73553717476981,
+        0.09847440038408552,
+        0.15745306525911604,
+        0.367529685156686
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28854334354400635,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2490544319152832,
+        "psnr": 33.96615219116211,
+        "ssim": 0.9207956044176704
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2490544319152832,
+        "psnr": 33.96615219116211,
+        "ssim": 0.9207956044176704
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0363__noise.png",
+        "sha256": "46419a87fe66c1b515a1a4dfa13a2a8c87380339f07b8a641e403bf7cd232bba"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0364",
+      "lq_sha256": "011382d688ea49f1d52c65f09809289b721513acfa01c785a227a8fb209259a6",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5674760367189134,
+        7.676447473253522,
+        0.11264474051339286,
+        0.325374117067882,
+        0.45642358916146414
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2876814603805542,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2504368722438812,
+        "psnr": 33.40249252319336,
+        "ssim": 0.92000691194397
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2504368722438812,
+        "psnr": 33.40249252319336,
+        "ssim": 0.92000691194397
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0364__noise.png",
+        "sha256": "be76d80f8e96cfff90345e4704fc72cd9124dace5146e6ff24ba8d433187e71b"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0365",
+      "lq_sha256": "e1653d22b6db9d017c63b5753b409f1bb5c405fada092d4f87eb9bfbec0ddf8c",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.476954574244363,
+        7.659437356676374,
+        0.02667478152683803,
+        0.23306651115417482,
+        0.4246975149427141
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28531843423843384,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.25311845541000366,
+        "psnr": 32.79840087890625,
+        "ssim": 0.9193131172372049
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.25311845541000366,
+        "psnr": 32.79840087890625,
+        "ssim": 0.9193131172372049
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0365__noise.png",
+        "sha256": "90361b76d547a40d8bfba370ba32d08d82b3e88ccf8b363b188262c4012e8a9f"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0366",
+      "lq_sha256": "6f5fa772d668d93f2901bd89f389e4276fab8df8efb8a0838a6ea74d3e6ed673",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5386188115392413,
+        7.720297077723912,
+        0.09411583627973284,
+        0.30239085725375586,
+        0.36943230628967283
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28718841075897217,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.24969814717769623,
+        "psnr": 33.594566345214844,
+        "ssim": 0.9206788069967693
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.24969814717769623,
+        "psnr": 33.594566345214844,
+        "ssim": 0.9206788069967693
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0366__noise.png",
+        "sha256": "4d3484b28ad94b8ce61e8518440e4d96deb558082ff5fc1abca817f4c8002a56"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0367",
+      "lq_sha256": "d0fbd7b4fd4c3fa27727929579e87f8ff38ad12daf202c31a3146c5f9f1c3321",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5161860219069889,
+        7.763571453094483,
+        0.05404529571533203,
+        0.1061624790940966,
+        0.5205107484545026
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.289084255695343,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2474510371685028,
+        "psnr": 34.060359954833984,
+        "ssim": 0.9207000801670568
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2474510371685028,
+        "psnr": 34.060359954833984,
+        "ssim": 0.9207000801670568
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0367__noise.png",
+        "sha256": "3d9aee735038426bd6fb6bd5350524e30c7d9d3670011ed072a3f1b33cb019d3"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0368",
+      "lq_sha256": "76b813120003866cf2c0de28cf28daeb8bc481e7e638d971216ffd19e3782aea",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5806621508938926,
+        7.75760555267334,
+        0.16827750205993652,
+        0.1385226479598454,
+        0.4582949842725481
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28875115513801575,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.25164079666137695,
+        "psnr": 33.22822952270508,
+        "ssim": 0.919688714563333
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.25164079666137695,
+        "psnr": 33.22822952270508,
+        "ssim": 0.919688714563333
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0368__noise.png",
+        "sha256": "219118dd2e656056cc2410bc68faabea96fbe4e0f0e2befbb8aee7cadce0334f"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0369",
+      "lq_sha256": "0ed1d05b5070ca03f40e64b092c7a858a625a5579a181bf4b6adc503d7190f6a",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5782082966395787,
+        7.785972132001604,
+        0.03830176762172154,
+        0.21558190754481724,
+        0.3836663246154785
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2853069305419922,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2536565363407135,
+        "psnr": 32.69248962402344,
+        "ssim": 0.9194201813312615
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2536565363407135,
+        "psnr": 32.69248962402344,
+        "ssim": 0.9194201813312615
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0369__noise.png",
+        "sha256": "1601069cfb22c9073faee30fe71a32280c0cd42067ada9f016229d91918545a7"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0370",
+      "lq_sha256": "eaca1e34d0f8ed197ba485ee8b5ff96e2f33031775dc39f97a821aba3811d4cf",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5759973185403007,
+        7.815546894073487,
+        0.10301151956830706,
+        0.11513593963214329,
+        0.4894792488643101
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28540611267089844,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.25140854716300964,
+        "psnr": 33.37712860107422,
+        "ssim": 0.9189122389959469
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.25140854716300964,
+        "psnr": 33.37712860107422,
+        "ssim": 0.9189122389959469
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0370__noise.png",
+        "sha256": "54b15ec61ce020818346a5bfeb2f52f41825b25c1def8e16fe998b5c9f831962"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0371",
+      "lq_sha256": "789659e33dc67d811a47ca4cf7f489fade3bcf88daadc2adcb0664cddb4b5369",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6957477334354605,
+        7.0641809122903005,
+        0.0355175290788923,
+        -0.5013115510344506,
+        1.2561526681695665
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.1990942358970642,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2406182587146759,
+        "psnr": 33.38850402832031,
+        "ssim": 0.8912133201083511
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2406182587146759,
+        "psnr": 33.38850402832031,
+        "ssim": 0.8912133201083511
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0371__noise.png",
+        "sha256": "514b813759958fb968a872d1dfe19df283c2400416ff6eb3d110ab61991e4d10"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0372",
+      "lq_sha256": "300dd4725418ec4a46364d9e223c4c088fde6fc57d64091de78e01c458f4dd1d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.4366055853664875,
+        6.473002021653311,
+        0.10894753336906433,
+        -0.8394804665020534,
+        2.2807139022009713
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.26340919733047485,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.16357260942459106,
+        "psnr": 34.960693359375,
+        "ssim": 0.9326604185133743
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.16357260942459106,
+        "psnr": 34.960693359375,
+        "ssim": 0.9326604185133743
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0372__noise.png",
+        "sha256": "e9008b3913a503e513371f8fc5f8b2f3abf9ad4e28b7c1b45c94bddcf4142a3d"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0373",
+      "lq_sha256": "fd6fca51edb859eb9530607d7c7d64ca18274f5cc15f7116c2331dfd0e668c1f",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.7035560477524996,
+        7.078886992590768,
+        0.04852044326918466,
+        -0.5583072159971509,
+        1.2472148652587618
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.206557035446167,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2413942813873291,
+        "psnr": 33.41512680053711,
+        "ssim": 0.890432338026809
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2413942813873291,
+        "psnr": 33.41512680053711,
+        "ssim": 0.890432338026809
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0373__noise.png",
+        "sha256": "54a65429f736d1fa682bbde4a13678b6df601760ec76dbbf4aa99fda6805cc91"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0374",
+      "lq_sha256": "71bff6bd0f6229b3921560c08e7e879da18a3fb352bf4d0e394f0c33cccba816",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.7535529258527927,
+        7.085823522295271,
+        0.06290106858525957,
+        -0.49506373086145944,
+        1.2115158686680454
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.20726466178894043,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.24238508939743042,
+        "psnr": 33.30897521972656,
+        "ssim": 0.8903208621479952
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.24238508939743042,
+        "psnr": 33.30897521972656,
+        "ssim": 0.8903208621479952
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0374__noise.png",
+        "sha256": "d2dfaef3af7b0c5056ee26a69785b680bf526d22adcf641ab34a5dfefb5eed79"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0375",
+      "lq_sha256": "5bef56056eaa3d50d89daae86fcda944ad99b33c8f6cba5890a64c826325db2f",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.693230122753552,
+        7.078877006258283,
+        0.11214193105697631,
+        -0.49596494159528187,
+        1.1741329750844411
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2002156674861908,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.24167977273464203,
+        "psnr": 33.05341720581055,
+        "ssim": 0.8909948624096276
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.24167977273464203,
+        "psnr": 33.05341720581055,
+        "ssim": 0.8909948624096276
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0375__noise.png",
+        "sha256": "3fe859f9d90763193646d8afb8a23891d05f3bc58e99493f58dca3c283e3ab78"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0376",
+      "lq_sha256": "5391c64d4aeec4a1d86c0b41827d28122d135f3a680b925312083a4b10a51375",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.7135659081595285,
+        7.071541486467634,
+        0.03969325338091169,
+        -0.487210884477411,
+        1.2735291719436646
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2137424498796463,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.24067245423793793,
+        "psnr": 33.37070846557617,
+        "ssim": 0.8903764419917747
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.24067245423793793,
+        "psnr": 33.37070846557617,
+        "ssim": 0.8903764419917747
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0376__noise.png",
+        "sha256": "93378532c49e5d9821d0b6fe90a3258890f4e527c6c22fe8f6ecd037961925c7"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0377",
+      "lq_sha256": "cd7079858bb0bde0e3a531dd84206b968ebde39f252a3b8e0824a0be1c288555",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.8029727767620768,
+        7.079543719972883,
+        0.13232259835515703,
+        -0.5141857362219265,
+        1.2702685318887235
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.20999225974082947,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.24019715189933777,
+        "psnr": 33.30365753173828,
+        "ssim": 0.8899997593600539
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.24019715189933777,
+        "psnr": 33.30365753173828,
+        "ssim": 0.8899997593600539
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0377__noise.png",
+        "sha256": "dd92cccb6d5a6d93c4e311e3726dde4678dc5069c5c99734cd68828908d099e5"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0378",
+      "lq_sha256": "d5a727b3d2a43da0973ac83f108041452e6a13ea9a7582aebc8b747212d5f0d9",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.4896503333534513,
+        6.543626315253121,
+        0.10697266800062998,
+        -0.8323260707514627,
+        2.2570868713515146
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2613012194633484,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.16512461006641388,
+        "psnr": 34.535858154296875,
+        "ssim": 0.9306760203270587
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.16512461006641388,
+        "psnr": 34.535858154296875,
+        "ssim": 0.9306760203270587
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0378__noise.png",
+        "sha256": "b2a569ce15e18cf8f92b8aa323b91a6290289e0f952bb7625c6a1a53f0ce5c22"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0379",
+      "lq_sha256": "c1ab719f0d55064fc18b6236097e7f993f6a3ec9f27cb551f54e498fd6bbd8fb",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.7554482315267835,
+        7.0346454211643765,
+        0.06084925787789481,
+        -0.4552090851323945,
+        1.3127379970891135
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.203438401222229,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.2424166202545166,
+        "psnr": 33.122005462646484,
+        "ssim": 0.8912556896376342
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2424166202545166,
+        "psnr": 33.122005462646484,
+        "ssim": 0.8912556896376342
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0379__noise.png",
+        "sha256": "ecd2cffe5369f9db73f1bf31b72dd5b1b12ab868a66794b39b50a39ce83ef726"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0380",
+      "lq_sha256": "1b1b51d6847af5bd8a59bb000fdebca9e9e7605985468599a34ac7dc54568638",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.7156263566442899,
+        7.138162013462612,
+        -0.031133349452699934,
+        -0.48709082284143995,
+        1.267472721849169
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2164376974105835,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.23980523645877838,
+        "psnr": 33.21959686279297,
+        "ssim": 0.8900373139645817
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.23980523645877838,
+        "psnr": 33.21959686279297,
+        "ssim": 0.8900373139645817
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0380__noise.png",
+        "sha256": "8cf1351f9b8926a196c013ab9646d5857500acfce832a1c276e03513284b599f"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0381",
+      "lq_sha256": "ca8aa1c2427380885c1f56d1203bdd3e882ed784ab8d8b0a8affed3a08ee61ac",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5962686900581632,
+        7.188353545325143,
+        -0.46802981314914566,
+        -1.3599996668951853,
+        2.0584223674876347
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.3308511972427368,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15428465604782104,
+        "psnr": 33.795249938964844,
+        "ssim": 0.9117837966857656
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15428465604782104,
+        "psnr": 33.795249938964844,
+        "ssim": 0.9117837966857656
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0381__noise.png",
+        "sha256": "e170e5a4c60a35c9131260cfe11f7c41369bd39b0afb8c2a5121cb64396bda64"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0382",
+      "lq_sha256": "aa471503485a5d4f512324cb47cd9ea5ceb0ddf0ce080f74fdc8e3333c55e14c",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.2700147569179535,
+        6.781042194366455,
+        -0.33668135809046884,
+        -1.485483615739005,
+        2.8445886739662716
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.35610097646713257,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.08087164908647537,
+        "psnr": 35.38941955566406,
+        "ssim": 0.952735896506583
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.08087164908647537,
+        "psnr": 35.38941955566406,
+        "ssim": 0.952735896506583
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0382__noise.png",
+        "sha256": "fc30380a4a8b25a31280edd4018696794126eb7bc2a592e4f3baecf31b472ec3"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0383",
+      "lq_sha256": "fc0b3297513057a0e89ae720239009c30d6293d9d41aadfdd93105127ec537d3",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6025360992976597,
+        7.1113781792776924,
+        -0.40366350433656145,
+        -1.451969793864659,
+        2.055400128023965
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.33126509189605713,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15448935329914093,
+        "psnr": 34.09101486206055,
+        "ssim": 0.9113710192928789
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15448935329914093,
+        "psnr": 34.09101486206055,
+        "ssim": 0.9113710192928789
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0383__noise.png",
+        "sha256": "9f75e833f21cb75d4a65c79ca390a255cebe509ad31075c8303b24adf1ab7493"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0384",
+      "lq_sha256": "c8aa9abff9e9b6bd5a8440c5fc66b2851f0f0a8494dd7af95c9b57448fa1883a",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6046828361494201,
+        7.185609946932112,
+        -0.4740689908819539,
+        -1.400262645312718,
+        2.039689772895404
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.3315136432647705,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15435852110385895,
+        "psnr": 34.341224670410156,
+        "ssim": 0.9116088090362102
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15435852110385895,
+        "psnr": 34.341224670410156,
+        "ssim": 0.9116088090362102
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0384__noise.png",
+        "sha256": "887a528ab0c0ea2002018e60f30e1bba583e01fa07108374c5e669c2c46a1a28"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0385",
+      "lq_sha256": "ec4d9322cfc3bd0d7f0da153e0f219754c8f99330ff9218c33832ceb0e725461",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6209464809724263,
+        7.159732042040144,
+        -0.4466987011688096,
+        -1.401996762411935,
+        2.075431260892323
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.3310021758079529,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15409253537654877,
+        "psnr": 34.15855407714844,
+        "ssim": 0.9115907521606974
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15409253537654877,
+        "psnr": 34.15855407714844,
+        "ssim": 0.9115907521606974
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0385__noise.png",
+        "sha256": "ad7cd6b854dec58f6e6285e6ec685a7835257ee027443956b9bbb5267024b071"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0386",
+      "lq_sha256": "be587ae2df76b4bab6b5bad8c75b34e2e461b138bb8ff35d83d68cdd6cd93a7f",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5932716224874769,
+        7.189969900676182,
+        -0.4639181837439537,
+        -1.345081070491246,
+        1.9837745376995632
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.33122554421424866,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.1543944776058197,
+        "psnr": 33.883785247802734,
+        "ssim": 0.9113208952976956
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1543944776058197,
+        "psnr": 33.883785247802734,
+        "ssim": 0.9113208952976956
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0386__noise.png",
+        "sha256": "e61f51b4badce8ccf83c3bb341d9e0f4252d5b0be346b5f4cff8d7db974af444"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0387",
+      "lq_sha256": "f7638141a5a045c3ccf2b5d798cb6162a9832db7d1391105329cda544927108c",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.1413214500461306,
+        6.746156113488333,
+        -0.3486474437373025,
+        -1.4983052236693246,
+        2.773218435049057
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.36593663692474365,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.08060844987630844,
+        "psnr": 35.69538116455078,
+        "ssim": 0.9522019083349665
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.08060844987630844,
+        "psnr": 35.69538116455078,
+        "ssim": 0.9522019083349665
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0387__noise.png",
+        "sha256": "abcb97d4f1685ec549099466aa7dafa7c88beb40b407f98deef3e999e4b94526"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0388",
+      "lq_sha256": "b407d6e71561e86837073a09dddb520d78a2148a82aeb8a9de74ac727dbd19ca",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.24107662013598852,
+        6.777082913262504,
+        -0.30817705690860747,
+        -1.498543359552111,
+        2.771805056503841
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.3622453212738037,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.08149832487106323,
+        "psnr": 35.32772445678711,
+        "ssim": 0.9519049490857566
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.08149832487106323,
+        "psnr": 35.32772445678711,
+        "ssim": 0.9519049490857566
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0388__noise.png",
+        "sha256": "45d22cd02cbdff2b0d1ba89d7b0f3e8d7c77a74f7b16d23fb6dbf405868918a4"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0389",
+      "lq_sha256": "adba8030bc8eb1fe830960448f98660e217d6e6853106e80c3e95d19dd436ac5",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5847125785691397,
+        7.183387334006174,
+        -0.46667950664247787,
+        -1.3359701531273978,
+        2.013765798296247
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.32888370752334595,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.14957726001739502,
+        "psnr": 33.34907150268555,
+        "ssim": 0.9131280471422053
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.14957726001739502,
+        "psnr": 33.34907150268555,
+        "ssim": 0.9131280471422053
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0389__noise.png",
+        "sha256": "76aea46316f6bf705c61c1ed0963439d5e50a50514ec5ac10b84c71f09da4be6"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0390",
+      "lq_sha256": "5ada91984a39c155604d51908abecf31c7e2ff5d2e52253581e4b17f304f7772",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6616245342152459,
+        7.204240846633911,
+        -0.46493134668895175,
+        -1.3186400634901865,
+        2.0279700441019877
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.331470787525177,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15342214703559875,
+        "psnr": 34.260398864746094,
+        "ssim": 0.9123010125006221
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15342214703559875,
+        "psnr": 34.260398864746094,
+        "ssim": 0.9123010125006221
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0390__noise.png",
+        "sha256": "f7d9055a3d83ca0d0b8836ed687c8858aa69cb8d31d85f9b7df776bdf7961306"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0391",
+      "lq_sha256": "3e80fca760b66083fa6ad07fd5a6203c186a9abaafb797bf241ddcd96b484afc",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9308453366160393,
+        6.758055865764618,
+        -0.40936287455260756,
+        0.3887688651680946,
+        1.0004934310913085
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2639598250389099,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15728214383125305,
+        "psnr": 40.80889892578125,
+        "ssim": 0.9570253578726335
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15728214383125305,
+        "psnr": 40.80889892578125,
+        "ssim": 0.9570253578726335
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0391__noise.png",
+        "sha256": "381359c68b6c399f5e855410dc905f87b0d2046bb9839f7b166fdb4b2310e277"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0392",
+      "lq_sha256": "d33fd86fd3bb735cd366a68aab4fa9e4a8d7fa5ff0cdbe39d049eecdac16bdd6",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.4119221203029155,
+        5.671097815036774,
+        0.3114111512899399,
+        0.3880895785987377,
+        0.8860064923763276
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2899414896965027,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.06765824556350708,
+        "psnr": 42.25595474243164,
+        "ssim": 0.9779971212040838
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.06765824556350708,
+        "psnr": 42.25595474243164,
+        "ssim": 0.9779971212040838
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0392__noise.png",
+        "sha256": "ae33d756d8a4308d51642087b4aa7acdf55736cc81b975c8bf4168a69a229ade"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0393",
+      "lq_sha256": "d8feec7c79b6f07c2dfdf5014e18772200d2ca1092e85bc195e5e0f676a41bdb",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.3037951946258546,
+        5.873496785759926,
+        0.30635412633419035,
+        0.2577944166958332,
+        0.8946829408407211
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2898235321044922,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.0682242214679718,
+        "psnr": 42.4821891784668,
+        "ssim": 0.9780578272283958
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.0682242214679718,
+        "psnr": 42.4821891784668,
+        "ssim": 0.9780578272283958
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0393__noise.png",
+        "sha256": "1f6d2334b66608efebbaf046e6fd80a98a407e00c9747795b851c7b99a69c623"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0394",
+      "lq_sha256": "b6fd7153edde304a5316af431253c56d47540b3df14ba0571ee43361ce719bf0",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.0620849192142487,
+        6.729829144477844,
+        -0.4830756325274706,
+        0.31225872188806536,
+        0.944526606798172
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2639390230178833,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15893951058387756,
+        "psnr": 40.78374481201172,
+        "ssim": 0.9569470100807951
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15893951058387756,
+        "psnr": 40.78374481201172,
+        "ssim": 0.9569470100807951
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0394__noise.png",
+        "sha256": "d03be6c3c9660cd8711615bf7956f3b6a9a3c939ed37df96d510ca0070cc935e"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0395",
+      "lq_sha256": "52c2cf06c98f98f90e023ae11f46067f02c24950c402089715b3afffbfb3690a",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9718689456582069,
+        6.735278582572937,
+        -0.3500337740406394,
+        0.33336475789546965,
+        0.9609876215457916
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.26391124725341797,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15749646723270416,
+        "psnr": 41.01945877075195,
+        "ssim": 0.9570534878916858
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15749646723270416,
+        "psnr": 41.01945877075195,
+        "ssim": 0.9570534878916858
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0395__noise.png",
+        "sha256": "187a9a3235a7161d8dbba24b0249621c0afc855976647656d90e3fa8174283ee"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0396",
+      "lq_sha256": "6a84738d4508865e46028858e8085b01bf52dbb9aa465d2ef070dd06986b2fda",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.0057243056595326,
+        6.742846071720123,
+        -0.40421769246459005,
+        0.3069531455636024,
+        0.9457501709461212
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.264045774936676,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.1598844826221466,
+        "psnr": 40.88147735595703,
+        "ssim": 0.9568440351829304
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1598844826221466,
+        "psnr": 40.88147735595703,
+        "ssim": 0.9568440351829304
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0396__noise.png",
+        "sha256": "3f1ba912ae14cfcd19f19d3dcd340a6c16569050efc9b215bbf70906c2644bf1"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0397",
+      "lq_sha256": "fc9d6b6c52a6cf56fc2191bd5575228a397370e0d42304bb8eb54ace6d0311a4",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.4079931311309337,
+        6.217672300338745,
+        -0.03621512353420257,
+        0.04054447114467621,
+        0.7956834673881531
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.28536927700042725,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.10667861998081207,
+        "psnr": 41.41513442993164,
+        "ssim": 0.9691277876492121
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.10667861998081207,
+        "psnr": 41.41513442993164,
+        "ssim": 0.9691277876492121
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0397__noise.png",
+        "sha256": "d6577a34492c98d45e5efe39e2c217044ebde03d25a879312530eceba637f851"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0398",
+      "lq_sha256": "e15c012351689d881fe4433d384c4a4fbf40626ee23d22f3f609a6f7eb2eea3c",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9999685451388359,
+        6.681575095653534,
+        -0.352421336248517,
+        0.34765333086252215,
+        0.9592275798320771
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.26382648944854736,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.15769633650779724,
+        "psnr": 40.80779266357422,
+        "ssim": 0.9571054077192701
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15769633650779724,
+        "psnr": 40.80779266357422,
+        "ssim": 0.9571054077192701
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0398__noise.png",
+        "sha256": "1f697208526ce33a5a84169a5aba2bf3eeeea274616f5575bec590aa57587c80"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0399",
+      "lq_sha256": "94b209095bfba1df8cd1640010d06f5d18aaef5deb57eb480586f66892add111",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.2455412812530995,
+        5.84665414094925,
+        0.2831170201301575,
+        0.3476739123463631,
+        0.9527006506919861
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.2898651361465454,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.06957383453845978,
+        "psnr": 42.08481216430664,
+        "ssim": 0.9778947670824365
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.06957383453845978,
+        "psnr": 42.08481216430664,
+        "ssim": 0.9778947670824365
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0399__noise.png",
+        "sha256": "1003094569459676e9f464de03983154f940f85ad44e16df9e4a20fa21de78b9"
+      }
+    },
+    {
+      "record_id": "official_05Noise_0400",
+      "lq_sha256": "1c7583feea81fcb7eee48d545721e56525de1928d2d592c4033aea14bc3bbc4f",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.089730741083622,
+        5.144715094566346,
+        1.1749714940786362,
+        0.6602433301508427,
+        0.9400921434164047
+      ],
+      "baseline_route": "noise",
+      "candidate_route": "noise",
+      "delta": 0.286601185798645,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "05Noise",
+      "baseline_metrics": {
+        "lpips": 0.07475335150957108,
+        "psnr": 43.303646087646484,
+        "ssim": 0.9828920867679851
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.07475335150957108,
+        "psnr": 43.303646087646484,
+        "ssim": 0.9828920867679851
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_05Noise_0400__noise.png",
+        "sha256": "d5980fab5f96e148fb4f23670809d2b17871cce49dd8593f4d15c92564957460"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1101",
+      "lq_sha256": "c13d76b2147751a3ca2fd10159790444b62c135247eb6f10857f2cf6da7dc960",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.1295857328389372,
+        0.6858726410261754,
+        1.0762256213596888,
+        6.413082821028573,
+        1.6077292561531067
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.20373858511447906,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.17363852262496948,
+        "psnr": 21.601863861083984,
+        "ssim": 0.8986621637712716
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.17363852262496948,
+        "psnr": 21.601863861083984,
+        "ssim": 0.8986621637712716
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1101__lowlight.png",
+        "sha256": "7c9f9020a5ed050530c0e7a27733b614eb9e513d3d994d1d7cff7f857e5f502a"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1102",
+      "lq_sha256": "ddc3723326b762d3e3efec6bb7801ccfc98072621b02147f67db4d67a0d59cdf",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.3394688027245658,
+        0.43633240674223217,
+        0.6036936896187919,
+        6.175912993294852,
+        1.186219504901341
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.25047969818115234,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.27166181802749634,
+        "psnr": 25.452533721923828,
+        "ssim": 0.8133526543380429
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.27166181802749634,
+        "psnr": 25.452533721923828,
+        "ssim": 0.8133526543380429
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1102__lowlight.png",
+        "sha256": "4135e32b49d500ce042009f73c29568accdc032b369794d0c88976780b6046e3"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1103",
+      "lq_sha256": "9fb1094b1bb34b35f4ce607d62cdb0ca94382f07f2939765e6d8a52933403fcf",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        2.0697528443166187,
+        0.3237308380859239,
+        0.35735186508723665,
+        5.698529396738325,
+        0.9885022640228271
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.24290524423122406,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.32342642545700073,
+        "psnr": 21.721637725830078,
+        "ssim": 0.7979996237307974
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.32342642545700073,
+        "psnr": 21.721637725830078,
+        "ssim": 0.7979996237307974
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1103__lowlight.png",
+        "sha256": "1ae21638d43428cfe3aab58a2f4fe06a22dc71f44165fdfb6012e69dbcd02b50"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1104",
+      "lq_sha256": "4329820a093ea985d13ca83dc85aa752b9fa8e0948cde1f2f2e2ad4b88cee708",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.6172162549836295,
+        0.7162253485460367,
+        0.7106546419007438,
+        6.033718194280352,
+        0.8912657754761832
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.24507592618465424,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.25607186555862427,
+        "psnr": 15.624943733215332,
+        "ssim": 0.7526498735208756
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.25607186555862427,
+        "psnr": 15.624943733215332,
+        "ssim": 0.7526498735208756
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1104__lowlight.png",
+        "sha256": "fc6f3dbd6b12cf87590b4947e88e67d5a7c918d006e938c65ef6852c1a6ce323"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1105",
+      "lq_sha256": "17765a7457e3430597f3ab4896a9ab22d701eb9bc9b283be0a1a396ffb9f3058",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.014546674809285573,
+        1.003160905625139,
+        0.4927624634334019,
+        6.462889381817409,
+        1.1663628220558167
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.20875336229801178,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.18832409381866455,
+        "psnr": 18.920366287231445,
+        "ssim": 0.8644388581716335
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.18832409381866455,
+        "psnr": 18.920366287231445,
+        "ssim": 0.8644388581716335
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1105__lowlight.png",
+        "sha256": "2a220feec1c4cfa6c8022b2a1e58bf409b24091d330bab9e196e9985d857e6c4"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1106",
+      "lq_sha256": "7b3209dadac394520a6dfead9e6cb17268eeef7a681530b8a9b3bd064a281746",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.6281710128699031,
+        1.7075713511024202,
+        0.4829347176211221,
+        7.16304498059409,
+        0.9646909236907959
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.24678482115268707,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.28454887866973877,
+        "psnr": 9.20309829711914,
+        "ssim": 0.7271206401080642
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.28454887866973877,
+        "psnr": 9.20309829711914,
+        "ssim": 0.7271206401080642
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1106__lowlight.png",
+        "sha256": "f25b7caa4181fcca70c427adacbf59cb19f09524994eeb76841da59570811501"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1107",
+      "lq_sha256": "d3bcc410913ed20bc4f2a5414a2989e61c2d401089281d0f843d346afe352cef",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.23816085181065969,
+        2.399257323571614,
+        0.13668845381055558,
+        6.173848237310137,
+        1.0861803548676627
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.20593895018100739,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.27928316593170166,
+        "psnr": 19.748857498168945,
+        "ssim": 0.8308881575294914
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.27928316593170166,
+        "psnr": 19.748857498168945,
+        "ssim": 0.8308881575294914
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1107__lowlight.png",
+        "sha256": "be6d8e75d43d139e2e9fa0662ceaf00aab9c007eed52c1ad9746abf7d038fbf2"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1108",
+      "lq_sha256": "9864f45a17539554edce59f7ef02a72bdde227a70a9b7e1bc88fa65a1040a0b5",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.18416000796215876,
+        1.6565866002014704,
+        0.4894311768668039,
+        6.335732766560146,
+        0.9311426367078509
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.17712180316448212,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.1507476568222046,
+        "psnr": 19.735044479370117,
+        "ssim": 0.8944732789346804
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1507476568222046,
+        "psnr": 19.735044479370117,
+        "ssim": 0.8944732789346804
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1108__lowlight.png",
+        "sha256": "53ce8afafd77bdeb3e2997738fa708c2a20981e59a7615b91330059f6f937e33"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1109",
+      "lq_sha256": "c392f415e76adcf54447df803b0a002e72e01a6b7b939e80da218787bc125b05",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.41124245311532703,
+        1.4720777294465475,
+        -0.016758578164236888,
+        5.836462804249355,
+        0.8856133563177926
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2384306639432907,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.15649142861366272,
+        "psnr": 19.097280502319336,
+        "ssim": 0.8797194946210365
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15649142861366272,
+        "psnr": 19.097280502319336,
+        "ssim": 0.8797194946210365
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1109__lowlight.png",
+        "sha256": "2e1dc350a31acf1f16abbb992600d64ee4f0edd05fc4e623970f6422cba55647"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1110",
+      "lq_sha256": "d2e4e32ab6f40ae7967f4ba5a97ce5fbaa70b4cc1de092beb67b6474354445a1",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.552916020154953,
+        0.30974934875432936,
+        1.5862966222422463,
+        6.737531202180045,
+        1.0787284927708762
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.13591264188289642,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.16169476509094238,
+        "psnr": 17.9847412109375,
+        "ssim": 0.7753880034288664
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.16169476509094238,
+        "psnr": 17.9847412109375,
+        "ssim": 0.7753880034288664
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1110__lowlight.png",
+        "sha256": "1b28e6b052f5bd54c0365d4317ee3a323fa89ce152c61ed8a98390cae7d4d4c4"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1111",
+      "lq_sha256": "3499ffad0c435b5fa5d771505c4048a19238abbb0c4d5a8306c1b2a0cffdaf04",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.5277164482644626,
+        1.5261715309960502,
+        0.8853629997798375,
+        5.61845280442919,
+        1.0479336977005005
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2465306967496872,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.18104401230812073,
+        "psnr": 18.11145782470703,
+        "ssim": 0.8774337698867575
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.18104401230812073,
+        "psnr": 18.11145782470703,
+        "ssim": 0.8774337698867575
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1111__lowlight.png",
+        "sha256": "d4cb0d145ee934419825f72be38c273aff97e1f10c2a11d1bfe26b7daec89d06"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1112",
+      "lq_sha256": "71b21e4a6ed6b69a395b91c8f61c17fdb885cc8b50eb438c0353c282a8c693e2",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5589584889156478,
+        0.9551570495324475,
+        1.5968310151781355,
+        6.837326066834586,
+        1.7370339930057526
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2609662413597107,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.25794872641563416,
+        "psnr": 23.016990661621094,
+        "ssim": 0.6806770854354391
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.25794872641563416,
+        "psnr": 23.016990661621094,
+        "ssim": 0.6806770854354391
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1112__lowlight.png",
+        "sha256": "29bf991f05c5659aa897093833a87263563bc53f095d8ff9e7c6444c321b8771"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1113",
+      "lq_sha256": "8bbcf6866820532b42c41a843e494201ec6ac1216e9034886e44ab3719d187d6",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.15619321752871787,
+        1.1150990341390883,
+        1.2652941686766488,
+        6.149864111627851,
+        1.5113341552870614
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2145240753889084,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.18536630272865295,
+        "psnr": 18.81578826904297,
+        "ssim": 0.883511472871529
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.18536630272865295,
+        "psnr": 18.81578826904297,
+        "ssim": 0.883511472871529
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1113__lowlight.png",
+        "sha256": "8ac378783ac3758f9df0de92abb8015cefce622c339bee9f9c90597c77143543"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1114",
+      "lq_sha256": "4bd6002dee6f2c1cc18df19fbeeb56ce99528566ea9014c7dd3c9b77237344a0",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.029563845667455877,
+        1.2095667304737228,
+        1.0140101654188973,
+        5.823018193244934,
+        1.2712246179580688
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2609320282936096,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.16590999066829681,
+        "psnr": 20.382192611694336,
+        "ssim": 0.9065523653945616
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.16590999066829681,
+        "psnr": 20.382192611694336,
+        "ssim": 0.9065523653945616
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1114__lowlight.png",
+        "sha256": "4e90c8f1bfdadcf71f17dfee037d7683e5db6f598b77c408fb8849ef7888b75f"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1115",
+      "lq_sha256": "7e92c2beaa44b2c170a8c669603579e245bea41fa07fb8a9c811f4a5a3bf8f9f",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.2707284007753645,
+        1.6486659539597375,
+        0.8972331242901939,
+        5.808633327484131,
+        0.5070128951753888
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.18281348049640656,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.1320137083530426,
+        "psnr": 20.638086318969727,
+        "ssim": 0.9167483386810792
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1320137083530426,
+        "psnr": 20.638086318969727,
+        "ssim": 0.9167483386810792
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1115__lowlight.png",
+        "sha256": "fc5d09ca1f97066fdaafbef97d2c5227fa8a2300a4f0a3f2dfc92fe07c3415f5"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1116",
+      "lq_sha256": "a02b253d6d7d61a7d40712bfda655853e474a5eb6405339f7fe1e9520a884657",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.267098137310573,
+        0.8361150409494128,
+        0.4237893649509975,
+        6.442800164222717,
+        1.7147936735834395
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.26514601707458496,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.14990033209323883,
+        "psnr": 22.10779571533203,
+        "ssim": 0.8861727030848617
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.14990033209323883,
+        "psnr": 22.10779571533203,
+        "ssim": 0.8861727030848617
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1116__lowlight.png",
+        "sha256": "f5fc64b01599bf639b544e9e8996d8635eff7e9972f0d6af84b8145b10ecd318"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1117",
+      "lq_sha256": "77ca4567f3e28f81c03980058d59cb951471d0b8d8af73cc35915265be3ef5a1",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.5483677397881236,
+        1.3493502331631524,
+        0.844459993498666,
+        6.568069781575884,
+        1.5719815407480513
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.26523321866989136,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.2702939510345459,
+        "psnr": 14.89676570892334,
+        "ssim": 0.7938288268868369
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2702939510345459,
+        "psnr": 14.89676570892334,
+        "ssim": 0.7938288268868369
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1117__lowlight.png",
+        "sha256": "e5fd22fc818a80597d4bae6b984490d725f771de13054d1bb36469d54a88a8b8"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1118",
+      "lq_sha256": "1d7924634c3b21ae4b71e06a806fd488f1228779ab1223b2a1480abf13f37cb7",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.36278958725077765,
+        1.3899443383727754,
+        1.4684265085629054,
+        5.972311922482082,
+        1.279756030866078
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.16039679944515228,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.1360093504190445,
+        "psnr": 20.103425979614258,
+        "ssim": 0.8346326548932967
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1360093504190445,
+        "psnr": 20.103425979614258,
+        "ssim": 0.8346326548932967
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1118__lowlight.png",
+        "sha256": "839fc4e072aeadd81d93e694d44379da664e1328d83876113903785e4e241257"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1119",
+      "lq_sha256": "07467737104c6bc339d823814721558255c952b341d67a51d76e1c462e8f9b74",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.43782046330826624,
+        1.2807503300053733,
+        0.9487545149666923,
+        6.179443001747131,
+        1.3308281557900565
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2758234739303589,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.17976856231689453,
+        "psnr": 17.884809494018555,
+        "ssim": 0.8717256784593972
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.17976856231689453,
+        "psnr": 17.884809494018555,
+        "ssim": 0.8717256784593972
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1119__lowlight.png",
+        "sha256": "b7bed6abff607f2da8741a65ef4efe1a9ef31076d9716110c839202433defd8d"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1120",
+      "lq_sha256": "74f2907e2c12042ea5e843c25de6e4dbf65c1db001ed1bbf949ebcee87803d62",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.7057014049163887,
+        0.7185938568519694,
+        0.8243742755481175,
+        6.3889752967017035,
+        1.2682672483580453
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.22907094657421112,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.13528573513031006,
+        "psnr": 20.092153549194336,
+        "ssim": 0.7804887229791768
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.13528573513031006,
+        "psnr": 20.092153549194336,
+        "ssim": 0.7804887229791768
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1120__lowlight.png",
+        "sha256": "189b1a184a7c32378dc3f8071c09af5512261856745498f29f848c0d1207b80c"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1121",
+      "lq_sha256": "5c3f8335a728041f8b7295666dd34016b0cb155968c9ab35433ae1b30d73be70",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.05847015976905823,
+        1.3131757421152932,
+        0.49144959449768066,
+        6.535841005189078,
+        1.041039228439331
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2414589375257492,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.29513776302337646,
+        "psnr": 20.173322677612305,
+        "ssim": 0.7931168301260262
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.29513776302337646,
+        "psnr": 20.173322677612305,
+        "ssim": 0.7931168301260262
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1121__lowlight.png",
+        "sha256": "23c70c91a025e67d4c38296c5b029f28232350d7273fb9b94656fba27d7bdfbb"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1122",
+      "lq_sha256": "dbbda8a51a1f0a66a27c5aba8ee11b58b543553ca8c73f404bab930b24263525",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.05791883170604706,
+        1.1821636472429549,
+        1.1826513494764055,
+        5.67908901827676,
+        1.4092854516846793
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.27489161491394043,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.27288761734962463,
+        "psnr": 10.946159362792969,
+        "ssim": 0.7800432819371704
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.27288761734962463,
+        "psnr": 10.946159362792969,
+        "ssim": 0.7800432819371704
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1122__lowlight.png",
+        "sha256": "fafdf18b40201249731030d6f2490ebdb167c89c3f57e3aa6dad988070d05247"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1123",
+      "lq_sha256": "50244377d867d9cc110e4f6daa252c20f216e96ab04bd1288c24e3d7cd93b707",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9464638020311084,
+        0.9506548845342228,
+        0.014991709164210729,
+        5.599793331963675,
+        1.1855593238558089
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.28729933500289917,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.2765182554721832,
+        "psnr": 14.520215034484863,
+        "ssim": 0.7080749356812189
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2765182554721832,
+        "psnr": 14.520215034484863,
+        "ssim": 0.7080749356812189
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1123__lowlight.png",
+        "sha256": "faaf2a62dc7efbdc490787c22abf059aaa28ba446dfb77847112b5a3dac5305f"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1124",
+      "lq_sha256": "6d58dd8ef90c7462bc3e2d64b43ccd7a23835a99bbd470e0bf9383f367c5c27b",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.12809117777006968,
+        0.34102251274245127,
+        0.9149846519742694,
+        4.961354170526777,
+        0.012816207749503
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.23216165602207184,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.19376401603221893,
+        "psnr": 23.076513290405273,
+        "ssim": 0.7758471755923056
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.19376401603221893,
+        "psnr": 23.076513290405273,
+        "ssim": 0.7758471755923056
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1124__lowlight.png",
+        "sha256": "309018fffc17d362d0b4f2811805092259554dd323b95f98d5d5b2e60220b3a5"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1125",
+      "lq_sha256": "a6fa03d3429d37856a7895b1ca73c824defc2fa95e8e118031a2266022a492c0",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.698008092386382,
+        0.9563542519296918,
+        1.0876294119017464,
+        5.93218799999782,
+        1.155889357839312
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2201007455587387,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.15193474292755127,
+        "psnr": 20.194480895996094,
+        "ssim": 0.8557850932639033
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15193474292755127,
+        "psnr": 20.194480895996094,
+        "ssim": 0.8557850932639033
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1125__lowlight.png",
+        "sha256": "152199952f46656ee34a70fc4b9e5a4d4159efeccbb22bc1fa9a5471815d5970"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1126",
+      "lq_sha256": "e5b9686f5e06139b9c306d1cc77bde553c897e6724c1e81be88115c16e9f96dc",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.8534809414829526,
+        0.28915212250181604,
+        0.8011268547603062,
+        6.212757093565805,
+        1.425069272518158
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.21952684223651886,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.15890106558799744,
+        "psnr": 21.560195922851562,
+        "ssim": 0.7467871568425604
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.15890106558799744,
+        "psnr": 21.560195922851562,
+        "ssim": 0.7467871568425604
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1126__lowlight.png",
+        "sha256": "48eb0a3fc320563c1718d811ce15b8ad99e21d4ed3b5235da604b82500fc2278"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1127",
+      "lq_sha256": "9eb2e0ce7dbbf8e27849b4977ab14e98c7b487b93c5d29a1d1cdfd0f3304e7ad",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.7057947814464569,
+        0.7774391642638615,
+        -0.33194116183689665,
+        6.297987648418972,
+        1.458865421158927
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.22810082137584686,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.3650439381599426,
+        "psnr": 8.680488586425781,
+        "ssim": 0.5934812752486905
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.3650439381599426,
+        "psnr": 8.680488586425781,
+        "ssim": 0.5934812752486905
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1127__lowlight.png",
+        "sha256": "378aeae17a15f3fa914e5be514e5676e8cc98b51acb5a3bfd7efebccafda16a8"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1128",
+      "lq_sha256": "85d9162e926d2f55a7fc1fbbdcf51dab15edd402b22c3582503af7b7eb46ee3a",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.3469106299536568,
+        0.9221729795847621,
+        0.19205666865621293,
+        5.085553518363407,
+        0.639005013874599
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.20495758950710297,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.2358894646167755,
+        "psnr": 19.04045867919922,
+        "ssim": 0.8643227546982528
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2358894646167755,
+        "psnr": 19.04045867919922,
+        "ssim": 0.8643227546982528
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1128__lowlight.png",
+        "sha256": "5ce3d44869aff9385f53d582b0819650edf3ceb33b6e6cf3ea177db78c5cc70e"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1129",
+      "lq_sha256": "2098333a945c830d69280125e7489e93ddc456eafb77a7048dfbd9f89a88600b",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.16359329968690872,
+        -0.5822126498179776,
+        2.049650499863284,
+        6.490394302776882,
+        -0.609870684998376
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2817779779434204,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.2032792866230011,
+        "psnr": 18.8720760345459,
+        "ssim": 0.6628488456184214
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.2032792866230011,
+        "psnr": 18.8720760345459,
+        "ssim": 0.6628488456184214
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1129__lowlight.png",
+        "sha256": "52186e68a0ce47374f12f2a5c7c79f014cab5befad844ca1859f2101620a167d"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1130",
+      "lq_sha256": "5e1fa392c60660c66f5362ee9c58c8d64c9df4cf04d0bbfa23c41c84fae8a486",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.32871477625199724,
+        0.7587749745164599,
+        0.5940697107996259,
+        6.069473658289228,
+        1.2856297663279943
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.21974427998065948,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.170261949300766,
+        "psnr": 15.454900741577148,
+        "ssim": 0.9153057564174186
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.170261949300766,
+        "psnr": 15.454900741577148,
+        "ssim": 0.9153057564174186
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1130__lowlight.png",
+        "sha256": "f21d59c3f3b687f3760f9ebc58e5b6721cbdfc5de9926c4db4a4e41ed7835454"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1131",
+      "lq_sha256": "aec1671c5a360d5128f2a808c0150e48b0cc6a46c45550e36e59a7067d20725f",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        1.1152425423264503,
+        0.165268737077713,
+        -0.8471569091081619,
+        6.303269743919373,
+        0.44032386541366575
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.15076325833797455,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.11587180942296982,
+        "psnr": 17.42827606201172,
+        "ssim": 0.9397601688298179
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.11587180942296982,
+        "psnr": 17.42827606201172,
+        "ssim": 0.9397601688298179
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1131__lowlight.png",
+        "sha256": "3024130f2bbbd657c446e553420d299c637576e147fb91d647c922e57fa06604"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1132",
+      "lq_sha256": "f3f33212842a651d556b37f75286b8263062ef8a3af4db021db8957999ae9327",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9398358196020127,
+        0.14589569270610808,
+        -0.5983109682798385,
+        6.203761243820191,
+        0.6356217265129089
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.16980402171611786,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.1292269229888916,
+        "psnr": 16.353076934814453,
+        "ssim": 0.9335492150914769
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1292269229888916,
+        "psnr": 16.353076934814453,
+        "ssim": 0.9335492150914769
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1132__lowlight.png",
+        "sha256": "b07d7af80235a520c4e901d8a9da09b4e12493d3bf8502060f16adc34bba50f7"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1133",
+      "lq_sha256": "cc183df76ab0c35dfbb5d02029a527f3c74c8428ae914821c697ec91b1bcf825",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.9867487713694573,
+        -0.2088109403848648,
+        -0.4230248048901558,
+        5.82373321056366,
+        0.7448428511619568
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.20514662563800812,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.1336108148097992,
+        "psnr": 15.850255966186523,
+        "ssim": 0.9274521499010082
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1336108148097992,
+        "psnr": 15.850255966186523,
+        "ssim": 0.9274521499010082
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1133__lowlight.png",
+        "sha256": "b7d173af830113c1634a2d7e64fe596610ca2a5ed730a9e0ebe57e7841985e31"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1134",
+      "lq_sha256": "c867f4d0540cfee8a6c58c9fd7937483e40303edccfe416e0fa7c1ee53453dcb",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.957750940322876,
+        -0.03214001655578613,
+        -0.34971003532409667,
+        5.931274724006653,
+        0.76581010222435
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.1915682703256607,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.13146455585956573,
+        "psnr": 15.820009231567383,
+        "ssim": 0.926836109683517
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.13146455585956573,
+        "psnr": 15.820009231567383,
+        "ssim": 0.926836109683517
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1134__lowlight.png",
+        "sha256": "6c3cbe9ae5f8f3566b31e619762a60414c2f44c4adf0f50702f3491dc57e8001"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1135",
+      "lq_sha256": "7c32c7cc45175b1265d3208f8035a3c62d0ba9e7750ca4ada19084f004b9b719",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -1.2663034707307816,
+        0.765104478597641,
+        1.0128977159038186,
+        6.687662160396576,
+        -0.27968561053276064
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.19831950962543488,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.09666066616773605,
+        "psnr": 24.270465850830078,
+        "ssim": 0.9627191830810434
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.09666066616773605,
+        "psnr": 24.270465850830078,
+        "ssim": 0.9627191830810434
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1135__lowlight.png",
+        "sha256": "02fd857c6ec07550e56573039838fe6b388bac0cc15399f1b68ae76c81e754c6"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1136",
+      "lq_sha256": "ce0fda5289ff118696f9cfb62e76249ae27b99e640c0a0fc519618496d3804cf",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -1.3798315525054932,
+        0.5560844421386719,
+        1.0510374650359153,
+        6.500135374069214,
+        -0.02930848002433777
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.21718697249889374,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.10947420448064804,
+        "psnr": 25.371829986572266,
+        "ssim": 0.9623032369437224
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.10947420448064804,
+        "psnr": 25.371829986572266,
+        "ssim": 0.9623032369437224
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1136__lowlight.png",
+        "sha256": "24c7da10649c1bec8e3d47e044e5fb58b044dc5ec8c842d364d3d1775a568b90"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1137",
+      "lq_sha256": "259be6d9c29c8f33a7bfb88bea4d3142f9dbe2353b0bb6bf4dd782c3638e465a",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -1.3212479308247567,
+        0.4732104420661926,
+        1.0474766947329044,
+        6.530044543743133,
+        -0.10733100771903992
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.21217332780361176,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.1102229431271553,
+        "psnr": 23.720857620239258,
+        "ssim": 0.9604820309814501
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1102229431271553,
+        "psnr": 23.720857620239258,
+        "ssim": 0.9604820309814501
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1137__lowlight.png",
+        "sha256": "aa562f0a5e5ce90a48cd738361f6232c5a0071483f81514cfc6878fcda2e6415"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1138",
+      "lq_sha256": "1b561e0c62667f71db69ff7fae5332b33ceebb3c86640a93cbd625c9c49f05a1",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -1.4083742320537567,
+        0.8637672245502472,
+        1.0369465962052344,
+        6.731581711769104,
+        -0.2782133162021637
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.18966911733150482,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.09691619127988815,
+        "psnr": 23.359888076782227,
+        "ssim": 0.9622580212039483
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.09691619127988815,
+        "psnr": 23.359888076782227,
+        "ssim": 0.9622580212039483
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1138__lowlight.png",
+        "sha256": "aacc6fa3a7daec3e6fb25333298d7520900167b4c4fadc729eb8dc79cf996728"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1139",
+      "lq_sha256": "207ae00a90b2a5aa7584650bc6e1aaab0d5e4898c785aef01ca5a6ddebf321f2",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.14685304872691632,
+        -0.15649901926517487,
+        0.035862318612635134,
+        6.508410573005676,
+        0.5860317587852478
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.1802135556936264,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.09877525269985199,
+        "psnr": 20.810096740722656,
+        "ssim": 0.9585899428005904
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.09877525269985199,
+        "psnr": 20.810096740722656,
+        "ssim": 0.9585899428005904
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1139__lowlight.png",
+        "sha256": "ba6ff79bcb83f5a9fbddfeb75f36ec39aac0a924a6b3ada122ddc1c03d3bf3d8"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1140",
+      "lq_sha256": "fbfc0bc2c419cd02f18c165bfbf00d1f56a10e4a79c98602e9a180a61484b728",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.21237822994589806,
+        -0.4642023205757141,
+        0.3558163594454527,
+        6.104954206943512,
+        1.0571317315101623
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.21114583313465118,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.1039089560508728,
+        "psnr": 21.407958984375,
+        "ssim": 0.95910879421744
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.1039089560508728,
+        "psnr": 21.407958984375,
+        "ssim": 0.95910879421744
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1140__lowlight.png",
+        "sha256": "c9ebab5fe10b5c01315339c8b49d53560b3145131e15116669321e5105d935cf"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1141",
+      "lq_sha256": "6a4a7bb6c6807c3614096258d6bb4f0dd0e1cc6562863809e001a6383b6336c1",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.17315384969115258,
+        -0.2318388491868973,
+        0.0667278528213501,
+        6.502372789382934,
+        0.5865078210830689
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.17742986977100372,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.10954907536506653,
+        "psnr": 19.17665672302246,
+        "ssim": 0.9525000649067445
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.10954907536506653,
+        "psnr": 19.17665672302246,
+        "ssim": 0.9525000649067445
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1141__lowlight.png",
+        "sha256": "ccdfd856181fd28b32445ca4a006aea5b7713affb81920ef674850052b75b232"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1142",
+      "lq_sha256": "c23bb68a32ec16f3aa37e940a45e7b110884a51ce448bac38cf57fc22cdf3dfb",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        -0.26677136644721033,
+        -0.15636062920093535,
+        0.1730160742998123,
+        6.2903312087059025,
+        0.666388475894928
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.18712715804576874,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.10332334786653519,
+        "psnr": 20.03217315673828,
+        "ssim": 0.9557934306686465
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.10332334786653519,
+        "psnr": 20.03217315673828,
+        "ssim": 0.9557934306686465
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1142__lowlight.png",
+        "sha256": "bb37aab3f151c4936a5fe8e70dc07a1de6b55e32c54b73e3877a2c3529b65405"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1143",
+      "lq_sha256": "a5a9447de4d425d35222c22c1066e5179cda1dc76278b752f78b7d0a7202b44c",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.27932513281703,
+        -0.19952628314495086,
+        0.3367521107196808,
+        6.39909405708313,
+        0.833047503232956
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2033074051141739,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.11277052015066147,
+        "psnr": 19.082059860229492,
+        "ssim": 0.9170929365924501
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.11277052015066147,
+        "psnr": 19.082059860229492,
+        "ssim": 0.9170929365924501
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1143__lowlight.png",
+        "sha256": "d12a52fa5eddcf73fe87e0d000597c61ab79e84cd2b122ab177a8abcc51950a5"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1144",
+      "lq_sha256": "4663476353fcd2a8ba26744dce3ad6add0500e046c33e2a7b2a160f1abec7075",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.2693896539509296,
+        -0.14054649472236633,
+        0.18886784911155702,
+        6.5044104099273685,
+        0.835455197095871
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.16487370431423187,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.11399554461240768,
+        "psnr": 16.636022567749023,
+        "ssim": 0.886534002952794
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.11399554461240768,
+        "psnr": 16.636022567749023,
+        "ssim": 0.886534002952794
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1144__lowlight.png",
+        "sha256": "175546f94e6a41c96bccc48b381ff21415ebe9b430d94b847c0531d6409b1106"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1145",
+      "lq_sha256": "1f2d4b252c59fb6c1d891fdabd630b18daf2529a16ff8460573e86bed5ae9d49",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.30851287208497524,
+        -0.10943171083927154,
+        0.322825425863266,
+        6.4129439234733585,
+        0.8124348819255829
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2047509402036667,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.10769404470920563,
+        "psnr": 20.25577163696289,
+        "ssim": 0.9242778038889049
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.10769404470920563,
+        "psnr": 20.25577163696289,
+        "ssim": 0.9242778038889049
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1145__lowlight.png",
+        "sha256": "9fee9835b829fdaa39c62427152bab9cf34e7bad5a058f419d3daeb69022f0ab"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1146",
+      "lq_sha256": "1b51bf682c305fd12a20970bf8126c21421138394595c0e6fa944af20208ce5d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.39873416274785994,
+        -0.01393500566482544,
+        0.08657903671264648,
+        6.587338507175446,
+        0.8178442418575287
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2360372692346573,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.11658110469579697,
+        "psnr": 21.889080047607422,
+        "ssim": 0.9349874956545424
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.11658110469579697,
+        "psnr": 21.889080047607422,
+        "ssim": 0.9349874956545424
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1146__lowlight.png",
+        "sha256": "0262428f3e35168bd05343c9f5c270603bd1dd53293c43b5a12051448e135cfe"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1147",
+      "lq_sha256": "227f995fa5aa1a1f77bbc2dc65c2647865bf4f90bbb58dfa44812f7d167420b9",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.4431756706110069,
+        0.08021589176995414,
+        -0.6879866165774209,
+        5.7280042341777255,
+        1.4804106056690216
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2339061051607132,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.12517042458057404,
+        "psnr": 20.967435836791992,
+        "ssim": 0.9479062633482621
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.12517042458057404,
+        "psnr": 20.967435836791992,
+        "ssim": 0.9479062633482621
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1147__lowlight.png",
+        "sha256": "89f1fe71e5d4ef770e86ac9d0e55f2bf61df17bef8c2a4f365ec219d70d1dbc8"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1148",
+      "lq_sha256": "6e49347598bf615861272e8e9666946b4c89460633805275da93941b2a4c7d91",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.0768777357680457,
+        0.2501658422606332,
+        0.5328502970082419,
+        5.249043754168919,
+        0.8216749106134688
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.17563413083553314,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.11065659672021866,
+        "psnr": 20.123123168945312,
+        "ssim": 0.9503733932618993
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.11065659672021866,
+        "psnr": 20.123123168945312,
+        "ssim": 0.9503733932618993
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1148__lowlight.png",
+        "sha256": "d757d644300249eca3ea66e647917dcd6c66cd065045f4d5065bb1fe78a6fc3e"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1149",
+      "lq_sha256": "60a4c0ba1ed27aa2136cecb0185472f0aefb6da35ff17671d58e7b8ed0b744c8",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.47944869313921246,
+        0.14090182440621513,
+        -0.6440889094557081,
+        5.775938163484846,
+        1.3188085275036947
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.2312750369310379,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.12175554782152176,
+        "psnr": 20.39897918701172,
+        "ssim": 0.9450457715378525
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.12175554782152176,
+        "psnr": 20.39897918701172,
+        "ssim": 0.9450457715378525
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1149__lowlight.png",
+        "sha256": "d67eaa782e317499ac53b21643675af4910e20dbbfad9f5df683e0c151139a44"
+      }
+    },
+    {
+      "record_id": "official_14Lowlight_1150",
+      "lq_sha256": "b0586d964eb0a9898ffb9a556ab372d2c92245180103177b137e04065bf8114d",
+      "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+      "base_logits": [
+        0.2627200335264206,
+        0.24861833878925868,
+        -0.11348624261362213,
+        5.4084964411599294,
+        1.2489086423601423
+      ],
+      "baseline_route": "lowlight",
+      "candidate_route": "lowlight",
+      "delta": -0.20883916318416595,
+      "GT_input": false,
+      "class_label_input": false,
+      "category_for_scoring_only": "14Lowlight",
+      "baseline_metrics": {
+        "lpips": 0.11546794325113297,
+        "psnr": 20.95587158203125,
+        "ssim": 0.9515119586547875
+      },
+      "candidate_output_available": true,
+      "candidate_metrics": {
+        "lpips": 0.11546794325113297,
+        "psnr": 20.95587158203125,
+        "ssim": 0.9515119586547875
+      },
+      "candidate_output": {
+        "path": "checkpoints/foundir_official_vlm_router_v4/official_vlm_v4_frozen4800_v1_4x2/restored/official_14Lowlight_1150__lowlight.png",
+        "sha256": "cd94dad1208e81ea7836a356f0820befca92b029157d7fb941a7ee65be25c30e"
+      }
+    }
+  ],
+  "seconds": 32.37982579320669,
+  "exit_code": 0,
+  "GPU_hours": 0,
+  "new_GPU_generations": 0,
+  "GT_pixels_decoded": 0,
+  "GT_or_labels_used_for_prediction": false,
+  "old_GPU_outputs_reused_only_after_LQ_decision": true,
+  "other450_not_regenerated_or_replaced": true,
+  "new_Rain_result_not_overwritten": true,
+  "automatic_deployment": false,
+  "official_is_adaptive_benchmark": true,
+  "legacy_router_source_overlap_not_erased": true
+}

@@ -1,0 +1,142 @@
+{
+  "status": "bounded_CPU_followups_complete_no_deployment",
+  "utc_unix": 1793986637.067481,
+  "noise": {
+    "training_seconds": 129.53345635905862,
+    "official_diagnosis_seconds": 32.37982579320669,
+    "checkpoint_sha256": "150005e1529438a940f237a3121d6335287e9161db830bc10380039b16a155d8",
+    "classification": {
+      "fit": {
+        "noise": {
+          "count": 1001,
+          "baseline_correct": 1001,
+          "candidate_correct": 1001,
+          "fixed": 0,
+          "regressed": 0
+        },
+        "lowlight": {
+          "count": 513,
+          "baseline_correct": 513,
+          "candidate_correct": 513,
+          "fixed": 0,
+          "regressed": 0
+        }
+      },
+      "calibration": {
+        "noise": {
+          "count": 80,
+          "baseline_correct": 78,
+          "candidate_correct": 79,
+          "fixed": 1,
+          "regressed": 0
+        },
+        "lowlight": {
+          "count": 77,
+          "baseline_correct": 77,
+          "candidate_correct": 77,
+          "fixed": 0,
+          "regressed": 0
+        }
+      },
+      "confirmation": {
+        "noise": {
+          "count": 20,
+          "baseline_correct": 20,
+          "candidate_correct": 20,
+          "fixed": 0,
+          "regressed": 0
+        },
+        "lowlight": {
+          "count": 17,
+          "baseline_correct": 17,
+          "candidate_correct": 17,
+          "fixed": 0,
+          "regressed": 0
+        }
+      }
+    },
+    "official": {
+      "05Noise": {
+        "count": 100,
+        "baseline_routes": {
+          "lowlight": 10,
+          "noise": 90
+        },
+        "candidate_routes": {
+          "lowlight": 10,
+          "noise": 90
+        },
+        "correct_routes": 90,
+        "changed": 0,
+        "missing_GPU_outputs": [],
+        "candidate_metrics": {
+          "psnr": 34.632453122138976,
+          "lpips": 0.13663816242478788,
+          "ssim": 0.9270681065619815
+        }
+      },
+      "14Lowlight": {
+        "count": 50,
+        "baseline_routes": {
+          "lowlight": 50
+        },
+        "candidate_routes": {
+          "lowlight": 50
+        },
+        "correct_routes": 50,
+        "changed": 0,
+        "missing_GPU_outputs": [],
+        "candidate_metrics": {
+          "psnr": 19.231370677947996,
+          "lpips": 0.17252287715673448,
+          "ssim": 0.8644231889270912
+        }
+      }
+    },
+    "deployed": false,
+    "reason": "all150 routes unchanged; official Noise remains34.632453/.136638"
+  },
+  "blur": {
+    "seconds": 54.672066647559404,
+    "summary": {
+      "prediction_to_GT_diagnostic": {
+        "within_fixed8px_count": 98,
+        "outside_fixed8px_count": 52,
+        "nonzero_shift_count": 63,
+        "mean_delta_valid_only": 0.1510626830740479,
+        "median_delta_valid_only": 0.0,
+        "min_delta_valid_only": 0.0,
+        "max_delta_valid_only": 3.4968735481043858
+      },
+      "prediction_to_LQ_without_GT": {
+        "within_fixed8px_count": 150,
+        "outside_fixed8px_count": 0,
+        "nonzero_shift_count": 3,
+        "mean_delta_valid_only": -0.013414208809245048,
+        "median_delta_valid_only": 0.0,
+        "min_delta_valid_only": -1.517346086856275,
+        "max_delta_valid_only": 0.571722342758644
+      },
+      "LQ_to_GT_diagnostic": {
+        "within_fixed8px_count": 120,
+        "outside_fixed8px_count": 30,
+        "nonzero_shift_count": 150,
+        "mean_delta_valid_only": 1.0731196691173082,
+        "median_delta_valid_only": 0.7504360769452632,
+        "min_delta_valid_only": 0.43129484222221137,
+        "max_delta_valid_only": 5.881509646572226
+      }
+    },
+    "deployed": false,
+    "reason": "LQ-only global integer alignment changes only3/150 and average common-interior PSNR decreases"
+  },
+  "GPU_hours": 0,
+  "new_GPU_jobs_submitted": false,
+  "old_assets_preserved": true,
+  "next_order": "Rain100 evaluation finishes, then Noise expert/routing work, then Blur; no automatic new training in this report",
+  "evidence_sha256": {
+    "reports/foundir_fullstack_noise_physical_router_v1_2026-11-06.json": "a6998277b482631d7f39c3483b250b764093d9d270c85a4bce7d950d4469361c",
+    "reports/foundir_fullstack_noise_physical_router_v1_official_2026-11-06.json": "1bb935a26dcc15578bbad5cc3f9f76bb7d1cd0ab7f63f4a96fbe75d74a237911",
+    "reports/foundir_fullstack_blur_translation_audit_v1_2026-11-06.json": "e71ae3581763308c57e4649523944f30d31effb49dfc53a0bbb9a63b80838d41"
+  }
+}
