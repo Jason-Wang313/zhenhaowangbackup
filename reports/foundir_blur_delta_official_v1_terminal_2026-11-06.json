@@ -1,0 +1,114 @@
+{
+  "CPU_stages": {
+    "finish": {
+      "seconds": 42.0116564296186,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_DELTA_OFFICIAL_RESULT_VERIFIED {\"status\": \"complete_official_Blur150\", \"means\": {\"lq\": {\"psnr\": 21.863902537027993, \"lpips\": 0.35360328872998553, \"ssim\": 0.7402368453389072}, \"old50step\": {\"psnr\": 21.546762199401854, \"lpips\": 0.2026222513616085, \"ssim\": 0.7535799373553662}, \"candidate\": {\"psnr\": 21.153158988952637, \"lpips\": 0.225558958252271, \"ssim\": 0.7146880389792597}}, \"gate_checks\": {\"psnr\": false, \"lpips\": false}, \"official_Blur_pass\": false, \"PSNR_delta_vs_old\": -0.39360321044921776, \"LPIPS_relative_reduction_vs_old_percent\": -11.319934872171888, \"PSNR_worse_than_LQ\": 111, \"joint_better_than_old\": 38, \"receipt_sha256\": \"2d8d3ebc2755bf5b9f00abcf57bf30827893c44e36af70ca8960d94a4887e024\", \"weight\": {\"path\": \"checkpoints/foundir_blur_delta_official_v1/weights/blur_delta200_d9e1847a0a0495e5fe7b76c4cf55138dc695c54c4daa1426ee343cd525105d28.safetensors\", \"sha256\": \"4a48636d9078b541741cdf78501292fb1c1795c72365a2cb92f335b828079909\"}, \"GT_used_in_training_or_selection\": false, \"independent_blind_test\": false, \"other_categories_evaluated\": false, \"development_population_evaluated\": false, \"seconds\": 35.423897840082645, \"exit_code\": 0, \"GPU_hours\": 0}\n"
+    },
+    "prepare": {
+      "seconds": 34.41283346712589,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "Loading pretrained model LPIPS from /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/models/torch/hub/pyiqa/LPIPS_v0.1_alex-df73285e.pth\nOFFICIAL_VLM_V4_METRIC_DEVICE_VERIFIED device=cpu full_state=true\nBLUR_DELTA_OFFICIAL_PREFLIGHT_PASS {\"status\": \"destination_CPU_preflight_pass\", \"records\": 150, \"final_step\": 200, \"final_parameter_hash\": \"d9e1847a0a0495e5fe7b76c4cf55138dc695c54c4daa1426ee343cd525105d28\", \"final_checkpoint_SHA_Adam_RNG_sampler_checked\": true, \"all201_step_receipts_contiguous\": true, \"all201_large_checkpoints_rehashed\": false, \"receipt_sha256\": \"2d8d3ebc2755bf5b9f00abcf57bf30827893c44e36af70ca8960d94a4887e024\", \"GT_pixels_decoded\": false, \"GPU_started\": false, \"seconds\": 28.359419599175453, \"exit_code\": 0, \"GPU_hours\": 0, \"completed_training_job\": {\"allocated_GPU_hours\": 0.6234152910444472, \"automatic_retry\": false, \"error\": null, \"gpus\": 2, \"seconds\": 1122.1475238800049, \"status\": 0}}\n"
+    }
+  },
+  "completed_GPU_hours": 1.2714492315716213,
+  "cost_complete": true,
+  "detail": "\u5b98\u65b9Blur150\u5f20\u5b8c\u6574\u6062\u590d\u3001\u4e24rank\u9000\u51fa0\u53caCPU\u5b8c\u6574\u6027\u6838\u9a8c\u7ed3\u675f\u3002\u6700\u7ec8\u8054\u5408\u95e8\u69db\u4ee5\u5b8c\u6574result JSON\u4e3a\u51c6\u3002",
+  "event": "terminal",
+  "independent_blind_test": false,
+  "jobs": {
+    "round9_blur_delta_cache_v1": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.03783612158563402,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 68.10501885414124,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "251aa4afd737e47fe8c62f4a8308c38c9c6c48fb4f465b567a08d2c40277d76e",
+        "node": 3,
+        "utc_unix": 1794002009.7895782
+      }
+    },
+    "round9_blur_delta_official150_v1": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.5334162414073944,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 960.1492345333099,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "10d71293f3586da72660aadf301d0ded2d141b84bcb4433d2f382575f2821447",
+        "node": 3,
+        "utc_unix": 1794003345.21453
+      }
+    },
+    "round9_blur_delta_qualify_v1": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.07678157753414577,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 138.2068395614624,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "0ce6d3d2aa1c86fb479eb26433f7e954c9df6ceabd3d3424db529ae540fba8dd",
+        "node": 3,
+        "utc_unix": 1794001681.237516
+      }
+    },
+    "round9_blur_delta_train_v1": {
+      "node3.ended": {
+        "allocated_GPU_hours": 0.6234152910444472,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1122.1475238800049,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "274160955b68db722533c52a6b5f41f8c4db8f626a05363b40f1cbe6ac3e0749",
+        "node": 3,
+        "utc_unix": 1794002127.9451156
+      }
+    }
+  },
+  "means": {
+    "candidate": {
+      "lpips": 0.225558958252271,
+      "psnr": 21.153158988952637,
+      "ssim": 0.7146880389792597
+    },
+    "lq": {
+      "lpips": 0.35360328872998553,
+      "psnr": 21.863902537027993,
+      "ssim": 0.7402368453389072
+    },
+    "old50step": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    }
+  },
+  "official_Blur_pass": false,
+  "official_only_per_latest_user": true,
+  "other_categories_run": false,
+  "other_evaluation_populations_run": false,
+  "result_sha256": "5fe7ac6cd1429f452ef73dacb89b89f57f0d2e063aa00626adb52f8c3d9e56b2",
+  "utc_unix": 1794004394.8165445
+}
