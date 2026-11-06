@@ -1,0 +1,34 @@
+{
+  "status": "official150_running_not_terminal",
+  "snapshot_utc_unix": 1794007653.7763433,
+  "job_id": "round10_blur_coverage_official_v2",
+  "source_commit": "81105617b9369b051a9c3bcf02f433a5e965e810",
+  "worker_heartbeat": {
+    "capability": "independent_node3_two_H100_jobs_only",
+    "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+    "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+    "job": "round10_blur_coverage_official_v2",
+    "pid": 299730,
+    "state": "running",
+    "utc_unix": 1794007652.7391245,
+    "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+  },
+  "official_images_completed": 68,
+  "required_images": 150,
+  "tiles_completed": 1040,
+  "required_tiles": 2250,
+  "rank_image_counts": {
+    "0": 34,
+    "1": 34
+  },
+  "elapsed_seconds_since_launcher_start": 459.7751512527466,
+  "provisional_GPU_hours": 0.25543063958485923,
+  "cost_complete": false,
+  "completed_cache_and_training_GPU_hours": 0.7046146641837225,
+  "official_Blur_pass": false,
+  "quality_conclusion": "pending full150 and terminal verification",
+  "recipe_unchanged_during_run": true,
+  "CPU_destination_preflight": "reports/foundir_blur_coverage_official_v2_preflight_2026-11-06.json",
+  "comparison_script": "smoke/analyze_foundir_blur_coverage_control_v2_cpu.py",
+  "new_GPU_submission": false
+}
