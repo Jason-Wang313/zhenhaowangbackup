@@ -1,0 +1,23 @@
+{
+  "GPU_started": false,
+  "excluded_source_groups": 3,
+  "last_selected_cache_index": 32001,
+  "legacy_exposure_is_not_erased_by_this_filter": true,
+  "local_sample_counts": [
+    6,
+    6,
+    5,
+    5,
+    5,
+    5
+  ],
+  "new_training_presentations": 6400,
+  "no_claim_of_semantic_source_disjointness_from_hashes_alone": true,
+  "official_exact_file_hashes_disjoint": true,
+  "parent_state_SHA_verified": true,
+  "receipt_sha256": "922bb045e02c7182cb59bd2c68786e9032993ce88aa058fe733207d9fa633af2",
+  "seconds": 4.848578080534935,
+  "status": "CPU_metadata_preflight_pass",
+  "training_pixels_read": false,
+  "training_probe_records": 32
+}

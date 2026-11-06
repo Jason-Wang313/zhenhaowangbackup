@@ -1,0 +1,1616 @@
+{
+  "status": "preflight_rejected_before_GPU_start",
+  "parent_native_receipt_sha256": "bd922f3a9ae031f38ab3e63c60986d64c18ee40871ae10b095f4c5a7fde6edbf",
+  "direct_matches": [
+    {
+      "cache_index": 3564,
+      "record_id": "foundir_train_0395714",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "859f6649eea2f3232134d5cf99533a2a7904a0fd21ac24f5c930dbc3e1446360",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 7009,
+      "record_id": "foundir_train_0395716",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "64f30fe93e1ca8b3f995b6df7db207400523378765ced988b757ad806d968c73",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 8039,
+      "record_id": "foundir_train_0395723",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "e11d99883b7141ff396415a6accb8bb0e9cd28860e46bb7ffefe67c8dc4e6ced",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 13638,
+      "record_id": "foundir_train_0395718",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "d3601cea5d2cf6b754c7c5250e6f1204999f29ea77c016ed8abe435a9a14e010",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 14960,
+      "record_id": "foundir_train_0391576",
+      "source_group": "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800",
+      "gt_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "lq_sha256": "9cfd10f771a5a9568f70818026dbad1c6a8b75fa9322103ca6f0a505d874ce47",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0821",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0822",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0823",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0824",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0825",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0826",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0827",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0828",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0829",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0830",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 15269,
+      "record_id": "foundir_train_0395713",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "5d099b294913065e969d6482f47c686749b01654e7be0ae50597552f4cd23224",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 16403,
+      "record_id": "foundir_train_0395714",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "859f6649eea2f3232134d5cf99533a2a7904a0fd21ac24f5c930dbc3e1446360",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 18521,
+      "record_id": "foundir_train_0385094",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "0d9be947eb4d40b417f768f7a9c514cdb410a030c405162c991bf688399fd01d",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 23377,
+      "record_id": "foundir_train_0385028",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "8005f1a9119df04e370b20fed43a27bb6920520a85694e60bff18f3373afb541",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 27928,
+      "record_id": "foundir_train_0395713",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "5d099b294913065e969d6482f47c686749b01654e7be0ae50597552f4cd23224",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 29403,
+      "record_id": "foundir_train_0391570",
+      "source_group": "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800",
+      "gt_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "lq_sha256": "c6610e445cdee7ef4d8287ddd539e06a730d8a5a81e9ae27e8cf4625085a6423",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0821",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0822",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0823",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0824",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0825",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0826",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0827",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0828",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0829",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0830",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 32792,
+      "record_id": "foundir_train_0385094",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "0d9be947eb4d40b417f768f7a9c514cdb410a030c405162c991bf688399fd01d",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 41071,
+      "record_id": "foundir_train_0391575",
+      "source_group": "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800",
+      "gt_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "lq_sha256": "d06500d7d65726fc498333fb899b53fc8f9adadcd956e07b4003d839875cc3af",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0821",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0822",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0823",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0824",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0825",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0826",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0827",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0828",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0829",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0830",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 44294,
+      "record_id": "foundir_train_0385050",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "1063936430a0182a46755d82d21678b259c9f184c3d2d0cac1d616a676cca21c",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 45730,
+      "record_id": "foundir_train_0385094",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "0d9be947eb4d40b417f768f7a9c514cdb410a030c405162c991bf688399fd01d",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 46298,
+      "record_id": "foundir_train_0385039",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "94792a5e6ee10f46167759178dc4ccb57941bf7bf8ad4d8cb6b397fcc196250d",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 46829,
+      "record_id": "foundir_train_0385116",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "8eba26fb9c36bc4d8fd1325e52139beb7407cb08e699ff7a2873fb2d6d9c1909",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 48413,
+      "record_id": "foundir_train_0385039",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "94792a5e6ee10f46167759178dc4ccb57941bf7bf8ad4d8cb6b397fcc196250d",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 50386,
+      "record_id": "foundir_train_0391579",
+      "source_group": "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800",
+      "gt_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "lq_sha256": "14a406b1d6a3cf4df1d7bfe5b3e3baccbf19adf700d840ec1e747c837c1c6e79",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0821",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0822",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0823",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0824",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0825",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0826",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0827",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0828",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0829",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0830",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 50582,
+      "record_id": "foundir_train_0391576",
+      "source_group": "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800",
+      "gt_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "lq_sha256": "9cfd10f771a5a9568f70818026dbad1c6a8b75fa9322103ca6f0a505d874ce47",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0821",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0822",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0823",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0824",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0825",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0826",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0827",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0828",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0829",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0830",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 51506,
+      "record_id": "foundir_train_0385083",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "233b6e7fb282d373c4086fc59cb9ff44fc95357e5df7f36359094627a0ed9023",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 52579,
+      "record_id": "foundir_train_0385094",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "0d9be947eb4d40b417f768f7a9c514cdb410a030c405162c991bf688399fd01d",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 53979,
+      "record_id": "foundir_train_0395723",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "e11d99883b7141ff396415a6accb8bb0e9cd28860e46bb7ffefe67c8dc4e6ced",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 54449,
+      "record_id": "foundir_train_0395718",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "d3601cea5d2cf6b754c7c5250e6f1204999f29ea77c016ed8abe435a9a14e010",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 56217,
+      "record_id": "foundir_train_0385050",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "1063936430a0182a46755d82d21678b259c9f184c3d2d0cac1d616a676cca21c",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 56602,
+      "record_id": "foundir_train_0395721",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "3f7c49b77128e1fa27ae6d1960cb5716057d7d42fe22a93e68dcd2bcb543d64e",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 59655,
+      "record_id": "foundir_train_0385105",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "856a0f70ab520fd35b45ca14491d9e4d706653087567a21a4a85c42ab5199d6a",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 61002,
+      "record_id": "foundir_train_0391571",
+      "source_group": "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800",
+      "gt_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "lq_sha256": "323595040b7217105eaf530607803ddb65c642390a3989d13a7036557efd6937",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0821",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0822",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0823",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0824",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0825",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0826",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0827",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0828",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0829",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0830",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 61750,
+      "record_id": "foundir_train_0395716",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "64f30fe93e1ca8b3f995b6df7db207400523378765ced988b757ad806d968c73",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    },
+    {
+      "cache_index": 61790,
+      "record_id": "foundir_train_0395716",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "64f30fe93e1ca8b3f995b6df7db207400523378765ced988b757ad806d968c73",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      }
+    }
+  ],
+  "direct_matching_presentations": 30,
+  "matching_source_groups": 3,
+  "ranges": {
+    "initial_native_0_400": {
+      "direct_matching_presentations": 3,
+      "source_groups": 1,
+      "matching_indices": [
+        3564,
+        7009,
+        8039
+      ]
+    },
+    "onpolicy_400_800": {
+      "direct_matching_presentations": 6,
+      "source_groups": 3,
+      "matching_indices": [
+        13638,
+        14960,
+        15269,
+        16403,
+        18521,
+        23377
+      ]
+    },
+    "proposed_800_1000": {
+      "direct_matching_presentations": 2,
+      "source_groups": 2,
+      "matching_indices": [
+        27928,
+        29403
+      ]
+    },
+    "native_old_full_0_2000": {
+      "direct_matching_presentations": 30,
+      "source_groups": 3,
+      "matching_indices": [
+        3564,
+        7009,
+        8039,
+        13638,
+        14960,
+        15269,
+        16403,
+        18521,
+        23377,
+        27928,
+        29403,
+        32792,
+        41071,
+        44294,
+        45730,
+        46298,
+        46829,
+        48413,
+        50386,
+        50582,
+        51506,
+        52579,
+        53979,
+        54449,
+        56217,
+        56602,
+        59655,
+        61002,
+        61750,
+        61790
+      ]
+    }
+  },
+  "probes_12800_12832_overlap": [],
+  "legal_unused_cache_presentations_available": 38379,
+  "first6400_legal_cache_end": 32001,
+  "excluded_source_groups": [
+    "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+    "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+    "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800"
+  ],
+  "seconds": 0.5207459777593613,
+  "gpus": 0,
+  "qualification": "Rows show potential exposure according to the saved sampler plan; actual checkpoint histories/cache usage must be checked before asserting each historical stage exposure. Exact-file checks do not establish semantic source independence."
+}

@@ -1,0 +1,377 @@
+{
+  "status": "historical_onpolicy_GT_source_overlap_confirmed",
+  "confirmed_training_presentations": 6,
+  "confirmed_source_groups": 3,
+  "official_records_sharing_these_GT_files": [
+    "official_10Rain_0811",
+    "official_10Rain_0812",
+    "official_10Rain_0813",
+    "official_10Rain_0814",
+    "official_10Rain_0815",
+    "official_10Rain_0816",
+    "official_10Rain_0817",
+    "official_10Rain_0818",
+    "official_10Rain_0819",
+    "official_10Rain_0820",
+    "official_10Rain_0821",
+    "official_10Rain_0822",
+    "official_10Rain_0823",
+    "official_10Rain_0824",
+    "official_10Rain_0825",
+    "official_10Rain_0826",
+    "official_10Rain_0827",
+    "official_10Rain_0828",
+    "official_10Rain_0829",
+    "official_10Rain_0830",
+    "official_10Rain_0831",
+    "official_10Rain_0832",
+    "official_10Rain_0833",
+    "official_10Rain_0834",
+    "official_10Rain_0835",
+    "official_10Rain_0836",
+    "official_10Rain_0837",
+    "official_10Rain_0838",
+    "official_10Rain_0839",
+    "official_10Rain_0840"
+  ],
+  "official_record_count": 30,
+  "verified_presentations": [
+    {
+      "cache_index": 13638,
+      "record_id": "foundir_train_0395718",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "d3601cea5d2cf6b754c7c5250e6f1204999f29ea77c016ed8abe435a9a14e010",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      },
+      "completed_optimizer_step": 427,
+      "checkpoint_receipt": "checkpoints/foundir_rain_onpolicy_midpoint_v1/step400_onpolicy200_4x2_v1/steps/step_000427.json",
+      "checkpoint_receipt_sha256": "ee96ca09542770e7b20fd798e15ae818bdc7d1c43cd7f18615e7f29d8efab878",
+      "cache_receipt_sha256": "8d04545a85ad9b1dd363bacaf075a4100507a7e042d8acfa753c7fc33c95fa45"
+    },
+    {
+      "cache_index": 14960,
+      "record_id": "foundir_train_0391576",
+      "source_group": "ef821839325a5a71d12e86187f040f829d3f5ca9deaefc3604890da83ff3a800",
+      "gt_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "lq_sha256": "9cfd10f771a5a9568f70818026dbad1c6a8b75fa9322103ca6f0a505d874ce47",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0821",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0822",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0823",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0824",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0825",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0826",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0827",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0828",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0829",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0830",
+            "side": "gt_sha256"
+          }
+        ]
+      },
+      "completed_optimizer_step": 468,
+      "checkpoint_receipt": "checkpoints/foundir_rain_onpolicy_midpoint_v1/step400_onpolicy200_4x2_v1/steps/step_000468.json",
+      "checkpoint_receipt_sha256": "f17e26b360b0ccfc06558b0f1938f454596cafd5d7e82b62fddd34b899ddbfb6",
+      "cache_receipt_sha256": "854138f3816aed08b81c08128fdae0bd981433602b9ca6f1eb670c13c9bc06ec"
+    },
+    {
+      "cache_index": 15269,
+      "record_id": "foundir_train_0395713",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "5d099b294913065e969d6482f47c686749b01654e7be0ae50597552f4cd23224",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      },
+      "completed_optimizer_step": 478,
+      "checkpoint_receipt": "checkpoints/foundir_rain_onpolicy_midpoint_v1/step400_onpolicy200_4x2_v1/steps/step_000478.json",
+      "checkpoint_receipt_sha256": "47104f3d348a3f8bc8f16327edd4eaa2b09eac50c378e909df7a706586ce8ffe",
+      "cache_receipt_sha256": "0192e0002544694f3b035c86b2ee12dc430bf878383a08f3e52db3d3fc616d13"
+    },
+    {
+      "cache_index": 16403,
+      "record_id": "foundir_train_0395714",
+      "source_group": "1bc70a8f4e86f86be38e5c317d63ac54533dd41032609ab0d2be24b625b93195",
+      "gt_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "lq_sha256": "859f6649eea2f3232134d5cf99533a2a7904a0fd21ac24f5c930dbc3e1446360",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0831",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0832",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0833",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0834",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0835",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0836",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0837",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0838",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0839",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0840",
+            "side": "gt_sha256"
+          }
+        ]
+      },
+      "completed_optimizer_step": 513,
+      "checkpoint_receipt": "checkpoints/foundir_rain_onpolicy_midpoint_v1/step400_onpolicy200_4x2_v1/steps/step_000513.json",
+      "checkpoint_receipt_sha256": "5e238de5a558555b5a4f102df8cf6a534e6ecb0de11cb2440ee986a6dbdfb9c6",
+      "cache_receipt_sha256": "cbbca6fe62099a0f7af6d6367d24a9bc6471cb1e22b256c4504902ee900faa2f"
+    },
+    {
+      "cache_index": 18521,
+      "record_id": "foundir_train_0385094",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "0d9be947eb4d40b417f768f7a9c514cdb410a030c405162c991bf688399fd01d",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      },
+      "completed_optimizer_step": 579,
+      "checkpoint_receipt": "checkpoints/foundir_rain_onpolicy_midpoint_v1/step400_onpolicy200_4x2_v1/steps/step_000579.json",
+      "checkpoint_receipt_sha256": "921edc76912ba06c8754021a95ae85bc4dc0c331bef9e633655ef1a51ab8ce39",
+      "cache_receipt_sha256": "5f829d2167ba0b48d350e564a7fcf4acf7bf96542787aaceb6807ab54dd0eb08"
+    },
+    {
+      "cache_index": 23377,
+      "record_id": "foundir_train_0385028",
+      "source_group": "8b6e15e6a0ac2114d57a67d650e171f269995c9402bc8577391c89d90e73f37f",
+      "gt_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "lq_sha256": "8005f1a9119df04e370b20fed43a27bb6920520a85694e60bff18f3373afb541",
+      "matches": {
+        "gt_sha256": [
+          {
+            "official_id": "official_10Rain_0811",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0812",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0813",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0814",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0815",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0816",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0817",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0818",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0819",
+            "side": "gt_sha256"
+          },
+          {
+            "official_id": "official_10Rain_0820",
+            "side": "gt_sha256"
+          }
+        ]
+      },
+      "completed_optimizer_step": 731,
+      "checkpoint_receipt": "checkpoints/foundir_rain_onpolicy_continue_v1/continue600_to800_4x2_v1/steps/step_000731.json",
+      "checkpoint_receipt_sha256": "b0e0ea38eeae5d5f18e70d95be2f640fd4716055c7fb2e16f75dd1a031d403bd",
+      "cache_receipt_sha256": "793abeaddc166713d08416452b06ebf4bba1fbfcc7b282ba2aca6843d573e2bf"
+    }
+  ],
+  "parent_full_state_SHA_verified": "6f2c0e162e3d868b427308534836f90cbbc72f8d1c1aca4c043183f23fc259c0",
+  "Adam_step_verified": 800,
+  "source_binding_verified_via_parent_receipts": true,
+  "earlier_native_teacher_lineage_fully_audited": false,
+  "implication": "The existing step800 Rain weights have trained on crops from three clean source images also used by 30 official Rain records. Future filtering cannot undo that exposure. Results are adaptive benchmark results with known source overlap, not clean held-out generalization.",
+  "seconds": 2.7419332712888718,
+  "gpus": 0
+}

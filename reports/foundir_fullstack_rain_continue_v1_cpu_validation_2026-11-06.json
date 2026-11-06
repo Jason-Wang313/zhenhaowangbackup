@@ -1,0 +1,19 @@
+{
+  "status": "CPU_preflight_pass_GPU_not_started",
+  "distributed_test": "real six-process Gloo; 32 sample coverage; parameters/Adam match global-batch reference at atol1e-12",
+  "updates_compared": 3,
+  "global_counts": [
+    6,
+    6,
+    5,
+    5,
+    5,
+    5
+  ],
+  "test_sha256": "0f914736d50a0899ae71de17cee8a04aa36e5da61f103772f436fd95ff71760a",
+  "parent_full_state_sha256": "6f2c0e162e3d868b427308534836f90cbbc72f8d1c1aca4c043183f23fc259c0",
+  "receipt_sha256": "922bb045e02c7182cb59bd2c68786e9032993ce88aa058fe733207d9fa633af2",
+  "sources_match_receipt": true,
+  "initial_preflight_failure": "official exact-file overlap rejected before GPU; whole-source filtered plan subsequently passed",
+  "legacy_official_GT_source_overlap_confirmed": true
+}

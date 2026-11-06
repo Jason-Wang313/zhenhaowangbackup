@@ -1,3 +1,16 @@
+## 当前执行：Rain固定step800→1000续训，三节点六卡 — 2026-11-06
+
+用户明确execute。保持原26调用endpoint、MSE×10/LPIPS×.05、lr1e-5、global32和512，只新增200步/6400呈现；不恢复旧任务或加新RGB网络。
+完整step800模型/Adam已验证并将复制，新world6每rank6/6/5/5/5/5样本，loss/32后梯度SUM；六进程CPU与global32对照通过。
+8→6 rank RNG重新设定，不是bitwise恢复；使用当前部署VAE runtime，先重算当前环境step800的32训练探针，900/1000同样检查，全部training_fit_only。
+重要：预检发现并确认旧on-policy六次呈现涉及3个官方GT来源，对应30张官方Rain记录；旧权重有历史曝光，不能称干净held-out泛化。
+新训练排除这3个来源组及所有关联裁图，25600起首6400合规缓存到32001；逻辑slot与实际cache_index显式映射。不删除旧数据，不隐瞒旧曝光。
+新目录checkpoints/foundir_fullstack_rain_continue_3x2_v1，job round4_rain_continue_3x2_v1，master10.244.211.17:29841。逐完整步保存800..1000。
+训练粗估100–140分钟/六卡，实际按首步更新；训练阶段每次cap3小时，不自动扩步/重试。六卡CUDA/NCCL状态须看真实日志。
+固定1000后再准备本轮Rain100官方评价；Haze/Lowlight结果保留。五类都过才统一600端到端复跑，不因训练探针达标就声称Rain修好。
+首次801..805、900和终态须推小报告，包含实际费用及已知数据重叠限制。旧资产/旧绑定源码全保留。
+详见reports/foundir_fullstack_rain_continue_v1_readiness_2026-11-06.md及CPU预检/数据审计JSON。
+
 ## Rain诊断完成：细节误差为主，尚未修复 — 2026-11-06
 
 遵守最新顺序：Haze单独端到端复跑暂停且未入队；先Rain、Noise、Blur，全部候选通过后再统一600端到端GPU验收。
