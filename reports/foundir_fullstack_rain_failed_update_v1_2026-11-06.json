@@ -1,0 +1,350 @@
+{
+  "status": "read_only_failure_diagnosis_complete",
+  "source_sha256": "9a018606d1764488fdce76ffb7197850358077b6fb35efcdc027db0e6756b95b",
+  "inputs": {
+    "reports/foundir_fullstack_rain_step1000_v1_result_2026-11-06.json": "1ebbf5d866d02d19634b2c2b9e9ae086ff4d51707ad0d48c62297fd65012ff1b",
+    "reports/foundir_fullstack_rain_continue_v1_result_2026-11-06.json": "92b5b280c850da29009925f1264d2e8b1966364a349bd8a0a1a0cd388ed30a98",
+    "reports/foundir_fullstack_rain_step1000_resume_v1_2026-11-06.json": "743518a3abd2f51d53dcccf9e8ac64ea417e42a09c2b17e2d291147c533d4456"
+  },
+  "official_records": 100,
+  "unique_GT_files": 10,
+  "baseline": {
+    "psnr": 32.0349299621582,
+    "lpips": 0.07501418385654687
+  },
+  "candidate": {
+    "psnr": 31.891857471466064,
+    "lpips": 0.07479695761576295
+  },
+  "delta": {
+    "psnr": -0.14307249069213768,
+    "lpips": -0.0002172262407839215
+  },
+  "PSNR_gap_to_34_2": 2.3081425285339385,
+  "LPIPS_relative_improvement_percent": 0.2895802228540317,
+  "both_metrics_better_images": 26,
+  "source_groups": [
+    {
+      "GT_file_sha256": "c7ccfba3436a5ef0aa76403024256392070c28987fc67b5f8d8b2eec326dafc6",
+      "record_ids": [
+        "official_10Rain_0801",
+        "official_10Rain_0802",
+        "official_10Rain_0803",
+        "official_10Rain_0804",
+        "official_10Rain_0805",
+        "official_10Rain_0806",
+        "official_10Rain_0807",
+        "official_10Rain_0808",
+        "official_10Rain_0809",
+        "official_10Rain_0810"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 30.2947639465332,
+        "lpips": 0.06929239854216576
+      },
+      "candidate": {
+        "psnr": 30.402180862426757,
+        "lpips": 0.06963860541582108
+      },
+      "delta": {
+        "psnr": 0.1074169158935554,
+        "lpips": 0.00034620687365531644
+      }
+    },
+    {
+      "GT_file_sha256": "3dcef26ac42f32199b5baa3720dbb5a0f31c89f4ae283ec81ee7f7598da2be44",
+      "record_ids": [
+        "official_10Rain_0811",
+        "official_10Rain_0812",
+        "official_10Rain_0813",
+        "official_10Rain_0814",
+        "official_10Rain_0815",
+        "official_10Rain_0816",
+        "official_10Rain_0817",
+        "official_10Rain_0818",
+        "official_10Rain_0819",
+        "official_10Rain_0820"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 27.278792762756346,
+        "lpips": 0.10659629255533218
+      },
+      "candidate": {
+        "psnr": 27.7502290725708,
+        "lpips": 0.10447008684277534
+      },
+      "delta": {
+        "psnr": 0.47143630981445384,
+        "lpips": -0.002126205712556839
+      }
+    },
+    {
+      "GT_file_sha256": "5dc3493f674841274ef3cad7ed06c60045deb1f6ff3a918249e352b3ca4b76ce",
+      "record_ids": [
+        "official_10Rain_0821",
+        "official_10Rain_0822",
+        "official_10Rain_0823",
+        "official_10Rain_0824",
+        "official_10Rain_0825",
+        "official_10Rain_0826",
+        "official_10Rain_0827",
+        "official_10Rain_0828",
+        "official_10Rain_0829",
+        "official_10Rain_0830"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 31.67935428619385,
+        "lpips": 0.06284686103463173
+      },
+      "candidate": {
+        "psnr": 31.672120666503908,
+        "lpips": 0.06276382766664028
+      },
+      "delta": {
+        "psnr": -0.007233619689941406,
+        "lpips": -8.3033367991453e-05
+      }
+    },
+    {
+      "GT_file_sha256": "0637fa270e46113097c9cb6fc2860dbf99c6c607caa224680d446d329def1d2e",
+      "record_ids": [
+        "official_10Rain_0831",
+        "official_10Rain_0832",
+        "official_10Rain_0833",
+        "official_10Rain_0834",
+        "official_10Rain_0835",
+        "official_10Rain_0836",
+        "official_10Rain_0837",
+        "official_10Rain_0838",
+        "official_10Rain_0839",
+        "official_10Rain_0840"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 29.75762233734131,
+        "lpips": 0.056152784079313275
+      },
+      "candidate": {
+        "psnr": 29.733810424804688,
+        "lpips": 0.056704162433743474
+      },
+      "delta": {
+        "psnr": -0.023811912536622515,
+        "lpips": 0.0005513783544301987
+      }
+    },
+    {
+      "GT_file_sha256": "19e0812e6ce3bc4694ee9afad1a8732de4b02cffda544833144f07edc7de1d9c",
+      "record_ids": [
+        "official_10Rain_0841",
+        "official_10Rain_0842",
+        "official_10Rain_0843",
+        "official_10Rain_0844",
+        "official_10Rain_0845",
+        "official_10Rain_0846",
+        "official_10Rain_0847",
+        "official_10Rain_0848",
+        "official_10Rain_0849",
+        "official_10Rain_0850"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 38.777920150756835,
+        "lpips": 0.019806816801428796
+      },
+      "candidate": {
+        "psnr": 37.63149566650391,
+        "lpips": 0.02009182944893837
+      },
+      "delta": {
+        "psnr": -1.1464244842529254,
+        "lpips": 0.0002850126475095749
+      }
+    },
+    {
+      "GT_file_sha256": "cea1b4e88c59f0e18eb71a5912091c02281d83bbf85d635d4353f032240a24d7",
+      "record_ids": [
+        "official_10Rain_0851",
+        "official_10Rain_0852",
+        "official_10Rain_0853",
+        "official_10Rain_0854",
+        "official_10Rain_0855",
+        "official_10Rain_0856",
+        "official_10Rain_0857",
+        "official_10Rain_0858",
+        "official_10Rain_0859",
+        "official_10Rain_0860"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 36.671918869018555,
+        "lpips": 0.01863552927970886
+      },
+      "candidate": {
+        "psnr": 36.073784255981444,
+        "lpips": 0.01866100300103426
+      },
+      "delta": {
+        "psnr": -0.5981346130371108,
+        "lpips": 2.5473721325396798e-05
+      }
+    },
+    {
+      "GT_file_sha256": "ec750e2263eed6c23e2fe30762bfd3d152553af0388ffbb8082881ff4e971fa6",
+      "record_ids": [
+        "official_10Rain_0861",
+        "official_10Rain_0862",
+        "official_10Rain_0863",
+        "official_10Rain_0864",
+        "official_10Rain_0865",
+        "official_10Rain_0866",
+        "official_10Rain_0867",
+        "official_10Rain_0868",
+        "official_10Rain_0869",
+        "official_10Rain_0870"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 27.187833976745605,
+        "lpips": 0.12311476692557335
+      },
+      "candidate": {
+        "psnr": 27.13619194030762,
+        "lpips": 0.12342972084879875
+      },
+      "delta": {
+        "psnr": -0.05164203643798615,
+        "lpips": 0.00031495392322539173
+      }
+    },
+    {
+      "GT_file_sha256": "918ad7ac2040e3c7a00db5d2b511083ad3f3aa3b958d1886c485bd0f8d10fb7c",
+      "record_ids": [
+        "official_10Rain_0871",
+        "official_10Rain_0872",
+        "official_10Rain_0873",
+        "official_10Rain_0874",
+        "official_10Rain_0875",
+        "official_10Rain_0876",
+        "official_10Rain_0877",
+        "official_10Rain_0878",
+        "official_10Rain_0879",
+        "official_10Rain_0880"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 31.17924385070801,
+        "lpips": 0.10508266538381576
+      },
+      "candidate": {
+        "psnr": 30.82601089477539,
+        "lpips": 0.10509753227233887
+      },
+      "delta": {
+        "psnr": -0.3532329559326186,
+        "lpips": 1.4866888523104582e-05
+      }
+    },
+    {
+      "GT_file_sha256": "59375eba8be0c88ff8c6b05064ed0cc3cb0f66b320eab9bf47374ac9afbdc0c5",
+      "record_ids": [
+        "official_10Rain_0881",
+        "official_10Rain_0882",
+        "official_10Rain_0883",
+        "official_10Rain_0884",
+        "official_10Rain_0885",
+        "official_10Rain_0886",
+        "official_10Rain_0887",
+        "official_10Rain_0888",
+        "official_10Rain_0889",
+        "official_10Rain_0890"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 34.426944732666016,
+        "lpips": 0.06976628229022026
+      },
+      "candidate": {
+        "psnr": 34.39014930725098,
+        "lpips": 0.06880614012479783
+      },
+      "delta": {
+        "psnr": -0.03679542541503622,
+        "lpips": -0.0009601421654224368
+      }
+    },
+    {
+      "GT_file_sha256": "7cb44b5ff495e002c63e37d550126934f8816078a83e94ffa5a791f80fd7dee6",
+      "record_ids": [
+        "official_10Rain_0891",
+        "official_10Rain_0892",
+        "official_10Rain_0893",
+        "official_10Rain_0894",
+        "official_10Rain_0895",
+        "official_10Rain_0896",
+        "official_10Rain_0897",
+        "official_10Rain_0898",
+        "official_10Rain_0899",
+        "official_10Rain_0900"
+      ],
+      "count": 10,
+      "baseline": {
+        "psnr": 33.0949047088623,
+        "lpips": 0.1188474416732788
+      },
+      "candidate": {
+        "psnr": 33.30260162353515,
+        "lpips": 0.11830666810274124
+      },
+      "delta": {
+        "psnr": 0.20769691467285156,
+        "lpips": -0.0005407735705375699
+      }
+    }
+  ],
+  "PSNR_improved_GT_groups": 3,
+  "training_probe": {
+    "800": {
+      "lpips": 0.05936874556937255,
+      "psnr": 34.71886276223198
+    },
+    "900": {
+      "lpips": 0.05905987019650638,
+      "psnr": 34.74326329486423
+    },
+    "1000": {
+      "lpips": 0.05887531043845229,
+      "psnr": 34.35283202276974
+    }
+  },
+  "training_loss_windows": {
+    "first20": {
+      "gt_lpips": 0.05726217729388736,
+      "gt_rgb_mse": 0.0023819146452865427,
+      "total": 0.02668225540091953
+    },
+    "last20": {
+      "gt_lpips": 0.05918212232481892,
+      "gt_rgb_mse": 0.002848876583107085,
+      "total": 0.03144787217011071
+    }
+  },
+  "loss_windows_use_different_presentations_not_a_controlled_comparison": true,
+  "training_fixed_probe_PSNR_delta": -0.3660307394622393,
+  "code_observation": "Same LoRA controls prefix25 and call26; prefix regenerated every presentation but detached from backward. Omitted prefix derivative is a hypothesis, not established cause.",
+  "next_bounded_diagnostic": "fixed legal training crops; compare prefix800/readout800, prefix800/readout1000, prefix1000/readout800, prefix1000/readout1000. No new training, no official rerun, single node only.",
+  "decision": "Do not adopt step1000 or append more identical training. Keep step800 reference. Isolate prefix/readout coupling before choosing any repair.",
+  "evaluation_attempt_GPU_hours": 14.048673889636994,
+  "all_expense_including_training": false,
+  "official_is_adaptive_not_blind": true,
+  "official_GT_pixels_read": false,
+  "pixels_decoded": 0,
+  "new_GPU_started": false,
+  "new_training": false,
+  "seconds": 0.034425728023052216,
+  "GPU_hours": 0,
+  "exit_code": 0
+}
