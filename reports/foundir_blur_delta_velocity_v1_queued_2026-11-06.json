@@ -1,0 +1,17 @@
+{
+  "CPU_stages": {},
+  "completed_GPU_hours": 0,
+  "cost_complete": false,
+  "cumulative_GPU_hour_cap": null,
+  "detail": "\u5df2\u63d0\u4ea4\u4e24\u6b65Blur\u5de5\u7a0b\u9a8c\u6536\u3002\u901a\u8fc7CPU\u6536\u5c3e\u540e\u4f9d\u6b21\u7f13\u5b58\u3001fresh200\u6b65\u3001\u5b8c\u6574160\u56fe\u8bc4\u4ef7\uff1b\u5931\u8d25\u505c\u94fe\uff0c\u4e0d\u63d0\u4ea4\u5b98\u65b9\u6216\u5176\u5b83\u7c7b\u522b\u3002",
+  "event": "queued",
+  "jobs": {
+    "qualify": {}
+  },
+  "latest_pilot_step_receipt": null,
+  "official_Blur_pass_required_before_other_types": true,
+  "official_evaluated": false,
+  "other_categories_submitted": false,
+  "receipt_sha256": "52d952c1156fc0cc85b86c0a96a0b85eef0867d8fdddeffb7d738ed85a312419",
+  "utc_unix": 1794001678.999831
+}
