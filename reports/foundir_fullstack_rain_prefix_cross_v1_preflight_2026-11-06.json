@@ -1,0 +1,16 @@
+{
+  "GPU_hours": 0,
+  "GPU_started": false,
+  "baseline_probe_tensors_verified": 16,
+  "checkpoint_hashes_verified": true,
+  "development_pixels_read": false,
+  "exit_code": 0,
+  "new_model_calls": 432,
+  "new_outputs": 32,
+  "new_training": false,
+  "official_pixels_read": false,
+  "receipt_sha256": "627640e1815df883830940a3a4cdae918579b5a6e7788af7516404999cf1fe83",
+  "seconds": 12.988560698926449,
+  "status": "destination_CPU_preflight_pass",
+  "training_cache_tensors_verified": 8
+}
