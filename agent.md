@@ -1,3 +1,9 @@
+## Blur四H100训练已开始；官方仅小幅改善，尚未通过 — 2026-11-07
+
+round20完整缓存15360/15360，旧4096只复用、新11264生成，两缓存job退出0、共1.451627582 GPU-hours。正式1792父模型/完整Adam/四rank RNG/历史/采样逐值恢复通过；初始120块和8训练全图PNG逐一复现，1794四rank真实CUDA重载通过。详见reports/foundir_blur_fullgrid_v1_parent_restore_2026-11-07.json。
+2026-11-07T05:11:31.798831+00:00快照：node1/node3四H100真实训练step1911，新增119/7680，目标9472；最近约3.100秒/步，训练暂余6.51小时，官方另8–12分钟。两个worker心跳及monitor1877938/upload1877939/comparison2052208真实cmdline核验正常；步骤/ETA仅快照，接手查实时记录，不重启或改绑定源码。
+完整官方仍1792的21.948140/.202188，未过25.9/.18；相对原FLUX仅+.401dB/LPIPS改善约.21%，不能说已修复。单训练图25.692→30.010只支持训练能力，不代表官方。当前固定1024来源全部15视图×4遍，正式父1792→9472，不用单图诊断权重，最终唯一官方150；3712/5632/7552/9472快照仅training_fit_only，终态自动核验/推报告/跨轮比较。只攻Blur，全栈自主授权持续，保留全部旧资产/energy。进展见reports/foundir_blur_fullgrid_v1_progress_assessment_2026-11-07.{json,md}。
+
 ## Blur终态跨轮比较观察器已运行；缓存链继续 — 2026-11-07
 
 CPU比较源码3613da5已推送并核验，3项比较契约测试通过。独立postprocess PID2052208实测存活，身份在checkpoints/foundir_blur_fullgrid_v1/comparison_daemon.json，日志comparison.log；只等主链terminal发布、两官方job退出0后运行同150图固定200/1280/1792/9472跨轮比较并推报告，不派发GPU。终态后检查published/official_comparison.json，不要重复启动该观察器。

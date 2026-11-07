@@ -1,0 +1,60 @@
+{
+  "utc": "2026-11-07T05:11:31.798831+00:00",
+  "scope": "Blur only; full official150 gate; no new official result this round",
+  "status": "training_running",
+  "latest_saved": {
+    "step": 1911,
+    "world": 4,
+    "next_global_slot": 15288,
+    "receipt_sha256": "03313b51686ab0403440989af186c9134bbce59babb54fa80e71b39ac5ef1782",
+    "parameter_hash": "d78c674c070467deb624eff967718a1959bff121422a8f9c42bdde57d72eedb3",
+    "file": "steps/state_001911_1794028289851594736.pt",
+    "sha256": "88fad3f0d1b0b0ae9b3ac083322932f86d128b57dc236e9fc1152bd3f975754d",
+    "saved_unix": 1794028289.8515947
+  },
+  "new_steps_done": 119,
+  "new_steps_planned": 7680,
+  "recent_median_seconds_per_step": 3.099644660949707,
+  "remaining_training_hours_estimate": 6.5101148004002045,
+  "official_evaluation_additional_minutes_estimate": [
+    8,
+    12
+  ],
+  "worker_heartbeats": {
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": "round20_blur_fullgrid_train_v1_node1",
+      "pid": 111399,
+      "state": "running",
+      "utc_unix": 1794028290.2790318,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "3": {
+      "capability": "independent_node3_two_H100_jobs_only",
+      "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "job": "round20_blur_fullgrid_train_v1_node3",
+      "pid": 299730,
+      "state": "running",
+      "utc_unix": 1794028290.9564993,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  },
+  "daemon_cmdlines": {
+    "1877938": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -S -u smoke/watch_foundir_blur_fullgrid_v1_cpu.py monitor --commit da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+    "1877939": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -S -u smoke/watch_foundir_blur_fullgrid_v1_cpu.py upload",
+    "2052208": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -S -u smoke/postprocess_foundir_blur_fullgrid_v1_cpu.py"
+  },
+  "latest_complete_official": {
+    "step": 1792,
+    "psnr": 21.948139508565266,
+    "lpips": 0.2021881063779195,
+    "pass": false
+  },
+  "gate": {
+    "psnr_min": 25.9,
+    "lpips_max": 0.18
+  },
+  "assessment": "Small official improvement vs original FLUX; LPIPS almost unchanged. Single-source training fit is strong but not evidence of official repair. No consistent cross-round improvement established.",
+  "next": "Fixed training9472 then full official150; no intermediate official checkpoint selection; no other types before Blur passes."
+}
