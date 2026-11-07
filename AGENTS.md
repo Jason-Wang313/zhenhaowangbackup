@@ -1,3 +1,10 @@
+## Blur固定1024来源十遍曝光链已准备：三节点六卡 — 2026-11-07
+
+固定8训练图100步已证明可拟合，非官方通过。当前保持原1024来源/配方/global8，从原完整step200模型与Adam迁移六卡到固定总1280（每来源10遍），再评价唯一最终1280的完整官方150；不使用8图拟合权重、不增加其它测试gate、不挑中途官方最好checkpoint。官方旧21.819776/.241321仍失败，25.9/.18之前只攻Blur。
+两rank→六rank保留模型/Adam/step/采样位置，显式重建6rank RNG，非逐位等价父训练恢复；旧父checkpoint/RNG原封保留。每步2/2/1/1/1/1真实样本、loss/8、全局SUM，global8/lr不变。迁移后同六卡可恢复，202步做真实CUDA状态重载。7项CPU测试含六进程Gloo/Adam/精确同world恢复通过，目的地预检14.163213秒，官方150元数据375块/卡已核验；实际CUDA/NCCL待日志。
+发布后启动smoke/watch_foundir_blur_exposure_v1_cpu.py的monitor/upload两个独立CPU进程，训练→CPU收尾→官方150→CPU核验→简报。201/512/1024/1280推小报告；网络故障不阻塞已发布GPU任务，工程故障仅取消本轮job，不重试/扩步。队列round14_blur_exposure_{train,official}_v1，node0/1/2双H100，node3空闲。
+接手先查foundir_blur_exposure_v1/daemons.json、共享queue实际日志/step/心跳及publication_requests/published；不要重复启动或修改绑定源码。预计训练45–90分钟/官方6–12分钟，仅粗估。保留所有旧资产/energy/失败及费用。详见reports/foundir_blur_exposure_v1_readiness_2026-11-07.md。完整自主修复授权继续。
+
 ## Blur固定8图100步完成：映射可拟合；官方仍失败 — 2026-11-07
 
 round13_blur_fixed8_fit_v1已结束，100/100、两rank及launcher退出0、CPU finish通过；node3双H100 519.128156秒/0.288404531GPU-hours，CPU3.111293秒。101步receipt连续，40图快照/SHA/均值核验，独立核验step1/50/100实际checkpoint；非全部大文件重哈希。无待续本轮训练，所有旧资产保留。

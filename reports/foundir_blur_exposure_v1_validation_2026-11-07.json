@@ -1,0 +1,31 @@
+{
+  "CPU_tests": 7,
+  "real_six_process_Gloo_global8_Adam_serial_comparison": true,
+  "same_six_rank_exact_resume_test": true,
+  "parent_two_to_six_bitwise_resume_claim": false,
+  "official150_six_way_partition_test": true,
+  "both_metrics_same_complete_output_test": true,
+  "peer_and_controller_failure_job_scoped_cancel_tests": true,
+  "syntax_pass": true,
+  "official_metadata_plan": {
+    "GPU_hours": 0,
+    "GPU_started": false,
+    "GT_pixels_decoded": false,
+    "exit_code": 0,
+    "independent_blind_test": false,
+    "plan_sha256": "1d69ee84a6df915f95969d8ce75967828b255ab5d7c9fd5489c6d700c11f28cd",
+    "records": 150,
+    "seconds": 1.2142995707690716,
+    "status": "official150_metadata_plan_pass",
+    "tiles_per_rank": [
+      375,
+      375,
+      375,
+      375,
+      375,
+      375
+    ],
+    "total_model_calls": 4500
+  },
+  "real_GPU_NCCL_started": false
+}
