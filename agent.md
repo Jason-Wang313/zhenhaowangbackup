@@ -1,3 +1,9 @@
+## Blur单来源16上下文诊断已真实训练，初始逐像素复现通过 — 2026-11-07
+
+round19_blur_singleframe_fit_v1由node3双H100实际领取运行；16参考缓存完成，初始16PNG和全图SHA逐一等同冻结1792旧输出。CPU3.273295秒核对父1792和新1792模型/完整Adam/参数顺序/历史/采样逐值相同，明确四rank RNG转两rank重新seed；实际1793 state SHA/100 Adam/参数更新通过。截至1794024565.7874634保存至1802，即10/200新增步；接手查最新step/心跳，不重启。
+持久monitor PID1123736，身份在checkpoints/foundir_blur_singleframe_fit_v1/monitor.json；脚本watch_foundir_blur_singleframe_fit_v1_cpu.py等待本job结束→CPU finish→小报告和费用自动推送，无后续GPU。新增0/50/100/200快照、每完整步保存，固定1992结束；禁止修改运行绑定源码。无自动续步、官方或其它类别。
+本轮仅training_fit_only，诊断权重不得部署/seed正式训练；官方仍21.948140/.202188未过25.9/.18，只攻Blur。全部旧资产/energy保留。源码9bef437已推；详见reports/foundir_blur_singleframe_fit_v1_live_2026-11-07.json。全栈自主修复授权持续，终态依据实证再决定下一方案。
+
 ## Blur单来源16上下文拟合诊断已准备 — 2026-11-07
 
 官方仍21.948140/.202188，相比原FLUX仅+.401377dB/LPIPS降.214263%，未过25.9/.18；72/150 PSNR差于LQ，不能说稳定修复。仅Blur继续，旧round17/18不重跑。

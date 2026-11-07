@@ -1,0 +1,68 @@
+{
+  "CPU_GPU_hours": 0,
+  "CPU_seconds": 3.273294523358345,
+  "first_Adam_states": 100,
+  "first_actual_checkpoint": {
+    "file": "steps/state_001793_1794024520958632762.pt",
+    "next_global_slot": 14344,
+    "parameter_hash": "48ee39eaf40610987d72e4ccfbc24b24bcf506d792196ed74f0cb6790cf7d6fb",
+    "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+    "sha256": "93ebb832c66a2ed3cc07dc8021c8189d05470d7207793bbc7f3085239b9a9640",
+    "step": 1793,
+    "world": 2
+  },
+  "initial16_PNG_and_full_exact_SHA_match": true,
+  "initial_snapshot": {
+    "both_improve_count": 11,
+    "full": {
+      "candidate": {
+        "lpips": 0.12458378076553345,
+        "psnr": 25.69210433959961,
+        "ssim": 0.8885319305721884
+      },
+      "lq": {
+        "lpips": 0.16538362205028534,
+        "psnr": 22.916574478149414,
+        "ssim": 0.875997512366531
+      },
+      "output": {
+        "path": "evaluations/step_001792_full.png",
+        "sha256": "f2d20128770d915246b03cee9580e773940207d6cf4f6730ba31a01526a8911c"
+      }
+    },
+    "means": {
+      "candidate": {
+        "lpips": 0.12270659499336034,
+        "psnr": 26.52184545993805,
+        "ssim": 0.8862036989978627
+      },
+      "lq": {
+        "lpips": 0.16183860870660283,
+        "psnr": 26.981631636619568,
+        "ssim": 0.8741063465139152
+      }
+    },
+    "parameter_hash": "1776f5e755050728c106d0d13bead0b7bc4f0fe6e3d5cddac9a4525ffc99fe86",
+    "quality_gate": false,
+    "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+    "scope": "training_fit_only",
+    "step": 1792
+  },
+  "job": "round19_blur_singleframe_fit_v1",
+  "latest_step_at_check": 1802,
+  "monitor": {
+    "job": "round19_blur_singleframe_fit_v1",
+    "log": "checkpoints/foundir_blur_singleframe_fit_v1/monitor.log",
+    "pid": 1123736,
+    "script": "smoke/watch_foundir_blur_singleframe_fit_v1_cpu.py",
+    "utc_unix": 1794024482.8883255
+  },
+  "node": 3,
+  "official_Blur_pass": false,
+  "parent_model_Adam_order_history_sampler_equal": true,
+  "parent_rng4_to_new_rng2_explicit": true,
+  "scope": "training_fit_only",
+  "status": "training_started_initial_reproduction_and_actual_states_verified",
+  "utc_unix": 1794024565.7874634,
+  "world": 2
+}
