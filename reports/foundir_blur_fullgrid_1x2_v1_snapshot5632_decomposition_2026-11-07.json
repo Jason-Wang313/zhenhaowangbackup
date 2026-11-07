@@ -1,0 +1,297 @@
+{
+  "utc": "2026-11-07T09:50:51.443292+00:00",
+  "status": "existing_training_outputs_error_decomposition",
+  "scope": "training_fit_only",
+  "quality_gate": false,
+  "official_Blur_pass": false,
+  "snapshot_steps": [
+    3712,
+    5632
+  ],
+  "images": 8,
+  "records": [
+    {
+      "source_index": 0,
+      "record_id": "foundir_train_0034314",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 1.2744827270507812,
+      "LPIPS_relative_reduction_percent": 10.899467234726568,
+      "old_MSE": 0.0019396812350979285,
+      "new_MSE": 0.0014463772366951299,
+      "MSE_change": -0.0004933039984027986,
+      "twice_error_dot_increment": -0.0009046197311733537,
+      "increment_squared_RMS": 0.00041131573277055516,
+      "increment_cosine_towards_GT": 0.5063877807908229,
+      "old_RGB_mean_error": [
+        -0.0006200450859356088,
+        -0.0019414960814572743,
+        -0.0011037487139917695
+      ],
+      "new_RGB_mean_error": [
+        0.0023114598462841925,
+        0.001106226171023965,
+        0.002074285887194384
+      ],
+      "RGB_mean_bias_MSE_change": 1.8323735792369822e-06,
+      "remaining_spatial_error_MSE_change": -0.0004951363719820367,
+      "MSE_increases": false,
+      "input_SHA": {
+        "old_output": "0ec50a21b64ca44470d75b85f7bf374d7604a08fa6a1b883d341c02114048334",
+        "new_output": "0bdd52a19e3177fd0fedd09b3ea2f22acdba04f77dd01d30f3770fa6cd879015",
+        "training_GT": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+        "training_LQ": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e"
+      }
+    },
+    {
+      "source_index": 1,
+      "record_id": "foundir_train_0067544",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 0.3257598876953125,
+      "LPIPS_relative_reduction_percent": 4.824031041252919,
+      "old_MSE": 0.006629776180675207,
+      "new_MSE": 0.006150671159339633,
+      "MSE_change": -0.00047910502133557357,
+      "twice_error_dot_increment": -0.0008685054804419952,
+      "increment_squared_RMS": 0.00038940045910642153,
+      "increment_cosine_towards_GT": 0.2702681721693878,
+      "old_RGB_mean_error": [
+        -0.006548879659888647,
+        -0.008261925835148875,
+        -0.0069628022119341566
+      ],
+      "new_RGB_mean_error": [
+        -0.004773066827039458,
+        -0.0038181149388767854,
+        -0.00325468825647543
+      ],
+      "RGB_mean_bias_MSE_change": -3.7224897893007065e-05,
+      "remaining_spatial_error_MSE_change": -0.0004418801234425604,
+      "MSE_increases": false,
+      "input_SHA": {
+        "old_output": "4863f30c523f8e7130417f1af5e3907594be330a7fdb1ebe45f5a5de119339c5",
+        "new_output": "af63aa40cfb93eda167db6b724c5471335653f7dbd577de08133a103d62eade7",
+        "training_GT": "f0c7d6eb0ec78b49491e7d41713eac4341ec5347e542e147c3e6d24ba2526c67",
+        "training_LQ": "92d7ba32d947240384a704be80980e4695029b4e6f8e3584ca46e72dcd0f9854"
+      }
+    },
+    {
+      "source_index": 2,
+      "record_id": "foundir_train_0068705",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 0.33428192138671875,
+      "LPIPS_relative_reduction_percent": 5.601175718267992,
+      "old_MSE": 0.0038205008055227255,
+      "new_MSE": 0.003537463291164525,
+      "MSE_change": -0.00028303751435820044,
+      "twice_error_dot_increment": -0.0006563574590652851,
+      "increment_squared_RMS": 0.0003733199447070848,
+      "increment_cosine_towards_GT": 0.2747955434571914,
+      "old_RGB_mean_error": [
+        -0.0031138665728637134,
+        -0.004871353788428952,
+        -0.0030427881414911645
+      ],
+      "new_RGB_mean_error": [
+        0.008633659752481239,
+        0.00815499235959816,
+        0.007454700360082304
+      ],
+      "RGB_mean_bias_MSE_change": 5.131057537523055e-05,
+      "remaining_spatial_error_MSE_change": -0.00033434808973343286,
+      "MSE_increases": false,
+      "input_SHA": {
+        "old_output": "a9829c73dfe5b2ea427d128805a557851c28c9260ebbb30f7e19ffb5e01d565c",
+        "new_output": "700d24c5e613ea7df5b99056397b75317261bee8b94ba7364a2086dfa6c9cde9",
+        "training_GT": "2ee7abf250c40d8290b21d35e790a147814b3021b77a48457c305caa5f91dcac",
+        "training_LQ": "31885e69147ac198cf197aa31b1d6bbdf10d770e135bec2be611b5f3fce239b4"
+      }
+    },
+    {
+      "source_index": 3,
+      "record_id": "foundir_train_0033402",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 3.905607223510742,
+      "LPIPS_relative_reduction_percent": 22.221513796475513,
+      "old_MSE": 0.01378182782609332,
+      "new_MSE": 0.005607195347072905,
+      "MSE_change": -0.008174632479020415,
+      "twice_error_dot_increment": -0.014769511137889352,
+      "increment_squared_RMS": 0.006594878658868938,
+      "increment_cosine_towards_GT": 0.7746032420217636,
+      "old_RGB_mean_error": [
+        -0.011145602608327282,
+        -0.009905832047325104,
+        -0.00856609704066812
+      ],
+      "new_RGB_mean_error": [
+        -0.002838293920963447,
+        -0.002258090504720407,
+        -0.004583815586419753
+      ],
+      "RGB_mean_bias_MSE_change": -8.718724470770565e-05,
+      "remaining_spatial_error_MSE_change": -0.008087445234312735,
+      "MSE_increases": false,
+      "input_SHA": {
+        "old_output": "01538b1274eeb4012fc4e622c3461373a429461e71d94116138a6abb1e945d46",
+        "new_output": "aa646e6869ccaa2dcbe5336f0f4e814f76f3fa472c94e702e1782066e1b967df",
+        "training_GT": "ae174b9e635c0b1adb278e9825da85d0378fad0d5fdf5cdfda5c10159bbb610a",
+        "training_LQ": "142e03f85e57d8ea2ddc2f2751d32d56396a88b6ea4f800b650ffdb87845abd5"
+      }
+    },
+    {
+      "source_index": 4,
+      "record_id": "foundir_train_0021200",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 0.6275272369384766,
+      "LPIPS_relative_reduction_percent": 4.913061828254395,
+      "old_MSE": 0.00587973846815011,
+      "new_MSE": 0.005088677921241118,
+      "MSE_change": -0.0007910605469089917,
+      "twice_error_dot_increment": -0.0015809496347558632,
+      "increment_squared_RMS": 0.0007898890878468712,
+      "increment_cosine_towards_GT": 0.36679717091242325,
+      "old_RGB_mean_error": [
+        -0.013634391642459453,
+        -0.019347139009924956,
+        -0.020988853334543693
+      ],
+      "new_RGB_mean_error": [
+        0.00028003207455821837,
+        -0.0029263022724521906,
+        -0.0038076755779472282
+      ],
+      "RGB_mean_bias_MSE_change": -0.00032586677712295937,
+      "remaining_spatial_error_MSE_change": -0.00046519376978602315,
+      "MSE_increases": false,
+      "input_SHA": {
+        "old_output": "9dfe2a73a2d2fbbc1aa1be7784e509532b91e9677e6373608033451817357109",
+        "new_output": "3de003cfc0318b4ce2b37c5101cc2775a53ddd57b323205da2ae701708c20d6f",
+        "training_GT": "bab1b1c77eff9eeea8ccdc0b50bbf6a15eae7527e5e6fad68eecb367774a343f",
+        "training_LQ": "7963f3585543ad477815d116b95997bafff99b934079adc7db22c1761836766e"
+      }
+    },
+    {
+      "source_index": 5,
+      "record_id": "foundir_train_0067698",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 2.040447235107422,
+      "LPIPS_relative_reduction_percent": 11.165335156570066,
+      "old_MSE": 0.012121886747618438,
+      "new_MSE": 0.007577491298554845,
+      "MSE_change": -0.004544395449063592,
+      "twice_error_dot_increment": -0.008343408597199875,
+      "increment_squared_RMS": 0.003799013148136282,
+      "increment_cosine_towards_GT": 0.6147421724018518,
+      "old_RGB_mean_error": [
+        -0.00379555873275236,
+        -0.004197402263374486,
+        -0.0005580292302106028
+      ],
+      "new_RGB_mean_error": [
+        0.0035029729484386345,
+        0.0029452784586056647,
+        0.004754671235778262
+      ],
+      "RGB_mean_bias_MSE_change": 3.738844920144402e-06,
+      "remaining_spatial_error_MSE_change": -0.004548134293983727,
+      "MSE_increases": false,
+      "input_SHA": {
+        "old_output": "c239bfa4e956c00aa5f70b93eb7bc49d63bdf6d41c83961f026ac111cd04cf73",
+        "new_output": "a5a83321fc94ae90ec6c4fc7378c2b3038d913ef20561035cdf6797b9a552497",
+        "training_GT": "12a104018079f1ebeabe5d41e0a0d30204d5843ae8192234845a56ccb69244ec",
+        "training_LQ": "be73e48f06334325bc4aa9b9f36bfefebf2b97f6e1523cddbd5cfe75701488f7"
+      }
+    },
+    {
+      "source_index": 6,
+      "record_id": "foundir_train_0053870",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": -3.4853382110595703,
+      "LPIPS_relative_reduction_percent": -26.910582283273587,
+      "old_MSE": 0.0030825303519697238,
+      "new_MSE": 0.006877683109574823,
+      "MSE_change": 0.0037951527576050993,
+      "twice_error_dot_increment": 0.0006606178742981094,
+      "increment_squared_RMS": 0.00313453488330699,
+      "increment_cosine_towards_GT": -0.10626251490175655,
+      "old_RGB_mean_error": [
+        -0.003332128646211571,
+        -0.0051017383805374,
+        -0.004172016839143065
+      ],
+      "new_RGB_mean_error": [
+        0.0048167097857661585,
+        0.001999699301016703,
+        0.0023243785554345193
+      ],
+      "RGB_mean_bias_MSE_change": -7.311438066899799e-06,
+      "remaining_spatial_error_MSE_change": 0.0038024641956719805,
+      "MSE_increases": true,
+      "input_SHA": {
+        "old_output": "e82ac3e6bb75b9dc02cb3d92367099ebd402be28fb7d457d536d5db78ac0b6dd",
+        "new_output": "e2beb4a56349edbbc9879e3055065555e8029986a3476f7f88ac14f4b45fda36",
+        "training_GT": "084aeb7ccc7b30137996c9c253b5b1de0abd0d464a893471d5a1061795d09d99",
+        "training_LQ": "92e0b3cf1ac62e025ef2e59210204ada4b399593c8b8a8d02599e88776ae0e8e"
+      }
+    },
+    {
+      "source_index": 7,
+      "record_id": "foundir_train_0099772",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 3.354543685913086,
+      "LPIPS_relative_reduction_percent": 8.477640791009733,
+      "old_MSE": 0.011848917960783523,
+      "new_MSE": 0.00547298087808108,
+      "MSE_change": -0.006375937082702443,
+      "twice_error_dot_increment": -0.010167821878812043,
+      "increment_squared_RMS": 0.0037918847961096003,
+      "increment_cosine_towards_GT": 0.758457098880008,
+      "old_RGB_mean_error": [
+        -0.07627356988320019,
+        -0.08149738070382474,
+        -0.06946979960965868
+      ],
+      "new_RGB_mean_error": [
+        -0.031722630718954245,
+        -0.03156170570079884,
+        -0.029453733962720892
+      ],
+      "RGB_mean_bias_MSE_change": -0.004805181523765328,
+      "remaining_spatial_error_MSE_change": -0.0015707555589371041,
+      "MSE_increases": false,
+      "input_SHA": {
+        "old_output": "3ff4ad6ee53b5a6ee08c0ad42c243f777229a3d0a8a4d906892c1bf61f2ecdae",
+        "new_output": "bc3768a7c743054ba9a3aaf1046e4443b271ea821a6735adea87e0510793ba09",
+        "training_GT": "e4354a6abddd65061fa6124eb764d9d5d09d97b48d2e9e45c403ce36f62b38ac",
+        "training_LQ": "c1e3209f4dc5d4a815b1d095e300825edd56cfa7d222ebb958901973ad56f8ea"
+      }
+    }
+  ],
+  "MSE_identity_verified": true,
+  "RGB_bias_and_spatial_identity_verified": true,
+  "RGB_bias_identity_max_absolute_error": 2.7755575615628914e-17,
+  "RGB_mean_reduction": "exact int64 sums of uint8 residuals divided once per channel",
+  "PSNR_epsilon": 1e-08,
+  "PSNR_from_RGB_matches_report_abs_tolerance": 2e-05,
+  "MSE_worse_count": 1,
+  "new_GPU_inference": false,
+  "GT_used_to_modify_or_select_outputs": false,
+  "inputs": {
+    "3712": {
+      "path": "checkpoints/foundir_blur_fullgrid_1x2_v1/snapshots/step_003712_summary.json",
+      "sha256": "92ae7da4eb46ee7a5b285a22b90a55e88fa95e5a9acc05af097b9e12abe212c2"
+    },
+    "5632": {
+      "path": "checkpoints/foundir_blur_fullgrid_1x2_v1/snapshots/step_005632_summary.json",
+      "sha256": "0d7b924c9c1218d058dd57a08a4ef308433fcf62eeeb876c0efa25cea7be167d"
+    }
+  },
+  "contact_sheet": {
+    "path": "checkpoints/foundir_blur_fullgrid_1x2_v1/diagnostics/snapshot5632_contact.png",
+    "sha256": "b060db5eb12d05abd9d945f2cdf1c1e9418709eea183cc3cf349688a005abab7"
+  },
+  "prior_analysis_attempt": "FP64 per-channel mean reduction on index7 produced 1.89777e-13 decomposition discrepancy and failed the 1e-14 guard. Replaced only diagnostic channel means with exact int64 uint8 residual sums; guard retained; GPU outputs/metrics unchanged.",
+  "CPU_seconds": 6.860740516334772,
+  "GPU_hours": 0,
+  "exit_code": 0
+}
