@@ -1,3 +1,11 @@
+## 当前Blur曝光试验改为健康node1/node3四卡；六卡准备保留未启动 — 2026-11-07
+
+启动前node0/2心跳中断，未有明确退出；随后node0恢复，node2仍陈旧。当前采用持续新鲜的物理node1(10.244.47.55)/node3(10.244.90.116)，两节点各2H100，master:29879。原六卡job从未提交，旧3x2源码/预检/资产全部保留；不要启动round14三节点任务。
+科学范围不变：原1024来源/配方/global8，原完整step200模型+Adam→固定1280，总每来源10遍→唯一最终权重官方150。不使用8图拟合权重。world2→4显式重建四rank RNG，非逐位等价父训练；同四卡保存恢复完整，202后真实GPU重载。每rank2真实样本、loss/8+SUM。8项CPU测试含真实4进程Adam/精确同world恢复通过；预检11.341932秒，官方150完整38/38/37/37分片元数据通过。
+新控制器分别给既有node1 worker(nodes=[1])和node3 extension(nodes=[3])提交同协议的成对子job；不改旧worker、不发送其不支持的联合nodes列表。两任务通过新torchrun入口协作，故障协调取消本组peer。实际四rank NCCL待日志，不把CPU通过当GPU开始。
+持久CPU脚本smoke/watch_foundir_blur_exposure_2x2_v2_cpu.py monitor/upload；输出foundir_blur_exposure_2x2_v2，PID记daemons.json，日志logs/foundir_blur_exposure_2x2_v2_{monitor,upload}.log。队列round14b_blur_exposure_{train,official}_v2_node{1,3}；先查真实step/心跳，勿重复提交。201/512/1024/1280和终态推小报告。
+完整官方150的25.9/.18仍唯一质量门槛，旧21.819776/.241321失败；Blur未过不推进其它类别。全栈授权继续，保留所有旧资产/energy。详见reports/foundir_blur_exposure_2x2_v2_readiness_2026-11-07.md。
+
 ## Blur固定1024来源十遍曝光链已准备：三节点六卡 — 2026-11-07
 
 固定8训练图100步已证明可拟合，非官方通过。当前保持原1024来源/配方/global8，从原完整step200模型与Adam迁移六卡到固定总1280（每来源10遍），再评价唯一最终1280的完整官方150；不使用8图拟合权重、不增加其它测试gate、不挑中途官方最好checkpoint。官方旧21.819776/.241321仍失败，25.9/.18之前只攻Blur。

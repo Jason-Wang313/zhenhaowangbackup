@@ -1,0 +1,25 @@
+{
+  "GPU_hours": 0,
+  "actual_parent_SHA_Adam_RNG_verified": true,
+  "bitwise_parent_resume": false,
+  "cache_metadata_checked": 1024,
+  "cache_tensors_rehashed_at_use": true,
+  "exit_code": 0,
+  "final_exposures_per_source": 10,
+  "local_counts": [
+    2,
+    2,
+    2,
+    2
+  ],
+  "new_runtime_rank_RNG_reseeded": 4,
+  "new_updates": 1080,
+  "official_pixels_accessed": false,
+  "original_rank_RNG_preserved_in_parent": 2,
+  "parent_parameter_hash": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175",
+  "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+  "seconds": 11.341932442039251,
+  "status": "destination_CPU_preflight_pass",
+  "total_steps": 1280,
+  "training_sources": 1024
+}

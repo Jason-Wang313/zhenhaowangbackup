@@ -1,0 +1,72 @@
+{
+  "CPU_tests": 8,
+  "real_four_process_Gloo_global8_Adam_serial_match": true,
+  "same_four_rank_resume_exact": true,
+  "global8_each_source_exactly10_exposures": true,
+  "official150_partition": [
+    38,
+    38,
+    37,
+    37
+  ],
+  "paired_submission_legacy_envelopes_test": true,
+  "paired_peer_and_controller_failure_cancel_tests": true,
+  "syntax_pass": true,
+  "hardware_observation_utc": 1794012915.5465822,
+  "heartbeats": {
+    "0": {
+      "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+      "job": null,
+      "pid": 115876,
+      "state": "idle",
+      "utc_unix": 1794012737.9453294,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": null,
+      "pid": 111399,
+      "state": "idle",
+      "utc_unix": 1794012911.7952228,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "2": {
+      "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+      "job": null,
+      "pid": 105249,
+      "state": "idle",
+      "utc_unix": 1794012794.2175105,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "3": {
+      "capability": "independent_node3_two_H100_jobs_only",
+      "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "job": null,
+      "pid": 299730,
+      "state": "idle",
+      "utc_unix": 1794012911.2361805,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  },
+  "six_rank_plan_GPU_never_submitted": true,
+  "new_GPU_started": false,
+  "official_metadata_plan": {
+    "GPU_hours": 0,
+    "GPU_started": false,
+    "GT_pixels_decoded": false,
+    "exit_code": 0,
+    "independent_blind_test": false,
+    "plan_sha256": "a9d3c5dc84fe97b31bfefc9f1848ada84be7ca11794f390078c90128db7ac116",
+    "records": 150,
+    "seconds": 1.1049800477921963,
+    "status": "official150_metadata_plan_pass",
+    "tiles_per_rank": [
+      570,
+      570,
+      555,
+      555
+    ],
+    "total_model_calls": 4500
+  }
+}
