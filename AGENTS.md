@@ -1,3 +1,9 @@
+## Blur完整网格终态将自动补充同官方150跨轮比较 — 2026-11-07
+
+当前round20 node1/node3四H100缓存链正常继续，GPU绑定源码/配方不变；不重新提交任务。新增独立CPU入口compare_foundir_blur_fullgrid_official_v1_cpu.py，待固定9472完整官方150终态后，与原FLUX、200、1280、1792在同一150图/无GT路由/评分口径上比较，独立重算均值、逐图双好/双差和双门槛；禁止混拼最好指标或GT选输出。
+3项标准库测试通过，覆盖多模型单项最好不能拼联合通过、缺失/重复/GT身份变更、均值与基线篡改。新postprocess_foundir_blur_fullgrid_v1_cpu.py仅等待主控制器发布terminal并确认两官方job退出0，再运行比较和推小报告；不生成图片、不训练。源码发布后将独立后台启动，身份写foundir_blur_fullgrid_v1/comparison_daemon.json。当前官方9472结果尚不存在，不能提前运行比较或声称改善。
+主monitor1877938/upload1877939仍负责固定缓存→1792至9472→官方150→终态回传，身份见daemons.json。正式候选仍旧1792，官方21.948140/.202188未过25.9/.18；仅Blur继续，全部旧资产/energy保留。接手查实时queue/缓存/step，不改绑定源码或重复启动。
+
 ## Blur完整网格链已真实启动：四rank新缓存及输入核验通过 — 2026-11-07
 
 源码da011aca已发布，全部10份新GPU/控制源码远端SHA逐一核验；queued报告ecfa36fa已推。物理node1/node3四H100实际领取round20_blur_fullgrid_cache_v1_node1/node3，四rank均已生成新缓存，未见早期异常。快照1794026615.1246603：4951/15360，其中旧4096复用、新855；每rank首份新tensor实际SHA/FP32有限/schema/LQ像素逐值一致核验通过（CPU1.705569秒）。当前尚未进入训练，接手查最新cache/step/queue，不重启或改绑定源码。
