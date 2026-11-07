@@ -1,3 +1,9 @@
+## Blur终态跨轮比较观察器已运行；缓存链继续 — 2026-11-07
+
+CPU比较源码3613da5已推送并核验，3项比较契约测试通过。独立postprocess PID2052208实测存活，身份在checkpoints/foundir_blur_fullgrid_v1/comparison_daemon.json，日志comparison.log；只等主链terminal发布、两官方job退出0后运行同150图固定200/1280/1792/9472跨轮比较并推报告，不派发GPU。终态后检查published/official_comparison.json，不要重复启动该观察器。
+主monitor1877938/upload1877939持续控制round20 node1/node3四H100缓存→固定1792至9472→完整官方150→核验/小报告。当前快照缓存9697/15360，四rank输出持续增长、两worker心跳正常；接手查实时状态，不把本旧计数当最新进度，不重启或改绑定源码。
+官方仍21.948140/.202188未过25.9/.18，仅Blur。全部旧资产/energy保留，训练和单图诊断不作为新质量gate，完整自主修复授权持续。详见reports/foundir_blur_fullgrid_v1_postprocess_live_2026-11-07.json。
+
 ## Blur完整网格终态将自动补充同官方150跨轮比较 — 2026-11-07
 
 当前round20 node1/node3四H100缓存链正常继续，GPU绑定源码/配方不变；不重新提交任务。新增独立CPU入口compare_foundir_blur_fullgrid_official_v1_cpu.py，待固定9472完整官方150终态后，与原FLUX、200、1280、1792在同一150图/无GT路由/评分口径上比较，独立重算均值、逐图双好/双差和双门槛；禁止混拼最好指标或GT选输出。
