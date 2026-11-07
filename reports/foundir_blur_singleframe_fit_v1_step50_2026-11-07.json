@@ -1,0 +1,885 @@
+{
+  "GPU_running_to_fixed200": true,
+  "after": {
+    "both_improve_count": 13,
+    "full": {
+      "candidate": {
+        "lpips": 0.08879245817661285,
+        "psnr": 28.85867691040039,
+        "ssim": 0.910955588509711
+      },
+      "lq": {
+        "lpips": 0.16538362205028534,
+        "psnr": 22.916574478149414,
+        "ssim": 0.875997512366531
+      },
+      "output": {
+        "path": "evaluations/step_001842_full.png",
+        "sha256": "be90a5775b9947334e727089edcd6ee94c5d223df89a296307150b997affb315"
+      }
+    },
+    "means": {
+      "candidate": {
+        "lpips": 0.08473069878527895,
+        "psnr": 31.27624213695526,
+        "ssim": 0.9106861160962957
+      },
+      "lq": {
+        "lpips": 0.16183860870660283,
+        "psnr": 26.981631636619568,
+        "ssim": 0.8741063465139152
+      }
+    },
+    "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+    "quality_gate": false,
+    "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+    "scope": "training_fit_only",
+    "step": 1842
+  },
+  "before": {
+    "both_improve_count": 11,
+    "full": {
+      "candidate": {
+        "lpips": 0.12458378076553345,
+        "psnr": 25.69210433959961,
+        "ssim": 0.8885319305721884
+      },
+      "lq": {
+        "lpips": 0.16538362205028534,
+        "psnr": 22.916574478149414,
+        "ssim": 0.875997512366531
+      },
+      "output": {
+        "path": "evaluations/step_001792_full.png",
+        "sha256": "f2d20128770d915246b03cee9580e773940207d6cf4f6730ba31a01526a8911c"
+      }
+    },
+    "means": {
+      "candidate": {
+        "lpips": 0.12270659499336034,
+        "psnr": 26.52184545993805,
+        "ssim": 0.8862036989978627
+      },
+      "lq": {
+        "lpips": 0.16183860870660283,
+        "psnr": 26.981631636619568,
+        "ssim": 0.8741063465139152
+      }
+    },
+    "parameter_hash": "1776f5e755050728c106d0d13bead0b7bc4f0fe6e3d5cddac9a4525ffc99fe86",
+    "quality_gate": false,
+    "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+    "scope": "training_fit_only",
+    "step": 1792
+  },
+  "both_better_vs1792": 16,
+  "both_worse_vs1792": 0,
+  "official_Blur_pass": false,
+  "records": [
+    {
+      "index": 1,
+      "item": {
+        "crop_xy": [
+          384,
+          0
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x384_y0",
+        "view": 1
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.21794329583644867,
+          "psnr": 25.10568618774414,
+          "ssim": 0.8154021679831076
+        },
+        "lq": {
+          "lpips": 0.4174121618270874,
+          "psnr": 19.752613067626953,
+          "ssim": 0.7330633882853311
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v01_x384_y0.png",
+        "sha256": "ec1e5dd7cc11eca4e0faf3efda035f6f252db3ca3c90cb933e0ce2d7d2d1dd6c"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 9,
+      "item": {
+        "crop_xy": [
+          1408,
+          384
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x1408_y384",
+        "view": 9
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.013453342020511627,
+          "psnr": 39.80037307739258,
+          "ssim": 0.9858472041979844
+        },
+        "lq": {
+          "lpips": 0.0022383304312825203,
+          "psnr": 50.128501892089844,
+          "ssim": 0.9960241460871666
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v09_x1408_y384.png",
+        "sha256": "2a5f620fb049a70ce8e74051b4f01464acf6450626298c9a86c89a3846acb375"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 7,
+      "item": {
+        "crop_xy": [
+          768,
+          384
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x768_y384",
+        "view": 7
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.16629265248775482,
+          "psnr": 26.660966873168945,
+          "ssim": 0.8232044314120343
+        },
+        "lq": {
+          "lpips": 0.3211858570575714,
+          "psnr": 18.747098922729492,
+          "ssim": 0.7461146316005006
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v07_x768_y384.png",
+        "sha256": "6bbf9bb6f7f78fa51ea5136212711a8fe6e5a7a7f17559f4eeb2ccb52513debf"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 4,
+      "item": {
+        "crop_xy": [
+          1408,
+          0
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x1408_y0",
+        "view": 4
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.009167999029159546,
+          "psnr": 39.4892463684082,
+          "ssim": 0.9881695719187515
+        },
+        "lq": {
+          "lpips": 0.0028506729286164045,
+          "psnr": 49.33192443847656,
+          "ssim": 0.9944543529792281
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v04_x1408_y0.png",
+        "sha256": "7864f1f2650b6f2a3be401bc8e46166bfd65ef2b60917458781ecafab631cfea"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 15,
+      "item": {
+        "crop_xy": [
+          985,
+          489
+        ],
+        "kind": "original_crop",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": null,
+        "view": 15
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.07639876008033752,
+          "psnr": 30.436534881591797,
+          "ssim": 0.9136475875991488
+        },
+        "lq": {
+          "lpips": 0.14240127801895142,
+          "psnr": 21.88920783996582,
+          "ssim": 0.8823668132485983
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v15_x985_y489.png",
+        "sha256": "7e91cbea7a9b84388d89d66766f7155765798cf2ea7b967c68cb66bd93ca972c"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 10,
+      "item": {
+        "crop_xy": [
+          0,
+          568
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x0_y568",
+        "view": 10
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.09766709059476852,
+          "psnr": 28.272981643676758,
+          "ssim": 0.891966988272101
+        },
+        "lq": {
+          "lpips": 0.1519785076379776,
+          "psnr": 22.79136848449707,
+          "ssim": 0.8650192188314035
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v10_x0_y568.png",
+        "sha256": "7112aaeb302abf69a5d6836fe500abb1b11d7d57d73c5ed1b1640e8776565069"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 14,
+      "item": {
+        "crop_xy": [
+          1408,
+          568
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x1408_y568",
+        "view": 14
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.01554012205451727,
+          "psnr": 41.760921478271484,
+          "ssim": 0.9836481649608801
+        },
+        "lq": {
+          "lpips": 0.002482401905581355,
+          "psnr": 49.318153381347656,
+          "ssim": 0.9960971749238886
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v14_x1408_y568.png",
+        "sha256": "34319a82f3f09123bc1a3c752c41b586bd2f845559c249bbd40ed50eb9562a6a"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 5,
+      "item": {
+        "crop_xy": [
+          0,
+          384
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x0_y384",
+        "view": 5
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.14365296065807343,
+          "psnr": 26.021018981933594,
+          "ssim": 0.8213544606117025
+        },
+        "lq": {
+          "lpips": 0.30077704787254333,
+          "psnr": 20.120018005371094,
+          "ssim": 0.7415175911901851
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v05_x0_y384.png",
+        "sha256": "f364bd8da3529c8a4f09b41fe0cd225d2f46c776305bbf99e16619f671c6e1d0"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 0,
+      "item": {
+        "crop_xy": [
+          0,
+          0
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x0_y0",
+        "view": 0
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.15509498119354248,
+          "psnr": 25.79746437072754,
+          "ssim": 0.8549706020706698
+        },
+        "lq": {
+          "lpips": 0.2655242383480072,
+          "psnr": 21.499155044555664,
+          "ssim": 0.7945538352193943
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v00_x0_y0.png",
+        "sha256": "ef8f9c2198f4b34f52172bc4bf130c046cb496b98570bc03f8fe529c574b0f74"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 13,
+      "item": {
+        "crop_xy": [
+          1152,
+          568
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x1152_y568",
+        "view": 13
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.028486210852861404,
+          "psnr": 34.5860710144043,
+          "ssim": 0.9678900379757169
+        },
+        "lq": {
+          "lpips": 0.045783139765262604,
+          "psnr": 25.04207992553711,
+          "ssim": 0.9621965793692234
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v13_x1152_y568.png",
+        "sha256": "ef981dd69dc2bb9b38bbe05ae1f7a786c7f9300a807d334ccfa640458fc343d9"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 12,
+      "item": {
+        "crop_xy": [
+          768,
+          568
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x768_y568",
+        "view": 12
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.0935901403427124,
+          "psnr": 29.22488021850586,
+          "ssim": 0.8887233507393726
+        },
+        "lq": {
+          "lpips": 0.17277969419956207,
+          "psnr": 21.485321044921875,
+          "ssim": 0.8542592385775161
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v12_x768_y568.png",
+        "sha256": "e735ac52b2e2d10f9b629d97f90760a3536faa032d225199a65243fcba3cd9dc"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 2,
+      "item": {
+        "crop_xy": [
+          768,
+          0
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x768_y0",
+        "view": 2
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.1417853981256485,
+          "psnr": 26.0679988861084,
+          "ssim": 0.8524548442666755
+        },
+        "lq": {
+          "lpips": 0.3038215637207031,
+          "psnr": 20.173812866210938,
+          "ssim": 0.7735117220449521
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v02_x768_y0.png",
+        "sha256": "cb46c41f96c6c491b20d89c10106f4cc3767c58ba77930dd457fb1dd45d70171"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 8,
+      "item": {
+        "crop_xy": [
+          1152,
+          384
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x1152_y384",
+        "view": 8
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.034816764295101166,
+          "psnr": 33.21903991699219,
+          "ssim": 0.9656684907109543
+        },
+        "lq": {
+          "lpips": 0.0872819796204567,
+          "psnr": 22.251007080078125,
+          "ssim": 0.9307413179707756
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v08_x1152_y384.png",
+        "sha256": "17906731caf90d863eea9584247b0ed9435d99ed1f9d2b4607389fba8586ee02"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 3,
+      "item": {
+        "crop_xy": [
+          1152,
+          0
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x1152_y0",
+        "view": 3
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.01575247384607792,
+          "psnr": 35.31140899658203,
+          "ssim": 0.9810886820465399
+        },
+        "lq": {
+          "lpips": 0.031789205968379974,
+          "psnr": 27.16356658935547,
+          "ssim": 0.972522928439852
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v03_x1152_y0.png",
+        "sha256": "1861b7842ea6a08303cc815232b8d3da7b753c5d5be902dea121fcb6c348c280"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 11,
+      "item": {
+        "crop_xy": [
+          384,
+          568
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x384_y568",
+        "view": 11
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.045967984944581985,
+          "psnr": 30.8438663482666,
+          "ssim": 0.9398488494432199
+        },
+        "lq": {
+          "lpips": 0.10240235924720764,
+          "psnr": 22.42435073852539,
+          "ssim": 0.9158917028540436
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v11_x384_y568.png",
+        "sha256": "dd6136cc4fc6a85f4dd9f6b673847b6152aaff1b645ca5bfd667e48c998ecf5e"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 1,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    {
+      "index": 6,
+      "item": {
+        "crop_xy": [
+          384,
+          384
+        ],
+        "kind": "deployment_grid",
+        "role": "train",
+        "row": {
+          "category": "01Blur",
+          "composition_size": "1",
+          "degradations_json": "[\"blur\"]",
+          "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+          "gt_phash": "864241b5def272f6",
+          "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+          "height": "1080",
+          "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+          "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+          "original_split": "train",
+          "record_id": "foundir_train_0034314",
+          "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+          "split": "train",
+          "width": "1920"
+        },
+        "tile_key": "foundir_train_0034314__x384_y384",
+        "view": 6
+      },
+      "metrics": {
+        "candidate": {
+          "lpips": 0.10008100420236588,
+          "psnr": 27.821414947509766,
+          "ssim": 0.8970924233318716
+        },
+        "lq": {
+          "lpips": 0.23870930075645447,
+          "psnr": 19.587926864624023,
+          "ssim": 0.8273669026005828
+        }
+      },
+      "output": {
+        "path": "evaluations/step_001842/foundir_train_0034314__v06_x384_y384.png",
+        "sha256": "91fb60e25cc247c3bcba1bffea600590dbdadce1202b2ad42a8764fe6cb5e972"
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "rank": 0,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    }
+  ],
+  "remaining_quality_gap_unchanged": "official150 21.948140/.202188 versus25.9/.18",
+  "scope": "training_fit_only",
+  "source_commit": "9bef437a9dd246b0c3125223b589157a3eb6f0b1",
+  "status": "fixed_training_snapshot50_complete",
+  "utc_unix": 1794024849.9790823
+}
