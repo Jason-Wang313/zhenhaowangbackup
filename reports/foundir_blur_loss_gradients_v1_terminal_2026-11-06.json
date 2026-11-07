@@ -1,0 +1,110 @@
+{
+  "status": "fixed8_parameter_gradient_diagnostic_complete",
+  "summary": {
+    "initial": {
+      "global_batch": {
+        "LPIPS_dot_mixed": -0.002442880357825513,
+        "LPIPS_to_MSE_norm_ratio": 0.18430751491997835,
+        "MSE_dot_mixed": 0.11787165834351065,
+        "cosine": -0.29072965550660895,
+        "dot": -0.006673590297653669,
+        "mixed_gradient_norm": 0.3397481096131149,
+        "parameter_count": 32440320,
+        "parameter_tensors": 100,
+        "raw_SGD_mixed_descent_first_order_increases_LPIPS": true,
+        "raw_SGD_mixed_descent_first_order_increases_MSE": false,
+        "weighted_LPIPS_gradient_norm": 0.0650439077841127,
+        "weighted_MSE_gradient_norm": 0.3529096890723806
+      },
+      "per_image_mixed_raw_SGD_descent_increases_MSE": 0,
+      "per_image_negative_cosine": 6,
+      "per_image_ratio_max": 0.9877918248946272,
+      "per_image_ratio_median": 0.25400906616335417,
+      "per_image_ratio_min": 0.03656911424473618
+    },
+    "step200": {
+      "global_batch": {
+        "LPIPS_dot_mixed": -0.0033058926035754964,
+        "LPIPS_to_MSE_norm_ratio": 0.3636371522076392,
+        "MSE_dot_mixed": 0.17369993194569694,
+        "cosine": -0.40820653060619005,
+        "dot": -0.030278343534315383,
+        "mixed_gradient_norm": 0.41278812887741995,
+        "parameter_count": 32440320,
+        "parameter_tensors": 100,
+        "raw_SGD_mixed_descent_first_order_increases_LPIPS": true,
+        "raw_SGD_mixed_descent_first_order_increases_MSE": false,
+        "weighted_LPIPS_gradient_norm": 0.16423291670898343,
+        "weighted_MSE_gradient_norm": 0.4516395415372887
+      },
+      "per_image_mixed_raw_SGD_descent_increases_MSE": 0,
+      "per_image_negative_cosine": 5,
+      "per_image_ratio_max": 0.5053998408029984,
+      "per_image_ratio_median": 0.241235333951555,
+      "per_image_ratio_min": 0.04184269515218434
+    }
+  },
+  "launcher": {
+    "allocated_GPU_hours": 0.0589929187297821,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 106.18725371360779,
+    "status": 0
+  },
+  "ranks": [
+    {
+      "keys": [
+        "train_foundir_train_0034314",
+        "train_foundir_train_0068705",
+        "train_foundir_train_0021200",
+        "train_foundir_train_0053870"
+      ],
+      "peak_allocated_GiB": 16.97564697265625,
+      "phase_hashes": {
+        "initial": {
+          "after": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+          "before": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5"
+        },
+        "step200": {
+          "after": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175",
+          "before": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175"
+        }
+      },
+      "rank": 0,
+      "receipt_sha256": "d2fe4702743d95a577f14976c5bf28bb78fe6d9823154889de61016c51a2d84c",
+      "seconds": 75.42272198502906
+    },
+    {
+      "keys": [
+        "train_foundir_train_0067544",
+        "train_foundir_train_0033402",
+        "train_foundir_train_0067698",
+        "train_foundir_train_0099772"
+      ],
+      "peak_allocated_GiB": 16.97564697265625,
+      "phase_hashes": {
+        "initial": {
+          "after": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+          "before": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5"
+        },
+        "step200": {
+          "after": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175",
+          "before": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175"
+        }
+      },
+      "rank": 1,
+      "receipt_sha256": "d2fe4702743d95a577f14976c5bf28bb78fe6d9823154889de61016c51a2d84c",
+      "seconds": 75.42273968399968
+    }
+  ],
+  "CPU_finish_seconds": 1.0845808163285255,
+  "CPU_exit_code": 0,
+  "model_parameters_changed_during_derivative_computation": false,
+  "official_Blur_pass": false,
+  "interpretation": "RGB gradient dominance does not transfer to parameter space. Weighted MSE norm is larger in every measured image and both full batches; mixed raw SGD first-order direction harms LPIPS, not MSE. This does not determine actual Adam update behavior or prove the root cause of official failure.",
+  "next_action": "Read-only replay actual saved step0->1 and199->200 on each original sampled global8 batch; compare actual parameter delta with separate loss derivatives and finite before/after losses. No optimizer updates/new training or official rerun. Not implemented/submitted yet.",
+  "new_GPU_jobs_submitted": false,
+  "current_delta_trials_and_diagnostics_GPU_hours": 2.6218105725731125,
+  "older_history_not_in_subtotal": true
+}
