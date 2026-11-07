@@ -1,0 +1,178 @@
+{
+  "CPU_stages": {
+    "cache_finish": {
+      "seconds": 43.314694952219725,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_FULLGRID_CACHE_VERIFIED {\"status\": \"all15360_fullgrid_reference_caches_ready\", \"training_sources\": 1024, \"training_views\": 15360, \"original4096_reused\": true, \"new_reference_tensors\": 11264, \"tensors_SHA_verified_at_training_use\": true, \"all_tensor_SHA_rechecked_on_CPU\": false, \"seconds\": 37.0127740316093, \"GPU_hours\": 0, \"exit_code\": 0}\n"
+    },
+    "official_plan": {
+      "seconds": 7.794567722827196,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_FULLGRID_OFFICIAL_PLAN {\"status\": \"official150_metadata_plan_pass\", \"records\": 150, \"tiles_per_rank\": [570, 570, 555, 555], \"total_model_calls\": 4500, \"GT_pixels_decoded\": false, \"GPU_started\": false, \"seconds\": 1.6810140162706375, \"exit_code\": 0, \"GPU_hours\": 0, \"plan_sha256\": \"bb09a79d7714834f3f224daac729c5302b05036fe980e3555087fc9780bdc883\", \"independent_blind_test\": false}\n"
+    }
+  },
+  "completed_GPU_hours": 1.4516275824440852,
+  "cost_complete_for_submitted_jobs": false,
+  "detail": "\u5b8c\u6574\u56dbrank\u72b6\u6001\u6062\u590d\u540e\u56fa\u5b9a\u7eed\u52309472\uff1b\u4e0d\u662f\u8d28\u91cf\u901a\u8fc7\u3002",
+  "event": "training_queued",
+  "fixed_final_step": 9472,
+  "fullgrid_epochs": 4,
+  "global_batch": 8,
+  "jobs": {
+    "cache_node1": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_cache_v1.sh",
+        "id": "round20_blur_fullgrid_cache_v1_node1",
+        "nodes": [
+          1
+        ],
+        "purpose": "Blur fixed1024 step1792->9472 then official150; paired nodes1/3: cache",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_data_v1.py": "de5e20faa5d37fb83667309af47aa7410e654b4e9294d87a7334a43a0fe567a8",
+          "smoke/blur_fullgrid_snapshots_v1.py": "cb266c67be8f082ce1fb5ca26111a2aebb16cf1a144afd2cf616a3c5e95dbeae",
+          "smoke/blur_fullgrid_state_v1.py": "4dc2560bfc3b96c32ddf1b60f0e646150835a9dfcd026258bc574d9bff71d947",
+          "smoke/evaluate_foundir_blur_fullgrid_official_v1.py": "c5ac5a2f7ff84636dedb7991c95b3d03677462f1e1b65d99bcb3e9e7b706c746",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_cache_v1.sh": "6982e36c0a2c342c9f12a753985320df3ba59460b91baf2e45092c3e0aea7607",
+          "smoke/train_foundir_blur_fullgrid_v1.py": "c6b8748722bb8ef983606c33a902e783c38c98ce8fe0ef95fe7dd4f5860882c7"
+        }
+      },
+      "node1.ended": {
+        "allocated_GPU_hours": 0.7347728154394362,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1322.591067790985,
+        "status": 0
+      },
+      "node1.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "43441f811ec9218c7e4bd3bd5b89554c5dd2da961912c51446c3f6693d1bd333",
+        "node": 1,
+        "utc_unix": 1794026487.694785
+      }
+    },
+    "cache_node3": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_cache_v1.sh",
+        "id": "round20_blur_fullgrid_cache_v1_node3",
+        "nodes": [
+          3
+        ],
+        "purpose": "Blur fixed1024 step1792->9472 then official150; paired nodes1/3: cache",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_data_v1.py": "de5e20faa5d37fb83667309af47aa7410e654b4e9294d87a7334a43a0fe567a8",
+          "smoke/blur_fullgrid_snapshots_v1.py": "cb266c67be8f082ce1fb5ca26111a2aebb16cf1a144afd2cf616a3c5e95dbeae",
+          "smoke/blur_fullgrid_state_v1.py": "4dc2560bfc3b96c32ddf1b60f0e646150835a9dfcd026258bc574d9bff71d947",
+          "smoke/evaluate_foundir_blur_fullgrid_official_v1.py": "c5ac5a2f7ff84636dedb7991c95b3d03677462f1e1b65d99bcb3e9e7b706c746",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_cache_v1.sh": "6982e36c0a2c342c9f12a753985320df3ba59460b91baf2e45092c3e0aea7607",
+          "smoke/train_foundir_blur_fullgrid_v1.py": "c6b8748722bb8ef983606c33a902e783c38c98ce8fe0ef95fe7dd4f5860882c7"
+        }
+      },
+      "node3.ended": {
+        "allocated_GPU_hours": 0.7168547670046489,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1290.338580608368,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "e3cf075dc5f78a1f02b568eddde60e276a04c05cf7313fbac09615e89a3b2a70",
+        "node": 3,
+        "utc_unix": 1794026487.6946902
+      }
+    },
+    "train_node1": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh",
+        "id": "round20_blur_fullgrid_train_v1_node1",
+        "nodes": [
+          1
+        ],
+        "purpose": "Blur fixed1024 step1792->9472 then official150; paired nodes1/3: train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_data_v1.py": "de5e20faa5d37fb83667309af47aa7410e654b4e9294d87a7334a43a0fe567a8",
+          "smoke/blur_fullgrid_snapshots_v1.py": "cb266c67be8f082ce1fb5ca26111a2aebb16cf1a144afd2cf616a3c5e95dbeae",
+          "smoke/blur_fullgrid_state_v1.py": "4dc2560bfc3b96c32ddf1b60f0e646150835a9dfcd026258bc574d9bff71d947",
+          "smoke/evaluate_foundir_blur_fullgrid_official_v1.py": "c5ac5a2f7ff84636dedb7991c95b3d03677462f1e1b65d99bcb3e9e7b706c746",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh": "9a2b4d397345ea1c218ace573c5a382de6219cb2a335a4640b099152c0c302cc",
+          "smoke/train_foundir_blur_fullgrid_v1.py": "c6b8748722bb8ef983606c33a902e783c38c98ce8fe0ef95fe7dd4f5860882c7"
+        }
+      }
+    },
+    "train_node3": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh",
+        "id": "round20_blur_fullgrid_train_v1_node3",
+        "nodes": [
+          3
+        ],
+        "purpose": "Blur fixed1024 step1792->9472 then official150; paired nodes1/3: train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_data_v1.py": "de5e20faa5d37fb83667309af47aa7410e654b4e9294d87a7334a43a0fe567a8",
+          "smoke/blur_fullgrid_snapshots_v1.py": "cb266c67be8f082ce1fb5ca26111a2aebb16cf1a144afd2cf616a3c5e95dbeae",
+          "smoke/blur_fullgrid_state_v1.py": "4dc2560bfc3b96c32ddf1b60f0e646150835a9dfcd026258bc574d9bff71d947",
+          "smoke/evaluate_foundir_blur_fullgrid_official_v1.py": "c5ac5a2f7ff84636dedb7991c95b3d03677462f1e1b65d99bcb3e9e7b706c746",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh": "9a2b4d397345ea1c218ace573c5a382de6219cb2a335a4640b099152c0c302cc",
+          "smoke/train_foundir_blur_fullgrid_v1.py": "c6b8748722bb8ef983606c33a902e783c38c98ce8fe0ef95fe7dd4f5860882c7"
+        }
+      }
+    }
+  },
+  "latest_step": null,
+  "new_views_per_source": 15,
+  "official_Blur_pass": false,
+  "old_fixed_crop_continuation_equivalent": false,
+  "only_official_quality_gate": true,
+  "physical_nodes": [
+    1,
+    3
+  ],
+  "same_world_state_preserved": true,
+  "total_exposures_per_source": 74,
+  "training_fit_snapshots": {},
+  "training_logs": [],
+  "training_sources": 1024,
+  "training_views": 15360,
+  "utc_unix": 1794027864.9515994,
+  "world": 4
+}
