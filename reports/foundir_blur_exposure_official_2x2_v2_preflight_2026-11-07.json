@@ -1,0 +1,32 @@
+{
+  "GPU_hours": 0,
+  "GPU_started": false,
+  "GT_pixels_decoded": false,
+  "all_large_checkpoints_rehashed": false,
+  "completed_training_jobs": [
+    {
+      "allocated_GPU_hours": 1.9372767550415464,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 3487.0981590747833,
+      "status": 0
+    },
+    {
+      "allocated_GPU_hours": 1.9379728884167142,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 3488.3511991500854,
+      "status": 0
+    }
+  ],
+  "exit_code": 0,
+  "final_SHA_Adam_RNG_sampler_checked": true,
+  "final_parameter_hash": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+  "final_step": 1280,
+  "records": 150,
+  "seconds": 24.54738738760352,
+  "status": "destination_CPU_preflight_pass",
+  "step200_to1280_receipts_contiguous": true
+}
