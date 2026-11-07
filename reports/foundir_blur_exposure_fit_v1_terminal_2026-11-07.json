@@ -1,0 +1,162 @@
+{
+  "status": "same64_training_diagnosis_complete",
+  "scope": "training_fit_only_not_official_or_new_gate",
+  "result_sha256": "a984daa78c092e305def0b8c33b89e959b3a1348a5ce84af136fc4500a9ce652",
+  "job": {
+    "args": [],
+    "automatic_retry": false,
+    "entry": "smoke/run_foundir_fullstack_blur_exposure_fit_v1.sh",
+    "id": "round15_blur_exposure_fit_v1",
+    "nodes": [
+      3
+    ],
+    "purpose": "Read-only final1280 on the same historical training64; no updates or new gate",
+    "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+    "source_commit": "9ef17405ea5eebd1bec62196a9763fd43af1be1a",
+    "sources": {
+      "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+      "smoke/diagnose_foundir_blur_coverage_fit_v2.py": "9e4a81019a918220a2bffdf6937786d971ce8eea440d1da17d95f716497ee7b2",
+      "smoke/diagnose_foundir_blur_exposure_fit_v1.py": "4fc691446a7b8e0198ee16908fc733307f13a50dad4f1798aef1c29494e58c77",
+      "smoke/evaluate_foundir_blur_exposure_official_2x2_v2.py": "52b1ec0eabd2d20da94da903dff5167ae4505c2490fd23970147352a88e918df",
+      "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+      "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "smoke/run_foundir_fullstack_blur_exposure_fit_v1.sh": "0b0dba2521ba0fb9755a8b8eb127b78e2968fef6dced0df863812a8701238204"
+    }
+  },
+  "GPU_execution": {
+    "allocated_GPU_hours": 0.027811536656485662,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 50.060765981674194,
+    "status": 0
+  },
+  "workers": [
+    {
+      "keys": [
+        "train_foundir_train_0034314",
+        "train_foundir_train_0068705",
+        "train_foundir_train_0021200",
+        "train_foundir_train_0053870",
+        "train_foundir_train_0032900",
+        "train_foundir_train_0072816",
+        "train_foundir_train_0066877",
+        "train_foundir_train_0033365",
+        "train_foundir_train_0035273",
+        "train_foundir_train_0066989",
+        "train_foundir_train_0065344",
+        "train_foundir_train_0068504",
+        "train_foundir_train_0071538",
+        "train_foundir_train_0062100",
+        "train_foundir_train_0034397",
+        "train_foundir_train_0072779",
+        "train_foundir_train_0059081",
+        "train_foundir_train_0066595",
+        "train_foundir_train_0066131",
+        "train_foundir_train_0027782",
+        "train_foundir_train_0100233",
+        "train_foundir_train_0073102",
+        "train_foundir_train_0106366",
+        "train_foundir_train_0072237",
+        "train_foundir_train_0033994",
+        "train_foundir_train_0106483",
+        "train_foundir_train_0103058",
+        "train_foundir_train_0040681",
+        "train_foundir_train_0104664",
+        "train_foundir_train_0046851",
+        "train_foundir_train_0035928",
+        "train_foundir_train_0072661"
+      ],
+      "parameter_hash_after": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "parameter_hash_before": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "peak_allocated_GiB": 10.605735778808594,
+      "rank": 0,
+      "receipt_sha256": "4464532f18c150dbe33235ffa4129c0e93d1e620f85a94df9b0487767a134084",
+      "seconds": 37.12035091093276
+    },
+    {
+      "keys": [
+        "train_foundir_train_0067544",
+        "train_foundir_train_0033402",
+        "train_foundir_train_0067698",
+        "train_foundir_train_0099772",
+        "train_foundir_train_0061901",
+        "train_foundir_train_0065808",
+        "train_foundir_train_0033202",
+        "train_foundir_train_0069301",
+        "train_foundir_train_0055794",
+        "train_foundir_train_0067616",
+        "train_foundir_train_0067472",
+        "train_foundir_train_0020942",
+        "train_foundir_train_0029938",
+        "train_foundir_train_0034644",
+        "train_foundir_train_0098994",
+        "train_foundir_train_0028201",
+        "train_foundir_train_0104253",
+        "train_foundir_train_0027701",
+        "train_foundir_train_0033938",
+        "train_foundir_train_0066904",
+        "train_foundir_train_0050835",
+        "train_foundir_train_0044989",
+        "train_foundir_train_0055579",
+        "train_foundir_train_0067037",
+        "train_foundir_train_0106409",
+        "train_foundir_train_0099178",
+        "train_foundir_train_0042548",
+        "train_foundir_train_0015271",
+        "train_foundir_train_0032063",
+        "train_foundir_train_0066572",
+        "train_foundir_train_0040835",
+        "train_foundir_train_0064927"
+      ],
+      "parameter_hash_after": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "parameter_hash_before": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "peak_allocated_GiB": 10.605735778808594,
+      "rank": 1,
+      "receipt_sha256": "4464532f18c150dbe33235ffa4129c0e93d1e620f85a94df9b0487767a134084",
+      "seconds": 37.003994402009994
+    }
+  ],
+  "CPU_finish_internal_seconds": 2.7502131275832653,
+  "CPU_finish_import_and_startup_not_in_internal_timer": true,
+  "summaries": {
+    "step200": {
+      "candidate": {
+        "lpips": 0.23219666178920306,
+        "psnr": 23.672546952962875,
+        "ssim": 0.7487340236670903
+      },
+      "lq": {
+        "lpips": 0.3473904332022357,
+        "psnr": 23.384540647268295,
+        "ssim": 0.7482926702686176
+      }
+    },
+    "step1280": {
+      "candidate": {
+        "lpips": 0.1439619590237271,
+        "psnr": 26.805871784687042,
+        "ssim": 0.8201992185661464
+      },
+      "lq": {
+        "lpips": 0.3473904332022357,
+        "psnr": 23.384540647268295,
+        "ssim": 0.7482926702686176
+      }
+    }
+  },
+  "joint_better_than_step200": 58,
+  "PSNR_delta_vs200": 3.133324831724167,
+  "PSNR_worse_than_LQ_count": 8,
+  "nonpositive_direction_count": 4,
+  "mean_direction_cosine": 0.6667421422880745,
+  "official_latest": {
+    "n": 150,
+    "psnr": 20.93698792775472,
+    "lpips": 0.1965160647034645,
+    "passed": false
+  },
+  "weights_changed_by_diagnostic": false,
+  "next_action": "same_first8_training_sources_full_image_inference_with_frozen1280; compare deployed tiling at original trained crop and full frame to distinguish context/stitching vs source transfer; not implemented or submitted yet",
+  "extra_training_submitted": false
+}
