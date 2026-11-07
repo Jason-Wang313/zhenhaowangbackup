@@ -1,3 +1,10 @@
+## Blur历史真实更新重放已准备：step0→1及199→200，无新训练 — 2026-11-07
+
+官方Blur150仍21.819776/.241321，未过25.9/.18，只推进Blur；没有联合质量改善。继续全栈自主修复，先确认实际Adam有限步效果，不由RGB/原始SGD梯度比直接改loss。
+四个原checkpoint的SHA/step/采样位置/FP32参数/Adam/RNG通过CPU预检，10.120323秒/GPU0；4项CPU测试及语法通过。恢复各步真实global8、原rank RNG及before/after参数，重算combined loss和gradient norm须匹配原日志，再报告分项梯度与真实delta内积及同批有限步前后指标。无optimizer更新、不重跑200步、不读官方像素；training_fit_only，不设新测试gate。
+入口smoke/diagnose_foundir_blur_actual_updates_v1.py prepare|run|finish，输出checkpoints/foundir_blur_actual_updates_v1。源码发布后提交round12_blur_actual_updates_v1，只用node3双H100；无独立持久观察器，接手查真实queue ended及两rank，然后CPU finish/推小报告，勿重复提交。预估2–4分钟，不是实测承诺。重放超固定容差须如实失败，不盲放宽容差。
+保留旧所有源码/权重/缓存/energy及失败费用。依据实际结果再制定下一训练方案，不把诊断完成称为修复成功。详见reports/foundir_blur_actual_updates_v1_readiness_2026-11-07.md。
+
 ## Blur参数梯度诊断完成：MSE范数更大；下一步核对真实已保存更新 — 2026-11-06
 
 固定8训练图×初始化/step200，16逐图+2全批，两个rank/launcher退出0、CPU核验通过。初始化/step200路径复现，参数求导前后SHA不变。106.187254秒/.058992919 GPU-hours；全部旧资产保留。

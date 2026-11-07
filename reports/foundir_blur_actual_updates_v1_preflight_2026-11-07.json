@@ -1,0 +1,24 @@
+{
+  "status": "destination_CPU_preflight_pass",
+  "seconds": 10.12032263725996,
+  "exit_code": 0,
+  "GPU_hours": 0,
+  "historical_checkpoints_checked": [
+    0,
+    1,
+    199,
+    200
+  ],
+  "actual_global_batches": 2,
+  "new_optimizer_steps": 0,
+  "CPU_tests_passed": 4,
+  "syntax_passed": true,
+  "official_pixels_accessed": false,
+  "quality_gate": false,
+  "historical_parameter_hashes": {
+    "0": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+    "1": "f58b2d97a311c36110a92308e019461dcc7e29ed78adf8772881c2a23f9aa2bb",
+    "199": "a8f8b8f5908b71970d51f67e42c024eeb13c8f9892fa3e6e95263d7b1b198faf",
+    "200": "3c2d0d764694962e7584b7f7322e438f4a763d1820aa18636d25fd6a3d371175"
+  }
+}
