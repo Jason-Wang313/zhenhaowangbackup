@@ -1,0 +1,71 @@
+{
+  "Adam_states": 100,
+  "CPU_seconds": 1.0571404993534088,
+  "GPU_hours": 0,
+  "event": "first_step_verified",
+  "exit_code": 0,
+  "note": "GPU fixed100\u4ecd\u8fd0\u884c\uff1b\u975e\u5b98\u65b9\u8d28\u91cf\u8fdb\u6b65\u3002\u7b2c0\u6b65\u5b8c\u65748\u56fe\u6d6e\u70b9\u8f93\u51fa\u7cbe\u786e\u7b49\u4e8eLQ\u3002",
+  "official_Blur_pass": false,
+  "rank_RNG_count": 2,
+  "scope": "training_fit_only",
+  "snapshots": {
+    "0": {
+      "LPIPS_delta_vs_LQ": 0.0,
+      "LPIPS_worse_count": 0,
+      "PSNR_delta_vs_LQ": 0.0,
+      "PSNR_worse_count": 0,
+      "both_improve_count": 0,
+      "means": {
+        "candidate": {
+          "lpips": 0.4232683405280113,
+          "psnr": 21.114951133728027,
+          "ssim": 0.6749388116649019
+        },
+        "lq": {
+          "lpips": 0.4232683405280113,
+          "psnr": 21.114951133728027,
+          "ssim": 0.6749388116649019
+        }
+      },
+      "parameter_hash": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+      "quality_gate": false,
+      "receipt_sha256": "efed7613a868e773d434ebaf472e6d660bcd8296c11004cdae9292e96afbdae5",
+      "scope": "training_fit_only",
+      "step": 0
+    },
+    "1": {
+      "LPIPS_delta_vs_LQ": 0.0009916182607412338,
+      "LPIPS_worse_count": 5,
+      "PSNR_delta_vs_LQ": 0.12629389762878418,
+      "PSNR_worse_count": 3,
+      "both_improve_count": 3,
+      "means": {
+        "candidate": {
+          "lpips": 0.42425995878875256,
+          "psnr": 21.24124503135681,
+          "ssim": 0.6760964419502611
+        },
+        "lq": {
+          "lpips": 0.4232683405280113,
+          "psnr": 21.114951133728027,
+          "ssim": 0.6749388116649019
+        }
+      },
+      "parameter_hash": "a6473e92f58a4321b882924c745cef14a7f8266754016bd9690f6569f3dbbe0c",
+      "quality_gate": false,
+      "receipt_sha256": "efed7613a868e773d434ebaf472e6d660bcd8296c11004cdae9292e96afbdae5",
+      "scope": "training_fit_only",
+      "step": 1
+    }
+  },
+  "source_commit": "77300828cabf41d198c2b25a48bb4e38c629f376",
+  "step1_checkpoint": {
+    "file": "steps/state_000001_1794010947862447068.pt",
+    "next_global_slot": 8,
+    "parameter_hash": "a6473e92f58a4321b882924c745cef14a7f8266754016bd9690f6569f3dbbe0c",
+    "receipt_sha256": "efed7613a868e773d434ebaf472e6d660bcd8296c11004cdae9292e96afbdae5",
+    "sha256": "9a4234cca5b282f5bf3561c4437a0768a2fe0b9067cdc9c833086666e6705c41",
+    "step": 1,
+    "world": 2
+  }
+}
