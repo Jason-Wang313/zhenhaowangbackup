@@ -1,0 +1,400 @@
+{
+  "utc": "2026-11-07T09:44:01.940200+00:00",
+  "scope": "training_fit_only",
+  "quality_gate": false,
+  "official_Blur_pass": false,
+  "snapshot_step": 5632,
+  "records": 8,
+  "means_by_step": {
+    "1792": {
+      "candidate": {
+        "lpips": 0.24045616947114468,
+        "psnr": 20.575352430343628,
+        "ssim": 0.6889701082883494
+      },
+      "lq": {
+        "lpips": 0.4121383782476187,
+        "psnr": 19.328647136688232,
+        "ssim": 0.675306833080224
+      }
+    },
+    "3712": {
+      "candidate": {
+        "lpips": 0.19085252285003662,
+        "psnr": 22.192277908325195,
+        "ssim": 0.7302444829997176
+      },
+      "lq": {
+        "lpips": 0.4121383782476187,
+        "psnr": 19.328647136688232,
+        "ssim": 0.675306833080224
+      }
+    },
+    "5632": {
+      "candidate": {
+        "lpips": 0.1757163666188717,
+        "psnr": 23.239441871643066,
+        "ssim": 0.7608789700934632
+      },
+      "lq": {
+        "lpips": 0.4121383782476187,
+        "psnr": 19.328647136688232,
+        "ssim": 0.675306833080224
+      }
+    }
+  },
+  "comparisons": {
+    "1792": {
+      "before_means": {
+        "lpips": 0.24045616947114468,
+        "psnr": 20.575352430343628,
+        "ssim": 0.6889701082883494
+      },
+      "after_means": {
+        "lpips": 0.1757163666188717,
+        "psnr": 23.239441871643066,
+        "ssim": 0.7608789700934632
+      },
+      "PSNR_delta_dB": 2.6640894412994385,
+      "LPIPS_relative_reduction_percent": 26.923743730369086,
+      "PSNR_improved_images": 8,
+      "LPIPS_improved_images": 8,
+      "both_improve_images": 8,
+      "images": [
+        {
+          "source_index": 0,
+          "record_id": "foundir_train_0034314",
+          "before": {
+            "lpips": 0.12458378076553345,
+            "psnr": 25.69210433959961,
+            "ssim": 0.8885319305721884
+          },
+          "after": {
+            "lpips": 0.09047673642635345,
+            "psnr": 28.39715576171875,
+            "ssim": 0.9077808700477221
+          },
+          "PSNR_delta_dB": 2.7050514221191406,
+          "LPIPS_relative_reduction_percent": 27.376793455457427,
+          "both_improve": true
+        },
+        {
+          "source_index": 1,
+          "record_id": "foundir_train_0067544",
+          "before": {
+            "lpips": 0.27029526233673096,
+            "psnr": 16.932695388793945,
+            "ssim": 0.5859904728328756
+          },
+          "after": {
+            "lpips": 0.15391221642494202,
+            "psnr": 22.110767364501953,
+            "ssim": 0.7522707270988427
+          },
+          "PSNR_delta_dB": 5.178071975708008,
+          "LPIPS_relative_reduction_percent": 43.05774540983267,
+          "both_improve": true
+        },
+        {
+          "source_index": 2,
+          "record_id": "foundir_train_0068705",
+          "before": {
+            "lpips": 0.31491899490356445,
+            "psnr": 22.232038497924805,
+            "ssim": 0.6596246336206871
+          },
+          "after": {
+            "lpips": 0.2261519730091095,
+            "psnr": 24.51306915283203,
+            "ssim": 0.7151631773885246
+          },
+          "PSNR_delta_dB": 2.2810306549072266,
+          "LPIPS_relative_reduction_percent": 28.18725555809598,
+          "both_improve": true
+        },
+        {
+          "source_index": 3,
+          "record_id": "foundir_train_0033402",
+          "before": {
+            "lpips": 0.3105570673942566,
+            "psnr": 18.912281036376953,
+            "ssim": 0.548730944524209
+          },
+          "after": {
+            "lpips": 0.22776858508586884,
+            "psnr": 22.512535095214844,
+            "ssim": 0.6836612812475428
+          },
+          "PSNR_delta_dB": 3.6002540588378906,
+          "LPIPS_relative_reduction_percent": 26.65805772930184,
+          "both_improve": true
+        },
+        {
+          "source_index": 4,
+          "record_id": "foundir_train_0021200",
+          "before": {
+            "lpips": 0.20810939371585846,
+            "psnr": 21.222917556762695,
+            "ssim": 0.6733008303381787
+          },
+          "after": {
+            "lpips": 0.17289580404758453,
+            "psnr": 22.933940887451172,
+            "ssim": 0.7160011281658664
+          },
+          "PSNR_delta_dB": 1.7110233306884766,
+          "LPIPS_relative_reduction_percent": 16.92071128531214,
+          "both_improve": true
+        },
+        {
+          "source_index": 5,
+          "record_id": "foundir_train_0067698",
+          "before": {
+            "lpips": 0.35904136300086975,
+            "psnr": 19.62065887451172,
+            "ssim": 0.5074713921959907
+          },
+          "after": {
+            "lpips": 0.27186745405197144,
+            "psnr": 21.204740524291992,
+            "ssim": 0.5884149561783729
+          },
+          "PSNR_delta_dB": 1.5840816497802734,
+          "LPIPS_relative_reduction_percent": 24.27962845848687,
+          "both_improve": true
+        },
+        {
+          "source_index": 6,
+          "record_id": "foundir_train_0053870",
+          "before": {
+            "lpips": 0.20155207812786102,
+            "psnr": 20.527626037597656,
+            "ssim": 0.7893623990968497
+          },
+          "after": {
+            "lpips": 0.14345167577266693,
+            "psnr": 21.625574111938477,
+            "ssim": 0.8529380693367011
+          },
+          "PSNR_delta_dB": 1.0979480743408203,
+          "LPIPS_relative_reduction_percent": 28.826496305503845,
+          "both_improve": true
+        },
+        {
+          "source_index": 7,
+          "record_id": "foundir_train_0099772",
+          "before": {
+            "lpips": 0.13459141552448273,
+            "psnr": 19.46249771118164,
+            "ssim": 0.8587482631258158
+          },
+          "after": {
+            "lpips": 0.1192064881324768,
+            "psnr": 22.617752075195312,
+            "ssim": 0.8708015512841328
+          },
+          "PSNR_delta_dB": 3.155254364013672,
+          "LPIPS_relative_reduction_percent": 11.430838536063492,
+          "both_improve": true
+        }
+      ]
+    },
+    "3712": {
+      "before_means": {
+        "lpips": 0.19085252285003662,
+        "psnr": 22.192277908325195,
+        "ssim": 0.7302444829997176
+      },
+      "after_means": {
+        "lpips": 0.1757163666188717,
+        "psnr": 23.239441871643066,
+        "ssim": 0.7608789700934632
+      },
+      "PSNR_delta_dB": 1.047163963317871,
+      "LPIPS_relative_reduction_percent": 7.930812758004901,
+      "PSNR_improved_images": 7,
+      "LPIPS_improved_images": 7,
+      "both_improve_images": 7,
+      "images": [
+        {
+          "source_index": 0,
+          "record_id": "foundir_train_0034314",
+          "before": {
+            "lpips": 0.10154455155134201,
+            "psnr": 27.12267303466797,
+            "ssim": 0.8992398165438477
+          },
+          "after": {
+            "lpips": 0.09047673642635345,
+            "psnr": 28.39715576171875,
+            "ssim": 0.9077808700477221
+          },
+          "PSNR_delta_dB": 1.2744827270507812,
+          "LPIPS_relative_reduction_percent": 10.899467234726568,
+          "both_improve": true
+        },
+        {
+          "source_index": 1,
+          "record_id": "foundir_train_0067544",
+          "before": {
+            "lpips": 0.16171331703662872,
+            "psnr": 21.78500747680664,
+            "ssim": 0.7395438675829163
+          },
+          "after": {
+            "lpips": 0.15391221642494202,
+            "psnr": 22.110767364501953,
+            "ssim": 0.7522707270988427
+          },
+          "PSNR_delta_dB": 0.3257598876953125,
+          "LPIPS_relative_reduction_percent": 4.824031041252919,
+          "both_improve": true
+        },
+        {
+          "source_index": 2,
+          "record_id": "foundir_train_0068705",
+          "before": {
+            "lpips": 0.239570751786232,
+            "psnr": 24.178787231445312,
+            "ssim": 0.7060866021225936
+          },
+          "after": {
+            "lpips": 0.2261519730091095,
+            "psnr": 24.51306915283203,
+            "ssim": 0.7151631773885246
+          },
+          "PSNR_delta_dB": 0.33428192138671875,
+          "LPIPS_relative_reduction_percent": 5.601175718267992,
+          "both_improve": true
+        },
+        {
+          "source_index": 3,
+          "record_id": "foundir_train_0033402",
+          "before": {
+            "lpips": 0.29284265637397766,
+            "psnr": 18.6069278717041,
+            "ssim": 0.554969230181917
+          },
+          "after": {
+            "lpips": 0.22776858508586884,
+            "psnr": 22.512535095214844,
+            "ssim": 0.6836612812475428
+          },
+          "PSNR_delta_dB": 3.905607223510742,
+          "LPIPS_relative_reduction_percent": 22.221513796475513,
+          "both_improve": true
+        },
+        {
+          "source_index": 4,
+          "record_id": "foundir_train_0021200",
+          "before": {
+            "lpips": 0.18182918429374695,
+            "psnr": 22.306413650512695,
+            "ssim": 0.6894255172397692
+          },
+          "after": {
+            "lpips": 0.17289580404758453,
+            "psnr": 22.933940887451172,
+            "ssim": 0.7160011281658664
+          },
+          "PSNR_delta_dB": 0.6275272369384766,
+          "LPIPS_relative_reduction_percent": 4.913061828254395,
+          "both_improve": true
+        },
+        {
+          "source_index": 5,
+          "record_id": "foundir_train_0067698",
+          "before": {
+            "lpips": 0.306037575006485,
+            "psnr": 19.16429328918457,
+            "ssim": 0.5163624427277191
+          },
+          "after": {
+            "lpips": 0.27186745405197144,
+            "psnr": 21.204740524291992,
+            "ssim": 0.5884149561783729
+          },
+          "PSNR_delta_dB": 2.040447235107422,
+          "LPIPS_relative_reduction_percent": 11.165335156570066,
+          "both_improve": true
+        },
+        {
+          "source_index": 6,
+          "record_id": "foundir_train_0053870",
+          "before": {
+            "lpips": 0.11303365975618362,
+            "psnr": 25.110912322998047,
+            "ssim": 0.8818156147912334
+          },
+          "after": {
+            "lpips": 0.14345167577266693,
+            "psnr": 21.625574111938477,
+            "ssim": 0.8529380693367011
+          },
+          "PSNR_delta_dB": -3.4853382110595703,
+          "LPIPS_relative_reduction_percent": -26.910582283273587,
+          "both_improve": false
+        },
+        {
+          "source_index": 7,
+          "record_id": "foundir_train_0099772",
+          "before": {
+            "lpips": 0.13024848699569702,
+            "psnr": 19.263208389282227,
+            "ssim": 0.8545127728077442
+          },
+          "after": {
+            "lpips": 0.1192064881324768,
+            "psnr": 22.617752075195312,
+            "ssim": 0.8708015512841328
+          },
+          "PSNR_delta_dB": 3.354543685913086,
+          "LPIPS_relative_reduction_percent": 8.477640791009733,
+          "both_improve": true
+        }
+      ]
+    }
+  },
+  "previous_PSNR_regression_source_indices": [
+    3,
+    5,
+    7
+  ],
+  "new_joint_regression_vs3712_source_indices": [
+    6
+  ],
+  "new_output_PNG_SHA_verified": 128,
+  "independent_means_recomputed": true,
+  "inputs": {
+    "1792": {
+      "path": "checkpoints/foundir_blur_fullgrid_v1/snapshots/step_001792_summary.json",
+      "sha256": "5e152defe54d35471686ef29e51a48f5f84f5cee1aa83f96279de8c132a62e4d"
+    },
+    "3712": {
+      "path": "checkpoints/foundir_blur_fullgrid_1x2_v1/snapshots/step_003712_summary.json",
+      "sha256": "92ae7da4eb46ee7a5b285a22b90a55e88fa95e5a9acc05af097b9e12abe212c2"
+    },
+    "5632": {
+      "path": "checkpoints/foundir_blur_fullgrid_1x2_v1/snapshots/step_005632_summary.json",
+      "sha256": "0d7b924c9c1218d058dd57a08a4ef308433fcf62eeeb876c0efa25cea7be167d"
+    }
+  },
+  "checkpoint": {
+    "file": "steps/state_005632_1794044457483944476.pt",
+    "next_global_slot": 45056,
+    "parameter_hash": "493f3397b528dc5528b7eba37aa74a5465fbe6084e45bdf1d388c6c7fb700abe",
+    "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+    "sha256": "56c8e8c34aaac41f70511ae5e629dd7a7bfea478eafac70307baf7cc982c1d89",
+    "step": 5632,
+    "world": 2
+  },
+  "checkpoint_CPU_verification": {
+    "path": "reports/foundir_blur_fullgrid_1x2_v1_step5632_state_2026-11-07.json",
+    "sha256": "b01a65010f8e91b6cfbbd9b1820dd79fb0248c717715fc8ba22287a0cb9848d5",
+    "exit_code": 0
+  },
+  "GPU_hours": 0,
+  "exit_code": 0,
+  "CPU_seconds": 1.1965794786810875,
+  "interpretation": "Mean training-fit improvement continues; one image reverses both metrics versus3712, so not uniformly stable. No new official result, no change to fixed9472 and no intermediate checkpoint/GT output selection."
+}
