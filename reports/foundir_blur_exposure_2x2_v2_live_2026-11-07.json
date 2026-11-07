@@ -1,0 +1,151 @@
+{
+  "utc_unix": 1794013104.8158586,
+  "source_commit": "d13527593640db51fcbad5755d1cafc0be1bedc0",
+  "physical_nodes": [
+    1,
+    3
+  ],
+  "NCCL_verified_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "CUDA_step202_restore_verified_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "first_saved_new_step_CPU_verification": {
+    "Adam_states": 100,
+    "GPU_hours": 0,
+    "actual_SHA_Adam_RNG_sampler_verified": true,
+    "bitwise_parent_resume": false,
+    "checkpoint": {
+      "file": "steps/state_000201_1794013032016642800.pt",
+      "next_global_slot": 1608,
+      "parameter_hash": "c1cf3cf985c88404c74e4436caeb3aea52d2ba357e77bfc4fbda27e4d5d1c6fc",
+      "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+      "sha256": "81a4767eccb2119397d057448ab268704a3ba613c44598e83bd8c60e2b451ea4",
+      "step": 201,
+      "world": 4
+    },
+    "exit_code": 0,
+    "next_global_slot": 1608,
+    "official_Blur_pass": false,
+    "rank_RNG_count": 4,
+    "seconds": 1.7786139026284218,
+    "step": 201
+  },
+  "latest_checkpoint": {
+    "file": "steps/state_000222_1794013102329582219.pt",
+    "next_global_slot": 1776,
+    "parameter_hash": "52c027ae9ab56f817da6833fe0d9d52c73e14079c42f703b1296117dc8f1cb1f",
+    "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+    "sha256": "38981e6c883a584cd35f61d83b94cbcb073339535938dee14ec681735a93d590",
+    "step": 222,
+    "world": 4
+  },
+  "runtime": [
+    {
+      "GPU": "NVIDIA H100 80GB HBM3",
+      "cuda": "12.8",
+      "cudnn": 90701,
+      "host": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "node": 1,
+      "rank": 0,
+      "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+      "torch": "2.7.0+cu128"
+    },
+    {
+      "GPU": "NVIDIA H100 80GB HBM3",
+      "cuda": "12.8",
+      "cudnn": 90701,
+      "host": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "node": 1,
+      "rank": 1,
+      "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+      "torch": "2.7.0+cu128"
+    },
+    {
+      "GPU": "NVIDIA H100 80GB HBM3",
+      "cuda": "12.8",
+      "cudnn": 90701,
+      "host": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "node": 3,
+      "rank": 2,
+      "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+      "torch": "2.7.0+cu128"
+    },
+    {
+      "GPU": "NVIDIA H100 80GB HBM3",
+      "cuda": "12.8",
+      "cudnn": 90701,
+      "host": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "node": 3,
+      "rank": 3,
+      "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+      "torch": "2.7.0+cu128"
+    }
+  ],
+  "heartbeats": {
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": "round14b_blur_exposure_train_v2_node1",
+      "pid": 111399,
+      "state": "running",
+      "utc_unix": 1794013103.1890738,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "3": {
+      "capability": "independent_node3_two_H100_jobs_only",
+      "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "job": "round14b_blur_exposure_train_v2_node3",
+      "pid": 299730,
+      "state": "running",
+      "utc_unix": 1794013103.000756,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  },
+  "daemons": {
+    "source_commit": "d13527593640db51fcbad5755d1cafc0be1bedc0",
+    "processes": {
+      "monitor": {
+        "pid": 671799,
+        "args": [
+          "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+          "-u",
+          "-S",
+          "smoke/watch_foundir_blur_exposure_2x2_v2_cpu.py",
+          "monitor",
+          "--commit",
+          "d13527593640db51fcbad5755d1cafc0be1bedc0"
+        ],
+        "log": "logs/foundir_blur_exposure_2x2_v2_monitor.log",
+        "utc_unix": 1794012977.9689262
+      },
+      "upload": {
+        "pid": 671800,
+        "args": [
+          "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+          "-u",
+          "-S",
+          "smoke/watch_foundir_blur_exposure_2x2_v2_cpu.py",
+          "upload"
+        ],
+        "log": "logs/foundir_blur_exposure_2x2_v2_upload.log",
+        "utc_unix": 1794012977.970017
+      }
+    }
+  },
+  "official_Blur_pass": false,
+  "fixed_final_step": 1280,
+  "global_batch": 8,
+  "training_sources": 1024,
+  "no_other_categories_submitted": true,
+  "GPU_training_started": true,
+  "recent_seconds_per_step_including_save": 3.24330304798327,
+  "rough_training_remaining_minutes": 57.19024374610499
+}

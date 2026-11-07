@@ -1,0 +1,82 @@
+{
+  "observed_at_UTC": "2026-11-07T01:02:27.375202+00:00",
+  "source_commit": "d13527593640db51fcbad5755d1cafc0be1bedc0",
+  "latest_saved_step": {
+    "file": "steps/state_000298_1794013343774396412.pt",
+    "next_global_slot": 2384,
+    "parameter_hash": "818b0a714467b12c14488c11c95eef32bfadf4d890768952586f0063e572cd27",
+    "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+    "sha256": "38fe0f1bef0f8b9b188493fadd942429a732269929eabea7f7cc29dfdfe900f1",
+    "step": 298,
+    "world": 4
+  },
+  "physical_nodes": [
+    1,
+    3
+  ],
+  "world": 4,
+  "NCCL_verified_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "CUDA_step202_restore_verified_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "worker_heartbeats": {
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": "round14b_blur_exposure_train_v2_node1",
+      "pid": 111399,
+      "state": "running",
+      "utc_unix": 1794013345.648839,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "3": {
+      "capability": "independent_node3_two_H100_jobs_only",
+      "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "job": "round14b_blur_exposure_train_v2_node3",
+      "pid": 299730,
+      "state": "running",
+      "utc_unix": 1794013345.389091,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  },
+  "CPU_processes": "    PID STAT     ELAPSED COMMAND\n 671799 Ss         06:09 /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -u -S smoke/watch_foundir_blur_exposure_2x2_v2_cpu.py monitor --commit d13527593640db51fcbad5755d1cafc0be1bedc0\n 671800 Ss         06:09 /inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python -u -S smoke/watch_foundir_blur_exposure_2x2_v2_cpu.py upload\n",
+  "recent_seconds_per_step_including_save": 3.1741270642531547,
+  "estimated_remaining_training_minutes": 51.94987961827663,
+  "official_evaluation_minutes_provisional": [
+    8,
+    15
+  ],
+  "official_baseline": {
+    "n": 150,
+    "PSNR": 21.546762199,
+    "LPIPS": 0.2026222514
+  },
+  "latest_completed_official": {
+    "n": 150,
+    "PSNR": 21.819775963,
+    "LPIPS": 0.2413212564,
+    "passed": false
+  },
+  "fixed8_training_fit_only": {
+    "initial_PSNR": 21.114951,
+    "initial_LPIPS": 0.423268,
+    "final100_PSNR": 26.408422,
+    "final100_LPIPS": 0.136296,
+    "not_official": true
+  },
+  "assessment": "No demonstrated joint official-quality improvement over original FLUX. Small-sample trainability is demonstrated; insufficient exposure remains a hypothesis, not an established cause. Current final1280 official evaluation is pending.",
+  "only_Blur_until_official_pass": true,
+  "quality_gate": {
+    "PSNR_min": 25.9,
+    "LPIPS_max": 0.18
+  },
+  "no_live_bound_source_changes": true
+}
