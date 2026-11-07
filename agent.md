@@ -1,3 +1,9 @@
+## Blur本轮终态须补充同官方150跨轮对照 — 2026-11-07
+
+当前round17四卡训练→最终1792官方150链继续，不修改运行绑定源码、不重启GPU。新增纯标准库CPU脚本smoke/compare_foundir_blur_multiview_official_v1_cpu.py，待本轮official finish完整退出0后运行。它读取已固定的200/1280/1792三份完整结果，核验同150输入/GT文件身份/无GT路由/基线/评分协议，独立重算均值并比较原FLUX、200、1280与1792；不混拼最好指标，不选权重或逐图输出。
+3项CPU测试通过，覆盖不同模型单项最好不能拼联合通过、缺失/重复/GT身份变化拒绝、均值与基线篡改拒绝。当前1792结果尚未产生，不能提前运行或伪造结果。终态控制器先推原始完整结果；接手随后执行此比较脚本并将新comparison JSON/MD小报告推送。无需新增GPU或其它测试gate。
+当前训练/监控以foundir_blur_multiview_v1实际step/daemons/worker heartbeat为准。Blur未过25.9/.18之前不转其它类别；全部旧资产保留。
+
 ## Blur四新裁图训练已启动：完整父状态与CUDA重载通过 — 2026-11-07
 
 round17缓存4096/4096完成，两node退出0，约510秒/.563941765GPU-hours；原资产不动。node1/node3四H100训练实际运行，截至1794020457.6403143已保存step1307/1792。四rank NCCL及1282真实CUDA状态重载通过；CPU逐值核对父1280与新起始1280的模型、完整Adam、4rank RNG、参数顺序/历史/采样完全一致（receipt因新数据方案不同）。1281实际checkpoint SHA/100 Adam/4 RNG/next_global_slot核验并推送1e4a7e5。不是从头重训或只创建tmux。
