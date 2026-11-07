@@ -1,0 +1,36 @@
+{
+  "GPU_hours": 0,
+  "exit_code": 0,
+  "images_hashed_and_crop_checked": 16,
+  "receipt_sha256": "efed7613a868e773d434ebaf472e6d660bcd8296c11004cdae9292e96afbdae5",
+  "recipe": {
+    "automatic_official_or_continuation": false,
+    "clip_grad": 1.0,
+    "crop": 512,
+    "exposures_per_source": 100,
+    "global_batch": 8,
+    "initialization": "original_Blur_step10000_fresh_Adam",
+    "learning_rate": 1e-05,
+    "loss": "10*MSE_RGB01 + .1*LPIPS",
+    "node": 3,
+    "official_pixels": false,
+    "quality_gate": false,
+    "scope": "training_fit_only",
+    "selection": "first8_original1024_order_no_metric_filter",
+    "snapshots": [
+      0,
+      1,
+      25,
+      50,
+      100
+    ],
+    "steps": 100,
+    "train": 8,
+    "weight_decay": 0.0,
+    "world": 2
+  },
+  "reference_caches_checked": 8,
+  "seconds": 12.978860698640347,
+  "sources": 8,
+  "status": "destination_CPU_preflight_pass"
+}

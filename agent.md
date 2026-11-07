@@ -1,3 +1,10 @@
+## Blur固定8训练图100步拟合诊断已准备 — 2026-11-07
+
+继续只攻Blur，官方150的25.9/.18是唯一质量门槛；当前21.819776/.241321仍失败。历史16图50步flow/末段监督不是当前原生预测差映射，不重复旧任务。
+当前1024训练来源前8条/固定512裁图/原缓存，fresh原step10000 LoRA与Adam，global8每图每步一次，共100步800曝光。模型/loss/lr/数值路径不变。0/1/25/50/100固定全8图快照与逐图指标、每步Adam/RNG/SHA；只标training_fit_only，无其它测试gate、不选最好checkpoint、无自动官方或长训。
+11项CPU测试/语法通过，目的地预检12.978861秒/GPU0，16图SHA/裁图、8缓存及模型/指标核验通过。发布后提交round13_blur_fixed8_fit_v1，只用node3双H100；预计8–12分钟，非实测保证。入口smoke/train_foundir_blur_fixed8_fit_v1.py，输出foundir_blur_fixed8_fit_v1。
+无独立持久观察器，接手查实际队列/step/五组快照，结束后CPU finish/推小报告，不重复提交。少量训练图学会不等于官方通过；若100步不行也不能宣判模型不可学。依据结果再制定下一方案，全栈授权继续。保留旧全部资产/energy/失败，勿改旧运行绑定源码。详见reports/foundir_blur_fixed8_fit_v1_readiness_2026-11-07.md。
+
 ## Blur两次实际更新核验完成：有学习，无官方联合收益 — 2026-11-07
 
 只读重放step0→1及199→200、原global8和rank RNG，四checkpoint SHA/Adam/采样核验，原loss精确复现/gradient norm固定容差通过；16逐图、两rank/launcher退出0、CPU finish通过，无optimizer更新。node3双H100 60.297005秒/0.033498336GPU-hours；CPU1.779189秒。四worker现无待续训练，以心跳为准。
