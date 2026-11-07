@@ -1,0 +1,1285 @@
+{
+  "utc": "2026-11-07T07:46:32.205011+00:00",
+  "scope": "Current 3x2_v2 shared queue, job IDs explicitly containing blur; not all project/lifetime GPU cost",
+  "accounting": "allocated GPU count times launcher elapsed wall hours, including setup/I/O/CPU waits; not kernel-active GPU time or billing",
+  "selected_jobs": 35,
+  "node_attempts": 39,
+  "ended_node_attempts": 37,
+  "ended_nonzero_statuses": 1,
+  "completed_allocated_GPU_hours": 19.665449205504522,
+  "open_confirmed_GPU_hours_lower_bound": 4.758082405991025,
+  "total_allocated_GPU_hours_lower_bound": 24.423531611495548,
+  "cost_complete": false,
+  "current_training_saved_step": 4209,
+  "fixed_training_end": 9472,
+  "official_Blur_pass": false,
+  "by_round": {
+    "round10": {
+      "node_attempts": 4,
+      "allocated_GPU_hours_lower_bound": 1.2668974294927384,
+      "cost_complete": true
+    },
+    "round11": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.0589929187297821,
+      "cost_complete": true
+    },
+    "round12": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.033498336209191217,
+      "cost_complete": true
+    },
+    "round13": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.2884045312139723,
+      "cost_complete": true
+    },
+    "round14b": {
+      "node_attempts": 4,
+      "allocated_GPU_hours_lower_bound": 4.449628434975942,
+      "cost_complete": true
+    },
+    "round15": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.027811536656485662,
+      "cost_complete": true
+    },
+    "round16": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.048960302538341945,
+      "cost_complete": true
+    },
+    "round17": {
+      "node_attempts": 6,
+      "allocated_GPU_hours_lower_bound": 3.01804899930954,
+      "cost_complete": true
+    },
+    "round18": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.050135082138909236,
+      "cost_complete": true
+    },
+    "round19": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.5610719288720025,
+      "cost_complete": true
+    },
+    "round1": {
+      "node_attempts": 1,
+      "allocated_GPU_hours_lower_bound": 0.2829638538095686,
+      "cost_complete": true
+    },
+    "round20": {
+      "node_attempts": 5,
+      "allocated_GPU_hours_lower_bound": 9.63753698070844,
+      "cost_complete": false
+    },
+    "round2": {
+      "node_attempts": 3,
+      "allocated_GPU_hours_lower_bound": 2.350241837501526,
+      "cost_complete": true
+    },
+    "round8": {
+      "node_attempts": 4,
+      "allocated_GPU_hours_lower_bound": 1.0534192150168948,
+      "cost_complete": true
+    },
+    "round9": {
+      "node_attempts": 5,
+      "allocated_GPU_hours_lower_bound": 1.295920224322213,
+      "cost_complete": true
+    }
+  },
+  "node_attempt_records": [
+    {
+      "job_id": "round10_blur_coverage_cache_v2",
+      "node": 3,
+      "source_commit": "81105617b9369b051a9c3bcf02f433a5e965e810",
+      "entry": "smoke/run_foundir_fullstack_blur_coverage_v2_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.13583142002423604,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "720ab9595ae2e7194123ab10754b4b0be22724dc1d4bd08595efe014c844e872",
+        "node": 3,
+        "utc_unix": 1794005860.5904267
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.13583142002423604,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 244.49655604362488,
+        "status": 0
+      },
+      "seconds_confirmed": 244.49655604362488
+    },
+    {
+      "job_id": "round10_blur_coverage_fit_v2",
+      "node": 3,
+      "source_commit": "8bbcebcd26e30bc83464d15e10e67d16496ab3f7",
+      "entry": "smoke/run_foundir_fullstack_blur_coverage_fit_v2.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.026708066595925225,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "1909e293ab915192037a13dd37225f65f1771df9c184c03b2769bc96ef66ee07",
+        "node": 3,
+        "utc_unix": 1794008673.5523963
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.026708066595925225,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 48.074519872665405,
+        "status": 0
+      },
+      "seconds_confirmed": 48.074519872665405
+    },
+    {
+      "job_id": "round10_blur_coverage_official_v2",
+      "node": 3,
+      "source_commit": "81105617b9369b051a9c3bcf02f433a5e965e810",
+      "entry": "smoke/run_foundir_fullstack_blur_coverage_v2_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.5355746987130907,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "582484a816c4dea01db97ab6c0ae27270e16d70c2d741a7249efb62b8aca9ea8",
+        "node": 3,
+        "utc_unix": 1794007194.001192
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.5355746987130907,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 964.0344576835632,
+        "status": 0
+      },
+      "seconds_confirmed": 964.0344576835632
+    },
+    {
+      "job_id": "round10_blur_coverage_train_v2",
+      "node": 3,
+      "source_commit": "81105617b9369b051a9c3bcf02f433a5e965e810",
+      "entry": "smoke/run_foundir_fullstack_blur_coverage_v2_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.5687832441594866,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "b67d9798c5a3da968819e3d0626dc934e45a95cab93a6da5aad4bde2539738c2",
+        "node": 3,
+        "utc_unix": 1794006125.1165237
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.5687832441594866,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1023.8098394870758,
+        "status": 0
+      },
+      "seconds_confirmed": 1023.8098394870758
+    },
+    {
+      "job_id": "round11_blur_loss_gradients_v1",
+      "node": 3,
+      "source_commit": "a8a77b9ece24b02184a5dad9e500598e02affdfe",
+      "entry": "smoke/run_foundir_fullstack_blur_loss_gradients_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.0589929187297821,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "2f911c264c409d43b0201fba93cbacc0cbc93c3bde86c43a0e80f4a6b3d6fb3e",
+        "node": 3,
+        "utc_unix": 1794009267.1747262
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.0589929187297821,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 106.18725371360779,
+        "status": 0
+      },
+      "seconds_confirmed": 106.18725371360779
+    },
+    {
+      "job_id": "round12_blur_actual_updates_v1",
+      "node": 3,
+      "source_commit": "46b596747cbf295f791961e2a01f97d139ee322e",
+      "entry": "smoke/run_foundir_fullstack_blur_actual_updates_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.033498336209191217,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "1211ef8f8ebc79b41a928404357afcbcaa7e7933ea146a80305419a04a558167",
+        "node": 3,
+        "utc_unix": 1794010369.4103296
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.033498336209191217,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 60.29700517654419,
+        "status": 0
+      },
+      "seconds_confirmed": 60.29700517654419
+    },
+    {
+      "job_id": "round13_blur_fixed8_fit_v1",
+      "node": 3,
+      "source_commit": "77300828cabf41d198c2b25a48bb4e38c629f376",
+      "entry": "smoke/run_foundir_fullstack_blur_fixed8_fit_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.2884045312139723,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "d52d056b2367854813c3cd57d01aebba3638c71bc3a1b8d0044d6349e101739e",
+        "node": 3,
+        "utc_unix": 1794010910.2397666
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.2884045312139723,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 519.1281561851501,
+        "status": 0
+      },
+      "seconds_confirmed": 519.1281561851501
+    },
+    {
+      "job_id": "round14b_blur_exposure_official_v2_node1",
+      "node": 1,
+      "source_commit": "d13527593640db51fcbad5755d1cafc0be1bedc0",
+      "entry": "smoke/run_foundir_fullstack_blur_exposure_official_2x2_v2.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.2972398289044698,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "9c480d71cb9cdea6517674671c56d686e0c0bd82fcf4d60479ea5b4d302174a6",
+        "node": 1,
+        "utc_unix": 1794016539.1773841
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.2972398289044698,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 535.0316920280457,
+        "status": 0
+      },
+      "seconds_confirmed": 535.0316920280457
+    },
+    {
+      "job_id": "round14b_blur_exposure_official_v2_node3",
+      "node": 3,
+      "source_commit": "d13527593640db51fcbad5755d1cafc0be1bedc0",
+      "entry": "smoke/run_foundir_fullstack_blur_exposure_official_2x2_v2.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.27713896261321175,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "f40a195cdb33733bd0aebaf7bc45c167ae6e4c3caae8176e9cc33d5df7adc96b",
+        "node": 3,
+        "utc_unix": 1794016535.2340467
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.27713896261321175,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 498.8501327037811,
+        "status": 0
+      },
+      "seconds_confirmed": 498.8501327037811
+    },
+    {
+      "job_id": "round14b_blur_exposure_train_v2_node1",
+      "node": 1,
+      "source_commit": "d13527593640db51fcbad5755d1cafc0be1bedc0",
+      "entry": "smoke/run_foundir_fullstack_blur_exposure_2x2_v2.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 1.9372767550415464,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "ef4f4d370c363948660070feb7bb0e17b109537e500744622e9be14de106910c",
+        "node": 1,
+        "utc_unix": 1794012986.940803
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 1.9372767550415464,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 3487.0981590747833,
+        "status": 0
+      },
+      "seconds_confirmed": 3487.0981590747833
+    },
+    {
+      "job_id": "round14b_blur_exposure_train_v2_node3",
+      "node": 3,
+      "source_commit": "d13527593640db51fcbad5755d1cafc0be1bedc0",
+      "entry": "smoke/run_foundir_fullstack_blur_exposure_2x2_v2.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 1.9379728884167142,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "5174a8c32d37985efb1e3e222180ec4050335d8042e17a4dbb3599748d76a283",
+        "node": 3,
+        "utc_unix": 1794012986.73642
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 1.9379728884167142,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 3488.3511991500854,
+        "status": 0
+      },
+      "seconds_confirmed": 3488.3511991500854
+    },
+    {
+      "job_id": "round15_blur_exposure_fit_v1",
+      "node": 3,
+      "source_commit": "9ef17405ea5eebd1bec62196a9763fd43af1be1a",
+      "entry": "smoke/run_foundir_fullstack_blur_exposure_fit_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.027811536656485662,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "1e302ba3da35b55cc450b32698fb9b72877758017cf7cc1da9f320256e010d2f",
+        "node": 3,
+        "utc_unix": 1794017554.5397036
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.027811536656485662,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 50.060765981674194,
+        "status": 0
+      },
+      "seconds_confirmed": 50.060765981674194
+    },
+    {
+      "job_id": "round16_blur_full_context_v1",
+      "node": 3,
+      "source_commit": "36689ee58e5a838b314c8574ffa4d7a903b804cd",
+      "entry": "smoke/run_foundir_fullstack_blur_full_context_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.048960302538341945,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "6935affbaa3befb009ce4467a5afa65495ad441f7150e7388eb83211c50a7195",
+        "node": 3,
+        "utc_unix": 1794018305.2303152
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.048960302538341945,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 88.1285445690155,
+        "status": 0
+      },
+      "seconds_confirmed": 88.1285445690155
+    },
+    {
+      "job_id": "round17_blur_multiview_cache_v1_node1",
+      "node": 1,
+      "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+      "entry": "smoke/run_foundir_fullstack_blur_multiview_cache_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.28360477368036907,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "da101f6fe6d119f25f729ade1697922d16ee64bf79b0f0c182e9f96e774ba5af",
+        "node": 1,
+        "utc_unix": 1794019772.776498
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.28360477368036907,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 510.4885926246643,
+        "status": 0
+      },
+      "seconds_confirmed": 510.4885926246643
+    },
+    {
+      "job_id": "round17_blur_multiview_cache_v1_node3",
+      "node": 3,
+      "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+      "entry": "smoke/run_foundir_fullstack_blur_multiview_cache_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.2803369908862644,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "3988033179005eb0a2b84aca670e2d03c855e8c9afd94142d496bab7f21d086e",
+        "node": 3,
+        "utc_unix": 1794019774.544864
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.2803369908862644,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 504.6065835952759,
+        "status": 0
+      },
+      "seconds_confirmed": 504.6065835952759
+    },
+    {
+      "job_id": "round17_blur_multiview_official_v1_node1",
+      "node": 1,
+      "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+      "entry": "smoke/run_foundir_fullstack_blur_multiview_official_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.2983922561009725,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "6d90acf51307f7d99bb8301a303553fc8d501ff0c41f73bfafbac9e6f615dcc8",
+        "node": 1,
+        "utc_unix": 1794022084.5200531
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.2983922561009725,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 537.1060609817505,
+        "status": 0
+      },
+      "seconds_confirmed": 537.1060609817505
+    },
+    {
+      "job_id": "round17_blur_multiview_official_v1_node3",
+      "node": 3,
+      "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+      "entry": "smoke/run_foundir_fullstack_blur_multiview_official_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.27735577053493926,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "8a5e88ab06695e8a897552d07ab2430ad632126806a0919c0d15cefb752a150b",
+        "node": 3,
+        "utc_unix": 1794022084.47531
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.27735577053493926,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 499.2403869628906,
+        "status": 0
+      },
+      "seconds_confirmed": 499.2403869628906
+    },
+    {
+      "job_id": "round17_blur_multiview_train_v1_node1",
+      "node": 1,
+      "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+      "entry": "smoke/run_foundir_fullstack_blur_multiview_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.9394559175438351,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "a238442a2ed431d1f33700649d0a77965621890ba605623c1afbf8434275e611",
+        "node": 1,
+        "utc_unix": 1794020333.3726563
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.9394559175438351,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1691.0206515789032,
+        "status": 0
+      },
+      "seconds_confirmed": 1691.0206515789032
+    },
+    {
+      "job_id": "round17_blur_multiview_train_v1_node3",
+      "node": 3,
+      "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+      "entry": "smoke/run_foundir_fullstack_blur_multiview_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.9389032905631595,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "e7fe6e14fa4aeaa88af862b47b4082a0535b600ebee066b6f0bccde469451b50",
+        "node": 3,
+        "utc_unix": 1794020334.2504458
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.9389032905631595,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1690.0259230136871,
+        "status": 0
+      },
+      "seconds_confirmed": 1690.0259230136871
+    },
+    {
+      "job_id": "round18_blur_multiview_context_v1",
+      "node": 3,
+      "source_commit": "26639f68ab4e93b2d882a72debc931513ee06b17",
+      "entry": "smoke/run_foundir_fullstack_blur_multiview_context_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.050135082138909236,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "a88432afcaaf727f27570865672b8029ff423a5d282a3bd053e520cd9f5e37ee",
+        "node": 3,
+        "utc_unix": 1794023244.5902836
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.050135082138909236,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 90.24314785003662,
+        "status": 0
+      },
+      "seconds_confirmed": 90.24314785003662
+    },
+    {
+      "job_id": "round19_blur_singleframe_fit_v1",
+      "node": 3,
+      "source_commit": "9bef437a9dd246b0c3125223b589157a3eb6f0b1",
+      "entry": "smoke/run_foundir_fullstack_blur_singleframe_fit_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.5610719288720025,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "f094d0b0b1211e1efd13c791461a7b9cfd414b67221dd561472e343fcc25190d",
+        "node": 3,
+        "utc_unix": 1794024471.3850882
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.5610719288720025,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1009.9294719696045,
+        "status": 0
+      },
+      "seconds_confirmed": 1009.9294719696045
+    },
+    {
+      "job_id": "round1_blur_strength_single_node_v1",
+      "node": 0,
+      "source_commit": "7524cbb8fa000e5335ea3f80dfc6232927fffe21",
+      "entry": "smoke/run_foundir_fullstack_blur_strength_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.2829638538095686,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "6a0fbfc85c26a40a7c162c48ea647a8f3c53df3fa0b8efb479b4807f19d370ba",
+        "node": 0,
+        "utc_unix": 1793969604.4178605
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.2829638538095686,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 509.3349368572235,
+        "status": 0
+      },
+      "seconds_confirmed": 509.3349368572235
+    },
+    {
+      "job_id": "round20_blur_fullgrid_cache_v1_node1",
+      "node": 1,
+      "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+      "entry": "smoke/run_foundir_fullstack_blur_fullgrid_cache_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.7347728154394362,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "43441f811ec9218c7e4bd3bd5b89554c5dd2da961912c51446c3f6693d1bd333",
+        "node": 1,
+        "utc_unix": 1794026487.694785
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.7347728154394362,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1322.591067790985,
+        "status": 0
+      },
+      "seconds_confirmed": 1322.591067790985
+    },
+    {
+      "job_id": "round20_blur_fullgrid_cache_v1_node3",
+      "node": 3,
+      "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+      "entry": "smoke/run_foundir_fullstack_blur_fullgrid_cache_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.7168547670046489,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "e3cf075dc5f78a1f02b568eddde60e276a04c05cf7313fbac09615e89a3b2a70",
+        "node": 3,
+        "utc_unix": 1794026487.6946902
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.7168547670046489,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1290.338580608368,
+        "status": 0
+      },
+      "seconds_confirmed": 1290.338580608368
+    },
+    {
+      "job_id": "round20_blur_fullgrid_resume_1x2_train_v1_node3",
+      "node": 3,
+      "source_commit": "bcc3b6d4146be7b5134aeac650ebec973a2589d8",
+      "entry": "smoke/run_foundir_fullstack_blur_fullgrid_1x2_v1.sh",
+      "status": null,
+      "cost_complete": false,
+      "allocated_GPU_hours_lower_bound": 1.4404078283574846,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "9fb8f147c91feea2eddae42e0bdc5138c587d21ea452bab8c6aebdf88324b608",
+        "node": 3,
+        "utc_unix": 1794034999.4268165
+      },
+      "cancel_requested": false,
+      "state": "running_heartbeat_fresh",
+      "last_matching_heartbeat": {
+        "capability": "independent_node3_two_H100_jobs_only",
+        "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job": "round20_blur_fullgrid_resume_1x2_train_v1_node3",
+        "pid": 299730,
+        "state": "running",
+        "utc_unix": 1794037592.1609075,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "last_matching_heartbeat_sha256": "6df44ef317ce85f3a0a2b0eb3184b0f01d84f8270377cdea8c0ecc135824a7b5",
+      "heartbeat_age_seconds": 0.044103145599365234,
+      "seconds_confirmed": 2592.7340910434723
+    },
+    {
+      "job_id": "round20_blur_fullgrid_train_v1_node1",
+      "node": 1,
+      "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+      "entry": "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh",
+      "status": null,
+      "cost_complete": false,
+      "allocated_GPU_hours_lower_bound": 3.31767457763354,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "240675c18e68362632cac962a3815e2e6b62be10345371a000f3c6a758969237",
+        "node": 1,
+        "utc_unix": 1794027865.4074728
+      },
+      "cancel_requested": true,
+      "state": "missing_terminal_stale_heartbeat",
+      "last_matching_heartbeat": {
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job": "round20_blur_fullgrid_train_v1_node1",
+        "pid": 111399,
+        "state": "running",
+        "utc_unix": 1794033837.2217126,
+        "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+      },
+      "last_matching_heartbeat_sha256": "c384585f472aba0368021a5e6a6413d321b33f79b43cbfa6f046cb521a5f113a",
+      "heartbeat_age_seconds": 3754.983298063278,
+      "seconds_confirmed": 5971.814239740372
+    },
+    {
+      "job_id": "round20_blur_fullgrid_train_v1_node3",
+      "node": 3,
+      "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+      "entry": "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh",
+      "status": -15,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 3.4278269922733307,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "1197814d1f235ef08090d67827f7581c763e59076004e6b702523201e3406173",
+        "node": 3,
+        "utc_unix": 1794027868.2146585
+      },
+      "cancel_requested": true,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 3.4278269922733307,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 6170.088586091995,
+        "status": -15
+      },
+      "seconds_confirmed": 6170.088586091995
+    },
+    {
+      "job_id": "round2_blur_lq_start_v1",
+      "node": 0,
+      "source_commit": "652fdd75e2cace9270ecf1d63fb29b17dfdb574f",
+      "entry": "smoke/run_foundir_fullstack_lq_start_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.7305302702056037,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+        "node": 0,
+        "utc_unix": 1793972220.981148
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.7305302702056037,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1314.9544863700867,
+        "status": 0
+      },
+      "seconds_confirmed": 1314.9544863700867
+    },
+    {
+      "job_id": "round2_blur_lq_start_v1",
+      "node": 1,
+      "source_commit": "652fdd75e2cace9270ecf1d63fb29b17dfdb574f",
+      "entry": "smoke/run_foundir_fullstack_lq_start_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.7327418396208021,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+        "node": 1,
+        "utc_unix": 1793972216.9561243
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.7327418396208021,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1318.9353113174438,
+        "status": 0
+      },
+      "seconds_confirmed": 1318.9353113174438
+    },
+    {
+      "job_id": "round2_blur_lq_start_v1",
+      "node": 2,
+      "source_commit": "652fdd75e2cace9270ecf1d63fb29b17dfdb574f",
+      "entry": "smoke/run_foundir_fullstack_lq_start_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.8869697276751201,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job_sha256": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+        "node": 2,
+        "utc_unix": 1793972217.544423
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.8869697276751201,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1596.545509815216,
+        "status": 0
+      },
+      "seconds_confirmed": 1596.545509815216
+    },
+    {
+      "job_id": "round8_blur_frequency_cache_v1",
+      "node": 0,
+      "source_commit": "fcdcfd1f118ebceb7aa5a6904e8d73ef6be9125c",
+      "entry": "smoke/run_foundir_fullstack_frequency_repair_v1_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.3264308994346195,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "86cbb15503726049ebd05ccc94bdbbf98a5107f5f26562acf14e9b74cc148c8b",
+        "node": 0,
+        "utc_unix": 1793999232.3168397
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.3264308994346195,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 587.5756189823151,
+        "status": 0
+      },
+      "seconds_confirmed": 587.5756189823151
+    },
+    {
+      "job_id": "round8_blur_frequency_cache_v1",
+      "node": 1,
+      "source_commit": "fcdcfd1f118ebceb7aa5a6904e8d73ef6be9125c",
+      "entry": "smoke/run_foundir_fullstack_frequency_repair_v1_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.37735513077841865,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "86cbb15503726049ebd05ccc94bdbbf98a5107f5f26562acf14e9b74cc148c8b",
+        "node": 1,
+        "utc_unix": 1793999232.5628588
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.37735513077841865,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 679.2392354011536,
+        "status": 0
+      },
+      "seconds_confirmed": 679.2392354011536
+    },
+    {
+      "job_id": "round8_blur_frequency_cache_v1",
+      "node": 2,
+      "source_commit": "fcdcfd1f118ebceb7aa5a6904e8d73ef6be9125c",
+      "entry": "smoke/run_foundir_fullstack_frequency_repair_v1_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.3150974237918854,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--6eaa7156ccad-w6jjhka2yc",
+        "job_sha256": "86cbb15503726049ebd05ccc94bdbbf98a5107f5f26562acf14e9b74cc148c8b",
+        "node": 2,
+        "utc_unix": 1793999233.4742339
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.3150974237918854,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 567.1753628253937,
+        "status": 0
+      },
+      "seconds_confirmed": 567.1753628253937
+    },
+    {
+      "job_id": "round8_blur_frequency_score_v1",
+      "node": 0,
+      "source_commit": "fcdcfd1f118ebceb7aa5a6904e8d73ef6be9125c",
+      "entry": "smoke/run_foundir_fullstack_frequency_repair_v1_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.034535761011971366,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy--494c701599ab-gqu345r4hl",
+        "job_sha256": "8519a7c4a5010f017681f60969bc3c82fc115327ead224b384043b1c4006a02e",
+        "node": 0,
+        "utc_unix": 1794000000.1663406
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.034535761011971366,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 62.16436982154846,
+        "status": 0
+      },
+      "seconds_confirmed": 62.16436982154846
+    },
+    {
+      "job_id": "round9_blur_delta_cache_v1",
+      "node": 3,
+      "source_commit": "4182f8c50d00460e3689032036bccc11b9090103",
+      "entry": "smoke/run_foundir_fullstack_blur_delta_v1_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.03783612158563402,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "251aa4afd737e47fe8c62f4a8308c38c9c6c48fb4f465b567a08d2c40277d76e",
+        "node": 3,
+        "utc_unix": 1794002009.7895782
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.03783612158563402,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 68.10501885414124,
+        "status": 0
+      },
+      "seconds_confirmed": 68.10501885414124
+    },
+    {
+      "job_id": "round9_blur_delta_official150_v1",
+      "node": 3,
+      "source_commit": "03892561cc47231584c64d6c3d6512f1a1834684",
+      "entry": "smoke/run_foundir_fullstack_blur_delta_official_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.5334162414073944,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "10d71293f3586da72660aadf301d0ded2d141b84bcb4433d2f382575f2821447",
+        "node": 3,
+        "utc_unix": 1794003345.21453
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.5334162414073944,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 960.1492345333099,
+        "status": 0
+      },
+      "seconds_confirmed": 960.1492345333099
+    },
+    {
+      "job_id": "round9_blur_delta_path_v1",
+      "node": 3,
+      "source_commit": "b4f905ea7f53ef2982b4026a603a72187ef5dbef",
+      "entry": "smoke/run_foundir_fullstack_blur_delta_path_v1.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.0244709927505917,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "fc9dd33cf0a33ba8f0b6d0d4c61805ec9ea7dc35c1aa7c893f40023ebc5b5f18",
+        "node": 3,
+        "utc_unix": 1794005085.9746332
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.0244709927505917,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 44.04778695106506,
+        "status": 0
+      },
+      "seconds_confirmed": 44.04778695106506
+    },
+    {
+      "job_id": "round9_blur_delta_qualify_v1",
+      "node": 3,
+      "source_commit": "4182f8c50d00460e3689032036bccc11b9090103",
+      "entry": "smoke/run_foundir_fullstack_blur_delta_v1_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.07678157753414577,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "0ce6d3d2aa1c86fb479eb26433f7e954c9df6ceabd3d3424db529ae540fba8dd",
+        "node": 3,
+        "utc_unix": 1794001681.237516
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.07678157753414577,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 138.2068395614624,
+        "status": 0
+      },
+      "seconds_confirmed": 138.2068395614624
+    },
+    {
+      "job_id": "round9_blur_delta_train_v1",
+      "node": 3,
+      "source_commit": "4182f8c50d00460e3689032036bccc11b9090103",
+      "entry": "smoke/run_foundir_fullstack_blur_delta_v1_gpu.sh",
+      "status": 0,
+      "cost_complete": true,
+      "allocated_GPU_hours_lower_bound": 0.6234152910444472,
+      "started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "274160955b68db722533c52a6b5f41f8c4db8f626a05363b40f1cbe6ac3e0749",
+        "node": 3,
+        "utc_unix": 1794002127.9451156
+      },
+      "cancel_requested": false,
+      "state": "ended",
+      "ended": {
+        "allocated_GPU_hours": 0.6234152910444472,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 1122.1475238800049,
+        "status": 0
+      },
+      "seconds_confirmed": 1122.1475238800049
+    }
+  ],
+  "excluded_current_queue_jobs": [
+    "round1_official_input_baseline_3x2_v2",
+    "round3_haze_consensus_single_node_v1",
+    "round4_rain_continue_3x2_v1",
+    "round5_rain_step1000_3x2_resume_v1",
+    "round5_rain_step1000_3x2_v1",
+    "round7_rain_prefix_cross_v1"
+  ],
+  "excludes": "Other queues, earlier experiments, shared baseline jobs, node idle allocation and storage; missing terminal duration after last matching heartbeat remains unknown",
+  "input_metadata_sha256": {
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_cache_v2/job.json": "720ab9595ae2e7194123ab10754b4b0be22724dc1d4bd08595efe014c844e872",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_cache_v2/node3.started.json": "4ada04c3fb2227241793a68e8cb943edc8c2d90dba9c6c900df674822bef8fe9",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_cache_v2/node3.ended.json": "91d2734e4300cb753944f3d31d0954ca44e56eb663e73e4e63725b6f154a03f3",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_fit_v2/job.json": "1909e293ab915192037a13dd37225f65f1771df9c184c03b2769bc96ef66ee07",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_fit_v2/node3.started.json": "120c1bb2098d29a535a7ab3a3a01f3c8f9b1bc98373e14a5ad0a42a23ad3d101",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_fit_v2/node3.ended.json": "51f3f347b241fe215d1104d2b87e3dce2e4d0b94cd764de0fd53360392947673",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_official_v2/job.json": "582484a816c4dea01db97ab6c0ae27270e16d70c2d741a7249efb62b8aca9ea8",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_official_v2/node3.started.json": "2fdf8594cd4c3fae91ed24ed017f2990e07851e4a2a890b33cbdbce965d69d86",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_official_v2/node3.ended.json": "b693bdf4365c3cae782fcb5eeb13dd2923e6f49c7d322aadf091a8b1d4f44ca1",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_train_v2/job.json": "b67d9798c5a3da968819e3d0626dc934e45a95cab93a6da5aad4bde2539738c2",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_train_v2/node3.started.json": "0128f92efeb3a58bf464540e97b417bbf0f64886ed73082988c5ba4838020e92",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round10_blur_coverage_train_v2/node3.ended.json": "492cfda9f634ba6f008263a1f785f44b4eb1dfe819b114ca1cc84c38ffd1e042",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round11_blur_loss_gradients_v1/job.json": "2f911c264c409d43b0201fba93cbacc0cbc93c3bde86c43a0e80f4a6b3d6fb3e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round11_blur_loss_gradients_v1/node3.started.json": "dac4e1cf685bc228ab97b5110e770693086042708254f05abe440580baf75940",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round11_blur_loss_gradients_v1/node3.ended.json": "e060e9f20bcab63bb0fd4e1a9f1fbb23f51f42aa332dc0d2d80f026f286d6b68",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round12_blur_actual_updates_v1/job.json": "1211ef8f8ebc79b41a928404357afcbcaa7e7933ea146a80305419a04a558167",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round12_blur_actual_updates_v1/node3.started.json": "98cec5a9a14a6c83b8b88492cecdc3241e6368b222194c5ae0470f45c43c411c",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round12_blur_actual_updates_v1/node3.ended.json": "f61f80443f480764420afe16492730437e93b7ef663cc51409e8284f245a9dc7",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round13_blur_fixed8_fit_v1/job.json": "d52d056b2367854813c3cd57d01aebba3638c71bc3a1b8d0044d6349e101739e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round13_blur_fixed8_fit_v1/node3.started.json": "dece86ddefa55e86652d52b09285aebb596c1437ece1304319b26261bd0095cf",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round13_blur_fixed8_fit_v1/node3.ended.json": "fd7c6f0a41729b9d489cf353c640ffd83e8f144b60b72f46b9bf5417cf7de879",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_official_v2_node1/job.json": "9c480d71cb9cdea6517674671c56d686e0c0bd82fcf4d60479ea5b4d302174a6",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_official_v2_node1/node1.started.json": "2cbe404db4887ef0bb3e1373ff42499e1224ac125281792bf05ddc9c839c4d64",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_official_v2_node1/node1.ended.json": "73cefcf38020a9c777e741c27344c7b67d54fbc40eb8ee3e6ca9217bf45c73d3",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_official_v2_node3/job.json": "f40a195cdb33733bd0aebaf7bc45c167ae6e4c3caae8176e9cc33d5df7adc96b",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_official_v2_node3/node3.started.json": "8448caf5505511ec3fbb685059aa93bbce7e57ede38a94a415baa9f61c728051",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_official_v2_node3/node3.ended.json": "91af9e334668d14c95757d06968a6a99cf06038b3480fadf5980a5e011d93844",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_train_v2_node1/job.json": "ef4f4d370c363948660070feb7bb0e17b109537e500744622e9be14de106910c",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_train_v2_node1/node1.started.json": "5c2340caa8425974aa6f32c546e4ce7054b1859cc8fff13800b8477e43e64101",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_train_v2_node1/node1.ended.json": "0dc1b3913b3631bc64baba36e7eeb7e98132d8ec37e2b70d196220d2c609f878",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_train_v2_node3/job.json": "5174a8c32d37985efb1e3e222180ec4050335d8042e17a4dbb3599748d76a283",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_train_v2_node3/node3.started.json": "84ea0c940d9c09148c059158eff2057565070b502c1208dadf4b43263dcbdceb",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round14b_blur_exposure_train_v2_node3/node3.ended.json": "356948c227f12effda3222ddcf61661b8c468f1d8edafa438b798ef95f8e1f5c",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round15_blur_exposure_fit_v1/job.json": "1e302ba3da35b55cc450b32698fb9b72877758017cf7cc1da9f320256e010d2f",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round15_blur_exposure_fit_v1/node3.started.json": "4c76a0966fc35d0373b0f04f91321a987bfa30e5f402a0f55a810bb3dbd6653e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round15_blur_exposure_fit_v1/node3.ended.json": "3a5a8fe69b26d1ee6491ee5ec62a3d5af5cfff719e4e0e6b8bd794c4f5b32b15",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round16_blur_full_context_v1/job.json": "6935affbaa3befb009ce4467a5afa65495ad441f7150e7388eb83211c50a7195",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round16_blur_full_context_v1/node3.started.json": "7edaea9c19cad9ae440c9e7870f46048a4f71ff548743989f10a8d4ffdc01914",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round16_blur_full_context_v1/node3.ended.json": "161696e6802c975985b9366ab1c1edf593c36eac397667a2ee86ac5ee18be6f6",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_cache_v1_node1/job.json": "da101f6fe6d119f25f729ade1697922d16ee64bf79b0f0c182e9f96e774ba5af",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_cache_v1_node1/node1.started.json": "af30663e346fe309818fffe2ebd083ae7121939a25a083a0d5f8b4fe3c8c2f6b",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_cache_v1_node1/node1.ended.json": "d4c1b745226645a28bd322d970489cc2fff5c2d527ef3d2843ba676749a22059",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_cache_v1_node3/job.json": "3988033179005eb0a2b84aca670e2d03c855e8c9afd94142d496bab7f21d086e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_cache_v1_node3/node3.started.json": "c1ad034e8ffc289115f51ac9069dfa3d93c48a2e870824acec5938074d223740",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_cache_v1_node3/node3.ended.json": "79ce7f071c427adfcf66bdcc7ae05ac6d24e4b3a795ea69439bf46baf8b358d8",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_official_v1_node1/job.json": "6d90acf51307f7d99bb8301a303553fc8d501ff0c41f73bfafbac9e6f615dcc8",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_official_v1_node1/node1.started.json": "7477167307c0aabf7c2accb39cb5e9e47104e866ac2e15aadd06fe50d74f7b13",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_official_v1_node1/node1.ended.json": "25bd2278b4494cc40ddac73f7e0b533b58290e014113a7a94612f34538a3cc73",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_official_v1_node3/job.json": "8a5e88ab06695e8a897552d07ab2430ad632126806a0919c0d15cefb752a150b",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_official_v1_node3/node3.started.json": "4da83b65cd2096a1dbbab424e9f03dcdd80ef3d2ebad86b4615a0a4ee08d52b3",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_official_v1_node3/node3.ended.json": "6bcace82a75421109b08c28b77eac8d0570880e8d80db529b33cda83edf78b70",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_train_v1_node1/job.json": "a238442a2ed431d1f33700649d0a77965621890ba605623c1afbf8434275e611",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_train_v1_node1/node1.started.json": "8a6475b86f006362efc17411d4f50ad856d7f1bb1795f4744700255ea84c6607",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_train_v1_node1/node1.ended.json": "14f046bcf10e888cca113a9f199a250a412207c79efd5409e0f1b66f5faed185",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_train_v1_node3/job.json": "e7fe6e14fa4aeaa88af862b47b4082a0535b600ebee066b6f0bccde469451b50",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_train_v1_node3/node3.started.json": "5ad991da5eb0e15a03d4f86a2908c593ceae807e4e59c1bc02576cd7a4da1ebe",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round17_blur_multiview_train_v1_node3/node3.ended.json": "ac425432a52e540c2fd18d1f3fcd1c046e56252a19c65bdb0d60427d1e6e8c51",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round18_blur_multiview_context_v1/job.json": "a88432afcaaf727f27570865672b8029ff423a5d282a3bd053e520cd9f5e37ee",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round18_blur_multiview_context_v1/node3.started.json": "877de964ca8a3e8ec44e4f08b253130452d7f8e6501dc5ce055323b66825ca21",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round18_blur_multiview_context_v1/node3.ended.json": "63e2b41241e32087ce0447c436aa9d55b67b3bf203512871bde9e1da57e8fdf6",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round19_blur_singleframe_fit_v1/job.json": "f094d0b0b1211e1efd13c791461a7b9cfd414b67221dd561472e343fcc25190d",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round19_blur_singleframe_fit_v1/node3.started.json": "ed547b777cc72e2ed3dd9baf472cc7a1032743dff332791bb21590264fa81fb1",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round19_blur_singleframe_fit_v1/node3.ended.json": "2ceba68b3d23071e29319f517862d4d9c7ca4f72b8e1d4a58aaaf29a1150014e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round1_blur_strength_single_node_v1/job.json": "6a0fbfc85c26a40a7c162c48ea647a8f3c53df3fa0b8efb479b4807f19d370ba",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round1_blur_strength_single_node_v1/node0.started.json": "37344dba794acce797b27489f4380193655fca89edd13b66b5b40b2bad5fb101",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round1_blur_strength_single_node_v1/node0.ended.json": "4fd7dd135582e12a4847299f6b9abcbae6543f255326b06a0c004a88a3443e7b",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_cache_v1_node1/job.json": "43441f811ec9218c7e4bd3bd5b89554c5dd2da961912c51446c3f6693d1bd333",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_cache_v1_node1/node1.started.json": "a40112ec4acc1bfdb93bf625dcd3b8c5dc30a29b82646ef267911e03673b834b",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_cache_v1_node1/node1.ended.json": "53bfa2bf5d14185d248f0ae39039318bbe15d42f2c45f621dd35fc44c33af126",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_cache_v1_node3/job.json": "e3cf075dc5f78a1f02b568eddde60e276a04c05cf7313fbac09615e89a3b2a70",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_cache_v1_node3/node3.started.json": "8034362c9e7c0444fe3fed0260693f562611574b4a60bde5ff50d172ba14ab6d",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_cache_v1_node3/node3.ended.json": "d1eaf59342e7fd1dd529c9b9b0711f69512e5d3c45607a4bf1f278c572450218",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_resume_1x2_train_v1_node3/job.json": "9fb8f147c91feea2eddae42e0bdc5138c587d21ea452bab8c6aebdf88324b608",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_resume_1x2_train_v1_node3/node3.started.json": "308076b934474d53611fcd8ae5598761e415fec183c037a9e0a4ea72076a238f",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_train_v1_node1/job.json": "240675c18e68362632cac962a3815e2e6b62be10345371a000f3c6a758969237",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_train_v1_node1/node1.started.json": "cfb3052343a8dadb97c90a2ba95b8a5eee333fd6f8aa83d42640dee39f23da50",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_train_v1_node3/job.json": "1197814d1f235ef08090d67827f7581c763e59076004e6b702523201e3406173",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_train_v1_node3/node3.started.json": "c2eb46ffa53b2bbcb1bc5d07d5f68f873c63827b36e31e010b4be0c9ef7f5a03",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round20_blur_fullgrid_train_v1_node3/node3.ended.json": "8ec1a3c1061e7f6186d11b70132dec7e8663013189705968c64ca8d0a7969b0c",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round2_blur_lq_start_v1/job.json": "62adb2f8620c537a7bdd8f4ab7e30734a438fa922affbaa19c2cf4bb802b73f9",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round2_blur_lq_start_v1/node0.started.json": "0168364ddc5e46ec442fb220ece3442f7eb7deee422a2164667e588d1c785adb",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round2_blur_lq_start_v1/node0.ended.json": "42f64765a298c9e59767bbed43ccf6a23653e3f3881b2e08fd258aead397a02c",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round2_blur_lq_start_v1/node1.started.json": "ba40ca717d1f134587aae9bbe2dfccbaf5e47205f40702726aa0f4568803b815",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round2_blur_lq_start_v1/node1.ended.json": "72af5afd23d1c3c13da7517a3372c6f5230e6116d46ea94c6a642113805b08a1",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round2_blur_lq_start_v1/node2.started.json": "5d96be8276362f693646012d6153a79b398ac994d6abfde387c95aaecf0c17da",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round2_blur_lq_start_v1/node2.ended.json": "4c0e017067b8a86e41fc10dad861d9556f2b3eb82b59181216fbc968d44952f7",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_cache_v1/job.json": "86cbb15503726049ebd05ccc94bdbbf98a5107f5f26562acf14e9b74cc148c8b",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_cache_v1/node0.started.json": "4536f3d816cac42742f6e87ae192c7b7eca048cd274d4dda8b1abd214d77a7df",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_cache_v1/node0.ended.json": "6ce9306a43346c9d912dea464f45bf282c84937a32c83496c96e7234db3a887c",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_cache_v1/node1.started.json": "bc7f33f484fb60b0f97b15528052a305df961baf62187394358ecf7707dbfb6e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_cache_v1/node1.ended.json": "090da9fe43ed1ddde2b4198a2e202f889770de4d98f2a5ba8e7cbf60034246c5",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_cache_v1/node2.started.json": "e52ce834ff72b05bd7031434598e25b1b0cba18ca8084bbc578a1f9ffc34b8e7",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_cache_v1/node2.ended.json": "0784fc0a913d32ceae01826bb687c022d960a6857c9c674c328a228a61df4aea",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_score_v1/job.json": "8519a7c4a5010f017681f60969bc3c82fc115327ead224b384043b1c4006a02e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_score_v1/node0.started.json": "0c0bd6e2baa4538b27890010ce8331e9b17d4e9df2d6dfa731a1178fc2d3f722",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round8_blur_frequency_score_v1/node0.ended.json": "7db41138c9a20c0af119ab4b653458a906a15958fc1a4f024de5b7bddfba23cf",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_cache_v1/job.json": "251aa4afd737e47fe8c62f4a8308c38c9c6c48fb4f465b567a08d2c40277d76e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_cache_v1/node3.started.json": "01b04e3e4afea01e9693fb09043a371fa8ae76444b44ee0f428fa087a056a86d",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_cache_v1/node3.ended.json": "6485779b1b0c459611cef3dea1d9da3f27202f0975124d0044bf5f8e09ae246d",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_official150_v1/job.json": "10d71293f3586da72660aadf301d0ded2d141b84bcb4433d2f382575f2821447",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_official150_v1/node3.started.json": "2eaa522284d9a4db63e304e806a45a85e3b070c9c7c27761d0ef7405fafd3fb1",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_official150_v1/node3.ended.json": "0df4be3933c53d2a0c307f497776a32c2f2ed2ecdf7a95fcc13f5ab88d0cf87e",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_path_v1/job.json": "fc9dd33cf0a33ba8f0b6d0d4c61805ec9ea7dc35c1aa7c893f40023ebc5b5f18",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_path_v1/node3.started.json": "b066aa9e25844a3c0303be1d6a7f5f2a947a8a4b69d5854baff73f2326d4872b",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_path_v1/node3.ended.json": "63172774ff4b6ef7ec289d5aaf766c643fc06ce669f90a87355c61c4b4017fd5",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_qualify_v1/job.json": "0ce6d3d2aa1c86fb479eb26433f7e954c9df6ceabd3d3424db529ae540fba8dd",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_qualify_v1/node3.started.json": "daff123ce8feefd9be055741399b46044e44c028d27bf950ab66ccfec230ec9f",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_qualify_v1/node3.ended.json": "dfb916b386bb9c59dbab4fc65d37364d21a66b814c65520e076d67891bfb96b7",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_train_v1/job.json": "274160955b68db722533c52a6b5f41f8c4db8f626a05363b40f1cbe6ac3e0749",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_train_v1/node3.started.json": "5ab22992e2a282f6344612d36a76e12fb4ae7df906a1831cfef14f33ef7aca3c",
+    "checkpoints/foundir_fullstack_executor_3x2_h100_v2/jobs/round9_blur_delta_train_v1/node3.ended.json": "b8890920de144c2422ebc6c030a3ae953d88a0974cbbd1255205822a4919b77b"
+  },
+  "cross_checks": {
+    "no_overlapping_confirmed_same_node_intervals": true,
+    "round17_terminal_report_sha256": "c384ea0c1351f2ad9363196c8652a1ac8220a03dbea0e28a040974d235bf6da6",
+    "round20_fault_report_sha256": "b5c5dd7fee7db092e2d10845dcbc6bc79769d52ce6973c80585d43df354f58f9",
+    "round20_previous_lower_bound_matches": true
+  },
+  "analysis_seconds": 0.15538595989346504,
+  "analysis_exit_code": 0,
+  "new_GPU_hours": 0
+}
