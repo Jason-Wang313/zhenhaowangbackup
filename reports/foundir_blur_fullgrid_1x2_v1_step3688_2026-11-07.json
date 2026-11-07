@@ -1,0 +1,123 @@
+{
+  "CPU_stages": {
+    "official_plan": {
+      "seconds": 7.587340719997883,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_FULLGRID_1X2_OFFICIAL_PLAN {\"status\": \"official150_metadata_plan_pass\", \"records\": 150, \"tiles_per_rank\": [1125, 1125], \"total_model_calls\": 4500, \"GT_pixels_decoded\": false, \"GPU_started\": false, \"seconds\": 1.5312352068722248, \"exit_code\": 0, \"GPU_hours\": 0, \"plan_sha256\": \"5c5613b722606abdc7fb10fec50c5b03c5ecd8c600cb72e17a285759c3b46c9c\", \"independent_blind_test\": false}\n"
+    },
+    "verify3688": {
+      "seconds": 10.84086399152875,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_FULLGRID_1X2_CHECKPOINT_VERIFIED {\"parent_model_Adam_history_sampler_RNG_mapping_exact\": true, \"step\": 3688, \"checkpoint\": {\"file\": \"steps/state_003688_1794035053160684319.pt\", \"next_global_slot\": 29504, \"parameter_hash\": \"edc8c64a3343f1b87d9cc5b4031b4302d3eef8866eacc4efc4eb4f23b8a1c427\", \"receipt_sha256\": \"7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb\", \"sha256\": \"7603469b9cb929104fda0f1329c51f25e097f1605452abd1dc263938c4f1b07e\", \"step\": 3688, \"world\": 2}, \"actual_SHA_Adam_RNG_sampler_verified\": true, \"Adam_states\": 100, \"rank_RNG_count\": 2, \"next_global_slot\": 29504, \"same_world_state_preserved\": false, \"model_Adam_sampler_preserved\": true, \"bitwise_four_rank_continuation\": false, \"new_data_views\": true, \"official_Blur_pass\": false, \"seconds\": 4.806590788066387, \"exit_code\": 0, \"GPU_hours\": 0}\n"
+    }
+  },
+  "bitwise_four_rank_continuation": false,
+  "completed_GPU_hours": 0,
+  "cost_complete_for_submitted_jobs": false,
+  "detail": "\u5b8c\u6574step3688\u5b9e\u9645checkpoint/Adam/\u4e24rank RNG/\u91c7\u6837\u6838\u9a8c\uff1b\u4e0d\u662f\u8d28\u91cf\u901a\u8fc7\u3002",
+  "event": "step3688",
+  "fixed_final_step": 9472,
+  "fullgrid_epochs": 4,
+  "global_batch": 8,
+  "jobs": {
+    "train_node3": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_1x2_v1.sh",
+        "id": "round20_blur_fullgrid_resume_1x2_train_v1_node3",
+        "nodes": [
+          3
+        ],
+        "purpose": "Blur complete3687 model/Adam/sampler ->9472 on node3 world2 global8; train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "bcc3b6d4146be7b5134aeac650ebec973a2589d8",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_1x2_data_v1.py": "30c84337f8b1be5dccebdc33676f64c7c77fb905c402df11a509996104630d2d",
+          "smoke/blur_fullgrid_1x2_snapshots_v1.py": "5e1f5d000b0efc10de32b98958a3421a0f9547d7b532ecd805b219030ae3c6fa",
+          "smoke/blur_fullgrid_1x2_state_v1.py": "c222340b5b4c772018480b70f64058510e13d7a878b192432ca5fff5b629fa75",
+          "smoke/evaluate_foundir_blur_fullgrid_1x2_official_v1.py": "50c50ffd11dc012ae061e507727896a8fcb057e94e2b155add0d38ea8d8ea735",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_1x2_v1.sh": "0a1f1b5f301c792c21fa83bdb700e08a977f68a19c4b012a2e4a221a1d3e2ebe",
+          "smoke/train_foundir_blur_fullgrid_1x2_v1.py": "9648da5d70121975be1eb7792f2b979b23ef56e377151f9b0ee84dc1bcc8ef28"
+        }
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "9fb8f147c91feea2eddae42e0bdc5138c587d21ea452bab8c6aebdf88324b608",
+        "node": 3,
+        "utc_unix": 1794034999.4268165
+      }
+    }
+  },
+  "latest_step": {
+    "file": "steps/state_003690_1794035064669762230.pt",
+    "next_global_slot": 29520,
+    "parameter_hash": "d727c88cec1a2dc23b44950b00bbc7f1d9d2a3f7f42d02c4746c6e8b1dfb883d",
+    "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+    "sha256": "1ea3e834050fa14bd843c4d923dc178c30dde6d2f96a0442c32dfaab01225bc0",
+    "step": 3690,
+    "world": 2
+  },
+  "migration_from_step": 3687,
+  "new_views_per_source": 15,
+  "official_Blur_pass": false,
+  "old_fixed_crop_continuation_equivalent": false,
+  "only_official_quality_gate": true,
+  "parent_round20_GPU_hours_lower_bound": 8.197129152350957,
+  "physical_nodes": [
+    3
+  ],
+  "same_world_state_preserved": false,
+  "total_exposures_per_source": 74,
+  "training_fit_snapshots": {},
+  "training_logs": [
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.6884368062019348,
+      "loss": 0.0452913623303175,
+      "lpips": 0.14698949083685875,
+      "max_rank_seconds": 4.585362434387207,
+      "mse": 0.0030592412913392764,
+      "next_global_slot": 29504,
+      "peak_allocated_GiB": 16.96579933166504,
+      "step": 3688,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.3476363718509674,
+      "loss": 0.045659679104574025,
+      "lpips": 0.13788002310320735,
+      "max_rank_seconds": 3.7857022285461426,
+      "mse": 0.0031871675309957936,
+      "next_global_slot": 29512,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3689,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.5646556615829468,
+      "loss": 0.055240867543034256,
+      "lpips": 0.12414341839030385,
+      "max_rank_seconds": 3.87687349319458,
+      "mse": 0.00428265266600647,
+      "next_global_slot": 29520,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3690,
+      "world": 2
+    }
+  ],
+  "training_sources": 1024,
+  "training_views": 15360,
+  "utc_unix": 1794035067.9913414,
+  "world": 2
+}
