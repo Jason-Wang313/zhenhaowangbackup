@@ -1,0 +1,170 @@
+{
+  "CPU_finish": {
+    "seconds": 12.113811690360308,
+    "status": 0,
+    "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+    "stdout": "BLUR_SINGLEFRAME_VERIFIED {\"1792\": {\"candidate\": {\"lpips\": 0.12458378076553345, \"psnr\": 25.69210433959961, \"ssim\": 0.8885319305721884}, \"lq\": {\"lpips\": 0.16538362205028534, \"psnr\": 22.916574478149414, \"ssim\": 0.875997512366531}, \"output\": {\"path\": \"evaluations/step_001792_full.png\", \"sha256\": \"f2d20128770d915246b03cee9580e773940207d6cf4f6730ba31a01526a8911c\"}}, \"1842\": {\"candidate\": {\"lpips\": 0.08879245817661285, \"psnr\": 28.85867691040039, \"ssim\": 0.910955588509711}, \"lq\": {\"lpips\": 0.16538362205028534, \"psnr\": 22.916574478149414, \"ssim\": 0.875997512366531}, \"output\": {\"path\": \"evaluations/step_001842_full.png\", \"sha256\": \"be90a5775b9947334e727089edcd6ee94c5d223df89a296307150b997affb315\"}}, \"1892\": {\"candidate\": {\"lpips\": 0.08227154612541199, \"psnr\": 29.402835845947266, \"ssim\": 0.9161183377252784}, \"lq\": {\"lpips\": 0.16538362205028534, \"psnr\": 22.916574478149414, \"ssim\": 0.875997512366531}, \"output\": {\"path\": \"evaluations/step_001892_full.png\", \"sha256\": \"d5d4ca9cda5959ca1f4cb5f36c78d7abb8dd870a6bddf60524cebd06cfed4782\"}}, \"1992\": {\"candidate\": {\"lpips\": 0.07446592301130295, \"psnr\": 30.010347366333008, \"ssim\": 0.9211851850107761}, \"lq\": {\"lpips\": 0.16538362205028534, \"psnr\": 22.916574478149414, \"ssim\": 0.875997512366531}, \"output\": {\"path\": \"evaluations/step_001992_full.png\", \"sha256\": \"413a3b8ea2fa2cbfedc4c7da20f7970397a3d2e4dbe1362ec5a9e1f6709c950f\"}}}\n"
+  },
+  "GPU_job": {
+    "allocated_GPU_hours": 0.5610719288720025,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 1009.9294719696045,
+    "status": 0
+  },
+  "assets_preserved": true,
+  "automatic_followup": false,
+  "may_seed_formal": false,
+  "official_Blur_pass": false,
+  "result_sha256": "c51b961e1228f766d67b0301af56af5cc24a3ca812c4410038d5d837591fe482",
+  "scope": "training_fit_only",
+  "snapshots": {
+    "1792": {
+      "both_improve_count": 11,
+      "full": {
+        "candidate": {
+          "lpips": 0.12458378076553345,
+          "psnr": 25.69210433959961,
+          "ssim": 0.8885319305721884
+        },
+        "lq": {
+          "lpips": 0.16538362205028534,
+          "psnr": 22.916574478149414,
+          "ssim": 0.875997512366531
+        },
+        "output": {
+          "path": "evaluations/step_001792_full.png",
+          "sha256": "f2d20128770d915246b03cee9580e773940207d6cf4f6730ba31a01526a8911c"
+        }
+      },
+      "means": {
+        "candidate": {
+          "lpips": 0.12270659499336034,
+          "psnr": 26.52184545993805,
+          "ssim": 0.8862036989978627
+        },
+        "lq": {
+          "lpips": 0.16183860870660283,
+          "psnr": 26.981631636619568,
+          "ssim": 0.8741063465139152
+        }
+      },
+      "parameter_hash": "1776f5e755050728c106d0d13bead0b7bc4f0fe6e3d5cddac9a4525ffc99fe86",
+      "quality_gate": false,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1792
+    },
+    "1842": {
+      "both_improve_count": 13,
+      "full": {
+        "candidate": {
+          "lpips": 0.08879245817661285,
+          "psnr": 28.85867691040039,
+          "ssim": 0.910955588509711
+        },
+        "lq": {
+          "lpips": 0.16538362205028534,
+          "psnr": 22.916574478149414,
+          "ssim": 0.875997512366531
+        },
+        "output": {
+          "path": "evaluations/step_001842_full.png",
+          "sha256": "be90a5775b9947334e727089edcd6ee94c5d223df89a296307150b997affb315"
+        }
+      },
+      "means": {
+        "candidate": {
+          "lpips": 0.08473069878527895,
+          "psnr": 31.27624213695526,
+          "ssim": 0.9106861160962957
+        },
+        "lq": {
+          "lpips": 0.16183860870660283,
+          "psnr": 26.981631636619568,
+          "ssim": 0.8741063465139152
+        }
+      },
+      "parameter_hash": "63848fd61b1a5cf210e1b5fee2dff47515b9a88617d1d0c27d22f4ad5884e2b1",
+      "quality_gate": false,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1842
+    },
+    "1892": {
+      "both_improve_count": 13,
+      "full": {
+        "candidate": {
+          "lpips": 0.08227154612541199,
+          "psnr": 29.402835845947266,
+          "ssim": 0.9161183377252784
+        },
+        "lq": {
+          "lpips": 0.16538362205028534,
+          "psnr": 22.916574478149414,
+          "ssim": 0.875997512366531
+        },
+        "output": {
+          "path": "evaluations/step_001892_full.png",
+          "sha256": "d5d4ca9cda5959ca1f4cb5f36c78d7abb8dd870a6bddf60524cebd06cfed4782"
+        }
+      },
+      "means": {
+        "candidate": {
+          "lpips": 0.07810053502907977,
+          "psnr": 32.05814516544342,
+          "ssim": 0.9160389418584912
+        },
+        "lq": {
+          "lpips": 0.16183860870660283,
+          "psnr": 26.981631636619568,
+          "ssim": 0.8741063465139152
+        }
+      },
+      "parameter_hash": "4fcee901dff0ec494e1ecc172eb24dc0f2e1d49a2a8e139e214649ef4af31079",
+      "quality_gate": false,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1892
+    },
+    "1992": {
+      "both_improve_count": 13,
+      "full": {
+        "candidate": {
+          "lpips": 0.07446592301130295,
+          "psnr": 30.010347366333008,
+          "ssim": 0.9211851850107761
+        },
+        "lq": {
+          "lpips": 0.16538362205028534,
+          "psnr": 22.916574478149414,
+          "ssim": 0.875997512366531
+        },
+        "output": {
+          "path": "evaluations/step_001992_full.png",
+          "sha256": "413a3b8ea2fa2cbfedc4c7da20f7970397a3d2e4dbe1362ec5a9e1f6709c950f"
+        }
+      },
+      "means": {
+        "candidate": {
+          "lpips": 0.07038211589679122,
+          "psnr": 32.957961201667786,
+          "ssim": 0.9212629779884701
+        },
+        "lq": {
+          "lpips": 0.16183860870660283,
+          "psnr": 26.981631636619568,
+          "ssim": 0.8741063465139152
+        }
+      },
+      "parameter_hash": "efa39491b6f24a22cbe5c58e76907a7ca039b2f4d7c88101e2a036adfc165ac7",
+      "quality_gate": false,
+      "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+      "scope": "training_fit_only",
+      "step": 1992
+    }
+  },
+  "status": "complete",
+  "utc_unix": null
+}
