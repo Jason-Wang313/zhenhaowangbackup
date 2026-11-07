@@ -1,0 +1,261 @@
+{
+  "CPU_stages": {
+    "cache_finish": {
+      "seconds": 34.45895682275295,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_MULTIVIEW_CACHE_VERIFIED {\"status\": \"all4096_view_cache_metadata_verified\", \"training_sources\": 1024, \"training_views\": 4096, \"tensors_SHA_verified_at_training_use\": true, \"all_tensor_SHA_rechecked_on_CPU\": false, \"seconds\": 28.03462202474475, \"GPU_hours\": 0, \"exit_code\": 0}\n"
+    },
+    "official_plan": {
+      "seconds": 7.184336304664612,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_MULTIVIEW_OFFICIAL_PLAN {\"status\": \"official150_metadata_plan_pass\", \"records\": 150, \"tiles_per_rank\": [570, 570, 555, 555], \"total_model_calls\": 4500, \"GT_pixels_decoded\": false, \"GPU_started\": false, \"seconds\": 1.271630421280861, \"exit_code\": 0, \"GPU_hours\": 0, \"plan_sha256\": \"f1bdb5977ff67be7ff3b1bc86a9c8b710d996f1128bd7c81727f5d918ad23f90\", \"independent_blind_test\": false}\n"
+    },
+    "verify1281": {
+      "seconds": 7.768344581127167,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_MULTIVIEW_CHECKPOINT_VERIFIED {\"step\": 1281, \"checkpoint\": {\"file\": \"steps/state_001281_1794020369457193573.pt\", \"next_global_slot\": 10248, \"parameter_hash\": \"7a83b34a85cdc1255d8edb14831149f60ac1e894536b4917d68ab9fc7d94dec2\", \"receipt_sha256\": \"34d55273ac32b26b28d7a6ee5b69ace71f56acff56c4d67b048c3183f55a1d86\", \"sha256\": \"e7dae556dfdc2699d0042df02ad8cc57b4c061ef43c290a3b4a3dae5dba5f463\", \"step\": 1281, \"world\": 4}, \"actual_SHA_Adam_RNG_sampler_verified\": true, \"Adam_states\": 100, \"rank_RNG_count\": 4, \"next_global_slot\": 10248, \"same_world_state_preserved\": true, \"new_data_views\": true, \"official_Blur_pass\": false, \"seconds\": 1.7679448500275612, \"exit_code\": 0, \"GPU_hours\": 0}\n"
+    }
+  },
+  "completed_GPU_hours": 0.5639417645666335,
+  "cost_complete_for_submitted_jobs": false,
+  "detail": "\u5b8c\u6574step1281\u5b9e\u9645checkpoint/Adam/\u56dbrank RNG/\u91c7\u6837\u6838\u9a8c\uff1b\u4e0d\u662f\u8d28\u91cf\u901a\u8fc7\u3002",
+  "event": "step1281",
+  "fixed_final_step": 1792,
+  "global_batch": 8,
+  "jobs": {
+    "cache_node1": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_multiview_cache_v1.sh",
+        "id": "round17_blur_multiview_cache_v1_node1",
+        "nodes": [
+          1
+        ],
+        "purpose": "Blur fixed1024 step1280->1792 then official150; paired nodes1/3: cache",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_multiview_data_v1.py": "57176282ac6ba9ef7f5e3252a707cdc33e374d94a340c97cb0b3b1262b690b5c",
+          "smoke/blur_multiview_state_v1.py": "d5574ee017af4ef4dca638743e4d6df28432f0a0d5b411e3346b000aa8794655",
+          "smoke/evaluate_foundir_blur_multiview_official_v1.py": "bb4990ef8f666c48a95035cf1eb052008e9d71ed265af4eefc5378e5d8ba4b67",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_multiview_cache_v1.sh": "71061601f958e04bb601c3cd1144ec40b38c61feacdc8fac93ea0afec8978164",
+          "smoke/train_foundir_blur_multiview_v1.py": "915543830d3e82df30eeddc825b7306125dfe5ed9fdcc2a9083db79bb0576fcb"
+        }
+      },
+      "node1.ended": {
+        "allocated_GPU_hours": 0.28360477368036907,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 510.4885926246643,
+        "status": 0
+      },
+      "node1.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "da101f6fe6d119f25f729ade1697922d16ee64bf79b0f0c182e9f96e774ba5af",
+        "node": 1,
+        "utc_unix": 1794019772.776498
+      }
+    },
+    "cache_node3": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_multiview_cache_v1.sh",
+        "id": "round17_blur_multiview_cache_v1_node3",
+        "nodes": [
+          3
+        ],
+        "purpose": "Blur fixed1024 step1280->1792 then official150; paired nodes1/3: cache",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_multiview_data_v1.py": "57176282ac6ba9ef7f5e3252a707cdc33e374d94a340c97cb0b3b1262b690b5c",
+          "smoke/blur_multiview_state_v1.py": "d5574ee017af4ef4dca638743e4d6df28432f0a0d5b411e3346b000aa8794655",
+          "smoke/evaluate_foundir_blur_multiview_official_v1.py": "bb4990ef8f666c48a95035cf1eb052008e9d71ed265af4eefc5378e5d8ba4b67",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_multiview_cache_v1.sh": "71061601f958e04bb601c3cd1144ec40b38c61feacdc8fac93ea0afec8978164",
+          "smoke/train_foundir_blur_multiview_v1.py": "915543830d3e82df30eeddc825b7306125dfe5ed9fdcc2a9083db79bb0576fcb"
+        }
+      },
+      "node3.ended": {
+        "allocated_GPU_hours": 0.2803369908862644,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 504.6065835952759,
+        "status": 0
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "3988033179005eb0a2b84aca670e2d03c855e8c9afd94142d496bab7f21d086e",
+        "node": 3,
+        "utc_unix": 1794019774.544864
+      }
+    },
+    "train_node1": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_multiview_v1.sh",
+        "id": "round17_blur_multiview_train_v1_node1",
+        "nodes": [
+          1
+        ],
+        "purpose": "Blur fixed1024 step1280->1792 then official150; paired nodes1/3: train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_multiview_data_v1.py": "57176282ac6ba9ef7f5e3252a707cdc33e374d94a340c97cb0b3b1262b690b5c",
+          "smoke/blur_multiview_state_v1.py": "d5574ee017af4ef4dca638743e4d6df28432f0a0d5b411e3346b000aa8794655",
+          "smoke/evaluate_foundir_blur_multiview_official_v1.py": "bb4990ef8f666c48a95035cf1eb052008e9d71ed265af4eefc5378e5d8ba4b67",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_multiview_v1.sh": "4f74a96b731f92de0b99221e13f9f682272af10f64865c8ec6ff19b4d90e4fe4",
+          "smoke/train_foundir_blur_multiview_v1.py": "915543830d3e82df30eeddc825b7306125dfe5ed9fdcc2a9083db79bb0576fcb"
+        }
+      },
+      "node1.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "a238442a2ed431d1f33700649d0a77965621890ba605623c1afbf8434275e611",
+        "node": 1,
+        "utc_unix": 1794020333.3726563
+      }
+    },
+    "train_node3": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_multiview_v1.sh",
+        "id": "round17_blur_multiview_train_v1_node3",
+        "nodes": [
+          3
+        ],
+        "purpose": "Blur fixed1024 step1280->1792 then official150; paired nodes1/3: train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_multiview_data_v1.py": "57176282ac6ba9ef7f5e3252a707cdc33e374d94a340c97cb0b3b1262b690b5c",
+          "smoke/blur_multiview_state_v1.py": "d5574ee017af4ef4dca638743e4d6df28432f0a0d5b411e3346b000aa8794655",
+          "smoke/evaluate_foundir_blur_multiview_official_v1.py": "bb4990ef8f666c48a95035cf1eb052008e9d71ed265af4eefc5378e5d8ba4b67",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_multiview_v1.sh": "4f74a96b731f92de0b99221e13f9f682272af10f64865c8ec6ff19b4d90e4fe4",
+          "smoke/train_foundir_blur_multiview_v1.py": "915543830d3e82df30eeddc825b7306125dfe5ed9fdcc2a9083db79bb0576fcb"
+        }
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "e7fe6e14fa4aeaa88af862b47b4082a0535b600ebee066b6f0bccde469451b50",
+        "node": 3,
+        "utc_unix": 1794020334.2504458
+      }
+    }
+  },
+  "latest_step": {
+    "file": "steps/state_001284_1794020381465958289.pt",
+    "next_global_slot": 10272,
+    "parameter_hash": "b7e724c982745036fdef8ee0e5edfe817e9b3c7cdb043a8ce4af9b01ce2a88fb",
+    "receipt_sha256": "34d55273ac32b26b28d7a6ee5b69ace71f56acff56c4d67b048c3183f55a1d86",
+    "sha256": "f4794ecbeb375d0cc9eb54c429e1af4fef84dc21c1fc58950bcec3a7c078d948",
+    "step": 1284,
+    "world": 4
+  },
+  "new_views_per_source": 4,
+  "official_Blur_pass": false,
+  "old_fixed_crop_continuation_equivalent": false,
+  "only_official_quality_gate": true,
+  "physical_nodes": [
+    1,
+    3
+  ],
+  "same_world_state_preserved": true,
+  "total_exposures_per_source": 14,
+  "training_logs": [
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.3642035722732544,
+      "loss": 0.13599754218012094,
+      "lpips": 0.2353274468332529,
+      "max_rank_seconds": 2.7310380935668945,
+      "mse": 0.011246479640249163,
+      "next_global_slot": 10248,
+      "peak_allocated_GiB": 16.96579933166504,
+      "step": 1281,
+      "world": 4
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.6134072542190552,
+      "loss": 0.11053228378295898,
+      "lpips": 0.20692041516304016,
+      "max_rank_seconds": 2.050204038619995,
+      "mse": 0.00898402399616316,
+      "next_global_slot": 10256,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 1282,
+      "world": 4
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.7144576907157898,
+      "loss": 0.06842379295267165,
+      "lpips": 0.13581269700080156,
+      "max_rank_seconds": 2.3278846740722656,
+      "mse": 0.005484252411406487,
+      "next_global_slot": 10264,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 1283,
+      "world": 4
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.5805797576904297,
+      "loss": 0.04183886176906526,
+      "lpips": 0.1458128453232348,
+      "max_rank_seconds": 2.1840500831604004,
+      "mse": 0.002725757709413301,
+      "next_global_slot": 10272,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 1284,
+      "world": 4
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.2794218063354492,
+      "loss": 0.0852001563180238,
+      "lpips": 0.19835692085325718,
+      "max_rank_seconds": 2.288214683532715,
+      "mse": 0.006536446344398428,
+      "next_global_slot": 10280,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 1285,
+      "world": 4
+    }
+  ],
+  "training_sources": 1024,
+  "training_views": 4096,
+  "utc_unix": 1794020384.607889,
+  "world": 4
+}
