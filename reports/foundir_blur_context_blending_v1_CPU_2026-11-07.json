@@ -1,0 +1,261 @@
+{
+  "GPU_hours": 0,
+  "GT_output_selection": false,
+  "GT_use": "post_generation_error_identity_only",
+  "all_native_stitches_exactly_reproduced": true,
+  "exit_code": 0,
+  "means": {
+    "trained_center384": {
+      "PSNR_committed_uint8": 22.798668756488176,
+      "PSNR_standalone": 23.87522671436568,
+      "blended_float_MSE": 0.007916367038833246,
+      "committed_uint8_MSE": 0.007917987652325504,
+      "standalone_MSE": 0.006047111990437317,
+      "variance_removed_by_blending": 0.0004058880571464621,
+      "weighted_individual_tile_MSE": 0.008322255095979706
+    },
+    "trained_crop512": {
+      "PSNR_committed_uint8": 22.49974454908955,
+      "PSNR_standalone": 23.727771798009915,
+      "blended_float_MSE": 0.00809294772806349,
+      "committed_uint8_MSE": 0.008094350667423304,
+      "standalone_MSE": 0.005862358994748552,
+      "variance_removed_by_blending": 0.00039190666415853115,
+      "weighted_individual_tile_MSE": 0.008484854392222019
+    }
+  },
+  "new_predictions_generated": false,
+  "new_quality_gate": false,
+  "note": "Fixed-weight blending reduces MSE versus the weighted constituent tile errors. This is not a guarantee versus a different standalone crop or proof of a unique cause.",
+  "parameters_fitted": false,
+  "records": [
+    {
+      "full_blended_float_MSE": 0.005223176833785039,
+      "full_committed_uint8_MSE": 0.005224326403128422,
+      "full_weighted_individual_tile_MSE": 0.005791525840421465,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0034314",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 22.838916327760014,
+          "PSNR_standalone": 26.744000497765576,
+          "blended_float_MSE": 0.005200089270217355,
+          "committed_uint8_MSE": 0.005201257645964159,
+          "standalone_MSE": 0.002116410708198947,
+          "variance_removed_by_blending": 0.000614234350068788,
+          "weighted_individual_tile_MSE": 0.005814323620286143
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 22.97974526646817,
+          "PSNR_standalone": 27.174876368702463,
+          "blended_float_MSE": 0.005034422619736713,
+          "committed_uint8_MSE": 0.005035301422623661,
+          "standalone_MSE": 0.0019165156197123202,
+          "variance_removed_by_blending": 0.00047789204439828214,
+          "weighted_individual_tile_MSE": 0.005512314664134994
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.0019608429794382154
+    },
+    {
+      "full_blended_float_MSE": 0.007028426960970817,
+      "full_committed_uint8_MSE": 0.007029421225593037,
+      "full_weighted_individual_tile_MSE": 0.007259150467093892,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0068705",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 27.210744306345337,
+          "PSNR_standalone": 27.181478214566784,
+          "blended_float_MSE": 0.0018990499790337721,
+          "committed_uint8_MSE": 0.001900752495590193,
+          "standalone_MSE": 0.0019136044777671873,
+          "variance_removed_by_blending": 0.0001917803323172379,
+          "weighted_individual_tile_MSE": 0.0020908303113510098
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 26.834028637947696,
+          "PSNR_standalone": 27.325907651533132,
+          "blended_float_MSE": 0.002071628648064894,
+          "committed_uint8_MSE": 0.002072989661678602,
+          "standalone_MSE": 0.001851012002470004,
+          "variance_removed_by_blending": 0.0003077875152051664,
+          "weighted_individual_tile_MSE": 0.00237941616327006
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.0019608225703304782
+    },
+    {
+      "full_blended_float_MSE": 0.01098823144114389,
+      "full_committed_uint8_MSE": 0.0109894549105045,
+      "full_weighted_individual_tile_MSE": 0.011219276325065544,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0021200",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 28.020777107005316,
+          "PSNR_standalone": 27.707083344874704,
+          "blended_float_MSE": 0.001574990671709837,
+          "committed_uint8_MSE": 0.0015773290042914406,
+          "standalone_MSE": 0.0016954760739058693,
+          "variance_removed_by_blending": 0.00021534461279159957,
+          "weighted_individual_tile_MSE": 0.0017903352845014362
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 27.32885559295632,
+          "PSNR_standalone": 27.309824449838487,
+          "blended_float_MSE": 0.0018478160486185289,
+          "committed_uint8_MSE": 0.0018497559829627828,
+          "standalone_MSE": 0.0018578795526297473,
+          "variance_removed_by_blending": 0.00017313557811615978,
+          "weighted_individual_tile_MSE": 0.0020209516267346898
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.001960807808039089
+    },
+    {
+      "full_blended_float_MSE": 0.012883140238827343,
+      "full_committed_uint8_MSE": 0.012884079888057462,
+      "full_weighted_individual_tile_MSE": 0.01359912995955403,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0053870",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 24.799820915278353,
+          "PSNR_standalone": 25.75794984851404,
+          "blended_float_MSE": 0.0033089189031574044,
+          "committed_uint8_MSE": 0.0033114477621454352,
+          "standalone_MSE": 0.0026558590037151835,
+          "variance_removed_by_blending": 0.000200989015800914,
+          "weighted_individual_tile_MSE": 0.0035099079189583166
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 24.28354369387776,
+          "PSNR_standalone": 24.925990666666436,
+          "blended_float_MSE": 0.003727391887056851,
+          "committed_uint8_MSE": 0.0037294572270193042,
+          "standalone_MSE": 0.0032166287056623363,
+          "variance_removed_by_blending": 0.00020811985937378588,
+          "weighted_individual_tile_MSE": 0.003935511746430638
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.001960813628406055
+    },
+    {
+      "full_blended_float_MSE": 0.01399619101309136,
+      "full_committed_uint8_MSE": 0.013997432547113074,
+      "full_weighted_individual_tile_MSE": 0.0149781658877117,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0067544",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 19.157536259107754,
+          "PSNR_standalone": 19.61749458638584,
+          "blended_float_MSE": 0.012139903044509896,
+          "committed_uint8_MSE": 0.01214077397977051,
+          "standalone_MSE": 0.010920701621783201,
+          "variance_removed_by_blending": 0.0007530848829751842,
+          "weighted_individual_tile_MSE": 0.01289298792748508
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 19.430963682681067,
+          "PSNR_standalone": 19.93818245609181,
+          "blended_float_MSE": 0.011399000231138661,
+          "committed_uint8_MSE": 0.011399967986071055,
+          "standalone_MSE": 0.01014335801475219,
+          "variance_removed_by_blending": 0.0007450175641561287,
+          "weighted_individual_tile_MSE": 0.012144017795294783
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.0019608092509745267
+    },
+    {
+      "full_blended_float_MSE": 0.015374766407812128,
+      "full_committed_uint8_MSE": 0.015376094607586033,
+      "full_weighted_individual_tile_MSE": 0.016140561039184036,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0033402",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 18.218951438975147,
+          "PSNR_standalone": 21.709443611132635,
+          "blended_float_MSE": 0.01506868580466848,
+          "committed_uint8_MSE": 0.0150697086546129,
+          "standalone_MSE": 0.00674614449225814,
+          "variance_removed_by_blending": 0.0008041805234484959,
+          "weighted_individual_tile_MSE": 0.01587286632811697
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 17.54918251199715,
+          "PSNR_standalone": 21.040725992624445,
+          "blended_float_MSE": 0.017580894543907963,
+          "committed_uint8_MSE": 0.01758254545339633,
+          "standalone_MSE": 0.007869142334109526,
+          "variance_removed_by_blending": 0.0007910587650220902,
+          "weighted_individual_tile_MSE": 0.018371953308930055
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.0019608974846189176
+    },
+    {
+      "full_blended_float_MSE": 0.011118922626894005,
+      "full_committed_uint8_MSE": 0.011119873677502954,
+      "full_weighted_individual_tile_MSE": 0.011438799066404408,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0067698",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 25.420758955635726,
+          "PSNR_standalone": 25.1310155343352,
+          "blended_float_MSE": 0.002868962941350728,
+          "committed_uint8_MSE": 0.0028702789397462877,
+          "standalone_MSE": 0.0030683044262378605,
+          "variance_removed_by_blending": 0.00010835562041374952,
+          "weighted_individual_tile_MSE": 0.0029773185617644783
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 24.500169593853187,
+          "PSNR_standalone": 24.217195037897234,
+          "blended_float_MSE": 0.0035471087847066198,
+          "committed_uint8_MSE": 0.0035479953388945964,
+          "standalone_MSE": 0.003786870870134332,
+          "variance_removed_by_blending": 0.00011310706444081152,
+          "weighted_individual_tile_MSE": 0.0036602158491474313
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.0019608070970031366
+    },
+    {
+      "full_blended_float_MSE": 0.015719113006806788,
+      "full_committed_uint8_MSE": 0.01572049875364492,
+      "full_weighted_individual_tile_MSE": 0.015923106470064834,
+      "native_stitch_exactly_reproduced": true,
+      "record_id": "foundir_train_0099772",
+      "regions": {
+        "trained_center384": {
+          "PSNR_committed_uint8": 16.721844741797767,
+          "PSNR_standalone": 17.153348077350678,
+          "blended_float_MSE": 0.021270335696018498,
+          "committed_uint8_MSE": 0.021272352736483112,
+          "standalone_MSE": 0.019260395119632148,
+          "variance_removed_by_blending": 0.0003591351193557278,
+          "weighted_individual_tile_MSE": 0.021629470815374214
+        },
+        "trained_crop512": {
+          "PSNR_committed_uint8": 17.091467412935042,
+          "PSNR_standalone": 17.889471760725307,
+          "blended_float_MSE": 0.019535319061277683,
+          "committed_uint8_MSE": 0.01953679226674011,
+          "standalone_MSE": 0.01625746485851796,
+          "variance_removed_by_blending": 0.0003191349225558245,
+          "weighted_individual_tile_MSE": 0.019854453983833505
+        }
+      },
+      "rounding_and_float32_max_abs_RGB01": 0.001960859726417352
+    }
+  ],
+  "result_sha256": "1cbc7f5cd9ea8141a3e2f66893bc83121691d557365c3030cb10e7f5cc3c651e",
+  "script_sha256": "64abdfe820ea5a883c28d6997f20e9880b59b7c7a71cd35347e9fdd2f8878069",
+  "seconds": 10.418525021523237,
+  "status": "existing_training8_fixed_blend_identity_verified"
+}

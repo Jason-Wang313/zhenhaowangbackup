@@ -1,0 +1,154 @@
+{
+  "status": "training8_context_diagnosis_complete",
+  "official_Blur_pass": false,
+  "result_sha256": "1cbc7f5cd9ea8141a3e2f66893bc83121691d557365c3030cb10e7f5cc3c651e",
+  "blending_analysis_sha256": "011290a859fcee6aed88bdf9540cff6e1a815770f51d66ee2e8753a45b5bb3fe",
+  "summary": {
+    "center384_from_full": {
+      "lpips": 0.20615993812680244,
+      "psnr": 22.798656702041626,
+      "ssim": 0.7180382403026235
+    },
+    "center384_lq": {
+      "lpips": 0.41711663641035557,
+      "psnr": 21.31159472465515,
+      "ssim": 0.6836388385530966
+    },
+    "center384_recomputed": {
+      "lpips": 0.1882315967231989,
+      "psnr": 23.87521266937256,
+      "ssim": 0.7446733807255514
+    },
+    "center384_standalone": {
+      "lpips": 0.18791184574365616,
+      "psnr": 23.877967357635498,
+      "ssim": 0.7447863659189037
+    },
+    "crop_from_full": {
+      "lpips": 0.20950722880661488,
+      "psnr": 22.49973440170288,
+      "ssim": 0.7088477730570242
+    },
+    "crop_lq": {
+      "lpips": 0.4232683405280113,
+      "psnr": 21.114951133728027,
+      "ssim": 0.6749388116649019
+    },
+    "crop_recomputed": {
+      "lpips": 0.18849601410329342,
+      "psnr": 23.727758646011353,
+      "ssim": 0.7385888894484121
+    },
+    "crop_standalone": {
+      "lpips": 0.18812184501439333,
+      "psnr": 23.730806827545166,
+      "ssim": 0.7386751703950143
+    },
+    "full_lq": {
+      "lpips": 0.4121383782476187,
+      "psnr": 19.328647136688232,
+      "ssim": 0.675306833080224
+    },
+    "full_prediction": {
+      "lpips": 0.2357424572110176,
+      "psnr": 19.635695934295654,
+      "ssim": 0.6831348383571476
+    }
+  },
+  "same_crop_full_minus_uncached_PSNR": -1.2280242443084717,
+  "same_crop_LPIPS_relative_increase_percent": 11.146768701330512,
+  "same_center_full_minus_uncached_PSNR": -1.0765559673309326,
+  "uncached_minus_cached_crop_PSNR": -0.0030481815338134766,
+  "full_frame_PSNR_gain_vs_LQ": 0.3070487976074219,
+  "full_frame_PSNR_worse_than_LQ_count": 4,
+  "crop_context_PSNR_decline_count": 6,
+  "training_repair_fixed_crop_pixel_fraction": 0.12641975308641976,
+  "GPU_execution": {
+    "allocated_GPU_hours": 0.048960302538341945,
+    "automatic_retry": false,
+    "error": null,
+    "gpus": 2,
+    "seconds": 88.1285445690155,
+    "status": 0
+  },
+  "workers": [
+    {
+      "keys": [
+        "train_foundir_train_0034314",
+        "train_foundir_train_0068705",
+        "train_foundir_train_0021200",
+        "train_foundir_train_0053870"
+      ],
+      "parameter_hash_after": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "parameter_hash_before": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "peak_allocated_GiB": 17.950613021850586,
+      "rank": 0,
+      "receipt_sha256": "d6e2871510b1820fad74c28b94090f65a11827dcf7309eff5a4394cb30e03aa3",
+      "reference_hash_after": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+      "reference_hash_before": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+      "seconds": 78.21396399405785
+    },
+    {
+      "keys": [
+        "train_foundir_train_0067544",
+        "train_foundir_train_0033402",
+        "train_foundir_train_0067698",
+        "train_foundir_train_0099772"
+      ],
+      "parameter_hash_after": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "parameter_hash_before": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "peak_allocated_GiB": 17.950613021850586,
+      "rank": 1,
+      "receipt_sha256": "d6e2871510b1820fad74c28b94090f65a11827dcf7309eff5a4394cb30e03aa3",
+      "reference_hash_after": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+      "reference_hash_before": "1643c42594b5ad31806392961c4c802542b1732aa2ea1886248e5ab35a9de7d5",
+      "seconds": 76.7499067710014
+    }
+  ],
+  "CPU_finish_internal_seconds": 3.0671723149716854,
+  "CPU_blending_analysis_seconds": 10.418525021523237,
+  "pixel_statistics": {
+    "center384_output_difference_RMS_RGB01": 0.03891402107448542,
+    "outside_trained_crop_LQ_MSE": 0.013411897145971331,
+    "outside_trained_crop_MSE": 0.01204166643652531,
+    "same_crop_output_difference_MAE_RGB01": 0.029864227070527914,
+    "same_crop_output_difference_RMS_RGB01": 0.044144216374276984,
+    "uncached_vs_cached_crop_max_abs_gray": 4.625,
+    "uncached_vs_cached_crop_output_RMS_RGB01": 0.0021651323456681874
+  },
+  "blending_means": {
+    "trained_center384": {
+      "PSNR_committed_uint8": 22.798668756488176,
+      "PSNR_standalone": 23.87522671436568,
+      "blended_float_MSE": 0.007916367038833246,
+      "committed_uint8_MSE": 0.007917987652325504,
+      "standalone_MSE": 0.006047111990437317,
+      "variance_removed_by_blending": 0.0004058880571464621,
+      "weighted_individual_tile_MSE": 0.008322255095979706
+    },
+    "trained_crop512": {
+      "PSNR_committed_uint8": 22.49974454908955,
+      "PSNR_standalone": 23.727771798009915,
+      "blended_float_MSE": 0.00809294772806349,
+      "committed_uint8_MSE": 0.008094350667423304,
+      "standalone_MSE": 0.005862358994748552,
+      "variance_removed_by_blending": 0.00039190666415853115,
+      "weighted_individual_tile_MSE": 0.008484854392222019
+    }
+  },
+  "all_native_stitches_exactly_reproduced": true,
+  "new_training": false,
+  "new_quality_gate": false,
+  "official_latest": {
+    "psnr": 20.93698792775472,
+    "lpips": 0.1965160647034645,
+    "passed": false
+  },
+  "qualitative_review": "All eight fixed training crop comparisons inspected in two contact sheets; context changes some contours and textures. No GT-based output selection.",
+  "visualizations": {
+    "checkpoints/foundir_blur_full_context_v1/visualizations/contact_sheet_01.png": "baddcb2cd96ecd084e9951387378090749601550026a63f79f7aab52976ba2ca",
+    "checkpoints/foundir_blur_full_context_v1/visualizations/contact_sheet_02.png": "e8c19dae1e9828fc7abca4393faac6566c497abc429c5d34079736f09940c65e"
+  },
+  "next_plan": "same1024 sources; frozen four distinct deployment-grid training views per source; keep loss/lr/global8; bounded continuation step1280->1792 then final-only official150; implementation and destination preflight still pending",
+  "next_GPU_job_submitted": false
+}
