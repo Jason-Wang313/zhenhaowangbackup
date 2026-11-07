@@ -1,0 +1,10 @@
+{
+  "GPU_hours": 0,
+  "all_tensor_SHA_rechecked_on_CPU": false,
+  "exit_code": 0,
+  "seconds": 28.03462202474475,
+  "status": "all4096_view_cache_metadata_verified",
+  "tensors_SHA_verified_at_training_use": true,
+  "training_sources": 1024,
+  "training_views": 4096
+}
