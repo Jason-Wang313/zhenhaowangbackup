@@ -1,0 +1,32 @@
+{
+  "GPU_hours": 0,
+  "GPU_started": false,
+  "RNG_parent_rank_mapping": [
+    2,
+    3
+  ],
+  "bitwise_four_rank_continuation": false,
+  "cache_views_reused": 15360,
+  "exit_code": 0,
+  "global_batch": 8,
+  "new_cache_generation": false,
+  "official_Blur_pass": false,
+  "parent_SHA_model_Adam_four_RNG_sampler_verified": true,
+  "parent_step": 3687,
+  "per_rank_samples": 4,
+  "remaining_steps": 5785,
+  "seconds": 5.742887485772371,
+  "source_checkpoint": {
+    "file": "steps/state_003687_1794033813996589584.pt",
+    "next_global_slot": 29496,
+    "parameter_hash": "e4e058318a39a4208a15ec0a48345ee2815ac512714a29dfc1ad4755c40f8bbc",
+    "receipt_sha256": "03313b51686ab0403440989af186c9134bbce59babb54fa80e71b39ac5ef1782",
+    "sha256": "e4f6ab31d1293b6aa86040caa9fca1e6d7b964681c5935ce0219b324faf9fa1f",
+    "step": 3687,
+    "world": 4
+  },
+  "status": "CPU_preflight_pass",
+  "target_step": 9472,
+  "world_after": 2,
+  "world_before": 4
+}

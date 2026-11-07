@@ -1,3 +1,9 @@
+## Blur两卡续训已实现并CPU预检，待发布后派发 — 2026-11-07
+
+node1仍失联，仅node3(10.244.90.116)两H100心跳新鲜。新foundir_blur_fullgrid_1x2_v1从原完整3687模型/Adam/历史/采样位置恢复，原rank2/3 RNG映射到新0/1；world4→2不称bitwise。每卡4样本、global8/每步相同8样本/原loss/lr/1024来源全15视图四遍不变，仍固定9472，仅剩5785步。旧15360缓存直接复用，全部旧目录/energy/失败记录及3688孤立tensor保留。
+7项CPU测试和语法通过，真实父状态/缓存清单预检5.742887秒；官方完整150元数据计划通过。新队列round20_blur_fullgrid_resume_1x2_{train,official}_v1_node3，源码发布后由watch_foundir_blur_fullgrid_1x2_v1_cpu.py monitor/upload接续；PID将写新目录daemons.json，接手查真实状态，不重复启动。3688 CPU核验真实迁移，3689 CUDA重载；3712/5632/7552/9472固定同8训练全图仅描述，最终9472完整官方150→核验/跨轮比较/小报告自动推送。
+当前尚未派发GPU；粗估剩余8–11小时/16–22GPU-hours，须按实测更新，无累计cap但不增加9472终点。旧round20至少8.197129152GPU-hours且node1费用不完整，不能清零。仅Blur，官方仍21.948140/.202188未过25.9/.18。全栈自主修复授权持续。详见reports/foundir_blur_fullgrid_1x2_v1_readiness_2026-11-07.{json,md}。
+
 ## Blur round20主连接中断；完整3687已核验，待恢复运行 — 2026-11-07
 
 node1最后心跳2026-11-07T06:43:57.221713+00:00，node3 TCPStore EOF/Broken pipe；实例/系统根因未确认，不能认定GPU显存或模型问题。精确取消round20训练对子job，node3 status=-15且worker已idle；node1缺退出receipt，不伪造。monitor1877938和comparison2052208已退出，upload已完成failed发布b2916885fa33b5244e58c3d54b286c7bf6d1dc8f；下方“训练仍正常”均为历史快照，接手必须查实时状态。
