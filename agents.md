@@ -1,3 +1,8 @@
+## Blur1024来源完整网格四遍终态 — 2026-11-07
+
+paired GPU job failed: train；保留全部资产，无自动重试。
+只用官方作质量门槛，Blur未过不推进其它类别。完整自主修复授权继续；本轮不自动追加旧步数。见reports/foundir_blur_fullgrid_v1_failed_2026-11-07.{json,md}。全部资产保留。
+
 ## Blur四H100训练已开始；官方仅小幅改善，尚未通过 — 2026-11-07
 
 round20完整缓存15360/15360，旧4096只复用、新11264生成，两缓存job退出0、共1.451627582 GPU-hours。正式1792父模型/完整Adam/四rank RNG/历史/采样逐值恢复通过；初始120块和8训练全图PNG逐一复现，1794四rank真实CUDA重载通过。详见reports/foundir_blur_fullgrid_v1_parent_restore_2026-11-07.json。
