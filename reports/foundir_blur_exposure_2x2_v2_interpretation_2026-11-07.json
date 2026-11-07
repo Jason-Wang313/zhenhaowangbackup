@@ -1,0 +1,120 @@
+{
+  "status": "official150_failed_after_fixed1280",
+  "official_result_SHA256": "997be872497c80c6deefc8355a8ac30017c8c92beb35c38d804cb580b1d36fb2",
+  "official_result_commit": "f090a0fb7e05fcbd16dcb93f610f3272cc6e6fca",
+  "means": {
+    "LQ": {
+      "lpips": 0.35360328872998553,
+      "psnr": 21.863902537027993,
+      "ssim": 0.7402368453389072
+    },
+    "old50step": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "step200": {
+      "lpips": 0.24132125635941823,
+      "psnr": 21.81977596282959,
+      "ssim": 0.7275497882643466
+    },
+    "step1280": {
+      "lpips": 0.1965160647034645,
+      "psnr": 20.93698792775472,
+      "ssim": 0.726844864725331
+    }
+  },
+  "change1280_vs200": {
+    "PSNR": -0.8827880350748671,
+    "LPIPS_relative_reduction_percent": 18.5666162740434
+  },
+  "official_Blur_pass": false,
+  "candidate_adopted": false,
+  "same_final_checkpoint_for_both_metrics": true,
+  "all150_unique_record_means_independently_recomputed": true,
+  "direction_summary": {
+    "old50step": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.007895083075126349,
+      "MSE_worse_than_LQ_count": 91,
+      "aligned_but_excess_norm_count": 67,
+      "cosine_mean": 0.23608861497624625,
+      "error_DC_MSE": 1.2053537662240076e-05,
+      "error_DC_fraction": 0.0017763028397549756,
+      "nonpositive_direction_count": 24,
+      "residual_MSE_norm": 0.003086700715279657,
+      "residual_target_dot_mean": 0.0012297235970792333
+    },
+    "step1280": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.009149556826401315,
+      "MSE_worse_than_LQ_count": 100,
+      "aligned_but_excess_norm_count": 37,
+      "cosine_mean": 0.11005189764656689,
+      "error_DC_MSE": 4.089171593741095e-05,
+      "error_DC_fraction": 0.005970168445415093,
+      "nonpositive_direction_count": 63,
+      "residual_MSE_norm": 0.0036007171247479735,
+      "residual_target_dot_mean": 0.000859494926175909
+    },
+    "step200": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.007464117142478175,
+      "MSE_worse_than_LQ_count": 100,
+      "aligned_but_excess_norm_count": 10,
+      "cosine_mean": 0.12573990357764514,
+      "error_DC_MSE": 6.482138229290715e-05,
+      "error_DC_fraction": 0.012326186013904507,
+      "nonpositive_direction_count": 90,
+      "residual_MSE_norm": 0.00086271085981294,
+      "residual_target_dot_mean": 0.0003332116356699623
+    }
+  },
+  "online_training_epoch10_vs1": {
+    "loss": -54.30383092188056,
+    "mse": -57.263818801099276,
+    "lpips": -44.99815238722405
+  },
+  "jobs": {
+    "train_node1": {
+      "allocated_GPU_hours": 1.9372767550415464,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 3487.0981590747833,
+      "status": 0
+    },
+    "train_node3": {
+      "allocated_GPU_hours": 1.9379728884167142,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 3488.3511991500854,
+      "status": 0
+    },
+    "official_node1": {
+      "allocated_GPU_hours": 0.2972398289044698,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 535.0316920280457,
+      "status": 0
+    },
+    "official_node3": {
+      "allocated_GPU_hours": 0.27713896261321175,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 498.8501327037811,
+      "status": 0
+    }
+  },
+  "round_GPU_hours": 4.449628434975942,
+  "historical_costs_additional_and_preserved": true,
+  "CPU_direction_seconds": 32.91893820092082,
+  "next_action": "same_historical_training64_frozen_final1280_diagnostic_on_node3_two_H100; no updates, no new quality gate",
+  "no_additional_training_submitted": true,
+  "other_categories_submitted": false,
+  "all_assets_preserved": true,
+  "official_adaptive_development_not_independent_blind_test": true
+}

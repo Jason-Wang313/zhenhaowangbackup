@@ -1,3 +1,10 @@
+## Blur1280官方仍失败；下一项同64训练图只读诊断 — 2026-11-07
+
+round14b两节点四卡训练1280/1280、官方150/150与2250块全部结束，四个子job退出0，CPU完整性核验通过，终态f090a0fb已推送且10份远端文件SHA核验一致。monitor/upload正常结束，无待续本轮GPU任务；禁止重跑或盲加该训练。新增训练+官方共4.449628435GPU-hours，旧资产/费用保留。
+完整官方20.936988/.196516，相比原FLUX PSNR−.609774dB、LPIPS改善3.013581%；相比200步PSNR−.882788dB、LPIPS改善18.566616%，两门槛25.9/.18均未过。十轮在线训练MSE/LPIPS虽下降57.26%/45.00%，不能当官方修复。只读方向分析63/150非正相关、另37方向正但幅度过量；仍只攻Blur，不转其它类别。详见exposure_2x2_v2_interpretation报告。
+下一项仅物理node3双H100，用最终1280权重重评原同64训练输入/裁图，与旧200逐图比较；没有optimizer/新训练/新质量门槛，不重跑官方。新入口smoke/diagnose_foundir_blur_exposure_fit_v1.py，新输出foundir_blur_exposure_fit_v1。CPU预检6.694160秒、语法通过；发布后提交round15_blur_exposure_fit_v1，实际GPU以共享job/心跳为准。
+无独立持久调度器；接手先查本job是否已提交，勿重复。两rank/launcher退出0后CPU finish并推小报告和费用。完整自主执行授权继续；保留所有旧修改/大资产/energy。详见reports/foundir_blur_exposure_fit_v1_readiness_2026-11-07.md。
+
 ## Blur1024来源十遍曝光终态 — 2026-11-07
 
 完整官方150结束并CPU核验，按同一最终1280输出判断双门槛。

@@ -1,0 +1,18 @@
+{
+  "GPU_hours": 0,
+  "exit_code": 0,
+  "fixed_training_records": 64,
+  "frozen_step": 1280,
+  "new_quality_gate": false,
+  "new_training": false,
+  "old_diagnostic_sha256": "8018bed50a8b665c439aa08185b414cd5eff3a479f3f33fc7c1c9aec59b6a4e5",
+  "parameter_hash": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+  "receipt_sha256": "4464532f18c150dbe33235ffa4129c0e93d1e620f85a94df9b0487767a134084",
+  "same_historical_training64": true,
+  "seconds": 6.694159850478172,
+  "status": "destination_CPU_preflight_pass",
+  "weight": {
+    "path": "checkpoints/foundir_blur_exposure_official_2x2_v2/weights/blur_delta1280_dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f.safetensors",
+    "sha256": "20e1dd00e5367931e938baca192620b01c9d54ed8e36eadfc2e68c1c11604435"
+  }
+}
