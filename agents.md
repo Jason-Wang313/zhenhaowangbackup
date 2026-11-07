@@ -1,3 +1,9 @@
+## Blur完整网格链已真实启动：四rank新缓存及输入核验通过 — 2026-11-07
+
+源码da011aca已发布，全部10份新GPU/控制源码远端SHA逐一核验；queued报告ecfa36fa已推。物理node1/node3四H100实际领取round20_blur_fullgrid_cache_v1_node1/node3，四rank均已生成新缓存，未见早期异常。快照1794026615.1246603：4951/15360，其中旧4096复用、新855；每rank首份新tensor实际SHA/FP32有限/schema/LQ像素逐值一致核验通过（CPU1.705569秒）。当前尚未进入训练，接手查最新cache/step/queue，不重启或改绑定源码。
+持久monitor PID1877938、upload PID1877939，身份在foundir_blur_fullgrid_v1/daemons.json；两worker心跳新鲜。固定缓存→CPU完整性→正式1792完整四rank状态恢复至9472→唯一最终官方150→核验/小报告。1793及每遍3712/5632/7552/9472回传；训练初始同8全图/120块必须复现，1794 CUDA重载。无需用户再输入GPU命令。
+完整1024来源×15视图×4遍，global8/模型/loss/lr不变，诊断单图权重绝不使用。官方仍21.948140/.202188未过25.9/.18，仅Blur；快照拟合不是质量通过。所有旧资产/energy保留，异常停链不自动扩步/盲重试。源码/readiness与live_cache报告含固定范围和粗估7–9小时，按新轮实测更新；完整自主修复授权持续。
+
 ## Blur完整部署网格四遍候选已实现并CPU预检 — 2026-11-07
 
 新round20_blur_fullgrid_{cache,train,official}_v1_node{1,3}：原1024训练来源、每来源全部15网格视图，共15360条；4遍无放回、每视图4次，global8。正式1792完整模型/Adam/四rank RNG→固定9472（新增7680），不使用单图诊断权重；原架构/loss/lr/CPU浮点归一化不变。覆盖和曝光共同变化，不声称单因素因果或保证通过。

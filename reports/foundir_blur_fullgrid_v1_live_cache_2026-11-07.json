@@ -1,0 +1,93 @@
+{
+  "CPU_GPU_hours": 0,
+  "CPU_seconds": 1.705569189041853,
+  "cache_markers_at_check": 4951,
+  "daemons": {
+    "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+    "utc_unix": 1794026485.8301044,
+    "workers": {
+      "monitor": {
+        "args": [
+          "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+          "-S",
+          "-u",
+          "smoke/watch_foundir_blur_fullgrid_v1_cpu.py",
+          "monitor",
+          "--commit",
+          "da011aca1e153c0bcc7cdda24a6ec9be523739eb"
+        ],
+        "log": "checkpoints/foundir_blur_fullgrid_v1/monitor.log",
+        "pid": 1877938
+      },
+      "upload": {
+        "args": [
+          "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+          "-S",
+          "-u",
+          "smoke/watch_foundir_blur_fullgrid_v1_cpu.py",
+          "upload"
+        ],
+        "log": "checkpoints/foundir_blur_fullgrid_v1/upload.log",
+        "pid": 1877939
+      }
+    }
+  },
+  "first_new_per_rank": [
+    {
+      "FP32_finite_schema_and_LQ_exact": true,
+      "cache_marker": "checkpoints/foundir_blur_fullgrid_v1/cache/train_foundir_train_0072777__grid04_x1408_y0.json",
+      "marker_sha256": "9d033dbe385d30b416dcbe21fa84cd89971708d7fa00fd8825e98ca4d17b7da7",
+      "rank": 0,
+      "tensor_sha256": "4a178884a9f1b370e9c54b710b6bba5beacebac9af19a6d2de733b81696a7485"
+    },
+    {
+      "FP32_finite_schema_and_LQ_exact": true,
+      "cache_marker": "checkpoints/foundir_blur_fullgrid_v1/cache/train_foundir_train_0065344__grid01_x384_y0.json",
+      "marker_sha256": "45fac191ae9485951984954031afa31c1dae30e08c9d36df112973cd4650cf2f",
+      "rank": 1,
+      "tensor_sha256": "44400477536e2d9aa042ff6015c9d067291efe6d51f574b59f30a24c59aab7f4"
+    },
+    {
+      "FP32_finite_schema_and_LQ_exact": true,
+      "cache_marker": "checkpoints/foundir_blur_fullgrid_v1/cache/train_foundir_train_0104664__grid10_x0_y568.json",
+      "marker_sha256": "df57f630b57d8135f66984eebc3750bb4404c9af9231455333a000708e50303d",
+      "rank": 2,
+      "tensor_sha256": "7ea477798abde4effb2569723e3a1199ae84af411112ed1a26bad324ab6ba545"
+    },
+    {
+      "FP32_finite_schema_and_LQ_exact": true,
+      "cache_marker": "checkpoints/foundir_blur_fullgrid_v1/cache/train_foundir_train_0040835__grid04_x1408_y0.json",
+      "marker_sha256": "8f744c3cf46fd9e477674d2b5fede0e6cf7160995a2b9e7391bd6a057d0de3fd",
+      "rank": 3,
+      "tensor_sha256": "70208fcdf259370ce10c21fbc64f875a8cb1df5d53de322df20740aa996e73cb"
+    }
+  ],
+  "new_caches_at_check": 855,
+  "official_Blur_pass": false,
+  "reused_old_caches": 4096,
+  "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+  "status": "four_ranks_reference_cache_running_and_first_tensor_verified",
+  "total_required": 15360,
+  "training_started": false,
+  "utc_unix": 1794026615.1246603,
+  "workers": {
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": "round20_blur_fullgrid_cache_v1_node1",
+      "pid": 111399,
+      "state": "running",
+      "utc_unix": 1794026613.9118903,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "3": {
+      "capability": "independent_node3_two_H100_jobs_only",
+      "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "job": "round20_blur_fullgrid_cache_v1_node3",
+      "pid": 299730,
+      "state": "running",
+      "utc_unix": 1794026613.8977346,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  }
+}
