@@ -1,3 +1,10 @@
+## Blur单来源16上下文拟合诊断已准备 — 2026-11-07
+
+官方仍21.948140/.202188，相比原FLUX仅+.401377dB/LPIPS降.214263%，未过25.9/.18；72/150 PSNR差于LQ，不能说稳定修复。仅Blur继续，旧round17/18不重跑。
+新round19_blur_singleframe_fit_v1：原1024第一来源0034314，15部署网格块+原[985,489]裁图共16；完整1792模型/Adam复制到独立目录，四rank转两rank显式重建RNG，不称逐位等价父训练。原模型/loss/lr/global8不变，固定200新增步到1992，每视图100次曝光。新增0/50/100/200保存16视图及拼接；初始必须逐像素复现1792的16输出，逐完整步保存Adam/RNG/哈希。仅training_fit_only，无新质量gate、无官方评价，诊断权重绝不部署/seed正式训练。
+6项CPU测试通过，含真实两进程global8 Adam汇总及同world精确恢复；目的地预检12.472429秒/GPU0，父状态/16输出/源图/指标SHA通过。轻任务仅node3两H100，粗估18–25分钟，按实测更新。源码安全发布后提交共享worker；接手查实际job/心跳/step，勿重复。
+持久CPU观察器smoke/watch_foundir_blur_singleframe_fit_v1_cpu.py仅等待本job终态→CPU finish→小报告/耗时/退出码推送，无后续GPU。daemon身份写foundir_blur_singleframe_fit_v1/monitor.json；尚未有该文件时不要称观察器已运行。所有旧资产、energy和失败费用保留；全栈自主修复授权持续。
+
 ## Blur1792同8全图对照完成：差距缩小主要来自原裁图退步 — 2026-11-07
 
 round18_blur_multiview_context_v1结束，node3双H10090.243148秒/.050135082GPU-hours；8图/120块/8原裁图、两rank和launcher退出0，模型/参考SHA前后不变，CPU finish2.655758秒。复用240旧/新块PNG的CPU统计7.087600秒，无新预测。无待续本轮GPU，勿重跑。

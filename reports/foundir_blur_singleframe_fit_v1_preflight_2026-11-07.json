@@ -1,0 +1,42 @@
+{
+  "GPU_hours": 0,
+  "exit_code": 0,
+  "initial16_PNG_and_full_SHA_verified": true,
+  "parent_model_Adam_four_rank_RNG_SHA_verified": true,
+  "receipt_sha256": "f5d2daa26c18142ed73c4ae322d40196a89e72a1f3eabc6035cfc0e0445bb26a",
+  "recipe": {
+    "automatic_official_or_continuation": false,
+    "bitwise_parent_continuation": false,
+    "clip_grad": 1.0,
+    "end_step": 1992,
+    "exposures_per_view": 100,
+    "failure_stop": "nonfinite/zero_gradient/hash_mismatch/OOM/initial_pixel_mismatch; no_auto_retry",
+    "global_batch": 8,
+    "initialization": "complete1792_model_Adam; world4_to2_explicit_new_rank_RNG_seed61903",
+    "input_normalization": "official_CPU_FP32",
+    "learning_rate": 1e-05,
+    "loss": "10*MSE_RGB01 + .1*LPIPS",
+    "may_seed_formal": false,
+    "new_steps": 200,
+    "node": 3,
+    "official_pixels": false,
+    "quality_gate": false,
+    "same_world2_resume": true,
+    "sample_order": "16_views_epoch_shuffle_without_replacement_seed61903",
+    "scope": "training_fit_only",
+    "selection": "first_original1024_source_no_metric_filter",
+    "snapshots": [
+      1792,
+      1842,
+      1892,
+      1992
+    ],
+    "sources": 1,
+    "start_step": 1792,
+    "views": 16,
+    "weight_decay": 0.0,
+    "world": 2
+  },
+  "seconds": 12.47242946922779,
+  "status": "destination_CPU_preflight_pass"
+}
