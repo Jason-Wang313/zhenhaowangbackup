@@ -1,0 +1,17 @@
+{
+  "GPU_hours": 0,
+  "GT_pixels_decoded": false,
+  "exit_code": 0,
+  "full_frames": 8,
+  "model_calls": 256,
+  "new_quality_gate": false,
+  "new_training": false,
+  "official_pixels_read": false,
+  "original_crop_outputs_reused": 8,
+  "receipt_sha256": "d6e2871510b1820fad74c28b94090f65a11827dcf7309eff5a4394cb30e03aa3",
+  "seconds": 5.244058061391115,
+  "status": "destination_CPU_preflight_pass",
+  "tiles": 120,
+  "training_sources": 8,
+  "uncached_control_crops": 8
+}

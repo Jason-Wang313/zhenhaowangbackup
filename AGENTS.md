@@ -1,3 +1,9 @@
+## Blur同前8训练来源全图上下文诊断已准备 — 2026-11-07
+
+同64固定训练图改善而官方失败，当前只隔离上下文/拼接与来源迁移，非新训练。冻结最终1280/参考LoRA，原1024来源前8张1920×1080，用官方同款512/128拼接120块；另8原裁图无缓存复现，总256模型调用。复用旧8裁图输出，比较全图、同512像素、固定中心384；输出先固定再用训练GT评分，training_fit_only，无新质量gate/GT选择。
+3项CPU几何测试、语法、目的地预检5.244058秒通过；源码发布后派发round16_blur_full_context_v1，仅node3双H100。入口smoke/diagnose_foundir_blur_full_context_v1.py prepare|run|finish，新输出foundir_blur_full_context_v1。无独立持久控制器，接手查共享job/心跳，勿重复提交。预计2–4分钟，异常停不自动重试。
+两rank及launcher退出0后CPU核验8图/120块/8对照和前后权重SHA，推小报告。官方仍20.936988/.196516，未过25.9/.18，只攻Blur；所有旧资产/energy保留，不盲加步。详见reports/foundir_blur_full_context_v1_readiness_2026-11-07.md。
+
 ## Blur同64训练图固定模型改善，官方仍失败；下一步隔离全图上下文 — 2026-11-07
 
 round15_blur_exposure_fit_v1已完成，64/64、两rank参数SHA前后不变、launcher退出0、CPU核验通过。node3双H10050.060766秒/.027811537GPU-hours；CPU finish内部2.750213秒（不含导入/启动）。无待续本轮GPU任务，勿重跑。
