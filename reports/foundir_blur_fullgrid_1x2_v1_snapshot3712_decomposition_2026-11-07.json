@@ -1,0 +1,292 @@
+{
+  "status": "existing_training_outputs_error_decomposition",
+  "snapshot_steps": [
+    1792,
+    3712
+  ],
+  "scope": "training_fit_only",
+  "quality_gate": false,
+  "official_Blur_pass": false,
+  "records": [
+    {
+      "source_index": 0,
+      "record_id": "foundir_train_0034314",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 1.4305686950683594,
+      "LPIPS_delta": -0.023039229214191437,
+      "old_MSE": 0.0026964218440240595,
+      "new_MSE": 0.0019396812350979278,
+      "MSE_change": -0.0007567406089261316,
+      "twice_error_dot_increment": -0.001321540168153117,
+      "increment_squared_RMS": 0.0005647995592269832,
+      "increment_cosine_towards_GT": 0.5354381105106296,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": 1.1699196171132393,
+      "MSE_increases": false,
+      "MSE_increase_interpretation": "MSE_decreases",
+      "old_RGB_mean_error": [
+        0.005776115423053594,
+        0.005355516975333353,
+        0.00500166046358147
+      ],
+      "new_RGB_mean_error": [
+        -0.0006200450859357616,
+        -0.0019414960814565345,
+        -0.001103748713990996
+      ],
+      "RGB_mean_bias_MSE_change": -2.722985155997812e-05,
+      "remaining_spatial_error_MSE_change": -0.0007295107573661535,
+      "input_SHA": {
+        "old_output": "f2d20128770d915246b03cee9580e773940207d6cf4f6730ba31a01526a8911c",
+        "new_output": "0ec50a21b64ca44470d75b85f7bf374d7604a08fa6a1b883d341c02114048334",
+        "training_GT": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55"
+      }
+    },
+    {
+      "source_index": 1,
+      "record_id": "foundir_train_0067544",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 4.852312088012695,
+      "LPIPS_delta": -0.10858194530010223,
+      "old_MSE": 0.020264236029530428,
+      "new_MSE": 0.006629776180675201,
+      "MSE_change": -0.013634459848855227,
+      "twice_error_dot_increment": -0.02619744726624615,
+      "increment_squared_RMS": 0.012562987417390876,
+      "increment_cosine_towards_GT": 0.8209513079294076,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": 1.0426440143520785,
+      "MSE_increases": false,
+      "MSE_increase_interpretation": "MSE_decreases",
+      "old_RGB_mean_error": [
+        -0.0010823726095386269,
+        -0.005723536598295092,
+        -0.0012759660191256276
+      ],
+      "new_RGB_mean_error": [
+        -0.006548879659909928,
+        -0.008261925835191074,
+        -0.006962802211950833
+      ],
+      "RGB_mean_bias_MSE_change": 4.1356455669687e-05,
+      "remaining_spatial_error_MSE_change": -0.013675816304524914,
+      "input_SHA": {
+        "old_output": "0471babdf4225c226959028cac5ebb204bf01bd254522a324e4fe75305b7f656",
+        "new_output": "4863f30c523f8e7130417f1af5e3907594be330a7fdb1ebe45f5a5de119339c5",
+        "training_GT": "f0c7d6eb0ec78b49491e7d41713eac4341ec5347e542e147c3e6d24ba2526c67"
+      }
+    },
+    {
+      "source_index": 2,
+      "record_id": "foundir_train_0068705",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 1.9467487335205078,
+      "LPIPS_delta": -0.07534824311733246,
+      "old_MSE": 0.0059812972253272395,
+      "new_MSE": 0.0038205008055227263,
+      "MSE_change": -0.002160796419804513,
+      "twice_error_dot_increment": -0.004120555108592292,
+      "increment_squared_RMS": 0.0019597586887877844,
+      "increment_cosine_towards_GT": 0.6017647439078742,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": 1.0512914503624617,
+      "MSE_increases": false,
+      "MSE_increase_interpretation": "MSE_decreases",
+      "old_RGB_mean_error": [
+        0.007649373638345692,
+        0.004466993085815358,
+        0.0034025924412956036
+      ],
+      "new_RGB_mean_error": [
+        -0.003113866572861542,
+        -0.004871353788444598,
+        -0.0030427881414892026
+      ],
+      "RGB_mean_bias_MSE_change": -1.578658905651229e-05,
+      "remaining_spatial_error_MSE_change": -0.002145009830748001,
+      "input_SHA": {
+        "old_output": "c4772ed37f565b0b31831becbf7dba4a1cd24f8d1eb5b13403b3b2fe52d3858b",
+        "new_output": "a9829c73dfe5b2ea427d128805a557851c28c9260ebbb30f7e19ffb5e01d565c",
+        "training_GT": "2ee7abf250c40d8290b21d35e790a147814b3021b77a48457c305caa5f91dcac"
+      }
+    },
+    {
+      "source_index": 3,
+      "record_id": "foundir_train_0033402",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": -0.30535316467285156,
+      "LPIPS_delta": -0.01771441102027893,
+      "old_MSE": 0.012846106764591182,
+      "new_MSE": 0.013781827826093315,
+      "MSE_change": 0.0009357210615021337,
+      "twice_error_dot_increment": -1.879632299542901e-05,
+      "increment_squared_RMS": 0.0009545173844975737,
+      "increment_cosine_towards_GT": 0.0026838931309415216,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": 0.009845982535625986,
+      "MSE_increases": true,
+      "MSE_increase_interpretation": "aligned_direction_but_increment_overshoots_MSE_minimum",
+      "old_RGB_mean_error": [
+        -0.007386543815054749,
+        -0.0062706423232764055,
+        -0.0041953749092271606
+      ],
+      "new_RGB_mean_error": [
+        -0.011145602608350604,
+        -0.009905832047340309,
+        -0.00856609704070009
+      ],
+      "RGB_mean_bias_MSE_change": 6.14149430856384e-05,
+      "remaining_spatial_error_MSE_change": 0.0008743061184164953,
+      "input_SHA": {
+        "old_output": "b720f1343832fd6b987a10288adc798b75aa5f48a1e5ad5e2ae77b4e841cae17",
+        "new_output": "01538b1274eeb4012fc4e622c3461373a429461e71d94116138a6abb1e945d46",
+        "training_GT": "ae174b9e635c0b1adb278e9825da85d0378fad0d5fdf5cdfda5c10159bbb610a"
+      }
+    },
+    {
+      "source_index": 4,
+      "record_id": "foundir_train_0021200",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 1.08349609375,
+      "LPIPS_delta": -0.02628020942211151,
+      "old_MSE": 0.007545841481513136,
+      "new_MSE": 0.005879738468150116,
+      "MSE_change": -0.0016661030133630203,
+      "twice_error_dot_increment": -0.003038349348857592,
+      "increment_squared_RMS": 0.0013722463354945784,
+      "increment_cosine_towards_GT": 0.4721041664358082,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": 1.1070714019296415,
+      "MSE_increases": false,
+      "MSE_increase_interpretation": "MSE_decreases",
+      "old_RGB_mean_error": [
+        -0.0014575995521663102,
+        -0.006069622216183049,
+        -0.009427087115739145
+      ],
+      "new_RGB_mean_error": [
+        -0.013634391642529994,
+        -0.0193471390100457,
+        -0.02098885333466927
+      ],
+      "RGB_mean_bias_MSE_change": 0.0002909685019502626,
+      "remaining_spatial_error_MSE_change": -0.001957071515313283,
+      "input_SHA": {
+        "old_output": "c016dd7420d0a613949a1bf5876eb786d49f4ea6ad001047e05ef4e2e0ff9221",
+        "new_output": "9dfe2a73a2d2fbbc1aa1be7784e509532b91e9677e6373608033451817357109",
+        "training_GT": "bab1b1c77eff9eeea8ccdc0b50bbf6a15eae7527e5e6fad68eecb367774a343f"
+      }
+    },
+    {
+      "source_index": 5,
+      "record_id": "foundir_train_0067698",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": -0.45636558532714844,
+      "LPIPS_delta": -0.053003787994384766,
+      "old_MSE": 0.010912734186004747,
+      "new_MSE": 0.012121886747618441,
+      "MSE_change": 0.0012091525616136946,
+      "twice_error_dot_increment": -0.0006370565323482741,
+      "increment_squared_RMS": 0.0018462090939619627,
+      "increment_cosine_towards_GT": 0.07096443450455883,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": 0.1725309810334515,
+      "MSE_increases": true,
+      "MSE_increase_interpretation": "aligned_direction_but_increment_overshoots_MSE_minimum",
+      "old_RGB_mean_error": [
+        -0.002845947561122468,
+        -0.004441696547446941,
+        -0.0013773053588726585
+      ],
+      "new_RGB_mean_error": [
+        -0.0037955587327500825,
+        -0.004197402263373125,
+        -0.0005580292302121592
+      ],
+      "RGB_mean_bias_MSE_change": 8.702642280853583e-07,
+      "remaining_spatial_error_MSE_change": 0.0012082822973856092,
+      "input_SHA": {
+        "old_output": "464ffa29df338f8f6e3f8ec5ef8623cd5ef5b792b9173253f05cbb22fef8c8de",
+        "new_output": "c239bfa4e956c00aa5f70b93eb7bc49d63bdf6d41c83961f026ac111cd04cf73",
+        "training_GT": "12a104018079f1ebeabe5d41e0a0d30204d5843ae8192234845a56ccb69244ec"
+      }
+    },
+    {
+      "source_index": 6,
+      "record_id": "foundir_train_0053870",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": 4.583286285400391,
+      "LPIPS_delta": -0.0885184183716774,
+      "old_MSE": 0.008855988954173211,
+      "new_MSE": 0.0030825303519697255,
+      "MSE_change": -0.005773458602203485,
+      "twice_error_dot_increment": -0.009611003572937283,
+      "increment_squared_RMS": 0.003837544970733799,
+      "increment_cosine_towards_GT": 0.8243155092104282,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": 1.2522333479129897,
+      "MSE_increases": false,
+      "MSE_increase_interpretation": "MSE_decreases",
+      "old_RGB_mean_error": [
+        0.0046866867889110535,
+        0.0033841363319976675,
+        0.003830424685301713
+      ],
+      "new_RGB_mean_error": [
+        -0.003332128646208121,
+        -0.005101738380547318,
+        -0.004172016839133647
+      ],
+      "RGB_mean_bias_MSE_change": 2.1489917612587637e-06,
+      "remaining_spatial_error_MSE_change": -0.005775607593964744,
+      "input_SHA": {
+        "old_output": "379bec7e8bf92c7e3ad2bcb2855dab6d36b54e829f8dfee1d2dea94c98161abf",
+        "new_output": "e82ac3e6bb75b9dc02cb3d92367099ebd402be28fb7d457d536d5db78ac0b6dd",
+        "training_GT": "084aeb7ccc7b30137996c9c253b5b1de0abd0d464a893471d5a1061795d09d99"
+      }
+    },
+    {
+      "source_index": 7,
+      "record_id": "foundir_train_0099772",
+      "scope": "training_GT_descriptive_only_no_output_selection",
+      "PSNR_delta_dB": -0.19928932189941406,
+      "LPIPS_delta": -0.004342928528785706,
+      "old_MSE": 0.011317477005124654,
+      "new_MSE": 0.011848917960783524,
+      "MSE_change": 0.0005314409556588708,
+      "twice_error_dot_increment": 1.4097458558990414e-05,
+      "increment_squared_RMS": 0.0005173434970998811,
+      "increment_cosine_towards_GT": -0.0029130405044277274,
+      "GT_oracle_scalar_along_observed_increment_NOT_deployed": -0.013624853349870833,
+      "MSE_increases": true,
+      "MSE_increase_interpretation": "opposite_GT_direction",
+      "old_RGB_mean_error": [
+        -0.08009377647773427,
+        -0.08142491981553675,
+        -0.07675395258548272
+      ],
+      "new_RGB_mean_error": [
+        -0.0762735698843032,
+        -0.08149738070554854,
+        -0.06946979961052337
+      ],
+      "RGB_mean_bias_MSE_change": -0.0005502220840797696,
+      "remaining_spatial_error_MSE_change": 0.0010816630397386404,
+      "input_SHA": {
+        "old_output": "26a007d4a3961a0e5b3ca81af8a0ec64c97caaee2186511aed130e240d5fdebf",
+        "new_output": "3ff4ad6ee53b5a6ee08c0ad42c243f777229a3d0a8a4d906892c1bf61f2ecdae",
+        "training_GT": "e4354a6abddd65061fa6124eb764d9d5d09d97b48d2e9e45c403ce36f62b38ac"
+      }
+    }
+  ],
+  "images": 8,
+  "MSE_identity_verified": true,
+  "PSNR_epsilon": 1e-08,
+  "PSNR_from_RGB_matches_report_abs_tolerance": 2e-05,
+  "all8_LPIPS_improve": true,
+  "MSE_worse_count": 3,
+  "new_GPU_inference": false,
+  "GT_used_to_modify_or_select_outputs": false,
+  "contact_sheet": {
+    "path": "checkpoints/foundir_blur_fullgrid_1x2_v1/diagnostics/snapshot3712_contact.png",
+    "sha256": "22996cc1a8330fb0c7216c8c251ba960f72d0fe7aa7ab3b931325b77ee120562"
+  },
+  "CPU_seconds": 7.013575684279203,
+  "GPU_hours": 0,
+  "exit_code": 0,
+  "prior_analysis_attempt": "Initial raw RGB PSNR check omitted existing pyiqa eps1e-8 and failed tolerance; corrected to existing metric formula, no GPU metric or output changed."
+}
