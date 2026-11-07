@@ -1,0 +1,25 @@
+{
+  "Adam_states": 100,
+  "GPU_hours": 0,
+  "actual_SHA_Adam_RNG_sampler_verified": true,
+  "bitwise_four_rank_continuation": false,
+  "checkpoint": {
+    "file": "steps/state_005632_1794044457483944476.pt",
+    "next_global_slot": 45056,
+    "parameter_hash": "493f3397b528dc5528b7eba37aa74a5465fbe6084e45bdf1d388c6c7fb700abe",
+    "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+    "sha256": "56c8e8c34aaac41f70511ae5e629dd7a7bfea478eafac70307baf7cc982c1d89",
+    "step": 5632,
+    "world": 2
+  },
+  "exit_code": 0,
+  "model_Adam_sampler_preserved": true,
+  "new_data_views": true,
+  "next_global_slot": 45056,
+  "official_Blur_pass": false,
+  "parent_model_Adam_history_sampler_RNG_mapping_exact": false,
+  "rank_RNG_count": 2,
+  "same_world_state_preserved": false,
+  "seconds": 2.336843501776457,
+  "step": 5632
+}
