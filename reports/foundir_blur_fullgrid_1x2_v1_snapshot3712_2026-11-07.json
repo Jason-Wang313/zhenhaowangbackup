@@ -1,0 +1,178 @@
+{
+  "utc": "2026-11-07T07:08:20.529213+00:00",
+  "scope": "training_fit_only",
+  "quality_gate": false,
+  "official_Blur_pass": false,
+  "snapshot_step": 3712,
+  "records": [
+    {
+      "source_index": 0,
+      "record_id": "foundir_train_0034314",
+      "step1792": {
+        "lpips": 0.12458378076553345,
+        "psnr": 25.69210433959961,
+        "ssim": 0.8885319305721884
+      },
+      "step3712": {
+        "lpips": 0.10154455155134201,
+        "psnr": 27.12267303466797,
+        "ssim": 0.8992398165438477
+      },
+      "PSNR_delta_dB": 1.4305686950683594,
+      "LPIPS_relative_reduction_percent": 18.492960377845048,
+      "both_improve": true
+    },
+    {
+      "source_index": 1,
+      "record_id": "foundir_train_0067544",
+      "step1792": {
+        "lpips": 0.27029526233673096,
+        "psnr": 16.932695388793945,
+        "ssim": 0.5859904728328756
+      },
+      "step3712": {
+        "lpips": 0.16171331703662872,
+        "psnr": 21.78500747680664,
+        "ssim": 0.7395438675829163
+      },
+      "PSNR_delta_dB": 4.852312088012695,
+      "LPIPS_relative_reduction_percent": 40.171605066770276,
+      "both_improve": true
+    },
+    {
+      "source_index": 2,
+      "record_id": "foundir_train_0068705",
+      "step1792": {
+        "lpips": 0.31491899490356445,
+        "psnr": 22.232038497924805,
+        "ssim": 0.6596246336206871
+      },
+      "step3712": {
+        "lpips": 0.239570751786232,
+        "psnr": 24.178787231445312,
+        "ssim": 0.7060866021225936
+      },
+      "PSNR_delta_dB": 1.9467487335205078,
+      "LPIPS_relative_reduction_percent": 23.926230026361495,
+      "both_improve": true
+    },
+    {
+      "source_index": 3,
+      "record_id": "foundir_train_0033402",
+      "step1792": {
+        "lpips": 0.3105570673942566,
+        "psnr": 18.912281036376953,
+        "ssim": 0.548730944524209
+      },
+      "step3712": {
+        "lpips": 0.29284265637397766,
+        "psnr": 18.6069278717041,
+        "ssim": 0.554969230181917
+      },
+      "PSNR_delta_dB": -0.30535316467285156,
+      "LPIPS_relative_reduction_percent": 5.704075959021804,
+      "both_improve": false
+    },
+    {
+      "source_index": 4,
+      "record_id": "foundir_train_0021200",
+      "step1792": {
+        "lpips": 0.20810939371585846,
+        "psnr": 21.222917556762695,
+        "ssim": 0.6733008303381787
+      },
+      "step3712": {
+        "lpips": 0.18182918429374695,
+        "psnr": 22.306413650512695,
+        "ssim": 0.6894255172397692
+      },
+      "PSNR_delta_dB": 1.08349609375,
+      "LPIPS_relative_reduction_percent": 12.628074568317238,
+      "both_improve": true
+    },
+    {
+      "source_index": 5,
+      "record_id": "foundir_train_0067698",
+      "step1792": {
+        "lpips": 0.35904136300086975,
+        "psnr": 19.62065887451172,
+        "ssim": 0.5074713921959907
+      },
+      "step3712": {
+        "lpips": 0.306037575006485,
+        "psnr": 19.16429328918457,
+        "ssim": 0.5163624427277191
+      },
+      "PSNR_delta_dB": -0.45636558532714844,
+      "LPIPS_relative_reduction_percent": 14.762585444579091,
+      "both_improve": false
+    },
+    {
+      "source_index": 6,
+      "record_id": "foundir_train_0053870",
+      "step1792": {
+        "lpips": 0.20155207812786102,
+        "psnr": 20.527626037597656,
+        "ssim": 0.7893623990968497
+      },
+      "step3712": {
+        "lpips": 0.11303365975618362,
+        "psnr": 25.110912322998047,
+        "ssim": 0.8818156147912334
+      },
+      "PSNR_delta_dB": 4.583286285400391,
+      "LPIPS_relative_reduction_percent": 43.91838535920374,
+      "both_improve": true
+    },
+    {
+      "source_index": 7,
+      "record_id": "foundir_train_0099772",
+      "step1792": {
+        "lpips": 0.13459141552448273,
+        "psnr": 19.46249771118164,
+        "ssim": 0.8587482631258158
+      },
+      "step3712": {
+        "lpips": 0.13024848699569702,
+        "psnr": 19.263208389282227,
+        "ssim": 0.8545127728077442
+      },
+      "PSNR_delta_dB": -0.19928932189941406,
+      "LPIPS_relative_reduction_percent": 3.2267500210633515,
+      "both_improve": false
+    }
+  ],
+  "old_means": {
+    "lpips": 0.24045616947114468,
+    "psnr": 20.575352430343628,
+    "ssim": 0.6889701082883494
+  },
+  "new_means": {
+    "lpips": 0.19085252285003662,
+    "psnr": 22.192277908325195,
+    "ssim": 0.7302444829997176
+  },
+  "PSNR_delta_dB": 1.6169254779815674,
+  "LPIPS_relative_reduction_percent": 20.628976470100767,
+  "both_improve_images": 5,
+  "images": 8,
+  "output_PNG_SHA_verified": 128,
+  "independent_means_recomputed": true,
+  "inputs": {
+    "1792": {
+      "path": "checkpoints/foundir_blur_fullgrid_v1/snapshots/step_001792_summary.json",
+      "sha256": "5e152defe54d35471686ef29e51a48f5f84f5cee1aa83f96279de8c132a62e4d"
+    },
+    "3712": {
+      "path": "checkpoints/foundir_blur_fullgrid_1x2_v1/snapshots/step_003712_summary.json",
+      "sha256": "92ae7da4eb46ee7a5b285a22b90a55e88fa95e5a9acc05af097b9e12abe212c2"
+    }
+  },
+  "live_step": 3731,
+  "seconds_per_step_median": 4.813148856163025,
+  "remaining_training_hours_estimate": 7.675635439786646,
+  "CPU_seconds": 0.754716832190752,
+  "GPU_hours": 0,
+  "exit_code": 0,
+  "interpretation": "First complete-grid epoch improves these same training full frames in both means. Not official or held-out evidence; continue fixed9472, then official150."
+}
