@@ -1,0 +1,192 @@
+{
+  "LPIPS_excess": 0.022188106377919514,
+  "PSNR_shortfall_dB": 3.951860491434733,
+  "all_GPU_jobs_exit0": true,
+  "comparisons": {
+    "lq": {
+      "LPIPS_relative_reduction_percent": 42.820637470848844,
+      "PSNR_delta_dB": 0.08423697153727261,
+      "both_means_improve": true,
+      "per_image_both_better": 78,
+      "per_image_both_worse": 0
+    },
+    "original_FLUX": {
+      "LPIPS_relative_reduction_percent": 0.21426323159059457,
+      "PSNR_delta_dB": 0.4013773091634114,
+      "both_means_improve": true,
+      "per_image_both_better": 64,
+      "per_image_both_worse": 52
+    },
+    "step1280": {
+      "LPIPS_relative_reduction_percent": -2.886299236153489,
+      "PSNR_delta_dB": 1.0111515808105445,
+      "both_means_improve": false,
+      "per_image_both_better": 45,
+      "per_image_both_worse": 25
+    },
+    "step200": {
+      "LPIPS_relative_reduction_percent": 16.21620514158717,
+      "PSNR_delta_dB": 0.12836354573567732,
+      "both_means_improve": true,
+      "per_image_both_better": 81,
+      "per_image_both_worse": 0
+    }
+  },
+  "completed_GPU_jobs": {
+    "round17_blur_multiview_cache_v1_node1_node1.ended": {
+      "allocated_GPU_hours": 0.28360477368036907,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 510.4885926246643,
+      "status": 0
+    },
+    "round17_blur_multiview_cache_v1_node3_node3.ended": {
+      "allocated_GPU_hours": 0.2803369908862644,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 504.6065835952759,
+      "status": 0
+    },
+    "round17_blur_multiview_official_v1_node1_node1.ended": {
+      "allocated_GPU_hours": 0.2983922561009725,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 537.1060609817505,
+      "status": 0
+    },
+    "round17_blur_multiview_official_v1_node3_node3.ended": {
+      "allocated_GPU_hours": 0.27735577053493926,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 499.2403869628906,
+      "status": 0
+    },
+    "round17_blur_multiview_train_v1_node1_node1.ended": {
+      "allocated_GPU_hours": 0.9394559175438351,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 1691.0206515789032,
+      "status": 0
+    },
+    "round17_blur_multiview_train_v1_node3_node3.ended": {
+      "allocated_GPU_hours": 0.9389032905631595,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 1690.0259230136871,
+      "status": 0
+    }
+  },
+  "correction_squared_norm_reduction_vs1280_percent": 61.30879059160803,
+  "current_round_GPU_hours": 3.01804899930954,
+  "direction": {
+    "old50step": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.007895083075126349,
+      "MSE_worse_than_LQ_count": 91,
+      "aligned_but_excess_norm_count": 67,
+      "cosine_mean": 0.23608861497624625,
+      "error_DC_MSE": 1.2053537662240076e-05,
+      "error_DC_fraction": 0.0017763028397549756,
+      "nonpositive_direction_count": 24,
+      "residual_MSE_norm": 0.003086700715279657,
+      "residual_target_dot_mean": 0.0012297235970792333
+    },
+    "step1280": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.009149556826401315,
+      "MSE_worse_than_LQ_count": 100,
+      "aligned_but_excess_norm_count": 37,
+      "cosine_mean": 0.11005189764656689,
+      "error_DC_MSE": 4.089171593741095e-05,
+      "error_DC_fraction": 0.005970168445415093,
+      "nonpositive_direction_count": 63,
+      "residual_MSE_norm": 0.0036007171247479735,
+      "residual_target_dot_mean": 0.000859494926175909
+    },
+    "step1792": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.006848618964842319,
+      "MSE_worse_than_LQ_count": 72,
+      "aligned_but_excess_norm_count": 24,
+      "cosine_mean": 0.19041716871638503,
+      "error_DC_MSE": 3.2647547720967716e-05,
+      "error_DC_fraction": 0.0053985637037601165,
+      "nonpositive_direction_count": 48,
+      "residual_MSE_norm": 0.001393161002940069,
+      "residual_target_dot_mean": 0.0009061857960514554
+    },
+    "step200": {
+      "LQ_MSE": 0.007267829554005161,
+      "MSE": 0.007464117142478175,
+      "MSE_worse_than_LQ_count": 100,
+      "aligned_but_excess_norm_count": 10,
+      "cosine_mean": 0.12573990357764514,
+      "error_DC_MSE": 6.482138229290715e-05,
+      "error_DC_fraction": 0.012326186013904507,
+      "nonpositive_direction_count": 90,
+      "residual_MSE_norm": 0.00086271085981294,
+      "residual_target_dot_mean": 0.0003332116356699623
+    }
+  },
+  "gate_checks": {
+    "lpips": false,
+    "psnr": false
+  },
+  "historical_costs_retained_separately": true,
+  "means": {
+    "lq": {
+      "lpips": 0.35360328872998553,
+      "psnr": 21.863902537027993,
+      "ssim": 0.7402368453389072
+    },
+    "original_FLUX": {
+      "lpips": 0.2026222513616085,
+      "psnr": 21.546762199401854,
+      "ssim": 0.7535799373553662
+    },
+    "step1280": {
+      "lpips": 0.1965160647034645,
+      "psnr": 20.93698792775472,
+      "ssim": 0.726844864725331
+    },
+    "step1792": {
+      "lpips": 0.2021881063779195,
+      "psnr": 21.948139508565266,
+      "ssim": 0.7361772159623922
+    },
+    "step200": {
+      "lpips": 0.24132125635941823,
+      "psnr": 21.81977596282959,
+      "ssim": 0.7275497882643466
+    }
+  },
+  "next_fixed_diagnostic": {
+    "checkpoint": 1792,
+    "deployment_tiles": 120,
+    "full_frames": 8,
+    "gpus": 2,
+    "implementation_status": "not_yet_implemented_or_submitted",
+    "model_calls": 256,
+    "new_quality_gate": false,
+    "new_training": false,
+    "node": 3,
+    "original_crops": 8,
+    "question": "did multiview training reduce same-pixel context gap, or does failure persist on the same training full frames?",
+    "reuse_prior1280_outputs": true,
+    "scope": "training_fit_only",
+    "selection_using_GT": false,
+    "sources": "same_first8_training_sources_as_prior_context_diagnostic"
+  },
+  "no_new_GPU_job_submitted": true,
+  "official_Blur_pass": false,
+  "status": "official150_complete_small_joint_gain_vs_original_but_both_gates_fail",
+  "ten_remote_report_files_SHA_verified": true,
+  "terminal_report_commit": "8f87385d5649f5d2c5f3d8323a02924df240a610",
+  "utc_unix": 1794022956.5305326
+}
