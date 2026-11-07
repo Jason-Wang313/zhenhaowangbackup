@@ -1,3 +1,11 @@
+## Blur四新裁图训练链已准备，官方仍未改善通过 — 2026-11-07
+
+官方Blur150当前1280为20.936988/.196516，原FLUX21.546762/.202622；PSNR退步、LPIPS略好，25.9/.18均未过。训练拟合改善和上下文诊断不是官方修复；最新终态/误差分解已推ff4ccd5。仍只攻Blur。
+下一轮round17_blur_multiview_{cache,train,official}_v1_node{1,3}：原1024来源，每来源固定seed/record_id/坐标SHA排序选4个不同部署网格512裁图，4096视图不是4096来源。输入浮点归一化对齐官方CPU路径（原GPU归一化存在微差）；原模型/loss/lr/global8不变。完整1280模型/Adam/四rank RNG和采样位置恢复，固定续到1792（512新增步），只评最终官方150；新数据有意变化，不称旧固定裁图逐位等价延续。无GT选裁图/输出/权重，不设其它测试gate。
+10项CPU测试含四进程global8 Adam汇总/同world精确恢复、视图覆盖与缓存键隔离、队列入口检查通过。目的地预检21.459116秒，2048训练图文件SHA及父状态核验。新缓存foundir_blur_multiview_v1，旧缓存/权重/energy/所有失败保持；GPU尚待源码发布后派发，勿调用旧exposure入口。
+持久控制器smoke/watch_foundir_blur_multiview_v1_cpu.py monitor/upload：健康node1(10.244.47.55)/node3(10.244.90.116)双H100，缓存→CPU完整性→四卡训练→最终官方150→CPU核验/小报告；1281/1536/1792及终态推送。daemon PID写新输出daemons.json，接手先查实际queue/心跳/缓存/step，勿重复提交。每GPU阶段异常停链并保留，无自动重试/扩步；完整自主修复授权持续。
+暂估缓存5–12分钟、训练28–40分钟、官方8–12分钟，合计约45–65分钟/3–4.33使用GPU-hours；以新轮实测更新，不保证质量通过。详见reports/foundir_blur_multiview_v1_readiness_2026-11-07.md。
+
 ## Blur全图上下文差异已定位；下一轮改训练裁图覆盖 — 2026-11-07
 
 round16_blur_full_context_v1已结束，8全图/120块/8无缓存裁图、两rank及launcher退出0，前后模型/参考SHA不变，CPU完整性核验通过。node3双H10088.128545秒/.048960303GPU-hours，CPU finish内部3.067172秒、误差分解10.418525秒。无待续本轮GPU任务，勿重跑；全部资产保留。

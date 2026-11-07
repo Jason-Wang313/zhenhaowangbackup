@@ -1,0 +1,18 @@
+{
+  "GPU_hours": 0,
+  "all2048_training_image_hashes_checked": true,
+  "equivalent_to_old_fixed_crop_continuation": false,
+  "exit_code": 0,
+  "final_step": 1792,
+  "new_cache_root": "checkpoints/foundir_blur_multiview_v1",
+  "new_updates": 512,
+  "official_pixels_decoded": false,
+  "old_cache_modified": false,
+  "parent_model_Adam_four_RNG_sampler_SHA_verified": true,
+  "receipt_sha256": "34d55273ac32b26b28d7a6ee5b69ace71f56acff56c4d67b048c3183f55a1d86",
+  "same_world_state_resume": true,
+  "seconds": 21.459116365760565,
+  "status": "destination_CPU_preflight_pass",
+  "training_sources": 1024,
+  "training_views": 4096
+}
