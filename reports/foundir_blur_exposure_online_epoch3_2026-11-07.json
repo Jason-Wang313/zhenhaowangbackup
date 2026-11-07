@@ -1,0 +1,72 @@
+{
+  "scope": "training_fit_only_online_logs_not_fixed_checkpoint_evaluation",
+  "through_step": 384,
+  "epochs": [
+    {
+      "epoch": 1,
+      "steps": [
+        1,
+        128
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.10882295785063434,
+        "mse": 0.008256147102134292,
+        "lpips": 0.26261485856161926,
+        "gradient_norm": 0.27346857398515567
+      },
+      "batches_gradient_norm_above_clip1": 0
+    },
+    {
+      "epoch": 2,
+      "steps": [
+        129,
+        256
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.09846344678499008,
+        "mse": 0.007653716730409599,
+        "lpips": 0.21926278605587868,
+        "gradient_norm": 0.3325097208144143
+      },
+      "batches_gradient_norm_above_clip1": 1
+    },
+    {
+      "epoch": 3,
+      "steps": [
+        257,
+        384
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.09289485561703259,
+        "mse": 0.007171333142370173,
+        "lpips": 0.2118152334669503,
+        "gradient_norm": 0.4221261733910069
+      },
+      "batches_gradient_norm_above_clip1": 0
+    }
+  ],
+  "last_vs_first_relative_change_percent": {
+    "loss": -14.636711359623188,
+    "mse": -13.139469856147358,
+    "lpips": -19.343774138640168
+  },
+  "limitations": [
+    "Each batch is measured before its update; weights change throughout an epoch.",
+    "Same full1024 source set and fixed crops, but each epoch reshuffles order.",
+    "Epoch2 includes the declared world2-to4 migration at step200.",
+    "These are continuous training metrics, not official quantized full-image metrics.",
+    "Do not derive mean image PSNR from mean MSE; no official-quality claim."
+  ],
+  "parent_report_sha256": "1997998f08fcc28ffff51e6aa8cfbd3a0a4a60fb537b46899f961d9e97fe1bbc",
+  "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+  "selected_history_sha256": "c2558697b8a6376ce021301c7bb7956dbb0c83516d03f068dcdd744fb18f1ce8",
+  "script_sha256": "f9424fa80b421df1b517fb5ed32de2bf952236fc6d445bca2d8ea17e72506c4e",
+  "new_GPU_work": false,
+  "image_pixels_read": false,
+  "official_result_produced": false,
+  "seconds": 0.36387499421834946,
+  "exit_code": 0
+}
