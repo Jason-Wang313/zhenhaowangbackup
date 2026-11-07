@@ -1,3 +1,9 @@
+## Blur四新裁图链已真实启动：四rank缓存生成与首份校验通过 — 2026-11-07
+
+源码51996fd已发布并逐文件SHA核验，queued报告32d7c17已推送。物理node1/node3四H100实际领取round17_blur_multiview_cache_v1_node1/node3，四rank均已产生新缓存；快照1794019850.4793422为446/4096。每rank首份tensor的SHA/有限FP32/schema及原LQ逐值一致CPU核验通过，不是仅tmux/入队。两个worker心跳正常，无早期异常；接手查最新缓存/step/queue，勿重复启动。
+持久monitor PID3518028、upload PID3518027，身份在checkpoints/foundir_blur_multiview_v1/daemons.json。固定链缓存→CPU完整性→1280至1792（512新增步）→唯一最终官方150→CPU核验/小报告；1281/1536/1792及终态推送。当前快照尚未进入训练。下一步由控制器接续，无需用户GPU命令，不改已绑定源码；仅异常停链，保留全部资产。
+官方仍20.936988/.196516（原FLUX21.546762/.202622），25.9/.18未过；训练/诊断进展不等于官方收益。仍只攻Blur。详见reports/foundir_blur_multiview_v1_live_cache_2026-11-07.json及readiness；无累计GPU上限不改变本轮固定范围。
+
 ## Blur四新裁图训练链已准备，官方仍未改善通过 — 2026-11-07
 
 官方Blur150当前1280为20.936988/.196516，原FLUX21.546762/.202622；PSNR退步、LPIPS略好，25.9/.18均未过。训练拟合改善和上下文诊断不是官方修复；最新终态/误差分解已推ff4ccd5。仍只攻Blur。

@@ -1,0 +1,68 @@
+{
+  "CPU_check_seconds": 1.6988483630120754,
+  "GPU_hours_for_CPU_check": 0,
+  "cache_counts": {
+    "0": 109,
+    "1": 109,
+    "2": 114,
+    "3": 114
+  },
+  "cache_target": 4096,
+  "cache_total": 446,
+  "current_official_result_unchanged": {
+    "LPIPS": 0.1965160647034645,
+    "PSNR": 20.93698792775472,
+    "pass": false
+  },
+  "exit_code": 0,
+  "first_cache_per_rank": [
+    {
+      "cache_marker_sha256": "5edef1fca142b660a4cb4c2787bcb2f2e1e42a3a5fbea5d1802578ec65b4d7a5",
+      "key": "train_foundir_train_0034314__v0_x768_y568",
+      "rank": 0,
+      "tensor_sha_finite_FP32_and_exact_LQ_checked": true
+    },
+    {
+      "cache_marker_sha256": "b98675827d0e6889887159b1decd78e383c1379894e780334d1cae5f88d45905",
+      "key": "train_foundir_train_0034314__v1_x384_y384",
+      "rank": 1,
+      "tensor_sha_finite_FP32_and_exact_LQ_checked": true
+    },
+    {
+      "cache_marker_sha256": "d9e8ee299c377f5cc5186c1ff15bd6e70b82a4c95a502a5dbc833f5671e58081",
+      "key": "train_foundir_train_0034314__v2_x384_y568",
+      "rank": 2,
+      "tensor_sha_finite_FP32_and_exact_LQ_checked": true
+    },
+    {
+      "cache_marker_sha256": "31b6a502d8c4208d3618134484fe0cbd4322dbefd2d38744063f7d3aa88cbbba",
+      "key": "train_foundir_train_0034314__v3_x0_y0",
+      "rank": 3,
+      "tensor_sha_finite_FP32_and_exact_LQ_checked": true
+    }
+  ],
+  "heartbeats": {
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": "round17_blur_multiview_cache_v1_node1",
+      "pid": 111399,
+      "state": "running",
+      "utc_unix": 1794019848.9652193,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "3": {
+      "capability": "independent_node3_two_H100_jobs_only",
+      "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "job": "round17_blur_multiview_cache_v1_node3",
+      "pid": 299730,
+      "state": "running",
+      "utc_unix": 1794019848.6258273,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  },
+  "scientific_success": false,
+  "status": "four_H100_ranks_producing_new_view_caches",
+  "training_started": false,
+  "utc_unix": 1794019850.4793422
+}
