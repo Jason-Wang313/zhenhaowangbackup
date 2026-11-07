@@ -1,3 +1,10 @@
+## Blur两次实际更新核验完成：有学习，无官方联合收益 — 2026-11-07
+
+只读重放step0→1及199→200、原global8和rank RNG，四checkpoint SHA/Adam/采样核验，原loss精确复现/gradient norm固定容差通过；16逐图、两rank/launcher退出0、CPU finish通过，无optimizer更新。node3双H100 60.297005秒/0.033498336GPU-hours；CPU1.779189秒。四worker现无待续训练，以心跳为准。
+第1步MSE8/8改善、LPIPS8/8恶化，平均PSNR+.138572、LPIPS+.005266；第200步均值两项微弱改善，但3/8两项都差、只有2/8两项都好。原weighted loss两步均下降；不能说优化器完全没学习，也不能把此诊断当修复成功。实际delta方向已核对，不依据RGB比或原始SGD方向盲改LPIPS系数。
+官方150仍21.819776/.241321，较旧FLUX PSNR+.273014但LPIPS差19.0991%，未过25.9/.18；仍只攻Blur，无其它测试gate。两批不能概括全部200步，未证明官方唯一根因。完整记录见reports/foundir_blur_actual_updates_v1_result_2026-11-07.json与terminal.{json,md}，不要重复round12。
+下一项先核对历史是否已有等价小样本充分拟合实验，再冻结少量训练图原生delta学习能力对照，区分映射/优化学不会和覆盖/跨图干扰。尚未实现/提交新训练；training_fit_only，不是新质量gate。完整自主研究授权继续，保留全部资产和失败，不盲加旧200步、不转其它类别。
+
 ## Blur历史真实更新重放已准备：step0→1及199→200，无新训练 — 2026-11-07
 
 官方Blur150仍21.819776/.241321，未过25.9/.18，只推进Blur；没有联合质量改善。继续全栈自主修复，先确认实际Adam有限步效果，不由RGB/原始SGD梯度比直接改loss。
