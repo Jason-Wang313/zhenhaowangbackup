@@ -1,0 +1,154 @@
+{
+  "ETA_not_guaranteed": true,
+  "NCCL_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "actual_CUDA_restore_at1282_ranks": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "cache_nodes": {
+    "1": {
+      "allocated_GPU_hours": 0.28360477368036907,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 510.4885926246643,
+      "status": 0
+    },
+    "3": {
+      "allocated_GPU_hours": 0.2803369908862644,
+      "automatic_retry": false,
+      "error": null,
+      "gpus": 2,
+      "seconds": 504.6065835952759,
+      "status": 0
+    }
+  },
+  "completed_cache_GPU_hours": 0.5639417645666335,
+  "current_official_metrics": {
+    "lpips": 0.1965160647034645,
+    "psnr": 20.93698792775472
+  },
+  "daemons": {
+    "monitor": {
+      "command": [
+        "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+        "-S",
+        "-u",
+        "smoke/watch_foundir_blur_multiview_v1_cpu.py",
+        "monitor",
+        "--commit",
+        "51996fde325ed3aed6b35cd12a1643097310bf5a"
+      ],
+      "log": "logs/foundir_blur_multiview_v1_monitor.log",
+      "pid": 3518028
+    },
+    "source_commit": "51996fde325ed3aed6b35cd12a1643097310bf5a",
+    "upload": {
+      "command": [
+        "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/.conda/gpu-train-stable/bin/python",
+        "-S",
+        "-u",
+        "smoke/watch_foundir_blur_multiview_v1_cpu.py",
+        "upload"
+      ],
+      "log": "logs/foundir_blur_multiview_v1_upload.log",
+      "pid": 3518027
+    },
+    "utc_unix": 1794019764.4228578
+  },
+  "heartbeats": {
+    "1": {
+      "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+      "job": "round17_blur_multiview_train_v1_node1",
+      "pid": 111399,
+      "state": "running",
+      "utc_unix": 1794020457.615408,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    },
+    "3": {
+      "capability": "independent_node3_two_H100_jobs_only",
+      "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+      "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+      "job": "round17_blur_multiview_train_v1_node3",
+      "pid": 299730,
+      "state": "running",
+      "utc_unix": 1794020456.4569988,
+      "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+    }
+  },
+  "latest_checkpoint": {
+    "file": "steps/state_001307_1794020454414276601.pt",
+    "next_global_slot": 10456,
+    "parameter_hash": "2d65bd8fc0bd62cae2305af534ad77b6122d477a3106a260e3b1e2df7cae66ac",
+    "receipt_sha256": "34d55273ac32b26b28d7a6ee5b69ace71f56acff56c4d67b048c3183f55a1d86",
+    "sha256": "550e0f0a8d81175bdebee82c1ca103a64165b2c13ad5e86c6b2d21ea310f6384",
+    "step": 1307,
+    "world": 4
+  },
+  "mean_recent_seconds_between_saved_steps": 3.1766711711883544,
+  "official_Blur_pass": false,
+  "official_evaluation_additional_minutes_estimate": [
+    8,
+    12
+  ],
+  "parent_state_comparison": {
+    "GPU_hours": 0,
+    "checks": {
+      "history": true,
+      "model": true,
+      "next_global_slot": true,
+      "optimizer": true,
+      "parameter_hash": true,
+      "parameter_order": true,
+      "rank_rng": true,
+      "step": true,
+      "world": true
+    },
+    "exit_code": 0,
+    "new_checkpoint": {
+      "file": "steps/state_001280_1794020365343041562.pt",
+      "next_global_slot": 10240,
+      "parameter_hash": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "receipt_sha256": "34d55273ac32b26b28d7a6ee5b69ace71f56acff56c4d67b048c3183f55a1d86",
+      "sha256": "a0f3dddf23f6f6efe892b8e63ac8f10b03338b6cbc54664811896fff536fd5cd",
+      "step": 1280,
+      "world": 4
+    },
+    "new_data_views_are_intentional_recipe_change": true,
+    "new_receipt_identity_intentionally_differs": true,
+    "parent_checkpoint": {
+      "file": "steps/state_001280_1794016469646174863.pt",
+      "next_global_slot": 10240,
+      "parameter_hash": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+      "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+      "sha256": "7da9fdd561c79675e8f958a0b4ebec90b54c382e27173df3b7795e58b3c0cd2e",
+      "step": 1280,
+      "world": 4
+    },
+    "seconds": 2.9216995611786842,
+    "status": "actual_parent_to_new_step1280_state_exactly_preserved",
+    "training_continuation_same_as_old_crops": false
+  },
+  "status": "new_view_training_running_after_exact_parent_state_and_CUDA_reload_verification",
+  "step1281_publication": {
+    "commit": "1e4a7e5388faaa981cdc94decf39f59ba9cc9db9",
+    "event": "step1281",
+    "files": {
+      "reports/foundir_blur_multiview_v1_cache_2026-11-07.json": "25e1a5acd25a5b5266904a1325bd3148674da0c1c6b82e83e28a793ee2b7b392",
+      "reports/foundir_blur_multiview_v1_preflight_2026-11-07.json": "9a0c2677e113e12334b715e2f9ed6c1514d63cf48cb973b610a7c3ceffdd16d2",
+      "reports/foundir_blur_multiview_v1_step1281_2026-11-07.json": "8922c7b8788c9c96e8b61a21d384654854aa719299a7d7307db6e1dcca84fdff",
+      "reports/foundir_blur_multiview_v1_step1281_2026-11-07.md": "7424bb20f6bfc8586316ddddfbd5be239ef7be7e070607c892756fd667357e31",
+      "reports/foundir_blur_multiview_v1_step1281_state_2026-11-07.json": "1f4c4332af6189a0e529748c89fc6e099c67b2d1494726196a5296c21fb579d3"
+    }
+  },
+  "training_remaining_minutes_estimate": 25.678091967105864,
+  "training_results_are_training_fit_only": true,
+  "utc_unix": 1794020457.6403143
+}

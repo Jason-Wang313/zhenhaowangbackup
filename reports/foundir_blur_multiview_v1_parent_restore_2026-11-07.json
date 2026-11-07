@@ -1,0 +1,38 @@
+{
+  "GPU_hours": 0,
+  "checks": {
+    "history": true,
+    "model": true,
+    "next_global_slot": true,
+    "optimizer": true,
+    "parameter_hash": true,
+    "parameter_order": true,
+    "rank_rng": true,
+    "step": true,
+    "world": true
+  },
+  "exit_code": 0,
+  "new_checkpoint": {
+    "file": "steps/state_001280_1794020365343041562.pt",
+    "next_global_slot": 10240,
+    "parameter_hash": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+    "receipt_sha256": "34d55273ac32b26b28d7a6ee5b69ace71f56acff56c4d67b048c3183f55a1d86",
+    "sha256": "a0f3dddf23f6f6efe892b8e63ac8f10b03338b6cbc54664811896fff536fd5cd",
+    "step": 1280,
+    "world": 4
+  },
+  "new_data_views_are_intentional_recipe_change": true,
+  "new_receipt_identity_intentionally_differs": true,
+  "parent_checkpoint": {
+    "file": "steps/state_001280_1794016469646174863.pt",
+    "next_global_slot": 10240,
+    "parameter_hash": "dbb2fb4725a04c9dac6aea5d8f08622fae9f07c1261676ad254e7a934f43732f",
+    "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+    "sha256": "7da9fdd561c79675e8f958a0b4ebec90b54c382e27173df3b7795e58b3c0cd2e",
+    "step": 1280,
+    "world": 4
+  },
+  "seconds": 2.9216995611786842,
+  "status": "actual_parent_to_new_step1280_state_exactly_preserved",
+  "training_continuation_same_as_old_crops": false
+}
