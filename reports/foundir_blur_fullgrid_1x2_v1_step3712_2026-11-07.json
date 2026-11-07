@@ -1,0 +1,1456 @@
+{
+  "CPU_stages": {
+    "official_plan": {
+      "seconds": 7.587340719997883,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_FULLGRID_1X2_OFFICIAL_PLAN {\"status\": \"official150_metadata_plan_pass\", \"records\": 150, \"tiles_per_rank\": [1125, 1125], \"total_model_calls\": 4500, \"GT_pixels_decoded\": false, \"GPU_started\": false, \"seconds\": 1.5312352068722248, \"exit_code\": 0, \"GPU_hours\": 0, \"plan_sha256\": \"5c5613b722606abdc7fb10fec50c5b03c5ecd8c600cb72e17a285759c3b46c9c\", \"independent_blind_test\": false}\n"
+    },
+    "verify3688": {
+      "seconds": 10.84086399152875,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_FULLGRID_1X2_CHECKPOINT_VERIFIED {\"parent_model_Adam_history_sampler_RNG_mapping_exact\": true, \"step\": 3688, \"checkpoint\": {\"file\": \"steps/state_003688_1794035053160684319.pt\", \"next_global_slot\": 29504, \"parameter_hash\": \"edc8c64a3343f1b87d9cc5b4031b4302d3eef8866eacc4efc4eb4f23b8a1c427\", \"receipt_sha256\": \"7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb\", \"sha256\": \"7603469b9cb929104fda0f1329c51f25e097f1605452abd1dc263938c4f1b07e\", \"step\": 3688, \"world\": 2}, \"actual_SHA_Adam_RNG_sampler_verified\": true, \"Adam_states\": 100, \"rank_RNG_count\": 2, \"next_global_slot\": 29504, \"same_world_state_preserved\": false, \"model_Adam_sampler_preserved\": true, \"bitwise_four_rank_continuation\": false, \"new_data_views\": true, \"official_Blur_pass\": false, \"seconds\": 4.806590788066387, \"exit_code\": 0, \"GPU_hours\": 0}\n"
+    },
+    "verify3712": {
+      "seconds": 8.113849692046642,
+      "status": 0,
+      "stderr": "/inspire/hdd/project/multimodal-discrete-diffusion/liuxiaohong-25080/zhenhaowang/sitecustomize.py:30: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.\n  import pkg_resources\n",
+      "stdout": "BLUR_FULLGRID_1X2_CHECKPOINT_VERIFIED {\"parent_model_Adam_history_sampler_RNG_mapping_exact\": false, \"step\": 3712, \"checkpoint\": {\"file\": \"steps/state_003712_1794035170033838522.pt\", \"next_global_slot\": 29696, \"parameter_hash\": \"12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87\", \"receipt_sha256\": \"7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb\", \"sha256\": \"8bcb4feb711a6d7ae83fdb02b2ad9938500af9e4a3447052886c6721ef443c30\", \"step\": 3712, \"world\": 2}, \"actual_SHA_Adam_RNG_sampler_verified\": true, \"Adam_states\": 100, \"rank_RNG_count\": 2, \"next_global_slot\": 29696, \"same_world_state_preserved\": false, \"model_Adam_sampler_preserved\": true, \"bitwise_four_rank_continuation\": false, \"new_data_views\": true, \"official_Blur_pass\": false, \"seconds\": 2.225847776979208, \"exit_code\": 0, \"GPU_hours\": 0}\n"
+    }
+  },
+  "bitwise_four_rank_continuation": false,
+  "completed_GPU_hours": 0,
+  "cost_complete_for_submitted_jobs": false,
+  "detail": "\u5b8c\u6574step3712\u5b9e\u9645checkpoint/Adam/\u4e24rank RNG/\u91c7\u6837\u6838\u9a8c\uff1b\u4e0d\u662f\u8d28\u91cf\u901a\u8fc7\u3002",
+  "event": "step3712",
+  "fixed_final_step": 9472,
+  "fullgrid_epochs": 4,
+  "global_batch": 8,
+  "jobs": {
+    "train_node3": {
+      "job": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_1x2_v1.sh",
+        "id": "round20_blur_fullgrid_resume_1x2_train_v1_node3",
+        "nodes": [
+          3
+        ],
+        "purpose": "Blur complete3687 model/Adam/sampler ->9472 on node3 world2 global8; train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "bcc3b6d4146be7b5134aeac650ebec973a2589d8",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_1x2_data_v1.py": "30c84337f8b1be5dccebdc33676f64c7c77fb905c402df11a509996104630d2d",
+          "smoke/blur_fullgrid_1x2_snapshots_v1.py": "5e1f5d000b0efc10de32b98958a3421a0f9547d7b532ecd805b219030ae3c6fa",
+          "smoke/blur_fullgrid_1x2_state_v1.py": "c222340b5b4c772018480b70f64058510e13d7a878b192432ca5fff5b629fa75",
+          "smoke/evaluate_foundir_blur_fullgrid_1x2_official_v1.py": "50c50ffd11dc012ae061e507727896a8fcb057e94e2b155add0d38ea8d8ea735",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_1x2_v1.sh": "0a1f1b5f301c792c21fa83bdb700e08a977f68a19c4b012a2e4a221a1d3e2ebe",
+          "smoke/train_foundir_blur_fullgrid_1x2_v1.py": "9648da5d70121975be1eb7792f2b979b23ef56e377151f9b0ee84dc1bcc8ef28"
+        }
+      },
+      "node3.started": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "9fb8f147c91feea2eddae42e0bdc5138c587d21ea452bab8c6aebdf88324b608",
+        "node": 3,
+        "utc_unix": 1794034999.4268165
+      }
+    }
+  },
+  "latest_step": {
+    "file": "steps/state_003716_1794035223753784062.pt",
+    "next_global_slot": 29728,
+    "parameter_hash": "e4f6c2964734914e4a6f1b9368b09f46b7934f4f93ce331913da059146622c31",
+    "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+    "sha256": "cf7e1d84655ba31ec7e4a87a450fc6ab04b9ea30ac2063c15f09f95b3dada6c9",
+    "step": 3716,
+    "world": 2
+  },
+  "migration_from_step": 3687,
+  "new_views_per_source": 15,
+  "official_Blur_pass": false,
+  "old_fixed_crop_continuation_equivalent": false,
+  "only_official_quality_gate": true,
+  "parent_round20_GPU_hours_lower_bound": 8.197129152350957,
+  "physical_nodes": [
+    3
+  ],
+  "same_world_state_preserved": false,
+  "total_exposures_per_source": 74,
+  "training_fit_snapshots": {
+    "step_003712_summary": {
+      "both_better_than_LQ": 7,
+      "means": {
+        "candidate": {
+          "lpips": 0.19085252285003662,
+          "psnr": 22.192277908325195,
+          "ssim": 0.7302444829997176
+        },
+        "lq": {
+          "lpips": 0.4121383782476187,
+          "psnr": 19.328647136688232,
+          "ssim": 0.675306833080224
+        }
+      },
+      "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+      "quality_gate": false,
+      "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+      "records": [
+        {
+          "item": {
+            "crop_xy": [
+              985,
+              489
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0034315.png",
+              "gt_phash": "864241b5def272f6",
+              "gt_sha256": "e8b1c8e8415d775977e4290a86f6ee074bf4d4273d3bdaabe9941c0f9b91af55",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0034315.png",
+              "lq_sha256": "1ae9c98f5cf40921758f44d05cf5c4eff77200bcd9bed013cb6c3679d81f515e",
+              "original_split": "train",
+              "record_id": "foundir_train_0034314",
+              "source_group": "29428aab2427a4bd38c27534643b053b3159fefae8fbea2f61872d24315b52cf",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.10154455155134201,
+              "psnr": 27.12267303466797,
+              "ssim": 0.8992398165438477
+            },
+            "lq": {
+              "lpips": 0.16538362205028534,
+              "psnr": 22.916574478149414,
+              "ssim": 0.875997512366531
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0034314_full.png",
+            "sha256": "0ec50a21b64ca44470d75b85f7bf374d7604a08fa6a1b883d341c02114048334"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 0,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 0,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x0_y0.png",
+              "sha256": "5137d2d8acc8c97c8d5157eeb6e266d4647302ada16ffe6776ae5f55b941aac0",
+              "tile_key": "foundir_train_0034314__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x384_y0.png",
+              "sha256": "9a469925bb3048045c77b2a54bf138d66264642137438cd107cdfede9e27438d",
+              "tile_key": "foundir_train_0034314__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x768_y0.png",
+              "sha256": "397674714f72856fd8656a8358190fdff305c5f7aab0c67ae46bd7f02eedb1c2",
+              "tile_key": "foundir_train_0034314__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x1152_y0.png",
+              "sha256": "dfe5c3fb9c98d6a6c849fa01504594715853cb945416e579c587527d037f83a2",
+              "tile_key": "foundir_train_0034314__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x1408_y0.png",
+              "sha256": "45757da920b6fb7fdb51cb8bc443690fa781e563aa5330a3b2f67ef9ad93a0a2",
+              "tile_key": "foundir_train_0034314__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x0_y384.png",
+              "sha256": "a9eec09c3b63a1cf6ad7e8fc328a6b3e4abbeb40d000110d4172eeaa4647c7ec",
+              "tile_key": "foundir_train_0034314__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x384_y384.png",
+              "sha256": "229554f2384bb521f99d0dc310bd07cf6c8cf56890b70f49a34fa0acac88899b",
+              "tile_key": "foundir_train_0034314__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x768_y384.png",
+              "sha256": "fb02224c1324d8b4f8ab0c977569e9b8e671fb11ea5e4ee7f9df844c31997d6d",
+              "tile_key": "foundir_train_0034314__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x1152_y384.png",
+              "sha256": "ac3b18f167d3cfe55b8dd3a2da7fd9b9f86884c6dae86d5bcf4093379030b8f9",
+              "tile_key": "foundir_train_0034314__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x1408_y384.png",
+              "sha256": "068a695c46d4d0a78b7b849899771d57ad0fae974f36ab3b966ad0667f20e139",
+              "tile_key": "foundir_train_0034314__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x0_y568.png",
+              "sha256": "7c21930caf544c02f250d61998ddc44ef15cfa0dd74e34056f7d02768331d64a",
+              "tile_key": "foundir_train_0034314__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x384_y568.png",
+              "sha256": "83d20f2c20705abf555ee07247d17d5191c6746b8e967ce404211ddcd663951b",
+              "tile_key": "foundir_train_0034314__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x768_y568.png",
+              "sha256": "4f3df1e0fe7fe04446476042812eef828ba1120ac9268d0b0d8a8152d05e72f3",
+              "tile_key": "foundir_train_0034314__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x1152_y568.png",
+              "sha256": "ad44f9a0b65e872205d5b29b95413881bbdca969dfedd52c7ce8c5466c5e0401",
+              "tile_key": "foundir_train_0034314__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0034314__x1408_y568.png",
+              "sha256": "0b65450b52a4d980e19b441d53bc79cea01a8503f0cb8f95a00a0ccde251fc9f",
+              "tile_key": "foundir_train_0034314__x1408_y568"
+            }
+          ]
+        },
+        {
+          "item": {
+            "crop_xy": [
+              1408,
+              178
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0067545.png",
+              "gt_phash": "e2fa3c3534ccb90d",
+              "gt_sha256": "f0c7d6eb0ec78b49491e7d41713eac4341ec5347e542e147c3e6d24ba2526c67",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0067545.png",
+              "lq_sha256": "92d7ba32d947240384a704be80980e4695029b4e6f8e3584ca46e72dcd0f9854",
+              "original_split": "train",
+              "record_id": "foundir_train_0067544",
+              "source_group": "24babaf68c57fa4e4ad0ec90f17424e4669751d07f04232255e13a9cd9814251",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.16171331703662872,
+              "psnr": 21.78500747680664,
+              "ssim": 0.7395438675829163
+            },
+            "lq": {
+              "lpips": 0.551925539970398,
+              "psnr": 16.6766414642334,
+              "ssim": 0.5713996481188036
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0067544_full.png",
+            "sha256": "4863f30c523f8e7130417f1af5e3907594be330a7fdb1ebe45f5a5de119339c5"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 1,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 1,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x0_y0.png",
+              "sha256": "6fa17c23511797a5973a03fe9db5d6ec9897f578ab87509ed1c02baebc156ecc",
+              "tile_key": "foundir_train_0067544__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x384_y0.png",
+              "sha256": "17a1fbd80b2a0791fd58033036045fbc368c13b93dbe29402042630355571433",
+              "tile_key": "foundir_train_0067544__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x768_y0.png",
+              "sha256": "3f53337b33f8053ede9c3f164ae5b80e63930fdd50941ba29b374368014a2f01",
+              "tile_key": "foundir_train_0067544__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x1152_y0.png",
+              "sha256": "c1f9f9fa4ad06718340c544ccd5e227b0d9f9615865e949eb08eb0c7aa1ab593",
+              "tile_key": "foundir_train_0067544__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x1408_y0.png",
+              "sha256": "fe1187d4b482688ac946dff0c4feee31c65cc0c90b5b04b540cc227ecb168198",
+              "tile_key": "foundir_train_0067544__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x0_y384.png",
+              "sha256": "cc98f5a83f63bfd70c8ab68ae31ca821cf6d57bf336bcec51a085b7328b1c21c",
+              "tile_key": "foundir_train_0067544__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x384_y384.png",
+              "sha256": "a836f852a7cbc3992d89ed22cc3521683ec686bab85719af702d3014c300659c",
+              "tile_key": "foundir_train_0067544__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x768_y384.png",
+              "sha256": "ec6bfbf16030022a8f3d4e9b6cbba3cc3c7bb42cdf0ae561d370194ec59ae165",
+              "tile_key": "foundir_train_0067544__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x1152_y384.png",
+              "sha256": "7922a8a92db9ee59900ac637a927e3c61a80733f116ea61d038929538d4e84ca",
+              "tile_key": "foundir_train_0067544__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x1408_y384.png",
+              "sha256": "57f256f36653c6b1a0f24b35a4f86a5e2fc9533bd7706b66d235fd3f9dc0b213",
+              "tile_key": "foundir_train_0067544__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x0_y568.png",
+              "sha256": "d28986b677aec6d095bb5c9678a2b71d8f3cfca27491c81c1c086795047a0d52",
+              "tile_key": "foundir_train_0067544__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x384_y568.png",
+              "sha256": "f167a54d762ac7a07ccfcca7861d44dae6f9361fc98d20a46712edf69caccf23",
+              "tile_key": "foundir_train_0067544__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x768_y568.png",
+              "sha256": "5e739dc6e82aba0d6a83a91bdcda7f8991e1c71f8aa4e548b95e31a528e9ecd4",
+              "tile_key": "foundir_train_0067544__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x1152_y568.png",
+              "sha256": "c2315bb9f437221c0dbcbf49b44164625b311c97a6fced45cb08a36bbfeb4518",
+              "tile_key": "foundir_train_0067544__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067544__x1408_y568.png",
+              "sha256": "7dbb0044d199297175c742fd3aef7b8421775bc2ebee99ffeaa647b4b56c8ca9",
+              "tile_key": "foundir_train_0067544__x1408_y568"
+            }
+          ]
+        },
+        {
+          "item": {
+            "crop_xy": [
+              793,
+              400
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0068706.png",
+              "gt_phash": "ee10d1f80be94ee9",
+              "gt_sha256": "2ee7abf250c40d8290b21d35e790a147814b3021b77a48457c305caa5f91dcac",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0068706.png",
+              "lq_sha256": "31885e69147ac198cf197aa31b1d6bbdf10d770e135bec2be611b5f3fce239b4",
+              "original_split": "train",
+              "record_id": "foundir_train_0068705",
+              "source_group": "360a962a9c896f07597da259fba17bff9a024f7de4da6f7f4ee4ea9533443111",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.239570751786232,
+              "psnr": 24.178787231445312,
+              "ssim": 0.7060866021225936
+            },
+            "lq": {
+              "lpips": 0.5533243417739868,
+              "psnr": 20.1311092376709,
+              "ssim": 0.6124536780188249
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0068705_full.png",
+            "sha256": "a9829c73dfe5b2ea427d128805a557851c28c9260ebbb30f7e19ffb5e01d565c"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 0,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 2,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x0_y0.png",
+              "sha256": "d3bdf410fca7d5cf118b67667fcad4b11c9d45a09fbacf82625e128bb4f8686d",
+              "tile_key": "foundir_train_0068705__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x384_y0.png",
+              "sha256": "da5af31a2e331eb9634bcfa695a89761d61632be282f35fa89a696084c8fa541",
+              "tile_key": "foundir_train_0068705__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x768_y0.png",
+              "sha256": "91594348c6975b5151eeb1c56e9836e69e2d7828d7df33e969dbc13bbe51d56e",
+              "tile_key": "foundir_train_0068705__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x1152_y0.png",
+              "sha256": "18c373325e7d144e8c857f6a43d758f469d84a1359db65785491bb9862f19708",
+              "tile_key": "foundir_train_0068705__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x1408_y0.png",
+              "sha256": "02e532768113c8684e53526929767920f855cf36c02ee55a6c44a485fa11fe73",
+              "tile_key": "foundir_train_0068705__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x0_y384.png",
+              "sha256": "febe637080554839dd3a139e8bb6419f7ab0b70f1b70eafc959ab5107cf0ce32",
+              "tile_key": "foundir_train_0068705__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x384_y384.png",
+              "sha256": "86caccc0c69f8bc6e5ebbf33a6c96176f6d0f7cb8db397f08fc5f5f9ae4d04ab",
+              "tile_key": "foundir_train_0068705__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x768_y384.png",
+              "sha256": "3bd2b03faf45d5ea3821a91c3de67b3176aaac45cfde97046ad5bc13cb52aff9",
+              "tile_key": "foundir_train_0068705__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x1152_y384.png",
+              "sha256": "c611bc91412f1348b70cd5046a72301b56bf82395b02a1d4bf1d80826e0226b8",
+              "tile_key": "foundir_train_0068705__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x1408_y384.png",
+              "sha256": "84e2334ba9ae3dca4b2baefdc3bab7cb679692bce4d3f49c40e1fad3c2cfe9aa",
+              "tile_key": "foundir_train_0068705__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x0_y568.png",
+              "sha256": "5aabadcc8e17ff06bd3908bd7c27ef9432f4b600332aca24c9a8a43d96392db4",
+              "tile_key": "foundir_train_0068705__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x384_y568.png",
+              "sha256": "1df79ac36c89de6eebee94b0b3d7cd48fff50e301b1ca50ae1069d5b15bab28a",
+              "tile_key": "foundir_train_0068705__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x768_y568.png",
+              "sha256": "c5c3e6082d44f0e788716ab0baf0537214c04b4e1b1508a162973494906da0cc",
+              "tile_key": "foundir_train_0068705__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x1152_y568.png",
+              "sha256": "6e182f1b0514008aae0d9c2c67bb5169331ca5737d1703bd9491a861480d1fcd",
+              "tile_key": "foundir_train_0068705__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0068705__x1408_y568.png",
+              "sha256": "e645710ff8afd765ef29e2afdab0b6bd294938a4479ad58c72c7c20776cccce5",
+              "tile_key": "foundir_train_0068705__x1408_y568"
+            }
+          ]
+        },
+        {
+          "item": {
+            "crop_xy": [
+              1212,
+              185
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0033403.png",
+              "gt_phash": "a809af3bc92e5ad9",
+              "gt_sha256": "ae174b9e635c0b1adb278e9825da85d0378fad0d5fdf5cdfda5c10159bbb610a",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0033403.png",
+              "lq_sha256": "142e03f85e57d8ea2ddc2f2751d32d56396a88b6ea4f800b650ffdb87845abd5",
+              "original_split": "train",
+              "record_id": "foundir_train_0033402",
+              "source_group": "d292a4b32f38d8410147036d78861c0e4a170f279b7214abf443e55e087c9800",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.29284265637397766,
+              "psnr": 18.6069278717041,
+              "ssim": 0.554969230181917
+            },
+            "lq": {
+              "lpips": 0.44727593660354614,
+              "psnr": 19.88385772705078,
+              "ssim": 0.6007926540346933
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0033402_full.png",
+            "sha256": "01538b1274eeb4012fc4e622c3461373a429461e71d94116138a6abb1e945d46"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 1,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 3,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x0_y0.png",
+              "sha256": "35d0834941e5d3076eebbebb54d40d50dafc96645e0c3a70a434009322ae57a5",
+              "tile_key": "foundir_train_0033402__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x384_y0.png",
+              "sha256": "11f3d5ef2d241e85afc8f86d2c9a2f4308f91adeb015f36efba4a7602e71d469",
+              "tile_key": "foundir_train_0033402__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x768_y0.png",
+              "sha256": "ceda21856960819e33e470dd282fbe83d010ee6f80b71aceb277f9403ec035df",
+              "tile_key": "foundir_train_0033402__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x1152_y0.png",
+              "sha256": "4d1801f2571f5b4bc1dc96b459c212e8e5efea641c1ca682b44c4c51c1bbd114",
+              "tile_key": "foundir_train_0033402__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x1408_y0.png",
+              "sha256": "971f031974e034667762ffdd841f902079143a3f972ff174479be83ef7a19036",
+              "tile_key": "foundir_train_0033402__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x0_y384.png",
+              "sha256": "3cf71f9dc0b9811e1dbbfd7031e2f4b41ca7c82f82a62f8202ef1ab9ed62f881",
+              "tile_key": "foundir_train_0033402__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x384_y384.png",
+              "sha256": "d5d8c80ec77bb25f85a35d0e22435030104c2bf3e43ca059dbc8340f277173a3",
+              "tile_key": "foundir_train_0033402__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x768_y384.png",
+              "sha256": "9770f60c7019c585347ce51f30909aac5af77b9acb58bada6ef8ba8467275461",
+              "tile_key": "foundir_train_0033402__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x1152_y384.png",
+              "sha256": "50f8f0e0e1a98ea6ffb1af42f911d7517ef0777dccc20cf0b95faa8e5b4bfa60",
+              "tile_key": "foundir_train_0033402__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x1408_y384.png",
+              "sha256": "96efef3b8e0cc6ffcda5c9d537286f88dfde478ec8f485e9bb49fc768aa34717",
+              "tile_key": "foundir_train_0033402__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x0_y568.png",
+              "sha256": "5745708d24436a2d9cf31d70f771d6ee9bdd90934b068e723d274993ba152f56",
+              "tile_key": "foundir_train_0033402__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x384_y568.png",
+              "sha256": "375177dc4c4bf8aa51920bdf7ab79dc7289e5692f89d4870902d9e16f583451f",
+              "tile_key": "foundir_train_0033402__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x768_y568.png",
+              "sha256": "18e0d4ad04fa9c32c78c95f886bbee5fe6bb03cbdb318d5d6581566923577bc3",
+              "tile_key": "foundir_train_0033402__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x1152_y568.png",
+              "sha256": "0631332685ca5dc4f480a2f5791077285c47472f11c79b23e89efd6dacc66f77",
+              "tile_key": "foundir_train_0033402__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0033402__x1408_y568.png",
+              "sha256": "4d6eba3174c6cba22485b9d415aefded20b1269e15e5000a321e361723d64934",
+              "tile_key": "foundir_train_0033402__x1408_y568"
+            }
+          ]
+        },
+        {
+          "item": {
+            "crop_xy": [
+              708,
+              504
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0021201.png",
+              "gt_phash": "d171f1f61f0fc822",
+              "gt_sha256": "bab1b1c77eff9eeea8ccdc0b50bbf6a15eae7527e5e6fad68eecb367774a343f",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0021201.png",
+              "lq_sha256": "7963f3585543ad477815d116b95997bafff99b934079adc7db22c1761836766e",
+              "original_split": "train",
+              "record_id": "foundir_train_0021200",
+              "source_group": "de4aa3ac92e3c31ea9b5de753df3f2e7da9c7e427d9904c4266b1dfaba3dd98f",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.18182918429374695,
+              "psnr": 22.306413650512695,
+              "ssim": 0.6894255172397692
+            },
+            "lq": {
+              "lpips": 0.31513676047325134,
+              "psnr": 21.167987823486328,
+              "ssim": 0.7016677173431544
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0021200_full.png",
+            "sha256": "9dfe2a73a2d2fbbc1aa1be7784e509532b91e9677e6373608033451817357109"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 0,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 4,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x0_y0.png",
+              "sha256": "abcfa7f1937cc6181b605d8033c09c77dd8b129dcf4347d44d66a6d5b19bdd6c",
+              "tile_key": "foundir_train_0021200__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x384_y0.png",
+              "sha256": "e7d5c57918f9c3ae462fc9a36093bdd9ccb68b45acb6c74761ea2542711a36a6",
+              "tile_key": "foundir_train_0021200__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x768_y0.png",
+              "sha256": "4651d213085b7d968fe9440c138a71e26747cbaaa13531e31e6920ff4e78b923",
+              "tile_key": "foundir_train_0021200__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x1152_y0.png",
+              "sha256": "13a3c336868867a465bd3bed7c0984ee228f8b9bc314f091333cf6790ad8b066",
+              "tile_key": "foundir_train_0021200__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x1408_y0.png",
+              "sha256": "790008cc3b23dc2182a6f044f977ea7462b1183210a33363732e3c5336d6f424",
+              "tile_key": "foundir_train_0021200__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x0_y384.png",
+              "sha256": "d7669d4f467c34772e379a54b1710fa5cbfd53341504f9babd3d9c983c6ccee5",
+              "tile_key": "foundir_train_0021200__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x384_y384.png",
+              "sha256": "1f67e5f566c7073398804cc332dc71c8b80eb05f83c4754bd8aed5e2f331783f",
+              "tile_key": "foundir_train_0021200__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x768_y384.png",
+              "sha256": "5b46c14642798a216fc8125504de7cb4adcc22f69e3c651faaf14f70b5883303",
+              "tile_key": "foundir_train_0021200__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x1152_y384.png",
+              "sha256": "f600603bee80cd8ffd1d0960d32d3754a1fcac31dd38349abc227efa09807014",
+              "tile_key": "foundir_train_0021200__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x1408_y384.png",
+              "sha256": "f8ca01dbc8c3072118b855692b046a96086422ddd96822ea3f2a19b404b38bc6",
+              "tile_key": "foundir_train_0021200__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x0_y568.png",
+              "sha256": "a9154c42b240392fd0a65d5196e165a6f01d86751603ef5147469743c46e62e9",
+              "tile_key": "foundir_train_0021200__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x384_y568.png",
+              "sha256": "0363f4114660914f1120f90e784833ee5bb8c59c4aa35fec7fc9cbc8ae2dc47e",
+              "tile_key": "foundir_train_0021200__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x768_y568.png",
+              "sha256": "ea86987fe8dac900ff08b78b67ace33b9a6fad09d9ff938a3c66549e1465e134",
+              "tile_key": "foundir_train_0021200__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x1152_y568.png",
+              "sha256": "8136799f0bbb7c7d53a93f18f72424c9c1e85cb597711c4fb3b28e6daf358523",
+              "tile_key": "foundir_train_0021200__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0021200__x1408_y568.png",
+              "sha256": "8b7e294e50760807bbd3c6a70c0582c3d80412fb70eb45cfdd591530ff1da331",
+              "tile_key": "foundir_train_0021200__x1408_y568"
+            }
+          ]
+        },
+        {
+          "item": {
+            "crop_xy": [
+              691,
+              564
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0067699.png",
+              "gt_phash": "fcf5a56143da11d4",
+              "gt_sha256": "12a104018079f1ebeabe5d41e0a0d30204d5843ae8192234845a56ccb69244ec",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0067699.png",
+              "lq_sha256": "be73e48f06334325bc4aa9b9f36bfefebf2b97f6e1523cddbd5cfe75701488f7",
+              "original_split": "train",
+              "record_id": "foundir_train_0067698",
+              "source_group": "6350648d9fe361495b0d43b003fa20d5c78931f1db389fd10b74c6a66c8a5d78",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.306037575006485,
+              "psnr": 19.16429328918457,
+              "ssim": 0.5163624427277191
+            },
+            "lq": {
+              "lpips": 0.6853945851325989,
+              "psnr": 17.983388900756836,
+              "ssim": 0.41636048584381397
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0067698_full.png",
+            "sha256": "c239bfa4e956c00aa5f70b93eb7bc49d63bdf6d41c83961f026ac111cd04cf73"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 1,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 5,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x0_y0.png",
+              "sha256": "85f065dba33a0b254bcc57e5bbd73f259a59164788742737b9a0a77affc688d9",
+              "tile_key": "foundir_train_0067698__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x384_y0.png",
+              "sha256": "8c3a0619ed2787cabad362eb1f1f48d97fb567b0cf1b1fd447bf94c775ad932c",
+              "tile_key": "foundir_train_0067698__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x768_y0.png",
+              "sha256": "96239d170f3696b455bf9c677243f23d38569162aa268d77f6c856a6ec4af438",
+              "tile_key": "foundir_train_0067698__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x1152_y0.png",
+              "sha256": "fe1479bff38887b9ac815a428b54fc2fa8d45ada6d833a2f6dee2f9de63b1053",
+              "tile_key": "foundir_train_0067698__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x1408_y0.png",
+              "sha256": "f12088a3754a935f02d27693fb23c71296b873a8a03f42299895cb728c13877a",
+              "tile_key": "foundir_train_0067698__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x0_y384.png",
+              "sha256": "d16ce35b2ee70b27280de727353467d038857837c920b4ce3361ff1cc36110e0",
+              "tile_key": "foundir_train_0067698__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x384_y384.png",
+              "sha256": "cce0e408f6018d4b62269e5264128ec5129da2567ed7eec1911283cbe4b110fb",
+              "tile_key": "foundir_train_0067698__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x768_y384.png",
+              "sha256": "942c7b5d6719a296267ead8235e3df770dd67224e6627dab2c4c44f36e28508f",
+              "tile_key": "foundir_train_0067698__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x1152_y384.png",
+              "sha256": "f42035098d25af86d79f40fb1dccac3abc61cea72a5faf8eb87a2d35dd065996",
+              "tile_key": "foundir_train_0067698__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x1408_y384.png",
+              "sha256": "298421672e698458196aebd2a7b9aa18c4dc0beb547a5b4cac04163e2a6d6b2f",
+              "tile_key": "foundir_train_0067698__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x0_y568.png",
+              "sha256": "afe46e669b07c24f71004264b324794db419623384cb1ac94d984764cf146d0c",
+              "tile_key": "foundir_train_0067698__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x384_y568.png",
+              "sha256": "95ed2e5056b6d714910f62e3ed0043a2b6822fde04fcff44febb0c11624f868a",
+              "tile_key": "foundir_train_0067698__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x768_y568.png",
+              "sha256": "0eea1b07219f7429ead47f0cbfd54c79ee52c41c5618876e1969105dfec36b10",
+              "tile_key": "foundir_train_0067698__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x1152_y568.png",
+              "sha256": "f9faf6636d910c502030ea8bce81de02d6de3df545769abac69c365940558160",
+              "tile_key": "foundir_train_0067698__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0067698__x1408_y568.png",
+              "sha256": "366797904babb00292f8323a84c95260f6137171b935a61bf4dca5093d574b2a",
+              "tile_key": "foundir_train_0067698__x1408_y568"
+            }
+          ]
+        },
+        {
+          "item": {
+            "crop_xy": [
+              578,
+              395
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0053871.png",
+              "gt_phash": "e004f3def085f3e8",
+              "gt_sha256": "084aeb7ccc7b30137996c9c253b5b1de0abd0d464a893471d5a1061795d09d99",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0053871.png",
+              "lq_sha256": "92e0b3cf1ac62e025ef2e59210204ada4b399593c8b8a8d02599e88776ae0e8e",
+              "original_split": "train",
+              "record_id": "foundir_train_0053870",
+              "source_group": "f102b4b3a25274b44e289fd47860ff979b2938fbfbdac7e63cbfd4324dbe14a5",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.11303365975618362,
+              "psnr": 25.110912322998047,
+              "ssim": 0.8818156147912334
+            },
+            "lq": {
+              "lpips": 0.3612285256385803,
+              "psnr": 19.84185028076172,
+              "ssim": 0.7709621167032
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0053870_full.png",
+            "sha256": "e82ac3e6bb75b9dc02cb3d92367099ebd402be28fb7d457d536d5db78ac0b6dd"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 0,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 6,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x0_y0.png",
+              "sha256": "a49d71d9d1b28dea43cd2d0eb027b8159dea34fe61aefbad638e912a9dd3fd40",
+              "tile_key": "foundir_train_0053870__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x384_y0.png",
+              "sha256": "57a9d283088bb2fe6fea4583ad45c27960b71e2df757ef9f7188e3d6874639a0",
+              "tile_key": "foundir_train_0053870__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x768_y0.png",
+              "sha256": "e87593dab30f9b6d342df8c46e2cc3a342248b9e80a63b4bfd411099c59de9e9",
+              "tile_key": "foundir_train_0053870__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x1152_y0.png",
+              "sha256": "1559897d6d7792c65442a3960b1bd68bd85a62fcfad85a538e9a0365e0334241",
+              "tile_key": "foundir_train_0053870__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x1408_y0.png",
+              "sha256": "891e387e83adfc58a506525cc91646f999bb4e4b12d885b91b849140b8b25b35",
+              "tile_key": "foundir_train_0053870__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x0_y384.png",
+              "sha256": "5e4f84b4def0cd0e5b9e84e1028fadcfa6ccdc5a2ca9a48cf22e41ef5b49e3bc",
+              "tile_key": "foundir_train_0053870__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x384_y384.png",
+              "sha256": "12e023159e445016404929ac486005b10571bd70ccbe9f1ba124762988226f5c",
+              "tile_key": "foundir_train_0053870__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x768_y384.png",
+              "sha256": "ca36ddde002166d0164001d81c017d2b3013270260c3fad05fa78dcd6cd91459",
+              "tile_key": "foundir_train_0053870__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x1152_y384.png",
+              "sha256": "a15b335f62537852002b07fb481f99d02318ebe6d9f6599a44c5b7471651b74b",
+              "tile_key": "foundir_train_0053870__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x1408_y384.png",
+              "sha256": "7cc314eb4ac05e1639b9dc4ff3af82c126c190c1c8c96af0577ceeae060f3af7",
+              "tile_key": "foundir_train_0053870__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x0_y568.png",
+              "sha256": "0a2c8d678d41baa8d5499df182445c32930bfb444595ade1af36ec65b30373dc",
+              "tile_key": "foundir_train_0053870__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x384_y568.png",
+              "sha256": "f4bce0519e88c1747cd3bf039e93fd32645df87be1e285bd27e5bef5d2fd020e",
+              "tile_key": "foundir_train_0053870__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x768_y568.png",
+              "sha256": "195acdd22276480684667ff74347dfaafc8a69ba61d31a67c4e25539a4e1253a",
+              "tile_key": "foundir_train_0053870__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x1152_y568.png",
+              "sha256": "1186c30f24fd2d43690c74105672991c2e8c4d565e386d95eb3448302310fdc8",
+              "tile_key": "foundir_train_0053870__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0053870__x1408_y568.png",
+              "sha256": "e9722695f8b32d23a5c23a1b03b454d7c99fe972584aaffa4f3b57f8270bcd84",
+              "tile_key": "foundir_train_0053870__x1408_y568"
+            }
+          ]
+        },
+        {
+          "item": {
+            "crop_xy": [
+              116,
+              203
+            ],
+            "role": "train",
+            "row": {
+              "category": "01Blur",
+              "composition_size": "1",
+              "degradations_json": "[\"blur\"]",
+              "gt_path": "data/foundir/MillionIRData/Train/01Blur/GT/0099773.png",
+              "gt_phash": "f70d95a308b79c9c",
+              "gt_sha256": "e4354a6abddd65061fa6124eb764d9d5d09d97b48d2e9e45c403ce36f62b38ac",
+              "height": "1080",
+              "lq_path": "data/foundir/MillionIRData/Train/01Blur/LQ/0099773.png",
+              "lq_sha256": "c1e3209f4dc5d4a815b1d095e300825edd56cfa7d222ebb958901973ad56f8ea",
+              "original_split": "train",
+              "record_id": "foundir_train_0099772",
+              "source_group": "96977d7de20eb6f4e1dfa39beb7c77d1506eff793cf7a72b12d0d68ab5f9c467",
+              "split": "train",
+              "width": "1920"
+            }
+          },
+          "metrics": {
+            "candidate": {
+              "lpips": 0.13024848699569702,
+              "psnr": 19.263208389282227,
+              "ssim": 0.8545127728077442
+            },
+            "lq": {
+              "lpips": 0.2174377143383026,
+              "psnr": 16.027767181396484,
+              "ssim": 0.8528208522127712
+            }
+          },
+          "output": {
+            "path": "snapshots/step_003712/foundir_train_0099772_full.png",
+            "sha256": "3ff4ad6ee53b5a6ee08c0ad42c243f777229a3d0a8a4d906892c1bf61f2ecdae"
+          },
+          "parameter_hash": "12411bef8b85517cf064c50296f24b66a2b728a54275d8b3c5ac8e7cbeb65c87",
+          "rank": 1,
+          "receipt_sha256": "7bd016bf578fbfee2ceb94aabe6eb6d7b6125730b4bfa962adfc754e3e617cdb",
+          "scope": "training_fit_only",
+          "source_index": 7,
+          "step": 3712,
+          "tiles": [
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x0_y0.png",
+              "sha256": "de8dd0384a852cb2a86fcab283444f3d10b3fe3a1a22b017239d712783bd24d1",
+              "tile_key": "foundir_train_0099772__x0_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x384_y0.png",
+              "sha256": "d8ef7ec313bc006393281fb5eea7e67dcf23c7380a5ac07515494a3e4397e40e",
+              "tile_key": "foundir_train_0099772__x384_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x768_y0.png",
+              "sha256": "f36ec774293f5eb836b5d9c6b0824bea3f14422a55b30f899f74fd6a14465cf7",
+              "tile_key": "foundir_train_0099772__x768_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x1152_y0.png",
+              "sha256": "66c7b62c393799aa9eb1367b0b290501faeeb6dfa4e45700db5cf2b0cbd3c302",
+              "tile_key": "foundir_train_0099772__x1152_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x1408_y0.png",
+              "sha256": "d43aeb22875c688987d3faa294731ada5408df400537aa40d94eded71ea8f675",
+              "tile_key": "foundir_train_0099772__x1408_y0"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x0_y384.png",
+              "sha256": "7c30462596d360d42a0c656534ad635b8877d82d37be2cbe211f3c07f752a34b",
+              "tile_key": "foundir_train_0099772__x0_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x384_y384.png",
+              "sha256": "e6eae17a406efc4642736e257fa592335b3520134a1682b87bfdc2e0e9b33859",
+              "tile_key": "foundir_train_0099772__x384_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x768_y384.png",
+              "sha256": "20ddd3a20ec77aad86cbc19328d9ed3232df37556d7ef766a15be3c39e9adbfa",
+              "tile_key": "foundir_train_0099772__x768_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x1152_y384.png",
+              "sha256": "f8e5ea4c0055784ffe37d95be4d56284fdd808a02cc5a868da1e7c8aa83bf800",
+              "tile_key": "foundir_train_0099772__x1152_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x1408_y384.png",
+              "sha256": "476fda4b52ba709f2ce1ae29a38ebb33366444bbea4e5088920dd8d41fa70a37",
+              "tile_key": "foundir_train_0099772__x1408_y384"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x0_y568.png",
+              "sha256": "46153ba2b927b4d4366f19bf752ea53dde5b2ba9f06ceceafd86d3a27526b596",
+              "tile_key": "foundir_train_0099772__x0_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x384_y568.png",
+              "sha256": "0347d039a1370ca70c77691494ee6635d258a43d42724a8444862954521c40e3",
+              "tile_key": "foundir_train_0099772__x384_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x768_y568.png",
+              "sha256": "56ad357ccd376d139650702ce66bc7c791b67196259438815077a93caf3edd30",
+              "tile_key": "foundir_train_0099772__x768_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x1152_y568.png",
+              "sha256": "0e1571d1e1dc2c7863d832888ae779055ecaae8e5a65ae98cc1b0f7d90b9c799",
+              "tile_key": "foundir_train_0099772__x1152_y568"
+            },
+            {
+              "path": "snapshots/step_003712/foundir_train_0099772__x1408_y568.png",
+              "sha256": "ce2bfe90c4be63df6c4d57feeac0cba7b6e62f188bf75b9e461e89c89fa24c04",
+              "tile_key": "foundir_train_0099772__x1408_y568"
+            }
+          ]
+        }
+      ],
+      "scope": "training_fit_only",
+      "step": 3712
+    }
+  },
+  "training_logs": [
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.6884368062019348,
+      "loss": 0.0452913623303175,
+      "lpips": 0.14698949083685875,
+      "max_rank_seconds": 4.585362434387207,
+      "mse": 0.0030592412913392764,
+      "next_global_slot": 29504,
+      "peak_allocated_GiB": 16.96579933166504,
+      "step": 3688,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.3476363718509674,
+      "loss": 0.045659679104574025,
+      "lpips": 0.13788002310320735,
+      "max_rank_seconds": 3.7857022285461426,
+      "mse": 0.0031871675309957936,
+      "next_global_slot": 29512,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3689,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.5646556615829468,
+      "loss": 0.055240867543034256,
+      "lpips": 0.12414341839030385,
+      "max_rank_seconds": 3.87687349319458,
+      "mse": 0.00428265266600647,
+      "next_global_slot": 29520,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3690,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.5431351065635681,
+      "loss": 0.057175280060619116,
+      "lpips": 0.1627116296440363,
+      "max_rank_seconds": 3.815746784210205,
+      "mse": 0.0040904117850004695,
+      "next_global_slot": 29528,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3691,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.7414271235466003,
+      "loss": 0.055112284142524004,
+      "lpips": 0.1769953202456236,
+      "max_rank_seconds": 3.986807107925415,
+      "mse": 0.0037412751698866487,
+      "next_global_slot": 29536,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3692,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.318106472492218,
+      "loss": 0.05106953834183514,
+      "lpips": 0.1207434767857194,
+      "max_rank_seconds": 3.817636013031006,
+      "mse": 0.0038995190407149494,
+      "next_global_slot": 29544,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3693,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.6470425724983215,
+      "loss": 0.1130094570107758,
+      "lpips": 0.21312676928937435,
+      "max_rank_seconds": 3.806993246078491,
+      "mse": 0.00916967770899646,
+      "next_global_slot": 29552,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3694,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.2821494340896606,
+      "loss": 0.05302447950816713,
+      "lpips": 0.11389399273321033,
+      "max_rank_seconds": 3.8082668781280518,
+      "mse": 0.004163508074270794,
+      "next_global_slot": 29560,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3695,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.3825657367706299,
+      "loss": 0.05275412637274712,
+      "lpips": 0.13341906224377453,
+      "max_rank_seconds": 3.795764684677124,
+      "mse": 0.003941221973946085,
+      "next_global_slot": 29568,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3696,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 2.0654118061065674,
+      "loss": 0.09001134801656008,
+      "lpips": 0.24815837666392326,
+      "max_rank_seconds": 3.816723108291626,
+      "mse": 0.00651955115608871,
+      "next_global_slot": 29576,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3697,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.43039655685424805,
+      "loss": 0.04820232023485005,
+      "lpips": 0.1485170153900981,
+      "max_rank_seconds": 4.059039115905762,
+      "mse": 0.003335061923280591,
+      "next_global_slot": 29584,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3698,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.6338633298873901,
+      "loss": 0.05342653812840581,
+      "lpips": 0.18117369152605534,
+      "max_rank_seconds": 3.7925312519073486,
+      "mse": 0.003530916896124836,
+      "next_global_slot": 29592,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3699,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.2990463972091675,
+      "loss": 0.11591712187509984,
+      "lpips": 0.2027230691164732,
+      "max_rank_seconds": 3.8672988414764404,
+      "mse": 0.00956448148644995,
+      "next_global_slot": 29600,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3700,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.8339634537696838,
+      "loss": 0.09545968845486641,
+      "lpips": 0.15588259045034647,
+      "max_rank_seconds": 3.806633710861206,
+      "mse": 0.007987142860656604,
+      "next_global_slot": 29608,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3701,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.4137372374534607,
+      "loss": 0.047110050451010466,
+      "lpips": 0.12605832796543837,
+      "max_rank_seconds": 3.821106433868408,
+      "mse": 0.003450421783782076,
+      "next_global_slot": 29616,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3702,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.655185341835022,
+      "loss": 0.05493985413340852,
+      "lpips": 0.14585517533123493,
+      "max_rank_seconds": 3.8880369663238525,
+      "mse": 0.004035433752505924,
+      "next_global_slot": 29624,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3703,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.3893040716648102,
+      "loss": 0.09876044327393174,
+      "lpips": 0.241868793964386,
+      "max_rank_seconds": 4.0071611404418945,
+      "mse": 0.007457356390659697,
+      "next_global_slot": 29632,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3704,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.3894728124141693,
+      "loss": 0.044011188903823495,
+      "lpips": 0.14875656086951494,
+      "max_rank_seconds": 3.858288526535034,
+      "mse": 0.0029135531949577853,
+      "next_global_slot": 29640,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3705,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.7177376747131348,
+      "loss": 0.09011805895715952,
+      "lpips": 0.18260546121746302,
+      "max_rank_seconds": 3.822831153869629,
+      "mse": 0.007185751179349609,
+      "next_global_slot": 29648,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3706,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.4945061206817627,
+      "loss": 0.04170890903333202,
+      "lpips": 0.12545296363532543,
+      "max_rank_seconds": 3.7866339683532715,
+      "mse": 0.002916361147072166,
+      "next_global_slot": 29656,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3707,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.4792901277542114,
+      "loss": 0.033650692290393636,
+      "lpips": 0.11892172298394144,
+      "max_rank_seconds": 3.808479070663452,
+      "mse": 0.0021758520115326974,
+      "next_global_slot": 29664,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3708,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 1.167865514755249,
+      "loss": 0.07567791943438351,
+      "lpips": 0.17409903462976217,
+      "max_rank_seconds": 3.9016573429107666,
+      "mse": 0.005826801629154943,
+      "next_global_slot": 29672,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3709,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.49874117970466614,
+      "loss": 0.04147839132929221,
+      "lpips": 0.1195939073804766,
+      "max_rank_seconds": 3.7918272018432617,
+      "mse": 0.002951900096377358,
+      "next_global_slot": 29680,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3710,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.30573153495788574,
+      "loss": 0.039615794783458114,
+      "lpips": 0.11289095971733332,
+      "max_rank_seconds": 3.810100793838501,
+      "mse": 0.002832669713825453,
+      "next_global_slot": 29688,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3711,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.39683249592781067,
+      "loss": 0.030347901629284024,
+      "lpips": 0.12594084301963449,
+      "max_rank_seconds": 3.792858362197876,
+      "mse": 0.0017753817010088824,
+      "next_global_slot": 29696,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3712,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.4132632911205292,
+      "loss": 0.034293572360184044,
+      "lpips": 0.11685395333915949,
+      "max_rank_seconds": 3.800044536590576,
+      "mse": 0.0022608177350775804,
+      "next_global_slot": 29704,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3713,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.2843472957611084,
+      "loss": 0.030080455588176847,
+      "lpips": 0.11517998157069087,
+      "max_rank_seconds": 3.829136371612549,
+      "mse": 0.0018562456607469358,
+      "next_global_slot": 29712,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3714,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.9233598709106445,
+      "loss": 0.030072434397879988,
+      "lpips": 0.100435143802315,
+      "max_rank_seconds": 3.9108142852783203,
+      "mse": 0.0020028920098411618,
+      "next_global_slot": 29720,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3715,
+      "world": 2
+    },
+    {
+      "global_batch": 8,
+      "gradient_norm": 0.48434895277023315,
+      "loss": 0.057186277816072106,
+      "lpips": 0.13279267214238644,
+      "max_rank_seconds": 3.9655096530914307,
+      "mse": 0.004390700865769759,
+      "next_global_slot": 29728,
+      "peak_allocated_GiB": 16.96634864807129,
+      "step": 3716,
+      "world": 2
+    }
+  ],
+  "training_sources": 1024,
+  "training_views": 15360,
+  "utc_unix": 1794035226.2311516,
+  "world": 2
+}
