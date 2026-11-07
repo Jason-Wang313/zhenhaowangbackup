@@ -1,0 +1,154 @@
+{
+  "utc": "2026-11-07T06:49:38.292056+00:00",
+  "status": "master_connection_lost_peer_cancelled_complete3687_verified",
+  "scope": "Blur only, same fixed9472 target; no new official result",
+  "root_cause_not_proven": "node1 heartbeat stopped; node3 TCPStore EOF then Broken pipe; no node1 exit receipt or Python traceback",
+  "node1_last_heartbeat": {
+    "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+    "job": "round20_blur_fullgrid_train_v1_node1",
+    "pid": 111399,
+    "state": "running",
+    "utc_unix": 1794033837.2217126,
+    "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+  },
+  "node3_current_heartbeat": {
+    "capability": "independent_node3_two_H100_jobs_only",
+    "extension_source_sha256": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+    "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+    "job": null,
+    "pid": 299730,
+    "state": "idle",
+    "utc_unix": 1794034173.471043,
+    "worker_source_sha256": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf"
+  },
+  "jobs": {
+    "1": {
+      "job.json": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh",
+        "id": "round20_blur_fullgrid_train_v1_node1",
+        "nodes": [
+          1
+        ],
+        "purpose": "Blur fixed1024 step1792->9472 then official150; paired nodes1/3: train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_data_v1.py": "de5e20faa5d37fb83667309af47aa7410e654b4e9294d87a7334a43a0fe567a8",
+          "smoke/blur_fullgrid_snapshots_v1.py": "cb266c67be8f082ce1fb5ca26111a2aebb16cf1a144afd2cf616a3c5e95dbeae",
+          "smoke/blur_fullgrid_state_v1.py": "4dc2560bfc3b96c32ddf1b60f0e646150835a9dfcd026258bc574d9bff71d947",
+          "smoke/evaluate_foundir_blur_fullgrid_official_v1.py": "c5ac5a2f7ff84636dedb7991c95b3d03677462f1e1b65d99bcb3e9e7b706c746",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh": "9a2b4d397345ea1c218ace573c5a382de6219cb2a335a4640b099152c0c302cc",
+          "smoke/train_foundir_blur_fullgrid_v1.py": "c6b8748722bb8ef983606c33a902e783c38c98ce8fe0ef95fe7dd4f5860882c7"
+        }
+      },
+      "cancel.json": {
+        "automatic_retry": false,
+        "reason": "master_TCPStore_EOF_broken_pipe_and_node1_heartbeat_lost_preserve_state3687_no_blind_retry"
+      },
+      "node1.started.json": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--735ced1e58cd-nq6vvca2dk",
+        "job_sha256": "240675c18e68362632cac962a3815e2e6b62be10345371a000f3c6a758969237",
+        "node": 1,
+        "utc_unix": 1794027865.4074728
+      }
+    },
+    "3": {
+      "job.json": {
+        "args": [],
+        "automatic_retry": false,
+        "entry": "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh",
+        "id": "round20_blur_fullgrid_train_v1_node3",
+        "nodes": [
+          3
+        ],
+        "purpose": "Blur fixed1024 step1792->9472 then official150; paired nodes1/3: train",
+        "scope": "authorized FoundIR full-stack iteration; official600 evaluation only; train data for training",
+        "source_commit": "da011aca1e153c0bcc7cdda24a6ec9be523739eb",
+        "sources": {
+          "lowlight_restoration/blur_delta_velocity_v1.py": "61b29bf08f55193db93cf34dee45c38f032fd05242a1d30c7c453038f5558615",
+          "lowlight_restoration/rain_global_batch_v1.py": "6f679dbae98bff7832bbd0d60f03cc4120f65ea9c8cfc2f2a7d99753cd687f76",
+          "smoke/blur_fullgrid_data_v1.py": "de5e20faa5d37fb83667309af47aa7410e654b4e9294d87a7334a43a0fe567a8",
+          "smoke/blur_fullgrid_snapshots_v1.py": "cb266c67be8f082ce1fb5ca26111a2aebb16cf1a144afd2cf616a3c5e95dbeae",
+          "smoke/blur_fullgrid_state_v1.py": "4dc2560bfc3b96c32ddf1b60f0e646150835a9dfcd026258bc574d9bff71d947",
+          "smoke/evaluate_foundir_blur_fullgrid_official_v1.py": "c5ac5a2f7ff84636dedb7991c95b3d03677462f1e1b65d99bcb3e9e7b706c746",
+          "smoke/foundir_fullstack_executor_3x2_v2.py": "701ee6cfd304c083e38555a0c44b9e1d6b68970b1342748759e1fa8a331b8baf",
+          "smoke/foundir_fullstack_node3_extension_v1.py": "e7394638ce5524d2d36a4f2452250053e62e414997fddf63f3dd307236a2c630",
+          "smoke/run_foundir_fullstack_blur_coverage_v2.py": "4198bbb19fc168b585f6951482b2ddd3c29baa67984685496d2105e09ba5bc63",
+          "smoke/run_foundir_fullstack_blur_fullgrid_v1.sh": "9a2b4d397345ea1c218ace573c5a382de6219cb2a335a4640b099152c0c302cc",
+          "smoke/train_foundir_blur_fullgrid_v1.py": "c6b8748722bb8ef983606c33a902e783c38c98ce8fe0ef95fe7dd4f5860882c7"
+        }
+      },
+      "node3.ended.json": {
+        "allocated_GPU_hours": 3.4278269922733307,
+        "automatic_retry": false,
+        "error": null,
+        "gpus": 2,
+        "seconds": 6170.088586091995,
+        "status": -15
+      },
+      "cancel.json": {
+        "automatic_retry": false,
+        "reason": "master_TCPStore_EOF_broken_pipe_and_node1_heartbeat_lost_preserve_state3687_no_blind_retry"
+      },
+      "node3.started.json": {
+        "gpus": 2,
+        "hostname": "qwen-copy-copy--5df18b6cd56a-6gppgovu6s",
+        "job_sha256": "1197814d1f235ef08090d67827f7581c763e59076004e6b702523201e3406173",
+        "node": 3,
+        "utc_unix": 1794027868.2146585
+      }
+    }
+  },
+  "verified_checkpoint": {
+    "Adam_states": 100,
+    "GPU_hours": 0,
+    "actual_SHA_Adam_RNG_sampler_verified": true,
+    "checkpoint": {
+      "file": "steps/state_003687_1794033813996589584.pt",
+      "next_global_slot": 29496,
+      "parameter_hash": "e4e058318a39a4208a15ec0a48345ee2815ac512714a29dfc1ad4755c40f8bbc",
+      "receipt_sha256": "03313b51686ab0403440989af186c9134bbce59babb54fa80e71b39ac5ef1782",
+      "sha256": "e4f6ab31d1293b6aa86040caa9fca1e6d7b964681c5935ce0219b324faf9fa1f",
+      "step": 3687,
+      "world": 4
+    },
+    "exit_code": 0,
+    "new_data_views": true,
+    "next_global_slot": 29496,
+    "official_Blur_pass": false,
+    "rank_RNG_count": 4,
+    "same_world_state_preserved": true,
+    "seconds": 4.285390205681324,
+    "step": 3687
+  },
+  "unreceipted_step3688_files": [
+    {
+      "path": "checkpoints/foundir_blur_fullgrid_v1/steps/state_003688_1794033837473497879.pt",
+      "bytes": 389866319,
+      "sha256": "07c2f5bf2c8eb537a12178d8f6805d0e3cd0a68c4cfbc74640a860600e3da46e",
+      "promoted": false,
+      "used_for_resume": false
+    }
+  ],
+  "first_new_snapshot3712_exists": false,
+  "official_started": false,
+  "node1_training_GPU_hours_lower_bound": 3.31767457763354,
+  "node3_training_GPU_hours": 3.4278269922733307,
+  "completed_cache_GPU_hours": 1.4516275824440852,
+  "round20_GPU_hours_lower_bound": 8.197129152350957,
+  "cost_complete": false,
+  "raw_failure_report_commit": "b2916885fa33b5244e58c3d54b286c7bf6d1dc8f",
+  "recoverable_new_steps": 1895,
+  "remaining_steps": 5785,
+  "same_world_restore_CPU_verified": true,
+  "automatic_retry": false,
+  "preserve_all_assets": true,
+  "next": "Confirm node1 availability; use verified3687 model+Adam+sampler, do not restart from1792. Four-rank continuation requires live second node and reconciled attempt/runtime identities; one-node option must explicitly validate world-size migration while preserving batch8/loss/lr/views9472. No GPU restart has been submitted."
+}

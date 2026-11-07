@@ -1,3 +1,9 @@
+## Blur round20主连接中断；完整3687已核验，待恢复运行 — 2026-11-07
+
+node1最后心跳2026-11-07T06:43:57.221713+00:00，node3 TCPStore EOF/Broken pipe；实例/系统根因未确认，不能认定GPU显存或模型问题。精确取消round20训练对子job，node3 status=-15且worker已idle；node1缺退出receipt，不伪造。monitor1877938和comparison2052208已退出，upload已完成failed发布b2916885fa33b5244e58c3d54b286c7bf6d1dc8f；下方“训练仍正常”均为历史快照，接手必须查实时状态。
+最后完整3687实际SHA/100Adam/四rank RNG/next_global_slot29496已CPU核验，保留新增1895步。3688孤立tensor保留但无receipt，不作为完成步。缓存15360完整保留，3712快照/新官方结果尚无，剩余目标仍9472（5785步）。恢复不从1792重训、不重缓存。原四rank须先恢复节点/处理新attempt运行身份；只剩node3时先实现验证world4→2的global8等价迁移，不能冒称bitwise。已询问node1平台状态，尚未提交恢复GPU。
+本轮费用至少8.197129152GPU-hours，node1终态缺失，不能报完整成本。官方仍21.948140/.202188未过25.9/.18，仅Blur、全栈修复授权持续，保留全部旧资产/energy。见reports/foundir_blur_fullgrid_v1_master_loss_2026-11-07.{json,md}和step3687_state核验。
+
 ## Blur1024来源完整网格四遍终态 — 2026-11-07
 
 paired GPU job failed: train；保留全部资产，无自动重试。
