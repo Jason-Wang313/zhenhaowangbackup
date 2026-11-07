@@ -1,3 +1,9 @@
+## Blur已通过1024步保存核验，继续固定1280→官方150 — 2026-11-07
+
+2026-11-07T01:42:56.371153+00:00记录：物理node1/node3共4H100的round14b_blur_exposure_train_v2仍在运行；step1024实际checkpoint SHA、100份Adam状态、四rank RNG、next_global_slot8192已CPU核验退出0，报告f2940a1已推送。monitor/upload持久进程存活，接手先查实时step/心跳，勿重复启动或改绑定源码。
+同1024来源前八轮在线训练MSE .008256→.004290、LPIPS .262615→.159421，均逐轮下降；仅training_fit_only，非固定模型/官方结果。官方仍旧21.819776/.241321失败，25.9/.18之前只攻Blur。保持最终1280唯一权重→完整官方150→CPU核验/小报告推送，不挑中间官方最好checkpoint，不自动扩大本轮步数。
+详见reports/foundir_blur_exposure_online_epoch8_2026-11-07.{md,json}及step1024_state报告。保留所有旧资产/失败/energy；官方GT不拟合、不逐图挑输出。
+
 ## Blur四卡已真实运行；官方尚无双指标改善 — 2026-11-07
 
 此节更新下方四卡准备状态：物理node1/node3共4H100，四rank NCCL及step202实际CUDA模型/Adam/RNG重载全部通过；step201实际checkpoint SHA/Adam/四rank RNG/采样CPU核验通过。2026-11-07T01:02:27.375202+00:00快照已保存至298/1280，两worker心跳新鲜、monitor/upload均存活。步骤与ETA是该时间快照，接手必须查最新共享日志，勿重启或改绑定源码。

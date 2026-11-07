@@ -1,0 +1,147 @@
+{
+  "scope": "training_fit_only_online_logs_not_fixed_checkpoint_evaluation",
+  "through_step": 1024,
+  "epochs": [
+    {
+      "epoch": 1,
+      "steps": [
+        1,
+        128
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.10882295785063434,
+        "mse": 0.008256147102134292,
+        "lpips": 0.26261485856161926,
+        "gradient_norm": 0.27346857398515567
+      },
+      "batches_gradient_norm_above_clip1": 0
+    },
+    {
+      "epoch": 2,
+      "steps": [
+        129,
+        256
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.09846344678499008,
+        "mse": 0.007653716730409599,
+        "lpips": 0.21926278605587868,
+        "gradient_norm": 0.3325097208144143
+      },
+      "batches_gradient_norm_above_clip1": 1
+    },
+    {
+      "epoch": 3,
+      "steps": [
+        257,
+        384
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.09289485561703259,
+        "mse": 0.007171333142370173,
+        "lpips": 0.2118152334669503,
+        "gradient_norm": 0.4221261733910069
+      },
+      "batches_gradient_norm_above_clip1": 0
+    },
+    {
+      "epoch": 4,
+      "steps": [
+        385,
+        512
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.08525061921022825,
+        "mse": 0.006531801487433597,
+        "lpips": 0.1993260384815585,
+        "gradient_norm": 0.5319736379315145
+      },
+      "batches_gradient_norm_above_clip1": 9
+    },
+    {
+      "epoch": 5,
+      "steps": [
+        513,
+        640
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.07799414772262026,
+        "mse": 0.005913076056433653,
+        "lpips": 0.1886338667372911,
+        "gradient_norm": 0.703544610994868
+      },
+      "batches_gradient_norm_above_clip1": 21
+    },
+    {
+      "epoch": 6,
+      "steps": [
+        641,
+        768
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.06920357308581515,
+        "mse": 0.005151165177096573,
+        "lpips": 0.1769192070205463,
+        "gradient_norm": 0.7010483477497473
+      },
+      "batches_gradient_norm_above_clip1": 24
+    },
+    {
+      "epoch": 7,
+      "steps": [
+        769,
+        896
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.06270549915643642,
+        "mse": 0.004605715065274296,
+        "lpips": 0.16648347912996542,
+        "gradient_norm": 0.6885614085476846
+      },
+      "batches_gradient_norm_above_clip1": 24
+    },
+    {
+      "epoch": 8,
+      "steps": [
+        897,
+        1024
+      ],
+      "samples": 1024,
+      "online_means": {
+        "loss": 0.05884230870810825,
+        "mse": 0.0042900203350164645,
+        "lpips": 0.1594210477624074,
+        "gradient_norm": 0.7144235838204622
+      },
+      "batches_gradient_norm_above_clip1": 23
+    }
+  ],
+  "last_vs_first_relative_change_percent": {
+    "loss": -45.92840530132195,
+    "mse": -48.0384702216915,
+    "lpips": -39.29473426005663
+  },
+  "limitations": [
+    "Each batch is measured before its update; weights change throughout an epoch.",
+    "Same full1024 source set and fixed crops, but each epoch reshuffles order.",
+    "Epoch2 includes the declared world2-to4 migration at step200.",
+    "These are continuous training metrics, not official quantized full-image metrics.",
+    "Do not derive mean image PSNR from mean MSE; no official-quality claim."
+  ],
+  "parent_report_sha256": "1997998f08fcc28ffff51e6aa8cfbd3a0a4a60fb537b46899f961d9e97fe1bbc",
+  "receipt_sha256": "f9b14f5ddbff8d3aa0a5a1d63db1b72820b94ed4523a3a725b04f2980406001b",
+  "selected_history_sha256": "8390f3222f9d398ef08ddb09b6f1068b1b72c41d3854e8c5a0c2dc62293d9336",
+  "script_sha256": "f9424fa80b421df1b517fb5ed32de2bf952236fc6d445bca2d8ea17e72506c4e",
+  "new_GPU_work": false,
+  "image_pixels_read": false,
+  "official_result_produced": false,
+  "seconds": 1.3390022851526737,
+  "exit_code": 0
+}
